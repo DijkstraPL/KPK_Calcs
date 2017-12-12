@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ViewModelBase>
+  <members name="viewModelBase">
+    <ViewModelBase>
+      <summary>
+        Base class for all ViewModels.
+      </summary>
+    </ViewModelBase>
+    <PropertyChangedEventHandler>
+      <summary>
+        Event for PropertyChanged.
+      </summary>
+    </PropertyChangedEventHandler>
+    <OnPropertyChanged>
+      <summary>
+        Method for property change.
+      </summary>
+      <param name="propertyName">Name of property which change its value.</param>
+    </OnPropertyChanged>
+  </members>
+</ViewModelBase>
