@@ -7,39 +7,25 @@ namespace ProjectManager.Model
     /// </summary>
     public class Project
     {
-        /// <summary>
-        /// Unique project Id.
-        /// </summary>
+        /// <value>Unique project Id.</value>
         public string Id { get; set; }
-
-        /// <summary>
-        /// Project name.
-        /// </summary>
+        
+        /// <value>Project name.</value>
         public string Name { get; set; }
-
-        /// <summary>
-        /// Name of city.
-        /// </summary>
+        
+        /// <value>Name of city.</value>
         public string City { get; set; }
-
-        /// <summary>
-        /// Street.
-        /// </summary>
+        
+        /// <value>Street.</value>
         public string Street { get; set; }
-
-        /// <summary>
-        /// Post Code.
-        /// </summary>
+        
+        /// <value>Post Code.</value>
         public string PostCode { get; set; }
-
-        /// <summary>
-        /// Registration number.
-        /// </summary>
+        
+        /// <value>Registration number.</value>
         public string RegistrationNumber { get; set; }
         
-        /// <summary>
-        /// Date.
-        /// </summary>
+        /// <value>Date.</value>
         public DateTime Date { get; set; }
         
     }

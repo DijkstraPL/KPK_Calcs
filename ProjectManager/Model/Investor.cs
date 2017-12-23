@@ -3,31 +3,21 @@ using System.Collections.Generic;
 
 namespace ProjectManager.Model
 {
-    class Investor
+    public class Investor
     {
-        /// <summary>
-        /// Investor's name.
-        /// </summary>
+        /// <value>Investor's name.</value>
         public string Name { get; set; }
-
-        /// <summary>
-        /// Investor's city.
-        /// </summary>
+        
+        /// <value>Investor's city.</value>
         public string City { get; set; }
-
-        /// <summary>
-        /// Investor's street.
-        /// </summary>
+        
+        /// <value>Investor's street.</value>
         public string Street { get; set; }
-
-        /// <summary>
-        /// Investor's post code.
-        /// </summary>
+        
+        /// <value>Investor's post code.</value>
         public string PostCode { get; set; }
-
-        /// <summary>
-        /// Investor's project list.
-        /// </summary>
+        
+        /// <value>Investor's project list.</value>
         public List<Project> ProjectList { get; set; }
     }
 }

@@ -10,19 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ProjectManager.View
 {
     /// <summary>
-    /// Interaction logic for ProjectManagerView.xaml
+    /// Interaction logic for ProjectManagerUserControl.xaml
     /// </summary>
-    public partial class ProjectManagerView : Window
+    public partial class ProjectManagerUserControl : UserControl
     {
-        /// <summary>
-        /// Constructor for ProjectManagerView.
-        /// </summary>
-        public ProjectManagerView()
+        public ProjectManagerUserControl()
         {
             InitializeComponent();
         }
