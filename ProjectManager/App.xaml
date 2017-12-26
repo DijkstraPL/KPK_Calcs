@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:ProjectManager"
              StartupUri="View/ProjectManagerView.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="C:\Users\Konrad\Desktop\WPF Themes\ExpressionDark.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

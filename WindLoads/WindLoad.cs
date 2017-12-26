@@ -100,7 +100,7 @@ namespace WindLoads
 
         #region Constructors
 
-        public WindLoad(WindLoadEnum zone, float heightAboveSeaLevel, TerrainCategoryEnum terrainCategory,
+        public WindLoad(WindLoadEnum zone, double heightAboveSeaLevel, TerrainCategoryEnum terrainCategory,
             double heightAboveGround, double buildingWidth, double buildingLength)
         {
             WindLoadZone = zone;
@@ -111,7 +111,7 @@ namespace WindLoads
             BuildingLength = buildingLength;
         }
 
-        public WindLoad(WindLoadEnum zone, float heightAboveSeaLevel, TerrainCategoryEnum terrainCategory,
+        public WindLoad(WindLoadEnum zone, double heightAboveSeaLevel, TerrainCategoryEnum terrainCategory,
             double heightAboveGround, double buildingWidth, double buildingLength,
             WindDirectionEnum windDirection) :
             this(zone, heightAboveSeaLevel, terrainCategory, heightAboveGround, buildingWidth, buildingLength)
@@ -123,13 +123,19 @@ namespace WindLoads
 
         public void CalculateWindLoad(double heightForCalculations, bool windAlongTheLength)
         {
+            if (heightForCalculations > HeightAboveGround)
+                throw new ArgumentOutOfRangeException("Calculation height shouldn't be more than height above the ground.");
+
             SetVelocityValuesAndDirectionalFactorForCurrentWindZone();
             CalculateBasicWindVelocity();
             SetTheRoughnessLengthAndExtremeHeights((int)TerrainCategory - 1);
 
+            SetBuildingFaceWidth(windAlongTheLength);
+
             double referenceHeight = SetReferenceHeight(heightForCalculations);
 
             CalculateRoughnessAndExposureFactor(referenceHeight);
+
             // CalculateOrographyFactor(); not implemented
             CalculateTurbulenceIntensity(referenceHeight);
             CalculateMeanWindVelocity();
@@ -137,6 +143,21 @@ namespace WindLoads
         }
 
         #region CalculationMethods
+
+        /// <summary>
+        /// Set proper width to further calculation.
+        /// </summary>
+        /// <remarks>
+        /// Method is base on <c>PN-EN 1991-1-4:2005 Fig.7.4</c>.
+        /// </remarks>
+        /// <param name="windAlongTheLength">Wind is blowing along length.</param>
+        private void SetBuildingFaceWidth(bool windAlongTheLength)
+        {
+            if (windAlongTheLength)
+                BuildingFaceWidth = BuildingWidth;
+            else
+                BuildingFaceWidth = BuildingLength;
+        }
 
         /// <summary>
         /// Sets the values which depends on wind zone.
@@ -294,7 +315,7 @@ namespace WindLoads
                     heightForCalculations = BuildingFaceWidth;
                 else
                 {
-                    int numberOfStrips = (int)(heightForCalculations - BuildingFaceWidth / HorizontalStrip) + 1;
+                    int numberOfStrips = (int)(heightForCalculations - BuildingFaceWidth / HorizontalStrip);
 
                     heightForCalculations = BuildingFaceWidth + numberOfStrips * HorizontalStrip;
                 }
@@ -361,7 +382,7 @@ namespace WindLoads
             if (currentWindZone == 4)
                 return (DirectionalFactors[1, (int)WindDirection] + DirectionalFactors[2, (int)WindDirection]) / 2;
 
-            return DirectionalFactors[currentWindZone - 1, (int)WindDirection];
+            return DirectionalFactors[currentWindZone - 1, (int)WindDirection - 1];
         }
 
         #endregion
@@ -571,6 +592,10 @@ namespace WindLoads
         /// <value>Height of the building also known as <c>h</c>.</value>
         public double BuildingHeight { get; set; }
 
+        #endregion
+
+        #region Abstract properties
+
         /// <value>Areas for walls with names of the zones.</value>
         protected abstract Dictionary<string, double> AreasOfWindZonesForWalls { get; set; }
 
@@ -594,8 +619,25 @@ namespace WindLoads
 
         #endregion
 
+
+        #region Abstract methods
+
+        /// <summary>
+        /// Calculate external pressure coefficient for walls.
+        /// </summary>
+        /// <remarks>
+        /// <para>Method should base on <c>PN-EN 1991-1-4:2005 Tab. 7.1</c>, <c>PN-EN 1991-1-4:2005 Fig. 7.5</c></para>
+        /// <para>and on <c>PN-EN 1991-1-4:2005 7.2.1 NOTE2</c>.</para>
+        /// </remarks>
         protected abstract void CalculateExternalPressureCoefficientForWalls();
 
+        /// <summary>
+        /// Calculate external pressure coefficient for roof.
+        /// </summary>
+        /// <remarks>
+        /// <para>Method should base on <c>PN-EN 1991-1-4:2005 Tab. 7.2 / 7.3a / 7.3b / 7.4a / 7.4b / 7.5</c></para>
+        /// <para>depending on case and on <c>PN-EN 1991-1-4:2005 7.2.1 NOTE2</c>.</para>
+        /// </remarks>
         protected abstract void CalculateExternalPressureCoefficientForRoof();
 
         /// <summary>
@@ -624,16 +666,50 @@ namespace WindLoads
         /// <param name="h">Dimension of the building according to <c>PN-EN 1991-1-4 Fig. 7.5</c>.</param>
         protected abstract void SetAreasForWallFields(double wallZoneRange, double d, double b, double h);
 
-        protected abstract double CalculateInterpolationFactorForWalls(double d, double b, double h);
+        /// <summary>
+        /// Set calculated areas into Dictionary.
+        /// </summary>
+        /// <param name="wallZoneRange">Dimension of the building according to <c>PN-EN 1991-1-4 Fig. 7.5</c> also known as <c>e</c>.</param>
+        /// <param name="d">Dimension of the building according to <c>PN-EN 1991-1-4 Fig. 7.5</c>.</param>
+        /// <param name="b">Dimension of the building according to <c>PN-EN 1991-1-4 Fig. 7.5</c>.</param>
+        /// <param name="h">Dimension of the building according to <c>PN-EN 1991-1-4 Fig. 7.5</c>.</param>
+        protected abstract void SetAreasForRoofFields(double wallZoneRange, double d, double b, double h);
 
-        protected abstract double CalculateExternalPressureCoefficientForValueBetweenMinAndMax
-            (double externalPressureCoefficientMin, double externalPressureCoefficientMax, double area);
+        #endregion
 
+        #region Calculation methods
+
+        /// <summary>
+        /// Method which calculate value of external pressure coefficient for areas which are less than 10.
+        /// </summary>
+        /// <remarks>
+        /// Method base on <c>PN-EN 1991-1-4 Fig.7.2</c>.
+        /// </remarks>
+        /// <param name="externalPressureCoefficientMin">Value of external pressure coefficient for one square meter area.</param>
+        /// <param name="externalPressureCoefficientMax">Value of external pressure coefficient for ten square meter area.</param>
+        /// <param name="area">Area of current field.</param>
+        /// <returns>Proper value of external pressure coefficient</returns>
+        protected double CalculateExternalPressureCoefficientForValueBetweenMinAndMax
+            (double externalPressureCoefficientMin, double externalPressureCoefficientMax, double area)
+            => externalPressureCoefficientMin - (externalPressureCoefficientMin - externalPressureCoefficientMax) * Math.Log10(area);
+
+        #endregion
+
+        /// <summary>
+        /// Internal pressure coefficient.
+        /// </summary>
+        /// <remarks>
+        /// Enumerator base on <c>PN-EN 1991-1-4 7.2.9.(6) NOTE2</c>.
+        /// </remarks>
         public enum InternalPressureCoefficientEnum
         {
+            /// <summary>None of internal pressure coefficients is selected.</summary>
             NONE,
+            /// <summary>Internal pressure coefficient is equal to 0.2.</summary>
             POINT_TWO,
+            /// <summary>Internal pressure coefficient is equal to -0.3.</summary>
             MINUS_POINT_THREE,
+            /// <summary>Internal pressure coefficient should be evaluated.</summary>
             CALCULATE
         }
 
@@ -642,7 +718,7 @@ namespace WindLoads
         /// </summary>
         public enum WindDirectionEnum
         {
-            /// <summary>When none of wind directions is selected.</summary>
+            /// <summary>None of wind directions is selected.</summary>
             NONE,
             /// <summary>Wind is blowing upwards.</summary>
             UP,
@@ -865,7 +941,7 @@ namespace WindLoads
 
             double mansardInterpolationFactor = RoundingRadius / BuildingHeight;
 
-            if (mansardInterpolationFactor <30 )
+            if (mansardInterpolationFactor < 30)
                 throw new ArgumentOutOfRangeException("Current factor of height to one of the building dimensions is not supported, by the current algorithms.");
 
             foreach (string field in ListOfFieldsForRoof)
@@ -892,7 +968,7 @@ namespace WindLoads
                        (TableWithExternalPressureCoefficientsForSharpEavesRoof[1][0 + index, i], TableWithExternalPressureCoefficientsForMansardEavesRoof[1][2 + index, i], 0.10, 0.05);
 
                     externalPressureCoefficientsForRoofMax = LinearInterpolation
-                       (TableWithExternalPressureCoefficientsForSharpEavesRoof[0][0+ index, i], TableWithExternalPressureCoefficientsForMansardEavesRoof[0][2 + index, i], 0.10, 0.05);
+                       (TableWithExternalPressureCoefficientsForSharpEavesRoof[0][0 + index, i], TableWithExternalPressureCoefficientsForMansardEavesRoof[0][2 + index, i], 0.10, 0.05);
                 }
 
                 if (AreasOfWindZonesForRoof[field] >= 10)
@@ -973,18 +1049,18 @@ namespace WindLoads
                 if (atticInterpolationFactor <= 0.05)
                 {
                     externalPressureCoefficientsFoRoofMin = LinearInterpolation
-                        (TableWithExternalPressureCoefficientsForRoofWithParapetes[1][1+ index, i], TableWithExternalPressureCoefficientsForRoofWithParapetes[1][0+ index, i], 0.05, 0.025);
+                        (TableWithExternalPressureCoefficientsForRoofWithParapetes[1][1 + index, i], TableWithExternalPressureCoefficientsForRoofWithParapetes[1][0 + index, i], 0.05, 0.025);
 
                     externalPressureCoefficientsForRoofMax = LinearInterpolation
-                       (TableWithExternalPressureCoefficientsForRoofWithParapetes[0][1+ index, i], TableWithExternalPressureCoefficientsForRoofWithParapetes[0][0+ index, i], 0.05, 0.025);
+                       (TableWithExternalPressureCoefficientsForRoofWithParapetes[0][1 + index, i], TableWithExternalPressureCoefficientsForRoofWithParapetes[0][0 + index, i], 0.05, 0.025);
                 }
                 else
                 {
                     externalPressureCoefficientsFoRoofMin = LinearInterpolation
-                       (TableWithExternalPressureCoefficientsForRoofWithParapetes[1][2+ index, i], TableWithExternalPressureCoefficientsForRoofWithParapetes[1][1+ index, i], 0.10, 0.05);
+                       (TableWithExternalPressureCoefficientsForRoofWithParapetes[1][2 + index, i], TableWithExternalPressureCoefficientsForRoofWithParapetes[1][1 + index, i], 0.10, 0.05);
 
                     externalPressureCoefficientsForRoofMax = LinearInterpolation
-                       (TableWithExternalPressureCoefficientsForRoofWithParapetes[0][2+ index, i], TableWithExternalPressureCoefficientsForRoofWithParapetes[0][1+ index, i], 0.10, 0.05);
+                       (TableWithExternalPressureCoefficientsForRoofWithParapetes[0][2 + index, i], TableWithExternalPressureCoefficientsForRoofWithParapetes[0][1 + index, i], 0.10, 0.05);
                 }
 
                 if (AreasOfWindZonesForRoof[field] >= 10)
@@ -1063,7 +1139,7 @@ namespace WindLoads
         private double LinearInterpolation(double minValue, double maxValue, double minInterpolation, double maxInterpolation)
         => minValue + (maxValue - minValue) / (maxInterpolation - minInterpolation) * (InterpolationFactor - minInterpolation);
 
-        protected override double CalculateInterpolationFactorForWalls(double d, double b, double h)
+        private double CalculateInterpolationFactorForWalls(double d, double b, double h)
         {
             double interpolationFactor = h / d;
 
@@ -1075,10 +1151,6 @@ namespace WindLoads
 
             return interpolationFactor;
         }
-
-        protected override double CalculateExternalPressureCoefficientForValueBetweenMinAndMax
-            (double externalPressureCoefficientMin, double externalPressureCoefficientMax, double area)
-            => externalPressureCoefficientMin - (externalPressureCoefficientMin - externalPressureCoefficientMax) * Math.Log10(area);
 
         protected override void CalculateAreas(WindDirectionEnum windDirection)
         {
@@ -1097,7 +1169,7 @@ namespace WindLoads
             InterpolationFactor = CalculateInterpolationFactorForWalls(d, b, h);
         }
 
-        private void SetAreasForRoofFields(double wallZoneRange, double d, double b, double h)
+        protected override void SetAreasForRoofFields(double wallZoneRange, double d, double b, double h)
         {
             AreasOfWindZonesForRoof["Field F"] = wallZoneRange / 4 * wallZoneRange / 10;
             AreasOfWindZonesForRoof["Field G"] = (b - 2 * wallZoneRange / 4) * wallZoneRange / 10;
@@ -1155,7 +1227,6 @@ namespace WindLoads
             h = BuildingHeight;
         }
 
-
         public enum RoofTypeEnum
         {
             NONE,
@@ -1165,7 +1236,6 @@ namespace WindLoads
             MANSARD_EAVES,
         }
 
-
         public enum FieldIValuesEnum
         {
             NONE,
@@ -1173,5 +1243,4 @@ namespace WindLoads
             MINUS_POINT_TWO
         }
     }
-
 }

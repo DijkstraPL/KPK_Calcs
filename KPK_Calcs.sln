@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManager", "ProjectMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindLoads", "WindLoads\WindLoads.csproj", "{7D938A25-AC75-47C1-93D4-99C78428CDBA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindLoadsTests", "WindLoadsTests\WindLoadsTests.csproj", "{1C990745-F195-440D-AEC8-DC23B43CAB9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7D938A25-AC75-47C1-93D4-99C78428CDBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D938A25-AC75-47C1-93D4-99C78428CDBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D938A25-AC75-47C1-93D4-99C78428CDBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C990745-F195-440D-AEC8-DC23B43CAB9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C990745-F195-440D-AEC8-DC23B43CAB9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C990745-F195-440D-AEC8-DC23B43CAB9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C990745-F195-440D-AEC8-DC23B43CAB9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
