@@ -1,0 +1,78 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<div class="container">
+    <table class="table table-condensed table-bordered" id="count-it">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Density</th>
+                <th>Thickness</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Unit</th>
+            </tr>
+        </thead>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="text" class="form-control" name="thickness" id="thickness" placeholder="Enter Thickness" required></td>
+            <td><input type="text" class="form-control" name="width" id="width" placeholder="Enter Width" required></td>
+            <td><input type="text" class="form-control" name="height" id="height" placeholder="Enter Height" required></td>
+            <td class="count-min-load">10</td>
+            <td class="count-max-load">12</td>
+            <td class="unit">kN/m<sup>2</sup></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="text" class="form-control" name="thickness" id="thickness" placeholder="Enter Thickness" required></td>
+            <td><input type="text" class="form-control" name="width" id="width" placeholder="Enter Width" required></td>
+            <td><input type="text" class="form-control" name="height" id="height" placeholder="Enter Height" required></td>
+            <td class="count-min-load">5</td>
+            <td class="count-max-load">7</td>
+            <td class="unit">kN/m<sup>2</sup></td>
+        </tr>
+        <tfoot>
+            <tr>
+                <td colspan="6"></td>
+                <td id="min-load-sum"></td>
+                <td id="max-load-sum"></td>
+                <td id="unit"></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="container">
+    <div class="form-group col-sm-4 col-md-3">
+        <label for="group">Group</label>
+        <select id="group" name="group" class="load-input">
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="form-group col-sm-4 col-md-3">
+        <label for="subgroup">Subgroup</label>
+        <select id="subgroup" name="subgroup" class="load-input">
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="form-group col-sm-4 col-md-3">
+        <label for="loadname">Load</label>
+        <select id="loadname" name="loadname" class="load-input">
+            <option value="Other">Other</option>
+        </select>
+    </div>
+
+    <div class="form-group col-sm-1 col-md-3">
+        <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right" required="required">Add</button>
+    </div>
+</div>

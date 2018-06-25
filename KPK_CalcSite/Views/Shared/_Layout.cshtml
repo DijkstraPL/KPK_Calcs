@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" id="bootstrap-overrides-background-gray">
+        <div class="container">
+            <div class="navbar-header">
+                <p class="navbar-left">
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-info">
+                        <span class="glyphicon glyphicon-hdd"></span> KPK Calcs
+                    </a>
+                    @*<span class="glyphicon glyphicon-envelope"></span>@Html.ActionLink("Civil engineering calculators", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+
+                </p>
+            </div>
+            <div class="navbar-header">
+                <div class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-toolbar nav-color-foreground">
+                                <span class="glyphicon glyphicon-home"></span> Home
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown btn btn-toolbar position">
+                                <button class="btn dropdown-toggle btn-toolbar nav-color-background nav-color-foreground" type="button" id="calculatorsDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <span class="glyphicon glyphicon-wrench"></span> Calculators
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="calculatorsDropdownMenu">
+                                    <li class="dropdown-header">Loads on structure</li>
+                                    <li><a href="@Url.Action("DeadLoadCalculator", "Home")"><span class="glyphicon glyphicon-wrench"></span> Dead loads</a></li>
+                                    <li><a href="@Url.Action("SnowLoadCalculator", "Home")"><span class="glyphicon glyphicon-wrench"></span> Snow loads</a></li>
+                                    <li role="separator" class="divider"></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("About", "Home")" class="btn btn-toolbar nav-color-foreground">
+                                <span class="glyphicon glyphicon-question-sign"></span> About
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Contact", "Home")" class="btn btn-toolbar nav-color-foreground">
+                                <span class="glyphicon glyphicon-envelope"></span> Contact
+                            </a>
+                        </li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+                <nav class="navbar-header navbar-fixed-top">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    <footer class="modal-footer">
+        <h4>&copy; @DateTime.Now.Year - Konrad Kania Civil Engineering Calculators</h4>
+        <p>
+            The author doesn't take any responsibility for information, data or the results of the calculations obtained on the website.
+            The data and results should be checked each time. You use on your own responsibility.
+        </p>
+    </footer>
+
+    @Scripts.Render("~/Scripts/dead-load.js")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+@*<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>*@

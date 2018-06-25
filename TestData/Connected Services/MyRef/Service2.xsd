@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WCF_SOAP_REST_Service" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WCF_SOAP_REST_Service" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfMaterialWeight">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MaterialWeight" nillable="true" type="tns:MaterialWeight" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMaterialWeight" nillable="true" type="tns:ArrayOfMaterialWeight" />
+  <xs:complexType name="MaterialWeight">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MatWeightNo" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaximumWeight" type="xs:double" />
+      <xs:element minOccurs="0" name="MinimumWeight" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MaterialWeight" nillable="true" type="tns:MaterialWeight" />
+</xs:schema>

@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a class="btn btn-toolbar nav-color-foreground" href="@Url.Action("Index", "Manage", routeValues:null)">
+            <span class="glyphicon glyphicon-user"></span> Hello @User.Identity.GetUserName()!
+            </a>
+            @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+        </li>
+        <li><a class="btn btn-toolbar nav-color-foreground" href="javascript:document.getElementById('logoutForm').submit()">
+            <span class="glyphicon glyphicon-log-out"></span> Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="@Url.Action("Register", "Account", routeValues: null)" class="btn btn-toolbar nav-color-foreground">
+                <span class="glyphicon glyphicon-user"></span> Register
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Login", "Account", routeValues: null)" class="btn btn-toolbar nav-color-foreground">
+                <span class="glyphicon glyphicon-log-in"></span> Login
+            </a>
+        </li>
+        @*<li class="glyphicon glyphicon-user">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li class="glyphicon glyphicon-log-in">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+    </ul>
+}

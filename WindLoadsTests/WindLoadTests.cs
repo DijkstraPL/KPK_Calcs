@@ -43,7 +43,7 @@ namespace WindLoads.Tests
         [ExpectedException(typeof(ArgumentException), "Current wind zone is not supported!")]
         public void SetVelocityValuesAndDirectionalFactorForCurrentWindZone_NoneZoneSelected_Exception()
         {
-            windLoadSecond.WindLoadZone = WindLoad.WindLoadEnum.NONE;
+           // windLoadSecond.WindLoadZone = WindLoad.WindLoadEnum.NONE;
 
             windLoadSecond.CalculateWindLoad(20, false);
         }
@@ -68,7 +68,7 @@ namespace WindLoads.Tests
         [ExpectedException(typeof(ArgumentException), "There is none terrain category selected.")]
         public void CalculateWindLoadTest_SetTheRoughnessLengthAndExtremeHeights_HeightAboveSeaLessThan300_Exception()
         {
-            windLoadFirst.TerrainCategory = WindLoad.TerrainCategoryEnum.NONE;
+           // windLoadFirst.TerrainCategory = WindLoad.TerrainCategoryEnum.NONE;
             windLoadFirst.CalculateWindLoad(20, false);
         }
 
@@ -154,9 +154,9 @@ namespace WindLoads.Tests
         }
 
         [DataTestMethod, Description("Ensure that CalculateMeanWindVelocity method calculate everything properly.")]
-        [DataRow(WindLoad.WindLoadEnum.SECOND_WIND_ZONE, 100, WindLoad.TerrainCategoryEnum.TERRAIN_CATEGORY_0, 5, 10, 30, WindLoad.WindDirectionEnum.DEGREE_60, 3, true, 25.064)]
-        [DataRow(WindLoad.WindLoadEnum.FIRST_WIND_ZONE, 200, WindLoad.TerrainCategoryEnum.TERRAIN_CATEGORY_2, 20, 50, 70, WindLoad.WindDirectionEnum.NONE, 20, false, 24.750)]
-        [DataRow(WindLoad.WindLoadEnum.THIRD_WIND_ZONE, 350, WindLoad.TerrainCategoryEnum.TERRAIN_CATEGORY_3, 50, 20, 10, WindLoad.WindDirectionEnum.DEGREE_90, 10, true, 14.482)]
+        [DataRow(WindLoad.WindLoadEnum.SECOND_WIND_ZONE, 100, WindLoad.TerrainCategoryEnum.TERRAIN_CATEGORY_0, 5, 10, 30, WindLoad.WindDirectionEnum.DEGREE_60, 3, true, 25.055)]
+        [DataRow(WindLoad.WindLoadEnum.FIRST_WIND_ZONE, 200, WindLoad.TerrainCategoryEnum.TERRAIN_CATEGORY_2, 20, 50, 70, WindLoad.WindDirectionEnum.NONE, 20, false, 24.751)]
+        [DataRow(WindLoad.WindLoadEnum.THIRD_WIND_ZONE, 350, WindLoad.TerrainCategoryEnum.TERRAIN_CATEGORY_3, 50, 20, 10, WindLoad.WindDirectionEnum.DEGREE_90, 10, true, 14.476)]
         public void CalculateWindLoadTest_CalculateMeanWindVelocity_True
         (WindLoad.WindLoadEnum windZone, double heightAboveSea, WindLoad.TerrainCategoryEnum terrainCategory,
         double buildingHeight, double buildingWidth, double buildingLength, WindLoad.WindDirectionEnum windDirection,
@@ -167,6 +167,23 @@ namespace WindLoads.Tests
             windLoad.CalculateWindLoad(calculationHeight, windAlongTheLength);
 
             Assert.AreEqual(Math.Round(windLoad.MeanWindVelocity, 3), expectedMeanWindVelocity);
+        }
+
+
+        [DataTestMethod, Description("Ensure that CalculateMeanWindVelocity method calculate everything properly.")]
+        [DataRow(WindLoad.WindLoadEnum.SECOND_WIND_ZONE, 100, WindLoad.TerrainCategoryEnum.TERRAIN_CATEGORY_0, 5, 10, 30, WindLoad.WindDirectionEnum.DEGREE_60, 3, true, 762.550)]
+        [DataRow(WindLoad.WindLoadEnum.FIRST_WIND_ZONE, 200, WindLoad.TerrainCategoryEnum.TERRAIN_CATEGORY_2, 20, 50, 70, WindLoad.WindDirectionEnum.NONE, 20, false, 830.234)]
+        [DataRow(WindLoad.WindLoadEnum.THIRD_WIND_ZONE, 350, WindLoad.TerrainCategoryEnum.TERRAIN_CATEGORY_3, 50, 20, 10, WindLoad.WindDirectionEnum.DEGREE_90, 10, true, 349.265)]
+        public void CalculateWindLoadTest_CalculatePeakVelocityPressure_True
+        (WindLoad.WindLoadEnum windZone, double heightAboveSea, WindLoad.TerrainCategoryEnum terrainCategory,
+        double buildingHeight, double buildingWidth, double buildingLength, WindLoad.WindDirectionEnum windDirection,
+        double calculationHeight, bool windAlongTheLength,
+        double expectedPeakVelocityPressure)
+        {
+            WindLoad windLoad = new WindLoad(windZone, heightAboveSea, terrainCategory, buildingHeight, buildingWidth, buildingLength, windDirection);
+            windLoad.CalculateWindLoad(calculationHeight, windAlongTheLength);
+
+            Assert.AreEqual(Math.Round(windLoad.PeakVelocityPressure, 3), expectedPeakVelocityPressure);
         }
     }
 }

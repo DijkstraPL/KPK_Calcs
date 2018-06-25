@@ -22,7 +22,7 @@ namespace ProjectManager.ViewModel
         /// Method for property change.
         /// </summary>
         /// <param name="propertyName">Name of property which change its value.</param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

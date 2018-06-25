@@ -1,0 +1,26 @@
+﻿<h1>@ViewBag.Title</h1>
+<p>@ViewBag.MessageDefinitions</p>
+<ul>
+    @foreach (var definition in ViewBag.Definitions)
+    {
+        <li><strong>@definition.Key</strong> - @definition.Value</li>
+    }
+</ul>
+
+<hr />
+
+<p>@ViewBag.MessageSymbols</p>
+<ul>
+    @foreach (var symbol in ViewBag.Symbols)
+    {
+        if (!symbol.Key.Contains("_"))
+        {
+            <li><strong>@symbol.Key</strong> - @symbol.Value</li>
+        }
+        else
+        {
+            <li><strong>@symbol.Key.Substring(0,symbol.Key.IndexOf("_"))<sub>@symbol.Key.Substring(symbol.Key.IndexOf("_")+1)</sub></strong> - @symbol.Value</li>
+        }
+    }
+</ul>
+

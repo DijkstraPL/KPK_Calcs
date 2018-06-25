@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Calculators";
+    ViewBag.Message = "";
+}
+<h2>@ViewBag.Title</h2>
+<h3>Overall informations</h3>
+<p>
+    The site contains a large number of calculators
+    which based mostly on Eurocodes with Polish national annexes.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>@Html.ActionLink("Snow load calculator", "SnowLoadCalculator", "Home")</h3>
+        <p>
+            Mostly based on <i>Eurocode 1 - Actions on structures Part 1-3: General actions - Snow loads</i> with Polish national annex.
+            This calculator contains all possible design situations and roof types which are described in the document.
+            This calculators shouldn't be used for or doesn't have informations how to calculate:
+            <ul>
+                <li>sites at altitudes above 1 500m,</li>
+                <li>impact snow loads resulting from sliding off or falling from a higher roof,</li>
+                <li>additional wind loads which could result from changes in shape or size of the construction works due to the presence of snow or the accretion of ice,</li>
+                <li>loads in areas where snow is present all year round,</li>
+                <li>ice loading,</li>
+                <li>lateral loading due to snow (e.g. lateral loads exerted by drifts),</li>
+                <li>snow loads on bridges.</li>
+            </ul>
+        </p>
+        <h4>@Html.ActionLink("Definitions", "SnowLoadDefinitions", "Home")</h4>
+    </div>
+    <div class="col-md-6">
+        <h3>@Html.ActionLink("Dead load calculator", "DeadLoadCalculator", "Home")</h3>
+        <p>
+            Mostly based on <i>Eurocode 1 - Actions on structures Part 1-1: General actions - Densities, self-weight, imposed loads for buildings</i> with Polish national annex
+            and on Polish standard document <i>PN-82/B-02001 Building loads - permanent loads</i> which contains informations about the density of the building materials.
+            This calculator allows us to get the information about the weight of all layers in the structure.
+        </p>
+    </div>
+</div>
+<hr />
+<h3>@Html.ActionLink("Site owner - Konrad Kania", "Contact", "Home")</h3>
+<p>
+    I am graduate of the technical university in Łódź at the faculty of Civil Engineering.
+    Currently, I am also a student of Polish Academy of Science and work for building company as a programmer since the beginning of March 2017.
+    I treat building designing with great passion the same as the programming.
+    This way of doing things and possibilities which comes with those two branches bring me an idea to make something for overall usage.
+    I started working on this site since May 2018 and I hope that there will be only more and better content available for everyone.
+</p>
+
+
+
+
+
