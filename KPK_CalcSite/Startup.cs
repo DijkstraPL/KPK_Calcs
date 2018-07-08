@@ -1,5 +1,7 @@
-﻿using Microsoft.Owin;
+﻿using KPK_CalcSite.App_Start;
+using Microsoft.Owin;
 using Owin;
+using System.Web.Mvc;
 
 [assembly: OwinStartupAttribute(typeof(KPK_CalcSite.Startup))]
 namespace KPK_CalcSite

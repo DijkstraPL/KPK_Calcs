@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SnowLoads.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,9 +11,11 @@ namespace SnowLoads
     /// <summary>
     /// Class for calculation of snow load on the ground.
     /// </summary>
-    public class SnowLoad
+    public class SnowLoad : ICalculatable
     {
         #region Properties
+
+        public DesignSituation CurrentDesignSituation { get; set; }
 
         private bool excepctionalSituation;
         /// <summary>
@@ -29,10 +32,7 @@ namespace SnowLoads
                     excepctionalSituation = false;
             }
         }
-
-
-        public DesignSituation CurrentDesignSituation { get; set; }
-
+        
         private double snowDensity;
         /// <summary>
         /// Density of the snow [kN/m3].
@@ -152,6 +152,15 @@ namespace SnowLoads
         #endregion // Constructors
 
         #region Methods
+        
+        public void CalculateSnowLoad()
+        {
+            SetCharacteristicSnowLoad();
+            SetVariationCoefficient();
+            SetCharacteristicSnowLoadForSpecificReturnPeriod();
+            SetExceptionalSnowLoadCoefficient();
+            SetDesignExceptionalSnowLoadForSpecificReturnPeriod();
+        }
 
         /// <summary>
         /// Set snow load base on terrain zone (Tab.NB.1).
@@ -216,7 +225,7 @@ namespace SnowLoads
                 SnowLoadForSpecificReturnPeriod = DefaultCharacteristicSnowLoad;
             else
                 SnowLoadForSpecificReturnPeriod = DefaultCharacteristicSnowLoad *
-                    ((1 - VariationCoefficient * Math.Sqrt(6) / Math.PI * (Math.Log(-Math.Log(1 - 1 / ReturnPeriod)) + 0.57722)) /
+                    ((1 - VariationCoefficient * Math.Sqrt(6) / Math.PI * (Math.Log(-Math.Log(1 - 1.0 / ReturnPeriod)) + 0.57722)) /
                     (1 + 2.5923 * VariationCoefficient));
         }
 

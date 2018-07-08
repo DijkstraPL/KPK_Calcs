@@ -1,0 +1,57 @@
+﻿@model KPK_CalcSite.ViewModels.SnowLoadsViewModel
+@{
+    ViewBag.Title = "Monopitch Roof";
+}
+
+<h2>Monopitch Roof</h2>
+
+<div class="submit-container">
+    @using (Html.BeginForm("CalculateMonopitchRoof", "SnowLoads"))
+    {
+        <div class="row">
+
+            <div class="col-sm-6">
+                @*<div id="map" class="collapse">
+                        <img id="mapImage" class="snow-load-link pull-right" src="~/Content/Images/SnowLoads/SnowMapPoland.png" />
+                    </div>*@
+                <img class="snow-load-link" src="~/Content/Images/SnowLoads/Monopitch.png" />
+            </div>
+
+            <div class="col-sm-6">
+
+                @Html.Partial("_BuildingSite", Model)
+
+                @*@Html.Partial("_BuildingSite", new KPK_CalcSite.ViewModels.SnowLoadsViewModel()
+        { BuildingData = new KPK_CalcSite.Models.BuildingData(),
+            SnowLoadMonopitchRoof = new KPK_CalcSite.Models.SnowLoadMonopitchRoof()
+             })*@
+                @*<div class="form-group">
+            @Html.LabelFor(m => m.SnowLoadMonopitchRoof.BuildingSite.CurrentZone, "Zone")
+            @Html.EnumDropDownListFor(m => m.SnowLoadMonopitchRoof.BuildingSite.CurrentZone)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.SnowLoadMonopitchRoof.BuildingSite.AltitudeAboveSea, "Attitude above the sea")
+            @Html.TextBoxFor(m => m.SnowLoadMonopitchRoof.BuildingSite.AltitudeAboveSea,
+           new { @class= "form-control", @placeholder= "Enter attitude in meters", Value = "" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.SnowLoadMonopitchRoof.BuildingSite.CurrentTopography, "Topography")
+            @Html.EnumDropDownListFor(m => m.SnowLoadMonopitchRoof.BuildingSite.CurrentTopography)
+        </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SnowLoadMonopitchRoof.MonopitchRoof.Slope)
+                    @Html.TextBoxFor(m => m.SnowLoadMonopitchRoof.MonopitchRoof.Slope,
+                   new { @class = "form-control", @placeholder = "Enter slope in degrees", Value = "", @step = "1" })
+                </div>
+                <div class="form-group">
+                    @Html.CheckBoxFor(m => m.SnowLoadMonopitchRoof.MonopitchRoof.SnowFences) @Html.LabelFor(m => m.SnowLoadMonopitchRoof.MonopitchRoof.SnowFences, "Snow Fences")
+                </div>
+                <div class="form-group">
+                    <button type="submit" name="calculate" id="calculate" value="calculate" class="btn btn-info pull-right" required="required">Calculate</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@Scripts.Render("~/Scripts/snow.loads.js")

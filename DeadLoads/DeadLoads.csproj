@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4F7E5A03-AEE4-442C-A347-5F96C42D503F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Test</RootNamespace>
-    <AssemblyName>Test</AssemblyName>
+    <ProjectGuid>{D63071F3-E389-4C18-A3A1-1077568434D9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeadLoads</RootNamespace>
+    <AssemblyName>DeadLoads</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -51,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Anchoring.cs" />
     <Compile Include="Category.cs">
       <DependentUpon>MaterialWeightsModel.tt</DependentUpon>
     </Compile>
@@ -73,7 +70,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MaterialWeightsModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subcategory.cs">
       <DependentUpon>MaterialWeightsModel.tt</DependentUpon>
@@ -89,16 +85,6 @@
       <DependentUpon>MaterialWeightsModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DeadLoads\DeadLoads.csproj">
-      <Project>{d63071f3-e389-4c18-a3a1-1077568434d9}</Project>
-      <Name>DeadLoads</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WindLoads\WindLoads.csproj">
-      <Project>{7d938a25-ac75-47c1-93d4-99c78428cdba}</Project>
-      <Name>WindLoads</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="MaterialWeightsModel.Context.tt">

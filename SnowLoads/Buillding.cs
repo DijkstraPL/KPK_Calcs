@@ -90,7 +90,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Calculate thermal coefficient (NB.1)
         /// </summary>
-        private void CalculateThermalCoefficient()
+        public void CalculateThermalCoefficient()
         {
             CalculateTempreatureDifference();
 

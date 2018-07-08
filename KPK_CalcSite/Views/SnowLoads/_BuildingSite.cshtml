@@ -1,0 +1,83 @@
+﻿@model KPK_CalcSite.ViewModels.SnowLoadsViewModel
+@*<div class="row" onmouseover="showZones()" , onmouseleave="hideZones()">
+        <div class="col-sm-12" id="zoneSelector">
+    
+        </div>
+    </div>*@
+    <div class="form-group">
+        @Html.LabelFor(m => m.BuildingData.BuildingSite.CurrentZone, "Zone")
+        @Html.EnumDropDownListFor(m => m.BuildingData.BuildingSite.CurrentZone,
+        new { @onchange = "checkIfAttitudeIsNeeded(this.value)"})
+    </div>
+
+    <div class="form-group" id="attitiude">
+        @Html.LabelFor(m => m.BuildingData.BuildingSite.AltitudeAboveSea, "Attitude above the sea")
+        @Html.TextBoxFor(m => m.BuildingData.BuildingSite.AltitudeAboveSea,
+       new { @class= "form-control", @placeholder= "Enter attitude in meters", Value = "", @type="number", @min="0" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.BuildingData.BuildingSite.CurrentTopography, "Topography")
+        @Html.EnumDropDownListFor(m => m.BuildingData.BuildingSite.CurrentTopography)
+    </div>
+    <div class="form-group">
+        <label>
+            <input type="checkbox" name="calculate-thermal-coefficient"
+                   id="calculate-thermal-coefficient" title="Calculate thermal coefficient"
+                   onchange="displayThermalCoefficient()" />
+            Calculate thermal coefficient
+        </label>
+    </div>
+
+    <div id="thermalCoefficient" class="collapse">
+        <div class="form-group">
+            @Html.LabelFor(m => m.BuildingData.Building.InternalTemperature, "Internal temperature")
+            @Html.TextBoxFor(m => m.BuildingData.Building.InternalTemperature,
+           new { @class= "form-control", @placeholder= "Enter temperature in Celsius", Value = "",
+               @type="number", @step=".5"
+           })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.BuildingData.Building.OverallHeatTransferCoefficient, "Overall heat transfer coefficient")
+            @Html.TextBoxFor(m => m.BuildingData.Building.OverallHeatTransferCoefficient,
+           new { @class= "form-control", @placeholder= "Enter heat transfer coefficient in W/(m2*K)", Value = "",
+               @type ="number", @step = ".1"
+           })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.BuildingData.SnowLoad.CurrentDesignSituation, "Current design situation")
+        @Html.EnumDropDownListFor(m => m.BuildingData.SnowLoad.CurrentDesignSituation,
+        new { @onchange = "checkIfExceptionalSituationIsPossible(this.value)" })
+    </div>
+
+    <div class="form-group collapse"" id="exceptional-situation-block">
+        @Html.CheckBoxFor(m => m.BuildingData.SnowLoad.ExcepctionalSituation)
+        @Html.LabelFor(m => m.BuildingData.SnowLoad.ExcepctionalSituation, "Exceptional situation")
+    </div>
+
+    <div class="form-group" id="attitiude">
+        @Html.LabelFor(m => m.BuildingData.SnowLoad.ReturnPeriod, "Return period")
+        @Html.TextBoxFor(m => m.BuildingData.SnowLoad.ReturnPeriod,
+       new { @class= "form-control", @placeholder= "Enter return period in years", Value = "50", @type="number", @min="5" })
+    </div>
+<script>
+
+
+
+            //function showZones() {
+            //    var map = document.getElementById("map");
+            //    map.style.display = "block";
+            //    if (!map.classList.contains("col-sm-6"))
+            //    map.classList.add("col-sm-6");
+
+            //    var mapImage = document.getElementById("mapImage");
+            //    mapImage.style.width = "75%";
+            //    mapImage.style.height = "75%";
+            //}
+
+            //function hideZones() {
+            //    var map = document.getElementById("map");
+            //    map.style.display = "none";
+            //}
+</script>

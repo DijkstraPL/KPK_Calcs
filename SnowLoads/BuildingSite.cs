@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,16 +76,25 @@ namespace SnowLoads
     /// </summary>
     public enum Zone
     {
-        None,
-        FirstZone,
-        BetweenFirst_Second,
-        SecondZone,
-        BetweenSecond_Third,
-        ThirdZone,
-        BetweenThird_Fourth,
-        FourthZone,
-        BetweenFourth_Fifth,
-        FifthZone
+        None = 0,
+        [Display(Name ="I")]
+        FirstZone = 1,
+        [Display(Name = "I-II")]
+        BetweenFirst_Second = 3,
+        [Display( Name = "II")]
+        SecondZone = 2,
+        [Display( Name = "II-III")]
+        BetweenSecond_Third = 6,
+        [Display( Name = "III")]
+        ThirdZone = 4,
+        [Display( Name ="III-IV")]
+        BetweenThird_Fourth = 12,
+        [Display(Name ="IV")]
+        FourthZone = 8,
+        [Display(Name ="IV-V")]
+        BetweenFourth_Fifth = 24,
+        [Display(Name ="V")]
+        FifthZone = 16
     }
 
     /// <summary>
@@ -98,18 +108,21 @@ namespace SnowLoads
         /// without, or little shelter afforded by terrain, higher construction works or
         /// trees.
         /// </summary>
+        [Display(Name ="Windswept")]
         Windswept,
         /// <summary>
         /// areas where there is no significant removal of snow
         /// by wind on construction work, because of terrain, other construction works
         /// or trees.
         /// </summary>
+        [Display( Name ="Normal")]
         Normal,
         /// <summary>
         /// areas in which the construction work being
         /// considered is considerably lower than the surrounding terrain or
         /// surrounded by high trees and/or surrounded by higher construction works.
         /// </summary>
+        [Display( Name ="Sheltered")]
         Sheltered
     }
 }
