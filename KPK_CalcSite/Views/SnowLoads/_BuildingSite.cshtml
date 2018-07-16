@@ -61,6 +61,13 @@
         @Html.TextBoxFor(m => m.BuildingData.SnowLoad.ReturnPeriod,
        new { @class= "form-control", @placeholder= "Enter return period in years", Value = "50", @type="number", @min="5" })
     </div>
+
+<div class="collapse">
+    <span id="exceptional">@ViewData["Exceptional"]</span>
+</div>
+
+
+
 <script>
 
 

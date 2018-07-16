@@ -18,12 +18,12 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Left roof.
         /// </summary>
-        public MonopitchRoof LeftRoof { get; set; }
+        public IMonopitchRoof LeftRoof { get; set; }
 
         /// <summary>
         /// Right roof.
         /// </summary>
-        public MonopitchRoof RightRoof { get; set; }
+        public IMonopitchRoof RightRoof { get; set; }
 
         /// <summary>
         /// Snow load on middle roof [kN/m2]
@@ -39,14 +39,14 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Instance of building.
         /// </summary>
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         #endregion // Properties
 
         #region Fields
 
-        private SnowLoad snowLoad;
-        private BuildingSite buildingSite;
+        private ISnowLoad snowLoad;
+        private IBuildingSite buildingSite;
 
         #endregion // Fields
 
@@ -56,24 +56,42 @@ namespace SnowLoads.BuildingTypes
         /// Constructor.
         /// </summary>
         /// <param name="building">Instance of buildinng.</param>
-        public MultiSpanRoof(Building building, double leftRoofSlope, double rightRoofSlope,
+        public MultiSpanRoof(IBuilding building, double leftRoofSlope, double rightRoofSlope,
             bool leftRoofSnowFences = false, bool rightRoofSnowFences = false)
         {
             Building = building;
 
             LeftRoof = new MonopitchRoof(Building, leftRoofSlope, leftRoofSnowFences);
             RightRoof = new MonopitchRoof(Building, rightRoofSlope, rightRoofSnowFences);
+
+            SetReferences();
+        }
+
+        public MultiSpanRoof(IBuilding building, IMonopitchRoof leftRoof, IMonopitchRoof rightRoof)
+        {
+            Building = building;
+
+            LeftRoof = leftRoof;
+            RightRoof = rightRoof;
         }
 
         #endregion // Constructors
 
         #region Methods
 
+        private void SetReferences()
+        {
+            snowLoad = Building.SnowLoad;
+            buildingSite = snowLoad.BuildingSite;
+        }
+
         /// <summary>
         /// Calculate Snow Load On Roof 
         /// </summary>
         public void CalculateSnowLoad()
         {
+            LeftRoof.CalculateSnowLoad();
+            RightRoof.CalculateSnowLoad();
             CalculateSnowLoadShapeCoefficient();
             CalculateSnowLoadOnRoof();
         }

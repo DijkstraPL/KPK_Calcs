@@ -29,19 +29,19 @@ namespace SnowLoads.Exceptional
 
         public double SnowLoad { get; private set; }
 
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         #endregion // Properties
 
         #region Fields
 
-        private SnowLoad snowLoad;
+        private ISnowLoad snowLoad;
 
         #endregion // Fields
 
         #region Constructors
 
-        public ExceptionalSnowBehindParapetAtEaves(Building building, double width1, double width2, double heightDifference)
+        public ExceptionalSnowBehindParapetAtEaves(IBuilding building, double width1, double width2, double heightDifference)
         {
             Building = building;
             Width1 = width1;
@@ -51,6 +51,8 @@ namespace SnowLoads.Exceptional
         }
 
         #endregion // Constructors
+
+        #region Methods
 
         public void CalculateDriftLength()
         {
@@ -81,5 +83,6 @@ namespace SnowLoads.Exceptional
                 SnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient1, snowLoad.SnowLoadForSpecificReturnPeriod);
         }
 
+        #endregion // Methods
     }
 }

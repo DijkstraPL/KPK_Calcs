@@ -1,0 +1,42 @@
+﻿@model KPK_CalcSite.Models.SnowLoads.SnowLoadSnowOverhanging
+    @{
+        ViewBag.Title = "SnowOverhangingResult";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Snow Overhanging Result</h2>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.Partial("_BuildingSiteResult", Model.BuildingData)
+                <ul>
+                    <li><strong>Snow density:</strong> @Model.SnowOverhanging.Building.SnowLoad.SnowDensity kN/m<sup>3</sup></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul>
+                    <li><strong>Snow layer depth:</strong> @Model.SnowOverhanging.SnowLayerDepth m</li>
+                    <li><strong>Snow load on roof:</strong> @Model.SnowOverhanging.SnowLoadOnRoofValue kN/m<sup>3</sup></li>
+                    <li>
+                        <strong>Shape coefficient:</strong> @Math.Round(Model.SnowOverhanging.IrregularShapeCoefficient, 3)
+                    </li>
+                </ul>
+
+
+                <h3>Snow load on roof:</h3>
+                <ul>
+                    <li class="score">
+                        <strong>Snow load:</strong> @Math.Round(Model.SnowOverhanging.SnowLoad, 3) kN/m
+                    </li>
+                </ul>
+
+                <div class="snow-load-case">
+                    <a href="@Url.Action("Calculator", "SnowLoads")">
+                        <img class="snow-load-link" src="~/Content/Images/SnowLoads/SnowOverhanging.png" alt="Snow Overhanging" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>

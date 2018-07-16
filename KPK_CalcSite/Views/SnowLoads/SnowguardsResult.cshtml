@@ -1,0 +1,37 @@
+﻿@model KPK_CalcSite.Models.SnowLoads.SnowLoadSnowguards
+@{
+    ViewBag.Title = "SnowguardsResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Snowguards Result</h2>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            @Html.Partial("_BuildingSiteResult", Model.BuildingData)
+        </div>
+        <div class="col-md-6">
+            <ul>
+                <li><strong>Roof width:</strong> @Model.Snowguards.Width m</li>
+                <li><strong>Slope:</strong> @Model.Snowguards.Slope degrees</li>
+                <li><strong>Snow load on roof:</strong> @Model.Snowguards.SnowLoadOnRoofValue kN/m<sup>3</sup></li>
+            </ul>
+
+
+            <h3>Snow load on roof:</h3>
+            <ul>
+                <li class="score">
+                    <strong>Force exerted by snow:</strong> @Math.Round(Model.Snowguards.ForceExertedBySnow, 3) kN/m
+                </li>
+            </ul>
+
+            <div class="snow-load-case">
+                <a href="@Url.Action("Calculator", "SnowLoads")">
+                    <img class="snow-load-link" src="~/Content/Images/SnowLoads/Snowguards.png" alt="Snowguards" />
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

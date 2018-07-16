@@ -42,7 +42,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Upper roof instance.
         /// </summary>
-        public MonopitchRoof UpperRoof { get; set; }
+        public IMonopitchRoof UpperRoof { get; set; }
 
         /// <summary>
         /// Width of the taller building [m].
@@ -78,19 +78,19 @@ namespace SnowLoads.BuildingTypes
         /// Length of the drift [m].
         /// </summary>
         [Abbreviation("l_s")]
-        public double DriftLength { get; set; }
+        public double DriftLength { get; private set; }
 
         /// <summary>
         /// Instance of building.
         /// </summary>
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         #endregion
 
         #region Fields
 
-        private SnowLoad snowLoad;
-        private BuildingSite buildingSite;
+        private ISnowLoad snowLoad;
+        private IBuildingSite buildingSite;
 
         #endregion // Fields
 
@@ -100,11 +100,30 @@ namespace SnowLoads.BuildingTypes
         /// Constructor.
         /// </summary>
         /// <param name="building">Instance of buildinng.</param>
-        public RoofAbuttingToTallerConstruction(Building building, double slopeOfHigherRoof, bool snowFencesOnHigherRoof = false)
+        public RoofAbuttingToTallerConstruction(IBuilding building, double widthOfUpperBuilding, double widthOfLowerBuilding,
+           double heightDifference, double slopeOfHigherRoof, bool snowFencesOnHigherRoof = false)
         {
             Building = building;
 
             UpperRoof = new MonopitchRoof(Building, slopeOfHigherRoof, snowFencesOnHigherRoof);
+
+            WidthOfUpperBuilding = widthOfUpperBuilding;
+            WidthOfLowerBuilding = widthOfLowerBuilding;
+            HeightDifference = heightDifference;
+
+            SetReferences();
+        }
+
+        public RoofAbuttingToTallerConstruction(IBuilding building, double widthOfUpperBuilding, double widthOfLowerBuilding,
+           double heightDifference, IMonopitchRoof upperRoof)
+        {
+            Building = building;
+
+            UpperRoof = upperRoof;
+
+            WidthOfUpperBuilding = widthOfUpperBuilding;
+            WidthOfLowerBuilding = widthOfLowerBuilding;
+            HeightDifference = heightDifference;
 
             SetReferences();
         }
@@ -130,6 +149,7 @@ namespace SnowLoads.BuildingTypes
         /// </summary>
         public void CalculateSnowLoad()
         {
+            UpperRoof.CalculateSnowLoad();
             CaluclateShapeCoefficients();
             CalculateSnowLoadOnRoof();
         }

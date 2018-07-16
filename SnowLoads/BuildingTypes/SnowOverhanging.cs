@@ -42,7 +42,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Instance of building.
         /// </summary>
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         #endregion // Properties
 
@@ -52,11 +52,20 @@ namespace SnowLoads.BuildingTypes
         /// Constructor.
         /// </summary>
         /// <param name="building">Instance of buildinng.</param>
-        public SnowOverhanging(Building building, double snowLayerDepth, double snowLoadOnRoof)
+        public SnowOverhanging(IBuilding building, double snowLayerDepth, double snowLoadOnRoof)
         {
             Building = building;
             SnowLayerDepth = snowLayerDepth;
             SnowLoadOnRoofValue = snowLoadOnRoof;
+        }
+
+        public SnowOverhanging(IBuilding building, double snowLayerDepth, IMonopitchRoof roof)
+        {
+            Building = building;
+            SnowLayerDepth = snowLayerDepth;
+
+            roof.CalculateSnowLoad();
+            SnowLoadOnRoofValue = roof.SnowLoadOnRoofValue;
         }
 
         #endregion

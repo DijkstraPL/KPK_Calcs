@@ -17,12 +17,12 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Left roof.
         /// </summary>
-        public MonopitchRoof LeftRoof { get; set; }
+        public IMonopitchRoof LeftRoof { get; set; }
 
         /// <summary>
         /// Right roof.
         /// </summary>
-        public MonopitchRoof RightRoof { get; set; }
+        public IMonopitchRoof RightRoof { get; set; }
         
         /// <summary>
         /// Snow load on left roof for all cases.
@@ -37,7 +37,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Instance of building.
         /// </summary>
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         #endregion
 
@@ -47,7 +47,7 @@ namespace SnowLoads.BuildingTypes
         /// Constructor.
         /// </summary>
         /// <param name="building">Instance of buildinng.</param>
-        public PitchedRoof(Building building, double leftRoofSlope, double rightRoofSlope,
+        public PitchedRoof(IBuilding building, double leftRoofSlope, double rightRoofSlope,
             bool leftRoofSnowFences = false, bool rightRoofSnowFences = false)
         {
             LeftRoofCasesSnowLoad = new Dictionary<int, double>();
@@ -59,6 +59,17 @@ namespace SnowLoads.BuildingTypes
             RightRoof = new MonopitchRoof(Building, rightRoofSlope, rightRoofSnowFences);
         }
 
+        public PitchedRoof(IBuilding building, IMonopitchRoof leftRoof, IMonopitchRoof rightRoof)
+        {
+            LeftRoofCasesSnowLoad = new Dictionary<int, double>();
+            RightRoofCasesSnowLoad = new Dictionary<int, double>();
+
+            Building = building;
+
+            LeftRoof = leftRoof;
+            RightRoof = rightRoof;
+        }
+
         #endregion // Constructors
 
         #region Methods
@@ -68,6 +79,8 @@ namespace SnowLoads.BuildingTypes
         /// </summary>
         public void CalculateSnowLoad()
         {
+            LeftRoof.CalculateSnowLoad();
+            RightRoof.CalculateSnowLoad();
             SetCasesSnowLoad();
         }
 

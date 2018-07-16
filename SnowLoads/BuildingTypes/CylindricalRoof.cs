@@ -1,6 +1,7 @@
 ﻿using SnowLoads.API;
 using SnowLoads.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace SnowLoads.BuildingTypes
 {
@@ -42,16 +43,21 @@ namespace SnowLoads.BuildingTypes
         public double SnowLoadOnRoofValue { get; private set; }
 
         /// <summary>
+        /// Snow load on roof for all cases.
+        /// </summary>
+        public Dictionary<int, double> RoofCasesSnowLoad { get; private set; }
+
+        /// <summary>
         /// Instance of building.
         /// </summary>
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         #endregion // Properties
 
         #region Fields
 
-        private SnowLoad snowLoad;
-        private BuildingSite buildingSite;
+        private ISnowLoad snowLoad;
+        private IBuildingSite buildingSite;
 
         #endregion // Fields
 
@@ -63,22 +69,15 @@ namespace SnowLoads.BuildingTypes
         /// <param name="building">Instance of a building</param>
         /// <param name="width">Width of the roof.</param>
         /// <param name="height">Height of the roof.</param>
-        private CylindricalRoof(Building building, double width, double height)
+        public CylindricalRoof(IBuilding building, double width, double height)
         {
+            RoofCasesSnowLoad = new Dictionary<int, double>();
+
             Building = building;
             Width = width;
             Height = height;
             SetReferences();
         }
-
-        // TODO: Consider to delete this or add
-        //public static class Factory
-        //{
-        //    public static CylindricalRoof CreateNew(Building building, double width, double height)
-        //    {
-        //        return new CylindricalRoof(building, width, height);
-        //    }
-        //}
 
         #endregion // Constructors
 
@@ -99,6 +98,17 @@ namespace SnowLoads.BuildingTypes
         {
             CalculateSnowLoadShapeCoefficient();
             CalculateSnowLoadOnRoof();
+            SetCasesSnowLoad();
+        }
+
+        public void SetCasesSnowLoad()
+        {
+            RoofCasesSnowLoad.Clear();
+
+            double snowLoad = CalculateSnowLoadOnRoof(0.8);
+            RoofCasesSnowLoad.Add(1, snowLoad);
+            RoofCasesSnowLoad.Add(2, SnowLoadOnRoofValue * 0.5);
+            RoofCasesSnowLoad.Add(3, SnowLoadOnRoofValue);
         }
 
         private void SetReferences()
@@ -138,7 +148,25 @@ namespace SnowLoads.BuildingTypes
                         snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
         }
 
-        #endregion // Methods
+        /// <summary>
+        /// Calculate snow load on roof.
+        /// </summary>
+        private double CalculateSnowLoadOnRoof(double shapeCoefficient)
+        {
+            if (!snowLoad.ExcepctionalSituation)
+                return SnowLoadCalc.CalculateSnowLoad(
+                        shapeCoefficient,
+                        buildingSite.ExposureCoefficient,
+                        Building.ThermalCoefficient,
+                        snowLoad.SnowLoadForSpecificReturnPeriod);
+            else
+                return SnowLoadCalc.CalculateSnowLoad(
+                        shapeCoefficient,
+                        buildingSite.ExposureCoefficient,
+                        Building.ThermalCoefficient,
+                        snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
+        }
 
+        #endregion // Methods
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SnowLoads.Interfaces
 {
-    interface ICalculatable
+    public interface ICalculatable
     {
         void CalculateSnowLoad();
     }

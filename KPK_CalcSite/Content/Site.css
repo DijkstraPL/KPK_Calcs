@@ -138,7 +138,19 @@ input[type=submit] {
     border-color: #FFF200;
 }
 
+
+.snow-load {
+    border: 5px dotted;
+    border-color: #5BC0DE;
+    border-radius: 20px 20px;
+}
+
 #map {
     width: 75%;
     height: 75%;
+}
+
+.score {
+    font-size: 150%;
+    color: #FFF200;
 }

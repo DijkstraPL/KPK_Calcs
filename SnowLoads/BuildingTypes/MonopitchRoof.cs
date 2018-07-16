@@ -11,7 +11,7 @@ namespace SnowLoads.BuildingTypes
     /// <summary>
     /// Calculation class for monopitch roofs.
     /// </summary>
-    public class MonopitchRoof : ICalculatable
+    public class MonopitchRoof : IMonopitchRoof
     {
         #region Properties
 
@@ -41,14 +41,14 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Instance of building.
         /// </summary>
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         #endregion // Properties
         
         #region Fields
 
-        private SnowLoad snowLoad;
-        private BuildingSite buildingSite;
+        private ISnowLoad snowLoad;
+        private IBuildingSite buildingSite;
 
         #endregion // Fields
 
@@ -58,7 +58,7 @@ namespace SnowLoads.BuildingTypes
         /// Constructor.
         /// </summary>
         /// <param name="building">Instance of buildinng.</param>
-        public MonopitchRoof(Building building, double slope, bool snowFences = false)
+        public MonopitchRoof(IBuilding building, double slope, bool snowFences = false)
         {
             Building = building;
             Slope = slope;

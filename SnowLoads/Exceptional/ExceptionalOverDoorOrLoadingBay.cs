@@ -40,19 +40,19 @@ namespace SnowLoads.Exceptional
         public double SnowLoad1 { get; private set; }
         public double SnowLoad2 { get; private set; }
 
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         #endregion // Properties
 
         #region Fields
 
-        private SnowLoad snowLoad;
+        private ISnowLoad snowLoad;
 
         #endregion // Fields
 
         #region Constructors
 
-        public ExceptionalOverDoorOrLoadingBay(Building building, double width1, double width2, double heightDifference)
+        public ExceptionalOverDoorOrLoadingBay(IBuilding building, double width1, double width2, double heightDifference)
         {
             Building = building;
             Width1 = width1;

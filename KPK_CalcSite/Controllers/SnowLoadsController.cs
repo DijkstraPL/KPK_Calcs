@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using KPK_CalcSite.Models;
+using KPK_CalcSite.Models.SnowLoads;
 using KPK_CalcSite.ViewModels;
 
 namespace KPK_CalcSite.Controllers
@@ -22,12 +22,12 @@ namespace KPK_CalcSite.Controllers
 
             return View(snowLoadMonopitchRoofViewModel);
         }
-        
+
         public ActionResult MonopitchRoof()
         {
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult CalculateMonopitchRoof(SnowLoadMonopitchRoof snowLoadMonopitchRoof, BuildingData buildingData)
         {
@@ -37,26 +37,262 @@ namespace KPK_CalcSite.Controllers
 
             snowLoadMonopitchRoof.BuildingData = buildingData;
 
-            snowLoadMonopitchRoof.MonopitchRoof = 
+            snowLoadMonopitchRoof.MonopitchRoof =
                 new SnowLoads.BuildingTypes.MonopitchRoof(
-                    buildingData.Building, 
-                    snowLoadMonopitchRoof.MonopitchRoof.Slope, 
+                    buildingData.Building,
+                    snowLoadMonopitchRoof.MonopitchRoof.Slope,
                     snowLoadMonopitchRoof.MonopitchRoof.SnowFences);
 
             snowLoadMonopitchRoof.MonopitchRoof.CalculateSnowLoad();
 
-            return Content(snowLoadMonopitchRoof.MonopitchRoof.SnowLoadOnRoofValue.ToString());
+            return View("MonopitchRoofResult", snowLoadMonopitchRoof);
         }
 
+        public ActionResult PitchedRoof()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult CalculatePitchedRoof(SnowLoadPitchedRoof snowLoadPitchedRoof, BuildingData buildingData)
+        {
+            buildingData.BuildingSite.CalculateExposureCoefficient();
+            buildingData.SnowLoad.CalculateSnowLoad();
+            buildingData.Building.CalculateThermalCoefficient();
 
+            snowLoadPitchedRoof.BuildingData = buildingData;
 
+            snowLoadPitchedRoof.PitchedRoof =
+                new SnowLoads.BuildingTypes.PitchedRoof(
+                    buildingData.Building,
+                    snowLoadPitchedRoof.PitchedRoof.LeftRoof.Slope,
+                    snowLoadPitchedRoof.PitchedRoof.RightRoof.Slope,
+                    snowLoadPitchedRoof.PitchedRoof.LeftRoof.SnowFences,
+                    snowLoadPitchedRoof.PitchedRoof.RightRoof.SnowFences);
 
+            snowLoadPitchedRoof.PitchedRoof.CalculateSnowLoad();
 
+            return View("PitchedRoofResult", snowLoadPitchedRoof);
+        }
 
+        public ActionResult MultispanRoof()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult CalculateMultispanRoof(SnowLoadMultispanRoof snowLoadMultispanRoof, BuildingData buildingData)
+        {
+            buildingData.BuildingSite.CalculateExposureCoefficient();
+            buildingData.SnowLoad.CalculateSnowLoad();
+            buildingData.Building.CalculateThermalCoefficient();
 
+            snowLoadMultispanRoof.BuildingData = buildingData;
 
+            snowLoadMultispanRoof.MultiSpanRoof =
+                new SnowLoads.BuildingTypes.MultiSpanRoof(
+                    buildingData.Building,
+                    snowLoadMultispanRoof.MultiSpanRoof.LeftRoof.Slope,
+                    snowLoadMultispanRoof.MultiSpanRoof.RightRoof.Slope,
+                    snowLoadMultispanRoof.MultiSpanRoof.LeftRoof.SnowFences,
+                    snowLoadMultispanRoof.MultiSpanRoof.RightRoof.SnowFences);
+
+            snowLoadMultispanRoof.MultiSpanRoof.CalculateSnowLoad();
+
+            return View("MultispanRoofResult", snowLoadMultispanRoof);
+        }
+
+        public ActionResult CylindricalRoof()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CalculateCylindricalRoof(SnowLoadCylindricalRoof snowLoadCylindricalRoof, BuildingData buildingData)
+        {
+            buildingData.BuildingSite.CalculateExposureCoefficient();
+            buildingData.SnowLoad.CalculateSnowLoad();
+            buildingData.Building.CalculateThermalCoefficient();
+
+            snowLoadCylindricalRoof.BuildingData = buildingData;
+
+            snowLoadCylindricalRoof.CylindricalRoof =
+                new SnowLoads.BuildingTypes.CylindricalRoof(
+                    buildingData.Building,
+                    snowLoadCylindricalRoof.CylindricalRoof.Width,
+                    snowLoadCylindricalRoof.CylindricalRoof.Height);
+
+            snowLoadCylindricalRoof.CylindricalRoof.CaluclateDriftLength();
+            snowLoadCylindricalRoof.CylindricalRoof.CalculateSnowLoad();
+
+            return View("CylindricalRoofResult", snowLoadCylindricalRoof);
+        }
+
+        public ActionResult RoofAbuttingToTallerConstruction()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CalculateRoofAbuttingToTallerConstruction(
+            SnowLoadRoofAbuttingToTallerConstruction snowLoadRoofAbuttingToTallerConstruction,
+            BuildingData buildingData)
+        {
+            buildingData.SnowLoad.SnowDensity = snowLoadRoofAbuttingToTallerConstruction.BuildingData.SnowLoad.SnowDensity;
+
+            buildingData.BuildingSite.CalculateExposureCoefficient();
+            buildingData.SnowLoad.CalculateSnowLoad();
+            buildingData.Building.CalculateThermalCoefficient();
+
+            var roof = snowLoadRoofAbuttingToTallerConstruction.RoofAbuttingToTallerConstruction;
+
+            snowLoadRoofAbuttingToTallerConstruction.BuildingData = buildingData;
+
+            roof =
+                new SnowLoads.BuildingTypes.RoofAbuttingToTallerConstruction(
+                    buildingData.Building,
+                    roof.WidthOfUpperBuilding,
+                    roof.WidthOfLowerBuilding,
+                    roof.HeightDifference,
+                    roof.UpperRoof.Slope,
+                    roof.UpperRoof.SnowFences);
+
+            roof.CaluclateDriftLength();
+            roof.CalculateSnowLoad();
+
+            snowLoadRoofAbuttingToTallerConstruction.RoofAbuttingToTallerConstruction = roof;
+
+            return View("RoofAbuttingToTallerConstructionResult", snowLoadRoofAbuttingToTallerConstruction);
+        }
+
+        public ActionResult DriftingAtProjectionsObstructions()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CalculateDriftingAtProjectionsObstructions(
+           SnowLoadDriftingAtProjectionsObstructions snowLoadDriftingAtProjectionsObstructions,
+           BuildingData buildingData)
+        {
+            buildingData.SnowLoad.SnowDensity = snowLoadDriftingAtProjectionsObstructions.BuildingData.SnowLoad.SnowDensity;
+
+            buildingData.BuildingSite.CalculateExposureCoefficient();
+            buildingData.SnowLoad.CalculateSnowLoad();
+            buildingData.Building.CalculateThermalCoefficient();
+
+            var roof = snowLoadDriftingAtProjectionsObstructions.DriftingAtProjectionsObstructions;
+
+            snowLoadDriftingAtProjectionsObstructions.BuildingData = buildingData;
+
+            roof =
+                new SnowLoads.BuildingTypes.DriftingAtProjectionsObstructions(
+                    buildingData.Building,
+                    roof.ObstructionHeight);
+
+            roof.CaluclateDriftLength();
+            roof.CalculateSnowLoad();
+
+            snowLoadDriftingAtProjectionsObstructions.DriftingAtProjectionsObstructions = roof;
+
+            return View("DriftingAtProjectionsObstructionsResult", snowLoadDriftingAtProjectionsObstructions);
+        }
+
+        public ActionResult SnowOverhanging()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CalculateSnowOverhanging(
+        SnowLoadSnowOverhanging snowLoadSnowOverhanging,
+        BuildingData buildingData)
+        {
+            buildingData.SnowLoad.SnowDensity = snowLoadSnowOverhanging.BuildingData.SnowLoad.SnowDensity;
+
+            buildingData.BuildingSite.CalculateExposureCoefficient();
+            buildingData.SnowLoad.CalculateSnowLoad();
+            buildingData.Building.CalculateThermalCoefficient();
+
+            var roof = snowLoadSnowOverhanging.SnowOverhanging;
+
+            snowLoadSnowOverhanging.BuildingData = buildingData;
+
+            roof =
+                new SnowLoads.BuildingTypes.SnowOverhanging(
+                    buildingData.Building,
+                    roof.SnowLayerDepth,
+                    roof.SnowLoadOnRoofValue);
+
+            roof.CalculateSnowLoad();
+
+            snowLoadSnowOverhanging.SnowOverhanging = roof;
+
+            return View("SnowOverhangingResult", snowLoadSnowOverhanging);
+        }
+
+        public ActionResult Snowguards()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CalculateSnowguards(
+            SnowLoadSnowguards snowLoadSnowguards,
+            BuildingData buildingData)
+        {
+            buildingData.BuildingSite.CalculateExposureCoefficient();
+            buildingData.SnowLoad.CalculateSnowLoad();
+            buildingData.Building.CalculateThermalCoefficient();
+
+            var roof = snowLoadSnowguards.Snowguards;
+
+            snowLoadSnowguards.BuildingData = buildingData;
+
+            roof =
+                new SnowLoads.BuildingTypes.Snowguards(
+                    roof.Width,
+                    roof.Slope,
+                    roof.SnowLoadOnRoofValue);
+
+            roof.CalculateSnowLoad();
+
+            snowLoadSnowguards.Snowguards = roof;
+
+            return View("SnowguardsResult", snowLoadSnowguards);
+        }
+        
+        public ActionResult ExceptionalMultispanRoof()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CalculateExceptionalMultispanRoof(
+        ExceptionalSnowLoadMultispanRoof exceptionalSnowLoadMultispanRoof,
+        BuildingData buildingData)
+        {
+            buildingData.BuildingSite.CalculateExposureCoefficient();
+            buildingData.SnowLoad.CalculateSnowLoad();
+            buildingData.Building.CalculateThermalCoefficient();
+
+            var roof = exceptionalSnowLoadMultispanRoof.ExceptionalMultispanRoof;
+
+            exceptionalSnowLoadMultispanRoof.BuildingData = buildingData;
+
+            roof =
+                new SnowLoads.Exceptional.ExceptionalMultiSpanRoof(
+                    buildingData.Building,
+                    roof.LeftDriftLength,
+                    roof.RightDriftLength,
+                    roof.HeightInTheLowestPart);
+
+            roof.CalculateSnowLoad();
+
+            exceptionalSnowLoadMultispanRoof.ExceptionalMultispanRoof = roof;
+
+            return View("ExceptionalMultispanRoofResult", exceptionalSnowLoadMultispanRoof);
+        }
 
         public ActionResult Definitions()
         {

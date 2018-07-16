@@ -54,14 +54,14 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Instance of building.
         /// </summary>
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         #endregion // Properties
 
         #region Fields
 
-        private SnowLoad snowLoad;
-        private BuildingSite buildingSite;
+        private ISnowLoad snowLoad;
+        private IBuildingSite buildingSite;
 
         #endregion // Fields
 
@@ -71,7 +71,7 @@ namespace SnowLoads.BuildingTypes
         /// Constructor.
         /// </summary>
         /// <param name="building">Instance of buildinng.</param>
-        public DriftingAtProjectionsObstructions(Building building, double obstructionHeight)
+        public DriftingAtProjectionsObstructions(IBuilding building, double obstructionHeight)
         {
             Building = building;
             ObstructionHeight = obstructionHeight;

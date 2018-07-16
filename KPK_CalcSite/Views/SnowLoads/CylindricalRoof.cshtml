@@ -1,0 +1,49 @@
+﻿@model KPK_CalcSite.ViewModels.SnowLoadsViewModel
+@{
+    ViewBag.Title = "CylindricalRoof";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cylindrical Roof</h2>
+
+<div class="submit-container">
+    @using (Html.BeginForm("CalculateCylindricalRoof", "SnowLoads"))
+    {
+        <div class="row">
+
+            <div class="col-sm-6">
+                <div class="snow-load-case">
+                    <a href="@Url.Action("Calculator", "SnowLoads")">
+                        <img class="snow-load-link" src="~/Content/Images/SnowLoads/CylindricalRoof.png" alt="Cylindrical Roof" />
+                    </a>
+                </div>
+                @*<div id="dvCategoryResults">
+                        @{Html.RenderPartial("_MonopitchRoofResults", Model.SnowLoadMonopitchRoof.MonopitchRoof);}
+                    </div>*@
+            </div>
+            <div class="col-sm-6">
+
+                @Html.Partial("_BuildingSite", Model, new ViewDataDictionary() { { "Exceptional", false } })
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SnowLoadCylindricalRoof.CylindricalRoof.Width, "Roof width")
+                    @Html.TextBoxFor(m => m.SnowLoadCylindricalRoof.CylindricalRoof.Width,
+                   new { @class = "form-control", @placeholder = "Enter width in meters", Value = "",
+                       @type = "number", @step = "0.1" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SnowLoadCylindricalRoof.CylindricalRoof.Height, "Roof height")
+                    @Html.TextBoxFor(m => m.SnowLoadCylindricalRoof.CylindricalRoof.Height,
+                   new { @class = "form-control", @placeholder = "Enter height in meters", Value = "",
+                       @type = "number", @step = "1" })
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" name="calculate" id="calculate" value="calculate" class="btn btn-info pull-right" required="required">Calculate</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@Scripts.Render("~/Scripts/snow.loads.js")

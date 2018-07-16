@@ -38,19 +38,19 @@ namespace SnowLoads.Exceptional
         [Abbreviation("alfa")]
         public double Angle { get; set; }
 
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         #endregion // Properties
 
         #region Fields
 
-        private SnowLoad snowLoad;
+        private ISnowLoad snowLoad;
 
         #endregion // Fields
 
         #region Constructors
 
-        public ExceptionalRoofAbuttingToTallerConstruction(Building building, double upperBuildingWidth, double lowerBuildingWidth,
+        public ExceptionalRoofAbuttingToTallerConstruction(IBuilding building, double upperBuildingWidth, double lowerBuildingWidth,
             double heightDifference, double angle)
         {
             Building = building;

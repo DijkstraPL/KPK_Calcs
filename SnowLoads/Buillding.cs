@@ -10,7 +10,7 @@ namespace SnowLoads.BuildingTypes
     /// <summary>
     /// Class containing informations about the building.
     /// </summary>
-    public class Building
+    public class Building : IBuilding
     {
         #region Properties
 
@@ -61,7 +61,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Instance of snow load.
         /// </summary>
-        public SnowLoad SnowLoad { get; private set; }
+        public ISnowLoad SnowLoad { get; private set; }
         
         #endregion // Properties
 
@@ -71,12 +71,12 @@ namespace SnowLoads.BuildingTypes
         /// Constructor for building.
         /// </summary>
         /// <param name="snowLoad">Instance of snow load.</param>
-        public Building(SnowLoad snowLoad)
+        public Building(ISnowLoad snowLoad)
         {
             SnowLoad = snowLoad;
         }
 
-        public Building(SnowLoad snowLoad, double internalTemperature, double overallHeatTransferCoefficient)
+        public Building(ISnowLoad snowLoad, double internalTemperature, double overallHeatTransferCoefficient)
         {
             SnowLoad = snowLoad;
             InternalTemperature = internalTemperature;
@@ -94,7 +94,7 @@ namespace SnowLoads.BuildingTypes
         {
             CalculateTempreatureDifference();
 
-            if (OverallHeatTransferCoefficient >= 1 && OverallHeatTransferCoefficient <= 4.5)
+            if (OverallHeatTransferCoefficient >= 1 && OverallHeatTransferCoefficient <= 4.5 && InternalTemperature > 5)
                 ThermalCoefficient = 1 - 0.054 * Math.Pow(SnowLoad.SnowLoadForSpecificReturnPeriod / 3.5, 0.25) *
                     TempreatureDifference * Math.Pow(Math.Sin(Math.PI / 180 * 57.3 * (0.4 * OverallHeatTransferCoefficient - 0.1)), 0.25);
             else

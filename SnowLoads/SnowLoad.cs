@@ -11,7 +11,7 @@ namespace SnowLoads
     /// <summary>
     /// Class for calculation of snow load on the ground.
     /// </summary>
-    public class SnowLoad : ICalculatable
+    public class SnowLoad : ICalculatable, ISnowLoad
     {
         #region Properties
 
@@ -32,8 +32,8 @@ namespace SnowLoads
                     excepctionalSituation = false;
             }
         }
-        
-        private double snowDensity;
+
+        private double snowDensity = 2;
         /// <summary>
         /// Density of the snow [kN/m3].
         /// </summary>
@@ -108,8 +108,8 @@ namespace SnowLoads
         /// <summary>
         /// Building site.
         /// </summary>
-        public BuildingSite BuildingSite { get; private set; }
-        
+        public IBuildingSite BuildingSite { get; private set; }
+
         #endregion // Properties
 
         #region Constructors
@@ -118,8 +118,8 @@ namespace SnowLoads
         /// Constructor for snow load.
         /// </summary>
         /// <param name="buildingSite">Instance of the building site.</param>
-        public SnowLoad(BuildingSite buildingSite,
-            DesignSituation currentDesignSituation = DesignSituation.A, 
+        public SnowLoad(IBuildingSite buildingSite,
+            DesignSituation currentDesignSituation = DesignSituation.A,
             bool excepctionalSituation = false)
         {
             BuildingSite = buildingSite;
@@ -127,21 +127,21 @@ namespace SnowLoads
             ExcepctionalSituation = excepctionalSituation;
         }
 
-        public SnowLoad(BuildingSite buildingSite, int returnPeriod, 
-            DesignSituation currentDesignSituation = DesignSituation.A, 
+        public SnowLoad(IBuildingSite buildingSite, int returnPeriod,
+            DesignSituation currentDesignSituation = DesignSituation.A,
             bool excepctionalSituation = false) : this(buildingSite, currentDesignSituation, excepctionalSituation)
         {
             ReturnPeriod = returnPeriod;
         }
 
-        public SnowLoad(BuildingSite buildingSite, double snowDensity,
+        public SnowLoad(IBuildingSite buildingSite, double snowDensity,
             DesignSituation currentDesignSituation = DesignSituation.A,
             bool excepctionalSituation = false) : this(buildingSite, currentDesignSituation, excepctionalSituation)
         {
             SnowDensity = snowDensity;
         }
 
-        public SnowLoad(BuildingSite buildingSite, double snowDensity, int returnPeriod,
+        public SnowLoad(IBuildingSite buildingSite, double snowDensity, int returnPeriod,
         DesignSituation currentDesignSituation = DesignSituation.A,
         bool excepctionalSituation = false) : this(buildingSite, currentDesignSituation, excepctionalSituation)
         {
@@ -152,7 +152,7 @@ namespace SnowLoads
         #endregion // Constructors
 
         #region Methods
-        
+
         public void CalculateSnowLoad()
         {
             SetCharacteristicSnowLoad();
@@ -166,7 +166,7 @@ namespace SnowLoads
         /// Set snow load base on terrain zone (Tab.NB.1).
         /// </summary>
         /// <param name="ownValue"></param>
-        public void SetCharacteristicSnowLoad(double ownValue = 0)
+        private void SetCharacteristicSnowLoad(double ownValue = 0)
         {
             switch (BuildingSite.CurrentZone)
             {
@@ -208,7 +208,7 @@ namespace SnowLoads
         /// <summary>
         /// Calculate coefficient of variation of annual maximum snow load (NB.3).
         /// </summary>
-        public void SetVariationCoefficient()
+        private void SetVariationCoefficient()
         {
             if (BuildingSite.AltitudeAboveSea < 300)
                 VariationCoefficient = 0.7;
@@ -219,7 +219,7 @@ namespace SnowLoads
         /// <summary>
         /// Calculate characteristic snow load for specific return period (D.1)
         /// </summary>
-        public void SetCharacteristicSnowLoadForSpecificReturnPeriod()
+        private void SetCharacteristicSnowLoadForSpecificReturnPeriod()
         {
             if (ReturnPeriod == 50)
                 SnowLoadForSpecificReturnPeriod = DefaultCharacteristicSnowLoad;
@@ -232,7 +232,7 @@ namespace SnowLoads
         /// <summary>
         /// Calculate exceptional snow load coefficient.
         /// </summary>
-        public void SetExceptionalSnowLoadCoefficient()
+        private void SetExceptionalSnowLoadCoefficient()
         {
             ExceptionalSnowLoadCoefficient = 2;
         }
@@ -240,7 +240,7 @@ namespace SnowLoads
         /// <summary>
         /// Calculate exceptional snow load value (4.1).
         /// </summary>
-        public void SetDesignExceptionalSnowLoadForSpecificReturnPeriod()
+        private void SetDesignExceptionalSnowLoadForSpecificReturnPeriod()
         {
             DesignExceptionalSnowLoadForSpecificReturnPeriod = ExceptionalSnowLoadCoefficient * SnowLoadForSpecificReturnPeriod;
         }
@@ -255,17 +255,4 @@ namespace SnowLoads
         B2,
         B3,
     }
-
-    //public abstract class Zone
-    //{
-    //    public BuildingSite BuildingSite { get; set; }
-
-    //    public abstract double CalculateDefaultCharacteristicSnowLoad();
-    //}
-
-    //public class FirstZone : Zone
-    //{
-
-    //}
-
 }

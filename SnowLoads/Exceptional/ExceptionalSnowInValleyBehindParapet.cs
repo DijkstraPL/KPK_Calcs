@@ -27,19 +27,19 @@ namespace SnowLoads.Exceptional
 
         public double SnowLoad1 { get; private set; }
 
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         #endregion // Properties
 
         #region Fields
 
-        private SnowLoad snowLoad;
+        private ISnowLoad snowLoad;
 
         #endregion // Fields
 
         #region Constructors
 
-        public ExceptionalSnowInValleyBehindParapet(Building building, double width, double heightDifference)
+        public ExceptionalSnowInValleyBehindParapet(IBuilding building, double width, double heightDifference)
         {
             Building = building;
             Width = width;

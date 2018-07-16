@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SnowLoads.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace SnowLoads
     /// <summary>
     /// Class for additional informations about building site.
     /// </summary>
-    public class BuildingSite
+    public class BuildingSite : IBuildingSite
     {
         /// <summary>
         /// A - Altitude above sea level.

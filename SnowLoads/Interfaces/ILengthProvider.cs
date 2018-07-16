@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SnowLoads.Interfaces
 {
-    interface ILengthProvider
+    public interface ILengthProvider
     {
         [Abbreviation("l_s")]
         double DriftLength { get; }

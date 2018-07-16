@@ -20,13 +20,13 @@ namespace SnowLoads.Exceptional
         /// <summary>
         /// Instance of building.
         /// </summary>
-        public Building Building { get; private set; }
+        public IBuilding Building { get; private set; }
 
         public double LeftDriftLength { get; set; }
 
         public double RightDriftLength { get; set; }
 
-        public double HeightInTheLowerPart { get; private set; }
+        public double HeightInTheLowestPart { get; set; }
 
         public double HorizontalDimensionOfThreeSlopes { get; private set; }
 
@@ -34,17 +34,18 @@ namespace SnowLoads.Exceptional
 
         #region Fields
 
-        private SnowLoad snowLoad;
+        private ISnowLoad snowLoad;
 
         #endregion // Fields
 
         #region Constructors
 
-        public ExceptionalMultiSpanRoof(Building building, double leftDriftLength, double rightDriftLength)
+        public ExceptionalMultiSpanRoof(IBuilding building, double leftDriftLength, double rightDriftLength, double heightInTheLowestPart)
         {
             Building = building;
             LeftDriftLength = leftDriftLength;
             RightDriftLength = rightDriftLength;
+            HeightInTheLowestPart = heightInTheLowestPart;
             SetReferences();
         }
 
@@ -72,7 +73,7 @@ namespace SnowLoads.Exceptional
         private void CalculateShapeCoefficient()
         {
             ShapeCoefficient = Math.Min(
-                2 * HeightInTheLowerPart / snowLoad.SnowLoadForSpecificReturnPeriod,
+                2 * HeightInTheLowestPart / snowLoad.SnowLoadForSpecificReturnPeriod,
                 2 * HorizontalDimensionOfThreeSlopes / (LeftDriftLength + RightDriftLength));
 
             ShapeCoefficient = Math.Min(ShapeCoefficient, 5);

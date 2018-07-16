@@ -1,0 +1,64 @@
+﻿@model KPK_CalcSite.ViewModels.SnowLoadsViewModel
+@{
+    ViewBag.Title = "Snowguards";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Snowguards</h2>
+
+
+
+<div class="submit-container">
+    @using (Html.BeginForm("CalculateSnowguards", "SnowLoads"))
+    {
+        <div class="row">
+
+            <div class="col-sm-6">
+                <div class="snow-load-case">
+                    <a href="@Url.Action("Calculator", "SnowLoads")">
+                        <img class="snow-load-link" src="~/Content/Images/SnowLoads/Snowguards.png"
+                             alt="Snowguards" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-6">
+
+                @Html.Partial("_BuildingSite", Model, new ViewDataDictionary() { { "Exceptional", false } })
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SnowLoadSnowguards.
+               Snowguards.Width, "Roof width")
+                    @Html.TextBoxFor(m => m.SnowLoadSnowguards.
+               Snowguards.Width,
+               new { @class = "form-control", @placeholder = "Enter roof width in meters", Value = "",
+                   @type = "number", @step = ".1" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SnowLoadSnowguards.
+               Snowguards.Slope, "Slope")
+                    @Html.TextBoxFor(m => m.SnowLoadSnowguards.
+               Snowguards.Slope,
+               new { @class = "form-control", @placeholder = "Enter slope in degrees", Value = "",
+                   @type = "number", @step = "1" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SnowLoadSnowguards.
+               Snowguards.SnowLoadOnRoofValue, "Snow load on roof")
+                    @Html.TextBoxFor(m => m.SnowLoadSnowguards.
+               Snowguards.SnowLoadOnRoofValue,
+               new { @class = "form-control", @placeholder = "Enter snow load in kN/m2", Value = "",
+                   @type = "number", @step = "0.1" })
+                </div>
+
+
+                <div class="form-group">
+                    <button type="submit" name="calculate" id="calculate" value="calculate" class="btn btn-info pull-right" required="required">Calculate</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@Scripts.Render("~/Scripts/snow.loads.js")

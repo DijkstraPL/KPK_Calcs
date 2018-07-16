@@ -1,0 +1,56 @@
+﻿@model KPK_CalcSite.ViewModels.SnowLoadsViewModel
+@{
+    ViewBag.Title = "PitchedRoof";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pitched Roof</h2>
+
+<div class="submit-container">
+    @using (Html.BeginForm("CalculatePitchedRoof", "SnowLoads"))
+    {
+        <div class="row">
+
+            <div class="col-sm-6">
+                <div class="snow-load-case">
+                    <a href="@Url.Action("Calculator", "SnowLoads")">
+                        <img class="snow-load-link" src="~/Content/Images/SnowLoads/PitchedRoof.png" alt="Pitched Roof" />
+                    </a>
+                </div>
+                @*<div id="dvCategoryResults">
+                        @{Html.RenderPartial("_MonopitchRoofResults", Model.SnowLoadMonopitchRoof.MonopitchRoof);}
+                    </div>*@
+            </div>
+            <div class="col-sm-6">
+
+                @Html.Partial("_BuildingSite", Model, new ViewDataDictionary() { { "Exceptional", false } })
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SnowLoadPitchedRoof.PitchedRoof.LeftRoof.Slope, "Left roof slope")
+                    @Html.TextBoxFor(m => m.SnowLoadPitchedRoof.PitchedRoof.LeftRoof.Slope,
+                   new { @class = "form-control", @placeholder = "Enter slope in degrees", Value = "",
+                       @type = "number", @step = "1" })
+                </div>
+                <div class="form-group">
+                    @Html.CheckBoxFor(m => m.SnowLoadPitchedRoof.PitchedRoof.LeftRoof.SnowFences) @Html.LabelFor(m => m.SnowLoadPitchedRoof.PitchedRoof.LeftRoof.SnowFences, "Snow fences on left roof")
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SnowLoadPitchedRoof.PitchedRoof.RightRoof.Slope, "Right roof slope")
+                    @Html.TextBoxFor(m => m.SnowLoadPitchedRoof.PitchedRoof.RightRoof.Slope,
+                   new { @class = "form-control", @placeholder = "Enter slope in degrees", Value = "",
+                       @type = "number", @step = "1" })
+                </div>
+                <div class="form-group">
+                    @Html.CheckBoxFor(m => m.SnowLoadPitchedRoof.PitchedRoof.LeftRoof.SnowFences) @Html.LabelFor(m => m.SnowLoadPitchedRoof.PitchedRoof.LeftRoof.SnowFences, "Snow fences on right roof")
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" name="calculate" id="calculate" value="calculate" class="btn btn-info pull-right" required="required">Calculate</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@Scripts.Render("~/Scripts/snow.loads.js")
