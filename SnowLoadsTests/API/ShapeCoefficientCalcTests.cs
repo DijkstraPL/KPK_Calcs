@@ -1,39 +1,18 @@
-﻿//using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SnowLoads;
+﻿using NUnit.Framework;
+using SnowLoads.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using SnowLoads.API;
 
-namespace SnowLoads.Tests
+namespace SnowLoads.API.Tests
 {
     [TestFixture()]
-    public class ToolsTests
+    public class ShapeCoefficientCalcTests
     {
-        [Test()]
-        [Description("Ensure that conversion from percentage to degrees is proper.")]
-        public void ConvertPercentageToDegreeTest_40Percent_Success()
-        {
-            double percent = 40;
-            double result = UnitConversion.ConvertToDegrees(percent);
-            Assert.AreEqual(21.801, result, 0.001, $"There is something wrong with conversion of {percent}% into degrees.");
-        }
-
-        [Test()]
-        [Description("Ensure that conversion to radians is proper.")]
-        public void ConvertToRadiansTest_90Degrees_Success()
-        {
-            double degrees = 90;
-            double result = UnitConversion.ConvertToRadians(degrees);
-
-            Assert.AreEqual(90 * 3.1415 / 180, result, 0.001, $"There is something wrong with conversion of {degrees}degree into radians.");
-        }
-
         #region CalculateSnowLoadShapeCoefficient1
-        
+
         [Test()]
         [Description("Ensure that calculation for shape coefficient is proper.")]
         public void CalculateSnowLoadShapeCoefficient1Test_LessThan30DegreeWithoutFences_Success()
@@ -63,7 +42,7 @@ namespace SnowLoads.Tests
 
             Assert.AreEqual(0, result, $"Something go wrong with shape coefficient calculation. Slope {slope}degree.");
         }
-        
+
         [Test()]
         [Description("Ensure that calculation for shape coefficient is proper.")]
         public void CalculateSnowLoadShapeCoefficient1Test_MoreThan60DegreeWithFences_Success()
@@ -130,35 +109,16 @@ namespace SnowLoads.Tests
 
             Assert.AreEqual(1.6, result, "Something go wrong with shape coefficient calculation. Slope {slope}degree.");
         }
-        
+
         [Test]
         [Description("Ensure that calculation for shape coefficient is proper.")]
         public void CalculateSnowLoadShapeCoefficient2Test_LessThan0Degree_Success()
         {
             double slope = -20;
 
-            Assert.Throws<ArgumentOutOfRangeException>(()=> ShapeCoefficientCalc.CalculateSnowLoadShapeCoefficient2(slope), "Method shouldn't work for this specific example.");
+            Assert.Throws<ArgumentOutOfRangeException>(() => ShapeCoefficientCalc.CalculateSnowLoadShapeCoefficient2(slope), "Method shouldn't work for this specific example.");
         }
 
         #endregion // CalculateSnowLoadShapeCoefficient2
-
-        #region CalculateSnowLoad
-
-
-        [Test]
-        [Description("Ensure that calculation for snow load is proper.")]
-        public void CalculateSnowLoadTest_Success()
-        {
-            double shapeCoefficient = 1.5;
-            double exposureCoefficient = 1.2;
-            double thermalCoefficient = 0.8;
-            double snowLoad = 0.9;
-
-            double result = SnowLoadCalc.CalculateSnowLoad(shapeCoefficient, exposureCoefficient, thermalCoefficient, snowLoad);
-
-            Assert.AreEqual(1.296, result, "Something go wrong with calculation for snow load.");
-        }
-
-        #endregion // CalculateSnowLoad
     }
 }

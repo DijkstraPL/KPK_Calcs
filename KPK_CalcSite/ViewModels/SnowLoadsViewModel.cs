@@ -18,7 +18,12 @@ namespace KPK_CalcSite.ViewModels
         public SnowLoadSnowOverhanging SnowLoadSnowOverhanging { get; set; }
         public SnowLoadSnowguards SnowLoadSnowguards { get; set; }
         public ExceptionalSnowLoadMultispanRoof ExceptionalSnowLoadMultispanRoof { get; set; }
-
-
+        public ExceptionalSnowLoadRoofAbuttingToTallerConstruction ExceptionalSnowLoadRoofAbuttingToTallerConstruction { get; set; }
+        public ExceptionalSnowLoadObstructionOnFlatRoof ExceptionalSnowLoadObstructionOnFlatRoof { get; set; }
+        public ExceptionalSnowLoadOverDoorOrLoadingBay ExceptionalSnowLoadOverDoorOrLoadingBay { get; set; }
+        public ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof { get; set; }
+        public ExceptionalSnowLoadSnowBehindParapet ExceptionalSnowLoadSnowBehindParapet { get; set; }
+        public ExceptionalSnowLoadSnowBehindParapetAtEaves ExceptionalSnowLoadSnowBehindParapetAtEaves { get; set; }
+        public ExceptionalSnowLoadSnowInValleyBehindParapet ExceptionalSnowLoadSnowInValleyBehindParapet { get; set; }
     }
 }

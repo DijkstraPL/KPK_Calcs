@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tools;
 
 namespace SnowLoads.Exceptional
 {
@@ -74,9 +75,9 @@ namespace SnowLoads.Exceptional
 
         public void CalculateSnowLoad()
         {
+            CalculateShapeCoefficient3();
             CalculateShapeCoefficient1();
             CalculateShapeCoefficient2();
-            CalculateShapeCoefficient3();
             CalculateSnowLoad1();
             CalculateSnowLoad2();
         }

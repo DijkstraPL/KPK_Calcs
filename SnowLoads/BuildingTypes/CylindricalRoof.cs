@@ -2,6 +2,7 @@
 using SnowLoads.Interfaces;
 using System;
 using System.Collections.Generic;
+using Tools;
 
 namespace SnowLoads.BuildingTypes
 {

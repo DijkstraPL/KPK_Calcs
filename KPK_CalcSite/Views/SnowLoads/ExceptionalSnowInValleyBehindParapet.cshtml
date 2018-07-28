@@ -1,0 +1,49 @@
+﻿@model KPK_CalcSite.ViewModels.SnowLoadsViewModel
+@{
+    ViewBag.Title = "ExceptionalSnowInValleyBehindParapet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Exceptional Snow In Valley Behind Parapet</h2>
+
+<div class="submit-container">
+
+    @using (Html.BeginForm("CalculateExceptionalSnowInValleyBehindParapet", "SnowLoads"))
+    {
+        <div class="row">
+
+            <div class="col-sm-6">
+                    <a href="@Url.Action("Calculator", "SnowLoads")">
+                <div class="snow-load-case">
+                        <img class="snow-load-link" src="~/Content/Images/SnowLoads/ExceptionalSnowInValleyBehindParapet.png" alt="Exceptional Snow In Valley Behind Parapet" />
+                </div>
+                    </a>
+            </div>
+            <div class="col-sm-6">
+
+                @Html.Partial("_BuildingSite", Model, new ViewDataDictionary() { { "Exceptional", true } })
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ExceptionalSnowLoadSnowInValleyBehindParapet.ExceptionalSnowInValleyBehindParapet.Width, "Building width")
+                    @Html.TextBoxFor(m => m.ExceptionalSnowLoadSnowInValleyBehindParapet.ExceptionalSnowInValleyBehindParapet.Width,
+                   new { @class = "form-control", @placeholder = "Enter width in meters", Value = "",
+                       @type = "number", @step = ".1" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ExceptionalSnowLoadSnowInValleyBehindParapet.ExceptionalSnowInValleyBehindParapet.HeightDifference, "Height difference")
+                    @Html.TextBoxFor(m => m.ExceptionalSnowLoadSnowInValleyBehindParapet.ExceptionalSnowInValleyBehindParapet.HeightDifference,
+                   new { @class = "form-control", @placeholder = "Enter height in meters", Value = "",
+                       @type = "number", @step = ".1" })
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" name="calculate" id="calculate" value="calculate" class="btn btn-info pull-right" required="required">Calculate</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@Scripts.Render("~/Scripts/snow.loads.js")
+
+

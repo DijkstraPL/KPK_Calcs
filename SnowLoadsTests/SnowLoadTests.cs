@@ -6,12 +6,60 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using SnowLoads.Interfaces;
 
 namespace SnowLoads.Tests
 {
     [TestFixture()]
     public class SnowLoadTests
     {
+        #region Constructors
+
+        [Test()]
+        [Description("Check the creation of SnowLoad object.")]
+        public void SnowLoadTest_ConstructorWithBuildingSite_Success()
+        {
+            var snowLoad = new SnowLoad(new BuildingSite());
+
+            Assert.IsTrue(snowLoad.BuildingSite != null, "Building Site shouldn't be null.");
+        }
+
+        [Test()]
+        [Description("Check the creation of SnowLoad object.")]
+        public void SnowLoadTest_ConstructorWithBuildingSiteAndDesignSituation_Success()
+        {
+            var snowLoad = new SnowLoad(new BuildingSite(), DesignSituation.B2);
+
+            Assert.IsTrue(snowLoad.BuildingSite != null, "Building Site shouldn't be null.");
+            Assert.IsTrue(snowLoad.CurrentDesignSituation == DesignSituation.B2, "Design situation is not set.");
+        }
+
+        [Test()]
+        [Description("Check the creation of SnowLoad object.")]
+        public void SnowLoadTest_ConstructorWithBuildingSiteDesignSituationAndReturnPeriod_Success()
+        {
+            var snowLoad = new SnowLoad(new BuildingSite(), 45, DesignSituation.B2);
+
+            Assert.IsTrue(snowLoad.BuildingSite != null, "Building Site shouldn't be null.");
+            Assert.IsTrue(snowLoad.ReturnPeriod == 45, "Return period is not set.");
+            Assert.IsTrue(snowLoad.CurrentDesignSituation == DesignSituation.B2, "Design situation is not set.");
+        }
+
+        [Test()]
+        [Description("Check the creation of SnowLoad object.")]
+        public void SnowLoadTest_ConstructorWithAllPossibleParameters_Success()
+        {
+            var snowLoad = new SnowLoad(new BuildingSite(), 3, 45, DesignSituation.B2, true);
+
+            Assert.IsTrue(snowLoad.BuildingSite != null, "Building Site shouldn't be null.");
+            Assert.IsTrue(snowLoad.SnowDensity == 3, "Snow density is not set.");
+            Assert.IsTrue(snowLoad.ReturnPeriod == 45, "Return period is not set.");
+            Assert.IsTrue(snowLoad.CurrentDesignSituation == DesignSituation.B2, "Design situation is not set.");
+            Assert.IsTrue(snowLoad.ExcepctionalSituation, "Exceptional situation is not set.");
+        }
+
+        #endregion // Constructors
+
         #region SnowDensity 
 
         [Test()]
@@ -54,42 +102,95 @@ namespace SnowLoads.Tests
         }
         #endregion // SnowDensity
 
+        #region ExceptionalSituation
+
         [Test()]
-        public void SnowLoadTest()
+        [Description("Check the ExceptionalSituation property.")]
+        public void SnowLoadTest_ExceptionalSituationForDesignSituationA_Success()
+        {
+            var snowLoad = new SnowLoad(new BuildingSite(), DesignSituation.A, true);
+
+            Assert.IsFalse(snowLoad.ExcepctionalSituation, "For design situation A exceptional situation should be false.");
+        }
+
+        [Test()]
+        [Description("Check the ExceptionalSituation property.")]
+        public void SnowLoadTest_ExceptionalSituationForDesignSituationB2_Success()
+        {
+            var snowLoad = new SnowLoad(new BuildingSite(), DesignSituation.B2, true);
+
+            Assert.IsTrue(snowLoad.ExcepctionalSituation, "For design situation other than A exceptional situation should be proper.");
+        }
+
+        #endregion // ExceptionalSituation
+
+        #region ReturnPeriod
+
+        [Test()]
+        [Description("Check the ReturnPeriod property.")]
+        public void SnowLoadTest_ReturnPeriodLessThan5_Exception()
         {
             var snowLoad = new SnowLoad(new BuildingSite());
-                        
-            Assert.IsTrue(snowLoad.BuildingSite != null);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => snowLoad.ReturnPeriod = 3, "Return period which is less than 5 throws ArgumentOutOfRangeException.");
         }
 
         [Test()]
-        public void SetCharacteristicSnowLoadTest()
+        [Description("Check the ReturnPeriod property.")]
+        public void SnowLoadTest_ReturnPeriodMoreThan5_Success()
         {
-            Assert.Fail();
+            var snowLoad = new SnowLoad(new BuildingSite());
+            snowLoad.ReturnPeriod = 55;
+
+            Assert.AreEqual(55, snowLoad.ReturnPeriod, "Return period should be proper.");
+        }
+
+        #endregion // ReturnPeriod
+
+        #region CalculateSnowLoads
+
+        [Test()]
+        [Description("Check the snow load calculations.")]
+        public void SnowLoadTest_FirstZone_Success()
+        {
+            var buildingSite = new BuildingSiteImplementation(10);
+
+            buildingSite.AltitudeAboveSea = 350;
+            buildingSite.CurrentZone = Zone.FirstZone;
+            buildingSite.CurrentTopography = Topography.Normal;
+            buildingSite.CalculateExposureCoefficient();
+
+            var snowLoad = new SnowLoad(buildingSite);
+            snowLoad.CalculateSnowLoad();
+
+            Assert.AreEqual(1.05, Math.Round(snowLoad.DefaultCharacteristicSnowLoad, 3), "DefaultCharacteristicSnowLoad has wrong calculations.");
+            Assert.AreEqual(0.648, Math.Round(snowLoad.VariationCoefficient, 3), "VariationCoefficient has wrong calculations.");
+            Assert.AreEqual(1.05, Math.Round(snowLoad.SnowLoadForSpecificReturnPeriod, 3), "SnowLoadForSpecificReturnPeriod has wrong calculations.");
+            Assert.AreEqual(2, Math.Round(snowLoad.ExceptionalSnowLoadCoefficient, 3), "ExceptionalSnowLoadCoefficient has wrong calculations.");
+            Assert.AreEqual(2.10, Math.Round(snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod, 3), "DesignExceptionalSnowLoadForSpecificReturnPeriod has wrong calculations.");
         }
 
         [Test()]
-        public void SetVariationCoefficientTest()
+        [Description("Check the snow load calculations.")]
+        public void SnowLoadTest_SecondZone_Windswept_Success()
         {
-            Assert.Fail();
+            var buildingSite = new BuildingSiteImplementation(10);
+
+            buildingSite.CurrentZone = Zone.SecondZone;
+            buildingSite.CurrentTopography = Topography.Windswept;
+            buildingSite.CalculateExposureCoefficient();
+
+            var snowLoad = new SnowLoad(buildingSite);
+            snowLoad.ReturnPeriod = 80;
+            snowLoad.CalculateSnowLoad();
+
+            Assert.AreEqual(0.9, Math.Round(snowLoad.DefaultCharacteristicSnowLoad, 3), "DefaultCharacteristicSnowLoad has wrong calculations.");
+            Assert.AreEqual(0.7, Math.Round(snowLoad.VariationCoefficient, 3), "VariationCoefficient has wrong calculations.");
+            Assert.AreEqual(0.983, Math.Round(snowLoad.SnowLoadForSpecificReturnPeriod, 3), "SnowLoadForSpecificReturnPeriod has wrong calculations.");
+            Assert.AreEqual(2, Math.Round(snowLoad.ExceptionalSnowLoadCoefficient, 3), "ExceptionalSnowLoadCoefficient has wrong calculations.");
+            Assert.AreEqual(1.965, Math.Round(snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod, 3), "DesignExceptionalSnowLoadForSpecificReturnPeriod has wrong calculations.");
         }
 
-        [Test()]
-        public void SetCharacteristicSnowLoadForSpecificReturnPeriodTest()
-        {
-            Assert.Fail();
-        }
-
-        [Test()]
-        public void SetExceptionalSnowLoadCoefficientTest()
-        {
-            Assert.Fail();
-        }
-
-        [Test()]
-        public void SetDesignExceptionalSnowLoadForSpecificReturnPeriodTest()
-        {
-            Assert.Fail();
-        }
+        #endregion // CalculateSnowLoads
     }
 }

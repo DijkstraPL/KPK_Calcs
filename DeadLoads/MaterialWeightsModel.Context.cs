@@ -15,10 +15,10 @@ namespace DeadLoads
     using System.Threading.Tasks;
 
 
-    public partial class MaterialsWeightsEntities : DbContext
+    public partial class MaterialsWeightEntities : DbContext
     {
-        public MaterialsWeightsEntities()
-            : base("name=MaterialsWeightsEntities")
+        public MaterialsWeightEntities()
+            : base("name=MaterialsWeightEntities")
         {
         }
 

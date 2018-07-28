@@ -14,7 +14,7 @@ namespace WCF_SOAP_REST_Service
         static MaterialWeightDatabase()
         {
             int i = 0;
-            var context = new MaterialsWeightsEntities();
+            var context = new MaterialsWeightEntities();
 
             foreach (var material in context.Materials)
             {

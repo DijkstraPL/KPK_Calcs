@@ -13,10 +13,10 @@ namespace Test
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MaterialsWeightsEntities : DbContext
+    public partial class MaterialsWeightEntities : DbContext
     {
-        public MaterialsWeightsEntities()
-            : base("name=MaterialsWeightsEntities")
+        public MaterialsWeightEntities()
+            : base("name=MaterialsWeightEntities")
         {
         }
     

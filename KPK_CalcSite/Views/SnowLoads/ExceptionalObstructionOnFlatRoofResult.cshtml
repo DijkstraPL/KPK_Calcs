@@ -1,0 +1,43 @@
+﻿@model KPK_CalcSite.Models.SnowLoads.ExceptionalSnowLoadObstructionOnFlatRoof
+@{
+    ViewBag.Title = "ExceptionalObstructionOnFlatRoofResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Exceptional Obstruction On Flat Roof Result</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            @Html.Partial("_BuildingSiteResult", Model.BuildingData)
+        </div>
+        <div class="col-md-6">
+            <h3>Roof geometry:</h3>
+            <ul>
+                <li><strong>Left side width:</strong> @Model.ExceptionalObstructionOnFlatRoof.LeftWidth m</li>
+                <li><strong>Left height difference:</strong> @Model.ExceptionalObstructionOnFlatRoof.LeftHeightDifference m</li>
+                <li><strong>Left drift length:</strong> @Model.ExceptionalObstructionOnFlatRoof.LeftDriftLength m</li>
+                <li><strong>Right side width:</strong> @Math.Round(Model.ExceptionalObstructionOnFlatRoof.RightWidth,3) m</li>
+                <li><strong>Right height difference:</strong> @Model.ExceptionalObstructionOnFlatRoof.RightHeightDifference m</li>
+                <li><strong>Right drift length:</strong> @Math.Round(Model.ExceptionalObstructionOnFlatRoof.RightDriftLength,3) m</li>
+            </ul>
+            <h3>Coefficients:</h3>
+            <ul>
+                <li><strong>Left shape coefficient:</strong> @Math.Round(Model.ExceptionalObstructionOnFlatRoof.LeftShapeCoefficient, 3)</li>
+                <li><strong>Right shape coefficient:</strong> @Math.Round(Model.ExceptionalObstructionOnFlatRoof.RightShapeCoefficient, 3)</li>
+            </ul>
+
+            <h3>Snow loads:</h3>
+            <ul>
+                <li class="score"><strong>Left snow load:</strong> @Math.Round(Model.ExceptionalObstructionOnFlatRoof.LeftSnowLoad, 3) kN/m<sup>2</sup></li>
+                <li class="score"><strong>Right snow load:</strong> @Math.Round(Model.ExceptionalObstructionOnFlatRoof.RightSnowLoad, 3) kN/m<sup>2</sup></li>
+            </ul>
+
+                <a href="@Url.Action("Calculator", "SnowLoads")">
+            <div class="snow-load-case">
+                    <img class="snow-load-link" src="~/Content/Images/SnowLoads/ExceptionalObstructionOnFlatRoof.png" alt="Exceptional Obstruction On Flat Roof" />
+            </div>
+                </a>
+        </div>
+    </div>
+</div>

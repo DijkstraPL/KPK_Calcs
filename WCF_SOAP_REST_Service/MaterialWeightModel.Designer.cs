@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Konrad\Desktop\Nauka C_sharp\KPK_Calcs\WCF_SOAP_REST_Service\MaterialWeightModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Disseminate\Desktop\Studia podyplomowe\Praca końcowa\KPK_Calcs\WCF_SOAP_REST_Service\MaterialWeightModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

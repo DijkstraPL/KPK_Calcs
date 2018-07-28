@@ -1,0 +1,398 @@
+﻿@model KPK_CalcSite.ViewModels.DeadLoadsViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<div class="container">
+    <table class="table table-condensed table-bordered invisible" id="materialTable">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Density</th>
+                <th>Thickness [mm]</th>
+                <th>Width [mm]</th>
+                <th>Height [mm]</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Unit</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6"></td>
+                <td id="min-load-sum"></td>
+                <td id="max-load-sum"></td>
+                <td id="unit"></td>
+                <td id="clear"></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="container">
+    @*@using (Html.BeginForm("AddMaterial", "DeadLoads"))
+        {*@
+    <div class="form-group col-sm-5 col-md-4">
+        @Html.LabelFor(c => c.SelectedCategory, "Select category")
+        @Html.DropDownListFor(c => c.SelectedCategory,
+       new SelectList(Model.CategoryList.Categories, "ID", "GroupName"), "Select category",
+       new { @onchange= "loadSubcategories()" })
+        @*<select id="group" name="group" class="load-input">
+                @foreach (var category in Model.CategoryList.Categories)
+                {
+                    <option value="@category.ID">@category.GroupName</option>
+                }
+                <option value="Other">Other</option>
+            </select>*@
+    </div>
+    <div class="form-group col-sm-5 col-md-4">
+        @Html.LabelFor(c => c.SelectedSubcategory, "Select subgroup")
+        @*@Html.DropDownListFor(c => c.SelectedSubcategory,
+            new SelectList(Model.SubcategoryList.Subcategories, "ID", "Name"), "Select subcategory",
+            new { @onchange= "LoadMaterials()" })*@
+        <select id="SelectedSubcategory" name="SelectedSubcategory" class="load-input" onchange="loadMaterials()">
+            <option value="">Select subgroup</option>
+        </select>
+    </div>
+    @*<div class="form-group col-sm-4 col-md-3">
+            <label for="loadname">Load</label>
+            <select id="loadname" name="loadname" class="load-input">
+                <option value="-" selected>-</option>
+                @foreach (var material in Model.MaterialList.Materials)
+                {
+                    <option value="@material.ID">@material.Name</option>
+                }
+                <option value="Other">Other</option>
+            </select>
+        </div>*@
+    @*<div class="form-group col-sm-1 col-md-3">
+            <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right" required="required">Add</button>
+        </div>*@
+    @*}*@
+</div>
+
+<div class="col-md-12">
+    @*<div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Please enter the details below.</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group col-md-5">
+                    <label>Material Name</label>
+                    <input type="text" name="MaterialName" id="MaterialName" class="form-control" placeholder="Enter Material Name" required="" />
+                </div>
+                <div class="form-group col-md-5">
+                    <label>Material Address</label>
+                    <input type="text" name="MaterialDensity" id="MaterialDensity" class="form-control" placeholder="Enter Material Density" required="" />
+                </div>
+
+                <div class="form-group col-md-1">
+                    <div style="float: right; display:inline-block;">
+                        <input class="btn btn-primary" name="submitButton" id="btnSave" value="Save" type="button">
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    <hr />
+    <table id="tblMaterial" class="table table-bordered table-responsive table-hover invisible">
+        <thead>
+            <tr>
+                <th align="left" class="productth">ID</th>
+                <th align="left" class="productth">Material Name</th>
+                <th align="left" class="productth">Material Density</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+    @*$(function () {
+        loadMaterials();
+        $("#btnSave").click(function () {
+            //alert("");
+            var mat = {};
+            mat.Name = $("#MaterialName").val();
+            mat.MaximumDensity = $("#MaterialDensity").val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CreateMaterial", Model)',
+                data: '{mat: ' + JSON.stringify(mat) + '}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                   // alert("Data has been added successfully.");
+                    loadMaterials();
+                },
+                error: function () {
+                    alert("Error while inserting data");
+                }
+            });
+            return false;
+        });
+        });*@
+
+        function loadSubcategories() {
+            $("#SelectedSubcategory option").remove();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetSubcategories")',
+                dataType: 'json',
+                data: {
+                    categoryName: $('#SelectedCategory option:selected').text(),
+                    categoryId: $('#SelectedCategory option:selected').val()
+                },
+                success: function (data) {
+                    var items = '';
+                    var row = "<option id='select' value='select' selected>Select subgroup</option>";
+                    $('#SelectedSubcategory').append(row);
+                    $.each(data, function (i, item) {
+                        var rows =
+                            "<option value='" + item.ID + "'>" + item.Name.trim() + " " + item.DocumentName + "</option>";
+                        $('#SelectedSubcategory').append(rows);
+                    });
+                    $("#tblMaterial tbody tr").remove();
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            checkTable(true);
+            return false;
+        }
+
+        function loadMaterials() {
+            $("#tblMaterial tbody tr").remove();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetMaterials")',
+                dataType: 'json',
+                data: {
+                    subcategoryName: $('#SelectedSubcategory option:selected').text(),
+                    subcategoryId: $('#SelectedSubcategory option:selected').val()
+                },
+                success: function (data) {
+                    var items = '';
+
+                    $.each(data, function (i, item) {
+
+                        var isNumberInUnits = item.Units.includes("2") || item.Units.includes("3");
+
+                        var rows = "<tr class='table-hover-text' onclick='addMaterial("+item.ID+")'>"
+                            + "<td class='prtoducttd'>" + item.ID + "</td>"
+                            + "<td class='prtoducttd'>" + item.Name + "</td>"
+                        if (item.MinimumDensity != item.MaximumDensity)
+                            rows += "<td class='prtoducttd'>" + item.MinimumDensity + "-" + item.MaximumDensity
+                        else
+                            rows += "<td class='prtoducttd'>" + item.MaximumDensity
+                        if (isNumberInUnits)
+                            rows += " " + item.Units.substr(0, item.Units.length - 1)
+                                + "<sup>" + item.Units.substr(item.Units.length - 1) + "</sup></td>"
+                        else
+                            rows += " " + item.Units + "</td>"
+                        rows += "</tr>";
+                        $('#tblMaterial tbody').append(rows);
+                    });
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                },
+            });
+        checkTable(false);
+        return false;
+        }
+
+        var counter = 0;
+
+        function addMaterial(material)
+        {
+            $("#materialTable").css("visibility", "visible");
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetMaterial")',
+                dataType: 'json',
+                data: {
+                    materialId: material
+                },
+                success: function (data) {
+                    var items = '';
+
+                    var isNumberInUnits = data.Units.includes("2") || data.Units.includes("3");
+
+                    var rows = "<tr id='tableRow" +data.ID+ "-"+ counter +"'>"
+                        + "<td>" + data.ID + "</td>"
+                        + "<td>" + $('#SelectedCategory option:selected').text().trim() + " - "
+                        + $('#SelectedSubcategory option:selected').text().trim() + " - " + data.Name.trim() + "</td>";
+                    if (data.MinimumDensity != data.MaximumDensity)
+                        rows += "<td>" + data.MinimumDensity + "-" + data.MaximumDensity
+                    else
+                        rows += "<td>" + data.MaximumDensity
+                    if (isNumberInUnits)
+                        rows += " " + data.Units.substr(0, data.Units.length - 1)
+                            + "<sup>" + data.Units.substr(data.Units.length - 1) + "</sup></td>"
+                    else
+                        rows += " "  + data.Units + "</td>"
+                    rows += "<td class='smaller-form'><input type='number' min='0' step='1' class='form-control' name='thickness" + data.ID + "' id='thickness" + data.ID + "-" + counter + "' placeholder='Enter Thickness' onchange='calculateDeadLoad()'></td>"
+                        + "<td class='smaller-form'><input type='number' min='0' step='10' class='form-control' name='width" + data.ID + "' id='width" + data.ID + "-" + counter + "' placeholder='Enter Width' onchange='calculateDeadLoad()'></td>"
+                        + "<td class='smaller-form'><input type='number' min='0' step='10' class='form-control' name='height" + data.ID + "' id='height" + data.ID + "-" + counter + "' placeholder='Enter Height' onchange='calculateDeadLoad()'></td>"
+                        + "<td class='count-min-load' id='minLoad" + data.ID + "-" + counter + "'></td>"
+                        + "<td class='count-max-load' id='maxLoad" + data.ID + "-" + counter + "'></td>"
+                        + "<td class='unit' id='unit" + data.ID + "-" + counter + "'></sup></td>"
+                        + "<td class='delete' onclick=removeFromTable('" + data.ID + "-" + counter +"')><button>-</button></td>"
+                         + "</tr>"
+                    $('#materialTable tbody').append(rows);
+
+                    counter++;
+
+                    calculateDeadLoad();
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                },
+            });
+        }
+
+        function removeFromTable(materialId) {
+            if ($("#materialTable > tbody > tr").length == 1)
+                $("#materialTable").css("visibility", "hidden");
+            $("#tableRow" + materialId).remove();
+            calculateSum();
+        }
+
+        function calculateDeadLoad() {
+            $('#materialTable > tbody > tr').each(function (i, item) {
+                var id = item.id.substring("tableRow".length);
+                var materialid = item.firstElementChild.textContent;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetMaterial")',
+                    dataType: 'json',
+                    data: {
+                        materialId: materialid
+                    },
+                    success: function (data) {
+                        var minLoad = data.MinimumDensity;
+                        var maxLoad = data.MaximumDensity;
+                        var materialUnit = data.Units;
+
+                        var unit = 3;
+
+                        if (materialUnit == "kN/m2")
+                            unit--;
+                        else if (materialUnit == "kN/m")
+                            unit -= 2;
+                        else if (materialUnit == "kN")
+                            unit -= 3;
+
+                        var thickness = $('#thickness' + id).val();
+                        var width = $('#width' + id).val();
+                        var height = $('#height' + id).val();
+
+                        if (thickness != "") {
+                            minLoad *= thickness / 1000;
+                            maxLoad *= thickness / 1000;
+                            unit--;
+                        }
+
+                        if (width != "") {
+                            minLoad *= width / 1000;
+                            maxLoad *= width / 1000;
+                            unit--;
+                        }
+
+                        if (height != "") {
+                            minLoad *= height / 1000;
+                            maxLoad *= height / 1000;
+                            unit--;
+                        }
+
+                        $('#unit' + id).css("color", "white");
+
+                        if (unit < 0) {
+                            alert("Wrong unit for " + data.Name);
+                            $('#unit' + id).html("Wrong");
+                            $('#unit' + id).css("color", "red");
+                        }
+                        else if (unit == 1)
+                            $('#unit' + id).html("kN/m");
+                        else if (unit == 0)
+                            $('#unit' + id).html("kN");
+                        else
+                            $('#unit' + id).html("kN/m<sup>" + unit + "</sup>");
+
+                        $('#minLoad' + id).text(Math.round((minLoad + 0.00001) * 1000) / 1000);
+                        $('#maxLoad' + id).text(Math.round((maxLoad + 0.00001) * 1000) / 1000);
+
+                        calculateSum();
+                    },
+                    error: function (ex) {
+                        var r = jQuery.parseJSON(response.responseText);
+                        alert("Message: " + r.Message);
+                        alert("StackTrace: " + r.StackTrace);
+                        alert("ExceptionType: " + r.ExceptionType);
+                    },
+                });
+            });
+
+        }
+
+        function calculateSum() {
+            var minLoadSum = 0;
+            var maxLoadSum = 0;
+            var properUnits = true;
+            var unit = [];
+            var unitHtml = [];
+
+            //alert(properUnits);
+
+            $('#materialTable > tbody > tr').each(function (i, item) {
+                unit[i] = item.getElementsByClassName("unit")[0].textContent;
+                unitHtml[i] = item.getElementsByClassName("unit")[0].innerHTML;
+                if (i > 0 && unit[i] != "" && unit[i-1] != unit[i])
+                    properUnits = false;
+
+                minLoadSum += parseFloat(item.getElementsByClassName("count-min-load")[0].textContent);
+                maxLoadSum += parseFloat(item.getElementsByClassName("count-max-load")[0].textContent);
+            });
+
+            $("#min-load-sum").text(Math.round((minLoadSum + 0.00001) * 1000) / 1000);
+            $("#max-load-sum").text(Math.round((maxLoadSum + 0.00001) * 1000) / 1000);
+
+            if (!properUnits) {
+                $("#unit").text("Wrong");
+                $("#unit").css("color", "red");
+            }
+            else {
+                $("#unit").html(unitHtml[0]);
+                $("#unit").css("color", "white");
+            }
+        }
+
+        function checkTable(categoryChanged) {
+            if (categoryChanged || $("#SelectedSubcategory").val() == "select" || $("#SelectedSubcategory").val() == "")
+                $("#tblMaterial").css("visibility", "hidden");
+            else
+                $("#tblMaterial").css("visibility", "visible");
+        }
+        
+    </script>
+}  

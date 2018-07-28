@@ -34,13 +34,6 @@ namespace CalcSite.Controllers
             return View();
         }
 
-        public ActionResult DeadLoadCalculator()
-        {
-            ViewBag.Title = "Dead load";
-            ViewBag.Message = "Calculate all dead loads";
-
-            return View();
-        }
 
        
     }

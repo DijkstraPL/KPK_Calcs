@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tools;
 
 namespace SnowLoads.Exceptional
 {
@@ -14,27 +15,27 @@ namespace SnowLoads.Exceptional
         #region Properties
 
         [Abbreviation("h_1")]
-        public double HeightDifference1 { get; set; }
+        public double LeftHeightDifference { get; set; }
         [Abbreviation("h_2")]
-        public double HeightDifference2 { get; set; }
+        public double RightHeightDifference { get; set; }
 
         [Abbreviation("b_1")]
-        public double Width1 { get; set; }
+        public double LeftWidth { get; set; }
         [Abbreviation("b_2")]
-        public double Width2 { get; set; }
+        public double RightWidth { get; set; }
 
         [Abbreviation("mi_1")]
-        public double ShapeCoefficient1 { get; private set; }
+        public double LeftShapeCoefficient { get; private set; }
         [Abbreviation("mi_2")]
-        public double ShapeCoefficient2 { get; private set; }
+        public double RightShapeCoefficient { get; private set; }
 
         [Abbreviation("l_s1")]
-        public double DriftLength_1 { get; private set; }
+        public double LeftDriftLength { get; private set; }
         [Abbreviation("l_s2")]
-        public double DriftLength_2 { get; private set; }
+        public double RightDriftLength { get; private set; }
 
-        public double SnowLoad1 { get; private set; }
-        public double SnowLoad2 { get; private set; }
+        public double LeftSnowLoad { get; private set; }
+        public double RightSnowLoad { get; private set; }
 
         public IBuilding Building { get; private set; }
 
@@ -48,13 +49,14 @@ namespace SnowLoads.Exceptional
 
         #region Constructors
 
-        public ExceptionalObstructionOnPitchedOrCurvedRoof(IBuilding building, double width1, double width2, double heightDifference1, double heightDifference2)
+        public ExceptionalObstructionOnPitchedOrCurvedRoof(IBuilding building, double leftWidth, double rightWidth, 
+            double leftHeightDifference, double rightHeightDifference)
         {
             Building = building;
-            Width1 = width1;
-            Width2 = width2;
-            HeightDifference1 = heightDifference1;
-            HeightDifference2 = heightDifference2;
+            LeftWidth = leftWidth;
+            RightWidth = rightWidth;
+            LeftHeightDifference = leftHeightDifference;
+            RightHeightDifference = rightHeightDifference;
             SetReferences();
         }
 
@@ -64,15 +66,15 @@ namespace SnowLoads.Exceptional
 
         public void CalculateDriftLength()
         {
-            if (HeightDifference1 > 1)
-                DriftLength_1 = Width1;
+            if (LeftHeightDifference > 1)
+                LeftDriftLength = LeftWidth;
             else
-                DriftLength_1 = Math.Min(5 * HeightDifference1, Width1);
+                LeftDriftLength = Math.Min(5 * LeftHeightDifference, LeftWidth);
 
-            if (HeightDifference2 > 1)
-                DriftLength_2 = Width2;
+            if (RightHeightDifference > 1)
+                RightDriftLength = RightWidth;
             else
-                DriftLength_2 = Math.Min(5 * HeightDifference2, Width2);
+                RightDriftLength = Math.Min(5 * RightHeightDifference, RightWidth);
         }
 
         public void CalculateSnowLoad()
@@ -89,19 +91,19 @@ namespace SnowLoads.Exceptional
 
         private void CalculateShapeCoefficient()
         {
-            ShapeCoefficient1 = Math.Min(2 * HeightDifference1 / snowLoad.SnowLoadForSpecificReturnPeriod, 5);
-            ShapeCoefficient2 = Math.Min(2 * HeightDifference2 / snowLoad.SnowLoadForSpecificReturnPeriod, 5);
+            LeftShapeCoefficient = Math.Min(2 * LeftHeightDifference / snowLoad.SnowLoadForSpecificReturnPeriod, 5);
+            RightShapeCoefficient = Math.Min(2 * RightHeightDifference / snowLoad.SnowLoadForSpecificReturnPeriod, 5);
         }
 
         private void CalculateSnowLoad1()
         {
             if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
-                SnowLoad1 = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient1, snowLoad.SnowLoadForSpecificReturnPeriod);
+                LeftSnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(LeftShapeCoefficient, snowLoad.SnowLoadForSpecificReturnPeriod);
         }
         private void CalculateSnowLoad2()
         {
             if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
-                SnowLoad2 = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient2, snowLoad.SnowLoadForSpecificReturnPeriod);
+                RightSnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(RightShapeCoefficient, snowLoad.SnowLoadForSpecificReturnPeriod);
         }
 
 

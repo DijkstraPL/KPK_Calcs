@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbbreviationAttribute.cs" />
     <Compile Include="API\ConditionChecker.cs" />
     <Compile Include="API\ShapeCoefficientCalc.cs" />
     <Compile Include="API\SnowLoadCalc.cs" />
@@ -72,6 +71,12 @@
     <Compile Include="Interfaces\ISnowLoad.cs" />
     <Compile Include="SnowLoad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools\Tools.csproj">
+      <Project>{B9C18721-33E0-4C53-93FA-373F78381516}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -65,10 +65,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MaterialWeightsModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MaterialWeightsModel.Designer.cs">
+    <Compile Include="MaterialWeightModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MaterialWeightsModel.edmx</DependentUpon>
+      <DependentUpon>MaterialWeightModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subcategory.cs">
@@ -77,24 +77,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="MaterialWeightsModel.edmx">
+    <EntityDeploy Include="MaterialWeightModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MaterialWeightsModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>MaterialWeightModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="MaterialWeightsModel.edmx.diagram">
-      <DependentUpon>MaterialWeightsModel.edmx</DependentUpon>
+    <None Include="MaterialWeightModel.edmx.diagram">
+      <DependentUpon>MaterialWeightModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MaterialWeightsModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MaterialWeightsModel.edmx</DependentUpon>
+      <DependentUpon>MaterialWeightModel.edmx</DependentUpon>
       <LastGenOutput>MaterialWeightsModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="MaterialWeightsModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MaterialWeightsModel.edmx</DependentUpon>
+      <DependentUpon>MaterialWeightModel.edmx</DependentUpon>
       <LastGenOutput>MaterialWeightsModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>

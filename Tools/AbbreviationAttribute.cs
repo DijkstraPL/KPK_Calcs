@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SnowLoads
+namespace Tools
 {
     /// <summary>
     /// Class which contain information about abbreviation of the property or field.

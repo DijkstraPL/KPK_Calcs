@@ -64,10 +64,19 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="API\ConditionCheckerTests.cs" />
+    <Compile Include="API\ShapeCoefficientCalcTests.cs" />
+    <Compile Include="API\SnowLoadCalcTests.cs" />
+    <Compile Include="API\UnitConversionTests.cs" />
+    <Compile Include="BuildingSiteImplementation.cs" />
     <Compile Include="BuildingSiteTests.cs" />
+    <Compile Include="BuildingTests.cs" />
+    <Compile Include="BuildingImplementation.cs" />
+    <Compile Include="BuildingTypes\MonopitchRoofTests.cs" />
+    <Compile Include="BuildingTypes\PitchedRoofTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnowLoadImplementation.cs" />
     <Compile Include="SnowLoadTests.cs" />
-    <Compile Include="ToolsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

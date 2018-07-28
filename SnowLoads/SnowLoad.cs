@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tools;
 
 namespace SnowLoads
 {
@@ -53,7 +54,7 @@ namespace SnowLoads
                         if (2.5 <= value && value <= 3.5)
                             snowDensity = value;
                         else
-                            throw new ArgumentOutOfRangeException("Snow density can't be this value.");
+                            throw new ArgumentOutOfRangeException(nameof(SnowDensity), "Snow density can't be this value.");
                         break;
                 }
             }

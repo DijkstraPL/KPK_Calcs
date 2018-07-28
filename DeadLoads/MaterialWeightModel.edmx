@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MaterialsWeightsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MaterialsWeightModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="ID" />
@@ -45,7 +45,7 @@ warning 6035: The relationship 'FK_Materials_Materials' has columns that are not
         <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_Subcategories_Categories' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_Subcategories_Categories" />-->
-        <EntityContainer Name="MaterialsWeightsModelStoreContainer">
+        <EntityContainer Name="MaterialsWeightModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subcategories" EntityType="Self.Subcategories" Schema="dbo" store:Type="Tables" />
@@ -54,7 +54,7 @@ warning 6035: The relationship 'FK_Subcategories_Categories' has columns that ar
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MaterialsWeightsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="MaterialsWeightModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="ID" />
@@ -89,7 +89,7 @@ warning 6035: The relationship 'FK_Subcategories_Categories' has columns that ar
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DocumentName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="MaterialsWeightsEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MaterialsWeightEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Materials" EntityType="Self.Material" />
           <EntitySet Name="Subcategories" EntityType="Self.Subcategory" />
@@ -99,9 +99,9 @@ warning 6035: The relationship 'FK_Subcategories_Categories' has columns that ar
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MaterialsWeightsModelStoreContainer" CdmEntityContainer="MaterialsWeightsEntities">
+        <EntityContainerMapping StorageEntityContainer="MaterialsWeightModelStoreContainer" CdmEntityContainer="MaterialsWeightEntities">
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="MaterialsWeightsModel.Category">
+            <EntityTypeMapping TypeName="MaterialsWeightModel.Category">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Symbol" ColumnName="Symbol" />
@@ -110,7 +110,7 @@ warning 6035: The relationship 'FK_Subcategories_Categories' has columns that ar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Materials">
-            <EntityTypeMapping TypeName="MaterialsWeightsModel.Material">
+            <EntityTypeMapping TypeName="MaterialsWeightModel.Material">
               <MappingFragment StoreEntitySet="Materials">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="SubCategorySymbol" ColumnName="SubCategorySymbol" />
@@ -127,7 +127,7 @@ warning 6035: The relationship 'FK_Subcategories_Categories' has columns that ar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Subcategories">
-            <EntityTypeMapping TypeName="MaterialsWeightsModel.Subcategory">
+            <EntityTypeMapping TypeName="MaterialsWeightModel.Subcategory">
               <MappingFragment StoreEntitySet="Subcategories">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CategorySymbol" ColumnName="CategorySymbol" />

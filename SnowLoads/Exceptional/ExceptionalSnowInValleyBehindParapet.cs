@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tools;
 
 namespace SnowLoads.Exceptional
 {
@@ -20,12 +21,12 @@ namespace SnowLoads.Exceptional
         public double Width { get; set; }
 
         [Abbreviation("mi_1")]
-        public double ShapeCoefficient1 { get; private set; }
+        public double ShapeCoefficient { get; private set; }
 
         [Abbreviation("l_s")]
         public double DriftLength { get; private set; }
 
-        public double SnowLoad1 { get; private set; }
+        public double SnowLoad { get; private set; }
 
         public IBuilding Building { get; private set; }
 
@@ -70,14 +71,14 @@ namespace SnowLoads.Exceptional
 
         private void CalculateShapeCoefficient()
         {
-            ShapeCoefficient1 = Math.Min(2 * HeightDifference / snowLoad.SnowLoadForSpecificReturnPeriod, 8);
-            ShapeCoefficient1 = Math.Min(ShapeCoefficient1, 2 * Width / DriftLength);
+            ShapeCoefficient = Math.Min(2 * HeightDifference / snowLoad.SnowLoadForSpecificReturnPeriod, 8);
+            ShapeCoefficient = Math.Min(ShapeCoefficient, 2 * Width / DriftLength);
         }
 
         private void CalculateSnowLoadOnRoof()
         {
             if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
-                SnowLoad1 = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient1, snowLoad.SnowLoadForSpecificReturnPeriod);
+                SnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient, snowLoad.SnowLoadForSpecificReturnPeriod);
         }
 
         #endregion // Methods

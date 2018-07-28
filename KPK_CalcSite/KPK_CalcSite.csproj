@@ -198,17 +198,29 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DeadLoadsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReinforcementController.cs" />
     <Compile Include="Controllers\SnowLoadsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DeadLoads\CategoryList.cs" />
+    <Compile Include="Models\DeadLoads\MaterialList.cs" />
+    <Compile Include="Models\DeadLoads\SubcategoryList.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SnowLoads\BuildingData.cs" />
+    <Compile Include="Models\SnowLoads\ExceptionalSnowLoadObstructionOnFlatRoof.cs" />
+    <Compile Include="Models\SnowLoads\ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof.cs" />
+    <Compile Include="Models\SnowLoads\ExceptionalSnowLoadOverDoorOrLoadingBay.cs" />
+    <Compile Include="Models\SnowLoads\ExceptionalSnowLoadRoofAbuttingToTallerConstruction.cs" />
     <Compile Include="Models\SnowLoads\ExceptionalSnowLoadMultispanRoof.cs" />
+    <Compile Include="Models\SnowLoads\ExceptionalSnowLoadSnowBehindParapet.cs" />
+    <Compile Include="Models\SnowLoads\ExceptionalSnowLoadSnowBehindParapetAtEaves.cs" />
+    <Compile Include="Models\SnowLoads\ExceptionalSnowLoadSnowInValleyBehindParapet.cs" />
     <Compile Include="Models\SnowLoads\SnowLoadCylindricalRoof.cs" />
     <Compile Include="Models\SnowLoads\SnowLoadDriftingAtProjectionsObstructions.cs" />
     <Compile Include="Models\SnowLoads\SnowLoadMonopitchRoof.cs" />
@@ -219,6 +231,7 @@
     <Compile Include="Models\SnowLoads\SnowLoadSnowOverhanging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\DeadLoadsViewModel.cs" />
     <Compile Include="ViewModels\SnowLoadsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +250,13 @@
     <Content Include="Content\Images\SnowLoads\CylindricalRoof.png" />
     <Content Include="Content\Images\SnowLoads\DriftingAtProjectionsObstructions.png" />
     <Content Include="Content\Images\SnowLoads\ExceptionalMultispanRoof.png" />
+    <Content Include="Content\Images\SnowLoads\ExceptionalObstructionOnFlatRoof.png" />
+    <Content Include="Content\Images\SnowLoads\ExceptionalObstructionOnPitchedOrCurvedRoof.png" />
+    <Content Include="Content\Images\SnowLoads\ExceptionalOverDoorOrLoadingBay.png" />
+    <Content Include="Content\Images\SnowLoads\ExceptionalRoofAbuttingToTallerConstruction.png" />
+    <Content Include="Content\Images\SnowLoads\ExceptionalSnowBehindParapet.png" />
+    <Content Include="Content\Images\SnowLoads\ExceptionalSnowBehindParapetAtEaves.png" />
+    <Content Include="Content\Images\SnowLoads\ExceptionalSnowInValleyBehindParapet.png" />
     <Content Include="Content\Images\SnowLoads\Monopitch.png" />
     <Content Include="Content\Images\SnowLoads\MultispanRoof.png" />
     <Content Include="Content\Images\SnowLoads\PitchedRoof.png" />
@@ -314,7 +334,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Calculators.cshtml" />
-    <Content Include="Views\Home\DeadLoadCalculator.cshtml" />
+    <Content Include="Views\DeadLoads\DeadLoadCalculator.cshtml" />
     <Content Include="Views\SnowLoads\Definitions.cshtml" />
     <Content Include="Views\SnowLoads\Calculator.cshtml" />
     <Content Include="Views\SnowLoads\_BuildingSite.cshtml" />
@@ -337,6 +357,21 @@
     <Content Include="Views\SnowLoads\SnowguardsResult.cshtml" />
     <Content Include="Views\SnowLoads\ExceptionalMultispanRoof.cshtml" />
     <Content Include="Views\SnowLoads\ExceptionalMultispanRoofResult.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalRoofAbuttingToTallerConstruction.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalRoofAbuttingToTallerConstructionResult.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalObstructionOnFlatRoof.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalObstructionOnFlatRoofResult.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalOverDoorOrLoadingBay.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalOverDoorOrLoadingBayResult.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalObstructionOnPitchedOrCurvedRoof.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalObstructionOnPitchedOrCurvedRoofResult.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalSnowBehindParapet.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalSnowBehindParapetResult.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalSnowBehindParapetAtEaves.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalSnowBehindParapetAtEavesResult.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalSnowInValleyBehindParapet.cshtml" />
+    <Content Include="Views\SnowLoads\ExceptionalSnowInValleyBehindParapetResult.cshtml" />
+    <Content Include="Views\Reinforcement\ReinforcementAnchoring.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -361,6 +396,10 @@
     <WCFMetadataStorage Include="Connected Services\MaterialWeights\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DeadLoads\DeadLoads.csproj">
+      <Project>{d63071f3-e389-4c18-a3a1-1077568434d9}</Project>
+      <Name>DeadLoads</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SnowLoads\SnowLoads.csproj">
       <Project>{4deb055d-acef-45fe-a927-b6e757099030}</Project>
       <Name>SnowLoads</Name>

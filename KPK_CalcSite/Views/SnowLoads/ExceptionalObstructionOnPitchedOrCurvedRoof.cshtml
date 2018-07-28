@@ -1,0 +1,61 @@
+﻿@model KPK_CalcSite.ViewModels.SnowLoadsViewModel
+@{
+    ViewBag.Title = "ExceptionalObstructionOnPitchedOrCurvedRoof";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Exceptional Obstruction On Pitched Or Curved Roof</h2>
+
+
+<div class="submit-container">
+
+    @using (Html.BeginForm("CalculateExceptionalObstructionOnPitchedOrCurvedRoof", "SnowLoads"))
+    {
+        <div class="row">
+
+            <div class="col-sm-6">
+                    <a href="@Url.Action("Calculator", "SnowLoads")">
+                <div class="snow-load-case">
+                        <img class="snow-load-link" src="~/Content/Images/SnowLoads/ExceptionalObstructionOnPitchedOrCurvedRoof.png" alt="Exceptional Obstruction On Pitched Or Curved Roof" />
+                </div>
+                    </a>
+            </div>
+            <div class="col-sm-6">
+
+                @Html.Partial("_BuildingSite", Model, new ViewDataDictionary() { { "Exceptional", true } })
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof.ExceptionalObstructionOnPitchedOrCurvedRoof.LeftWidth, "Left side width")
+                    @Html.TextBoxFor(m => m.ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof.ExceptionalObstructionOnPitchedOrCurvedRoof.LeftWidth,
+                   new { @class = "form-control", @placeholder = "Enter width in meters", Value = "",
+                       @type = "number", @step = ".1" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof.ExceptionalObstructionOnPitchedOrCurvedRoof.LeftHeightDifference, "Left height difference")
+                    @Html.TextBoxFor(m => m.ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof.ExceptionalObstructionOnPitchedOrCurvedRoof.LeftHeightDifference,
+                   new { @class = "form-control", @placeholder = "Enter height in meters", Value = "",
+                       @type = "number", @step = ".1", @max="2" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof.ExceptionalObstructionOnPitchedOrCurvedRoof.RightWidth, "Right side width")
+                    @Html.TextBoxFor(m => m.ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof.ExceptionalObstructionOnPitchedOrCurvedRoof.RightWidth,
+                   new { @class = "form-control", @placeholder = "Enter width in meters", Value = "",
+                       @type = "number", @step = ".1" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof.ExceptionalObstructionOnPitchedOrCurvedRoof.RightHeightDifference, "Right height difference")
+                    @Html.TextBoxFor(m => m.ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof.ExceptionalObstructionOnPitchedOrCurvedRoof.RightHeightDifference,
+                   new { @class = "form-control", @placeholder = "Enter height in meters", Value = "",
+                       @type = "number", @step = ".1", @max="2" })
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" name="calculate" id="calculate" value="calculate" class="btn btn-info pull-right" required="required">Calculate</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@Scripts.Render("~/Scripts/snow.loads.js")
+

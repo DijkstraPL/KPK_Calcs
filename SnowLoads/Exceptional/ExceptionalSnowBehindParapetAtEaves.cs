@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tools;
 
 namespace SnowLoads.Exceptional
 {
@@ -17,12 +18,12 @@ namespace SnowLoads.Exceptional
         public double HeightDifference { get; set; }
 
         [Abbreviation("b_1")]
-        public double Width1 { get; set; }
+        public double RidgeDistance { get; set; }
         [Abbreviation("b_2")]
-        public double Width2 { get; set; }
+        public double BuildingWidth { get; set; }
 
         [Abbreviation("mi_1")]
-        public double ShapeCoefficient1 { get; private set; }
+        public double ShapeCoefficient { get; private set; }
 
         [Abbreviation("l_s")]
         public double DriftLength { get; private set; }
@@ -41,11 +42,11 @@ namespace SnowLoads.Exceptional
 
         #region Constructors
 
-        public ExceptionalSnowBehindParapetAtEaves(IBuilding building, double width1, double width2, double heightDifference)
+        public ExceptionalSnowBehindParapetAtEaves(IBuilding building, double ridgeDistance, double buildingWidth, double heightDifference)
         {
             Building = building;
-            Width1 = width1;
-            Width2 = width2;
+            RidgeDistance = ridgeDistance;
+            BuildingWidth = buildingWidth;
             HeightDifference = heightDifference;
             SetReferences();
         }
@@ -56,7 +57,7 @@ namespace SnowLoads.Exceptional
 
         public void CalculateDriftLength()
         {
-            DriftLength = Math.Min(5 * HeightDifference, Width1);
+            DriftLength = Math.Min(5 * HeightDifference, RidgeDistance);
             DriftLength = Math.Min(DriftLength, 15);
         }
 
@@ -73,14 +74,14 @@ namespace SnowLoads.Exceptional
 
         private void CalculateShapeCoefficient()
         {
-            ShapeCoefficient1 = Math.Min(2 * HeightDifference / snowLoad.SnowLoadForSpecificReturnPeriod, 8);
-            ShapeCoefficient1 = Math.Min(ShapeCoefficient1, 2 * Math.Max(Width1,Width2) / DriftLength);
+            ShapeCoefficient = Math.Min(2 * HeightDifference / snowLoad.SnowLoadForSpecificReturnPeriod, 8);
+            ShapeCoefficient = Math.Min(ShapeCoefficient, 2 * Math.Max(RidgeDistance,BuildingWidth) / DriftLength);
         }
 
         private void CalculateSnowLoadOnRoof()
         {
             if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
-                SnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient1, snowLoad.SnowLoadForSpecificReturnPeriod);
+                SnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient, snowLoad.SnowLoadForSpecificReturnPeriod);
         }
 
         #endregion // Methods
