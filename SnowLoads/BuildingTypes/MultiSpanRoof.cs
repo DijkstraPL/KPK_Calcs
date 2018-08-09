@@ -74,6 +74,8 @@ namespace SnowLoads.BuildingTypes
 
             LeftRoof = leftRoof;
             RightRoof = rightRoof;
+
+            SetReferences();
         }
 
         #endregion // Constructors

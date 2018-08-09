@@ -87,7 +87,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Calculate range of the load.
         /// </summary>
-        public void CaluclateDriftLength()
+        public void CalculateDriftLength()
         {
             DriftLength = Math.Min((Math.Pow(Width, 2) + 4 * Math.Pow(Height, 2)) / (8 * Height) * Math.Sqrt(3), Width);
         }

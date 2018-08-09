@@ -14,7 +14,7 @@ namespace SnowLoads.BuildingTypes.Tests
     {
         [Test()]
         [Description("Check constructor for the monopitchRoof.")]
-        public void MonopitchRoofTest_Constructor_Success0()
+        public void MonopitchRoofTest_Constructor_Success()
         {
             var monopitchRoof = new MonopitchRoof(new BuildingImplementation()
             { SnowLoad = new SnowLoadImplementation() }, 15);
@@ -23,20 +23,10 @@ namespace SnowLoads.BuildingTypes.Tests
         }
 
         [Test()]
-        [Description("Check constructor for the monopitchRoof.")]
-        public void MonopitchRoofTest_CalculateSnowLoad_Success0()
+        [Description("Check calculations of snow loads for the monopitchRoof.")]
+        public void MonopitchRoofTest_CalculateSnowLoad_Success()
         {
-            var buildingSite = new BuildingSiteImplementation(1);
-            var snowLoad = new SnowLoadImplementation()
-            {
-                BuildingSite = buildingSite,
-                SnowLoadForSpecificReturnPeriod = 0.9
-            };
-            var building = new BuildingImplementation()
-            {
-                SnowLoad = snowLoad,
-                ThermalCoefficient = 1
-            };
+            var building = BuildingImplementation.CreateBuilding();
 
             var monopitchRoof = new MonopitchRoof(building, 15);
 

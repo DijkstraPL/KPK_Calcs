@@ -86,7 +86,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Calculate drift length.
         /// </summary>
-        public void CaluclateDriftLength()
+        public void CalculateDriftLength()
         {
             DriftLength = 2 * ObstructionHeight;
             if (DriftLength < 5)

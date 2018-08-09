@@ -113,6 +113,9 @@ namespace SnowLoads.Exceptional
 
         private void CalculateShapeCoefficient3()
         {
+            if (DriftLength == 0)
+                CalculateDriftLength();
+
             ShapeCoefficient3 = Math.Min(
                 2 * HeightDifference / snowLoad.SnowLoadForSpecificReturnPeriod,
                 2 * Math.Max(LowerBuildingWidth, UpperBuildingWidth) / DriftLength);

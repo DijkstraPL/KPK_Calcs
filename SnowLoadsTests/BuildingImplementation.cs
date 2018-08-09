@@ -18,5 +18,22 @@ namespace SnowLoads.Tests
         {
             ThermalCoefficient = 0.9;
         }
+        
+        public static IBuilding CreateBuilding()
+        {
+            var buildingSite = new BuildingSiteImplementation(1);
+            var snowLoad = new SnowLoadImplementation()
+            {
+                BuildingSite = buildingSite,
+                SnowLoadForSpecificReturnPeriod = 0.9,
+                SnowDensity = 2
+            };
+            var building = new BuildingImplementation()
+            {
+                SnowLoad = snowLoad,
+                ThermalCoefficient = 1
+            };
+            return building;
+        }
     }
 }

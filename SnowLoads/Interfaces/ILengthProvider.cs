@@ -12,6 +12,6 @@ namespace SnowLoads.Interfaces
         [Abbreviation("l_s")]
         double DriftLength { get; }
 
-        void CaluclateDriftLength();
+        void CalculateDriftLength();
     }
 }

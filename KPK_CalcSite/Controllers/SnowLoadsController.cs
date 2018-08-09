@@ -122,7 +122,7 @@ namespace KPK_CalcSite.Controllers
                     snowLoadCylindricalRoof.CylindricalRoof.Width,
                     snowLoadCylindricalRoof.CylindricalRoof.Height);
 
-            snowLoadCylindricalRoof.CylindricalRoof.CaluclateDriftLength();
+            snowLoadCylindricalRoof.CylindricalRoof.CalculateDriftLength();
             snowLoadCylindricalRoof.CylindricalRoof.CalculateSnowLoad();
 
             return View("CylindricalRoofResult", snowLoadCylindricalRoof);
@@ -157,7 +157,7 @@ namespace KPK_CalcSite.Controllers
                     roof.UpperRoof.Slope,
                     roof.UpperRoof.SnowFences);
 
-            roof.CaluclateDriftLength();
+            roof.CalculateDriftLength();
             roof.CalculateSnowLoad();
 
             snowLoadRoofAbuttingToTallerConstruction.RoofAbuttingToTallerConstruction = roof;
@@ -190,7 +190,7 @@ namespace KPK_CalcSite.Controllers
                     buildingData.Building,
                     roof.ObstructionHeight);
 
-            roof.CaluclateDriftLength();
+            roof.CalculateDriftLength();
             roof.CalculateSnowLoad();
 
             snowLoadDriftingAtProjectionsObstructions.DriftingAtProjectionsObstructions = roof;

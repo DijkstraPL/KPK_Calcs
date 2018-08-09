@@ -136,7 +136,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Calculate drift length.
         /// </summary>
-        public void CaluclateDriftLength()
+        public void CalculateDriftLength()
         {
             DriftLength = 2 * HeightDifference;
             if (DriftLength < 5)
@@ -168,7 +168,7 @@ namespace SnowLoads.BuildingTypes
             CaluclateShapeCoefficient();
 
             if (DriftLength == 0)
-                CaluclateDriftLength();
+                CalculateDriftLength();
             CalculateShapeCoefficientAtTheEnd();
         }
 
