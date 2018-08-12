@@ -1,4 +1,5 @@
-﻿using ReinforcementArchoring.Coefficients;
+﻿using ReinforcementAnchoring.Coefficients;
+using ReinforcementAnchoring.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tools;
 
-namespace ReinforcementArchoring
+namespace ReinforcementAnchoring
 {
     public class AnchorageLength
     {
@@ -21,7 +22,7 @@ namespace ReinforcementArchoring
         {
             get
             {
-                return ConcreteClass.ConcretClasses[ConcreteClassName];
+                return ConcreteClass.ConcreteClasses[ConcreteClassName];
             }
         }
 
@@ -50,14 +51,14 @@ namespace ReinforcementArchoring
         [Abbreviation("p")]
         public double TransversePressure { get; set; }
 
-        public IEnumerable<ICoefficient> Coefficients { get; private set; }
+        public IList<ICoefficient> Coefficients { get; set; }
 
         #endregion // Properties
         #region Constructors
 
         public AnchorageLength(Reinforcement reinforcement, ReinforcementPosition reinforcementPosition,
             ConcreteClassEnum concreteClassName, TypeEnum type, BondConditionEnum bondCondition,
-             IEnumerable<ICoefficient> coefficients, double transversePressure = 0)
+             IList<ICoefficient> coefficients, double transversePressure = 0)
         {
             Reinforcement = reinforcement;
             ReinforcementPosition = reinforcementPosition;
@@ -67,14 +68,41 @@ namespace ReinforcementArchoring
             TransversePressure = transversePressure;
             Coefficients = coefficients;
         }
+
         #endregion // Constructors
 
         #region Methods
-        
-        public void CalculateDesighAnchorageLength()
+
+        public void CalculateAnchorageLengths()
+        {
+            CalculateBasicRequiredAnchorageLength();
+            CalculateMinimumAnchorageLength();
+            CalculateDesignAnchorageLength();
+        }
+
+        private void CalculateDesignAnchorageLength()
         {
             List<Type> types = new List<Type>();
             double coefficient = 1;
+
+            if(Coefficients != null)
+            {
+                coefficient = CalculateCoefficientsMultipler(types, coefficient);
+
+                if ((Coefficients.FirstOrDefault(p => p is CoverCoefficient)?.Coefficient ?? 1) *
+                   (Coefficients.FirstOrDefault(p => p is TransverseReinforcementCoefficient)?.Coefficient ?? 1) *
+                   (Coefficients.FirstOrDefault(p => p is TransversePressureCoefficient)?.Coefficient ?? 1)
+                   < 0.7)
+                        coefficient = (Coefficients.FirstOrDefault(p => p is BarFormCoefficient)?.Coefficient ?? 1) *
+                        (Coefficients.FirstOrDefault(p => p is WeldedTransverseBarCoefficient)?.Coefficient ?? 1) *
+                        0.7;
+            }         
+
+            DesignAnchorageLength = coefficient * BasicRequiredAnchorageLength;
+        }
+
+        private double CalculateCoefficientsMultipler(List<Type> types, double coefficient)
+        {
             foreach (var anchoringCoefficient in Coefficients)
             {
                 types.Add(anchoringCoefficient.GetType());
@@ -83,20 +111,11 @@ namespace ReinforcementArchoring
             }
             if (types.Distinct().Count() != Coefficients.Count())
                 throw new ArgumentException("There are wrong coefficients!");
-
-            if (Coefficients.FirstOrDefault(p => p is CoverCoefficient).Coefficient *
-                Coefficients.FirstOrDefault(p => p is TransverseReinforcementCoefficient).Coefficient *
-                Coefficients.FirstOrDefault(p => p is TransversePressureCoefficient).Coefficient
-                < 0.7)
-                throw new ArgumentOutOfRangeException("alpha2 * alpha3 * alpha5 should be greater than 0.7.");
-
-            DesignAnchorageLength = coefficient * BasicRequiredAnchorageLength;
+            return coefficient;
         }
 
         private void CalculateMinimumAnchorageLength()
         {
-            CalculateBasicRequiredAnchorageLength();
-
             double minimum = Math.Max(10 * Reinforcement.Diameter, 100);
             if (ReinforcementPosition.AreAnchoragesInTension)
                 MinimumAnchorageLength = Math.Max(0.3 * BasicRequiredAnchorageLength, minimum);
@@ -111,8 +130,8 @@ namespace ReinforcementArchoring
                 diameter = Reinforcement.Diameter * Math.Sqrt(2);
 
             CalculateDesignValueUltimateBondStress();
-            BasicRequiredAnchorageLength = diameter / 4 *
-                Reinforcement.DesignPressInReinforcement / DesignValueUltimateBondStress;
+            BasicRequiredAnchorageLength = (diameter / 4 *
+                Reinforcement.DesignPressInReinforcement / DesignValueUltimateBondStress);
         }
 
         private void CalculateDesignValueUltimateBondStress()
@@ -141,9 +160,8 @@ namespace ReinforcementArchoring
         private void SetCoefficientBarDiameter()
         {
             CoefficientBarDiameter = Reinforcement.Diameter <= 32 ?
-                Reinforcement.Diameter :
-                (132 - Reinforcement.Diameter) / 100;
-        } 
+                1 : (132 - Reinforcement.Diameter) / 100;
+        }
         #endregion // Methods
     }
 

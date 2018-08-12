@@ -1,10 +1,10 @@
 ﻿using System;
 using Tools;
 
-namespace ReinforcementArchoring
+namespace ReinforcementAnchoring
 {
 
-    public class Reinforcement
+    public class Reinforcement : Bar
     {
         #region Properties
 
@@ -15,36 +15,23 @@ namespace ReinforcementArchoring
         public static double PartialSafetyFactor { get; } = 1.15;
 
         [Abbreviation("Sigma_sd")]
-        public double DesignPressInReinforcement
-        {
-            get
-            {
-                return PressInReinforcement / PartialSafetyFactor;
-            }
-        }
-
-        [Abbreviation("fi")]
-        public double Diameter { get; set; }
-
+        public double DesignPressInReinforcement => PressInReinforcement / PartialSafetyFactor;
+        
         public bool IsPairOfBars { get; set; }
-
+                
         #endregion // Properties
 
         #region Constructors
 
-        public Reinforcement(double diameter)
+        public Reinforcement(double diameter, double pressInReinforcement, bool isPairOfBars = false) : base (diameter)
         {
-            Diameter = diameter;
+            PressInReinforcement = pressInReinforcement;
+            IsPairOfBars = isPairOfBars;
         }
 
         #endregion // Constructors
 
         #region Methods
-        
-        public double GetArea()
-        {
-            return Diameter * Diameter / 4 * Math.PI;
-        } 
 
         #endregion // Methods
     }

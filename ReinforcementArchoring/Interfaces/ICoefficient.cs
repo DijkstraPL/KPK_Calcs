@@ -1,4 +1,4 @@
-﻿namespace ReinforcementArchoring.Coefficients
+﻿namespace ReinforcementAnchoring.Interfaces
 {
     public interface ICoefficient
     {

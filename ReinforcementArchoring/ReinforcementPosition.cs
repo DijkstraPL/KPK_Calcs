@@ -1,17 +1,18 @@
-﻿using Tools;
+﻿using System.ComponentModel.DataAnnotations;
+using Tools;
 
-namespace ReinforcementArchoring
+namespace ReinforcementAnchoring
 {
     public class ReinforcementPosition
     {
         #region Properties
 
         [Abbreviation("c_1")]
-        internal double SideCoverDistance { get; set; }
+        public double SideCoverDistance { get; set; }
         [Abbreviation("c")]
-        internal double BottomCoverDistance { get; set; }
+        public double BottomCoverDistance { get; set; }
         [Abbreviation("a")]
-        internal double DistanceBetweenBars { get; set; }
+        public double DistanceBetweenBars { get; set; }
 
         public bool AreAnchoragesInTension { get; set; }
 
@@ -22,25 +23,32 @@ namespace ReinforcementArchoring
         #endregion // Properties
 
         #region Constructors
-
+        
         public ReinforcementPosition(
+            bool areAnchoragesInTension,
             AnchorageTypeEnum anchorageType,
             double sideCoverDistance,
             double bottomCoverDistance,
-            double distanceBetweenBars)
+            double distanceBetweenBars,
+            TransverseBarPositionEnum transverseBarPosition)
         {
+            AreAnchoragesInTension = areAnchoragesInTension;
             SideCoverDistance = sideCoverDistance;
             BottomCoverDistance = bottomCoverDistance;
             DistanceBetweenBars = distanceBetweenBars;
             AnchorageType = anchorageType;
+            TransverseBarPosition = transverseBarPosition;
         } 
         #endregion // Constructors
     }
     public enum TransverseBarPositionEnum
     {
         None,
+        [Display(Name ="Inside of the bar bend")]
         InsideBend,
+        [Display(Name = "At the top")]
         AtTheTop,
+        [Display(Name = "At the bottom")]
         AtTheBottom
     }
     public enum AnchorageTypeEnum

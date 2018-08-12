@@ -212,6 +212,7 @@
     <Compile Include="Models\DeadLoads\SubcategoryList.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ReinforcementAnchoring\AnchoringAnchorageLength.cs" />
     <Compile Include="Models\SnowLoads\BuildingData.cs" />
     <Compile Include="Models\SnowLoads\ExceptionalSnowLoadObstructionOnFlatRoof.cs" />
     <Compile Include="Models\SnowLoads\ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DeadLoadsViewModel.cs" />
+    <Compile Include="ViewModels\ReinforcementAnchoringViewModel.cs" />
     <Compile Include="ViewModels\SnowLoadsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -399,6 +401,10 @@
     <ProjectReference Include="..\DeadLoads\DeadLoads.csproj">
       <Project>{d63071f3-e389-4c18-a3a1-1077568434d9}</Project>
       <Name>DeadLoads</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReinforcementArchoring\ReinforcementAnchoring.csproj">
+      <Project>{18B27FDB-03F1-4FFC-AAF8-9F0C3C9D11EC}</Project>
+      <Name>ReinforcementAnchoring</Name>
     </ProjectReference>
     <ProjectReference Include="..\SnowLoads\SnowLoads.csproj">
       <Project>{4deb055d-acef-45fe-a927-b6e757099030}</Project>

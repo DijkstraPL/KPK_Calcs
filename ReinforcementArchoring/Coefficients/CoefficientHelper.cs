@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReinforcementArchoring.Coefficients
+namespace ReinforcementAnchoring.Coefficients
 {
     internal class CoefficientHelper
     {

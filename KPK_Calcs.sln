@@ -27,9 +27,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPK_CalcSite", "KPK_CalcSit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadLoads", "DeadLoads\DeadLoads.csproj", "{D63071F3-E389-4C18-A3A1-1077568434D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReinforcementArchoring", "ReinforcementArchoring\ReinforcementArchoring.csproj", "{18B27FDB-03F1-4FFC-AAF8-9F0C3C9D11EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReinforcementAnchoring", "ReinforcementArchoring\ReinforcementAnchoring.csproj", "{18B27FDB-03F1-4FFC-AAF8-9F0C3C9D11EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{B9C18721-33E0-4C53-93FA-373F78381516}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReinforcementAnchoringTests", "ReinforcementAnchoringTests\ReinforcementAnchoringTests.csproj", "{0A48AB81-0B1F-4433-B604-88564EB5F849}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{B9C18721-33E0-4C53-93FA-373F78381516}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9C18721-33E0-4C53-93FA-373F78381516}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9C18721-33E0-4C53-93FA-373F78381516}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A48AB81-0B1F-4433-B604-88564EB5F849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A48AB81-0B1F-4433-B604-88564EB5F849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A48AB81-0B1F-4433-B604-88564EB5F849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A48AB81-0B1F-4433-B604-88564EB5F849}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

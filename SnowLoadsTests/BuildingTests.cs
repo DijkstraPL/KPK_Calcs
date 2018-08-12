@@ -71,7 +71,7 @@ namespace SnowLoads.Tests
 
         [Test()]
         [Description("Test for thermalCoefficient calculations.")]
-        public void CalculateThermalCoefficientTest()
+        public void CalculateThermalCoefficientTest_Success()
         {
             var building = new Building(new SnowLoadImplementation() { SnowLoadForSpecificReturnPeriod= 2 }, 12, 3);
             building.CalculateThermalCoefficient();

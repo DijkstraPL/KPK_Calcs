@@ -1,6 +1,8 @@
-﻿using Tools;
+﻿using ReinforcementAnchoring.Interfaces;
+using System;
+using Tools;
 
-namespace ReinforcementArchoring.Coefficients
+namespace ReinforcementAnchoring.Coefficients
 {
     public class TransverseReinforcementCoefficient : ICoefficient
     {
@@ -10,13 +12,13 @@ namespace ReinforcementArchoring.Coefficients
         public double Coefficient { get; private set; } = 1;
         
         public ReinforcementPosition ReinforcementPosition { get; private set; }
-        public Reinforcement Reinforcement { get; private set; }
+        public Bar Bar { get; private set; }
         public TypeEnum Type { get; private set; }
 
         [Abbreviation("A_st,min")]
         public double MinReinforcementArea { get; private set; }
         [Abbreviation("A_st")]
-        public double ReinforcementArea { get; set; }
+        public double TransverseReinforcementArea { get; set; }
 
         #endregion // Properties
 
@@ -30,12 +32,12 @@ namespace ReinforcementArchoring.Coefficients
         #region Constructors
 
         public TransverseReinforcementCoefficient(ReinforcementPosition reinforcementPosition,
-            Reinforcement reinforcement, TypeEnum elementType, double reinforcementArea)
+            Bar bar, TypeEnum elementType, double transverseReinforcementArea)
         {
             ReinforcementPosition = reinforcementPosition;
-            Reinforcement = reinforcement;
+            Bar = bar;
             Type = elementType;
-            ReinforcementArea = reinforcementArea;
+            TransverseReinforcementArea = transverseReinforcementArea;
         }
 
         #endregion // Constructors
@@ -44,24 +46,25 @@ namespace ReinforcementArchoring.Coefficients
 
         public void Calculate()
         {
+            SetMinReinforcementArea();
             CalculateLambdaCoefficient();
             SetCoefficientK();
-            SetMinReinforcementArea();
+            //SetMinReinforcementArea();
 
             Coefficient = 1 - coefficientK * lambdaCoefficient;
+            Coefficient = Math.Min(Coefficient, 1);
+            Coefficient = Math.Max(0.7, Coefficient);
         }
 
         private void CalculateLambdaCoefficient()
         {
-            SetMinReinforcementArea();
-            double singleBarArea = Reinforcement.GetArea();
-            lambdaCoefficient = (ReinforcementArea - MinReinforcementArea) / singleBarArea;
+            lambdaCoefficient = (TransverseReinforcementArea - MinReinforcementArea) / Bar.Area;
         }
 
         private void SetMinReinforcementArea()
         {
             if (Type == TypeEnum.Beam)
-                MinReinforcementArea = 0.25 * ReinforcementArea;
+                MinReinforcementArea = 0.25 * Bar.Area;
             else
                 MinReinforcementArea = 0;
         }

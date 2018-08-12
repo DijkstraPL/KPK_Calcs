@@ -1,7 +1,8 @@
-﻿using System;
+﻿using ReinforcementAnchoring.Interfaces;
+using System;
 using Tools;
 
-namespace ReinforcementArchoring.Coefficients
+namespace ReinforcementAnchoring.Coefficients
 {
     public class TransversePressureCoefficient : ICoefficient
     {
@@ -19,11 +20,11 @@ namespace ReinforcementArchoring.Coefficients
         
         #region Constructors
 
-        public TransversePressureCoefficient(double transversePressure,
-            ReinforcementPosition reinforcementPosition)
+        public TransversePressureCoefficient(ReinforcementPosition reinforcementPosition, 
+            double transversePressure)
         {
-            TransversePressure = transversePressure;
             ReinforcementPosition = reinforcementPosition;
+            TransversePressure = transversePressure;
         }
 
         #endregion // Constructors

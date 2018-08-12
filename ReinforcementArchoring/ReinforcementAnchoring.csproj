@@ -7,8 +7,8 @@
     <ProjectGuid>{18B27FDB-03F1-4FFC-AAF8-9F0C3C9D11EC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReinforcementArchoring</RootNamespace>
-    <AssemblyName>ReinforcementArchoring</AssemblyName>
+    <RootNamespace>ReinforcementAnchoring</RootNamespace>
+    <AssemblyName>ReinforcementAnchoring</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,7 +46,8 @@
     <Compile Include="ConcreteClass.cs" />
     <Compile Include="AnchorageLength.cs" />
     <Compile Include="Coefficients\CoverCoefficient.cs" />
-    <Compile Include="Coefficients\ICoefficient.cs" />
+    <Compile Include="Interfaces\ICoefficient.cs" />
+    <Compile Include="Bar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reinforcement.cs" />
     <Compile Include="Coefficients\WeldedTransverseBarCoefficient.cs" />

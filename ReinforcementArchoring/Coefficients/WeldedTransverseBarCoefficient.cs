@@ -1,6 +1,7 @@
-﻿using Tools;
+﻿using ReinforcementAnchoring.Interfaces;
+using Tools;
 
-namespace ReinforcementArchoring.Coefficients
+namespace ReinforcementAnchoring.Coefficients
 {
     public class WeldedTransverseBarCoefficient : ICoefficient
     {

@@ -1,8 +1,230 @@
-﻿
+﻿@model KPK_CalcSite.ViewModels.ReinforcementAnchoringViewModel
 @{
-    ViewBag.Title = "ReinforcementAnchoring";
+    ViewBag.Title = "Reinforcement Anchoring";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ReinforcementAnchoring</h2>
+<h2>Reinforcement Anchoring</h2>
 
+<div class="submit-container">
+    @using (Html.BeginForm("CalculateReinforcementAnchoring", "Reinforcement"))
+    {
+        if (Model.ShowResults)
+        {
+            <div>
+                <ul class="score" id="results">
+                    <li><strong>Basic required anchorage length:</strong> @Math.Round(Model.AnchoringAnchorageLength?.AnchorageLength?.BasicRequiredAnchorageLength ?? 0, 0) mm</li>
+                    <li><strong>Minimum anchorage length:</strong> @Math.Round(Model.AnchoringAnchorageLength?.AnchorageLength?.MinimumAnchorageLength ?? 0, 0) mm</li>
+                    <li><strong>Design anchorage length:</strong> @Math.Round(Model.AnchoringAnchorageLength?.AnchorageLength?.DesignAnchorageLength ?? 0, 0) mm</li>
+                </ul>
+            </div>
+        }
+        <div class="row">
+
+            <div class="col-sm-6">
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ReinforcementDiameter, "Bar diameter")
+                    @Html.TextBoxFor(m => m.ReinforcementDiameter,
+                        new { @class = "form-control", @placeholder = "Enter diameter in milimeters",
+                            @type = "number", @onchange = "dataChanged()", @step = "1", @min = "6", @max = "32" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConcreteClassName, "Concrete class")
+                    @Html.EnumDropDownListFor(m => m.ConcreteClassName, new { @onchange = "dataChanged()" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PressInReinforcement, "Press in reinforcement")
+                    @Html.TextBoxFor(m => m.PressInReinforcement,
+                        new { @class = "form-control", @placeholder = "Enter press in MPa",
+                        @type = "number", @onchange = "dataChanged()", @step = "10" })
+                </div>
+
+                <div class="form-group">
+                    @Html.CheckBoxFor(m => m.IsPairOfBars, new { @onchange = "dataChanged()" }) @Html.LabelFor(m => m.IsPairOfBars, "Is pair of bars")
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        @Html.RadioButtonFor(m => m.BondCondition, ReinforcementAnchoring.BondConditionEnum.Good, new { @checked = "checked", @onchange = "dataChanged()" }) @Html.LabelFor(m => m.BondCondition, "Good anchoring conditions")
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(m => m.BondCondition, ReinforcementAnchoring.BondConditionEnum.Bad, new { @onchange = "dataChanged()" }) @Html.LabelFor(m => m.BondCondition, "Bad anchoring conditions")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        @Html.RadioButtonFor(m => m.AreAnchoragesInTension, true, new { @checked = "checked", @onchange = "dataChanged()" }) @Html.LabelFor(m => m.AreAnchoragesInTension, "Tensioned rebars")
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(m => m.AreAnchoragesInTension, false, new { @onchange = "dataChanged()" }) @Html.LabelFor(m => m.AreAnchoragesInTension, "Stressed rebars")
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+
+                <div>
+                    @Html.CheckBoxFor(m => m.CalculateBarFormCoefficient, new { @onchange = "barFormCoverChanged()" }) @Html.LabelFor(m => m.CalculateBarFormCoefficient, "Bar form coefficient")
+                </div>
+                <div>
+                    @Html.CheckBoxFor(m => m.CalculateCoverCoefficient, new { @onchange = "barFormCoverChanged()" }) @Html.LabelFor(m => m.CalculateCoverCoefficient, "Cover coefficient")
+                </div>
+                <div>
+                    @Html.CheckBoxFor(m => m.CalculateTransverseReinforcementCoefficient, new { @onchange = "transverseReinforcementChanged()" }) @Html.LabelFor(m => m.CalculateTransverseReinforcementCoefficient, "Transverse reinforcement coefficient")
+                </div>
+                <div>
+                    @Html.CheckBoxFor(m => m.CalculateWeldedTransverseBarCoefficient, new { @onchange = "dataChanged()" }) @Html.LabelFor(m => m.CalculateWeldedTransverseBarCoefficient, "Welded transverse bar coefficient")
+                </div>
+                <div>
+                    @Html.CheckBoxFor(m => m.CalculateTransversePressureCoefficient, new { @onchange = "transversePressureChanged()" }) @Html.LabelFor(m => m.CalculateTransversePressureCoefficient, "Transverse pressure coefficient")
+                </div>
+
+                <div id="barForm-cover-Form" class="collapse">
+                    <div class="form-group">
+                        <div>
+                            @Html.RadioButtonFor(m => m.AnchorageType, ReinforcementAnchoring.AnchorageTypeEnum.Straight, new { @checked = "checked", @onchange = "dataChanged()" }) @Html.LabelFor(m => m.AnchorageType, "Straight bar")
+                        </div>
+                        <div>
+                            @Html.RadioButtonFor(m => m.AnchorageType, ReinforcementAnchoring.AnchorageTypeEnum.Bended_Hack, new { @onchange = "dataChanged()" }) @Html.LabelFor(m => m.AnchorageType, "Bended hack")
+                        </div>
+                        <div>
+                            @Html.RadioButtonFor(m => m.AnchorageType, ReinforcementAnchoring.AnchorageTypeEnum.Loop, new { @onchange = "dataChanged()" }) @Html.LabelFor(m => m.AnchorageType, "Bar loop")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BottomCoverDistance, "Bottom cover distance")
+                        @Html.TextBoxFor(m => m.BottomCoverDistance,
+                            new { @class = "form-control", @placeholder = "Enter distance in milimeters",
+                                @type = "number", @onchange = "dataChanged()", @step = "1"})
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SideCoverDistance, "Side cover distance")
+                        @Html.TextBoxFor(m => m.SideCoverDistance,
+                            new { @class = "form-control", @placeholder = "Enter distance in milimeters",
+                                @type = "number", @onchange = "dataChanged()", @step = "1" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DistanceBetweenBars, "Distance between bars")
+                        @Html.TextBoxFor(m => m.DistanceBetweenBars,
+                            new { @class = "form-control", @placeholder = "Enter distance in milimeters",
+                                @type = "number", @onchange = "dataChanged()", @step = "1" })
+                    </div>
+                </div>
+
+                <div id="transverseReinforcement-Form" class="collapse">
+                    <div class="form-group">
+                        <div>
+                            @Html.RadioButtonFor(m => m.Type, ReinforcementAnchoring.TypeEnum.Beam, new { @checked = "checked", @onchange = "dataChanged()" }) @Html.LabelFor(m => m.Type, "Beam shape")
+                        </div>
+                        <div>
+                            @Html.RadioButtonFor(m => m.Type, ReinforcementAnchoring.TypeEnum.Slab, new { @onchange = "dataChanged()" }) @Html.LabelFor(m => m.Type, "Slab shape")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.TransverseReinforcementArea, "Transverse reinforcement area")
+                        @Html.TextBoxFor(m => m.TransverseReinforcementArea,
+                            new { @class = "form-control", @placeholder = "Enter area in cm2",
+                                @type = "number", @onchange = "dataChanged()", @step = ".1"})
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.TransverseBarPosition, "Transverse bar position")
+                        @Html.EnumDropDownListFor(m => m.TransverseBarPosition, new { @onchange = "dataChanged()" })
+                    </div>
+                </div>
+
+                <div id="transversePressure-Form" class="collapse">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.TransversePressure, "Transverse pressure")
+                        @Html.TextBoxFor(m => m.TransversePressure,
+                            new { @class = "form-control", @placeholder = "Enter pressure in kN/m2",
+                            @type = "number", @onchange = "dataChanged()", @step = "1"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" name="calculate" id="calculate" value="calculate" class="btn btn-info pull-left"
+                            required="required" onclick="showResults()">
+                        Calculate
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<script>
+
+    window.addEventListener("load", displayCoefficients())
+    var windowStarted = false;
+    var showResults = false;
+
+    function displayCoefficients() {
+        windowStarted = true;
+
+        barFormCoverChanged();
+        transverseReinforcementChanged();
+        transversePressureChanged();
+
+        windowStarted = false;
+        
+    }
+
+    function dataChanged() {
+        var results = document.getElementById("results");
+        if (showResults)
+            results = results.style.display = "block";
+        else
+            results = results.style.display = "none";
+    }
+
+    function showResults() {
+        showResults = true;
+        dataChanged();
+    }
+
+    function barFormCoverChanged() {
+        if (windowStarted)
+            dataChanged();
+
+        var barFormChecked = document.getElementById("CalculateBarFormCoefficient").checked;
+        var coverChecked = document.getElementById("CalculateCoverCoefficient").checked;
+
+        var barFormCoverForm = document.getElementById("barForm-cover-Form");
+
+        if (barFormChecked || coverChecked)
+            barFormCoverForm.style.display = "block";
+        else
+            barFormCoverForm.style.display = "none";
+    }
+
+    function transverseReinforcementChanged() {
+        if (windowStarted)
+            dataChanged();
+
+        var transverseReinforcement = document.getElementById("CalculateTransverseReinforcementCoefficient").checked;
+
+        var transverseReinforcementForm = document.getElementById("transverseReinforcement-Form");
+
+        if (transverseReinforcement)
+            transverseReinforcementForm.style.display = "block";
+        else
+            transverseReinforcementForm.style.display = "none";
+    }
+
+    function transversePressureChanged() {
+        if (windowStarted)
+            dataChanged();
+
+        var transversePressure = document.getElementById("CalculateTransversePressureCoefficient").checked;
+
+        var transversePressureForm = document.getElementById("transversePressure-Form");
+
+        if (transversePressure)
+            transversePressureForm.style.display = "block";
+        else
+            transversePressureForm.style.display = "none";
+    }
+</script>

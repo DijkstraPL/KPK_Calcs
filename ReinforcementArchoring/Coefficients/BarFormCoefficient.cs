@@ -1,6 +1,7 @@
-﻿using Tools;
+﻿using ReinforcementAnchoring.Interfaces;
+using Tools;
 
-namespace ReinforcementArchoring.Coefficients
+namespace ReinforcementAnchoring.Coefficients
 {
     public class BarFormCoefficient : ICoefficient
     {
@@ -10,7 +11,7 @@ namespace ReinforcementArchoring.Coefficients
         public double Coefficient { get; private set; } = 1;
 
         public ReinforcementPosition ReinforcementPosition { get; private set; }
-        public Reinforcement Reinforcement { get; private set; }
+        public Bar Bar { get; private set; }
 
         #endregion // Properties
 
@@ -22,12 +23,12 @@ namespace ReinforcementArchoring.Coefficients
 
         #region Constructors
 
-        public BarFormCoefficient(ReinforcementPosition reinforcementPosition, Reinforcement reinforcement)
+        public BarFormCoefficient(ReinforcementPosition reinforcementPosition, Bar bar)
         {
             ReinforcementPosition = reinforcementPosition;
-            Reinforcement = reinforcement;
+            Bar = bar;
         }
-
+        
         #endregion // Constructors
 
         #region Methods
@@ -38,7 +39,7 @@ namespace ReinforcementArchoring.Coefficients
             cover = coefficientHelper.CalculateCover();
 
             if (ReinforcementPosition.AnchorageType != AnchorageTypeEnum.Straight &&
-                ReinforcementPosition.AreAnchoragesInTension && cover > 3 * Reinforcement.Diameter)
+                ReinforcementPosition.AreAnchoragesInTension && cover > 3 * Bar.Diameter)
                 Coefficient = 0.7;
             else
                 Coefficient = 1;
