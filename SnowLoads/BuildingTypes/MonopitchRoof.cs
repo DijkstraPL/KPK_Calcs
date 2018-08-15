@@ -20,6 +20,7 @@ namespace SnowLoads.BuildingTypes
         /// Slope for roof.
         /// </summary>
         [Abbreviation("alpha")]
+        [Unit("degree")]
         public double Slope { get; set; }
 
         /// <summary>
@@ -31,12 +32,14 @@ namespace SnowLoads.BuildingTypes
         /// Snow load shape coefficient
         /// </summary>
         [Abbreviation("mi_1")]
+        [Unit("")]
         public double ShapeCoefficient { get; private set; }
 
         /// <summary>
         /// Snow load on the roof [kN/m2]
         /// </summary>
         [Abbreviation("s")]
+        [Unit("kN/m2")]
         public double SnowLoadOnRoofValue { get; private set; }
 
         /// <summary>

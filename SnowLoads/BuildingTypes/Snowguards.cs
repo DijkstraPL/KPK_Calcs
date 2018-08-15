@@ -21,24 +21,28 @@ namespace SnowLoads.BuildingTypes
         /// appropriate for the roof under consideration [kN/m2].
         /// </summary>
         [Abbreviation("s")]
+        [Unit("kN/m2")]
         public double SnowLoadOnRoofValue { get; set; }
 
         /// <summary>
         /// b - Width on plan (horizontal) from the guard or obstacle to the next guard or to the ridge.
         /// </summary>
         [Abbreviation("b")]
+        [Unit("m")]
         public double Width { get; set; }
 
         /// <summary>
         /// alpha - pitch of the roof, measured from the horizontal
         /// </summary>
         [Abbreviation("alpha")]
+        [Unit("degree")]
         public double Slope { get; set; }
 
         /// <summary>
         /// Force on snow guard.
         /// </summary>
         [Abbreviation("F_s")]
+        [Unit("kN/m")]
         public double ForceExertedBySnow { get; private set; }
 
         #endregion // Properties

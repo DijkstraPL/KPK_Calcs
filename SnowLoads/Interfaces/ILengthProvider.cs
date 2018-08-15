@@ -10,6 +10,7 @@ namespace SnowLoads.Interfaces
     public interface ILengthProvider
     {
         [Abbreviation("l_s")]
+        [Unit("m")]
         double DriftLength { get; }
 
         void CalculateDriftLength();

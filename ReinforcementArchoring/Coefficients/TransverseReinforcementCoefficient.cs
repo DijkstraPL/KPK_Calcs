@@ -51,9 +51,14 @@ namespace ReinforcementAnchoring.Coefficients
             SetCoefficientK();
             //SetMinReinforcementArea();
 
-            Coefficient = 1 - coefficientK * lambdaCoefficient;
-            Coefficient = Math.Min(Coefficient, 1);
-            Coefficient = Math.Max(0.7, Coefficient);
+            if (!ReinforcementPosition.AreAnchoragesInTension)
+                Coefficient = 1;
+            else
+            {
+                Coefficient = 1 - coefficientK * lambdaCoefficient;
+                Coefficient = Math.Min(Coefficient, 1);
+                Coefficient = Math.Max(0.7, Coefficient);
+            }
         }
 
         private void CalculateLambdaCoefficient()

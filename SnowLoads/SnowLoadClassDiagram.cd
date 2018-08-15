@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SnowLoads.BuildingTypes.MonopitchRoof">
+    <Position X="9.25" Y="4.25" Width="2.75" />
+    <AssociationLine Name="buildingSite" Type="SnowLoads.Interfaces.IBuildingSite">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.076" Y="0.132" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAABCgAAAAAAAAAAAAQAASAAAAAAAAAAIAAAEAA0A=</HashCode>
+      <FileName>BuildingTypes\MonopitchRoof.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="buildingSite" />
+      <Field Name="snowLoad" />
+      <Property Name="Building" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SnowLoads.BuildingSite" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAQAAAABAAAA=</HashCode>
+      <FileName>BuildingSite.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CurrentTopography" />
+      <Property Name="CurrentZone" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SnowLoads.BuildingTypes.Building">
+    <Position X="3.5" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AFAAAAAAAAAAgBAAAAAAAAAAAAAACAAAAAAQAACAEAA=</HashCode>
+      <FileName>Buillding.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SnowLoad" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SnowLoads.SnowLoad">
+    <Position X="3.75" Y="3.25" Width="3.75" />
+    <AssociationLine Name="BuildingSite" Type="SnowLoads.Interfaces.IBuildingSite" ManuallyRouted="true">
+      <Path>
+        <Point X="7.5" Y="3.719" />
+        <Point X="9.094" Y="3.719" />
+        <Point X="9.094" Y="2.882" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AIAKAAAAAgQAAAAAAQALAAAAACBBCAAAAAASAAAAEYQ=</HashCode>
+      <FileName>SnowLoad.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="BuildingSite" />
+      <Property Name="CurrentDesignSituation" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="SnowLoads.Interfaces.IBuildingSite">
+    <Position X="9" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAQAAAABAAAA=</HashCode>
+      <FileName>Interfaces\IBuildingSite.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SnowLoads.Interfaces.ISnowLoad">
+    <Position X="8.25" Y="8.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AIAKAAAAAgQAAAAAAQAAAAAAACBACAAAAAAQAAAAAQA=</HashCode>
+      <FileName>Interfaces\ISnowLoad.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SnowLoads.Interfaces.IBuilding">
+    <Position X="13" Y="4.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AFAAAAAAAAAAgBAAAAAAAAAAAAAAAAAAAAAAAACAEAA=</HashCode>
+      <FileName>Interfaces\IBuilding.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="SnowLoads.Zone">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAEIAAAAAAAAAAAAAEAAAEAhAgAAAAAAAEAACA=</HashCode>
+      <FileName>BuildingSite.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SnowLoads.Topography">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAEAAAAAAAAAAAAAAIAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>BuildingSite.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SnowLoads.DesignSituation">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAEAAAAAAACAAAAAAIAAAAAA=</HashCode>
+      <FileName>SnowLoad.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

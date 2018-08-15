@@ -17,30 +17,35 @@ namespace SnowLoads.BuildingTypes
         /// Width of the roof.
         /// </summary>
         [Abbreviation("b")]
+        [Unit("m")]
         public double Width { get; set; }
 
         /// <summary>
         /// Height of the roof.
         /// </summary>
         [Abbreviation("h")]
+        [Unit("m")]
         public double Height { get; set; }
 
         /// <summary>
         /// Length of the load.
         /// </summary>
         [Abbreviation("l_s")]
+        [Unit("m")]
         public double DriftLength { get; private set; }
 
         /// <summary>
         /// Snow load shape coefficient.
         /// </summary>
         [Abbreviation("mi_3")]
+        [Unit("")]
         public double ShapeCoefficient { get; private set; }
 
         /// <summary>
         /// Snow load on the roof [kN/m2]
         /// </summary>
         [Abbreviation("s")]
+        [Unit("kN/m2")]
         public double SnowLoadOnRoofValue { get; private set; }
 
         /// <summary>
@@ -56,8 +61,13 @@ namespace SnowLoads.BuildingTypes
         #endregion // Properties
 
         #region Fields
-
+        /// <summary>
+        /// 
+        /// </summary>
         private ISnowLoad snowLoad;
+        /// <summary>
+        /// 
+        /// </summary>
         private IBuildingSite buildingSite;
 
         #endregion // Fields
@@ -101,7 +111,10 @@ namespace SnowLoads.BuildingTypes
             CalculateSnowLoadOnRoof();
             SetCasesSnowLoad();
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetCasesSnowLoad()
         {
             RoofCasesSnowLoad.Clear();
@@ -112,6 +125,9 @@ namespace SnowLoads.BuildingTypes
             RoofCasesSnowLoad.Add(3, SnowLoadOnRoofValue);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void SetReferences()
         {
             snowLoad = Building.SnowLoad;

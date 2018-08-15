@@ -6,8 +6,8 @@ namespace SnowLoads.Tests
     public class BuildingSiteImplementation : IBuildingSite
     {
         public double AltitudeAboveSea { get; set; }
-        public Zone CurrentZone { get; set; }
-        public Topography CurrentTopography { get; set; }
+        public ZoneEnum CurrentZone { get; set; }
+        public TopographyEnum CurrentTopography { get; set; }
 
         public double ExposureCoefficient { get; private set; }
 

@@ -1,6 +1,5 @@
 ﻿window.addEventListener("load", displayThermalCoefficient())
-window.addEventListener("load",
-    checkIfAttitudeIsNeeded(document.getElementById("BuildingData_BuildingSite_CurrentZone").value))
+window.addEventListener("load", checkIfAttitudeIsNeeded())
 window.addEventListener("load",
     checkIfExceptionalSituationIsPossible(document.getElementById("BuildingData_SnowLoad_CurrentDesignSituation").value))
 window.addEventListener("load",
@@ -8,9 +7,12 @@ window.addEventListener("load",
 window.addEventListener("load",
     checkIfExceptional(document.getElementById("exceptional").value))
 
-function checkIfAttitudeIsNeeded(selectedZone) {
+function checkIfAttitudeIsNeeded() {
     var elem = document.getElementById("attitiude");
-    if (selectedZone === "2" || selectedZone === "8")
+    var selectedZone = document.getElementById("BuildingData_BuildingSite_CurrentZone").value;
+    var returnPeriod = document.getElementById("BuildingData_SnowLoad_ReturnPeriod")
+
+    if ((selectedZone === "2" || selectedZone === "8") && returnPeriod.value == "50")
         elem.style.display = "none";
     else
         elem.style.display = "block";

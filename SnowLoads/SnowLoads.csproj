@@ -78,5 +78,8 @@
       <Name>Tools</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SnowLoadClassDiagram.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

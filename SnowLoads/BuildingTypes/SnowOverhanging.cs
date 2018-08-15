@@ -19,12 +19,14 @@ namespace SnowLoads.BuildingTypes
         /// Thickness of the snow.
         /// </summary>
         [Abbreviation("d")]
+        [Unit("m")]
         public double SnowLayerDepth { get; set; }
 
         /// <summary>
         /// Shape coefficient.
         /// </summary>
         [Abbreviation("k")]
+        [Unit("")]
         public double IrregularShapeCoefficient { get; private set; }
 
         /// <summary>
@@ -32,12 +34,14 @@ namespace SnowLoads.BuildingTypes
         /// appropriate for the roof under consideration [kN/m2].
         /// </summary>
         [Abbreviation("s")]
+        [Unit("kN/m2")]
         public double SnowLoadOnRoofValue { get; set; }
 
         /// <summary>
         /// Snow load per metre length due to the overhang [kN/m].
         /// </summary>
         [Abbreviation("s_e")]
+        [Unit("kN/m")]
         public double SnowLoad { get; private set; }
 
         /// <summary>

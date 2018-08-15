@@ -10,13 +10,15 @@ namespace SnowLoads.Interfaces
     public interface IBuildingSite
     {
         [Abbreviation("A")]
+        [Unit("m")]
         double AltitudeAboveSea { get; set; }
         
-        Zone CurrentZone { get; set; }
+        ZoneEnum CurrentZone { get; set; }
         
-        Topography CurrentTopography { get; set; }
+        TopographyEnum CurrentTopography { get; set; }
         
         [Abbreviation("C_e")]
+        [Unit("")]
         double ExposureCoefficient { get; }
 
         void CalculateExposureCoefficient();

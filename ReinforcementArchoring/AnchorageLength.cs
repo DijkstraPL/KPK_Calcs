@@ -99,6 +99,8 @@ namespace ReinforcementAnchoring
             }         
 
             DesignAnchorageLength = coefficient * BasicRequiredAnchorageLength;
+            if (DesignAnchorageLength < MinimumAnchorageLength)
+                DesignAnchorageLength = MinimumAnchorageLength;
         }
 
         private double CalculateCoefficientsMultipler(List<Type> types, double coefficient)

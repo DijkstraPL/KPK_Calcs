@@ -20,24 +20,28 @@ namespace SnowLoads.BuildingTypes
         /// Snow load shape coefficient due to sliiding of snow.
         /// </summary>
         [Abbreviation("mi_s")]
+        [Unit("")]
         public double ShapeCoefficientSlidingSnow { get; private set; }
 
         /// <summary>
         /// Snow load shape coefficient due to wind.
         /// </summary>
         [Abbreviation("mi_w")]
+        [Unit("")]
         public double ShapeCoefficientWind { get; private set; }
 
         /// <summary>
         /// Snow load shape coefficient.
         /// </summary>
         [Abbreviation("mi_2")]
+        [Unit("")]
         public double ShapeCoefficient { get; private set; }
 
         /// <summary>
         /// Snow load shape coefficient at the end of drift length.
         /// </summary>
         [Abbreviation("mi")]
+        [Unit("")]
         public double ShapeCoefficientAtTheEnd { get; private set; }
 
         /// <summary>
@@ -49,36 +53,42 @@ namespace SnowLoads.BuildingTypes
         /// Width of the taller building [m].
         /// </summary>
         [Abbreviation("b_1")]
+        [Unit("m")]
         public double WidthOfUpperBuilding { get; set; }
 
         /// <summary>
         /// Width of the lower building [m].
         /// </summary>
         [Abbreviation("b_2")]
+        [Unit("m")]
         public double WidthOfLowerBuilding { get; set; }
 
         /// <summary>
         /// Height difference between buildings [m].
         /// </summary>
         [Abbreviation("h")]
+        [Unit("m")]
         public double HeightDifference { get; set; }
         
         /// <summary>
         /// Snow load on the roof [kN/m2]
         /// </summary>
         [Abbreviation("s")]
+        [Unit("kN/m2")]
         public double SnowLoadOnRoofValue { get; private set; }
 
         /// <summary>
         /// Snow load on the roof [kN/m2]
         /// </summary>
         [Abbreviation("s_2")]
+        [Unit("kN/m2")]
         public double SnowLoadOnRoofValueAtTheEnd { get; private set; }
 
         /// <summary>
         /// Length of the drift [m].
         /// </summary>
         [Abbreviation("l_s")]
+        [Unit("m")]
         public double DriftLength { get; private set; }
 
         /// <summary>

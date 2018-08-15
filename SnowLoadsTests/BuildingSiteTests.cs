@@ -19,7 +19,7 @@ namespace SnowLoads.Tests
         public void CalculateExposureCoefficientTest_WindsweptTopography_Success()
         {
             var buildingSite = new BuildingSite();
-            buildingSite.CurrentTopography = Topography.Windswept;
+            buildingSite.CurrentTopography = TopographyEnum.Windswept;
 
             buildingSite.CalculateExposureCoefficient();
 
@@ -31,7 +31,7 @@ namespace SnowLoads.Tests
         public void CalculateExposureCoefficientTest_NormalTopography_Success()
         {
             var buildingSite = new BuildingSite();
-            buildingSite.CurrentTopography = Topography.Normal;
+            buildingSite.CurrentTopography = TopographyEnum.Normal;
 
             buildingSite.CalculateExposureCoefficient();
 
@@ -43,7 +43,7 @@ namespace SnowLoads.Tests
         public void CalculateExposureCoefficientTest_ShelteredTopography_Success()
         {
             var buildingSite = new BuildingSite();
-            buildingSite.CurrentTopography = Topography.Sheltered;
+            buildingSite.CurrentTopography = TopographyEnum.Sheltered;
 
             buildingSite.CalculateExposureCoefficient();
 
@@ -55,7 +55,7 @@ namespace SnowLoads.Tests
         public void CalculateExposureCoefficientTest_NoneTopography_Success()
         {
             var buildingSite = new BuildingSite();
-            buildingSite.CurrentTopography = Topography.None;
+            buildingSite.CurrentTopography = TopographyEnum.None;
 
             buildingSite.CalculateExposureCoefficient();
 

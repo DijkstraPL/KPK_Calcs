@@ -16,10 +16,7 @@ namespace Tools
         /// <summary>
         /// Parameter which describes the abbreviation of the property or field.
         /// </summary>
-        public virtual string Abbreviation
-        {
-            get { return abbreviation; }
-        }
+        public string Abbreviation => abbreviation;
 
         /// <summary>
         /// Constructor for abbreviation attribute.

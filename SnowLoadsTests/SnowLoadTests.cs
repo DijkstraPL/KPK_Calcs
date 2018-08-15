@@ -156,8 +156,8 @@ namespace SnowLoads.Tests
             var buildingSite = new BuildingSiteImplementation(10);
 
             buildingSite.AltitudeAboveSea = 350;
-            buildingSite.CurrentZone = Zone.FirstZone;
-            buildingSite.CurrentTopography = Topography.Normal;
+            buildingSite.CurrentZone = ZoneEnum.FirstZone;
+            buildingSite.CurrentTopography = TopographyEnum.Normal;
             buildingSite.CalculateExposureCoefficient();
 
             var snowLoad = new SnowLoad(buildingSite);
@@ -176,8 +176,8 @@ namespace SnowLoads.Tests
         {
             var buildingSite = new BuildingSiteImplementation(10);
 
-            buildingSite.CurrentZone = Zone.SecondZone;
-            buildingSite.CurrentTopography = Topography.Windswept;
+            buildingSite.CurrentZone = ZoneEnum.SecondZone;
+            buildingSite.CurrentTopography = TopographyEnum.Windswept;
             buildingSite.CalculateExposureCoefficient();
 
             var snowLoad = new SnowLoad(buildingSite);

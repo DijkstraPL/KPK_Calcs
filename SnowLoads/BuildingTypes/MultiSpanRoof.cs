@@ -29,12 +29,15 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Snow load on middle roof [kN/m2]
         /// </summary>
+        [Abbreviation("s")]
+        [Unit("kN/m2")]
         public double SnowLoadOnMiddleRoof { get; private set; }
 
         /// <summary>
         /// Snow load shape coefficient
         /// </summary>
         [Abbreviation("mi_2")]
+        [Unit("")]
         public double ShapeCoefficient { get; private set; }
         
         /// <summary>

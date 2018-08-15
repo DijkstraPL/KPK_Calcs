@@ -20,24 +20,28 @@ namespace SnowLoads.BuildingTypes
         /// Length of the drift.
         /// </summary>
         [Abbreviation("l_s")]
+        [Unit("m")]
         public double DriftLength { get; private set; }
 
         /// <summary>
         /// Height of the obstruction.
         /// </summary>
         [Abbreviation("h")]
+        [Unit("m")]
         public double ObstructionHeight { get; set; }
 
         /// <summary>
         /// Snow load shape coefficient.
         /// </summary>
         [Abbreviation("mi_1")]
+        [Unit("")]
         public double FirstShapeCoefficient { get; private set; }
 
         /// <summary>
         /// Snow load shape coefficient.
         /// </summary>
         [Abbreviation("mi_2")]
+        [Unit("")]
         public double SecondShapeCoefficient { get; private set; }
 
         /// <summary>
@@ -50,6 +54,7 @@ namespace SnowLoads.BuildingTypes
         /// Snow load on the roof [kN/m2]
         /// </summary>
         [Abbreviation("s_2")]
+        [Unit("kN/m2")]
         public double SnowLoadOnRoofValueAtTheEnd { get; private set; }
 
         /// <summary>

@@ -11,28 +11,41 @@ namespace SnowLoads.BuildingTypes
     /// <summary>
     /// Class containing informations about the building.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// class TestClass
+    /// {
+    ///     static void Main()
+    ///     {
+    ///         BuildingSite buildingSite = new BuildingSite();
+    ///         SnowLoad snowLoad = new SnowLoad(buildingSite, DesignSituation.A, false);
+    ///         Building building = new Building(snowLoad, 15, 3);
+    ///         building.CalculateThermalCoefficient();
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
     public class Building : IBuilding
     {
         #region Properties
 
         /// <summary>
-        /// Ct - thermal coefficient - 
+        /// Thermal coefficient - 
         /// coefficient defining the reduction of snow load on roofs
         /// as a function of the heat flux through the roof, causing snow melting.
         /// </summary>
-        /// <remarks>
-        /// The thermal coefficient Ct should be used to account for the reduction of
-        /// snow loads on roofs with high thermal transmittance(> 1 W/m2K), in particular
-        /// for some glass covered roofs, because of melting caused by heat loss.
-        /// </remarks>
+        /// <remarks>[PN-EN 1991-1-3 5.2.(8)]</remarks>
         [Abbreviation("C_t")]
+        [Unit("")]
         public double ThermalCoefficient { get; private set; }
 
         private double internalTemperature;
         /// <summary>
         /// Internal temperature in degrees of Celsius
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 NB1.8]</remarks>
         [Abbreviation("t_i")]
+        [Unit("C")]
         public double InternalTemperature
         {
             get { return internalTemperature; }
@@ -50,33 +63,43 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Difference between temperatures
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 (NB.2)]</remarks>
         [Abbreviation("delta-t")]
+        [Unit("C")]
         public double TempreatureDifference { get; private set; }
-        
+
         /// <summary>
-        /// U - Overall heat transfer coefficient - refers to how well heat is conducted over a series of mediums W/(m2*K).
+        /// Overall heat transfer coefficient - refers to how well heat is conducted over a series of mediums.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 NB1.8]</remarks>
         [Abbreviation("U")]
+        [Unit("W/(m2*K)")]
         public double OverallHeatTransferCoefficient { get; set; }
 
         /// <summary>
-        /// Instance of snow load.
+        /// Instance of class implementing <see cref="ISnowLoad"/>.
         /// </summary>
         public ISnowLoad SnowLoad { get; private set; }
-        
+
         #endregion // Properties
 
         #region Constructors
 
         /// <summary>
-        /// Constructor for building.
+        /// Initializes a new instance of the <see cref="Building"/> class.
         /// </summary>
-        /// <param name="snowLoad">Instance of snow load.</param>
+        /// <param name="snowLoad">Instance of class implementing <see cref="ISnowLoad"/>.</param>
         public Building(ISnowLoad snowLoad)
         {
             SnowLoad = snowLoad;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Building"/> class.
+        /// </summary>
+        /// <param name="snowLoad">Instance of class implementing <see cref="ISnowLoad"/>.</param>
+        /// <param name="internalTemperature"><see cref="InternalTemperature"/>.</param>
+        /// <param name="overallHeatTransferCoefficient"><see cref="OverallHeatTransferCoefficient"/>.</param>
         public Building(ISnowLoad snowLoad, double internalTemperature, double overallHeatTransferCoefficient)
         {
             SnowLoad = snowLoad;
@@ -87,10 +110,11 @@ namespace SnowLoads.BuildingTypes
         #endregion // Constructors
 
         #region Methods
-        
+
         /// <summary>
-        /// Calculate thermal coefficient (NB.1)
+        /// Calculate <see cref="ThermalCoefficient"/>.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 (NB.1)]</remarks>
         public void CalculateThermalCoefficient()
         {
             CalculateTempreatureDifference();
@@ -103,8 +127,9 @@ namespace SnowLoads.BuildingTypes
         }
 
         /// <summary>
-        /// Calculate difference in temperature (NB.2)
+        /// Calculate <see cref="TempreatureDifference"/>.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 (NB.2)]</remarks>
         private void CalculateTempreatureDifference()
         {
             TempreatureDifference = InternalTemperature - 5;
