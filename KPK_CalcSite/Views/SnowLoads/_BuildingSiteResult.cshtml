@@ -1,8 +1,8 @@
 ﻿@model KPK_CalcSite.Models.SnowLoads.BuildingData
 <ul>
     <li><strong>Zone:</strong> @Model.BuildingSite.CurrentZone</li>
-    @if (@Model.BuildingSite.CurrentZone != SnowLoads.Zone.SecondZone &&
-        Model.BuildingSite.CurrentZone != SnowLoads.Zone.FourthZone)
+    @if (@Model.BuildingSite.CurrentZone != SnowLoads.ZoneEnum.SecondZone &&
+        Model.BuildingSite.CurrentZone != SnowLoads.ZoneEnum.FourthZone)
     {
         <li><strong>Attitude:</strong> @Model.BuildingSite.AltitudeAboveSea meters above sea-level</li>
     }
