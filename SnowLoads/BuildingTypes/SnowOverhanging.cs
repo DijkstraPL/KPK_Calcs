@@ -53,6 +53,14 @@ namespace SnowLoads.BuildingTypes
 
         #region Constructor 
 
+        public SnowOverhanging(IBuilding building, double snowLoadOnRoof)
+        {
+            Building = building;
+            SnowLoadOnRoofValue = snowLoadOnRoof;
+
+            SnowLayerDepth = SnowLoadOnRoofValue / Building.SnowLoad.SnowDensity;
+        }
+
         /// <summary>
         /// Constructor.
         /// </summary>

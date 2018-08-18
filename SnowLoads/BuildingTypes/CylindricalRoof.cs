@@ -7,8 +7,29 @@ using Tools;
 namespace SnowLoads.BuildingTypes
 {
     /// <summary>
-    /// Calculation class for cylindrical roof.
+    /// Calculation class for cylindrical roofs.
     /// </summary>
+    /// <remarks>[PN-EN 1991-1-3 5.3.5]</remarks>
+    /// <example>
+    /// <code>
+    /// class TestClass
+    /// {
+    ///     static void Main()
+    ///     {
+    ///         BuildingSite buildingSite = new BuildingSite();
+    ///         SnowLoad snowLoad = new SnowLoad(buildingSite, DesignSituation.A, false);
+    ///         Building building = new Building(snowLoad, 15, 3);
+    ///         CylindricalRoof cylindricalRoof = new CylindricalRoof(building, 20, 10);
+    ///         cylindricalRoof.CalculateDriftLength();
+    ///         cylindricalRoof.CalculateSnowLoad();
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
+    /// <seealso cref="MonopitchRoof"/>
+    /// <seealso cref="PitchedRoof"/>
+    /// <seealso cref="MultiSpanRoof"/>
+    /// <seealso cref="RoofAbuttingToTallerConstruction"/>
     public class CylindricalRoof : ICalculatable, ILengthProvider
     {
         #region Properties
@@ -16,6 +37,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Width of the roof.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.6]</remarks>
         [Abbreviation("b")]
         [Unit("m")]
         public double Width { get; set; }
@@ -23,6 +45,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Height of the roof.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.6]</remarks>
         [Abbreviation("h")]
         [Unit("m")]
         public double Height { get; set; }
@@ -30,20 +53,23 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Length of the load.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.6]</remarks>
         [Abbreviation("l_s")]
         [Unit("m")]
         public double DriftLength { get; private set; }
 
         /// <summary>
-        /// Snow load shape coefficient.
+        /// Snow load shape coefficient 3.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.6]</remarks>
         [Abbreviation("mi_3")]
         [Unit("")]
         public double ShapeCoefficient { get; private set; }
 
         /// <summary>
-        /// Snow load on the roof [kN/m2]
+        /// Snow load on the roof.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.6]</remarks>
         [Abbreviation("s")]
         [Unit("kN/m2")]
         public double SnowLoadOnRoofValue { get; private set; }
@@ -51,23 +77,19 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Snow load on roof for all cases.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.6]</remarks>
         public Dictionary<int, double> RoofCasesSnowLoad { get; private set; }
 
         /// <summary>
-        /// Instance of building.
+        /// Instance of class implementing <see cref="IBuilding"/>.
         /// </summary>
         public IBuilding Building { get; private set; }
 
         #endregion // Properties
 
         #region Fields
-        /// <summary>
-        /// 
-        /// </summary>
+
         private ISnowLoad snowLoad;
-        /// <summary>
-        /// 
-        /// </summary>
         private IBuildingSite buildingSite;
 
         #endregion // Fields
@@ -75,11 +97,11 @@ namespace SnowLoads.BuildingTypes
         #region Constructors
 
         /// <summary>
-        /// Constructor for the cylindrical roof.
+        /// Initializes a new instance of the <see cref="CylindricalRoof"/> class.
         /// </summary>
-        /// <param name="building">Instance of a building</param>
-        /// <param name="width">Width of the roof.</param>
-        /// <param name="height">Height of the roof.</param>
+        /// <param name="building">Set instance of a class implementing <see cref="IBuilding"/> for <see cref="Building"/>.</param>
+        /// <param name="width">Set <see cref="Width"/> of the roof.</param>
+        /// <param name="height">Set <see cref="Height"/> of the roof.</param>
         public CylindricalRoof(IBuilding building, double width, double height)
         {
             RoofCasesSnowLoad = new Dictionary<int, double>();
@@ -95,39 +117,27 @@ namespace SnowLoads.BuildingTypes
         #region Methods
 
         /// <summary>
-        /// Calculate range of the load.
+        /// Calculate <see cref="DriftLength"/>.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.6]</remarks>
         public void CalculateDriftLength()
         {
             DriftLength = Math.Min((Math.Pow(Width, 2) + 4 * Math.Pow(Height, 2)) / (8 * Height) * Math.Sqrt(3), Width);
         }
 
         /// <summary>
-        /// Calculate Snow Load On Roof 
+        /// Calculate <see cref="SnowLoadOnRoofValue"/> 
         /// </summary>
+        /// <seealso cref="CalculateSnowLoadShapeCoefficient"/>
+        /// <seealso cref="CalculateSnowLoadOnRoof"/>
+        /// <seealso cref="SetCasesSnowLoad"/>
         public void CalculateSnowLoad()
         {
             CalculateSnowLoadShapeCoefficient();
             CalculateSnowLoadOnRoof();
             SetCasesSnowLoad();
         }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public void SetCasesSnowLoad()
-        {
-            RoofCasesSnowLoad.Clear();
 
-            double snowLoad = CalculateSnowLoadOnRoof(0.8);
-            RoofCasesSnowLoad.Add(1, snowLoad);
-            RoofCasesSnowLoad.Add(2, SnowLoadOnRoofValue * 0.5);
-            RoofCasesSnowLoad.Add(3, SnowLoadOnRoofValue);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         private void SetReferences()
         {
             snowLoad = Building.SnowLoad;
@@ -135,8 +145,9 @@ namespace SnowLoads.BuildingTypes
         }
 
         /// <summary>
-        /// Calculate shape coefficient for cylindrical roof.
+        /// Calculate <see cref="ShapeCoefficient"/> for cylindrical roof.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.5]</remarks>
         private void CalculateSnowLoadShapeCoefficient()
         {
             ShapeCoefficient = 0.2 + 10 * Height / Width;
@@ -145,8 +156,9 @@ namespace SnowLoads.BuildingTypes
         }
 
         /// <summary>
-        /// Calculate snow load on roof.
+        /// Calculate <see cref="SnowLoadOnRoofValue"/>.
         /// </summary>
+        /// <seealso cref="SnowLoadCalc.CalculateSnowLoad(double, double, double, double)"/>
         private void CalculateSnowLoadOnRoof()
         {
             if (!snowLoad.ExcepctionalSituation)
@@ -166,8 +178,25 @@ namespace SnowLoads.BuildingTypes
         }
 
         /// <summary>
+        /// Set <see cref="RoofCasesSnowLoad"/>.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.6]</remarks>
+        private void SetCasesSnowLoad()
+        {
+            RoofCasesSnowLoad.Clear();
+
+            double snowLoad = CalculateSnowLoadOnRoof(0.8);
+            RoofCasesSnowLoad.Add(1, snowLoad);
+            RoofCasesSnowLoad.Add(2, SnowLoadOnRoofValue * 0.5);
+            RoofCasesSnowLoad.Add(3, SnowLoadOnRoofValue);
+        }
+
+        /// <summary>
         /// Calculate snow load on roof.
         /// </summary>
+        /// <param name="shapeCoefficient">Shape coefficient for roof.</param>
+        /// <returns>Snow load on rooof.</returns>
+        /// <seealso cref="SnowLoadCalc.CalculateSnowLoad(double, double, double, double)"/>
         private double CalculateSnowLoadOnRoof(double shapeCoefficient)
         {
             if (!snowLoad.ExcepctionalSituation)

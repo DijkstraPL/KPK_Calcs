@@ -152,9 +152,9 @@ namespace SnowLoads
         /// <summary>
         /// Initializes a new instance of the <see cref="SnowLoad"/> class.
         /// </summary>
-        /// <param name="buildingSite"><see cref="BuildingSite"/> instance.</param>
-        /// <param name="currentDesignSituation"><see cref="CurrentDesignSituation"/>.</param>
-        /// <param name="excepctionalSituation"><see cref="ExcepctionalSituation"/>.</param>
+        /// <param name="buildingSite">Set instance of a class implementing <see cref="IBuildingSite"/> for <see cref="BuildingSite"/>.</param>
+        /// <param name="currentDesignSituation">Set <see cref="CurrentDesignSituation"/>.</param>
+        /// <param name="excepctionalSituation">Set <see cref="ExcepctionalSituation"/>.</param>
         public SnowLoad(IBuildingSite buildingSite,
             DesignSituation currentDesignSituation = DesignSituation.A,
             bool excepctionalSituation = false)
@@ -167,10 +167,10 @@ namespace SnowLoads
         /// <summary>
         /// Initializes a new instance of the <see cref="SnowLoad"/> class.
         /// </summary>
-        /// <param name="buildingSite"><see cref="BuildingSite"/> instance.</param>
-        /// <param name="returnPeriod"><see cref="ReturnPeriod"/> in years</param>
-        /// <param name="currentDesignSituation"><see cref="CurrentDesignSituation"/>.</param>
-        /// <param name="excepctionalSituation"><see cref="ExcepctionalSituation"/>.</param>
+        /// <param name="buildingSite">Set instance of a class implementing <see cref="IBuildingSite"/> for <see cref="BuildingSite"/>.</param>
+        /// <param name="returnPeriod">Set <see cref="ReturnPeriod"/> in years</param>
+        /// <param name="currentDesignSituation">Set <see cref="CurrentDesignSituation"/>.</param>
+        /// <param name="excepctionalSituation">Set <see cref="ExcepctionalSituation"/>.</param>
         public SnowLoad(IBuildingSite buildingSite, int returnPeriod,
             DesignSituation currentDesignSituation = DesignSituation.A,
             bool excepctionalSituation = false) : this(buildingSite, currentDesignSituation, excepctionalSituation)
@@ -181,10 +181,10 @@ namespace SnowLoads
         /// <summary>
         /// Initializes a new instance of the <see cref="SnowLoad"/> class.
         /// </summary>
-        /// <param name="buildingSite"><see cref="BuildingSite"/> instance.</param>
-        /// <param name="snowDensity"><see cref="SnowDensity"/> in kN/m3.</param>
-        /// <param name="currentDesignSituation"><see cref="CurrentDesignSituation"/>.</param>
-        /// <param name="excepctionalSituation"><see cref="ExcepctionalSituation"/>.</param>
+        /// <param name="buildingSite">Set instance of a class implementing <see cref="IBuildingSite"/> for <see cref="BuildingSite"/>.</param>
+        /// <param name="snowDensity">Set <see cref="SnowDensity"/> in kN/m3.</param>
+        /// <param name="currentDesignSituation">Set <see cref="CurrentDesignSituation"/>.</param>
+        /// <param name="excepctionalSituation">Set <see cref="ExcepctionalSituation"/>.</param>
         public SnowLoad(IBuildingSite buildingSite, double snowDensity,
             DesignSituation currentDesignSituation = DesignSituation.A,
             bool excepctionalSituation = false) : this(buildingSite, currentDesignSituation, excepctionalSituation)
@@ -195,11 +195,11 @@ namespace SnowLoads
         /// <summary>
         /// Initializes a new instance of the <see cref="SnowLoad"/> class.
         /// </summary>
-        /// <param name="buildingSite"><see cref="BuildingSite"/> instance.</param>
-        /// <param name="snowDensity"><see cref="SnowDensity"/> in kN/m3.</param>
-        /// <param name="returnPeriod"><see cref="ReturnPeriod"/> in years</param>
-        /// <param name="currentDesignSituation"><see cref="CurrentDesignSituation"/>.</param>
-        /// <param name="excepctionalSituation"><see cref="ExcepctionalSituation"/>.</param>
+        /// <param name="buildingSite">Set instance of a class implementing <see cref="IBuildingSite"/> for <see cref="BuildingSite"/>.</param>
+        /// <param name="snowDensity">Set <see cref="SnowDensity"/> in kN/m3.</param>
+        /// <param name="returnPeriod">Set <see cref="ReturnPeriod"/> in years</param>
+        /// <param name="currentDesignSituation">Set <see cref="CurrentDesignSituation"/>.</param>
+        /// <param name="excepctionalSituation">Set <see cref="ExcepctionalSituation"/>.</param>
         public SnowLoad(IBuildingSite buildingSite, double snowDensity, int returnPeriod,
         DesignSituation currentDesignSituation = DesignSituation.A,
         bool excepctionalSituation = false) : this(buildingSite, currentDesignSituation, excepctionalSituation)

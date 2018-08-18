@@ -33,7 +33,6 @@ namespace SnowLoads.BuildingTypes.Tests
             var cylindricalRoof = new CylindricalRoof(building, 20, 10);
             
             cylindricalRoof.CalculateSnowLoad();
-            cylindricalRoof.SetCasesSnowLoad();
             Assert.AreEqual(0.72, Math.Round(cylindricalRoof.RoofCasesSnowLoad[1], 3),
                 "Snow load for roof is not calculated properly.");
             Assert.AreEqual(0.9, Math.Round(cylindricalRoof.RoofCasesSnowLoad[2], 3),

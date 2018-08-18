@@ -38,5 +38,27 @@ namespace SnowLoads.BuildingTypes.Tests
             Assert.AreEqual(0.104, Math.Round(snowOverhanging.SnowLoad, 3),
                 "Snow load is not calculated properly.");
         }
+
+        [Test()]
+        [Description("Example number 2 from \"Obciążenia budynków i konstrukcji budowlanych według Eurokodów\" - Anna Rawska-Skotniczy")]
+        public void ExampleTest2_CalculateSnowOverhanging_Success()
+        {
+            var buildingSite = new BuildingSite(ZoneEnum.ThirdZone, TopographyEnum.Normal, 360);
+            buildingSite.CalculateExposureCoefficient();
+            var snowLoad = new SnowLoad(buildingSite);
+            snowLoad.SnowDensity = 3;
+            snowLoad.CalculateSnowLoad();
+            var building = new Building(snowLoad);
+            building.CalculateThermalCoefficient();
+
+            var monopitchRoof = new MonopitchRoof(building, 5);
+            monopitchRoof.CalculateSnowLoad();
+
+            var snowOverhanging = new SnowOverhanging(building, monopitchRoof.SnowLoadOnRoofValue);
+            snowOverhanging.CalculateSnowLoad();
+
+            Assert.AreEqual(0.648, Math.Round(snowOverhanging.SnowLoad, 3),
+                "Snow overhanging is not calculated properly.");
+        }
     }
 }

@@ -61,5 +61,26 @@ namespace SnowLoads.Exceptional.Tests
             Assert.AreEqual(5, Math.Round(exceptionalSnowBehindParapetAtEaves.DriftLength, 3),
                 "Drift length for roof is not calculated properly.");
         }
+
+        [Test()]
+        [Description("Example number 2 from \"Obciążenia budynków i konstrukcji budowlanych według Eurokodów\" - Anna Rawska-Skotniczy")]
+        public void ExampleTest2_CalculateExceptionalSnowLoad_Success()
+        {
+            var buildingSite = new BuildingSite(ZoneEnum.ThirdZone, TopographyEnum.Normal, 360);
+            buildingSite.CalculateExposureCoefficient();
+            var snowLoad = new SnowLoad(buildingSite, DesignSituation.B2, true);
+            snowLoad.CalculateSnowLoad();
+            var building = new Building(snowLoad);
+            building.CalculateThermalCoefficient();
+
+            var exceptionalSnowBehindParapetAtEaves = new ExceptionalSnowBehindParapetAtEaves(building, 6, 12, 1);
+            exceptionalSnowBehindParapetAtEaves.CalculateDriftLength();
+            exceptionalSnowBehindParapetAtEaves.CalculateSnowLoad();
+
+            Assert.AreEqual(5, Math.Round(exceptionalSnowBehindParapetAtEaves.DriftLength, 3),
+                "Drift length is not calculated properly.");
+            Assert.AreEqual(2, Math.Round(exceptionalSnowBehindParapetAtEaves.SnowLoad, 3),
+                "Snow load for roof is not calculated properly.");
+        }
     }
 }

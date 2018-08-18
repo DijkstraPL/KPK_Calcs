@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tools;
 
-namespace SnowLoads.BuildingTypes
+namespace SnowLoads
 {
     /// <summary>
     /// Class containing informations about the building.
@@ -88,7 +88,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Initializes a new instance of the <see cref="Building"/> class.
         /// </summary>
-        /// <param name="snowLoad">Instance of class implementing <see cref="ISnowLoad"/>.</param>
+        /// <param name="snowLoad">Set instance of a class implementing <see cref="ISnowLoad"/> for <see cref="SnowLoad"/>.</param>
         public Building(ISnowLoad snowLoad)
         {
             SnowLoad = snowLoad;
@@ -97,9 +97,9 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Initializes a new instance of the <see cref="Building"/> class.
         /// </summary>
-        /// <param name="snowLoad">Instance of class implementing <see cref="ISnowLoad"/>.</param>
-        /// <param name="internalTemperature"><see cref="InternalTemperature"/>.</param>
-        /// <param name="overallHeatTransferCoefficient"><see cref="OverallHeatTransferCoefficient"/>.</param>
+        /// <param name="snowLoad">Set instance of a class implementing <see cref="ISnowLoad"/> for <see cref="SnowLoad"/>.</param>
+        /// <param name="internalTemperature">Set <see cref="InternalTemperature"/>.</param>
+        /// <param name="overallHeatTransferCoefficient">Set <see cref="OverallHeatTransferCoefficient"/>.</param>
         public Building(ISnowLoad snowLoad, double internalTemperature, double overallHeatTransferCoefficient)
         {
             SnowLoad = snowLoad;

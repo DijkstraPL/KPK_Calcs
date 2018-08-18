@@ -62,6 +62,6 @@ namespace SnowLoads.BuildingTypes.Tests
             roofAbuttingToTallerConstruction.CalculateDriftLength();
             Assert.AreEqual(10, Math.Round(roofAbuttingToTallerConstruction.DriftLength, 3),
                 "Drift length for roof is not calculated properly.");
-        }
+        }        
     }
 }

@@ -9,34 +9,58 @@ using Tools;
 namespace SnowLoads.BuildingTypes
 {
     /// <summary>
-    /// class for pitched roof.
+    /// Calculation class for pitched roofs.
     /// </summary>
+    /// <remarks>[PN-EN 1991-1-3 5.3.3]</remarks>
+    /// <example>
+    /// <code>
+    /// class TestClass
+    /// {
+    ///     static void Main()
+    ///     {
+    ///         BuildingSite buildingSite = new BuildingSite();
+    ///         SnowLoad snowLoad = new SnowLoad(buildingSite, DesignSituation.A, false);
+    ///         Building building = new Building(snowLoad, 15, 3);
+    ///         PitchedRoof pitchedRoof = new PitchedRoof(building, 35, 25, false , true);
+    ///         pitchedRoof.CalculateSnowLoad();
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
+    /// <seealso cref="MonopitchRoof"/>
+    /// <seealso cref="MultiSpanRoof"/>
+    /// <seealso cref="CylindricalRoof"/>
+    /// <seealso cref="RoofAbuttingToTallerConstruction"/>
     public class PitchedRoof : ICalculatable
     {
         #region Properties
 
         /// <summary>
-        /// Left roof.
+        /// Instance of class implementing <see cref="IMonopitchRoof"/>.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 5.3.2]</remarks>
         public IMonopitchRoof LeftRoof { get; set; }
 
         /// <summary>
-        /// Right roof.
+        /// Instance of class implementing <see cref="IMonopitchRoof"/>.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 5.3.2]</remarks>
         public IMonopitchRoof RightRoof { get; set; }
-        
+
         /// <summary>
         /// Snow load on left roof for all cases.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.3]</remarks>
         public Dictionary<int, double> LeftRoofCasesSnowLoad { get; private set; }
 
         /// <summary>
         /// Snow load on right roof for all cases.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.3]</remarks>
         public Dictionary<int, double> RightRoofCasesSnowLoad { get; private set; }
 
         /// <summary>
-        /// Instance of building.
+        /// Instance of class implementing <see cref="IBuilding"/>.
         /// </summary>
         public IBuilding Building { get; private set; }
 
@@ -45,9 +69,13 @@ namespace SnowLoads.BuildingTypes
         #region Constructors
 
         /// <summary>
-        /// Constructor.
+        /// Initializes a new instance of the <see cref="PitchedRoof"/> class.
         /// </summary>
-        /// <param name="building">Instance of buildinng.</param>
+        /// <param name="building">Set instance of a class implementing <see cref="IBuilding"/> for <see cref="Building"/>.</param>
+        /// <param name="leftRoofSlope">Set <see cref="IMonopitchRoof.Slope"/> for <see cref="LeftRoof"/>.</param>
+        /// <param name="rightRoofSlope">Set <see cref="IMonopitchRoof.Slope"/> for <see cref="RightRoof"/>.</param>
+        /// <param name="leftRoofSnowFences">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="LeftRoof"/>.</param>
+        /// <param name="rightRoofSnowFences">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="RightRoof"/>.</param>
         public PitchedRoof(IBuilding building, double leftRoofSlope, double rightRoofSlope,
             bool leftRoofSnowFences = false, bool rightRoofSnowFences = false)
         {
@@ -60,6 +88,12 @@ namespace SnowLoads.BuildingTypes
             RightRoof = new MonopitchRoof(Building, rightRoofSlope, rightRoofSnowFences);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PitchedRoof"/> class.
+        /// </summary>
+        /// <param name="building">Set instance of a class implementing <see cref="IBuilding"/> for <see cref="Building"/>.</param>
+        /// <param name="leftRoof">Set instance of a class implementing <see cref="IMonopitchRoof"/> for <see cref="LeftRoof"/>.</param>
+        /// <param name="rightRoof">Set instance of a class implementing <see cref="IMonopitchRoof"/> for <see cref="RightRoof"/>.</param>
         public PitchedRoof(IBuilding building, IMonopitchRoof leftRoof, IMonopitchRoof rightRoof)
         {
             LeftRoofCasesSnowLoad = new Dictionary<int, double>();
@@ -76,8 +110,9 @@ namespace SnowLoads.BuildingTypes
         #region Methods
 
         /// <summary>
-        /// Calculate Snow Load On Roof 
+        /// Calculate <see cref="IMonopitchRoof.SnowLoadOnRoofValue"/> for <see cref="LeftRoof"/> and <see cref="RightRoof"/> 
         /// </summary>
+        /// <seealso cref="ICalculatable.CalculateSnowLoad"/>
         public void CalculateSnowLoad()
         {
             LeftRoof.CalculateSnowLoad();
@@ -86,9 +121,10 @@ namespace SnowLoads.BuildingTypes
         }
 
         /// <summary>
-        /// Set all cases of snow load for both roofs.
+        /// Set <see cref="LeftRoofCasesSnowLoad"/> and <see cref="RightRoofCasesSnowLoad"/>.
         /// </summary>
-        public void SetCasesSnowLoad()
+        /// <remarks>[PN-EN 1991-1-3 Fig.5.3]</remarks>
+        private void SetCasesSnowLoad()
         {
             LeftRoofCasesSnowLoad.Clear();
             RightRoofCasesSnowLoad.Clear();

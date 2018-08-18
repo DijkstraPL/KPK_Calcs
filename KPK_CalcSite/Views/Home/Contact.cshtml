@@ -1,66 +1,57 @@
-﻿@{
+﻿@model KPK_CalcSite.Models.MailModels
+@{
     ViewBag.Title = "Contact";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<div class="submit-container">
-    <div class="row">
+@using (Html.BeginForm("ContactForm", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "contact-form", role = "form" }))
+{
+    <div class="submit-container">
+        <div class="row">
 
-        <div class="col-sm-6">
+            <div class="col-sm-6">
+                @Html.ValidationSummary()
 
-            <div class="form-group">
-                <label for="fname">Name*</label>
-                <input type="text" class="form-control" name="fname" id="fname" placeholder="Enter First Name" required>
-            </div>
-            <div class="form-group">
-                <label for="lname">Last Name</label>
-                <input type="text" class="form-control" name="lname" id="lname" placeholder="Enter Last Name">
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
-            </div>
-            <div class="form-group">
-                <label for="contactno">Contact No.</label>
-                <input type="text" class="form-control" id="contactno" name="contactno" placeholder="Enter Contact No.">
-            </div>
-            <div class="form-group">
-                <label for="country">Country</label>
-                <select id="country" name="country" class="contact-input">
-                    <option value="Poland">Poland</option>
-                    <optgroup label="Countries">
-                        <option value="Czech">Czech Republic</option>
-                        <option value="Denmark">Denmark</option>
-                        <option value="Finland">Finland</option>
-                        <option value="France">France</option>
-                        <option value="Germany">Germany</option>
-                        <option value="Greece">Greece</option>
-                        <option value="Norway">Norway</option>
-                        <option value="Sweden">Sweden</option>
-                    </optgroup>
-                    <option value="Other">Other</option>
-                </select>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName, "First Name*")
+                    @Html.TextBoxFor(m => m.FirstName, new { @placeholder = "Enter First Name", @type = "text", @required="" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LastName, "Last Name*")
+                    @Html.TextBoxFor(m => m.LastName, new { @placeholder = "Enter Last Name", @type = "text", @required = "" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, "Email*")
+                    @Html.TextBoxFor(m => m.Email, new { @placeholder = "Enter Email", @type = "email", @class = "form-control", @required = "" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Telephone, "Contact No.")
+                    @Html.TextBoxFor(m => m.Telephone, new { @placeholder = "Enter Contact No.", @type = "text" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Country, "Country")
+                    @Html.DropDownListFor(m => m.Country, KPK_CalcSite.Models.MailModels.Coutries, new { @placeholder = "Enter Contact No.", @type = "text" })
+                </div>
+
             </div>
 
-        </div>
+            <div class="col-sm-6">
 
-        <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Message, "Message*")
+                    @Html.TextAreaFor(m => m.Message, new { @placeholder = "Enter Message.", @type = "text", @rows = "5", @required = "" })
+                </div>
+                <div class="form-group">
+                    <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right" required="required">Submit Message</button>
+                </div>
 
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea name="message" id="message" class="form-control" rows="5" required></textarea>
-            </div>
-            <div class="form-group">
-                <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right" required="required">Submit Message</button>
             </div>
 
         </div>
 
     </div>
-
-</div>
-
+}
 <address>
     Konrad Kania<br />
     Łódź<br />

@@ -42,5 +42,25 @@ namespace SnowLoads.BuildingTypes.Tests
             Assert.AreEqual(0.72, Math.Round(pitchedRoof.RightRoof.SnowLoadOnRoofValue, 3), 
                 "Snow load for right roof is not calculated properly.");
         }
+        
+        [Test()]
+        [Description("Example number 1 from \"Obciążenia budynków i konstrukcji budowlanych według Eurokodów\" - Anna Rawska-Skotniczy")]
+        public void ExampleTest1_CalculateSnowLoad_Success()
+        {
+            var buildingSite = new BuildingSite(ZoneEnum.FirstZone, TopographyEnum.Normal, 127);
+            buildingSite.CalculateExposureCoefficient();
+            var snowLoad = new SnowLoad(buildingSite);
+            snowLoad.CalculateSnowLoad();
+            var building = new Building(snowLoad);
+            building.CalculateThermalCoefficient();
+
+            var pitchedRoof = new PitchedRoof(building, 35, 5);
+
+            pitchedRoof.CalculateSnowLoad();
+            Assert.AreEqual(0.467, Math.Round(pitchedRoof.LeftRoof.SnowLoadOnRoofValue, 3),
+                "Snow load for left roof is not calculated properly.");
+            Assert.AreEqual(0.56, Math.Round(pitchedRoof.RightRoof.SnowLoadOnRoofValue, 3),
+                "Snow load for right roof is not calculated properly.");
+        }
     }
 }
