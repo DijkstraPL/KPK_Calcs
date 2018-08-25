@@ -10,15 +10,56 @@ using Tools;
 
 namespace SnowLoads.Exceptional
 {
+    /// <summary>
+    /// Calculation class for exceptional over door or loading bay.
+    /// </summary>
+    /// <remarks>[PN-EN 1991-1-3 B4]</remarks>
+    /// <example>
+    /// <code>
+    /// class TestClass
+    /// {
+    ///     static void Main()
+    ///     {
+    ///         BuildingSite buildingSite = new BuildingSite();
+    ///         buildingSite.CalculateExposureCoefficient();
+    ///         SnowLoad snowLoad = new SnowLoad(buildingSite, DesignSituation.A, false);
+    ///         snowLoad.CalculateSnowLoad();
+    ///         Building building = new Building(snowLoad, 15, 3);
+    ///         building.CalculateThermalCoefficient();
+    ///         ExceptionalOverDoorOrLoadingBay exceptionalOverDoorOrLoadingBay = 
+    ///             new ExceptionalOverDoorOrLoadingBay(building, 5, 15, 1);
+    ///         exceptionalOverDoorOrLoadingBay.CalculateDriftLength();
+    ///         exceptionalOverDoorOrLoadingBay.CalculateSnowLoad();
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
+    /// <seealso cref="ExceptionalMultiSpanRoof"/>
+    /// <seealso cref="ExceptionalRoofAbuttingToTallerConstruction"/>
+    /// <seealso cref="ExceptionalObstructionOnFlatRoof"/>
+    /// <seealso cref="ExceptionalObstructionOnPitchedOrCurvedRoof"/>
+    /// <seealso cref="ExceptionalSnowBehindParapet"/>
+    /// <seealso cref="ExceptionalSnowBehindParapetAtEaves"/>
+    /// <seealso cref="ExceptionalSnowInValleyBehindParapet"/>
     public class ExceptionalOverDoorOrLoadingBay : ICalculatable
     {
         #region Properties
 
+        /// <summary>
+        /// Height difference.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("h")]
+        [Unit("m")]
         public double HeightDifference { get; set; }
         
         private double widthAboveDoor;
+        /// <summary>
+        /// Width above the roof.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("b_1")]
+        [Unit("m")]
         public double WidthAboveDoor
         {
             get { return widthAboveDoor; }
@@ -29,15 +70,36 @@ namespace SnowLoads.Exceptional
             }
         }
 
+        /// <summary>
+        /// Width of the building.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("b_2")]
+        [Unit("m")]
         public double BuildingWidth { get; set; }
 
+        /// <summary>
+        /// Snow load shape coefficient.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("mi_1")]
-        public double ShapeCoefficient1 { get; private set; }
+        [Unit("")]
+        public double ShapeCoefficient { get; private set; }
 
+        /// <summary>
+        /// Length of the drift.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("l_s")]
+        [Unit("m")]
         public double DriftLength { get; private set; }
 
+        /// <summary>
+        /// Snow load.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
+        [Abbreviation("s")]
+        [Unit("kN/m2")]
         public double SnowLoad { get; private set; }
 
         public IBuilding Building { get; private set; }
@@ -52,6 +114,13 @@ namespace SnowLoads.Exceptional
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExceptionalOverDoorOrLoadingBay"/> class.
+        /// </summary>
+        /// <param name="building">Set instance of a class implementing <see cref="IBuilding"/> for <see cref="Building"/>.</param>
+        /// <param name="widthAboveDoor">Set <see cref="WidthAboveDoor"/>.</param>
+        /// <param name="buildingWidth">Set <see cref="BuildingWidth"/>.</param>
+        /// <param name="heightDifference">Set <see cref="HeightDifference"/>.</param>
         public ExceptionalOverDoorOrLoadingBay(IBuilding building, double widthAboveDoor, double buildingWidth, double heightDifference)
         {
             Building = building;
@@ -65,6 +134,10 @@ namespace SnowLoads.Exceptional
 
         #region Methods
 
+        /// <summary>
+        /// Calculate <see cref="DriftLength"/>.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 B4.(2)</remarks>
         public void CalculateDriftLength()
         {
             if (HeightDifference > 1)
@@ -73,6 +146,10 @@ namespace SnowLoads.Exceptional
                 DriftLength = Math.Min(5 * HeightDifference, WidthAboveDoor);
         }
 
+        /// <summary>
+        /// Calculate <see cref="SnowLoad"/>.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 B4.(2)</remarks>
         public void CalculateSnowLoad()
         {
             CalculateShapeCoefficient();
@@ -86,15 +163,15 @@ namespace SnowLoads.Exceptional
 
         private void CalculateShapeCoefficient()
         {
-            ShapeCoefficient1 = Math.Min(2 * HeightDifference / snowLoad.SnowLoadForSpecificReturnPeriod, 5);
+            ShapeCoefficient = Math.Min(2 * HeightDifference / snowLoad.SnowLoadForSpecificReturnPeriod, 5);
             if (WidthAboveDoor <= 5)
-                ShapeCoefficient1 = Math.Min(ShapeCoefficient1, 2 * Math.Max(WidthAboveDoor, BuildingWidth) / DriftLength);
+                ShapeCoefficient = Math.Min(ShapeCoefficient, 2 * Math.Max(WidthAboveDoor, BuildingWidth) / DriftLength);
         }
 
         private void CalculateSnowLoadOnRoof()
         {
             if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
-                SnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient1, snowLoad.SnowLoadForSpecificReturnPeriod);
+                SnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient, snowLoad.SnowLoadForSpecificReturnPeriod);
         }
 
         #endregion // Methods

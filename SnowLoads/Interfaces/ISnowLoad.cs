@@ -7,40 +7,28 @@ using Tools;
 
 namespace SnowLoads.Interfaces
 {
-    public interface ISnowLoad
-    {
-         DesignSituation CurrentDesignSituation { get; set; }
+    public interface ISnowLoad : ISnowDensityProvider, IReturnPeriodProvider, IExceptionalSituationProvider
+    {    
+        /// <summary>
+        /// Current design situation enumerator - <see cref="DesignSituation"/>.
+        /// </summary>
+        DesignSituation CurrentDesignSituation { get; set; }
 
-        bool ExcepctionalSituation { get; set; }
-        
-        double SnowDensity { get; set; }
-       
+        /// <summary>
+        /// Characteristic value of snow on the ground at the relevant site.
+        /// </summary>
         [Abbreviation("s_k")]
         [Unit("kN/m2")]
         double DefaultCharacteristicSnowLoad { get; }
-        
-        [Abbreviation("s_n")]
-        [Unit("kN/m2")]
-        double SnowLoadForSpecificReturnPeriod { get; }
 
-        [Abbreviation("V")]
-        [Unit("")]
-        double VariationCoefficient { get; }
+        /// <summary>
+        /// Instance of class implementing <see cref="IBuildingSite"/>.
+        /// </summary>
+        IBuildingSite BuildingSite { get; }
 
-        [Abbreviation("n")]
-        [Unit("year")]
-        int ReturnPeriod { get; set; }
-        
-        [Abbreviation("C_esl")]
-        [Unit("")]
-        double ExceptionalSnowLoadCoefficient { get; }
-
-        [Abbreviation("s_Ad")]
-        [Unit("kN/m2")]
-        double DesignExceptionalSnowLoadForSpecificReturnPeriod { get;  }
-
-         IBuildingSite BuildingSite { get; }
-
+        /// <summary>
+        /// Calculate characteristic snow load on ground.
+        /// </summary>
         void CalculateSnowLoad();
     }
 }

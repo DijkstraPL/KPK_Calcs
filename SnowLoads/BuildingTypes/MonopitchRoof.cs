@@ -15,17 +15,20 @@ namespace SnowLoads.BuildingTypes
     /// <remarks>[PN-EN 1991-1-3 5.3.2]</remarks>
     /// <example>
     /// <code>
-    /// class TestClass
-    /// {
-    ///     static void Main()
-    ///     {
-    ///         BuildingSite buildingSite = new BuildingSite();
-    ///         SnowLoad snowLoad = new SnowLoad(buildingSite, DesignSituation.A, false);
-    ///         Building building = new Building(snowLoad, 15, 3);
-    ///         MonopitchRoof monopitchRoof = new MonopitchRoof(building, 35, true);
-    ///         monopitchRoof.CalculateSnowLoad();
-    ///     }
-    /// }
+    ///  class TestClass
+    ///  {
+    ///      static void Main()
+    ///      {
+    ///          BuildingSite buildingSite = new BuildingSite();
+    ///          buildingSite.CalculateExposureCoefficient();
+    ///          SnowLoad snowLoad = new SnowLoad(buildingSite, DesignSituation.A, false);
+    ///          snowLoad.CalculateSnowLoad();
+    ///          Building building = new Building(snowLoad, 15, 3);
+    ///          building.CalculateThermalCoefficient();
+    ///          MonopitchRoof monopitchRoof = new MonopitchRoof(building, 35, true);
+    ///          monopitchRoof.CalculateSnowLoad();
+    ///      }
+    ///  }
     /// </code>
     /// </example>
     /// <seealso cref="PitchedRoof"/>

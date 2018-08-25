@@ -46,9 +46,9 @@ namespace SnowLoads.Exceptional.Tests
 
             exceptionalRoofAbuttingToTallerConstruction.CalculateSnowLoad();
 
-            Assert.AreEqual(3.6, Math.Round(exceptionalRoofAbuttingToTallerConstruction.SnowLoad1, 3),
+            Assert.AreEqual(3.6, Math.Round(exceptionalRoofAbuttingToTallerConstruction.SnowLoadNearTheTop, 3),
                 "Snow load for roof is not calculated properly.");
-            Assert.AreEqual(3.6, Math.Round(exceptionalRoofAbuttingToTallerConstruction.SnowLoad2, 3),
+            Assert.AreEqual(3.6, Math.Round(exceptionalRoofAbuttingToTallerConstruction.SnowLoadNearTheEdge, 3),
                 "Snow load for roof is not calculated properly.");
         }
 
@@ -87,13 +87,13 @@ namespace SnowLoads.Exceptional.Tests
 
             Assert.AreEqual(14.6, Math.Round(roofAbuttingToTallerConstruction5Degrees.DriftLength, 3),
                 "Drift length is not calculated properly.");
-            Assert.AreEqual(1.4, Math.Round(roofAbuttingToTallerConstruction5Degrees.SnowLoad1, 3),
+            Assert.AreEqual(1.4, Math.Round(roofAbuttingToTallerConstruction5Degrees.SnowLoadNearTheTop, 3),
                 "Snow load for roof is not calculated properly.");
-            Assert.AreEqual(1.4, Math.Round(roofAbuttingToTallerConstruction5Degrees.SnowLoad2, 3),
+            Assert.AreEqual(1.4, Math.Round(roofAbuttingToTallerConstruction5Degrees.SnowLoadNearTheEdge, 3),
                 "Snow load for roof is not calculated properly.");
-            Assert.AreEqual(0, Math.Round(roofAbuttingToTallerConstruction35Degrees.SnowLoad1, 3),
+            Assert.AreEqual(0, Math.Round(roofAbuttingToTallerConstruction35Degrees.SnowLoadNearTheTop, 3),
                 "Snow load for roof is not calculated properly.");
-            Assert.AreEqual(1.167, Math.Round(roofAbuttingToTallerConstruction35Degrees.SnowLoad2, 3),
+            Assert.AreEqual(1.167, Math.Round(roofAbuttingToTallerConstruction35Degrees.SnowLoadNearTheEdge, 3),
                 "Snow load for roof is not calculated properly.");
         }
     }

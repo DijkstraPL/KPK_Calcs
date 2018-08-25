@@ -10,8 +10,31 @@ using Tools;
 namespace SnowLoads.BuildingTypes
 {
     /// <summary>
-    /// Calculation class for snow load near the obstruction.
+    /// Calculation class for roofs abutting to taller constructions.
     /// </summary>
+    /// <remarks>[PN-EN 1991-1-3 5.3.6]</remarks>
+    /// <example>
+    /// <code>
+    /// class TestClass
+    /// {
+    ///     static void Main()
+    ///     {
+    ///         BuildingSite buildingSite = new BuildingSite();
+    ///         buildingSite.CalculateExposureCoefficient();
+    ///         SnowLoad snowLoad = new SnowLoad(buildingSite, DesignSituation.A, false);
+    ///         snowLoad.CalculateSnowLoad();
+    ///         Building building = new Building(snowLoad, 15, 3);
+    ///         building.CalculateThermalCoefficient();
+    ///         RoofAbuttingToTallerConstruction roofAbuttingToTallerConstruction =
+    ///           new RoofAbuttingToTallerConstruction(building, 20, 10, 2, 25, false);
+    ///         roofAbuttingToTallerConstruction.CalculateDriftLength();
+    ///         roofAbuttingToTallerConstruction.CalculateSnowLoad();
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
+    /// <seealso cref="Snowguards"/>
+    /// <seealso cref="SnowOverhanging"/>
     public class DriftingAtProjectionsObstructions : ICalculatable, ILengthProvider
     {
         #region Properties
@@ -89,7 +112,7 @@ namespace SnowLoads.BuildingTypes
         #region Methods
 
         /// <summary>
-        /// Calculate drift length.
+        /// Calculate <see cref="DriftLength"/>.
         /// </summary>
         public void CalculateDriftLength()
         {
@@ -101,7 +124,7 @@ namespace SnowLoads.BuildingTypes
         }
 
         /// <summary>
-        /// Calculate Snow Load On Roof 
+        /// Calculate <see cref="FirstShapeCoefficient"/>, <see cref="SecondShapeCoefficient"/> and <see cref="SnowLoadOnRoofValue"/>.
         /// </summary>
         public void CalculateSnowLoad()
         {
@@ -116,7 +139,7 @@ namespace SnowLoads.BuildingTypes
         }
 
         /// <summary>
-        /// Calculate shape coefficient due to wind.
+        /// Calculate <see cref="FirstShapeCoefficient"/> and <see cref="SecondShapeCoefficient"/>.
         /// </summary>
         private void CalculateSnowLoadShapeCoefficient()
         {
@@ -131,7 +154,7 @@ namespace SnowLoads.BuildingTypes
         }
 
         /// <summary>
-        /// Calclate snow load.
+        /// Calclate <see cref="SnowLoadOnRoofValue"/>.
         /// </summary>
         private void CalculateSnowLoadOnRoof()
         {

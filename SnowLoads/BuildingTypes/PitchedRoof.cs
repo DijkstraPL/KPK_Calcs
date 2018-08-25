@@ -19,8 +19,11 @@ namespace SnowLoads.BuildingTypes
     ///     static void Main()
     ///     {
     ///         BuildingSite buildingSite = new BuildingSite();
+    ///         buildingSite.CalculateExposureCoefficient();
     ///         SnowLoad snowLoad = new SnowLoad(buildingSite, DesignSituation.A, false);
+    ///         snowLoad.CalculateSnowLoad();
     ///         Building building = new Building(snowLoad, 15, 3);
+    ///         building.CalculateThermalCoefficient();
     ///         PitchedRoof pitchedRoof = new PitchedRoof(building, 35, 25, false , true);
     ///         pitchedRoof.CalculateSnowLoad();
     ///     }

@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tools;
 
 namespace SnowLoads.Interfaces
 {
-    public interface ICalculatable
-    {
+    public interface ISnowDensityProvider
+    {       
         /// <summary>
-        /// Calculate snow load on roof.
+        /// Density of the snow.
         /// </summary>
-        void CalculateSnowLoad();
+        [Abbreviation("gamma")]
+        [Unit("kN/m3")]
+        double SnowDensity { get; set; }
     }
 }

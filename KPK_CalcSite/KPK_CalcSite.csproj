@@ -375,6 +375,7 @@
     <Content Include="Views\SnowLoads\ExceptionalSnowInValleyBehindParapet.cshtml" />
     <Content Include="Views\SnowLoads\ExceptionalSnowInValleyBehindParapetResult.cshtml" />
     <Content Include="Views\Reinforcement\ReinforcementAnchoring.cshtml" />
+    <Content Include="Scripts\reinforcement.anchoring.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

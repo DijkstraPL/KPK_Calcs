@@ -11,13 +11,35 @@ namespace SnowLoads.BuildingTypes
     /// <summary>
     /// Class for calculation of snow hanging over the roof.
     /// </summary>
+    /// <remarks>[PN-EN 1991-1-3 6.3]</remarks>
+    /// <example>
+    /// <code>
+    /// class TestClass
+    /// {
+    ///     static void Main()
+    ///     {
+    ///         BuildingSite buildingSite = new BuildingSite();
+    ///         buildingSite.CalculateExposureCoefficient();
+    ///         SnowLoad snowLoad = new SnowLoad(buildingSite, DesignSituation.A, false);
+    ///         snowLoad.CalculateSnowLoad();
+    ///         Building building = new Building(snowLoad, 15, 3);
+    ///         building.CalculateThermalCoefficient();
+    ///         SnowOverhanging snowOverhanging = new SnowOverhanging(building, 0.9);
+    ///         snowOverhanging.CalculateSnowLoad();
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
+    /// <seealso cref="DriftingAtProjectionsObstructions"/>
+    /// <seealso cref="Snowguards"/>
     public class SnowOverhanging : ICalculatable
     {
         #region Properties
 
         /// <summary>
-        /// Thickness of the snow.
+        /// Thickness of the snow [m].
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.6.2]</remarks>
         [Abbreviation("d")]
         [Unit("m")]
         public double SnowLayerDepth { get; set; }
@@ -25,6 +47,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Shape coefficient.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 6.3.(2)]</remarks>
         [Abbreviation("k")]
         [Unit("")]
         public double IrregularShapeCoefficient { get; private set; }
@@ -33,6 +56,7 @@ namespace SnowLoads.BuildingTypes
         /// Snow load on the roof - the most onerous undrifted load case
         /// appropriate for the roof under consideration [kN/m2].
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 6.3.(2)]</remarks>
         [Abbreviation("s")]
         [Unit("kN/m2")]
         public double SnowLoadOnRoofValue { get; set; }
@@ -40,6 +64,7 @@ namespace SnowLoads.BuildingTypes
         /// <summary>
         /// Snow load per metre length due to the overhang [kN/m].
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.6.2]</remarks>
         [Abbreviation("s_e")]
         [Unit("kN/m")]
         public double SnowLoad { get; private set; }
@@ -53,6 +78,11 @@ namespace SnowLoads.BuildingTypes
 
         #region Constructor 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SnowOverhanging"/> class.
+        /// </summary>
+        /// <param name="building">Set instance of a class implementing <see cref="IBuilding"/> for <see cref="Building"/>.</param>
+        /// <param name="snowLoadOnRoof">Set <see cref="SnowLoadOnRoofValue"/>.</param>
         public SnowOverhanging(IBuilding building, double snowLoadOnRoof)
         {
             Building = building;
@@ -62,9 +92,11 @@ namespace SnowLoads.BuildingTypes
         }
 
         /// <summary>
-        /// Constructor.
+        /// Initializes a new instance of the <see cref="SnowOverhanging"/> class.
         /// </summary>
-        /// <param name="building">Instance of buildinng.</param>
+        /// <param name="building">Set instance of a class implementing <see cref="IBuilding"/> for <see cref="Building"/>.</param>
+        /// <param name="snowLayerDepth">Set <see cref="SnowLayerDepth"/>.</param>
+        /// <param name="snowLoadOnRoof">Set <see cref="SnowLoadOnRoofValue"/>.</param>
         public SnowOverhanging(IBuilding building, double snowLayerDepth, double snowLoadOnRoof)
         {
             Building = building;
@@ -72,6 +104,12 @@ namespace SnowLoads.BuildingTypes
             SnowLoadOnRoofValue = snowLoadOnRoof;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SnowOverhanging"/> class.
+        /// </summary>
+        /// <param name="building">Set instance of a class implementing <see cref="IBuilding"/> for <see cref="Building"/>.</param>
+        /// <param name="snowLayerDepth">Set <see cref="SnowLayerDepth"/>.</param>
+        /// <param name="roof">Is used to calculate <see cref="SnowLoadOnRoofValue"/>.</param>
         public SnowOverhanging(IBuilding building, double snowLayerDepth, IMonopitchRoof roof)
         {
             Building = building;
@@ -85,6 +123,10 @@ namespace SnowLoads.BuildingTypes
 
         #region Methods
 
+        /// <summary>
+        /// Calculate <see cref="IrregularShapeCoefficient"/> and <see cref="SnowLoad"/>.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 6.3.(2)]</remarks>
         public void CalculateSnowLoad()
         {
             CalculateIrregularShapeCoefficient();
@@ -92,16 +134,18 @@ namespace SnowLoads.BuildingTypes
         }
 
         /// <summary>
-        /// Calculate irregular shape coefficient.
+        /// Calculate <see cref="IrregularShapeCoefficient"/>.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 6.3.(2)]</remarks>
         private void CalculateIrregularShapeCoefficient()
         {
             IrregularShapeCoefficient = Math.Min(3 / SnowLayerDepth, SnowLayerDepth * Building.SnowLoad.SnowDensity);
         }
 
         /// <summary>
-        /// Calculate snow load.
+        /// Calculate <see cref="SnowLoad"/>.
         /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 6.3.(2)]</remarks>
         private void CalculateOverhangingSnowLoad()
         {
             SnowLoad = IrregularShapeCoefficient * Math.Pow(SnowLoadOnRoofValue, 2) / Building.SnowLoad.SnowDensity;

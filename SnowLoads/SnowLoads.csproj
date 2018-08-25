@@ -66,9 +66,13 @@
     <Compile Include="Interfaces\IBuilding.cs" />
     <Compile Include="Interfaces\IBuildingSite.cs" />
     <Compile Include="Interfaces\ICalculatable.cs" />
+    <Compile Include="Interfaces\IExceptionalSituationProvider.cs" />
     <Compile Include="Interfaces\ILengthProvider.cs" />
     <Compile Include="Interfaces\IMonopitchRoof.cs" />
+    <Compile Include="Interfaces\IReturnPeriodProvider.cs" />
+    <Compile Include="Interfaces\ISnowDensityProvider.cs" />
     <Compile Include="Interfaces\ISnowLoad.cs" />
+    <Compile Include="Interfaces\ITemperatureProvider.cs" />
     <Compile Include="SnowLoad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

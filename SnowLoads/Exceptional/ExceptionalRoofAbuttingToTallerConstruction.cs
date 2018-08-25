@@ -10,33 +10,116 @@ using Tools;
 
 namespace SnowLoads.Exceptional
 {
+    /// <summary>
+    /// Calculation class for exceptional roof abutting to taller construction.
+    /// </summary>
+    /// <remarks>[PN-EN 1991-1-3 B3]</remarks>
+    /// <example>
+    /// <code>
+    /// class TestClass
+    /// {
+    ///     static void Main()
+    ///     {
+    ///         BuildingSite buildingSite = new BuildingSite();
+    ///         buildingSite.CalculateExposureCoefficient();
+    ///         SnowLoad snowLoad = new SnowLoad(buildingSite, DesignSituation.A, false);
+    ///         snowLoad.CalculateSnowLoad();
+    ///         Building building = new Building(snowLoad, 15, 3);
+    ///         building.CalculateThermalCoefficient();
+    ///         ExceptionalRoofAbuttingToTallerConstruction exceptionalRoofAbuttingToTallerConstruction = 
+    ///             new ExceptionalRoofAbuttingToTallerConstruction(building, 15, 5, 1, 30);
+    ///         exceptionalRoofAbuttingToTallerConstruction.CalculateDriftLength();
+    ///         exceptionalRoofAbuttingToTallerConstruction.CalculateSnowLoad();
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
+    /// <seealso cref="ExceptionalMultiSpanRoof"/>
+    /// <seealso cref="ExceptionalObstructionOnFlatRoof"/>
+    /// <seealso cref="ExceptionalObstructionOnPitchedOrCurvedRoof"/>
+    /// <seealso cref="ExceptionalOverDoorOrLoadingBay"/>
+    /// <seealso cref="ExceptionalSnowBehindParapet"/>
+    /// <seealso cref="ExceptionalSnowBehindParapetAtEaves"/>
+    /// <seealso cref="ExceptionalSnowInValleyBehindParapet"/>
     public class ExceptionalRoofAbuttingToTallerConstruction : ICalculatable
     {
         #region Properties
 
+        /// <summary>
+        /// Height difference.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("h")]
+        [Unit("m")]
         public double HeightDifference { get; set; }
 
+        /// <summary>
+        /// Length of the drift.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("l_s")]
+        [Unit("m")]
         public double DriftLength { get; private set; }
 
+        /// <summary>
+        /// Lower building width.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("b_1")]
+        [Unit("m")]
         public double LowerBuildingWidth { get; set; }
 
+        /// <summary>
+        /// Upper building width.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("b_2")]
+        [Unit("m")]
         public double UpperBuildingWidth { get; set; }
 
+        /// <summary>
+        /// Snow load shape coefficient 1.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("mi_1")]
+        [Unit("")]
         public double ShapeCoefficient1 { get; private set; }
+        /// <summary>
+        /// Snow load shape coefficient 2.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("mi_2")]
+        [Unit("")]
         public double ShapeCoefficient2 { get; private set; }
+        /// <summary>
+        /// Snow load shape coefficient 3.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("mi_3")]
+        [Unit("")]
         public double ShapeCoefficient3 { get; private set; }
 
-        public double SnowLoad1 { get; private set; }
-        public double SnowLoad2 { get; private set; }
+        /// <summary>
+        /// Snow load near the top.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
+        [Abbreviation("s_1")]
+        [Unit("kN/m2")]
+        public double SnowLoadNearTheTop { get; private set; }
+        /// <summary>
+        /// Snow load near the edge.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
+        [Abbreviation("s_2")]
+        [Unit("kN/m2")]
+        public double SnowLoadNearTheEdge { get; private set; }
 
+        /// <summary>
+        /// slope of the lower roof.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("alfa")]
+        [Unit("degree")]
         public double Angle { get; set; }
 
         public IBuilding Building { get; private set; }
@@ -51,6 +134,14 @@ namespace SnowLoads.Exceptional
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExceptionalRoofAbuttingToTallerConstruction"/> class.
+        /// </summary>
+        /// <param name="building">Set instance of a class implementing <see cref="IBuilding"/> for <see cref="Building"/>.</param>
+        /// <param name="upperBuildingWidth">Set <see cref="UpperBuildingWidth"/>.</param>
+        /// <param name="lowerBuildingWidth">Set <see cref="LowerBuildingWidth"/>.</param>
+        /// <param name="heightDifference">Set <see cref="HeightDifference"/>.</param>
+        /// <param name="angle">Set <see cref="Angle"/>.</param>
         public ExceptionalRoofAbuttingToTallerConstruction(IBuilding building, double upperBuildingWidth, double lowerBuildingWidth,
             double heightDifference, double angle)
         {
@@ -66,6 +157,10 @@ namespace SnowLoads.Exceptional
 
         #region Methods
 
+        /// <summary>
+        /// Calculate <see cref="DriftLength"/>.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 B3.(3)</remarks>
         public void CalculateDriftLength()
         {
             DriftLength = Math.Min(5 * HeightDifference, LowerBuildingWidth);
@@ -73,6 +168,10 @@ namespace SnowLoads.Exceptional
             DriftLength = Math.Min(DriftLength, 15);
         }
 
+        /// <summary>
+        /// Calculate <see cref="SnowLoadNearTheTop"/> and <see cref="SnowLoadNearTheEdge"/>.
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 B3.(3)</remarks>
         public void CalculateSnowLoad()
         {
             CalculateShapeCoefficient3();
@@ -126,13 +225,13 @@ namespace SnowLoads.Exceptional
         private void CalculateSnowLoad1()
         {
             if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
-                SnowLoad1 = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient1, snowLoad.SnowLoadForSpecificReturnPeriod);
+                SnowLoadNearTheTop = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient1, snowLoad.SnowLoadForSpecificReturnPeriod);
         }
         
         private void CalculateSnowLoad2()
         {
             if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
-                SnowLoad2 = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient2, snowLoad.SnowLoadForSpecificReturnPeriod);
+                SnowLoadNearTheEdge = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient2, snowLoad.SnowLoadForSpecificReturnPeriod);
         }
 
         #endregion // Methods

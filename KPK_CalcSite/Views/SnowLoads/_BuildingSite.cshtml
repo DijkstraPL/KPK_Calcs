@@ -1,9 +1,5 @@
 ﻿@model KPK_CalcSite.ViewModels.SnowLoadsViewModel
-@*<div class="row" onmouseover="showZones()" , onmouseleave="hideZones()">
-        <div class="col-sm-12" id="zoneSelector">
-    
-        </div>
-    </div>*@
+
     <div class="form-group">
         @Html.LabelFor(m => m.BuildingData.BuildingSite.CurrentZone, "Zone")
         @Html.EnumDropDownListFor(m => m.BuildingData.BuildingSite.CurrentZone,
@@ -65,26 +61,3 @@
 <div class="collapse">
     <span id="exceptional">@ViewData["Exceptional"]</span>
 </div>
-
-
-
-<script>
-
-
-
-            //function showZones() {
-            //    var map = document.getElementById("map");
-            //    map.style.display = "block";
-            //    if (!map.classList.contains("col-sm-6"))
-            //    map.classList.add("col-sm-6");
-
-            //    var mapImage = document.getElementById("mapImage");
-            //    mapImage.style.width = "75%";
-            //    mapImage.style.height = "75%";
-            //}
-
-            //function hideZones() {
-            //    var map = document.getElementById("map");
-            //    map.style.display = "none";
-            //}
-</script>
