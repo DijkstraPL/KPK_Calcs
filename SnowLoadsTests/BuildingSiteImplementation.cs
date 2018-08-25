@@ -1,5 +1,4 @@
-﻿//using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SnowLoads.Interfaces;
+﻿using SnowLoads.Interfaces;
 
 namespace SnowLoads.Tests
 {

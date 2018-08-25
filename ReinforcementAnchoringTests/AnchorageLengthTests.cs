@@ -1,13 +1,9 @@
 ﻿using NUnit.Framework;
-using ReinforcementAnchoring;
 using ReinforcementAnchoring.Coefficients;
 using ReinforcementAnchoring.Interfaces;
 using ReinforcementAnchoringTests;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReinforcementAnchoring.Tests
 {

@@ -1,5 +1,4 @@
 ﻿using SnowLoads;
-using SnowLoads.BuildingTypes;
 using SnowLoads.Interfaces;
 
 namespace KPK_CalcSite.Models.SnowLoads

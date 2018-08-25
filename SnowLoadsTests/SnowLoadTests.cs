@@ -1,12 +1,6 @@
 ﻿//using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SnowLoads;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
-using SnowLoads.Interfaces;
+using System;
 
 namespace SnowLoads.Tests
 {

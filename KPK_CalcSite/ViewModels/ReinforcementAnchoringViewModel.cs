@@ -1,10 +1,5 @@
 ﻿using KPK_CalcSite.Models.ReinforcementAnchoring;
 using ReinforcementAnchoring;
-using ReinforcementAnchoring.Coefficients;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace KPK_CalcSite.ViewModels
 {

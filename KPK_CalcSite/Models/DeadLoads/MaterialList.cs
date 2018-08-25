@@ -1,8 +1,5 @@
-﻿using System;
+﻿using DeadLoads;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using DeadLoads;
 
 namespace KPK_CalcSite.Models.DeadLoads
 {
