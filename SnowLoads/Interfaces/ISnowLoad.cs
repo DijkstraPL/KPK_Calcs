@@ -2,12 +2,59 @@
 
 namespace SnowLoads.Interfaces
 {
-    public interface ISnowLoad : ISnowDensityProvider, IReturnPeriodProvider, IExceptionalSituationProvider
+    public interface ISnowLoad //: ISnowDensityProvider, IReturnPeriodProvider, IExceptionalSituationProvider
     {    
         /// <summary>
         /// Current design situation enumerator - <see cref="DesignSituation"/>.
         /// </summary>
         DesignSituation CurrentDesignSituation { get; set; }
+        
+        /// <summary>
+        /// Is situation for calculations exceptional.
+        /// </summary>
+        bool ExcepctionalSituation { get; set; }
+
+        /// <summary>
+        /// Coefficient for exceptional snow loads.
+        /// </summary>
+        [Abbreviation("C_esl")]
+        [Unit("")]
+        double ExceptionalSnowLoadCoefficient { get; }
+
+        /// <summary>
+        /// Characteristic ground snow load with a return period of n years.
+        /// </summary>
+        [Abbreviation("s_n")]
+        [Unit("kN/m2")]
+        double SnowLoadForSpecificReturnPeriod { get; }
+
+        /// <summary>
+        /// Coefficient of variation of annual maximum snow load.
+        /// </summary>
+        [Abbreviation("V")]
+        [Unit("")]
+        double VariationCoefficient { get; }
+
+        /// <summary>
+        /// Years of return period.
+        /// </summary>
+        [Abbreviation("n")]
+        [Unit("year")]
+        int ReturnPeriod { get; set; }
+
+        /// <summary>
+        /// The design value of exceptional snow load on the ground for the given location. 
+        /// </summary>
+        [Abbreviation("s_Ad")]
+        [Unit("kN/m2")]
+        double DesignExceptionalSnowLoadForSpecificReturnPeriod { get; }
+
+        /// <summary>
+        /// Density of the snow.
+        /// </summary>
+        [Abbreviation("gamma")]
+        [Unit("kN/m3")]
+        double SnowDensity { get; set; }
 
         /// <summary>
         /// Characteristic value of snow on the ground at the relevant site.

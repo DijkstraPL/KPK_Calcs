@@ -2,7 +2,7 @@
 
 namespace SnowLoads.Interfaces
 {
-    public interface IBuilding : ITemperatureProvider
+    public interface IBuilding //: ITemperatureProvider
     {      
         /// <summary>
         /// Thermal coefficient - 
@@ -19,6 +19,21 @@ namespace SnowLoads.Interfaces
         [Abbreviation("U")]
         [Unit("W/(m2*K)")]
         double OverallHeatTransferCoefficient { get; set; }
+
+        /// <summary>
+        /// Internal temperature in degrees of Celsius
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-3 NB1.8]</remarks>
+        [Abbreviation("t_i")]
+        [Unit("C")]
+        double InternalTemperature { get; set; }
+
+        /// <summary>
+        /// Difference between temperatures
+        /// </summary>
+        [Abbreviation("delta-t")]
+        [Unit("C")]
+        double TempreatureDifference { get; }
 
         /// <summary>
         /// Instance of class implementing <see cref="ISnowLoad"/>.

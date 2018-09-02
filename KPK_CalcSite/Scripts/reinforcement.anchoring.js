@@ -16,10 +16,10 @@ function displayCoefficients() {
 
 function dataChanged() {
 	var results = document.getElementById("results");
-	if (showResults)
-		results = results.style.display = "block";
-	else
-		results = results.style.display = "none";
+    if (showResults && results != null)
+		results.style.display = "block";
+    else if (results != null)
+		results.style.display = "none";
 }
 
 function showResults() {
@@ -28,7 +28,7 @@ function showResults() {
 }
 
 function barFormCoverChanged() {
-	if (windowStarted)
+	//if (windowStarted)
 		dataChanged();
 
 	var barFormChecked = document.getElementById("CalculateBarFormCoefficient").checked;
@@ -43,7 +43,7 @@ function barFormCoverChanged() {
 }
 
 function transverseReinforcementChanged() {
-	if (windowStarted)
+	//if (windowStarted)
 		dataChanged();
 
 	var transverseReinforcement = document.getElementById("CalculateTransverseReinforcementCoefficient").checked;
@@ -57,7 +57,7 @@ function transverseReinforcementChanged() {
 }
 
 function transversePressureChanged() {
-	if (windowStarted)
+	//if (windowStarted)
 		dataChanged();
 
 	var transversePressure = document.getElementById("CalculateTransversePressureCoefficient").checked;

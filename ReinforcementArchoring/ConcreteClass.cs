@@ -4,31 +4,73 @@ using Tools;
 
 namespace ReinforcementAnchoring
 {
+    /// <summary>
+    /// Class containing information about the concrete.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// class TestClass
+    /// {
+    ///     static void Main()
+    ///     {
+    ///         ConcreteClass concreteClass = ConcreteClass.ConcreteClasses[ConcreteClassEnum.C20_25];
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
     public class ConcreteClass
     {
         #region Properties
 
+        /// <summary>
+        /// Coefficient taking account of long term effects on the compressive strength
+        /// and of unfavourable effects resulting from the way the load is applied.
+        /// </summary>
+        /// <remarks>[PN-EN 1992-1-1 3.1.6.(1) Note]</remarks>
         [Abbreviation("alpha_ct")]
+        [Unit("")]
         public static double LongTermEffectTensileStrengthCoefficient { get; } = 1;
 
+        /// <summary>
+        /// Partial safety factor for concrete.
+        /// </summary>
+        /// <remarks>[PN-EN 1992-1-1 NA.2]</remarks>
         [Abbreviation("gamma_c")]
+        [Unit("")]
         public static double PartialSafetyFactor { get; } = 1.4;
 
+        /// <summary>
+        /// Name - object dictionary for concrete classes.
+        /// </summary>
         public static Dictionary<ConcreteClassEnum, ConcreteClass> ConcreteClasses { get; set; }
 
+        /// <summary>
+        /// Name of the concrete class.
+        /// </summary>
         public ConcreteClassEnum ClassOfConcrete { get; private set; }
 
+        /// <summary>
+        /// Characteristic axial tensile strength of concrete. 
+        /// Quantile 5% according to Gauss distribution.
+        /// </summary>
+        /// <remarks>[PN-EN 1992-1-1 Table 3.1]</remarks>
         [Abbreviation("f_ctk,0,05")]
+        [Unit("MPa")]
         public double CharacteristicAxialTensileStrength { get; }
 
+        /// <summary>
+        /// Design tensile strength.
+        /// </summary>
+        /// <remarks>[PN-EN 1992-1-1 (3.16)]</remarks>
         [Abbreviation("f_ctd")]
-        public double DesignValueConcreteTensileStrength => 
+        [Unit("MPa")]
+        public double DesignValueConcreteTensileStrength =>
             LongTermEffectTensileStrengthCoefficient * CharacteristicAxialTensileStrength / PartialSafetyFactor;
         #endregion // Properties
 
         #region Constructors
 
-        private ConcreteClass(ConcreteClassEnum classOfConcrete,double characteristicAxialTensileStrength)
+        private ConcreteClass(ConcreteClassEnum classOfConcrete, double characteristicAxialTensileStrength)
         {
             ClassOfConcrete = classOfConcrete;
             CharacteristicAxialTensileStrength = characteristicAxialTensileStrength;
@@ -47,17 +89,21 @@ namespace ReinforcementAnchoring
             ConcreteClasses.Add(ConcreteClassEnum.C45_55, new ConcreteClass(ConcreteClassEnum.C45_55, 2.7));
             ConcreteClasses.Add(ConcreteClassEnum.C50_60, new ConcreteClass(ConcreteClassEnum.C50_60, 2.9));
             ConcreteClasses.Add(ConcreteClassEnum.C55_67, new ConcreteClass(ConcreteClassEnum.C55_67, 3.0));
-            ConcreteClasses.Add(ConcreteClassEnum.C60_75, new ConcreteClass(ConcreteClassEnum.C60_75 , 3.1));
+            ConcreteClasses.Add(ConcreteClassEnum.C60_75, new ConcreteClass(ConcreteClassEnum.C60_75, 3.1));
             ConcreteClasses.Add(ConcreteClassEnum.C70_85, new ConcreteClass(ConcreteClassEnum.C70_85, 3.2));
             ConcreteClasses.Add(ConcreteClassEnum.C80_95, new ConcreteClass(ConcreteClassEnum.C80_95, 3.4));
-            ConcreteClasses.Add(ConcreteClassEnum.C90_105, new ConcreteClass(ConcreteClassEnum.C90_105 , 3.5));
-        } 
+            ConcreteClasses.Add(ConcreteClassEnum.C90_105, new ConcreteClass(ConcreteClassEnum.C90_105, 3.5));
+        }
         #endregion // Constructors
     }
 
+    /// <summary>
+    /// List of possible concrete classes.
+    /// </summary>
+    /// <remarks>[PN-EN 1992-1-1 Table 3.1]</remarks>
     public enum ConcreteClassEnum
     {
-        [Display( Name = "C12/15")]
+        [Display(Name = "C12/15")]
         C12_15,
         [Display(Name = "C16/20")]
         C16_20,

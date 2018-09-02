@@ -13,7 +13,7 @@ namespace KPK_CalcSite.Models.SnowLoads
         {
             BuildingSite = new BuildingSite();
             SnowLoad = new SnowLoad(BuildingSite);
-            Building = new Building(SnowLoad);
+            Building = new Building(SnowLoad, 0, 0);
         }
     }
 }
