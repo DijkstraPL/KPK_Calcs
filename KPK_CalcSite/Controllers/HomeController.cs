@@ -38,7 +38,7 @@ namespace CalcSite.Controllers
 
         public ActionResult ContactForm(MailModels emailData)
         {
-            ViewBag.Message = "If you have any questions about how calculators work or want to report an error, please feel free to contact me.";
+            ViewBag.Message = "Email sended.";
 
             if (ModelState.IsValid)
             {
