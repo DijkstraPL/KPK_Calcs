@@ -75,9 +75,14 @@ function checkSnowType(snowType) {
         
     if (snowType === "old") {
         snowDensity.style.display = "block";
+        snowDensity.min = "2.5";
+        snowDensity.max = "3.5";
     }
     else {
         snowDensity.style.display = "none";
+
+        snowDensity.min = "-99999999999999999999999";
+        snowDensity.max = "99999999999999999999999";
     }
 
     if (snowType === "fresh")
