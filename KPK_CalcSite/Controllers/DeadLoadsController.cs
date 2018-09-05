@@ -77,20 +77,5 @@ namespace KPK_CalcSite.Controllers
             materials = context.Materials.Where(s => s.SubCategorySymbol == subcategorySymbol).ToList();
             return Json(materials, JsonRequestBehavior.AllowGet);
         }
-
-        public class StudentContext : System.Data.Entity.DbContext
-        {
-            public System.Data.Entity.DbSet<Student> Students { get; set; }
-        }
-
-        public class Student
-        {
-            [System.ComponentModel.DataAnnotations.Key]
-            public int studentID { get; set; }
-            [System.ComponentModel.DataAnnotations.Required]
-            public string studentName { get; set; }
-            [System.ComponentModel.DataAnnotations.Required]
-            public string studentAddress { get; set; }
-        }
     }
 }

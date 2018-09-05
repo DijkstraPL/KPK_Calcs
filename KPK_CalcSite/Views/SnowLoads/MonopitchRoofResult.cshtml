@@ -9,13 +9,23 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            @Html.Partial("_BuildingSiteResult", Model.BuildingData)
+            @if (Request.IsAuthenticated)
+            {
+                @Html.Partial("_BuildingSiteResult", Model.BuildingData)
+            }
+            else
+            {
+                <h4><a href="@Url.Action("Login", "Account", routeValues: null)">Login</a> to see more details.</h4>
+            }
         </div>
         <div class="col-md-6">
             <ul>
-                <li><strong>Slope:</strong> @Model.MonopitchRoof.Slope degrees</li>
-                <li><strong>Shape coefficient:</strong> @Math.Round(Model.MonopitchRoof.ShapeCoefficient, 3)</li>
-                <li><strong>Snow fences:</strong> @Model.MonopitchRoof.SnowFences</li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li><strong>Slope:</strong> @Model.MonopitchRoof.Slope degrees</li>
+                    <li><strong>Shape coefficient:</strong> @Math.Round(Model.MonopitchRoof.ShapeCoefficient, 3)</li>
+                    <li><strong>Snow fences:</strong> @Model.MonopitchRoof.SnowFences</li>
+                }
                 <li class="score"><strong>Snow load on roof:</strong> @Math.Round(Model.MonopitchRoof.SnowLoadOnRoofValue, 3) kN/m<sup>2</sup></li>
             </ul>
 

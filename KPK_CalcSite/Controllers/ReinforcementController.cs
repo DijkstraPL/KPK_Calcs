@@ -17,7 +17,7 @@ namespace KPK_CalcSite.Controllers
         {
             Reinforcement reinforcement = null;
             ReinforcementPosition reinforcementPosition = null;
-            ConcreteClass concreteClass = null;
+            //ConcreteClass concreteClass = null;
 
             ICoefficient barFormCoefficient = new BarFormCoefficient(
                 reinforcementPosition, reinforcement);
@@ -40,13 +40,6 @@ namespace KPK_CalcSite.Controllers
             var anchorageLength = new AnchoringAnchorageLength();
 
             var reinforcementAnchoringViewModel = new ReinforcementAnchoringViewModel();
-            //reinforcementAnchoringViewModel.AnchoringReinforcement = reinforcement;
-            //reinforcementAnchoringViewModel.AnchoringReinforcementPosition = reinforcementPosition;
-
-            //reinforcementAnchoringViewModel.AnchoringConcreteClass = concreteClass;
-            //reinforcementAnchoringViewModel.AnchoringAnchorageLength = anchorageLength;
-
-            //reinforcementAnchoringViewModel.AnchoringAnchorageLength.AnchorageLength.Coefficients = coefficients;
 
             return View("ReinforcementAnchoring", reinforcementAnchoringViewModel);
         }

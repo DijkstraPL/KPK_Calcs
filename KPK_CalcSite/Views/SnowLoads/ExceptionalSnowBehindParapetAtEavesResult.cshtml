@@ -9,28 +9,40 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            @Html.Partial("_BuildingSiteResult", Model.BuildingData)
+            @if (Request.IsAuthenticated)
+            {
+                @Html.Partial("_BuildingSiteResult", Model.BuildingData)
+            }
+            else
+            {
+                <h4><a href="@Url.Action("Login", "Account", routeValues: null)">Login</a> to see more details.</h4>
+            }
         </div>
         <div class="col-md-6">
-            <h3>Roof geometry:</h3>
-            <ul>
-                <li><strong>Building width:</strong> @Model.ExceptionalSnowBehindParapetAtEaves.BuildingWidth m</li>
-                <li><strong>Distance to the ridge:</strong> @Model.ExceptionalSnowBehindParapetAtEaves.RidgeDistance m</li>
-                <li><strong>Height difference:</strong> @Model.ExceptionalSnowBehindParapetAtEaves.HeightDifference m</li>
-            </ul>
-
+            @if (Request.IsAuthenticated)
+            {
+                <h3>Roof geometry:</h3>
+                <ul>
+                    <li><strong>Building width:</strong> @Model.ExceptionalSnowBehindParapetAtEaves.BuildingWidth m</li>
+                    <li><strong>Distance to the ridge:</strong> @Model.ExceptionalSnowBehindParapetAtEaves.RidgeDistance m</li>
+                    <li><strong>Height difference:</strong> @Model.ExceptionalSnowBehindParapetAtEaves.HeightDifference m</li>
+                </ul>
+            }
             <h3>Snow loads:</h3>
             <ul>
-                <li><strong>Drift length:</strong> @Math.Round(Model.ExceptionalSnowBehindParapetAtEaves.DriftLength, 3) m</li>
-                <li><strong>Shape coefficient:</strong> @Math.Round(Model.ExceptionalSnowBehindParapetAtEaves.ShapeCoefficient, 3)</li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li><strong>Drift length:</strong> @Math.Round(Model.ExceptionalSnowBehindParapetAtEaves.DriftLength, 3) m</li>
+                    <li><strong>Shape coefficient:</strong> @Math.Round(Model.ExceptionalSnowBehindParapetAtEaves.ShapeCoefficient, 3)</li>
+                }
                 <li class="score"><strong>Snow load:</strong> @Math.Round(Model.ExceptionalSnowBehindParapetAtEaves.SnowLoad, 3) kN/m<sup>2</sup></li>
             </ul>
 
-                <a href="@Url.Action("Calculator", "SnowLoads")">
-            <div class="snow-load-case">
+            <a href="@Url.Action("Calculator", "SnowLoads")">
+                <div class="snow-load-case">
                     <img class="snow-load-link" src="~/Content/Images/SnowLoads/ExceptionalSnowBehindParapetAtEaves.png" alt="Exceptional Snow Behind Parapet At Eaves" />
-            </div>
-                </a>
+                </div>
+            </a>
         </div>
     </div>
 </div>

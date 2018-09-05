@@ -64,7 +64,7 @@ namespace CalcSite.Controllers
             return View("Contact");
         }
 
-        public void SendEmail(string toAddress, string fromAddress,
+        private void SendEmail(string toAddress, string fromAddress,
                       string subject, string message)
         {
             try

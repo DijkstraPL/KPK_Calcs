@@ -9,21 +9,31 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            @Html.Partial("_BuildingSiteResult", Model.BuildingData)
+            @if (Request.IsAuthenticated)
+            {
+                @Html.Partial("_BuildingSiteResult", Model.BuildingData)
+            }
+            else
+            {
+                <h4><a href="@Url.Action("Login", "Account", routeValues: null)">Login</a> to see more details.</h4>
+            }
         </div>
         <div class="col-md-6">
-            <h3>Left Roof:</h3>
-            <ul>
-                <li><strong>Slope:</strong> @Model.MultiSpanRoof.LeftRoof.Slope degrees</li>
-                <li><strong>Shape coefficient:</strong> @Math.Round(Model.MultiSpanRoof.LeftRoof.ShapeCoefficient, 3)</li>
-                <li><strong>Snow fences:</strong> @Model.MultiSpanRoof.LeftRoof.SnowFences</li>
-            </ul>
-            <h3>Right Roof:</h3>
-            <ul>
-                <li><strong>Slope:</strong> @Model.MultiSpanRoof.RightRoof.Slope degrees</li>
-                <li><strong>Shape coefficient:</strong> @Math.Round(Model.MultiSpanRoof.RightRoof.ShapeCoefficient, 3)</li>
-                <li><strong>Snow fences:</strong> @Model.MultiSpanRoof.RightRoof.SnowFences</li>
-            </ul>
+            @if (Request.IsAuthenticated)
+            {
+                <h3>Left Roof:</h3>
+                <ul>
+                    <li><strong>Slope:</strong> @Model.MultiSpanRoof.LeftRoof.Slope degrees</li>
+                    <li><strong>Shape coefficient:</strong> @Math.Round(Model.MultiSpanRoof.LeftRoof.ShapeCoefficient, 3)</li>
+                    <li><strong>Snow fences:</strong> @Model.MultiSpanRoof.LeftRoof.SnowFences</li>
+                </ul>
+                <h3>Right Roof:</h3>
+                <ul>
+                    <li><strong>Slope:</strong> @Model.MultiSpanRoof.RightRoof.Slope degrees</li>
+                    <li><strong>Shape coefficient:</strong> @Math.Round(Model.MultiSpanRoof.RightRoof.ShapeCoefficient, 3)</li>
+                    <li><strong>Snow fences:</strong> @Model.MultiSpanRoof.RightRoof.SnowFences</li>
+                </ul>
+            }
 
             <h3>Snow load on roof:</h3>
             <ul>
@@ -38,11 +48,11 @@
                 </li>
             </ul>
 
-                <a href="@Url.Action("Calculator", "SnowLoads")">
-            <div class="snow-load-case">
+            <a href="@Url.Action("Calculator", "SnowLoads")">
+                <div class="snow-load-case">
                     <img class="snow-load-link" src="~/Content/Images/SnowLoads/MultispanRoof.png" alt="Multispan Roof" />
-            </div>
-                </a>
+                </div>
+            </a>
         </div>
     </div>
 </div>

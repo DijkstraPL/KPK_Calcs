@@ -9,38 +9,47 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            @Html.Partial("_BuildingSiteResult", Model.BuildingData)
-            <ul>
-                <li><strong>Snow density:</strong> @Model.DriftingAtProjectionsObstructions.Building.SnowLoad.SnowDensity kN/m<sup>3</sup></li>
-            </ul>
+            @if (Request.IsAuthenticated)
+            {
+                @Html.Partial("_BuildingSiteResult", Model.BuildingData)
+                <ul>
+                    <li><strong>Snow density:</strong> @Model.DriftingAtProjectionsObstructions.Building.SnowLoad.SnowDensity kN/m<sup>3</sup></li>
+                </ul>
+            }
+            else
+            {
+                <h4><a href="@Url.Action("Login", "Account", routeValues: null)">Login</a> to see more details.</h4>
+            }
         </div>
-        <div class="col-md-6">           
-            <ul>
-                <li><strong>Obstruction height:</strong> @Model.DriftingAtProjectionsObstructions.ObstructionHeight m</li>
-                <li><strong>Drift length:</strong> @Math.Round(Model.DriftingAtProjectionsObstructions.DriftLength,3) m</li>
-                <li><strong>First shape coefficient:</strong> @Math.Round(Model.DriftingAtProjectionsObstructions.
-                                                             FirstShapeCoefficient,3)</li>
-                <li><strong>Second shape coefficient:</strong> @Math.Round(Model.DriftingAtProjectionsObstructions.
-                                                              SecondShapeCoefficient,3)</li>
-            </ul>
-
+        <div class="col-md-6">
+            @if (Request.IsAuthenticated)
+            {
+                <ul>
+                    <li><strong>Obstruction height:</strong> @Model.DriftingAtProjectionsObstructions.ObstructionHeight m</li>
+                    <li><strong>Drift length:</strong> @Math.Round(Model.DriftingAtProjectionsObstructions.DriftLength, 3) m</li>
+                    <li>
+                        <strong>First shape coefficient:</strong> @Math.Round(Model.DriftingAtProjectionsObstructions.FirstShapeCoefficient, 3)
+                    </li>
+                    <li>
+                        <strong>Second shape coefficient:</strong> @Math.Round(Model.DriftingAtProjectionsObstructions.SecondShapeCoefficient, 3)
+                    </li>
+                </ul>
+            }
             <h3>Snow load on roof:</h3>
             <ul>
                 <li class="score">
-                    <strong>Closer to the obstruction:</strong> @Math.Round(Model.DriftingAtProjectionsObstructions.
-                                                                   SnowLoadOnRoofValue, 3) kN/m<sup>2</sup>
+                    <strong>Closer to the obstruction:</strong> @Math.Round(Model.DriftingAtProjectionsObstructions.SnowLoadOnRoofValue, 3) kN/m<sup>2</sup>
                 </li>
                 <li class="score">
-                    <strong>Away from the obstruction:</strong> @Math.Round(Model.DriftingAtProjectionsObstructions.
-                                                                    SnowLoadOnRoofValueAtTheEnd, 3) kN/m<sup>2</sup>
+                    <strong>Away from the obstruction:</strong> @Math.Round(Model.DriftingAtProjectionsObstructions.SnowLoadOnRoofValueAtTheEnd, 3) kN/m<sup>2</sup>
                 </li>
             </ul>
 
-                <a href="@Url.Action("Calculator", "SnowLoads")">
-            <div class="snow-load-case">
-                        <img class="snow-load-link" src="~/Content/Images/SnowLoads/DriftingAtProjectionsObstructions.png" alt="Drifting At Projections Obstructions" />
-            </div>
-                </a>
+            <a href="@Url.Action("Calculator", "SnowLoads")">
+                <div class="snow-load-case">
+                    <img class="snow-load-link" src="~/Content/Images/SnowLoads/DriftingAtProjectionsObstructions.png" alt="Drifting At Projections Obstructions" />
+                </div>
+            </a>
         </div>
     </div>
 </div>

@@ -1,12 +1,5 @@
-﻿using KPK_CalcSite.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Web.Mvc;
-using DeadLoads;
 
 namespace KPK_CalcSite.Controllers.Tests
 {
@@ -14,26 +7,46 @@ namespace KPK_CalcSite.Controllers.Tests
     public class DeadLoadsControllerTests
     {
         [Test()]
-        public void DeadLoadCalculatorTest_Success()
+        public void DeadLoadCalculatorTest()
         {
-            var deadLoadsController = new DeadLoadsController();
+            // Arrange
+            DeadLoadsController controller = new DeadLoadsController();
 
-            var result = deadLoadsController.DeadLoadCalculator();
+            // Act
+            ViewResult result = controller.DeadLoadCalculator() as ViewResult;
 
+            // Assert
             Assert.IsNotNull(result);
+            Assert.AreEqual("Dead load", result.ViewBag.Title);
         }
 
         [Test()]
-        public void AddMaterialTest_Success()
+        public void GetSubcategoriesTest()
         {
-            var deadLoadsController = new DeadLoadsController();
+            // Arrange
+            DeadLoadsController controller = new DeadLoadsController();
 
-            var material = new Material() { Name = "Test" };
+            // Act
+            JsonResult result = controller.GetSubcategories("1", "Concretes");
 
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Data);
+        }
 
-            var jsonMaterial = deadLoadsController.AddMaterial(material);
+        [Test()]
+        public void GetMaterialTest()
+        {
+            // Arrange
+            DeadLoadsController controller = new DeadLoadsController();
 
-            Assert.IsNotNull(jsonMaterial);
+            // Act
+            JsonResult result = controller.GetMaterial("34");
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Data);
+            Assert.AreEqual("Żelbet", ((DeadLoads.Material)result.Data).Name);
         }
     }
 }

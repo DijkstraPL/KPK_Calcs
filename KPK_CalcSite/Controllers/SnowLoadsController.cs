@@ -258,12 +258,14 @@ namespace KPK_CalcSite.Controllers
 
             return View("SnowguardsResult", snowLoadSnowguards);
         }
-        
+
+        [Authorize]
         public ActionResult ExceptionalMultispanRoof()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult CalculateExceptionalMultispanRoof(
         ExceptionalSnowLoadMultispanRoof exceptionalSnowLoadMultispanRoof,
@@ -291,12 +293,13 @@ namespace KPK_CalcSite.Controllers
             return View("ExceptionalMultispanRoofResult", exceptionalSnowLoadMultispanRoof);
         }
 
+        [Authorize]
         public ActionResult ExceptionalRoofAbuttingToTallerConstruction()
         {
             return View();
         }
-
-
+        
+        [Authorize]
         [HttpPost]
         public ActionResult CalculateExceptionalRoofAbuttingToTallerConstruction(
         ExceptionalSnowLoadRoofAbuttingToTallerConstruction exceptionalSnowLoadRoofAbuttingToTallerConstruction,
@@ -326,12 +329,14 @@ namespace KPK_CalcSite.Controllers
 
             return View("ExceptionalRoofAbuttingToTallerConstructionResult", exceptionalSnowLoadRoofAbuttingToTallerConstruction);
         }
-        
+
+        [Authorize]
         public ActionResult ExceptionalObstructionOnFlatRoof()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult CalculateExceptionalObstructionOnFlatRoof(
         ExceptionalSnowLoadObstructionOnFlatRoof exceptionalSnowLoadObstructionOnFlatRoof,
@@ -361,12 +366,14 @@ namespace KPK_CalcSite.Controllers
 
             return View("ExceptionalObstructionOnFlatRoofResult", exceptionalSnowLoadObstructionOnFlatRoof);
         }
-        
+
+        [Authorize]
         public ActionResult ExceptionalOverDoorOrLoadingBay()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult CalculateExceptionalOverDoorOrLoadingBay(
         ExceptionalSnowLoadOverDoorOrLoadingBay exceptionalSnowLoadOverDoorOrLoadingBay,
@@ -396,11 +403,13 @@ namespace KPK_CalcSite.Controllers
             return View("ExceptionalOverDoorOrLoadingBayResult", exceptionalSnowLoadOverDoorOrLoadingBay);
         }
 
+        [Authorize]
         public ActionResult ExceptionalObstructionOnPitchedOrCurvedRoof()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult CalculateExceptionalObstructionOnPitchedOrCurvedRoof(
         ExceptionalSnowLoadObstructionOnPitchedOrCurvedRoof exceptionalSnowLoadObstructionOnPitchedOrCurvedRoof,
@@ -430,12 +439,14 @@ namespace KPK_CalcSite.Controllers
 
             return View("ExceptionalObstructionOnPitchedOrCurvedRoofResult", exceptionalSnowLoadObstructionOnPitchedOrCurvedRoof);
         }
-        
+
+        [Authorize]
         public ActionResult ExceptionalSnowBehindParapet()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult CalculateExceptionalSnowBehindParapet(
             ExceptionalSnowLoadSnowBehindParapet exceptionalSnowLoadSnowBehindParapet,
@@ -464,11 +475,13 @@ namespace KPK_CalcSite.Controllers
             return View("ExceptionalSnowBehindParapetResult", exceptionalSnowLoadSnowBehindParapet);
         }
 
+        [Authorize]
         public ActionResult ExceptionalSnowBehindParapetAtEaves()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult CalculateExceptionalSnowBehindParapetAtEaves(
             ExceptionalSnowLoadSnowBehindParapetAtEaves exceptionalSnowLoadSnowBehindParapetAtEaves,
@@ -498,11 +511,13 @@ namespace KPK_CalcSite.Controllers
             return View("ExceptionalSnowBehindParapetAtEavesResult", exceptionalSnowLoadSnowBehindParapetAtEaves);
         }
 
+        [Authorize]
         public ActionResult ExceptionalSnowInValleyBehindParapet()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult CalculateExceptionalSnowInValleyBehindParapet(
             ExceptionalSnowLoadSnowInValleyBehindParapet exceptionalSnowLoadSnowInValleyBehindParapet,
