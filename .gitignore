@@ -259,3 +259,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/TestData
+/Test
+/WCF_SOAP_REST_Service
+/WindLoads
+/WindLoadsTests
