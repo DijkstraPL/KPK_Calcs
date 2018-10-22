@@ -75,6 +75,8 @@
     <Compile Include="Interfaces\ITemperatureProvider.cs" />
     <Compile Include="SnowLoad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TopographyEnum.cs" />
+    <Compile Include="ZoneEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tools\Tools.csproj">
