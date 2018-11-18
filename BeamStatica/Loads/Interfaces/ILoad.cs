@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Loads.Interfaces
 {
-    public interface IPosition
+    public interface ILoad : ILoadPosition
     {
-         double Position { get; set; }
+        double CalculateShear();
+        double CalculateBendingMoment(double distanceFromLoad);
     }
 }
