@@ -1,17 +1,17 @@
-﻿using BeamStatica._spans.Interfaces;
-using BeamStatica.Loads.ContinousLoads;
+﻿using BeamStatica.Loads.ContinousLoads;
 using BeamStatica.Loads.Interfaces;
 using BeamStatica.Materials.Intefaces;
 using BeamStatica.Nodes;
 using BeamStatica.Nodes.Interfaces;
 using BeamStatica.Sections.Interfaces;
+using BeamStatica.Spans.Interfaces;
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tools;
 
-namespace BeamStatica._spans
+namespace BeamStatica.Spans
 {
     public class Span : ISpan
     {

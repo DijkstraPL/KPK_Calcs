@@ -1,4 +1,4 @@
-﻿namespace BeamStatica._spans
+﻿namespace BeamStatica.Spans
 {
     public class StiffnessMatrixPosition
     {

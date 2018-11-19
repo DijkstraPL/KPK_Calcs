@@ -1,11 +1,8 @@
-﻿using BeamStatica.Loads.PointLoads;
-using BeamStatica.Results.Interfaces;
-using BeamStatica.Results.Reactions;
-using BeamStatica._spans;
+﻿using BeamStatica.Results.Interfaces;
+using BeamStatica.Spans;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BendingMoment = BeamStatica.Loads.PointLoads.BendingMoment;
 
 namespace BeamStatica.Results.OnSpan
 {

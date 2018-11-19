@@ -1,0 +1,144 @@
+﻿using BeamStatica;
+using BeamStatica.Loads.ContinousLoads;
+using BeamStatica.Loads.PointLoads;
+using BeamStatica.Materials;
+using BeamStatica.Nodes;
+using BeamStatica.Sections;
+using BeamStatica.Spans;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BeamStaticaTests.BeamsTests
+{
+    [TestFixture]
+    public class BeamWithTelescopeSupportTests
+    {
+        private Beam _beam;
+
+        [SetUp]
+        public void SetUpBeam()
+        {
+            var material1 = new Material() { YoungModulus = 30 };
+            var material2 = new Material() { YoungModulus = 33 };
+            var section = new RectangleSection(width: 300, height: 500);
+
+            var node1 = new TelescopeNode();
+            var node2 = new SupportedNode();
+            var node3 = new SupportedNode();
+
+            var nodes = new Node[] { node1, node2, node3 };
+
+            var span1 = new Span(
+                leftNode: node1,
+                length: 10,
+                rightNode: node2,
+                material: material1,
+                section: section
+                );
+
+            var span2 = new Span(
+                leftNode: node2,
+                length: 10,
+                rightNode: node3,
+                material: material2,
+                section: section
+                );
+
+            var spans = new Span[] { span1, span2 };
+
+            var startLoad1 = new ShearLoad(value: -20, position: 0);
+            var endLoad1 = new ShearLoad(value: -20, position: 10);
+            span1.ContinousLoads.Add(new ContinousLoad(startLoad1, endLoad1));
+
+            var startLoad2 = new ShearLoad(value: -20, position: 0);
+            var endLoad2 = new ShearLoad(value: -20, position: 10);
+            span2.ContinousLoads.Add(new ContinousLoad(startLoad2, endLoad2));
+
+            var pointLoad = new ShearLoad(value: -100, position: 5);
+            span1.PointLoads.Add(pointLoad);
+
+            _beam = new Beam(spans, nodes);
+
+            _beam.Calculate();
+        }
+
+        [Test()]
+        public void NodeForcesCalculationsTest_Successful()
+        {
+            Assert.That(_beam.Spans[0].LeftNode.ShearForce, Is.Null);
+            Assert.That(_beam.Spans[0].LeftNode.BendingMoment.Value, Is.EqualTo(642.442).Within(0.001));
+
+            Assert.That(_beam.Spans[1].LeftNode.ShearForce.Value, Is.EqualTo(485.756).Within(0.001));
+            Assert.That(_beam.Spans[1].LeftNode.BendingMoment, Is.Null);
+
+            Assert.That(_beam.Spans[1].RightNode.ShearForce.Value, Is.EqualTo(14.244).Within(0.001));
+            Assert.That(_beam.Spans[1].RightNode.BendingMoment, Is.Null);
+        }
+
+        [Test()]
+        [TestCase(0, 0)]
+        [TestCase(2, -40)]
+        [TestCase(5, -100)]
+        [TestCase(5.00001, -200)]
+        [TestCase(10, -300)]
+        [TestCase(10.0001, 185.754)]
+        [TestCase(12, 145.756)]
+        [TestCase(15, 85.756)]
+        [TestCase(20, -14.244)]
+        public void ShearForceAtPositionCalculationsTest_Successful(double position, double result)
+        {
+            double calculatedShear = _beam.ShearResult.GetValue(position).Value;
+
+            Assert.That(calculatedShear, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, 642.442)]
+        [TestCase(2, 602.442)]
+        [TestCase(5, 392.442)]
+        [TestCase(10, -857.558)]
+        [TestCase(12, -526.047)]
+        [TestCase(15, -178.779)]
+        [TestCase(20, 0)]
+        public void BendingMomentAtPositionCalculationsTest_Successful(double position, double result)
+        {
+            double calculatedMoment = _beam.BendingMomentResult.GetValue(position).Value;
+
+            Assert.That(calculatedMoment, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, 0)]
+        [TestCase(2, 0.013421)]
+        [TestCase(5, 0.029819)]
+        [TestCase(10, 0.019638)]
+        [TestCase(12, 0.006351)]
+        [TestCase(15, -0.003465)]
+        [TestCase(20, -0.005779)]
+        public void RotationAtPositionCalculationsTest_Successful(double position, double result)
+        {
+            double rotation = _beam.RotationResult.GetValue(position).Value;
+
+            Assert.That(rotation, Is.EqualTo(result).Within(0.000001), message: $"At {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, -231.525)]
+        [TestCase(2, -217.961)]
+        [TestCase(5, -151.421)]
+        [TestCase(10, 0)]
+        [TestCase(12, 24.917)]
+        [TestCase(15, 26.721)]
+        [TestCase(20, 0)]
+        public void DeflectionAtPositionCalculationsTest_Successful(double position, double result)
+        {
+            double deflection = _beam.DeflectionResult.GetValue(position).Value;
+
+            Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
+        }
+    }
+}

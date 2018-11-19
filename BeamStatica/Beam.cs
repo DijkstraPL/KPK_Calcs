@@ -2,7 +2,7 @@
 using BeamStatica.Nodes.Interfaces;
 using BeamStatica.Results.Interfaces;
 using BeamStatica.Results.OnSpan;
-using BeamStatica._spans;
+using BeamStatica.Spans;
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
@@ -10,13 +10,14 @@ using System.Linq;
 
 namespace BeamStatica
 {
-
     public class Beam
     {
         public IGetResult ShearResult { get; }
         public IGetResult BendingMomentResult { get; }
         public IGetResult RotationResult { get; }
         public IGetResult DeflectionResult { get; }
+
+        public double Length => Spans.Sum(s => s.Length);
 
         public short NumberOfDegreesOfFreedom { get; private set; }
 

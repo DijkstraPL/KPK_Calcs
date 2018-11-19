@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BeamStatica._spans.Interfaces
+namespace BeamStatica.Spans.Interfaces
 {
     public interface ISpan : ILengthProvider
     {

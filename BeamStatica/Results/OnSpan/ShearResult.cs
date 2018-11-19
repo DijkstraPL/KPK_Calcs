@@ -1,6 +1,6 @@
-﻿using BeamStatica._spans;
-using BeamStatica.Results.Interfaces;
+﻿using BeamStatica.Results.Interfaces;
 using BeamStatica.Results.Reactions;
+using BeamStatica.Spans;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +12,13 @@ namespace BeamStatica.Results.OnSpan
         public IResultValue Result { get; private set; }
         private IList<Span> _spans { get; }
         private double _currentLength;
+        private IList<Span> spans;
 
         public ShearResult(IList<Span> spans)
         {
             _spans = spans ?? throw new ArgumentNullException(nameof(spans));
         }
-
+        
         public IResultValue GetValue(double distanceFromLeftSide)
         {
             Result = new ShearForce() { Value = 0 };

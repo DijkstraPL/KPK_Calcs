@@ -63,7 +63,15 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="BeamsTests\BeamWithDoubleOverhangingTests.cs" />
+    <Compile Include="BeamsTests\BeamWithRightOverhangingTests.cs" />
+    <Compile Include="BeamsTests\BeamWithTelescopeSupportTests.cs" />
+    <Compile Include="BeamsTests\BeamWithTrapezoidalLoadTests.cs" />
+    <Compile Include="BeamsTests\BeamWithTriangleLoad2Tests.cs" />
+    <Compile Include="BeamsTests\BeamWithTriangleLoad1Tests.cs" />
     <Compile Include="BeamTests.cs" />
+    <Compile Include="BeamsTests\BeamWithLeftOverhangingTests.cs" />
+    <Compile Include="BeamsTests\BeamWithTwoSectionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
