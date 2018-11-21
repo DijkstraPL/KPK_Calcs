@@ -11,15 +11,22 @@ namespace BeamStatica.Results.OnSpan
     public class RotationResult : IGetResult
     {
         public IResultValue Result { get; private set; }
-        private readonly Beam _beam;
         private double _currentLength;
         private double _distanceFromLeftSide;
 
         private double _spanRotation;
+        private readonly Beam _beam;
+        private readonly bool _adjustRotation;
 
         public RotationResult(Beam beam)
         {
             _beam = beam ?? throw new ArgumentNullException(nameof(beam));
+        }
+
+        private RotationResult(Beam beam, bool adjustRotation)
+        {
+            _beam = beam ?? throw new ArgumentNullException(nameof(beam));
+            _adjustRotation = adjustRotation;
         }
 
         public IResultValue GetValue(double distanceFromLeftSide)
@@ -46,22 +53,35 @@ namespace BeamStatica.Results.OnSpan
             foreach (var span in _beam.Spans)
             {
                 calculatedLength += span.Length;
-               if (calculatedLength <= _distanceFromLeftSide &&
-                   !IsLastNode(span))
+                if (calculatedLength <= _distanceFromLeftSide &&
+                    !IsLastNode(span))
                 {
                     _currentLength += span.Length;
                     continue;
                 }
 
-                if (_distanceFromLeftSide >= _currentLength)
+                if (_distanceFromLeftSide < _currentLength)
                 {
-                    CalculateRotationFromCalculatedForcesAndDisplacements(span);
-                    CalculateRotationFromNodeForces(span);
-                    CalculateRotationFromContinousLoads(span);
-                    CalculateRotationFromPointLoads(span);
+                    _currentLength += span.Length;
+                    continue;
                 }
+
+                if (span.LeftNode is Hinge && !_adjustRotation && _distanceFromLeftSide != _currentLength)
+                    AdjustRotationResultForLeftHinge(span);
+
+                CalculateRotationFromCalculatedForcesAndDisplacements(span);
+                CalculateRotationFromNodeForces(span);
+                CalculateRotationFromContinousLoads(span);
+                CalculateRotationFromPointLoads(span);
+
                 _currentLength += span.Length;
             }
+        }
+
+        private void AdjustRotationResultForLeftHinge(Span span)
+        {
+            var adjustRotationResult = new RotationResult(_beam, adjustRotation: true);
+            _spanRotation -= adjustRotationResult.GetValue(_currentLength + span.Length).Value / 100;
         }
 
         private bool IsLastNode(Span span) =>

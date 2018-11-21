@@ -11,7 +11,7 @@ namespace BeamStatica.Nodes
 {
     public class TelescopeNode : Node
     {
-        public override short DegreesOfFreedom { get; } = 1;
+        public override short DegreesOfFreedom => 1;
 
         public TelescopeNode( IResultValue bendingMoment = null, IResultValue deflection = null)
         {

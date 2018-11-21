@@ -10,7 +10,7 @@ namespace BeamStatica.Nodes
 {
     public class Hinge : Node
     {
-        public override short DegreesOfFreedom { get; } = 2;
+        public override short DegreesOfFreedom => 1;
 
         public Hinge(IResultValue deflection = null, IResultValue rotation = null)
         {

@@ -10,7 +10,7 @@ namespace BeamStatica.Nodes
 {
     public sealed class FixedNode : Node
     {
-        public override short DegreesOfFreedom { get; } = 0;
+        public override short DegreesOfFreedom => 0;
 
         public FixedNode(IResultValue shearForce = null, IResultValue bendingMoment = null)
         {

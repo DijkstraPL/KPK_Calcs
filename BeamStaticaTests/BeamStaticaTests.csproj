@@ -64,6 +64,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BeamsTests\BeamWithDoubleOverhangingTests.cs" />
+    <Compile Include="BeamsTests\BeamWithHingeTests.cs" />
     <Compile Include="BeamsTests\BeamWithRightOverhangingTests.cs" />
     <Compile Include="BeamsTests\BeamWithTelescopeSupportTests.cs" />
     <Compile Include="BeamsTests\BeamWithTrapezoidalLoadTests.cs" />

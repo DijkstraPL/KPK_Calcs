@@ -11,7 +11,7 @@ namespace BeamStatica.Nodes
 {
     public sealed class SupportedNode : Node
     {
-        public override short DegreesOfFreedom { get; } = 1;
+        public override short DegreesOfFreedom => 1;
 
         public SupportedNode(IResultValue shearForce = null, IResultValue rotation = null)
         {

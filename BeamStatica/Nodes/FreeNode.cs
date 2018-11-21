@@ -10,7 +10,7 @@ namespace BeamStatica.Nodes
 {
     public sealed class FreeNode : Node
     {
-        public override short DegreesOfFreedom { get; } = 2;
+        public override short DegreesOfFreedom => 2;
 
         public FreeNode(IResultValue deflection = null, IResultValue rotation = null)
         {
