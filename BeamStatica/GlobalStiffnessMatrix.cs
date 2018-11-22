@@ -1,11 +1,7 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Complex;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BeamStatica
 {
@@ -18,22 +14,23 @@ namespace BeamStatica
 
         public GlobalStiffnessMatrix(Beam beam)
         {
-            _beam = beam;
+            _beam = beam ?? throw new ArgumentNullException(nameof(beam));
         }
 
         public void Calculate()
         {
-            Matrix = Matrix<double>.Build.Dense(_beam.NumberOfDegreesOfFreedom, _beam.NumberOfDegreesOfFreedom);
+            if (_beam.NumberOfDegreesOfFreedom != 0)
+                Matrix = Matrix<double>.Build.Dense(_beam.NumberOfDegreesOfFreedom, _beam.NumberOfDegreesOfFreedom);
 
-            for (int i = 0; i < _beam.NumberOfDegreesOfFreedom; i++)
-                for (int j = 0; j < _beam.NumberOfDegreesOfFreedom; j++)
-                    SetMatrixValues(i, j);
+            for (int row = 0; row < _beam.NumberOfDegreesOfFreedom; row++)
+                for (int col = 0; col < _beam.NumberOfDegreesOfFreedom; col++)
+                    SetMatrixValues(row, col);
         }
 
-        private void SetMatrixValues(int i, int j)
+        private void SetMatrixValues(int row, int col)
         {
-            Matrix[i, j] += _beam.Spans.SelectMany(s => s.StiffnessMatrix.MatrixOfPositions)
-                .Where(m => m.RowNumber == i && m.ColumnNumber == j).Sum(m => m.Value);
+            Matrix[row, col] += _beam.Spans.SelectMany(s => s.StiffnessMatrix.MatrixOfPositions)
+                .Where(m => m.RowNumber == row && m.ColumnNumber == col).Sum(m => m.Value);
         }
     }
 }

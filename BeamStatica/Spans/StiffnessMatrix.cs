@@ -74,7 +74,7 @@ namespace BeamStatica.Spans
             MatrixOfPositions.Add(new StiffnessMatrixPosition(value * -3 * _span.Length, _span.RightNode.MovementNumber, _span.LeftNode.RotationNumber));
             MatrixOfPositions.Add(new StiffnessMatrixPosition(value * 3, _span.RightNode.MovementNumber, _span.RightNode.MovementNumber));
             MatrixOfPositions.Add(new StiffnessMatrixPosition(0, _span.RightNode.MovementNumber, _span.RightNode.RotationNumber));
-
+            
             MatrixOfPositions.Add(new StiffnessMatrixPosition(0, _span.RightNode.RotationNumber, _span.LeftNode.MovementNumber));
             MatrixOfPositions.Add(new StiffnessMatrixPosition(0, _span.RightNode.RotationNumber, _span.LeftNode.RotationNumber));
             MatrixOfPositions.Add(new StiffnessMatrixPosition(0, _span.RightNode.RotationNumber, _span.RightNode.MovementNumber));
@@ -147,7 +147,7 @@ namespace BeamStatica.Spans
             {
                 Matrix[j, i] = position.Value;
                 i++;
-                if(i % 4 == 0)
+                if (i % 4 == 0)
                 {
                     j++;
                     i = 0;

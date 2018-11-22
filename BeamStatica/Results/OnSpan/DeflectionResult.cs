@@ -1,4 +1,5 @@
 ﻿using BeamStatica.Loads.PointLoads;
+using BeamStatica.Nodes;
 using BeamStatica.Results.Displacements;
 using BeamStatica.Results.Interfaces;
 using BeamStatica.Spans;
@@ -9,12 +10,15 @@ namespace BeamStatica.Results.OnSpan
 {
     class DeflectionResult : IGetResult
     {
+        private const double _nextToNodePosition = 0.00000001;
+
         public IResultValue Result { get; private set; }
-        private readonly Beam _beam;
         private double _currentLength;
         private double _distanceFromLeftSide;
 
         private double _spanDeflection;
+
+        private readonly Beam _beam;
 
         public DeflectionResult(Beam beam)
         {
@@ -51,6 +55,10 @@ namespace BeamStatica.Results.OnSpan
                         continue;                    
                 }
 
+                if (_distanceFromLeftSide >= _currentLength && 
+                    span.LeftNode is Hinge && _distanceFromLeftSide != _currentLength)
+                    AdjustDeflectionResultForLeftHinge(span);
+
                 if (_distanceFromLeftSide >= _currentLength)
                 {
                     CalculateDeflectionFromCalculatedForcesAndDisplacements(span);
@@ -60,6 +68,12 @@ namespace BeamStatica.Results.OnSpan
                 }
                 _currentLength += span.Length;
             }
+        }
+
+        private void AdjustDeflectionResultForLeftHinge(Span span)
+        {
+            _spanDeflection += (_distanceFromLeftSide - _currentLength)
+               * _beam.RotationResult.GetValue(_currentLength + _nextToNodePosition).Value / 100;
         }
 
         private bool IsLastNode(Span span) =>

@@ -20,6 +20,15 @@ namespace BeamStatica.Sections
         {
             Width = width;
             Height = height;
+
+            //Points = new List<Point>();
+
+            //Points.Add(new Point() { X = 0, Y = 0 });
+            //Points.Add(new Point() { X = width, Y = 0 });
+            //Points.Add(new Point() { X = width, Y = height });
+            //Points.Add(new Point() { X = 0, Y = height });
+
+
             CalculateMomentOfInteria();
         }
 
@@ -28,7 +37,7 @@ namespace BeamStatica.Sections
         /// </summary>
         private void CalculateMomentOfInteria()
         {
-            MomentOfInteria = Width * Math.Pow(Height, 3) / 12 / 10000; 
+            MomentOfInteria = Width * Math.Pow(Height, 3) / 12 / 10000;
         }
     }
 }

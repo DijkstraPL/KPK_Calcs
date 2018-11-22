@@ -77,7 +77,8 @@ namespace BeamStatica
 
         private void CaluclateJointLoadVector()
         {
-            JointLoadVector = Vector<double>.Build.Dense(NumberOfDegreesOfFreedom);
+            if (NumberOfDegreesOfFreedom != 0)
+                JointLoadVector = Vector<double>.Build.Dense(NumberOfDegreesOfFreedom);
 
             for (int i = 0; i < NumberOfDegreesOfFreedom; i++)
             {
@@ -96,14 +97,16 @@ namespace BeamStatica
 
         private void CalculateSpanLoadVector()
         {
-            SpanLoadVector = Vector<double>.Build.Dense(NumberOfDegreesOfFreedom);
+            if (NumberOfDegreesOfFreedom != 0)
+                SpanLoadVector = Vector<double>.Build.Dense(NumberOfDegreesOfFreedom);
             foreach (var span in Spans)
                 CalculateSpanLoadVectorForCurrentSpan(span);
         }
 
         private void CalculateDeflectionVector()
         {
-            DeflectionVector = GlobalStiffnessMatrix.InversedMatrix * (JointLoadVector - SpanLoadVector);
+            if (NumberOfDegreesOfFreedom != 0)
+                DeflectionVector = GlobalStiffnessMatrix.InversedMatrix * (JointLoadVector - SpanLoadVector);
         }
 
         private void CalculateDisplacements()
