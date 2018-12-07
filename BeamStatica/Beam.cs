@@ -1,4 +1,5 @@
 ﻿using BeamStatica.Loads.PointLoads;
+using BeamStatica.Nodes;
 using BeamStatica.Nodes.Interfaces;
 using BeamStatica.Results.Interfaces;
 using BeamStatica.Results.OnSpan;
@@ -83,9 +84,11 @@ namespace BeamStatica
             for (int i = 0; i < NumberOfDegreesOfFreedom; i++)
             {
                 if (Nodes.Any(n => n.MovementNumber == i))
-                    JointLoadVector[i] = Nodes.SingleOrDefault(n => n.MovementNumber == i)?.ConcentratedForces.Sum(cf => (cf as ShearLoad)?.Value ?? 0) ?? 0;
+                    JointLoadVector[i] = Nodes.SingleOrDefault(n => n.MovementNumber == i)?
+                        .ConcentratedForces.Sum(cf => (cf as ShearLoad)?.Value ?? 0) ?? 0;
                 else
-                    JointLoadVector[i] = Nodes.SingleOrDefault(n => n.RotationNumber == i)?.ConcentratedForces.Sum(cf => -(cf as BendingMoment)?.Value ?? 0) ?? 0;
+                    JointLoadVector[i] = Nodes.SingleOrDefault(n => n.LeftRotationNumber == i || n.RightRotationNumber == i)?
+                        .ConcentratedForces.Sum(cf => -(cf as BendingMoment)?.Value ?? 0) ?? 0;
             }
         }
 
@@ -128,20 +131,22 @@ namespace BeamStatica
         {
             int numberOfReactions = Spans.Count * 2 + 2 - NumberOfDegreesOfFreedom;
 
+            numberOfReactions += Nodes.Count(n => n is Hinge);
+
             for (int i = NumberOfDegreesOfFreedom; i < numberOfReactions + NumberOfDegreesOfFreedom; i++)
             {
                 var shearForce = Spans.SingleOrDefault(s => s.LeftNode.MovementNumber == i)?.LeftNode.ShearForce;
                 if (shearForce != null)
                     shearForce.Value += Spans.Where(s => s.LeftNode.MovementNumber == i).Sum(s => s.Forces[0]);
 
-                if (Spans.SingleOrDefault(s => s.LeftNode.RotationNumber == i)?.LeftNode.BendingMoment != null)
-                    Spans.SingleOrDefault(s => s.LeftNode.RotationNumber == i).LeftNode.BendingMoment.Value -= Spans.Where(s => s.LeftNode.RotationNumber == i).Sum(s => s.Forces[1]);
+                if (Spans.SingleOrDefault(s => s.LeftNode.RightRotationNumber == i)?.LeftNode.BendingMoment != null)
+                    Spans.SingleOrDefault(s => s.LeftNode.RightRotationNumber == i).LeftNode.BendingMoment.Value -= Spans.Where(s => s.LeftNode.LeftRotationNumber == i).Sum(s => s.Forces[1]);
 
                 if (Spans.SingleOrDefault(s => s.RightNode.MovementNumber == i)?.RightNode.ShearForce != null)
                     Spans.SingleOrDefault(s => s.RightNode.MovementNumber == i).RightNode.ShearForce.Value += Spans.Where(s => s.RightNode.MovementNumber == i).Sum(s => s.Forces[2]);
 
-                if (Spans.SingleOrDefault(s => s.RightNode.RotationNumber == i)?.RightNode.BendingMoment != null)
-                    Spans.SingleOrDefault(s => s.RightNode.RotationNumber == i).RightNode.BendingMoment.Value -= Spans.Where(s => s.RightNode.RotationNumber == i).Sum(s => s.Forces[3]);
+                if (Spans.SingleOrDefault(s => s.RightNode.LeftRotationNumber == i)?.RightNode.BendingMoment != null)
+                    Spans.SingleOrDefault(s => s.RightNode.LeftRotationNumber == i).RightNode.BendingMoment.Value -= Spans.Where(s => s.RightNode.RightRotationNumber == i).Sum(s => s.Forces[3]);
             }
         }
 
@@ -173,11 +178,11 @@ namespace BeamStatica
             {
                 if (span.LeftNode.MovementNumber == i)
                     SpanLoadVector[i] += span.LoadVector[0];
-                else if (span.LeftNode.RotationNumber == i)
+                else if (span.LeftNode.RightRotationNumber == i)
                     SpanLoadVector[i] += span.LoadVector[1];
                 else if (span.RightNode.MovementNumber == i)
                     SpanLoadVector[i] += span.LoadVector[2];
-                else if (span.RightNode.RotationNumber == i)
+                else if (span.RightNode.LeftRotationNumber == i)
                     SpanLoadVector[i] += span.LoadVector[3];
             }
         }

@@ -14,7 +14,8 @@ namespace BeamStatica.Nodes
     public abstract class Node : INode
     {
         public short MovementNumber { get; protected set; }
-        public short RotationNumber { get; protected set; }
+        public short LeftRotationNumber { get; protected set; }
+        public short RightRotationNumber { get; protected set; }
 
         public virtual short DegreesOfFreedom { get; }
 
@@ -22,7 +23,8 @@ namespace BeamStatica.Nodes
 
         public IResultValue BendingMoment { get; protected set; } = null;
         public IResultValue ShearForce { get; protected set; } = null;
-        public IResultValue Rotation { get; protected set; } = null;
+        public IResultValue LeftRotation { get; protected set; } = null;
+        public IResultValue RightRotation { get; protected set; } = null;
         public IResultValue Deflection { get; protected set; } = null;
 
         public abstract void SetDisplacementNumeration(ref short currentCounter);

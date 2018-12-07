@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="BeamsTests\BeamWithDoubleOverhangingTests.cs" />
     <Compile Include="BeamsTests\BeamWithDoubleHingeTests.cs" />
+    <Compile Include="BeamsTests\BeamWithHinge4Tests.cs" />
     <Compile Include="BeamsTests\BeamWithHinge3Tests.cs" />
     <Compile Include="BeamsTests\BeamWithHinge2Tests.cs" />
     <Compile Include="BeamsTests\BeamWithHinge1Tests.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="BeamsTests\BeamWithSingleSpanFixedEndsTests.cs" />
     <Compile Include="BeamsTests\BeamWithTelescopeSupportTests.cs" />
     <Compile Include="BeamsTests\BeamWithTrapezoidalLoadTests.cs" />
+    <Compile Include="BeamsTests\BeamWithTriangleLoadPaperTests.cs" />
     <Compile Include="BeamsTests\BeamWithTriangleLoad2Tests.cs" />
     <Compile Include="BeamsTests\BeamWithTriangleLoad1Tests.cs" />
     <Compile Include="BeamsTests\BeamWithLeftOverhangingTests.cs" />

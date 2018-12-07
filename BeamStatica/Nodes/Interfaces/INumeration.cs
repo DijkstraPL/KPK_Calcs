@@ -9,9 +9,10 @@ namespace BeamStatica.Nodes.Interfaces
     public interface INumeration
     {
          short MovementNumber { get;  }
-         short RotationNumber { get;  }
+         short LeftRotationNumber { get;  }
+         short RightRotationNumber { get; }
 
-         void SetDisplacementNumeration(ref short currentCounter);
+        void SetDisplacementNumeration(ref short currentCounter);
          void SetReactionNumeration(ref short currentCounter);
     }
 }

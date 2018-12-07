@@ -66,9 +66,6 @@ namespace BeamStatica.Results.OnSpan
                     continue;
                 }
 
-                if (span.LeftNode is Hinge && !_adjustRotation && _distanceFromLeftSide != _currentLength)
-                    AdjustRotationResultForLeftHinge(span);
-
                 CalculateRotationFromCalculatedForcesAndDisplacements(span);
                 CalculateRotationFromNodeForces(span);
                 CalculateRotationFromContinousLoads(span);
@@ -77,19 +74,13 @@ namespace BeamStatica.Results.OnSpan
                 _currentLength += span.Length;
             }
         }
-
-        private void AdjustRotationResultForLeftHinge(Span span)
-        {
-            var adjustRotationResult = new RotationResult(_beam, adjustRotation: true);
-            _spanRotation -= adjustRotationResult.GetValue(_currentLength + span.Length).Value / 100;
-        }
-
+        
         private bool IsLastNode(Span span) =>
             span == _beam.Spans.Last() && _distanceFromLeftSide == _beam.Length;
 
         private void CalculateRotationFromCalculatedForcesAndDisplacements(Span span)
         {
-            _spanRotation += span.LeftNode.Rotation?.Value / 100 ?? 0;
+            _spanRotation += span.LeftNode.RightRotation?.Value / 100 ?? 0;
 
             if (_currentLength != 0)
             {

@@ -102,7 +102,7 @@ namespace BeamStaticaTests.BeamsTests
         [TestCase(5, -0.014577)]
         [TestCase(9, -0.019242)]
         [TestCase(9.99999, -0.019436)]
-        [TestCase(10, 0)]
+        [TestCase(10, 0.019436)]
         [TestCase(10.00001, 0.019436)]
         [TestCase(11, 0.019242)]
         [TestCase(17, 0.009913)]

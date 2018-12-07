@@ -55,10 +55,6 @@ namespace BeamStatica.Results.OnSpan
                         continue;                    
                 }
 
-                if (_distanceFromLeftSide >= _currentLength && 
-                    span.LeftNode is Hinge && _distanceFromLeftSide != _currentLength)
-                    AdjustDeflectionResultForLeftHinge(span);
-
                 if (_distanceFromLeftSide >= _currentLength)
                 {
                     CalculateDeflectionFromCalculatedForcesAndDisplacements(span);
@@ -69,20 +65,14 @@ namespace BeamStatica.Results.OnSpan
                 _currentLength += span.Length;
             }
         }
-
-        private void AdjustDeflectionResultForLeftHinge(Span span)
-        {
-            _spanDeflection += (_distanceFromLeftSide - _currentLength)
-               * _beam.RotationResult.GetValue(_currentLength + _nextToNodePosition).Value / 100;
-        }
-
+        
         private bool IsLastNode(Span span) =>
             span == _beam.Spans.Last() && _distanceFromLeftSide == _beam.Length;
 
         private void CalculateDeflectionFromCalculatedForcesAndDisplacements(Span span)
         {
             _spanDeflection += span.LeftNode.Deflection?.Value / 100 ?? 0;
-            _spanDeflection += span.LeftNode.Rotation?.Value * (_distanceFromLeftSide - _currentLength) / 100 ?? 0;
+            _spanDeflection += span.LeftNode.RightRotation?.Value * (_distanceFromLeftSide - _currentLength) / 100 ?? 0;
 
             if (_currentLength != 0)
             {

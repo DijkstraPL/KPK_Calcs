@@ -73,24 +73,24 @@ namespace BeamStatica.Spans
 
             if (LeftNode.MovementNumber < numberOfDegreesOfFreedom)
                 Displacements[0] = deflectionVector[LeftNode.MovementNumber];
-            if (LeftNode.RotationNumber < numberOfDegreesOfFreedom)
-                Displacements[1] = deflectionVector[LeftNode.RotationNumber];
+            if (LeftNode.RightRotationNumber < numberOfDegreesOfFreedom)
+                Displacements[1] = deflectionVector[LeftNode.RightRotationNumber];
             if (RightNode.MovementNumber < numberOfDegreesOfFreedom)
                 Displacements[2] = deflectionVector[RightNode.MovementNumber];
-            if (RightNode.RotationNumber < numberOfDegreesOfFreedom)
-                Displacements[3] = deflectionVector[RightNode.RotationNumber];
+            if (RightNode.LeftRotationNumber < numberOfDegreesOfFreedom)
+                Displacements[3] = deflectionVector[RightNode.LeftRotationNumber];
         }
                
         public void SetDisplacement()
         {
-            if (LeftNode.Rotation != null)
-                LeftNode.Rotation.Value = Displacements[1];
             if (LeftNode.Deflection != null)
                 LeftNode.Deflection.Value = Displacements[0];
-            if (RightNode.Rotation != null)
-                RightNode.Rotation.Value = Displacements[3];
+            if (LeftNode.RightRotation != null)
+                LeftNode.RightRotation.Value = Displacements[1];
             if (RightNode.Deflection != null)
                 RightNode.Deflection.Value = Displacements[2];
+            if (RightNode.LeftRotation != null)
+                RightNode.LeftRotation.Value = Displacements[3];
         }
 
         public void CalculateForce()

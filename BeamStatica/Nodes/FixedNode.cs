@@ -25,7 +25,8 @@ namespace BeamStatica.Nodes
         public override void SetReactionNumeration(ref short currentCounter)
         {
             MovementNumber = currentCounter++;
-            RotationNumber = currentCounter++;
+            LeftRotationNumber = currentCounter++;
+            RightRotationNumber = LeftRotationNumber;
         }
     }
 }

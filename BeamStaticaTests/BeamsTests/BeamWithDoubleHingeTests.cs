@@ -67,7 +67,7 @@ namespace BeamStaticaTests.BeamsTests
 
             var spans = new Span[] { span1, span2, span3, span4 };
 
-            node2.ConcentratedForces.Add(new BendingMoment(value: 56));
+           // node2.ConcentratedForces.Add(new BendingMoment(value: 56));
             node3.ConcentratedForces.Add(new ShearLoad(value: 100));
 
             var startLoad1 = new ShearLoad(value: -15, position: 1);

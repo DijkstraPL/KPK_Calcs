@@ -15,13 +15,15 @@ namespace BeamStatica.Nodes
         public FreeNode(IResultValue deflection = null, IResultValue rotation = null)
         {
             Deflection = deflection ?? new Deflection();
-            Rotation = rotation ?? new Rotation();
+            LeftRotation = rotation ?? new Rotation();
+            RightRotation = LeftRotation;
         }
         
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
             MovementNumber = currentCounter++;
-            RotationNumber = currentCounter++;
+            LeftRotationNumber = currentCounter++;
+            RightRotationNumber = LeftRotationNumber;
         }
 
         public override void SetReactionNumeration(ref short currentCounter)

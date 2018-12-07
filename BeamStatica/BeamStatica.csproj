@@ -84,6 +84,7 @@
     <Compile Include="Results\Reactions\Reaction.cs" />
     <Compile Include="Results\Reactions\ShearForce.cs" />
     <Compile Include="Results\OnSpan\ShearResult.cs" />
+    <Compile Include="Sections\PolygonSection.cs" />
     <Compile Include="Spans\Interfaces\ILengthProvider.cs" />
     <Compile Include="Spans\Interfaces\ISpan.cs" />
     <Compile Include="Spans\Span.cs" />

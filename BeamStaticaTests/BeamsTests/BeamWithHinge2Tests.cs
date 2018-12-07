@@ -95,6 +95,78 @@ namespace BeamStaticaTests.BeamsTests
 
         }
 
-        
+        [Test()]
+        [TestCase(0, 50.976)]
+        [TestCase(2, 30.976)]
+        [TestCase(3, 20.976)]
+        [TestCase(5, 0.976)]
+        [TestCase(7, -19.024)]
+        [TestCase(10, -49.024)]
+        [TestCase(10.00001, 94.634)]
+        [TestCase(12, 74.635)]
+        [TestCase(12.5, 69.634)]
+        [TestCase(12.50001, -30.366)]
+        [TestCase(14, -45.365)]
+        [TestCase(15, -55.366)]
+        public void ShearForceAtPositionCalculationsTest_Successful(double position, double result)
+        {
+            double calculatedShear = _beam.ShearResult.GetValue(position).Value;
+
+            Assert.That(calculatedShear, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, -107.927)]
+        [TestCase(2, -25.975)]
+        [TestCase(3, 0)]
+        [TestCase(5, 21.951)]
+        [TestCase(7, 3.902)]
+        [TestCase(10, -98.171)]
+        [TestCase(12, 71.098)]
+        [TestCase(12.5, 107.165)]
+        [TestCase(14, 50.366)]
+        [TestCase(15, 0)]
+        public void BendingMomentAtPositionCalculationsTest_Successful(double position, double result)
+        {
+            double calculatedMoment = _beam.BendingMomentResult.GetValue(position).Value;
+
+            Assert.That(calculatedMoment, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, 0)]
+        [TestCase(2,-0.001357)]
+        [TestCase(2.99999, -0.001487)]
+        [TestCase(3, 0.000139)]
+        [TestCase(3.00001, 0.000139)]
+        [TestCase(5, 0.000444)]
+        [TestCase(7, 0.000791)]
+        [TestCase(10, -0.000477)]
+        [TestCase(12, -0.000695)]
+        [TestCase(14, 0.001072)]
+        [TestCase(15, 0.001350)]
+        public void RotationAtPositionCalculationsTest_Successful(double position, double result)
+        {
+            double rotation = _beam.RotationResult.GetValue(position).Value;
+
+            Assert.That(rotation, Is.EqualTo(result).Within(0.000001), message: $"At {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, 0)]
+        [TestCase(2, -1.649)]
+        [TestCase(3, -3.094)]
+        [TestCase(5, -2.588)]
+        [TestCase(7, -1.288)]
+        [TestCase(10, 0)]
+        [TestCase(12, -1.773)]
+        [TestCase(14, -1.256)]
+        [TestCase(15, 0)]
+        public void DeflectionAtPositionCalculationsTest_Successful(double position, double result)
+        {
+            double deflection = _beam.DeflectionResult.GetValue(position).Value;
+
+            Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
+        }
     }
 }

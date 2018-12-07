@@ -16,12 +16,14 @@ namespace BeamStatica.Nodes
         public SupportedNode(IResultValue shearForce = null, IResultValue rotation = null)
         {
             ShearForce = shearForce ?? new ShearForce();
-            Rotation = rotation ?? new Rotation();
+            LeftRotation = rotation ?? new Rotation();
+            RightRotation = LeftRotation;
         }
 
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
-            RotationNumber = currentCounter++;
+            LeftRotationNumber = currentCounter++;
+            RightRotationNumber = LeftRotationNumber;
         }
 
         public override void SetReactionNumeration(ref short currentCounter)

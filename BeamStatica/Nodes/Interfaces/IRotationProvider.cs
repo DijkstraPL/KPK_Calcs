@@ -9,6 +9,7 @@ namespace BeamStatica.Nodes.Interfaces
 {
     public interface IRotationProvider
     {
-        IResultValue Rotation { get; }
+        IResultValue LeftRotation { get; }
+        IResultValue RightRotation { get; }
     }
 }
