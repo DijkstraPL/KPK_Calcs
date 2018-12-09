@@ -63,8 +63,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="BeamsTests\BeamWithMultipleSpansTests.cs" />
+    <Compile Include="BeamsTests\BeamWithDoubleHinge2Tests.cs" />
     <Compile Include="BeamsTests\BeamWithDoubleOverhangingTests.cs" />
-    <Compile Include="BeamsTests\BeamWithDoubleHingeTests.cs" />
+    <Compile Include="BeamsTests\BeamWithDoubleHinge1Tests.cs" />
     <Compile Include="BeamsTests\BeamWithHinge4Tests.cs" />
     <Compile Include="BeamsTests\BeamWithHinge3Tests.cs" />
     <Compile Include="BeamsTests\BeamWithHinge2Tests.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="BeamsTests\BeamWithLeftOverhangingTests.cs" />
     <Compile Include="BeamsTests\BeamWithTwoSectionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sections\PolygonSectionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

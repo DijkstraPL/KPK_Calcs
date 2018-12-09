@@ -11,6 +11,6 @@ namespace BeamStatica.Sections.Interfaces
     {
         [Abbreviation("I")]
         [Unit("cm4")]
-        double MomentOfInteria { get; set; }
+        double MomentOfInteria { get; }
     }
 }
