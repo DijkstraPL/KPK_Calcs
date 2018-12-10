@@ -1,39 +1,42 @@
-﻿using BeamStatica.Loads.PointLoads;
+﻿using BeamStatica.Beams.Interfaces;
+using BeamStatica.Loads.PointLoads;
 using BeamStatica.Nodes;
 using BeamStatica.Nodes.Interfaces;
 using BeamStatica.Results.Interfaces;
 using BeamStatica.Results.OnSpan;
 using BeamStatica.Spans;
+using BeamStatica.Spans.Interfaces;
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BeamStatica
+namespace BeamStatica.Beams
 {
-    public class Beam
+    public class Beam : IBeam
     {
         public IGetResult NormalForceResult { get; }
         public IGetResult ShearResult { get; }
         public IGetResult BendingMomentResult { get; }
+        public IGetResult HorizontalDeflectionResult { get; }
+        public IGetResult VerticalDeflectionResult { get; }
         public IGetResult RotationResult { get; }
-        public IGetResult DeflectionResult { get; }
 
         public double Length => Spans.Sum(s => s.Length);
 
         public short NumberOfDegreesOfFreedom { get; private set; }
 
-        public IList<Span> Spans { get; }
+        public IList<ISpan> Spans { get; }
         public ICollection<INode> Nodes { get; }
 
-        public GlobalStiffnessMatrix GlobalStiffnessMatrix { get; }
+        public IGlobalStiffnessMatrix GlobalStiffnessMatrix { get; }
 
         public Vector<double> JointLoadVector { get; private set; }
         public Vector<double> SpanLoadVector { get; private set; }
 
         public Vector<double> DeflectionVector { get; private set; }
 
-        public Beam(IList<Span> spans, ICollection<INode> nodes)
+        public Beam(IList<ISpan> spans, ICollection<INode> nodes)
         {
             Spans = spans ?? throw new ArgumentNullException(nameof(spans));
             Nodes = nodes ?? throw new ArgumentNullException(nameof(nodes));
@@ -42,7 +45,8 @@ namespace BeamStatica
             NormalForceResult = new NormalForceResult(Spans);
             ShearResult = new ShearResult(Spans);
             BendingMomentResult = new BendingMomentResult(Spans);
-            DeflectionResult = new DeflectionResult(this);
+            HorizontalDeflectionResult = new HorizontalDeflectionResult(this);
+            VerticalDeflectionResult = new VerticalDeflectionResult(this);
             RotationResult = new RotationResult(this);
         }
 
@@ -187,7 +191,7 @@ namespace BeamStatica
                 NumberOfDegreesOfFreedom += node.DegreesOfFreedom;
         }
 
-        private void CalculateSpanLoadVectorForCurrentSpan(Span span)
+        private void CalculateSpanLoadVectorForCurrentSpan(ISpan span)
         {
             for (int i = 0; i < NumberOfDegreesOfFreedom; i++)
             {

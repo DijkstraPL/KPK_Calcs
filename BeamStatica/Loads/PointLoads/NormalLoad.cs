@@ -27,9 +27,7 @@ namespace BeamStatica.Loads.PointLoads
         {
             double distanceFromCloserNode = leftNode ? this.Position : spanLength - this.Position;
             double distanceFromOtherNode = leftNode ? spanLength - this.Position : this.Position;
-            return (-this.Value * Math.Pow(distanceFromOtherNode, 2) *
-                (3 * distanceFromCloserNode + distanceFromOtherNode)) /
-                Math.Pow(spanLength, 3);
+            return -this.Value * distanceFromOtherNode / spanLength;
         }
 
         public override double CalculateSpanLoadVectorShearMember(double spanLength, bool leftNode) => 0;

@@ -1,4 +1,5 @@
 ﻿using BeamStatica;
+using BeamStatica.Beams;
 using BeamStatica.Loads.ContinousLoads;
 using BeamStatica.Loads.PointLoads;
 using BeamStatica.Materials;
@@ -93,7 +94,7 @@ namespace BeamStaticaTests.BeamsTests
             {
                 _beam.ShearResult.GetValue(i);
                 _beam.BendingMomentResult.GetValue(i);
-                _beam.DeflectionResult.GetValue(i);
+                _beam.VerticalDeflectionResult.GetValue(i);
                 _beam.RotationResult.GetValue(i);
             }
             

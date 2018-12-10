@@ -1,4 +1,5 @@
 ﻿using BeamStatica;
+using BeamStatica.Beams;
 using BeamStatica.Loads.PointLoads;
 using BeamStatica.Materials;
 using BeamStatica.Nodes;
@@ -124,15 +125,30 @@ namespace BeamStaticaTests.BeamsTests
 
         [Test()]
         [TestCase(0, 0)]
+        [TestCase(2, 0.111)]
+        [TestCase(3, 0.167)]
+        [TestCase(4, 0.2)]
+        [TestCase(5, 0.233)]
+        [TestCase(7, 0.3)]
+        [TestCase(10, 0.4)]
+        public void HorizontalDeflectionAtPositionCalculationsTest_Successful(double position, double result)
+        {
+            double deflection = _beam.HorizontalDeflectionResult.GetValue(position).Value;
+
+            Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, 0)]
         [TestCase(2, -9.244)]
         [TestCase(3, -19.2)]
         [TestCase(4, -31.289)]
         [TestCase(5, -44.444)]
         [TestCase(7, -71.111)]
         [TestCase(10, -111.111)]
-        public void DeflectionAtPositionCalculationsTest_Successful(double position, double result)
+        public void VerticalDeflectionAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double deflection = _beam.DeflectionResult.GetValue(position).Value;
+            double deflection = _beam.VerticalDeflectionResult.GetValue(position).Value;
 
             Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }
