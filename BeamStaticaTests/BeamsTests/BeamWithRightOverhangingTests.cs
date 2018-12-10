@@ -1,4 +1,5 @@
 ﻿using BeamStatica;
+using BeamStatica.Beams;
 using BeamStatica.Loads.ContinousLoads;
 using BeamStatica.Loads.PointLoads;
 using BeamStatica.Materials;
@@ -141,7 +142,7 @@ namespace BeamStaticaTests.BeamsTests
         [TestCase(20, 188)]
         public void DeflectionAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double deflection = _beam.DeflectionResult.GetValue(position).Value;
+            double deflection = _beam.VerticalDeflectionResult.GetValue(position).Value;
 
             Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }

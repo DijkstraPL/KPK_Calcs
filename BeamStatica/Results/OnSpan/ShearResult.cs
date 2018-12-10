@@ -1,6 +1,7 @@
 ﻿using BeamStatica.Results.Interfaces;
 using BeamStatica.Results.Reactions;
 using BeamStatica.Spans;
+using BeamStatica.Spans.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,11 @@ namespace BeamStatica.Results.OnSpan
     public class ShearResult : IGetResult
     {
         public IResultValue Result { get; private set; }
-        private IList<Span> _spans { get; }
+        private IList<ISpan> _spans { get; }
         private double _currentLength;
-        private IList<Span> spans;
+        private IList<ISpan> spans;
 
-        public ShearResult(IList<Span> spans)
+        public ShearResult(IList<ISpan> spans)
         {
             _spans = spans ?? throw new ArgumentNullException(nameof(spans));
         }
@@ -43,20 +44,20 @@ namespace BeamStatica.Results.OnSpan
             }
         }
 
-        private void CalculateShearForceFromNodeForces(Span span)
+        private void CalculateShearForceFromNodeForces(ISpan span)
         {
             Result.Value += span.LeftNode.ShearForce?.Value ?? 0;
             Result.Value += span.LeftNode.ConcentratedForces.Sum(l => l.CalculateShear());
         }
 
-        private void CalculateShearFromContinousLoads(double distanceFromLeftSide, Span span)
+        private void CalculateShearFromContinousLoads(double distanceFromLeftSide, ISpan span)
         {
             foreach (var load in span.ContinousLoads)
                 if (distanceFromLeftSide - _currentLength > load.StartPosition.Position)
                     Result.Value += load.CalculateShear(distanceFromLeftSide - load.StartPosition.Position - _currentLength);
         }
 
-        private void CalculateShearFromPointLoads(double distanceFromLeftSide, Span span)
+        private void CalculateShearFromPointLoads(double distanceFromLeftSide, ISpan span)
         {
             foreach (var load in span.PointLoads)
                 if (distanceFromLeftSide - _currentLength > load.Position)

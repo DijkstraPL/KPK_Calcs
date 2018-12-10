@@ -49,8 +49,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Beam.cs" />
-    <Compile Include="GlobalStiffnessMatrix.cs" />
+    <Compile Include="Beams\Beam.cs" />
+    <Compile Include="Beams\GlobalStiffnessMatrix.cs" />
+    <Compile Include="Beams\Interfaces\IBeam.cs" />
+    <Compile Include="Beams\Interfaces\IGlobalStiffnessMatrix.cs" />
+    <Compile Include="Beams\Interfaces\IResultProvider.cs" />
     <Compile Include="Loads\Interfaces\ILoad.cs" />
     <Compile Include="Loads\Interfaces\ILoadPosition.cs" />
     <Compile Include="Loads\PointLoads\BendingMoment.cs" />
@@ -79,7 +82,8 @@
     <Compile Include="Results\Displacements\HorizontalDeflection.cs" />
     <Compile Include="Results\Interfaces\IGetResult.cs" />
     <Compile Include="Results\OnSpan\BendingMomentResult.cs" />
-    <Compile Include="Results\OnSpan\DeflectionResult.cs" />
+    <Compile Include="Results\OnSpan\HorizontalDeflectionResult.cs" />
+    <Compile Include="Results\OnSpan\VerticalDeflectionResult.cs" />
     <Compile Include="Results\OnSpan\NormalForceResult.cs" />
     <Compile Include="Results\OnSpan\RotationResult.cs" />
     <Compile Include="Results\Reactions\BendingMoment.cs" />
@@ -95,7 +99,12 @@
     <Compile Include="Sections\Interfaces\IArea.cs" />
     <Compile Include="Sections\Interfaces\ISection.cs" />
     <Compile Include="Spans\Interfaces\ILengthProvider.cs" />
+    <Compile Include="Spans\Interfaces\ILoadProvider.cs" />
+    <Compile Include="Spans\Interfaces\INodesProvider.cs" />
     <Compile Include="Spans\Interfaces\ISpan.cs" />
+    <Compile Include="Spans\Interfaces\ISpanCalculations.cs" />
+    <Compile Include="Spans\Interfaces\IStiffnessMatrix.cs" />
+    <Compile Include="Spans\Interfaces\IStiffnessMatrixPosition.cs" />
     <Compile Include="Spans\Span.cs" />
     <Compile Include="Sections\Interfaces\IMomentOfInteria.cs" />
     <Compile Include="Sections\Section.cs" />

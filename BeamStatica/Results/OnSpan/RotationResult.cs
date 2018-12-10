@@ -1,8 +1,10 @@
-﻿using BeamStatica.Loads.PointLoads;
+﻿using BeamStatica.Beams;
+using BeamStatica.Loads.PointLoads;
 using BeamStatica.Nodes;
 using BeamStatica.Results.Displacements;
 using BeamStatica.Results.Interfaces;
 using BeamStatica.Spans;
+using BeamStatica.Spans.Interfaces;
 using System;
 using System.Linq;
 
@@ -75,10 +77,10 @@ namespace BeamStatica.Results.OnSpan
             }
         }
         
-        private bool IsLastNode(Span span) =>
+        private bool IsLastNode(ISpan span) =>
             span == _beam.Spans.Last() && _distanceFromLeftSide == _beam.Length;
 
-        private void CalculateRotationFromCalculatedForcesAndDisplacements(Span span)
+        private void CalculateRotationFromCalculatedForcesAndDisplacements(ISpan span)
         {
             _spanRotation += span.LeftNode.RightRotation?.Value / 100 ?? 0;
 
@@ -95,13 +97,13 @@ namespace BeamStatica.Results.OnSpan
             }
         }
 
-        private void CalculateRotationFromNodeForces(Span span)
+        private void CalculateRotationFromNodeForces(ISpan span)
         {
             CalculateRotationFromMomentForces(span);
             CalculateRotationFromShearForces(span);
         }
 
-        private void CalculateRotationFromContinousLoads(Span span)
+        private void CalculateRotationFromContinousLoads(ISpan span)
         {
             foreach (var load in span.ContinousLoads)
             {
@@ -112,7 +114,13 @@ namespace BeamStatica.Results.OnSpan
             }
         }
 
-        private void CalculateRotationFromPointLoads(Span span)
+        private void CalculateRotationFromPointLoads(ISpan span)
+        {
+            CalculateRotationFromShearForcesPointLoads(span);
+            CalculateRotationFromBendingMomentPointLoads(span);
+        }
+
+        private void CalculateRotationFromShearForcesPointLoads(ISpan span)
         {
             foreach (var load in span.PointLoads.Where(pl => pl is ShearLoad))
             {
@@ -126,7 +134,20 @@ namespace BeamStatica.Results.OnSpan
             }
         }
 
-        private void CalculateRotationFromMomentForces(Span span)
+        private void CalculateRotationFromBendingMomentPointLoads(ISpan span)
+        {
+            foreach (var load in span.PointLoads.Where(pl => pl is BendingMoment))
+            {
+                if (_distanceFromLeftSide - _currentLength <= load.Position)
+                    continue;
+
+                _spanRotation += load.Value
+                    * (_distanceFromLeftSide - _currentLength - load.Position)
+                    / (span.Material.YoungModulus * span.Section.MomentOfInteria);
+            }
+        }
+        
+        private void CalculateRotationFromMomentForces(ISpan span)
         {
             _spanRotation += (span.LeftNode.BendingMoment?.Value * (_distanceFromLeftSide - _currentLength) ?? 0)
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
@@ -135,7 +156,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private void CalculateRotationFromShearForces(Span span)
+        private void CalculateRotationFromShearForces(ISpan span)
         {
             _spanRotation += (span.LeftNode.ShearForce?.Value * (_distanceFromLeftSide - _currentLength) *
                 (_distanceFromLeftSide - _currentLength) / 2 ?? 0)
@@ -145,7 +166,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private void CalculateRotationOutsideLoadLength(Span span, Loads.ContinousLoads.ContinousLoad load)
+        private void CalculateRotationOutsideLoadLength(ISpan span, Loads.ContinousLoads.ContinousLoad load)
         {
             double forceAtX = GetForceAtTheCalculatedPoint(load);
 
@@ -172,7 +193,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private void CalculateRotationInsideLoadLength(Span span, Loads.ContinousLoads.ContinousLoad load)
+        private void CalculateRotationInsideLoadLength(ISpan span, Loads.ContinousLoads.ContinousLoad load)
         {
             double forceAtX = GetForceAtTheCalculatedPoint(load);
 

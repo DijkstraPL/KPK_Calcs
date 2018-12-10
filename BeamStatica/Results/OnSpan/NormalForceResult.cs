@@ -1,6 +1,7 @@
 ﻿using BeamStatica.Results.Interfaces;
 using BeamStatica.Results.Reactions;
 using BeamStatica.Spans;
+using BeamStatica.Spans.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,10 @@ namespace BeamStatica.Results.OnSpan
     public class NormalForceResult : IGetResult
     {
         public IResultValue Result { get; private set; }
-        private IList<Span> _spans { get; }
+        private IList<ISpan> _spans;
         private double _currentLength;
-        private IList<Span> spans;
 
-        public NormalForceResult(IList<Span> spans)
+        public NormalForceResult(IList<ISpan> spans)
         {
             _spans = spans ?? throw new ArgumentNullException(nameof(spans));
         }
@@ -43,20 +43,20 @@ namespace BeamStatica.Results.OnSpan
             }
         }
 
-        private void CalculateNormalForceFromNodeForces(Span span)
+        private void CalculateNormalForceFromNodeForces(ISpan span)
         {
             Result.Value += span.LeftNode.NormalForce?.Value ?? 0;
             Result.Value += span.LeftNode.ConcentratedForces.Sum(l => l.CalculateNormalForce());
         }
 
-        private void CalculateNormalForceFromContinousLoads(double distanceFromLeftSide, Span span)
+        private void CalculateNormalForceFromContinousLoads(double distanceFromLeftSide, ISpan span)
         {
             foreach (var load in span.ContinousLoads)
                 if (distanceFromLeftSide - _currentLength > load.StartPosition.Position)
                     Result.Value += load.CalculateNormalForce(distanceFromLeftSide - load.StartPosition.Position - _currentLength);
         }
 
-        private void CalculateNormalForceFromPointLoads(double distanceFromLeftSide, Span span)
+        private void CalculateNormalForceFromPointLoads(double distanceFromLeftSide, ISpan span)
         {
             foreach (var load in span.PointLoads)
                 if (distanceFromLeftSide - _currentLength > load.Position)

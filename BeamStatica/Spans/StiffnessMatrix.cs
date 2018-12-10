@@ -1,13 +1,14 @@
 ﻿using BeamStatica.Nodes;
+using BeamStatica.Spans.Interfaces;
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 
 namespace BeamStatica.Spans
 {
-    public class StiffnessMatrix
+    public class StiffnessMatrix : IStiffnessMatrix
     {
-        public ICollection<StiffnessMatrixPosition> MatrixOfPositions { get; private set; } = new List<StiffnessMatrixPosition>();
+        public ICollection<IStiffnessMatrixPosition> MatrixOfPositions { get; private set; } = new List<IStiffnessMatrixPosition>();
         public Matrix<double> Matrix { get; private set; }
         public int Size { get; private set; }
 

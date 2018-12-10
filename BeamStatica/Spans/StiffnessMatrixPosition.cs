@@ -1,6 +1,8 @@
-﻿namespace BeamStatica.Spans
+﻿using BeamStatica.Spans.Interfaces;
+
+namespace BeamStatica.Spans
 {
-    public class StiffnessMatrixPosition
+    public class StiffnessMatrixPosition : IStiffnessMatrixPosition
     {
         public short RowNumber { get; }
         public short ColumnNumber { get; }

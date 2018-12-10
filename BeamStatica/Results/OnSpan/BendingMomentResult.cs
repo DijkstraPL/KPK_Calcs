@@ -1,5 +1,6 @@
 ﻿using BeamStatica.Results.Interfaces;
 using BeamStatica.Spans;
+using BeamStatica.Spans.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace BeamStatica.Results.OnSpan
     public class BendingMomentResult : IGetResult
     {
         public IResultValue Result { get; private set; }
-        private IList<Span> _spans { get; }
+        private IList<ISpan> _spans { get; }
         private double _currentLength;
 
-        public BendingMomentResult(IList<Span> spans)
+        public BendingMomentResult(IList<ISpan> spans)
         {
             _spans = spans ?? throw new ArgumentNullException(nameof(spans));
         }
@@ -40,21 +41,21 @@ namespace BeamStatica.Results.OnSpan
             }
         }
 
-        private void CalculateBendingMomentFromNodeForces(double distanceFromLeftSide, Span span)
+        private void CalculateBendingMomentFromNodeForces(double distanceFromLeftSide, ISpan span)
         {
             Result.Value += span.LeftNode.BendingMoment?.Value ?? 0;
             Result.Value += (span.LeftNode.ShearForce?.Value ?? 0) * (distanceFromLeftSide - _currentLength);
             Result.Value += span.LeftNode.ConcentratedForces.Sum(l => l.CalculateBendingMoment(distanceFromLeftSide - _currentLength));
         }
 
-        private void CalculateBendingMomentFromContinousLoads(double distanceFromLeftSide, Span span)
+        private void CalculateBendingMomentFromContinousLoads(double distanceFromLeftSide, ISpan span)
         {
             foreach (var load in span.ContinousLoads)
                 if (distanceFromLeftSide - _currentLength > load.StartPosition.Position)
                     Result.Value += load.CalculateBendingMoment(distanceFromLeftSide - load.StartPosition.Position - _currentLength);            
         }
         
-        private void CalculateBendingMomentFromPointLoads(double distanceFromLeftSide, Span span)
+        private void CalculateBendingMomentFromPointLoads(double distanceFromLeftSide, ISpan span)
         {
             foreach (var load in span.PointLoads)
                 if (distanceFromLeftSide > load.Position + _currentLength)                    

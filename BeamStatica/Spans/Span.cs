@@ -32,12 +32,12 @@ namespace BeamStatica.Spans
         public ICollection<ContinousLoad> ContinousLoads { get; set; }
         public ICollection<ILoad> PointLoads { get; set; }
 
-        public StiffnessMatrix StiffnessMatrix { get; }
+        public IStiffnessMatrix StiffnessMatrix { get; }
         public Vector<double> LoadVector { get; private set; }
         public Vector<double> Displacements { get; private set; }
         public Vector<double> Forces { get; private set; }
 
-        public Span(Node leftNode, double length, INode rightNode, IYoungModulus material, ISection section)
+        public Span(INode leftNode, double length, INode rightNode, IYoungModulus material, ISection section)
         {
             LeftNode = leftNode ?? throw new ArgumentNullException(nameof(leftNode));
             Length = length;

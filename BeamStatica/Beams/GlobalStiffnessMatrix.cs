@@ -1,13 +1,14 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿using BeamStatica.Beams.Interfaces;
+using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Complex;
 using System;
 using System.Linq;
 
-namespace BeamStatica
+namespace BeamStatica.Beams
 {
-    public class GlobalStiffnessMatrix
+    public class GlobalStiffnessMatrix : IGlobalStiffnessMatrix
     {
-        public Matrix<double> Matrix { get; set; }
+        public Matrix<double> Matrix { get; private set; }
         public Matrix<double> InversedMatrix => Matrix.Inverse();
 
         private readonly Beam _beam;

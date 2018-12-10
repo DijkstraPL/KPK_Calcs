@@ -3,12 +3,15 @@ using BeamStatica.Nodes;
 using BeamStatica.Results.Displacements;
 using BeamStatica.Results.Interfaces;
 using BeamStatica.Spans;
+using BeamStatica;
 using System;
 using System.Linq;
+using BeamStatica.Beams;
+using BeamStatica.Spans.Interfaces;
 
 namespace BeamStatica.Results.OnSpan
 {
-    class DeflectionResult : IGetResult
+    class VerticalDeflectionResult : IGetResult
     {
         private const double _nextToNodePosition = 0.00000001;
 
@@ -20,7 +23,7 @@ namespace BeamStatica.Results.OnSpan
 
         private readonly Beam _beam;
 
-        public DeflectionResult(Beam beam)
+        public VerticalDeflectionResult(Beam beam)
         {
             _beam = beam ?? throw new ArgumentNullException(nameof(beam));
         }
@@ -66,10 +69,10 @@ namespace BeamStatica.Results.OnSpan
             }
         }
         
-        private bool IsLastNode(Span span) =>
+        private bool IsLastNode(ISpan span) =>
             span == _beam.Spans.Last() && _distanceFromLeftSide == _beam.Length;
 
-        private void CalculateDeflectionFromCalculatedForcesAndDisplacements(Span span)
+        private void CalculateDeflectionFromCalculatedForcesAndDisplacements(ISpan span)
         {
             _spanDeflection += span.LeftNode.VerticalDeflection?.Value / 100000 ?? 0;
             _spanDeflection += span.LeftNode.RightRotation?.Value * (_distanceFromLeftSide - _currentLength) / 100 ?? 0;
@@ -89,13 +92,13 @@ namespace BeamStatica.Results.OnSpan
             }
         }
 
-        private void CalculateDeflectionFromNodeForces(Span span)
+        private void CalculateDeflectionFromNodeForces(ISpan span)
         {
             CalculateDeflectionFromMomentForces(span);
             CalculateDeflectionFromShearForces(span);
         }
 
-        private void CalculateDeflectionFromContinousLoads(Span span)
+        private void CalculateDeflectionFromContinousLoads(ISpan span)
         {
             foreach (var load in span.ContinousLoads)
             {
@@ -106,7 +109,13 @@ namespace BeamStatica.Results.OnSpan
             }
         }
 
-        private void CalculateDeflectionFromPointLoads(Span span)
+        private void CalculateDeflectionFromPointLoads(ISpan span)
+        {
+            CalculateDeflectionFromShearForcesPointLoads(span);
+            CalculateDeflectionFromBendingMomentPointLoads(span);
+        }
+
+        private void CalculateDeflectionFromShearForcesPointLoads(ISpan span)
         {
             foreach (var load in span.PointLoads.Where(pl => pl is ShearLoad))
             {
@@ -121,7 +130,21 @@ namespace BeamStatica.Results.OnSpan
             }
         }
 
-        private void CalculateDeflectionFromMomentForces(Span span)
+        private void CalculateDeflectionFromBendingMomentPointLoads(ISpan span)
+        {
+            foreach (var load in span.PointLoads.Where(pl => pl is BendingMoment))
+            {
+                if (_distanceFromLeftSide - _currentLength <= load.Position)
+                    continue;
+
+                _spanDeflection += load.Value
+                    * (_distanceFromLeftSide - _currentLength - load.Position)
+                    * (_distanceFromLeftSide - _currentLength - load.Position) / 2
+                    / (span.Material.YoungModulus * span.Section.MomentOfInteria);
+            }
+        }
+
+        private void CalculateDeflectionFromMomentForces(ISpan span)
         {
             _spanDeflection += (span.LeftNode.BendingMoment?.Value
                 * (_distanceFromLeftSide - _currentLength)
@@ -133,7 +156,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private void CalculateDeflectionFromShearForces(Span span)
+        private void CalculateDeflectionFromShearForces(ISpan span)
         {
             _spanDeflection += (span.LeftNode.ShearForce?.Value
                 * (_distanceFromLeftSide - _currentLength)
@@ -148,7 +171,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private void CalculateDeflectionOutsideLoadLength(Span span, Loads.ContinousLoads.ContinousLoad load)
+        private void CalculateDeflectionOutsideLoadLength(ISpan span, Loads.ContinousLoads.ContinousLoad load)
         {
             double forceAtX = GetForceAtTheCalculatedPoint(load);
 
@@ -179,7 +202,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private void CalculateDeflectionInsideLoadLength(Span span, Loads.ContinousLoads.ContinousLoad load)
+        private void CalculateDeflectionInsideLoadLength(ISpan span, Loads.ContinousLoads.ContinousLoad load)
         {
             double forceAtX = GetForceAtTheCalculatedPoint(load);
 
