@@ -13,6 +13,7 @@ namespace BeamStatica
 {
     public class Beam
     {
+        public IGetResult NormalForceResult { get; }
         public IGetResult ShearResult { get; }
         public IGetResult BendingMomentResult { get; }
         public IGetResult RotationResult { get; }
@@ -38,10 +39,11 @@ namespace BeamStatica
             Nodes = nodes ?? throw new ArgumentNullException(nameof(nodes));
 
             GlobalStiffnessMatrix = new GlobalStiffnessMatrix(this);
+            NormalForceResult = new NormalForceResult(Spans);
             ShearResult = new ShearResult(Spans);
             BendingMomentResult = new BendingMomentResult(Spans);
-            RotationResult = new RotationResult(this);
             DeflectionResult = new DeflectionResult(this);
+            RotationResult = new RotationResult(this);
         }
 
         public void Calculate()
@@ -57,7 +59,6 @@ namespace BeamStatica
             CalculateForces();
             CalculateReactions();
         }
-
 
         private void SetNumeration()
         {
@@ -83,10 +84,10 @@ namespace BeamStatica
 
             for (int i = 0; i < NumberOfDegreesOfFreedom; i++)
             {
-                if(Nodes.Any(n => n.HorizontalMovementNumber == i))
+                if (Nodes.Any(n => n.HorizontalMovementNumber == i))
                     JointLoadVector[i] = Nodes.SingleOrDefault(n => n.HorizontalMovementNumber == i)?
-                       .ConcentratedForces.Sum(cf => 0) ?? 0;
-               else if (Nodes.Any(n => n.VerticalMovementNumber == i))
+                       .ConcentratedForces.Sum(cf => (cf as NormalLoad)?.Value ?? 0) ?? 0;
+                else if (Nodes.Any(n => n.VerticalMovementNumber == i))
                     JointLoadVector[i] = Nodes.SingleOrDefault(n => n.VerticalMovementNumber == i)?
                         .ConcentratedForces.Sum(cf => (cf as ShearLoad)?.Value ?? 0) ?? 0;
                 else
@@ -138,18 +139,29 @@ namespace BeamStatica
 
             for (int i = NumberOfDegreesOfFreedom; i < numberOfReactions + NumberOfDegreesOfFreedom; i++)
             {
-                var shearForce = Spans.SingleOrDefault(s => s.LeftNode.VerticalMovementNumber == i)?.LeftNode.ShearForce;
-                if (shearForce != null)
-                    shearForce.Value += Spans.Where(s => s.LeftNode.VerticalMovementNumber == i).Sum(s => s.Forces[1]);
+                if (Spans.SingleOrDefault(s => s.LeftNode.HorizontalMovementNumber == i)?.LeftNode.NormalForce != null)
+                    Spans.SingleOrDefault(s => s.LeftNode.HorizontalMovementNumber == i).LeftNode.NormalForce.Value
+                        += Spans.Where(s => s.LeftNode.HorizontalMovementNumber == i).Sum(s => s.Forces[0]);
+
+                if (Spans.SingleOrDefault(s => s.LeftNode.VerticalMovementNumber == i)?.LeftNode.ShearForce != null)
+                    Spans.SingleOrDefault(s => s.LeftNode.VerticalMovementNumber == i).LeftNode.ShearForce.Value 
+                        += Spans.Where(s => s.LeftNode.VerticalMovementNumber == i).Sum(s => s.Forces[1]);
 
                 if (Spans.SingleOrDefault(s => s.LeftNode.RightRotationNumber == i)?.LeftNode.BendingMoment != null)
-                    Spans.SingleOrDefault(s => s.LeftNode.RightRotationNumber == i).LeftNode.BendingMoment.Value -= Spans.Where(s => s.LeftNode.LeftRotationNumber == i).Sum(s => s.Forces[2]);
+                    Spans.SingleOrDefault(s => s.LeftNode.RightRotationNumber == i).LeftNode.BendingMoment.Value 
+                        -= Spans.Where(s => s.LeftNode.LeftRotationNumber == i).Sum(s => s.Forces[2]);
+                
+                if (Spans.SingleOrDefault(s => s.RightNode.HorizontalMovementNumber == i)?.RightNode.NormalForce != null)
+                    Spans.SingleOrDefault(s => s.RightNode.HorizontalMovementNumber == i).RightNode.NormalForce.Value
+                        += Spans.Where(s => s.RightNode.HorizontalMovementNumber == i).Sum(s => s.Forces[3]);
 
                 if (Spans.SingleOrDefault(s => s.RightNode.VerticalMovementNumber == i)?.RightNode.ShearForce != null)
-                    Spans.SingleOrDefault(s => s.RightNode.VerticalMovementNumber == i).RightNode.ShearForce.Value += Spans.Where(s => s.RightNode.VerticalMovementNumber == i).Sum(s => s.Forces[4]);
+                    Spans.SingleOrDefault(s => s.RightNode.VerticalMovementNumber == i).RightNode.ShearForce.Value 
+                        += Spans.Where(s => s.RightNode.VerticalMovementNumber == i).Sum(s => s.Forces[4]);
 
                 if (Spans.SingleOrDefault(s => s.RightNode.LeftRotationNumber == i)?.RightNode.BendingMoment != null)
-                    Spans.SingleOrDefault(s => s.RightNode.LeftRotationNumber == i).RightNode.BendingMoment.Value -= Spans.Where(s => s.RightNode.RightRotationNumber == i).Sum(s => s.Forces[5]);
+                    Spans.SingleOrDefault(s => s.RightNode.LeftRotationNumber == i).RightNode.BendingMoment.Value 
+                        -= Spans.Where(s => s.RightNode.RightRotationNumber == i).Sum(s => s.Forces[5]);
             }
         }
 

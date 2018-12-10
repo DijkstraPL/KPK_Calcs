@@ -14,6 +14,8 @@ namespace BeamStatica.Loads.ContinousLoads
             StartPosition = startPosition ?? throw new ArgumentNullException(nameof(startPosition));
             EndPosition = endPosition ?? throw new ArgumentNullException(nameof(endPosition));
         }
+        
+        public double CalculateNormalForce(double distanceFromLoadStartPosition) => 0;
 
         public double CalculateShear(double distanceFromLoadStartPosition)
         {

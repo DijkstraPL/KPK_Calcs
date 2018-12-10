@@ -73,6 +73,7 @@
     <Compile Include="BeamsTests\BeamWithHinge2Tests.cs" />
     <Compile Include="BeamsTests\BeamWithHinge1Tests.cs" />
     <Compile Include="BeamsTests\BeamWithRightOverhangingTests.cs" />
+    <Compile Include="BeamsTests\BeamWithHorizontalLoadTests.cs" />
     <Compile Include="BeamsTests\BeamWithSingleSpanFixedEndsTests.cs" />
     <Compile Include="BeamsTests\BeamWithTelescopeSupportTests.cs" />
     <Compile Include="BeamsTests\BeamWithTrapezoidalLoadTests.cs" />

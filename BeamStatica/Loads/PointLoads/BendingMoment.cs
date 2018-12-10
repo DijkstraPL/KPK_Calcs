@@ -12,9 +12,26 @@ namespace BeamStatica.Loads.PointLoads
         {
         }
 
+        public override double CalculateNormalForce() => 0;
+
         public override double CalculateShear() => 0;
 
         public override double CalculateBendingMoment(double distanceFromLoad) 
             => this.Value;
+
+        public override double CalculateSpanLoadVectorNormalForceMember(double spanLength, bool leftNode)
+        {
+            return 0;
+        }
+
+        public override double CalculateSpanLoadVectorShearMember(double spanLength, bool leftNode)
+        {
+            return 0;
+        }
+
+        public override double CalculateSpanLoadBendingMomentMember(double spanLength, bool leftNode)
+        {
+            return 0;
+        }
     }
 }

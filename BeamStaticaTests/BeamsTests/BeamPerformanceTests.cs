@@ -15,7 +15,7 @@ namespace BeamStaticaTests.BeamsTests
         private Beam _beam;
 
         [Test]
-        [Timeout(300)]        
+        [Timeout(300)]      
         public void FullBeamCalculationsTest_TimeoutPerformanceChecking_Success(
         [Random(27.0,37.0,1)] double youngModulus,
         [Random(150.0, 500.0, 1)] double width,

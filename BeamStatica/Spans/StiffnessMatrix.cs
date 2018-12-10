@@ -25,7 +25,7 @@ namespace BeamStatica.Spans
               
         private void CalculateStiffnessMatrixForGeneralBeam()
         {
-            var horizontalValue = _span.Section.Area * _span.Material.YoungModulus / _span.Length;
+            var horizontalValue = _span.Section.Area * _span.Material.YoungModulus / _span.Length * 100; // kN
             var verticalValue = _span.Material.YoungModulus * _span.Section.MomentOfInteria / Math.Pow(_span.Length, 3) / 100; // kN/m
 
             SetLeftNodeHorizontalMovementColumn(horizontalValue);

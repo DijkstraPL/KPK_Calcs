@@ -55,22 +55,22 @@ namespace BeamStatica.Spans
             LoadVector = Vector<double>.Build.Dense(StiffnessMatrix.Size);
 
             LoadVector[0] = ContinousLoads.Sum(cl => CalculateNormalForce(cl, leftNode: true)) +
-                PointLoads.Sum(pl => CalculateNormalForceFromPointLoad(pl, leftNode: true));
+                PointLoads.Sum(pl => pl.CalculateSpanLoadVectorNormalForceMember(this.Length, leftNode: true));
 
             LoadVector[1] = ContinousLoads.Sum(cl => CalculateShear(cl, leftNode: true)) +
-                PointLoads.Sum(pl => CalculateShearFromPointLoad(pl, leftNode: true));
+                PointLoads.Sum(pl => pl.CalculateSpanLoadVectorShearMember(this.Length, leftNode: true));
 
             LoadVector[2] = ContinousLoads.Sum(cl => CalculateBendingMoment(cl, leftNode: true)) +
-                PointLoads.Sum(pl => CalculateMomentFromPointLoad(pl, leftNode: true));
+                PointLoads.Sum(pl => pl.CalculateSpanLoadBendingMomentMember(this.Length, leftNode: true));
 
             LoadVector[3] = ContinousLoads.Sum(cl => CalculateNormalForce(cl, leftNode: false)) +
-                PointLoads.Sum(pl => CalculateNormalForceFromPointLoad(pl, leftNode: false));
+                PointLoads.Sum(pl => pl.CalculateSpanLoadVectorNormalForceMember(this.Length, leftNode: false));
 
             LoadVector[4] = ContinousLoads.Sum(cl => CalculateShear(cl, leftNode: false)) +
-               PointLoads.Sum(pl => CalculateShearFromPointLoad(pl, leftNode: false));
+               PointLoads.Sum(pl => pl.CalculateSpanLoadVectorShearMember(this.Length, leftNode: false));
 
             LoadVector[5] = ContinousLoads.Sum(cl => CalculateBendingMoment(cl, leftNode: false)) +
-                PointLoads.Sum(pl => CalculateMomentFromPointLoad(pl, leftNode: false));
+                PointLoads.Sum(pl => pl.CalculateSpanLoadBendingMomentMember(this.Length, leftNode: false));
         }
 
         public void CalculateDisplacement(Vector<double> deflectionVector, int numberOfDegreesOfFreedom)
@@ -94,15 +94,15 @@ namespace BeamStatica.Spans
         public void SetDisplacement()
         {
             if (LeftNode.HorizontalDeflection != null)
-                LeftNode.HorizontalDeflection.Value = Displacements[0];
+                LeftNode.HorizontalDeflection.Value = Displacements[0] * 1000; // mm
             if (LeftNode.VerticalDeflection != null)
-                LeftNode.VerticalDeflection.Value = Displacements[1];
+                LeftNode.VerticalDeflection.Value = Displacements[1] * 1000; // mm
             if (LeftNode.RightRotation != null)
                 LeftNode.RightRotation.Value = Displacements[2];
             if (RightNode.HorizontalDeflection != null)
-                RightNode.HorizontalDeflection.Value = Displacements[3];
+                RightNode.HorizontalDeflection.Value = Displacements[3] * 1000; // mm
             if (RightNode.VerticalDeflection != null)
-                RightNode.VerticalDeflection.Value = Displacements[4];
+                RightNode.VerticalDeflection.Value = Displacements[4] * 1000; // mm
             if (RightNode.LeftRotation != null)
                 RightNode.LeftRotation.Value = Displacements[5];
         }
@@ -111,29 +111,7 @@ namespace BeamStatica.Spans
         {
             Forces = StiffnessMatrix.Matrix.Multiply(Displacements).Add(LoadVector);
         }
-
-        private int CalculateNormalForceFromPointLoad(ILoad pl, bool leftNode)
-        {
-            return 0;
-        }
-
-        private double CalculateShearFromPointLoad(ILoad pointLoad, bool leftNode)
-        {
-            double distanceFromCloserNode = leftNode ? pointLoad.Position : Length - pointLoad.Position;
-            double distanceFromOtherNode = leftNode ? Length - pointLoad.Position : pointLoad.Position;
-            return (-pointLoad.Value * Math.Pow(distanceFromOtherNode, 2) *
-                (3 * distanceFromCloserNode + distanceFromOtherNode)) /
-                Math.Pow(Length, 3);
-        }
-
-        private double CalculateMomentFromPointLoad(ILoad pointLoad, bool leftNode)
-        {
-            double sign = leftNode ? 1.0 : -1.0;
-            double distanceFromCloserNode = leftNode ? pointLoad.Position : Length - pointLoad.Position;
-            double distanceFromOtherNode = leftNode ? Length - pointLoad.Position : pointLoad.Position;
-            return sign * (-pointLoad.Value * distanceFromCloserNode * Math.Pow(distanceFromOtherNode, 2)) / Math.Pow(Length, 2);
-        }
-               
+        
         private double CalculateNormalForce(ContinousLoad cl, bool leftNode)
         {
            return 0;

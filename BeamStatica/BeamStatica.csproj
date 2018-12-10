@@ -56,6 +56,7 @@
     <Compile Include="Loads\PointLoads\BendingMoment.cs" />
     <Compile Include="Loads\PointLoads\ConcentratedLoad.cs" />
     <Compile Include="Loads\ContinousLoads\ContinousLoad.cs" />
+    <Compile Include="Loads\PointLoads\NormalLoad.cs" />
     <Compile Include="Loads\PointLoads\ShearLoad.cs" />
     <Compile Include="Materials\Intefaces\IYoungModulus.cs" />
     <Compile Include="Materials\Material.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Results\Interfaces\IGetResult.cs" />
     <Compile Include="Results\OnSpan\BendingMomentResult.cs" />
     <Compile Include="Results\OnSpan\DeflectionResult.cs" />
+    <Compile Include="Results\OnSpan\NormalForceResult.cs" />
     <Compile Include="Results\OnSpan\RotationResult.cs" />
     <Compile Include="Results\Reactions\BendingMoment.cs" />
     <Compile Include="Results\Displacements\VerticalDeflection.cs" />

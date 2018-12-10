@@ -114,7 +114,7 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateRotationFromPointLoads(Span span)
         {
-            foreach (var load in span.PointLoads)
+            foreach (var load in span.PointLoads.Where(pl => pl is ShearLoad))
             {
                 if (_distanceFromLeftSide - _currentLength <= load.Position)
                     continue;
