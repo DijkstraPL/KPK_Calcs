@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Nodes.Interfaces
 {
-    public interface INode : IShearForceProvider, IBendingMomentProvider, IDeflectionProvider, IRotationProvider, INumeration
+    public interface INode : INormalForceProvider, IShearForceProvider, IBendingMomentProvider, 
+        IDeflectionProvider, IRotationProvider, INumeration
     {
         short DegreesOfFreedom { get; }
         ICollection<ILoad> ConcentratedForces { get; set; }

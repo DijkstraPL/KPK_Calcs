@@ -8,7 +8,8 @@ namespace BeamStatica.Nodes.Interfaces
 {
     public interface INumeration
     {
-         short MovementNumber { get;  }
+         short HorizontalMovementNumber { get;  }
+         short VerticalMovementNumber { get;  }
          short LeftRotationNumber { get;  }
          short RightRotationNumber { get; }
 

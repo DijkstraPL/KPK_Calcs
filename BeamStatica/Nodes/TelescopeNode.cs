@@ -13,19 +13,21 @@ namespace BeamStatica.Nodes
     {
         public override short DegreesOfFreedom => 1;
 
-        public TelescopeNode( IResultValue bendingMoment = null, IResultValue deflection = null)
+        public TelescopeNode(IResultValue normalForce = null, IResultValue bendingMoment = null, IResultValue verticalDeflection = null)
         {
+            NormalForce = normalForce ?? new NormalForce();
             BendingMoment = bendingMoment ?? new BendingMoment();
-            Deflection = deflection ?? new Deflection();
+            VerticalDeflection = verticalDeflection ?? new VerticalDeflection();
         }
 
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
-            MovementNumber = currentCounter++;
+            VerticalMovementNumber = currentCounter++;
         }
 
         public override void SetReactionNumeration(ref short currentCounter)
         {
+            HorizontalMovementNumber = currentCounter++;
             LeftRotationNumber = currentCounter++;
             RightRotationNumber = LeftRotationNumber;
         }

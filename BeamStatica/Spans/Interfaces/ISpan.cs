@@ -10,7 +10,7 @@ namespace BeamStatica.Spans.Interfaces
 {
     public interface ISpan : ILengthProvider
     {
-        IMomentOfInteria Section { get; }
+        ISection Section { get; }
         IYoungModulus Material { get; }
     }
 }

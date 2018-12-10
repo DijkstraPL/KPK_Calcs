@@ -63,6 +63,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="BeamsTests\BeamPerformanceTests.cs" />
     <Compile Include="BeamsTests\BeamWithMultipleSpansTests.cs" />
     <Compile Include="BeamsTests\BeamWithDoubleHinge2Tests.cs" />
     <Compile Include="BeamsTests\BeamWithDoubleOverhangingTests.cs" />

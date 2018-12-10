@@ -5,18 +5,21 @@ namespace BeamStatica.Nodes
 {
     public class Hinge : Node
     {
-        public override short DegreesOfFreedom => 3;
+        public override short DegreesOfFreedom => 4;
 
-        public Hinge(IResultValue deflection = null, IResultValue leftRotation = null, IResultValue rightRotation = null)
+        public Hinge(IResultValue horizontalDeflection = null, IResultValue verticalDeflection = null, 
+            IResultValue leftRotation = null, IResultValue rightRotation = null)
         {
-            Deflection = deflection ?? new Deflection();
+            HorizontalDeflection = horizontalDeflection ?? new VerticalDeflection();
+            VerticalDeflection = verticalDeflection ?? new VerticalDeflection();
             LeftRotation = leftRotation ?? new Rotation();
             RightRotation = rightRotation ?? new Rotation();
         }
 
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
-            MovementNumber = currentCounter++;
+            HorizontalMovementNumber = currentCounter++;
+            VerticalMovementNumber = currentCounter++;
             LeftRotationNumber = currentCounter++;
             RightRotationNumber = currentCounter++;
         }

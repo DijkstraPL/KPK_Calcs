@@ -9,6 +9,7 @@ namespace BeamStatica.Nodes.Interfaces
 {
     public interface IDeflectionProvider
     {
-        IResultValue Deflection { get; }
+        IResultValue HorizontalDeflection { get; }
+        IResultValue VerticalDeflection { get; }
     }
 }

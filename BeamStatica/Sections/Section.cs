@@ -7,7 +7,7 @@ using Tools;
 
 namespace BeamStatica.Sections
 {
-    public class Section : IMomentOfInteria
+    public class Section : ISection
     {
         [Abbreviation("I")]
         [Unit("cm4")]

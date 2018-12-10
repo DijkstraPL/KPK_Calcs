@@ -71,7 +71,7 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromCalculatedForcesAndDisplacements(Span span)
         {
-            _spanDeflection += span.LeftNode.Deflection?.Value / 100 ?? 0;
+            _spanDeflection += span.LeftNode.VerticalDeflection?.Value / 100 ?? 0;
             _spanDeflection += span.LeftNode.RightRotation?.Value * (_distanceFromLeftSide - _currentLength) / 100 ?? 0;
 
             if (_currentLength != 0)

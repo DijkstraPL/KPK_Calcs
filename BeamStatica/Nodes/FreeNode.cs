@@ -10,18 +10,21 @@ namespace BeamStatica.Nodes
 {
     public sealed class FreeNode : Node
     {
-        public override short DegreesOfFreedom => 2;
+        public override short DegreesOfFreedom => 3;
 
-        public FreeNode(IResultValue deflection = null, IResultValue rotation = null)
+        public FreeNode(IResultValue horizontalDeflection = null, IResultValue verticalDeflection = null,
+            IResultValue rotation = null)
         {
-            Deflection = deflection ?? new Deflection();
+            HorizontalDeflection = horizontalDeflection ?? new HorizontalDeflection();
+            VerticalDeflection = verticalDeflection ?? new VerticalDeflection();
             LeftRotation = rotation ?? new Rotation();
             RightRotation = LeftRotation;
         }
         
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
-            MovementNumber = currentCounter++;
+            HorizontalMovementNumber = currentCounter++;
+            VerticalMovementNumber = currentCounter++;
             LeftRotationNumber = currentCounter++;
             RightRotationNumber = LeftRotationNumber;
         }

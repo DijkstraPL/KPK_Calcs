@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BeamStatica.Results.Displacements
+namespace BeamStatica.Nodes.Interfaces
 {
-    public sealed class Deflection : Displacement
+    public interface INormalForceProvider
     {
-        public override string ToString() => Value.ToString();
+        IResultValue NormalForce { get; }
     }
 }
