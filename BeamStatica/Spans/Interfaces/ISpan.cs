@@ -13,7 +13,7 @@ namespace BeamStatica.Spans.Interfaces
     {
         short Number { get; set; }
         ISection Section { get; }
-        IYoungModulus Material { get; }
+        IMaterial Material { get; }
         IStiffnessMatrix StiffnessMatrix { get; }
 
         Vector<double> Forces { get; }

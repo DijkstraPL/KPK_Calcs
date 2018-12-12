@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BeamStaticaTests.BeamsTests
 {
-    [TestFixture]
+    [TestFixture(Description = "18.12.12-16")]
     public class BeamWithSingleSpanFixedEndsTests
     {
         private Beam _beam;
@@ -22,7 +22,7 @@ namespace BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material = new Material(youngModulus: 30);
+            var material = new Concrete(youngModulus: 30);
             var section = new RectangleSection(width: 300, height: 500);
 
             var node1 = new FixedNode();
@@ -56,6 +56,16 @@ namespace BeamStaticaTests.BeamsTests
 
             Assert.That(_beam.Spans[0].RightNode.ShearForce.Value, Is.EqualTo(21.6).Within(0.001));
             Assert.That(_beam.Spans[0].RightNode.BendingMoment.Value, Is.EqualTo(63).Within(0.001));
+        }
+
+        [Test()]
+        public void NodeDisplacementsCalculationsTest_Successful()
+        {
+            Assert.That(_beam.Spans[0].LeftNode.VerticalDeflection, Is.Null);
+            Assert.That(_beam.Spans[0].LeftNode.RightRotation, Is.Null);
+
+            Assert.That(_beam.Spans[0].RightNode.LeftRotation, Is.Null);
+            Assert.That(_beam.Spans[0].RightNode.VerticalDeflection, Is.Null);
         }
 
         [Test()]
@@ -106,7 +116,7 @@ namespace BeamStaticaTests.BeamsTests
         [TestCase(5, -3.600)]
         [TestCase(7, -1.987)]
         [TestCase(10, 0)]
-        public void DeflectionAtPositionCalculationsTest_Successful(double position, double result)
+        public void VerticalDeflectionAtPositionCalculationsTest_Successful(double position, double result)
         {
             double deflection = _beam.VerticalDeflectionResult.GetValue(position).Value;
 

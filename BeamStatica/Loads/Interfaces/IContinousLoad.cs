@@ -19,6 +19,6 @@ namespace BeamStatica.Loads.Interfaces
 
         double CalculateSpanLoadVectorNormalForceMember(ISpan span, bool leftNode);
         double CalculateSpanLoadVectorShearMember(ISpan span, bool leftNode);
-        double CalculateSpanLoadBendingMomentMember(ISpan span, bool leftNode);
+        double CalculateSpanLoadVectorBendingMomentMember(ISpan span, bool leftNode);
     }
 }

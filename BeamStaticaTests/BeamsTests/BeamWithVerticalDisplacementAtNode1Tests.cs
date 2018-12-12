@@ -18,8 +18,8 @@ namespace BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material1 = new Material(youngModulus: 30);
-            var material2 = new Material(youngModulus: 33);
+            var material1 = new Concrete(youngModulus: 30);
+            var material2 = new Concrete(youngModulus: 33);
             var section1 = new RectangleSection(width: 300, height: 700);
             var section2 = new RectangleSection(width: 300, height: 500);
 

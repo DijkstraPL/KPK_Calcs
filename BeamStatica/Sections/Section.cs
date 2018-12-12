@@ -3,6 +3,7 @@ using BeamStatica.Sections.Additional.Interfaces;
 using BeamStatica.Sections.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tools;
 
 namespace BeamStatica.Sections
@@ -20,6 +21,8 @@ namespace BeamStatica.Sections
         [Abbreviation("C")]
         [Unit("cm")]
         public double Circumference { get; protected set; }
+
+        public virtual double SolidHeight => Points.Max(p => p.Y) - Points.Min(p => p.Y);
 
         public IList<IPoint> Points { get; protected set; }
         public IList<IPoint> AdjustedPoints { get; protected set; }
@@ -125,7 +128,7 @@ namespace BeamStatica.Sections
             }
             MomentOfInteria = 1.0 / 12 * Math.Abs(value) / 10000;
         }
-
+        
         private IPoint SubstractPoints(IPoint a, IPoint b)
             => new Point(a.X - b.X, a.Y - b.Y);
     }

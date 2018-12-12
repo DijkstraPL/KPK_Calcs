@@ -26,6 +26,6 @@ namespace BeamStatica.Loads.ContinousLoads
         
         public virtual double CalculateSpanLoadVectorNormalForceMember(ISpan span, bool leftNode) => 0;
         public virtual double CalculateSpanLoadVectorShearMember(ISpan span, bool leftNode) => 0;
-        public virtual double CalculateSpanLoadBendingMomentMember(ISpan span, bool leftNode) => 0;
+        public virtual double CalculateSpanLoadVectorBendingMomentMember(ISpan span, bool leftNode) => 0;
     }
 }

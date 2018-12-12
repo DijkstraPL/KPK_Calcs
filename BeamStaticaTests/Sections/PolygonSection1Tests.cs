@@ -64,5 +64,10 @@ namespace BeamStatica.Sections.Tests
             Assert.That(_polygonSection.MomentOfInteria, Is.EqualTo(45000));
         }
 
+        [Test()]
+        public void PolygonSection_CalculatedSolidHeightTest_Success()
+        {
+            Assert.That(_polygonSection.SolidHeight, Is.EqualTo(300));
+        }
     }
 }

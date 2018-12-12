@@ -32,7 +32,7 @@ namespace BeamStaticaTests.BeamsTests
         [Random(1.1, 3.0, 2)] double divider
         )
         {
-            var material = new Material(youngModulus: youngModulus);
+            var material = new Concrete(youngModulus: youngModulus);
             var section = new RectangleSection(width: width, height: height);
 
             var node1 = new FixedNode();

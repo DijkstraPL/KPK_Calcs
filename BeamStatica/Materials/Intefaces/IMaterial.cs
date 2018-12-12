@@ -7,10 +7,14 @@ using Tools;
 
 namespace BeamStatica.Materials.Intefaces
 {
-    public interface IYoungModulus
+    public interface IMaterial
     {
         [Abbreviation("E")]
         [Unit("GPa")]
         double YoungModulus { get; }
+
+        [Abbreviation("alpha")]
+        [Unit("1/K")]
+        double ThermalExpansionCoefficient { get; }
     }
 }

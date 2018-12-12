@@ -14,6 +14,8 @@ namespace BeamStatica.Sections
         [Unit("mm")]
         public double Height { get; }
 
+        public override double SolidHeight => Height;
+
         public RectangleSection(double width, double height) 
         {
             Width = width;

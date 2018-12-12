@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace BeamStaticaTests.BeamsTests
 {
-    [TestFixture]
+    [TestFixture(Description = "18.12.12-14")]
     public class BeamWithPointBendingMomentLoadTests
     {
         private Beam _beam;
@@ -23,7 +23,7 @@ namespace BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material = new Material(youngModulus: 30);
+            var material = new Concrete(youngModulus: 30);
             var section = new RectangleSection(width: 300, height: 500);
 
             var node1 = new FixedNode();
@@ -57,7 +57,17 @@ namespace BeamStaticaTests.BeamsTests
             Assert.That(_beam.Spans[0].RightNode.ShearForce.Value, Is.EqualTo(9.6).Within(0.001));
             Assert.That(_beam.Spans[0].RightNode.BendingMoment.Value, Is.EqualTo(-32).Within(0.001));
         }
-        
+
+        [Test()]
+        public void NodeDisplacementsCalculationsTest_Successful()
+        {
+            Assert.That(_beam.Spans[0].LeftNode.VerticalDeflection, Is.Null);
+            Assert.That(_beam.Spans[0].LeftNode.RightRotation, Is.Null);
+
+            Assert.That(_beam.Spans[0].RightNode.LeftRotation, Is.Null);
+            Assert.That(_beam.Spans[0].RightNode.VerticalDeflection, Is.Null);
+        }
+
         [Test()]
         [TestCase(0, -9.6)]
         [TestCase(2, -9.6)]

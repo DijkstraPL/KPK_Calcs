@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace BeamStaticaTests.BeamsTests
 {
-    [TestFixture]
+    [TestFixture(Description = "18.12.12-22")]
    public  class BeamWithTwoSectionsTests
     {
         private Beam _beam;
@@ -17,7 +17,7 @@ namespace BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material = new Material(youngModulus: 30);
+            var material = new Concrete(youngModulus: 30);
             var section1 = new RectangleSection(width: 300, height: 500);
             var section2 = new RectangleSection(width: 300, height: 700);
 
@@ -64,6 +64,20 @@ namespace BeamStaticaTests.BeamsTests
 
             Assert.That(_beam.Spans[1].RightNode.ShearForce.Value, Is.EqualTo(19.710).Within(0.001));
             Assert.That(_beam.Spans[1].RightNode.BendingMoment.Value, Is.EqualTo(151.387).Within(0.001));
+        }
+
+        [Test()]
+        public void NodeDisplacementsCalculationsTest_Successful()
+        {
+            Assert.That(_beam.Spans[0].LeftNode.VerticalDeflection, Is.Null);
+            Assert.That(_beam.Spans[0].LeftNode.RightRotation, Is.Null);
+
+            Assert.That(_beam.Spans[0].RightNode.LeftRotation.Value, Is.EqualTo(0.002054).Within(0.000001));
+            Assert.That(_beam.Spans[1].LeftNode.VerticalDeflection.Value, Is.EqualTo(-16.655).Within(0.001));
+            Assert.That(_beam.Spans[1].LeftNode.RightRotation.Value, Is.EqualTo(0.002054).Within(0.000001));
+
+            Assert.That(_beam.Spans[1].RightNode.LeftRotation, Is.Null);
+            Assert.That(_beam.Spans[1].RightNode.VerticalDeflection, Is.Null);
         }
 
         [Test()]

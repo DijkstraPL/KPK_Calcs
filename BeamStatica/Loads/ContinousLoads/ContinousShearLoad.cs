@@ -31,9 +31,9 @@ namespace BeamStatica.Loads.ContinousLoads
         {
             double closerLoad = leftNode ? -this.StartPosition.Value : -this.EndPosition.Value;
             double furtherLoad = leftNode ? -this.EndPosition.Value : -this.StartPosition.Value;
-            double distanceFromCalculatedNode = leftNode ? this.StartPosition.Position : Length - this.EndPosition.Position;
+            double distanceFromCalculatedNode = leftNode ? this.StartPosition.Position : span.Length - this.EndPosition.Position;
             double loadLength = this.EndPosition.Position - this.StartPosition.Position;
-            double distanceToOtherNode = leftNode ? Length - this.EndPosition.Position : this.StartPosition.Position;
+            double distanceToOtherNode = leftNode ? span.Length - this.EndPosition.Position : this.StartPosition.Position;
 
             return 1.0 / 20 * furtherLoad * loadLength *
                 (3 * Math.Pow(loadLength, 3) +
@@ -43,7 +43,7 @@ namespace BeamStatica.Loads.ContinousLoads
                 30 * Math.Pow(distanceToOtherNode, 2) * distanceFromCalculatedNode +
                 15 * Math.Pow(loadLength, 2) * distanceToOtherNode +
                 20 * distanceFromCalculatedNode * loadLength * distanceToOtherNode) /
-                Math.Pow(Length, 3) +
+                Math.Pow(span.Length, 3) +
                 1.0 / 20 * closerLoad * loadLength *
                 (7 * Math.Pow(loadLength, 3) +
                 15 * Math.Pow(loadLength, 2) * distanceFromCalculatedNode +
@@ -52,17 +52,17 @@ namespace BeamStatica.Loads.ContinousLoads
                  30 * Math.Pow(distanceToOtherNode, 2) * distanceFromCalculatedNode +
                  25 * Math.Pow(loadLength, 2) * distanceToOtherNode +
                  40 * distanceFromCalculatedNode * loadLength * distanceToOtherNode) /
-                 Math.Pow(Length, 3);
+                 Math.Pow(span.Length, 3);
         }
 
-        public override double CalculateSpanLoadBendingMomentMember(ISpan span, bool leftNode)
+        public override double CalculateSpanLoadVectorBendingMomentMember(ISpan span, bool leftNode)
         {
             double sign = leftNode ? 1.0 : -1.0;
             double closerLoad = leftNode ? -this.StartPosition.Value : -this.EndPosition.Value;
             double furtherLoad = leftNode ? -this.EndPosition.Value : -this.StartPosition.Value;
-            double distanceFromCalculatedNode = leftNode ? this.StartPosition.Position : Length - this.EndPosition.Position;
+            double distanceFromCalculatedNode = leftNode ? this.StartPosition.Position : span.Length - this.EndPosition.Position;
             double loadLength = this.EndPosition.Position - this.StartPosition.Position;
-            double distanceToOtherNode = leftNode ? Length - this.EndPosition.Position : this.StartPosition.Position;
+            double distanceToOtherNode = leftNode ? span.Length - this.EndPosition.Position : this.StartPosition.Position;
 
             return sign / 60 * closerLoad * loadLength *
                    (3 * Math.Pow(loadLength, 3) +
@@ -71,7 +71,7 @@ namespace BeamStatica.Loads.ContinousLoads
                    30 * Math.Pow(distanceToOtherNode, 2) * distanceFromCalculatedNode +
                    10 * Math.Pow(loadLength, 2) * distanceToOtherNode +
                    40 * distanceFromCalculatedNode * loadLength * distanceToOtherNode) /
-                   Math.Pow(Length, 2) +
+                   Math.Pow(span.Length, 2) +
                    sign / 60 * furtherLoad * loadLength *
                    (2 * Math.Pow(loadLength, 3) +
                    5 * Math.Pow(loadLength, 2) * distanceFromCalculatedNode +
@@ -79,7 +79,7 @@ namespace BeamStatica.Loads.ContinousLoads
                    30 * Math.Pow(distanceToOtherNode, 2) * distanceFromCalculatedNode +
                    10 * Math.Pow(loadLength, 2) * distanceToOtherNode +
                    20 * distanceFromCalculatedNode * loadLength * distanceToOtherNode) /
-                   Math.Pow(Length, 2);
+                   Math.Pow(span.Length, 2);
         }
 
         private double CalculateShearForceOutsideLoadLength() 
