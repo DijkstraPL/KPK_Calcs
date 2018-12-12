@@ -39,7 +39,7 @@ namespace BeamStatica.Results.OnSpan
             CalculateDeflection();
 
             _spanDeflection *= 1000;
-            Result.Value -= _spanDeflection;
+            Result.Value += _spanDeflection;
 
             return Result;
         }
@@ -72,12 +72,11 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromCalculatedForcesAndDisplacements(ISpan span)
         {
-            _spanDeflection += span.LeftNode.HorizontalDeflection?.Value / 100000 ?? 0;
-            // _spanDeflection += span.LeftNode.RightRotation?.Value * (_distanceFromLeftSide - _currentLength) / 100 ?? 0;
+            _spanDeflection += span.LeftNode.HorizontalDeflection?.Value / 1000 ?? 0;
 
             if (_currentLength != 0)
             {
-                _spanDeflection += _beam.NormalForceResult.GetValue(_currentLength).Value
+                _spanDeflection -= _beam.NormalForceResult.GetValue(_currentLength).Value
                     * (_distanceFromLeftSide - _currentLength)
                     / (span.Material.YoungModulus * span.Section.Area);
             }
@@ -95,7 +94,7 @@ namespace BeamStatica.Results.OnSpan
                 if (_distanceFromLeftSide - _currentLength <= load.Position)
                     continue;
 
-                _spanDeflection += load.Value
+                _spanDeflection -= load.Value
                     * (_distanceFromLeftSide - _currentLength - load.Position)
                     / (span.Material.YoungModulus * span.Section.Area);
             }
@@ -103,11 +102,11 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromNormalForces(ISpan span)
         {
-            _spanDeflection += (span.LeftNode.NormalForce?.Value
+            _spanDeflection -= (span.LeftNode.NormalForce?.Value
                 * (_distanceFromLeftSide - _currentLength)
                 ?? 0)
                 / (span.Material.YoungModulus * span.Section.Area);
-            _spanDeflection += span.LeftNode.ConcentratedForces.Where(cf => cf is NormalLoad).Sum(cf => cf.Value)
+            _spanDeflection -= span.LeftNode.ConcentratedForces.Where(cf => cf is NormalLoad).Sum(cf => cf.Value)
                 * (_distanceFromLeftSide - _currentLength)
                 / (span.Material.YoungModulus * span.Section.Area);
         }

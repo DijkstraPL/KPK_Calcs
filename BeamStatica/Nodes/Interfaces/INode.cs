@@ -11,6 +11,6 @@ namespace BeamStatica.Nodes.Interfaces
         IDeflectionProvider, IRotationProvider, INumeration
     {
         short DegreesOfFreedom { get; }
-        ICollection<ILoad> ConcentratedForces { get; set; }
+        ICollection<INodeLoad> ConcentratedForces { get; set; }
     }
 }

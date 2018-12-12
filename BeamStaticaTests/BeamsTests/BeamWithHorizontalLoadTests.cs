@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BeamStaticaTests.BeamsTests
 {
-    [TestFixture]
+    [TestFixture(Description = "18.12.12-11")]
     public class BeamWithHorizontalLoadTests
     {
         private Beam _beam;
@@ -22,7 +22,7 @@ namespace BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material = new Material() { YoungModulus = 30 };
+            var material = new Material(youngModulus: 30);
             var section = new RectangleSection(width: 300, height: 500);
 
             var node1 = new FixedNode();
@@ -62,6 +62,18 @@ namespace BeamStaticaTests.BeamsTests
             Assert.That(_beam.Spans[0].RightNode.NormalForce, Is.Null);
             Assert.That(_beam.Spans[0].RightNode.ShearForce, Is.Null);
             Assert.That(_beam.Spans[0].RightNode.BendingMoment, Is.Null);
+        }
+
+        [Test()]
+        public void NodeDisplacementsCalculationsTest_Successful()
+        {
+            Assert.That(_beam.Spans[0].LeftNode.HorizontalDeflection, Is.Null);
+            Assert.That(_beam.Spans[0].LeftNode.VerticalDeflection, Is.Null);
+            Assert.That(_beam.Spans[0].LeftNode.RightRotation, Is.Null);
+
+            Assert.That(_beam.Spans[0].RightNode.LeftRotation.Value, Is.EqualTo(-0.013333).Within(0.000001));
+            Assert.That(_beam.Spans[0].RightNode.HorizontalDeflection.Value, Is.EqualTo(0.400).Within(0.001));
+            Assert.That(_beam.Spans[0].RightNode.VerticalDeflection.Value, Is.EqualTo(-111.111).Within(0.001));
         }
 
         [Test()]

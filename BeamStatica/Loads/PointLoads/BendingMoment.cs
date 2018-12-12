@@ -1,42 +1,46 @@
-﻿using System;
+﻿using BeamStatica.Loads.Interfaces;
+using BeamStatica.Spans.Interfaces;
+using System;
 
 namespace BeamStatica.Loads.PointLoads
 {
-    public sealed class BendingMoment : ConcentratedLoad
+    public class BendingMoment : SpanConcentratedLoad
     {
+        /// <summary>
+        /// Use in node loads.
+        /// </summary>
+        /// <param name="value">kNm</param>
         public BendingMoment(double value) : base(value)
         {
         }
 
+        /// <summary>
+        /// Use in span loads.
+        /// </summary>
+        /// <param name="value">kNm</param>
+        /// <param name="position">m</param>
         public BendingMoment(double value, double position) : base(value, position)
         {
         }
 
-        public override double CalculateNormalForce() => 0;
-
-        public override double CalculateShear() => 0;
-
         public override double CalculateBendingMoment(double distanceFromLoad)
             => this.Value;
-
-        public override double CalculateSpanLoadVectorNormalForceMember(double spanLength, bool leftNode)
-            => 0;
-
-        public override double CalculateSpanLoadVectorShearMember(double spanLength, bool leftNode)
+        
+        public override double CalculateSpanLoadVectorShearMember(ISpan span, bool leftNode)
         {
             double sign = leftNode ? -1.0 : 1.0;
-            double distanceFromCloserNode = leftNode ? this.Position : spanLength - this.Position;
-            double distanceFromOtherNode = leftNode ? spanLength - this.Position : this.Position;
-            return (sign * 6 * this.Value * distanceFromCloserNode * distanceFromOtherNode) / Math.Pow(spanLength, 3);
+            double distanceFromCloserNode = leftNode ? this.Position : span.Length - this.Position;
+            double distanceFromOtherNode = leftNode ? span.Length - this.Position : this.Position;
+            return (sign * 6 * this.Value * distanceFromCloserNode * distanceFromOtherNode) / Math.Pow(span.Length, 3);
         }
 
-        public override double CalculateSpanLoadBendingMomentMember(double spanLength, bool leftNode)
+        public override double CalculateSpanLoadBendingMomentMember(ISpan span, bool leftNode)
         {
-            double distanceFromCloserNode = leftNode ? this.Position : spanLength - this.Position;
-            double distanceFromOtherNode = leftNode ? spanLength - this.Position : this.Position;
+            double distanceFromCloserNode = leftNode ? this.Position : span.Length - this.Position;
+            double distanceFromOtherNode = leftNode ? span.Length - this.Position : this.Position;
             return (-this.Value * distanceFromOtherNode
                 * (2 * distanceFromCloserNode - distanceFromOtherNode))
-                / Math.Pow(spanLength, 2);
+                / Math.Pow(span.Length, 2);
         }
     }
 }

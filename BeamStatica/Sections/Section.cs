@@ -17,6 +17,10 @@ namespace BeamStatica.Sections
         [Unit("cm2")]
         public double Area { get; protected set; }
 
+        [Abbreviation("C")]
+        [Unit("cm")]
+        public double Circumference { get; protected set; }
+
         public IList<IPoint> Points { get; protected set; }
         public IList<IPoint> AdjustedPoints { get; protected set; }
 
@@ -38,10 +42,26 @@ namespace BeamStatica.Sections
 
         public void SetSectionProperties()
         {
+            CalculateCimcuference();
             CalculateArea();
             CalculateCentroid();
             AdjustPoints();
             CalculateMomentOfInteria();
+        }
+
+        protected virtual void CalculateCimcuference()
+        {
+            double value = 0;
+            for (int i = 0; i < Points.Count; i++)
+            {
+                int nextPointIndex = i + 1;
+                if (nextPointIndex == Points.Count)
+                    nextPointIndex = 0;
+
+                value += Math.Sqrt(Math.Pow(Points[nextPointIndex].X - Points[i].X, 2)
+                    + Math.Pow(Points[nextPointIndex].Y - Points[i].Y, 2));
+            }
+            Circumference = Math.Abs(value) / 10;
         }
 
         protected virtual void CalculateArea()
@@ -83,10 +103,11 @@ namespace BeamStatica.Sections
 
         protected virtual void AdjustPoints()
         {
+            AdjustedPoints.Clear();
             foreach (var point in Points)
-                AdjustedPoints.Add(SubstractPoints(point,Centroid));
+                AdjustedPoints.Add(SubstractPoints(point, Centroid));
         }
-        
+
         protected virtual void CalculateMomentOfInteria()
         {
             double value = 0;
@@ -102,10 +123,10 @@ namespace BeamStatica.Sections
                     * (AdjustedPoints[i].X * AdjustedPoints[nextPointIndex].Y
                     - AdjustedPoints[nextPointIndex].X * AdjustedPoints[i].Y);
             }
-            MomentOfInteria = 1.0 / 12 * value / 10000;
+            MomentOfInteria = 1.0 / 12 * Math.Abs(value) / 10000;
         }
 
-        private static IPoint SubstractPoints(IPoint a, IPoint b) 
+        private IPoint SubstractPoints(IPoint a, IPoint b)
             => new Point(a.X - b.X, a.Y - b.Y);
     }
 }

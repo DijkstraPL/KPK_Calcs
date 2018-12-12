@@ -79,13 +79,17 @@
     <Compile Include="BeamsTests\BeamWithSingleSpanFixedEndsTests.cs" />
     <Compile Include="BeamsTests\BeamWithTelescopeSupportTests.cs" />
     <Compile Include="BeamsTests\BeamWithTrapezoidalLoadTests.cs" />
-    <Compile Include="BeamsTests\BeamWithTriangleLoadPaperTests.cs" />
     <Compile Include="BeamsTests\BeamWithTriangleLoad2Tests.cs" />
     <Compile Include="BeamsTests\BeamWithTriangleLoad1Tests.cs" />
     <Compile Include="BeamsTests\BeamWithLeftOverhangingTests.cs" />
     <Compile Include="BeamsTests\BeamWithTwoSectionsTests.cs" />
+    <Compile Include="BeamsTests\BeamWithVerticalDisplacementAtNode3Tests.cs" />
+    <Compile Include="BeamsTests\BeamWithVerticalDisplacementAtNode2Tests.cs" />
+    <Compile Include="BeamsTests\BeamWithVerticalDisplacementAtNode1Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sections\PolygonSectionTests.cs" />
+    <Compile Include="Sections\PolygonSection3Tests.cs" />
+    <Compile Include="Sections\PolygonSection2Tests.cs" />
+    <Compile Include="Sections\PolygonSection1Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

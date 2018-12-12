@@ -8,6 +8,5 @@ namespace BeamStatica.Results.Displacements
 {
    public  class HorizontalDeflection : Displacement
     {
-        public override string ToString() => Value.ToString();
     }
 }

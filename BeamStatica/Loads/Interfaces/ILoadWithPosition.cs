@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Loads.Interfaces
 {
-    public interface ILoadPosition
+    public interface ILoadWithPosition : ILoad
     {
-         double Position { get; set; }
-         double Value { get; set; }
+        double Position { get; }
     }
 }

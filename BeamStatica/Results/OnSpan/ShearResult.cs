@@ -13,7 +13,6 @@ namespace BeamStatica.Results.OnSpan
         public IResultValue Result { get; private set; }
         private IList<ISpan> _spans { get; }
         private double _currentLength;
-        private IList<ISpan> spans;
 
         public ShearResult(IList<ISpan> spans)
         {

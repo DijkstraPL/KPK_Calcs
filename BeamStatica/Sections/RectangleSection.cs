@@ -32,6 +32,11 @@ namespace BeamStatica.Sections
             Points.Add(new Point(0, Height));
         }
 
+        protected override void CalculateCimcuference()
+        {
+            Circumference = 2 * Width + 2 * Height;
+        }
+
         protected override void CalculateArea()
         {
             Area = Width * Height;

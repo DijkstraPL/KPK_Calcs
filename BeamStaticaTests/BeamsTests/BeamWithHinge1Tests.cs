@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BeamStaticaTests.BeamsTests
 {
-    [TestFixture]
+    [TestFixture(Description = "18.12.12-07")]
     public class BeamWithHinge1Tests
     {
         private Beam _beam;
@@ -22,7 +22,7 @@ namespace BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material = new Material() { YoungModulus = 30 };
+            var material = new Material(youngModulus: 30);
             var section = new RectangleSection(width: 300, height: 700);
 
             var node1 = new FixedNode();
@@ -67,6 +67,20 @@ namespace BeamStaticaTests.BeamsTests
 
             Assert.That(_beam.Spans[1].RightNode.ShearForce.Value, Is.EqualTo(100).Within(0.001));
             Assert.That(_beam.Spans[1].RightNode.BendingMoment.Value, Is.EqualTo(1000).Within(0.001));
+        }
+
+        [Test()]
+        public void NodeDisplacementsCalculationsTest_Successful()
+        {
+            Assert.That(_beam.Spans[0].LeftNode.VerticalDeflection, Is.Null);
+            Assert.That(_beam.Spans[0].LeftNode.RightRotation, Is.Null);
+
+            Assert.That(_beam.Spans[0].RightNode.LeftRotation.Value, Is.EqualTo(-0.019436).Within(0.000001));
+            Assert.That(_beam.Spans[1].LeftNode.VerticalDeflection.Value, Is.EqualTo(-129.576).Within(0.001));
+            Assert.That(_beam.Spans[1].LeftNode.RightRotation.Value, Is.EqualTo(0.019436).Within(0.000001));
+
+            Assert.That(_beam.Spans[1].RightNode.LeftRotation, Is.Null);
+            Assert.That(_beam.Spans[1].RightNode.VerticalDeflection, Is.Null);
         }
 
         [Test()]
@@ -125,7 +139,7 @@ namespace BeamStaticaTests.BeamsTests
         [TestCase(13, -73.016)]
         [TestCase(15, -40.492)]
         [TestCase(20, 0)]
-        public void DeflectionAtPositionCalculationsTest_Successful(double position, double result)
+        public void VerticalDeflectionAtPositionCalculationsTest_Successful(double position, double result)
         {
             double deflection = _beam.VerticalDeflectionResult.GetValue(position).Value;
 

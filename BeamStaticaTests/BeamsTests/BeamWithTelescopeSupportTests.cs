@@ -23,8 +23,8 @@ namespace BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material1 = new Material() { YoungModulus = 30 };
-            var material2 = new Material() { YoungModulus = 33 };
+            var material1 = new Material(youngModulus: 30);
+            var material2 = new Material(youngModulus: 33);
             var section = new RectangleSection(width: 300, height: 500);
 
             var node1 = new TelescopeNode();

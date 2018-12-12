@@ -11,7 +11,7 @@ using BeamStatica.Sections.Additional.Interfaces;
 namespace BeamStatica.Sections.Tests
 {
     [TestFixture()]
-    public class PolygonSectionTests
+    public class PolygonSection1Tests
     {
         private Section _polygonSection;
 
@@ -24,6 +24,12 @@ namespace BeamStatica.Sections.Tests
             points.Add(new Point(200, 300));
             points.Add(new Point(0, 300));
             _polygonSection = new Section(points);
+        }
+
+        [Test()]
+        public void PolygonSection_CalculatedCircumferenceTest_Success()
+        {
+            Assert.That(_polygonSection.Circumference, Is.EqualTo(100));
         }
 
         [Test()]

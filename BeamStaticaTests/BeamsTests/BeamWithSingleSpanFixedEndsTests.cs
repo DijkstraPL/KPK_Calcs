@@ -22,7 +22,7 @@ namespace BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material = new Material() { YoungModulus = 30 };
+            var material = new Material(youngModulus: 30);
             var section = new RectangleSection(width: 300, height: 500);
 
             var node1 = new FixedNode();

@@ -11,6 +11,6 @@ namespace BeamStatica.Spans.Interfaces
     public interface ILoadProvider
     {
          ICollection<ContinousLoad> ContinousLoads { get; set; }
-         ICollection<ILoad> PointLoads { get; set; }
+         ICollection<ISpanLoad> PointLoads { get; set; }
     }
 }

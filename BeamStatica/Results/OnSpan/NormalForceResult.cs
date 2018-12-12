@@ -21,7 +21,7 @@ namespace BeamStatica.Results.OnSpan
 
         public IResultValue GetValue(double distanceFromLeftSide)
         {
-            Result = new ShearForce() { Value = 0 };
+            Result = new NormalForce() { Value = 0 };
             _currentLength = 0;
 
             CalculateNormalForce(distanceFromLeftSide);

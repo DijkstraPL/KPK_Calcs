@@ -20,7 +20,7 @@ namespace BeamStatica.Nodes
 
         public abstract short DegreesOfFreedom { get; }
 
-        public ICollection<ILoad> ConcentratedForces { get; set; } = new List<ILoad>();
+        public ICollection<INodeLoad> ConcentratedForces { get; set; } = new List<INodeLoad>();
 
         public IResultValue NormalForce { get; protected set; } = null;
         public IResultValue ShearForce { get; protected set; } = null;

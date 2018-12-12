@@ -5,11 +5,11 @@ namespace BeamStatica.Loads.ContinousLoads
 {
     public class ContinousLoad
     {
-        public ILoadPosition StartPosition { get; set; }
-        public ILoadPosition EndPosition { get; set; }
+        public ILoadWithPosition StartPosition { get; set; }
+        public ILoadWithPosition EndPosition { get; set; }
         public double Length => EndPosition.Position - StartPosition.Position;
         
-        public ContinousLoad(ILoadPosition startPosition, ILoadPosition endPosition)
+        public ContinousLoad(ILoadWithPosition startPosition, ILoadWithPosition endPosition)
         {
             StartPosition = startPosition ?? throw new ArgumentNullException(nameof(startPosition));
             EndPosition = endPosition ?? throw new ArgumentNullException(nameof(endPosition));

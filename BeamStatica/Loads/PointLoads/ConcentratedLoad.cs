@@ -7,27 +7,19 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Loads.PointLoads
 {
-    public abstract class ConcentratedLoad : ILoad
+    public abstract class ConcentratedLoad : INodeLoad
     {
-        public double Value { get; set; }
-        public double Position { get; set; }
-
-        public abstract double CalculateNormalForce();
-        public abstract double CalculateShear();
-        public abstract double CalculateBendingMoment(double distanceFromLoad);
-
-        public abstract double CalculateSpanLoadVectorNormalForceMember(double spanLength, bool leftNode);
-        public abstract double CalculateSpanLoadVectorShearMember(double spanLength, bool leftNode);
-        public abstract double CalculateSpanLoadBendingMomentMember(double spanLength, bool leftNode);
+        public double Value { get; }
+        public virtual bool IncludeInSpanLoadCalculations => false;
 
         protected ConcentratedLoad(double value)
         {
             Value = value;
         }
 
-        protected ConcentratedLoad(double value, double position) : this(value)
-        {
-            Position = position;
-        }
+        public virtual double CalculateNormalForce() => 0;
+        public virtual double CalculateShear() => 0;
+        public virtual double CalculateBendingMoment(double distanceFromLoad) => 0;
+        public virtual double CalculateVerticalDisplacement() => 0;
     }
 }

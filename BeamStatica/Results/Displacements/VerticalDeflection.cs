@@ -9,6 +9,5 @@ namespace BeamStatica.Results.Displacements
 {
     public sealed class VerticalDeflection : Displacement
     {
-        public override string ToString() => Value.ToString();
     }
 }

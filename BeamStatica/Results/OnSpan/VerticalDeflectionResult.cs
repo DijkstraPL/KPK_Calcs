@@ -111,6 +111,7 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromPointLoads(ISpan span)
         {
+            CalculateDeflectionFromVerticalDisplacements(span);
             CalculateDeflectionFromShearForcesPointLoads(span);
             CalculateDeflectionFromBendingMomentPointLoads(span);
         }
@@ -144,18 +145,6 @@ namespace BeamStatica.Results.OnSpan
             }
         }
 
-        private void CalculateDeflectionFromMomentForces(ISpan span)
-        {
-            _spanDeflection += (span.LeftNode.BendingMoment?.Value
-                * (_distanceFromLeftSide - _currentLength)
-                * (_distanceFromLeftSide - _currentLength) / 2 ?? 0)
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-            _spanDeflection += span.LeftNode.ConcentratedForces.Where(cf => cf is BendingMoment).Sum(cf => cf.Value) *
-                (_distanceFromLeftSide - _currentLength) *
-                (_distanceFromLeftSide - _currentLength) / 2
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-        }
-
         private void CalculateDeflectionFromShearForces(ISpan span)
         {
             _spanDeflection += (span.LeftNode.ShearForce?.Value
@@ -168,6 +157,24 @@ namespace BeamStatica.Results.OnSpan
                 * (_distanceFromLeftSide - _currentLength)
                 * (_distanceFromLeftSide - _currentLength) / 2
                 * (_distanceFromLeftSide - _currentLength) / 3
+                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
+        }
+
+        private void CalculateDeflectionFromVerticalDisplacements(ISpan span)
+        {
+            _spanDeflection += span.LeftNode.ConcentratedForces
+                .Where(cf => cf is VerticalDisplacement).Sum(cf => cf.Value) / 100000;
+        }
+
+        private void CalculateDeflectionFromMomentForces(ISpan span)
+        {
+            _spanDeflection += (span.LeftNode.BendingMoment?.Value
+                * (_distanceFromLeftSide - _currentLength)
+                * (_distanceFromLeftSide - _currentLength) / 2 ?? 0)
+                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
+            _spanDeflection += span.LeftNode.ConcentratedForces.Where(cf => cf is BendingMoment).Sum(cf => cf.Value) *
+                (_distanceFromLeftSide - _currentLength) *
+                (_distanceFromLeftSide - _currentLength) / 2
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 

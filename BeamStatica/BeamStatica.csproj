@@ -55,12 +55,16 @@
     <Compile Include="Beams\Interfaces\IGlobalStiffnessMatrix.cs" />
     <Compile Include="Beams\Interfaces\IResultProvider.cs" />
     <Compile Include="Loads\Interfaces\ILoad.cs" />
-    <Compile Include="Loads\Interfaces\ILoadPosition.cs" />
+    <Compile Include="Loads\Interfaces\ILoadWithPosition.cs" />
+    <Compile Include="Loads\Interfaces\INodeLoad.cs" />
+    <Compile Include="Loads\Interfaces\ISpanLoad.cs" />
     <Compile Include="Loads\PointLoads\BendingMoment.cs" />
-    <Compile Include="Loads\PointLoads\ConcentratedLoad.cs" />
     <Compile Include="Loads\ContinousLoads\ContinousLoad.cs" />
+    <Compile Include="Loads\PointLoads\ConcentratedLoad.cs" />
+    <Compile Include="Loads\PointLoads\SpanConcentratedLoad.cs" />
     <Compile Include="Loads\PointLoads\NormalLoad.cs" />
     <Compile Include="Loads\PointLoads\ShearLoad.cs" />
+    <Compile Include="Loads\PointLoads\VerticalDisplacement.cs" />
     <Compile Include="Materials\Intefaces\IYoungModulus.cs" />
     <Compile Include="Materials\Material.cs" />
     <Compile Include="Nodes\FixedNode.cs" />
@@ -74,6 +78,8 @@
     <Compile Include="Nodes\Interfaces\INormalForceProvider.cs" />
     <Compile Include="Nodes\Interfaces\IShearForceProvider.cs" />
     <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Nodes\PinNode.cs" />
+    <Compile Include="Nodes\SleeveNode.cs" />
     <Compile Include="Nodes\SupportedNodeWithHinge.cs" />
     <Compile Include="Nodes\SupportedNode.cs" />
     <Compile Include="Nodes\TelescopeNode.cs" />

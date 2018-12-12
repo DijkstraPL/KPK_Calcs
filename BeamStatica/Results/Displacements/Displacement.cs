@@ -10,5 +10,6 @@ namespace BeamStatica.Results.Displacements
    public  abstract class Displacement : IResultValue
     {
         public double Value { get; set; }
+        public override string ToString() => Value.ToString();
     }
 }

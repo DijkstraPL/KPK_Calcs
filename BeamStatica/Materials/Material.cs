@@ -12,6 +12,11 @@ namespace BeamStatica.Materials
     {
         [Abbreviation("E")]
         [Unit("GPa")]
-        public double YoungModulus { get; set; }
+        public double YoungModulus { get; }
+
+        public Material(double youngModulus)
+        {
+            YoungModulus = youngModulus;
+        }
     }
 }

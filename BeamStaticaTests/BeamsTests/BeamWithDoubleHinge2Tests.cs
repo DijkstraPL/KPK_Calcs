@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace BeamStaticaTests.BeamsTests
 {
-    [TestFixture]
+    [TestFixture(Description = "18.12.12-05")]
     public class BeamWithDoubleHinge2Tests
     {
         private Beam _beam;
@@ -23,7 +23,7 @@ namespace BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material = new Material() { YoungModulus = 30 };
+            var material = new Material(youngModulus: 30);
             var section = new RectangleSection(width: 300, height: 500);
 
             var node1 = new FixedNode();
@@ -84,6 +84,24 @@ namespace BeamStaticaTests.BeamsTests
 
             Assert.That(_beam.Spans[2].RightNode.ShearForce.Value, Is.EqualTo(50).Within(0.001));
             Assert.That(_beam.Spans[2].RightNode.BendingMoment.Value, Is.EqualTo(250).Within(0.001));
+        }
+
+        [Test()]
+        public void NodeDisplacementsCalculationsTest_Successful()
+        {
+            Assert.That(_beam.Spans[0].LeftNode.VerticalDeflection, Is.Null);
+            Assert.That(_beam.Spans[0].LeftNode.RightRotation, Is.Null);
+
+            Assert.That(_beam.Spans[0].RightNode.LeftRotation.Value, Is.EqualTo(-0.01).Within(0.000001));
+            Assert.That(_beam.Spans[1].LeftNode.VerticalDeflection.Value, Is.EqualTo(-36.111).Within(0.001));
+            Assert.That(_beam.Spans[1].LeftNode.RightRotation.Value, Is.EqualTo(0.001111).Within(0.000001));
+
+            Assert.That(_beam.Spans[1].RightNode.LeftRotation.Value, Is.EqualTo(0.004444).Within(0.000001));
+            Assert.That(_beam.Spans[2].LeftNode.VerticalDeflection.Value, Is.EqualTo(-22.222).Within(0.001));
+            Assert.That(_beam.Spans[2].LeftNode.RightRotation.Value, Is.EqualTo(0.006667).Within(0.000001));
+
+            Assert.That(_beam.Spans[2].RightNode.LeftRotation, Is.Null);
+            Assert.That(_beam.Spans[2].RightNode.VerticalDeflection, Is.Null);
         }
 
         [Test()]
@@ -150,7 +168,7 @@ namespace BeamStaticaTests.BeamsTests
         [TestCase(10, -22.222)]
         [TestCase(12, -9.6)]
         [TestCase(15, 0)]
-        public void DeflectionAtPositionCalculationsTest_Successful(double position, double result)
+        public void VerticalDeflectionAtPositionCalculationsTest_Successful(double position, double result)
         {
             double deflection = _beam.VerticalDeflectionResult.GetValue(position).Value;
 
