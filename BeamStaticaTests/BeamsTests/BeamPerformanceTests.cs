@@ -81,7 +81,7 @@ namespace BeamStaticaTests.BeamsTests
 
             var startLoad1 = new ShearLoad(value: shearForce, position: minPosition);
             var endLoad1 = new ShearLoad(value: shearForce, position: length1);
-            span1.ContinousLoads.Add(new ContinousLoad(startLoad1, endLoad1));
+            span1.ContinousLoads.Add(new ContinousShearLoad(startLoad1, endLoad1));
 
             var pointLoad1 = new ShearLoad(value: pointLoad, position: length2 / divider);
             span2.PointLoads.Add(pointLoad1);

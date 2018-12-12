@@ -52,7 +52,7 @@ namespace BeamStaticaTests.BeamsTests
             var spans = new Span[] { span1, span2 };
 
             node2.ConcentratedForces.Add(new ShearLoad(value: -20));
-            span1.ContinousLoads.Add(new ContinousLoad(
+            span1.ContinousLoads.Add(new ContinousShearLoad(
                 new ShearLoad(value: -9, position: 0), 
                 new ShearLoad(value: -9, position: 4)));
 

@@ -60,7 +60,7 @@ namespace BeamStaticaTests.BeamsTests
 
             var startLoad = new ShearLoad(value: -30, position: 2);
             var endLoad = new ShearLoad(value: -30, position: 6);
-            span3.ContinousLoads.Add(new ContinousLoad(startLoad, endLoad));
+            span3.ContinousLoads.Add(new ContinousShearLoad(startLoad, endLoad));
 
             _beam = new Beam(spans, nodes);
 

@@ -72,15 +72,15 @@ namespace BeamStaticaTests.BeamsTests
 
             var startLoad1 = new ShearLoad(value: -10, position: 0);
             var endLoad1 = new ShearLoad(value: -30, position: 5);
-            span1.ContinousLoads.Add(new ContinousLoad(startLoad1, endLoad1));
+            span1.ContinousLoads.Add(new ContinousShearLoad(startLoad1, endLoad1));
 
             var startLoad2 = new ShearLoad(value: -10, position: 0);
             var endLoad2 = new ShearLoad(value: -10, position: 5);
-            span4.ContinousLoads.Add(new ContinousLoad(startLoad2, endLoad2));
+            span4.ContinousLoads.Add(new ContinousShearLoad(startLoad2, endLoad2));
 
             var startLoad3 = new ShearLoad(value: 0, position: 0);
             var endLoad3 = new ShearLoad(value: -20, position: 5);
-            span4.ContinousLoads.Add(new ContinousLoad(startLoad3, endLoad3));
+            span4.ContinousLoads.Add(new ContinousShearLoad(startLoad3, endLoad3));
             
             var pointLoad1 = new ShearLoad(value: -150, position: 4);
             span2.PointLoads.Add(pointLoad1);

@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using BeamStatica.Beams;
 using BeamStatica.Spans.Interfaces;
+using BeamStatica.Loads.Interfaces;
 
 namespace BeamStatica.Results.OnSpan
 {
@@ -178,7 +179,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private void CalculateDeflectionOutsideLoadLength(ISpan span, Loads.ContinousLoads.ContinousLoad load)
+        private void CalculateDeflectionOutsideLoadLength(ISpan span, IContinousLoad load)
         {
             double forceAtX = GetForceAtTheCalculatedPoint(load);
 
@@ -209,7 +210,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private void CalculateDeflectionInsideLoadLength(ISpan span, Loads.ContinousLoads.ContinousLoad load)
+        private void CalculateDeflectionInsideLoadLength(ISpan span, IContinousLoad load)
         {
             double forceAtX = GetForceAtTheCalculatedPoint(load);
 
@@ -227,7 +228,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private double GetForceAtTheCalculatedPoint(Loads.ContinousLoads.ContinousLoad load)
+        private double GetForceAtTheCalculatedPoint(IContinousLoad load)
             => (load.EndPosition.Value - load.StartPosition.Value) /
                 (load.EndPosition.Position - load.StartPosition.Position) *
                 (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) +

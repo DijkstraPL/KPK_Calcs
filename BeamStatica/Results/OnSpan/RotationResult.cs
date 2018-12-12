@@ -1,4 +1,5 @@
 ﻿using BeamStatica.Beams;
+using BeamStatica.Loads.Interfaces;
 using BeamStatica.Loads.PointLoads;
 using BeamStatica.Nodes;
 using BeamStatica.Results.Displacements;
@@ -166,7 +167,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private void CalculateRotationOutsideLoadLength(ISpan span, Loads.ContinousLoads.ContinousLoad load)
+        private void CalculateRotationOutsideLoadLength(ISpan span, IContinousLoad load)
         {
             double forceAtX = GetForceAtTheCalculatedPoint(load);
 
@@ -193,7 +194,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private void CalculateRotationInsideLoadLength(ISpan span, Loads.ContinousLoads.ContinousLoad load)
+        private void CalculateRotationInsideLoadLength(ISpan span, IContinousLoad load)
         {
             double forceAtX = GetForceAtTheCalculatedPoint(load);
 
@@ -209,7 +210,7 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private double GetForceAtTheCalculatedPoint(Loads.ContinousLoads.ContinousLoad load)
+        private double GetForceAtTheCalculatedPoint(IContinousLoad load)
             => (load.EndPosition.Value - load.StartPosition.Value) /
                 (load.EndPosition.Position - load.StartPosition.Position) *
                 (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) +
