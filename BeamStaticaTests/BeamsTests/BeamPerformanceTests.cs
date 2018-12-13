@@ -1,5 +1,6 @@
 ﻿using BeamStatica;
 using BeamStatica.Beams;
+using BeamStatica.Loads;
 using BeamStatica.Loads.ContinousLoads;
 using BeamStatica.Loads.PointLoads;
 using BeamStatica.Materials;
@@ -79,9 +80,9 @@ namespace BeamStaticaTests.BeamsTests
 
             node3.ConcentratedForces.Add(new ShearLoad(value: nodeForce));
 
-            var startLoad1 = new ShearLoad(value: shearForce, position: minPosition);
-            var endLoad1 = new ShearLoad(value: shearForce, position: length1);
-            span1.ContinousLoads.Add(new ContinousShearLoad(startLoad1, endLoad1));
+            var startLoad1 = new LoadData(value: shearForce, position: minPosition);
+            var endLoad1 = new LoadData(value: shearForce, position: length1);
+            span1.ContinousLoads.Add(ContinousShearLoad.Create(startLoad1, endLoad1));
 
             var pointLoad1 = new ShearLoad(value: pointLoad, position: length2 / divider);
             span2.PointLoads.Add(pointLoad1);
@@ -98,18 +99,23 @@ namespace BeamStaticaTests.BeamsTests
                 _beam.RotationResult.GetValue(i);
             }
             
+            Assert.That(_beam.Spans[0].LeftNode.NormalForce?.Value, Is.Not.Null);
             Assert.That(_beam.Spans[0].LeftNode.ShearForce?.Value, Is.Not.Null);
             Assert.That(_beam.Spans[0].LeftNode.BendingMoment?.Value, Is.Not.Null);
 
+            Assert.That(_beam.Spans[1].LeftNode.NormalForce, Is.Null);
             Assert.That(_beam.Spans[1].LeftNode.ShearForce, Is.Null);
             Assert.That(_beam.Spans[1].LeftNode.BendingMoment, Is.Null);
 
+            Assert.That(_beam.Spans[2].LeftNode.NormalForce, Is.Null);
             Assert.That(_beam.Spans[2].LeftNode.ShearForce, Is.Null);
             Assert.That(_beam.Spans[2].LeftNode.BendingMoment, Is.Null);
 
+            Assert.That(_beam.Spans[3].LeftNode.NormalForce?.Value, Is.Not.Null);
             Assert.That(_beam.Spans[3].LeftNode.ShearForce?.Value, Is.Not.Null);
             Assert.That(_beam.Spans[3].LeftNode.BendingMoment, Is.Null);
 
+            Assert.That(_beam.Spans[3].RightNode.NormalForce?.Value, Is.Not.Null);
             Assert.That(_beam.Spans[3].RightNode.ShearForce?.Value, Is.Not.Null);
             Assert.That(_beam.Spans[3].RightNode.BendingMoment, Is.Null);
         }

@@ -1,10 +1,7 @@
 ﻿using BeamStatica.Beams;
-using BeamStatica.Loads.Interfaces;
 using BeamStatica.Loads.PointLoads;
-using BeamStatica.Nodes;
 using BeamStatica.Results.Displacements;
 using BeamStatica.Results.Interfaces;
-using BeamStatica.Spans;
 using BeamStatica.Spans.Interfaces;
 using System;
 using System.Linq;
@@ -77,7 +74,7 @@ namespace BeamStatica.Results.OnSpan
                 _currentLength += span.Length;
             }
         }
-        
+
         private bool IsLastNode(ISpan span) =>
             span == _beam.Spans.Last() && _distanceFromLeftSide == _beam.Length;
 
@@ -106,13 +103,8 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateRotationFromContinousLoads(ISpan span)
         {
-            foreach (var load in span.ContinousLoads)
-            {
-                if (_distanceFromLeftSide > load.EndPosition.Position + _currentLength)
-                    CalculateRotationOutsideLoadLength(span, load);
-                else if (_distanceFromLeftSide > load.StartPosition.Position + _currentLength)
-                    CalculateRotationInsideLoadLength(span, load);
-            }
+            _spanRotation += span.ContinousLoads.Sum(cl => 
+            cl.CalculateRotation(span, _distanceFromLeftSide, _currentLength));
         }
 
         private void CalculateRotationFromPointLoads(ISpan span)
@@ -147,7 +139,7 @@ namespace BeamStatica.Results.OnSpan
                     / (span.Material.YoungModulus * span.Section.MomentOfInteria);
             }
         }
-        
+
         private void CalculateRotationFromMomentForces(ISpan span)
         {
             _spanRotation += (span.LeftNode.BendingMoment?.Value * (_distanceFromLeftSide - _currentLength) ?? 0)
@@ -166,54 +158,5 @@ namespace BeamStatica.Results.OnSpan
                 (_distanceFromLeftSide - _currentLength) * (_distanceFromLeftSide - _currentLength) / 2
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
-
-        private void CalculateRotationOutsideLoadLength(ISpan span, IContinousLoad load)
-        {
-            double forceAtX = GetForceAtTheCalculatedPoint(load);
-
-            _spanRotation += load.StartPosition.Value *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 2 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 3 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) * 3 / 4
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-            _spanRotation += forceAtX *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 2 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 3 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 4
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-
-            _spanRotation -= load.EndPosition.Value *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 2 *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 3 *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) * 3 / 4
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-            _spanRotation -= forceAtX *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 2 *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 3 *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 4
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-        }
-
-        private void CalculateRotationInsideLoadLength(ISpan span, IContinousLoad load)
-        {
-            double forceAtX = GetForceAtTheCalculatedPoint(load);
-
-            _spanRotation += load.StartPosition.Value *
-               (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 2 *
-               (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 3 *
-               (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) * 3 / 4
-               / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-            _spanRotation += forceAtX *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 2 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 3 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 4
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-        }
-
-        private double GetForceAtTheCalculatedPoint(IContinousLoad load)
-            => (load.EndPosition.Value - load.StartPosition.Value) /
-                (load.EndPosition.Position - load.StartPosition.Position) *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) +
-                load.StartPosition.Value;
     }
 }

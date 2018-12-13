@@ -78,6 +78,9 @@
     <Compile Include="BeamsTests\BeamWithHorizontalLoadTests.cs" />
     <Compile Include="BeamsTests\BeamWithSingleSpanFixedEndsTests.cs" />
     <Compile Include="BeamsTests\BeamWithTelescopeSupportTests.cs" />
+    <Compile Include="BeamsTests\BeamWithTemperatureLoad3Tests.cs" />
+    <Compile Include="BeamsTests\BeamWithTemperatureLoad2Tests.cs" />
+    <Compile Include="BeamsTests\BeamWithTemperatureLoad1Tests.cs" />
     <Compile Include="BeamsTests\BeamWithTrapezoidalLoadTests.cs" />
     <Compile Include="BeamsTests\BeamWithTriangleLoad2Tests.cs" />
     <Compile Include="BeamsTests\BeamWithTriangleLoad1Tests.cs" />

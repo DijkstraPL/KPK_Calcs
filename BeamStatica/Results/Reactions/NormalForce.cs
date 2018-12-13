@@ -8,6 +8,5 @@ namespace BeamStatica.Results.Reactions
 {
     public class NormalForce : Reaction
     {
-        public override string ToString() => this.Value.ToString();
     }
 }

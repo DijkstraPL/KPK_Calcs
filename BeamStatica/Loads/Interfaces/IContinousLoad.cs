@@ -16,6 +16,9 @@ namespace BeamStatica.Loads.Interfaces
         double CalculateNormalForce(double distanceFromLoadStartPosition);
         double CalculateShear(double distanceFromLoadStartPosition);
         double CalculateBendingMoment(double distanceFromLoadStartPosition);
+        double CalculateRotation(ISpan span, double distanceFromLeftSide, double currentLength);
+        double CalculateHorizontalDeflection(ISpan span, double distanceFromLeftSide, double currentLength);
+        double CalculateVerticalDeflection(ISpan span, double distanceFromLeftSide, double currentLength);
 
         double CalculateSpanLoadVectorNormalForceMember(ISpan span, bool leftNode);
         double CalculateSpanLoadVectorShearMember(ISpan span, bool leftNode);

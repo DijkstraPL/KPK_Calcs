@@ -9,6 +9,7 @@ using System.Linq;
 using BeamStatica.Beams;
 using BeamStatica.Spans.Interfaces;
 using BeamStatica.Loads.Interfaces;
+using BeamStatica.Loads.ContinousLoads;
 
 namespace BeamStatica.Results.OnSpan
 {
@@ -101,13 +102,8 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromContinousLoads(ISpan span)
         {
-            foreach (var load in span.ContinousLoads)
-            {
-                if (_distanceFromLeftSide > load.EndPosition.Position + _currentLength)
-                    CalculateDeflectionOutsideLoadLength(span, load);
-                else if (_distanceFromLeftSide > load.StartPosition.Position + _currentLength)
-                    CalculateDeflectionInsideLoadLength(span, load);
-            }
+            _spanDeflection += span.ContinousLoads.Sum(cl =>
+            cl.CalculateVerticalDeflection(span, _distanceFromLeftSide, _currentLength));
         }
 
         private void CalculateDeflectionFromPointLoads(ISpan span)
@@ -179,54 +175,6 @@ namespace BeamStatica.Results.OnSpan
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
 
-        private void CalculateDeflectionOutsideLoadLength(ISpan span, IContinousLoad load)
-        {
-            double forceAtX = GetForceAtTheCalculatedPoint(load);
-
-            _spanDeflection += load.StartPosition.Value *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 2 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 3 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 4 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) * 4 / 5
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-            _spanDeflection += forceAtX *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 2 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 3 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 4 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 5
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-
-            _spanDeflection -= load.EndPosition.Value *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 2 *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 3 *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 4 *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) * 4 / 5
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-            _spanDeflection -= forceAtX *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 2 *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 3 *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 4 *
-                (_distanceFromLeftSide - _currentLength - load.EndPosition.Position) / 5
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-        }
-
-        private void CalculateDeflectionInsideLoadLength(ISpan span, IContinousLoad load)
-        {
-            double forceAtX = GetForceAtTheCalculatedPoint(load);
-
-            _spanDeflection += load.StartPosition.Value *
-               (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 2 *
-               (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 3 *
-               (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 4 *
-               (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) * 4 / 5
-               / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-            _spanDeflection += forceAtX *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 2 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 3 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 4 *
-                (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) / 5
-                / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-        }
 
         private double GetForceAtTheCalculatedPoint(IContinousLoad load)
             => (load.EndPosition.Value - load.StartPosition.Value) /

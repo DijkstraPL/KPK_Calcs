@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Loads
 {
-    public class Load : ILoadWithPosition
+    public class LoadData : ILoadWithPosition
     {
         public double Position { get; }
         public double Value { get; }
 
-        public Load(double position, double value)
+        public LoadData(double position, double value)
         {
             Position = position;
             Value = value;

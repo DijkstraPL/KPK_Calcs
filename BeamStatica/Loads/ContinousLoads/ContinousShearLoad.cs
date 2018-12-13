@@ -1,30 +1,34 @@
-﻿using BeamStatica.Loads.Interfaces;
+﻿using BeamStatica.Loads.ContinousLoads.ShearLoadResults;
+using BeamStatica.Loads.Interfaces;
 using BeamStatica.Spans.Interfaces;
 using System;
 
 namespace BeamStatica.Loads.ContinousLoads
 {
     public class ContinousShearLoad : ContinousLoad
-    {        
-        public ContinousShearLoad(ILoadWithPosition startPosition, ILoadWithPosition endPosition) 
-            : base(startPosition, endPosition)
+    {
+        public static IContinousLoad Create(double startPosition, double startValue, double endPosition, double endValue)
         {
-        }
-        
-        public override double CalculateShear(double distanceFromLoadStartPosition)
-        {
-            if (distanceFromLoadStartPosition >= this.Length)
-               return CalculateShearForceOutsideLoadLength();
-            else
-                return CalculateShearForceInsideLoadLength(distanceFromLoadStartPosition);
+            return new ContinousShearLoad(
+                new LoadData(startPosition, startValue),
+                new LoadData(endPosition, endValue));
         }
 
-        public override double CalculateBendingMoment(double distanceFromLoadStartPosition)
+        public static IContinousLoad Create(
+            ILoadWithPosition startLoadWithPosition, 
+            ILoadWithPosition endLoadWithPosition)
         {
-            if (distanceFromLoadStartPosition >= this.Length)
-                return CalculateBendingMomentOutsideLoadLength(distanceFromLoadStartPosition);
-            else
-                return CalculateBendingMomentInsideLoadLength(distanceFromLoadStartPosition);
+            return new ContinousShearLoad(startLoadWithPosition, endLoadWithPosition);
+        }
+
+        private ContinousShearLoad(ILoadWithPosition startPosition, ILoadWithPosition endPosition) 
+            : base(startPosition, endPosition)
+        {
+            ShearResult = new ShearResult(this);
+            BendingMomentResult = new BendingMomentResult(this);
+
+            RotationResult = new RotationResult(this);
+            VerticalDeflectionResult = new VerticalDeflectionResult(this);
         }
 
         public override double CalculateSpanLoadVectorShearMember(ISpan span, bool leftNode)
@@ -80,52 +84,6 @@ namespace BeamStatica.Loads.ContinousLoads
                    10 * Math.Pow(loadLength, 2) * distanceToOtherNode +
                    20 * distanceFromCalculatedNode * loadLength * distanceToOtherNode) /
                    Math.Pow(span.Length, 2);
-        }
-
-        private double CalculateShearForceOutsideLoadLength() 
-            => ((this.StartPosition.Value + this.EndPosition.Value) * this.Length) / 2;
-
-        private double CalculateShearForceInsideLoadLength(double distanceFromLoadStartPosition)
-        {
-            double lineAngle = (this.EndPosition.Value - this.StartPosition.Value) / this.Length;
-
-            return (this.StartPosition.Value + (lineAngle * distanceFromLoadStartPosition
-                 + this.StartPosition.Value)) * distanceFromLoadStartPosition / 2;
-        }
-
-        private double CalculateBendingMomentOutsideLoadLength(double distanceFromLoadStartPosition)
-        {
-            double bendingMoment = 0;
-
-            bendingMoment += this.StartPosition.Value *
-                this.Length / 2 *
-                (distanceFromLoadStartPosition - this.Length * 1 / 3);
-            bendingMoment += this.EndPosition.Value *
-                this.Length / 2 *
-               (distanceFromLoadStartPosition - this.Length * 2 / 3);
-            return bendingMoment;
-        }
-
-        private double CalculateBendingMomentInsideLoadLength(double distanceFromLoadStartPosition)
-        {
-            double forceAtX = GetForceAtTheCalculatedPoint(distanceFromLoadStartPosition);
-            double bendingMoment = 0;
-
-            bendingMoment += this.StartPosition.Value *
-               distanceFromLoadStartPosition / 2 *
-               distanceFromLoadStartPosition * 2 / 3;
-            bendingMoment += forceAtX *
-                distanceFromLoadStartPosition / 2 *
-                distanceFromLoadStartPosition * 1 / 3;
-
-            return bendingMoment;
-
-        }
-
-        private double GetForceAtTheCalculatedPoint(double distanceFromLoadStartPosition)
-            => (this.EndPosition.Value - this.StartPosition.Value) /
-               this.Length *
-               distanceFromLoadStartPosition +
-               this.StartPosition.Value;
+        }     
     }
 }

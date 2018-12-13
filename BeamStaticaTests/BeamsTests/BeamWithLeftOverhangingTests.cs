@@ -1,5 +1,6 @@
 ﻿using BeamStatica;
 using BeamStatica.Beams;
+using BeamStatica.Loads;
 using BeamStatica.Loads.ContinousLoads;
 using BeamStatica.Loads.PointLoads;
 using BeamStatica.Materials;
@@ -58,9 +59,9 @@ namespace BeamStaticaTests.BeamsTests
             node1.ConcentratedForces.Add(new ShearLoad(value: -200));
             node3.ConcentratedForces.Add(new BendingMoment(value: 90));
 
-            var startLoad = new ShearLoad(value: -30, position: 2);
-            var endLoad = new ShearLoad(value: -30, position: 6);
-            span3.ContinousLoads.Add(new ContinousShearLoad(startLoad, endLoad));
+            var startLoad = new LoadData(value: -30, position: 2);
+            var endLoad = new LoadData(value: -30, position: 6);
+            span3.ContinousLoads.Add(ContinousShearLoad.Create(startLoad, endLoad));
 
             _beam = new Beam(spans, nodes);
 

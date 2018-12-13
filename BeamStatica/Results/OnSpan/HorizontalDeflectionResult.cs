@@ -1,4 +1,5 @@
 ﻿using BeamStatica.Beams;
+using BeamStatica.Loads.ContinousLoads;
 using BeamStatica.Loads.PointLoads;
 using BeamStatica.Nodes;
 using BeamStatica.Results.Displacements;
@@ -61,6 +62,7 @@ namespace BeamStatica.Results.OnSpan
                 {
                     CalculateDeflectionFromCalculatedForcesAndDisplacements(span);
                     CalculateDeflectionFromNodeForces(span);
+                    CalculateDeflectionFromContinousLoads(span);
                     CalculateDeflectionFromPointLoads(span);
                 }
                 _currentLength += span.Length;
@@ -85,6 +87,12 @@ namespace BeamStatica.Results.OnSpan
         private void CalculateDeflectionFromNodeForces(ISpan span)
         {
             CalculateDeflectionFromNormalForces(span);
+        }
+
+        private void CalculateDeflectionFromContinousLoads(ISpan span)
+        {
+            _spanDeflection -= span.ContinousLoads.Sum(cl => 
+            cl.CalculateHorizontalDeflection(span, _distanceFromLeftSide, _currentLength));
         }
 
         private void CalculateDeflectionFromPointLoads(ISpan span)

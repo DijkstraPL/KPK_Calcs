@@ -10,5 +10,7 @@ namespace BeamStatica.Results.Reactions
     public abstract class Reaction : IResultValue
     {
         public double Value { get; set; }
+
+        public override string ToString() => Value.ToString();
     }
 }

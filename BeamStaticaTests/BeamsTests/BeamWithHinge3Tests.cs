@@ -59,12 +59,15 @@ namespace BeamStaticaTests.BeamsTests
         [Test()]
         public void NodeForcesCalculationsTest_Successful()
         {
+            Assert.That(_beam.Spans[0].LeftNode.NormalForce.Value, Is.EqualTo(0).Within(0.001));
             Assert.That(_beam.Spans[0].LeftNode.ShearForce.Value, Is.EqualTo(89.2).Within(0.001));
             Assert.That(_beam.Spans[0].LeftNode.BendingMoment.Value, Is.EqualTo(-192).Within(0.001));
 
+            Assert.That(_beam.Spans[1].LeftNode.NormalForce, Is.Null);
             Assert.That(_beam.Spans[1].LeftNode.ShearForce, Is.Null);
             Assert.That(_beam.Spans[1].LeftNode.BendingMoment, Is.Null);
 
+            Assert.That(_beam.Spans[1].RightNode.NormalForce.Value, Is.EqualTo(0).Within(0.001));
             Assert.That(_beam.Spans[1].RightNode.ShearForce.Value, Is.EqualTo(10.8).Within(0.001));
             Assert.That(_beam.Spans[1].RightNode.BendingMoment.Value, Is.EqualTo(54).Within(0.001));
         }
@@ -72,15 +75,32 @@ namespace BeamStaticaTests.BeamsTests
         [Test()]
         public void NodeDisplacementsCalculationsTest_Successful()
         {
+            Assert.That(_beam.Spans[0].LeftNode.HorizontalDeflection, Is.Null);
             Assert.That(_beam.Spans[0].LeftNode.VerticalDeflection, Is.Null);
             Assert.That(_beam.Spans[0].LeftNode.RightRotation, Is.Null);
 
             Assert.That(_beam.Spans[0].RightNode.LeftRotation.Value, Is.EqualTo(0.000960).Within(0.000001));
+            Assert.That(_beam.Spans[1].LeftNode.HorizontalDeflection.Value, Is.EqualTo(0).Within(0.001));
             Assert.That(_beam.Spans[1].LeftNode.VerticalDeflection.Value, Is.EqualTo(-4.800).Within(0.001));
             Assert.That(_beam.Spans[1].LeftNode.RightRotation.Value, Is.EqualTo(0.001440).Within(0.000001));
 
             Assert.That(_beam.Spans[1].RightNode.LeftRotation, Is.Null);
+            Assert.That(_beam.Spans[1].RightNode.HorizontalDeflection, Is.Null);
             Assert.That(_beam.Spans[1].RightNode.VerticalDeflection, Is.Null);
+        }
+
+        [Test()]
+        [TestCase(0, 0)]
+        [TestCase(2, 0)]
+        [TestCase(5, 0)]
+        [TestCase(10, 0)]
+        [TestCase(12, 0)]
+        [TestCase(15, 0)]
+        public void NormalForceAtPositionCalculationsTest_Successful(double position, double result)
+        {
+            double calculatedShear = _beam.NormalForceResult.GetValue(position).Value;
+
+            Assert.That(calculatedShear, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }
 
         [Test()]
@@ -133,6 +153,20 @@ namespace BeamStaticaTests.BeamsTests
             double rotation = _beam.RotationResult.GetValue(position).Value;
 
             Assert.That(rotation, Is.EqualTo(result).Within(0.000001), message: $"At {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, 0)]
+        [TestCase(2, 0)]
+        [TestCase(5, 0)]
+        [TestCase(10, 0)]
+        [TestCase(12, 0)]
+        [TestCase(15, 0)]
+        public void HorizontalDeflectionAtPositionCalculationsTest_Successful(double position, double result)
+        {
+            double deflection = _beam.HorizontalDeflectionResult.GetValue(position).Value;
+
+            Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }
 
         [Test()]
