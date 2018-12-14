@@ -36,5 +36,7 @@ namespace BeamStatica.Loads.PointLoads
             double distanceFromOtherNode = leftNode ? span.Length - this.Position : this.Position;
             return -this.Value * distanceFromOtherNode / span.Length;
         }
+
+        public override double CalculateJointLoadVectorNormalForceMember() => this.Value;
     }
 }

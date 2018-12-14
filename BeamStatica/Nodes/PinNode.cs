@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Nodes
 {
-    public sealed class PinNode : Node
+    public class PinNode : Node
     {
         public override short DegreesOfFreedom => 2;
 
         public PinNode(IResultValue shearForce = null, IResultValue horizontalDeflection = null, IResultValue rotation = null)
         {
-            HorizontalDeflection = horizontalDeflection ?? new HorizontalDeflection();
             ShearForce = shearForce ?? new ShearForce();
+            HorizontalDeflection = horizontalDeflection ?? new HorizontalDeflection();
             LeftRotation = rotation ?? new Rotation();
             RightRotation = LeftRotation;
         }

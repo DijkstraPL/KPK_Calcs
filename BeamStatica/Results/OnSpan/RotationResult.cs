@@ -1,4 +1,5 @@
 ﻿using BeamStatica.Beams;
+using BeamStatica.Beams.Interfaces;
 using BeamStatica.Loads.PointLoads;
 using BeamStatica.Results.Displacements;
 using BeamStatica.Results.Interfaces;
@@ -15,17 +16,16 @@ namespace BeamStatica.Results.OnSpan
         private double _distanceFromLeftSide;
 
         private double _spanRotation;
-        private readonly Beam _beam;
+        private readonly IBeam _beam;
         private readonly bool _adjustRotation;
 
-        public RotationResult(Beam beam)
+        public RotationResult(IBeam beam)
         {
             _beam = beam ?? throw new ArgumentNullException(nameof(beam));
         }
 
-        private RotationResult(Beam beam, bool adjustRotation)
+        private RotationResult(IBeam beam, bool adjustRotation) : this(beam)
         {
-            _beam = beam ?? throw new ArgumentNullException(nameof(beam));
             _adjustRotation = adjustRotation;
         }
 
@@ -115,12 +115,12 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateRotationFromShearForcesPointLoads(ISpan span)
         {
-            foreach (var load in span.PointLoads.Where(pl => pl is ShearLoad))
+            foreach (var load in span.PointLoads)
             {
                 if (_distanceFromLeftSide - _currentLength <= load.Position)
                     continue;
 
-                _spanRotation += load.Value
+                _spanRotation += load.CalculateShear()
                     * (_distanceFromLeftSide - _currentLength - load.Position)
                     * (_distanceFromLeftSide - _currentLength - load.Position) / 2
                     / (span.Material.YoungModulus * span.Section.MomentOfInteria);
@@ -129,12 +129,12 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateRotationFromBendingMomentPointLoads(ISpan span)
         {
-            foreach (var load in span.PointLoads.Where(pl => pl is BendingMoment))
+            foreach (var load in span.PointLoads)
             {
                 if (_distanceFromLeftSide - _currentLength <= load.Position)
                     continue;
 
-                _spanRotation += load.Value
+                _spanRotation += load.CalculateBendingMoment(0)
                     * (_distanceFromLeftSide - _currentLength - load.Position)
                     / (span.Material.YoungModulus * span.Section.MomentOfInteria);
             }
@@ -144,7 +144,7 @@ namespace BeamStatica.Results.OnSpan
         {
             _spanRotation += (span.LeftNode.BendingMoment?.Value * (_distanceFromLeftSide - _currentLength) ?? 0)
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-            _spanRotation += span.LeftNode.ConcentratedForces.Where(cf => cf is BendingMoment).Sum(cf => cf.Value) *
+            _spanRotation += span.LeftNode.ConcentratedForces.Sum(cf => cf.CalculateBendingMoment(0)) *
                 (_distanceFromLeftSide - _currentLength)
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
@@ -154,7 +154,7 @@ namespace BeamStatica.Results.OnSpan
             _spanRotation += (span.LeftNode.ShearForce?.Value * (_distanceFromLeftSide - _currentLength) *
                 (_distanceFromLeftSide - _currentLength) / 2 ?? 0)
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-            _spanRotation += span.LeftNode.ConcentratedForces.Where(cf => cf is ShearLoad).Sum(cf => cf.Value) *
+            _spanRotation += span.LeftNode.ConcentratedForces.Sum(cf => cf.CalculateShear()) *
                 (_distanceFromLeftSide - _currentLength) * (_distanceFromLeftSide - _currentLength) / 2
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }

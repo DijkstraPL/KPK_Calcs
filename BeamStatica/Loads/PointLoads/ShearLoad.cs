@@ -49,5 +49,7 @@ namespace BeamStatica.Loads.PointLoads
             double distanceFromOtherNode = leftNode ? span.Length - this.Position : this.Position;
             return sign * (-this.Value * distanceFromCloserNode * Math.Pow(distanceFromOtherNode, 2)) / Math.Pow(span.Length, 2);
         }
+
+        public override double CalculateJointLoadVectorShearMember() => this.Value;
     }
 }
