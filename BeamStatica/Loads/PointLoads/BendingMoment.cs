@@ -42,5 +42,7 @@ namespace BeamStatica.Loads.PointLoads
                 * (2 * distanceFromCloserNode - distanceFromOtherNode))
                 / Math.Pow(span.Length, 2);
         }
+
+        public override double CalculateJointLoadVectorBendingMomentMember() => -this.Value;
     }
 }

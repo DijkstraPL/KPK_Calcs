@@ -1,4 +1,5 @@
 ﻿using BeamStatica.Beams;
+using BeamStatica.Beams.Interfaces;
 using BeamStatica.Loads.ContinousLoads;
 using BeamStatica.Loads.PointLoads;
 using BeamStatica.Nodes;
@@ -21,9 +22,9 @@ namespace BeamStatica.Results.OnSpan
 
         private double _spanDeflection;
 
-        private readonly Beam _beam;
+        private readonly IBeam _beam;
 
-        public HorizontalDeflectionResult(Beam beam)
+        public HorizontalDeflectionResult(IBeam beam)
         {
             _beam = beam ?? throw new ArgumentNullException(nameof(beam));
         }
@@ -97,12 +98,12 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromPointLoads(ISpan span)
         {
-            foreach (var load in span.PointLoads.Where(pl => pl is NormalLoad))
+            foreach (var load in span.PointLoads)
             {
                 if (_distanceFromLeftSide - _currentLength <= load.Position)
                     continue;
 
-                _spanDeflection -= load.Value
+                _spanDeflection -= load.CalculateNormalForce()
                     * (_distanceFromLeftSide - _currentLength - load.Position)
                     / (span.Material.YoungModulus * span.Section.Area);
             }
@@ -114,7 +115,7 @@ namespace BeamStatica.Results.OnSpan
                 * (_distanceFromLeftSide - _currentLength)
                 ?? 0)
                 / (span.Material.YoungModulus * span.Section.Area);
-            _spanDeflection -= span.LeftNode.ConcentratedForces.Where(cf => cf is NormalLoad).Sum(cf => cf.Value)
+            _spanDeflection -= span.LeftNode.ConcentratedForces.Sum(cf => cf.CalculateNormalForce())
                 * (_distanceFromLeftSide - _currentLength)
                 / (span.Material.YoungModulus * span.Section.Area);
         }

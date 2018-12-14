@@ -12,9 +12,9 @@ namespace BeamStatica.Spans
         public Matrix<double> Matrix { get; private set; }
         public int Size { get; private set; }
 
-        private readonly Span _span;
+        private readonly ISpan _span;
 
-        public StiffnessMatrix(Span span)
+        public StiffnessMatrix(ISpan span)
         {
             _span = span;
         }

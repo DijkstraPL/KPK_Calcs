@@ -10,10 +10,11 @@ using BeamStatica.Beams;
 using BeamStatica.Spans.Interfaces;
 using BeamStatica.Loads.Interfaces;
 using BeamStatica.Loads.ContinousLoads;
+using BeamStatica.Beams.Interfaces;
 
 namespace BeamStatica.Results.OnSpan
 {
-    class VerticalDeflectionResult : IGetResult
+    public class VerticalDeflectionResult : IGetResult
     {
         private const double _nextToNodePosition = 0.00000001;
 
@@ -23,9 +24,9 @@ namespace BeamStatica.Results.OnSpan
 
         private double _spanDeflection;
 
-        private readonly Beam _beam;
+        private readonly IBeam _beam;
 
-        public VerticalDeflectionResult(Beam beam)
+        public VerticalDeflectionResult(IBeam beam)
         {
             _beam = beam ?? throw new ArgumentNullException(nameof(beam));
         }
@@ -115,12 +116,12 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromShearForcesPointLoads(ISpan span)
         {
-            foreach (var load in span.PointLoads.Where(pl => pl is ShearLoad))
+            foreach (var load in span.PointLoads)
             {
                 if (_distanceFromLeftSide - _currentLength <= load.Position)
                     continue;
 
-                _spanDeflection += load.Value
+                _spanDeflection += load.CalculateShear()
                     * (_distanceFromLeftSide - _currentLength - load.Position)
                     * (_distanceFromLeftSide - _currentLength - load.Position) / 2
                     * (_distanceFromLeftSide - _currentLength - load.Position) / 3
@@ -130,12 +131,12 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromBendingMomentPointLoads(ISpan span)
         {
-            foreach (var load in span.PointLoads.Where(pl => pl is BendingMoment))
+            foreach (var load in span.PointLoads)
             {
                 if (_distanceFromLeftSide - _currentLength <= load.Position)
                     continue;
 
-                _spanDeflection += load.Value
+                _spanDeflection += load.CalculateBendingMoment(0)
                     * (_distanceFromLeftSide - _currentLength - load.Position)
                     * (_distanceFromLeftSide - _currentLength - load.Position) / 2
                     / (span.Material.YoungModulus * span.Section.MomentOfInteria);
@@ -150,7 +151,7 @@ namespace BeamStatica.Results.OnSpan
                 * (_distanceFromLeftSide - _currentLength) / 3
                 ?? 0)
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-            _spanDeflection += span.LeftNode.ConcentratedForces.Where(cf => cf is ShearLoad).Sum(cf => cf.Value)
+            _spanDeflection += span.LeftNode.ConcentratedForces.Sum(cf => cf.CalculateShear())
                 * (_distanceFromLeftSide - _currentLength)
                 * (_distanceFromLeftSide - _currentLength) / 2
                 * (_distanceFromLeftSide - _currentLength) / 3
@@ -159,8 +160,8 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromVerticalDisplacements(ISpan span)
         {
-            _spanDeflection += span.LeftNode.ConcentratedForces
-                .Where(cf => cf is VerticalDisplacement).Sum(cf => cf.Value) / 100000;
+            _spanDeflection += span.LeftNode.ConcentratedForces.Sum(cf 
+                => cf.CalculateVerticalDisplacement()) / 100000;
         }
 
         private void CalculateDeflectionFromMomentForces(ISpan span)
@@ -169,7 +170,7 @@ namespace BeamStatica.Results.OnSpan
                 * (_distanceFromLeftSide - _currentLength)
                 * (_distanceFromLeftSide - _currentLength) / 2 ?? 0)
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
-            _spanDeflection += span.LeftNode.ConcentratedForces.Where(cf => cf is BendingMoment).Sum(cf => cf.Value) *
+            _spanDeflection += span.LeftNode.ConcentratedForces.Sum(cf => cf.CalculateBendingMoment(0)) *
                 (_distanceFromLeftSide - _currentLength) *
                 (_distanceFromLeftSide - _currentLength) / 2
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);

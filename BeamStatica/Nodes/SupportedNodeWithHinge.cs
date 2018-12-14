@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Nodes
 {
-    public sealed class SupportedNodeWithHinge : Node
+    public class SupportedNodeWithHinge : Node
     {
         public override short DegreesOfFreedom => 2;
 

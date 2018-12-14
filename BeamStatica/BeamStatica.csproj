@@ -75,6 +75,7 @@
     <Compile Include="Loads\Interfaces\INodeLoad.cs" />
     <Compile Include="Loads\Interfaces\ISpanLoad.cs" />
     <Compile Include="Loads\LoadData.cs" />
+    <Compile Include="Loads\PointLoads\AngledLoad.cs" />
     <Compile Include="Loads\PointLoads\BendingMoment.cs" />
     <Compile Include="Loads\ContinousLoads\ContinousShearLoad.cs" />
     <Compile Include="Loads\PointLoads\ConcentratedLoad.cs" />

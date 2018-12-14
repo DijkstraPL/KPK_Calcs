@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Nodes
 {
-    public sealed class FixedNode : Node
+    public class FixedNode : Node
     {
         public override short DegreesOfFreedom => 0;
 

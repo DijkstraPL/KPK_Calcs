@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Results.Displacements
 {
-    public sealed class Rotation : Displacement
+    public class Rotation : Displacement
     {
     }
 }

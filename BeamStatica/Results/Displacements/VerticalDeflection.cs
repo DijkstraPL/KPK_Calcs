@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Results.Displacements
 {
-    public sealed class VerticalDeflection : Displacement
+    public class VerticalDeflection : Displacement
     {
     }
 }

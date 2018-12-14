@@ -21,5 +21,9 @@ namespace BeamStatica.Loads.PointLoads
         public virtual double CalculateShear() => 0;
         public virtual double CalculateBendingMoment(double distanceFromLoad) => 0;
         public virtual double CalculateVerticalDisplacement() => 0;
+
+        public virtual double CalculateJointLoadVectorNormalForceMember() => 0;
+        public virtual double CalculateJointLoadVectorShearMember() => 0;
+        public virtual double CalculateJointLoadVectorBendingMomentMember() => 0;
     }
 }
