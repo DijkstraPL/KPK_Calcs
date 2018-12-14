@@ -19,6 +19,6 @@ namespace BeamStatica.Loads.ContinousLoads.AlongTemperatureDifferenceResult
         public override double GetValue(ISpan span, double distanceFromLeftSide, double currentLength)
             => _material.ThermalExpansionCoefficient
                * (ContinousLoad.StartPosition.Value - ContinousLoad.EndPosition.Value)
-               * distanceFromLeftSide;
+               * (distanceFromLeftSide - currentLength);
     }
 }
