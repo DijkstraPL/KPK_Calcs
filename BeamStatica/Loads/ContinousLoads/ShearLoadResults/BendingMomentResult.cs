@@ -11,7 +11,7 @@ namespace BeamStatica.Loads.ContinousLoads.ShearLoadResults
 {
     public class BendingMomentResult : ForceResultBase
     {
-        public BendingMomentResult(ContinousLoad continousLoad) : base(continousLoad)
+        public BendingMomentResult(IContinousLoad continousLoad) : base(continousLoad)
         {
         }
 

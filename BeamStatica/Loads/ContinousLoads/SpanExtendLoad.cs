@@ -1,4 +1,4 @@
-﻿using BeamStatica.Loads.ContinousLoads.AlongTemperatureDifferenceResult;
+﻿using BeamStatica.Loads.ContinousLoads.SpanExtendLoadResult;
 using BeamStatica.Loads.Interfaces;
 using BeamStatica.Materials.Intefaces;
 using BeamStatica.Sections.Interfaces;
@@ -11,30 +11,29 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Loads.ContinousLoads
 {
-    public class AlongTemperatureDifferenceLoad : ContinousLoad
+    public class SpanExtendLoad : ContinousLoad
     {
-        public static IContinousLoad Create(ISpan span, double temperatureDifference)
+        public static IContinousLoad Create(ISpan span, double lengthIncrease)
         {
-            return new AlongTemperatureDifferenceLoad(
+            return new SpanExtendLoad(
                            new LoadData(0, 0),
-                           new LoadData(span.Length, temperatureDifference),
+                           new LoadData(span.Length, lengthIncrease),
                            span.Material);
         }
 
-        private AlongTemperatureDifferenceLoad(
+        private SpanExtendLoad(
             ILoadWithPosition startPosition, ILoadWithPosition endPosition,
             IMaterial material)
             : base(startPosition, endPosition)
         {
-            HorizontalDeflectionResult = new HorizontalDeflectionResult(this, material);
+            HorizontalDeflectionResult = new HorizontalDeflectionResult(this);
         }
-        
+
         public override double CalculateSpanLoadVectorNormalForceMember(ISpan span, bool leftNode)
         {
             double sign = leftNode ? 1.0 : -1.0;
-             return sign * span.Material.ThermalExpansionCoefficient 
-                * (EndPosition.Value - StartPosition.Value)
-                * span.Section.Area * span.Material.YoungModulus * 100;
+            return sign * (EndPosition.Value - StartPosition.Value) / span.Length
+               * span.Section.Area * span.Material.YoungModulus / 10;
         }
     }
 }

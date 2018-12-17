@@ -118,13 +118,13 @@ namespace BeamStatica.Spans
         public void SetDisplacement()
         {
             if (LeftNode.HorizontalDeflection != null)
-                LeftNode.HorizontalDeflection.Value = Displacements[0] * 100000; // mm
+                LeftNode.HorizontalDeflection.Value = Displacements[0] * 1000; // mm
             if (LeftNode.VerticalDeflection != null)
                 LeftNode.VerticalDeflection.Value = Displacements[1] * 1000; // mm
             if (LeftNode.RightRotation != null)
                 LeftNode.RightRotation.Value = Displacements[2];
             if (RightNode.HorizontalDeflection != null)
-                RightNode.HorizontalDeflection.Value = Displacements[3] * 100000; // mm
+                RightNode.HorizontalDeflection.Value = Displacements[3] * 1000; // mm
             if (RightNode.VerticalDeflection != null)
                 RightNode.VerticalDeflection.Value = Displacements[4] * 1000; // mm
             if (RightNode.LeftRotation != null)

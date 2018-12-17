@@ -1,5 +1,6 @@
 ﻿using BeamStatica;
 using BeamStatica.Beams;
+using BeamStatica.Beams.Interfaces;
 using BeamStatica.Loads;
 using BeamStatica.Loads.ContinousLoads;
 using BeamStatica.Loads.PointLoads;
@@ -14,7 +15,7 @@ namespace BeamStaticaTests.BeamsTests
     [TestFixture]
     public class BeamPerformanceTests
     {
-        private Beam _beam;
+        private IBeam _beam;
 
         [Test]
         [Timeout(300)]      

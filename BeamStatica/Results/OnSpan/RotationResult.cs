@@ -109,8 +109,15 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateRotationFromPointLoads(ISpan span)
         {
+            CalculateRotationFromRotationDisplacements(span);
             CalculateRotationFromShearForcesPointLoads(span);
             CalculateRotationFromBendingMomentPointLoads(span);
+        }
+
+        private void CalculateRotationFromRotationDisplacements(ISpan span)
+        {
+            _spanRotation += span.LeftNode.ConcentratedForces.Sum(cf
+                => cf.CalculateRotationDisplacement()) / 100;
         }
 
         private void CalculateRotationFromShearForcesPointLoads(ISpan span)

@@ -4,7 +4,6 @@ using BeamStatica.Spans.Interfaces;
 
 namespace BeamStatica.Loads.ContinousLoads.UpDownTemperatureDifferenceResults
 {
-
     public class RotationResult : DisplacementResultBase
     {
         public RotationResult(IContinousLoad continousLoad) : base(continousLoad)

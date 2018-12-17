@@ -140,7 +140,7 @@ namespace BeamStatica.Beams
         {
             int numberOfReactions = Spans.Count * 3 + 3 - NumberOfDegreesOfFreedom;
 
-            numberOfReactions += Nodes.Count(n => n is Hinge); // HAACK: Check if needed
+            numberOfReactions += Nodes.Count(n => n is Hinge); // HACK: Check if needed
 
             for (int i = NumberOfDegreesOfFreedom; i < numberOfReactions + NumberOfDegreesOfFreedom; i++)
             {

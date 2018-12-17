@@ -41,7 +41,7 @@ namespace BeamStatica.Sections
 
         protected override void CalculateArea()
         {
-            Area = Width * Height;
+            Area = Width * Height / 100;
         }
 
         protected override void CalculateCentroid()

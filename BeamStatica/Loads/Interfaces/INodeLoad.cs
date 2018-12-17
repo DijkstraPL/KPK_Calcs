@@ -13,7 +13,10 @@ namespace BeamStatica.Loads.Interfaces
         double CalculateNormalForce();
         double CalculateShear();
         double CalculateBendingMoment(double distanceFromLoad);
+
+        double CalculateHorizontalDisplacement();
         double CalculateVerticalDisplacement();
+        double CalculateRotationDisplacement();
 
         double CalculateJointLoadVectorNormalForceMember();
         double CalculateJointLoadVectorShearMember();

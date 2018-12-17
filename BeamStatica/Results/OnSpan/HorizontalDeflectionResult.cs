@@ -40,7 +40,7 @@ namespace BeamStatica.Results.OnSpan
 
             CalculateDeflection();
 
-            _spanDeflection *= 1000;
+            _spanDeflection *= 10;
             Result.Value += _spanDeflection;
 
             return Result;
@@ -75,7 +75,7 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromCalculatedForcesAndDisplacements(ISpan span)
         {
-            _spanDeflection += span.LeftNode.HorizontalDeflection?.Value / 1000 ?? 0;
+            _spanDeflection += span.LeftNode.HorizontalDeflection?.Value / 10 ?? 0;
 
             if (_currentLength != 0)
             {
@@ -98,6 +98,18 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromPointLoads(ISpan span)
         {
+            CalculateDeflectionFromHorizontalDisplacements(span);
+            CalculateDeflectionFromNormalForcesPointLoads(span);
+        }
+
+        private void CalculateDeflectionFromHorizontalDisplacements(ISpan span)
+        {
+            _spanDeflection += span.LeftNode.ConcentratedForces.Sum(cf
+                => cf.CalculateHorizontalDisplacement()) / 10;
+        }
+
+        private void CalculateDeflectionFromNormalForcesPointLoads(ISpan span)
+        {
             foreach (var load in span.PointLoads)
             {
                 if (_distanceFromLeftSide - _currentLength <= load.Position)
@@ -108,7 +120,7 @@ namespace BeamStatica.Results.OnSpan
                     / (span.Material.YoungModulus * span.Section.Area);
             }
         }
-
+        
         private void CalculateDeflectionFromNormalForces(ISpan span)
         {
             _spanDeflection -= (span.LeftNode.NormalForce?.Value

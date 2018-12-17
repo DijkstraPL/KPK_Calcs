@@ -34,6 +34,5 @@ namespace BeamStatica.Loads.PointLoads
             return sign * 6 * span.Material.YoungModulus * span.Section.MomentOfInteria * Value
                 / Math.Pow(span.Length, 2) / 100000; // kNm
         }
-
     }
 }

@@ -64,8 +64,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BeamsTests\BeamPerformanceTests.cs" />
+    <Compile Include="BeamsTests\BeamWithSpanExtendsLoadsTests.cs" />
+    <Compile Include="BeamsTests\BeamWithContinousAngledLoadsTests.cs" />
+    <Compile Include="BeamsTests\BeamWithAngledLoads3Tests.cs" />
     <Compile Include="BeamsTests\BeamWithAngledLoads2Tests.cs" />
     <Compile Include="BeamsTests\BeamWithAngledLoads1Tests.cs" />
+    <Compile Include="BeamsTests\BeamWithHorizontalContinousLoadTests.cs" />
+    <Compile Include="BeamsTests\BeamWithRotationDisplacementAtNodeTests.cs" />
+    <Compile Include="BeamsTests\BeamWithHorizontalDisplacementAtNodeTests.cs" />
     <Compile Include="BeamsTests\BeamWithSupportWithHingeTests.cs" />
     <Compile Include="BeamsTests\BeamWithPointBendingMomentLoadTests.cs" />
     <Compile Include="BeamsTests\BeamWithMultipleSpansTests.cs" />

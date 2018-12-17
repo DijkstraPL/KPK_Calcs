@@ -109,6 +109,7 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateDeflectionFromPointLoads(ISpan span)
         {
+            CalculateRotationFromRotationDisplacements(span);
             CalculateDeflectionFromVerticalDisplacements(span);
             CalculateDeflectionFromShearForcesPointLoads(span);
             CalculateDeflectionFromBendingMomentPointLoads(span);
@@ -156,6 +157,12 @@ namespace BeamStatica.Results.OnSpan
                 * (_distanceFromLeftSide - _currentLength) / 2
                 * (_distanceFromLeftSide - _currentLength) / 3
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
+        }
+
+        private void CalculateRotationFromRotationDisplacements(ISpan span)
+        {
+            _spanDeflection += span.LeftNode.ConcentratedForces.Sum(cf
+                => cf.CalculateRotationDisplacement()) * (_distanceFromLeftSide - _currentLength) / 100;
         }
 
         private void CalculateDeflectionFromVerticalDisplacements(ISpan span)
