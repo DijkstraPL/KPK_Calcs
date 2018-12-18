@@ -1,5 +1,4 @@
-﻿using BeamStatica.Nodes;
-using BeamStatica.Spans.Interfaces;
+﻿using BeamStatica.Spans.Interfaces;
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,7 @@ namespace BeamStatica.Spans
         public Matrix<double> Matrix { get; private set; }
         public int Size { get; private set; }
 
+        private Matrix<double> _transformationMatrix;
         private readonly ISpan _span;
 
         public StiffnessMatrix(ISpan span)
@@ -23,7 +23,7 @@ namespace BeamStatica.Spans
         {
             CalculateStiffnessMatrixForGeneralBeam();
         }
-              
+        
         private void CalculateStiffnessMatrixForGeneralBeam()
         {
             var horizontalValue = _span.Section.Area * _span.Material.YoungModulus / _span.Length * 100; // kN
@@ -38,6 +38,9 @@ namespace BeamStatica.Spans
 
             SetSize();
             SetMatrix();
+
+            if (_span.LeftNode.Angle != 0 || _span.RightNode.Angle != 0)
+                AdjustMatrix();
         }
 
         private void SetLeftNodeHorizontalMovementColumn(double horizontalValue)
@@ -79,7 +82,7 @@ namespace BeamStatica.Spans
             MatrixOfPositions.Add(new StiffnessMatrixPosition(0, _span.RightNode.HorizontalMovementNumber, _span.RightNode.VerticalMovementNumber));
             MatrixOfPositions.Add(new StiffnessMatrixPosition(0, _span.RightNode.HorizontalMovementNumber, _span.RightNode.LeftRotationNumber));
         }
-        
+
         private void SetRightNodeVerticalMovementColumn(double verticalValue)
         {
             MatrixOfPositions.Add(new StiffnessMatrixPosition(0, _span.RightNode.VerticalMovementNumber, _span.LeftNode.HorizontalMovementNumber));
@@ -89,7 +92,7 @@ namespace BeamStatica.Spans
             MatrixOfPositions.Add(new StiffnessMatrixPosition(verticalValue * 12, _span.RightNode.VerticalMovementNumber, _span.RightNode.VerticalMovementNumber));
             MatrixOfPositions.Add(new StiffnessMatrixPosition(verticalValue * -6 * _span.Length, _span.RightNode.VerticalMovementNumber, _span.RightNode.LeftRotationNumber));
         }
-        
+
         private void SetRightNodeLeftRotationColumn(double verticalValue)
         {
             MatrixOfPositions.Add(new StiffnessMatrixPosition(0, _span.RightNode.LeftRotationNumber, _span.LeftNode.HorizontalMovementNumber));
@@ -106,7 +109,7 @@ namespace BeamStatica.Spans
         }
 
         private void SetMatrix()
-        {           
+        {
             Matrix = Matrix<double>.Build.Dense(Size, Size);
 
             int i = 0;
@@ -114,6 +117,46 @@ namespace BeamStatica.Spans
             foreach (var position in MatrixOfPositions)
             {
                 Matrix[j, i] = position.Value;
+                i++;
+                if (i % Size == 0)
+                {
+                    j++;
+                    i = 0;
+                }
+            }
+        }
+
+        private void AdjustMatrix()
+        {
+            CalculateTransformationMatrix();
+            Matrix = _transformationMatrix.Multiply(Matrix).Multiply(_transformationMatrix.Transpose());
+            SetAdjustedMatrix();
+        }
+
+        private void CalculateTransformationMatrix()
+        {
+            _transformationMatrix = Matrix<double>.Build.Dense(Size, Size);
+            double leftAngle = _span.LeftNode.Angle * Math.PI / 180;
+            double rightAngle = _span.RightNode.Angle * Math.PI / 180;
+            _transformationMatrix[0, 0] = Math.Cos(leftAngle);
+            _transformationMatrix[0, 1] = -Math.Sin(leftAngle);
+            _transformationMatrix[1, 0] = Math.Sin(leftAngle);
+            _transformationMatrix[1, 1] = Math.Cos(leftAngle);
+            _transformationMatrix[2, 2] = 1;
+            _transformationMatrix[3, 3] = Math.Cos(rightAngle);
+            _transformationMatrix[3, 4] = -Math.Sin(rightAngle);
+            _transformationMatrix[4, 3] = Math.Sin(rightAngle);
+            _transformationMatrix[4, 4] = Math.Cos(rightAngle);
+            _transformationMatrix[5, 5] = 1;
+        }
+
+        private void SetAdjustedMatrix()
+        {
+            int i = 0;
+            int j = 0;
+            foreach (var position in MatrixOfPositions)
+            {
+                position.Value = Matrix[j, i];
                 i++;
                 if (i % Size == 0)
                 {

@@ -11,9 +11,9 @@ namespace BeamStatica.Beams
         public Matrix<double> Matrix { get; private set; }
         public Matrix<double> InversedMatrix => Matrix.Inverse();
 
-        private readonly Beam _beam;
+        private readonly IBeam _beam;
 
-        public GlobalStiffnessMatrix(Beam beam)
+        public GlobalStiffnessMatrix(IBeam beam)
         {
             _beam = beam ?? throw new ArgumentNullException(nameof(beam));
         }

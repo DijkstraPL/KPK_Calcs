@@ -10,6 +10,6 @@ namespace BeamStatica.Spans.Interfaces
     {
         short RowNumber { get; }
         short ColumnNumber { get; }
-        double Value { get; }
+        double Value { get; set; }
     }
 }

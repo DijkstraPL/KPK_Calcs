@@ -56,6 +56,9 @@
     <Compile Include="Beams\Interfaces\IResultProvider.cs" />
     <Compile Include="Loads\ContinousLoads\AlongTemperatureDifferenceLoad.cs" />
     <Compile Include="Loads\ContinousLoads\AlongTemperatureDifferenceResult\HorizontalDeflectionResult.cs" />
+    <Compile Include="Loads\ContinousLoads\BendingMomentLoadResults\BendingMomentResult.cs" />
+    <Compile Include="Loads\ContinousLoads\BendingMomentLoadResults\RotationResult.cs" />
+    <Compile Include="Loads\ContinousLoads\BendingMomentLoadResults\VerticalDeflectionResult.cs" />
     <Compile Include="Loads\ContinousLoads\ContinousAngledLoad.cs" />
     <Compile Include="Loads\ContinousLoads\ContinousBendingMomentLoad.cs" />
     <Compile Include="Loads\ContinousLoads\ContinousLoad.cs" />

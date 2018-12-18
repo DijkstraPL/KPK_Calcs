@@ -11,6 +11,7 @@ namespace BeamStatica.Beams.Interfaces
     {
         double Length { get; }
         IList<ISpan> Spans { get; }
+        short NumberOfDegreesOfFreedom { get; }
 
         void Calculate();
     }

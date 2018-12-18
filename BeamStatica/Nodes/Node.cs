@@ -13,6 +13,8 @@ namespace BeamStatica.Nodes
 {
     public abstract class Node : INode
     {
+        public double Angle { get; protected set; } 
+
         public short HorizontalMovementNumber { get; protected set; }
         public short VerticalMovementNumber { get; protected set; }
         public short LeftRotationNumber { get; protected set; }

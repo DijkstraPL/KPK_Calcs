@@ -54,48 +54,39 @@ namespace BeamStatica.Spans
         {
             LoadVector = Vector<double>.Build.Dense(StiffnessMatrix.Size);
 
-            LoadVector[0] = ContinousLoads.Sum(cl => cl.CalculateSpanLoadVectorNormalForceMember(this, leftNode: true)) +
-                PointLoads.Sum(pl => pl.CalculateSpanLoadVectorNormalForceMember(this, leftNode: true)) +
-                LeftNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorNormalForceMember(this, leftNode: true) ?? 0) +
-                RightNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorNormalForceMember(this, leftNode: true) ?? 0);
+            LoadVector[0] = SetNormalForceLoadVector(isLeftNode: true);
+            LoadVector[1] = SetShearForceLoadVector(isLeftNode: true);
+            LoadVector[2] = SetBendingMomentForceLoadVector(isLeftNode: true);
 
-            LoadVector[1] = ContinousLoads.Sum(cl => cl.CalculateSpanLoadVectorShearMember(this, leftNode: true)) +
-                PointLoads.Sum(pl => pl.CalculateSpanLoadVectorShearMember(this, leftNode: true)) +
-                LeftNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorShearMember(this, leftNode: true) ?? 0) +
-                RightNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorShearMember(this, leftNode: true) ?? 0);
-
-            LoadVector[2] = ContinousLoads.Sum(cl => cl.CalculateSpanLoadVectorBendingMomentMember(this, leftNode: true)) +
-                PointLoads.Sum(pl => pl.CalculateSpanLoadBendingMomentMember(this, leftNode: true)) +
-                LeftNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadBendingMomentMember(this, leftNode: true) ?? 0) +
-                RightNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadBendingMomentMember(this, leftNode: true) ?? 0);
-
-            LoadVector[3] = ContinousLoads.Sum(cl => cl.CalculateSpanLoadVectorNormalForceMember(this, leftNode: false)) +
-                PointLoads.Sum(pl => pl.CalculateSpanLoadVectorNormalForceMember(this, leftNode: false)) +
-                LeftNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorNormalForceMember(this, leftNode: false) ?? 0) +
-                RightNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorNormalForceMember(this, leftNode: false) ?? 0);
-
-            LoadVector[4] = ContinousLoads.Sum(cl => cl.CalculateSpanLoadVectorShearMember(this, leftNode: false)) +
-               PointLoads.Sum(pl => pl.CalculateSpanLoadVectorShearMember(this, leftNode: false)) +
-                LeftNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorShearMember(this, leftNode: false) ?? 0) +
-                RightNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorShearMember(this, leftNode: false) ?? 0);
-
-            LoadVector[5] = ContinousLoads.Sum(cl => cl.CalculateSpanLoadVectorBendingMomentMember(this, leftNode: false)) +
-                PointLoads.Sum(pl => pl.CalculateSpanLoadBendingMomentMember(this, leftNode: false)) +
-                LeftNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadBendingMomentMember(this, leftNode: false) ?? 0) +
-                RightNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
-                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadBendingMomentMember(this, leftNode: false) ?? 0);
+            LoadVector[3] = SetNormalForceLoadVector(isLeftNode: false);
+            LoadVector[4] = SetShearForceLoadVector(isLeftNode: false);
+            LoadVector[5] = SetBendingMomentForceLoadVector(isLeftNode: false);
         }
+
+        private double SetNormalForceLoadVector(bool isLeftNode)
+            => ContinousLoads.Sum(cl => cl.CalculateSpanLoadVectorNormalForceMember(this, isLeftNode)) +
+                PointLoads.Sum(pl => pl.CalculateSpanLoadVectorNormalForceMember(this, isLeftNode)) +
+                LeftNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
+                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorNormalForceMember(this, isLeftNode) ?? 0) +
+                RightNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
+                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorNormalForceMember(this, isLeftNode) ?? 0);
+
+        private double SetShearForceLoadVector(bool isLeftNode)
+            => ContinousLoads.Sum(cl => cl.CalculateSpanLoadVectorShearMember(this, isLeftNode)) +
+                PointLoads.Sum(pl => pl.CalculateSpanLoadVectorShearMember(this, isLeftNode)) +
+                LeftNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
+                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorShearMember(this, isLeftNode) ?? 0) +
+                RightNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
+                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadVectorShearMember(this, isLeftNode) ?? 0);
+
+        private double SetBendingMomentForceLoadVector(bool isLeftNode)
+            => ContinousLoads.Sum(cl => cl.CalculateSpanLoadVectorBendingMomentMember(this, isLeftNode)) +
+                PointLoads.Sum(pl => pl.CalculateSpanLoadBendingMomentMember(this, isLeftNode)) +
+                LeftNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
+                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadBendingMomentMember(this, isLeftNode) ?? 0) +
+                RightNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
+                .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadBendingMomentMember(this, isLeftNode) ?? 0);
+
 
         public void CalculateDisplacement(Vector<double> deflectionVector, int numberOfDegreesOfFreedom)
         {

@@ -11,6 +11,7 @@ using NUnit.Framework;
 namespace BeamStaticaTests.BeamsTests
 {
     [TestFixture(Description = "18.12.14-01")]
+    [Ignore("Not finished")]
     public class BeamWithAngledLoads1Tests
     {
         private Beam _beam;

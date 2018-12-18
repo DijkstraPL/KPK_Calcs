@@ -10,6 +10,7 @@ namespace BeamStatica.Nodes.Interfaces
     public interface INode : INormalForceProvider, IShearForceProvider, IBendingMomentProvider, 
         IDeflectionProvider, IRotationProvider, INumeration
     {
+        double Angle { get; }
         short DegreesOfFreedom { get; }
         ICollection<INodeLoad> ConcentratedForces { get; set; }
     }

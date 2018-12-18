@@ -32,7 +32,7 @@ namespace BeamStatica.Loads.ContinousLoads
         public override double CalculateSpanLoadVectorNormalForceMember(ISpan span, bool leftNode)
         {
             double sign = leftNode ? 1.0 : -1.0;
-            return sign * (EndPosition.Value - StartPosition.Value) / span.Length
+            return sign * (this.EndPosition.Value - this.StartPosition.Value) / span.Length
                * span.Section.Area * span.Material.YoungModulus / 10;
         }
     }

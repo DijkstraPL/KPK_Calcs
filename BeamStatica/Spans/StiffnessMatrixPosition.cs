@@ -6,7 +6,7 @@ namespace BeamStatica.Spans
     {
         public short RowNumber { get; }
         public short ColumnNumber { get; }
-        public double Value { get; }
+        public double Value { get; set;  }
 
         public StiffnessMatrixPosition(double value, short rowNumber, short columnNumber)
         {

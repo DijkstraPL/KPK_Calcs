@@ -17,16 +17,14 @@ namespace BeamStatica.Loads.ContinousLoads
         {
             return new AlongTemperatureDifferenceLoad(
                            new LoadData(0, 0),
-                           new LoadData(span.Length, temperatureDifference),
-                           span.Material);
+                           new LoadData(span.Length, temperatureDifference));
         }
 
         private AlongTemperatureDifferenceLoad(
-            ILoadWithPosition startPosition, ILoadWithPosition endPosition,
-            IMaterial material)
+            ILoadWithPosition startPosition, ILoadWithPosition endPosition)
             : base(startPosition, endPosition)
         {
-            HorizontalDeflectionResult = new HorizontalDeflectionResult(this, material);
+            HorizontalDeflectionResult = new HorizontalDeflectionResult(this);
         }
         
         public override double CalculateSpanLoadVectorNormalForceMember(ISpan span, bool leftNode)
