@@ -9,19 +9,17 @@ using System.Linq;
 
 namespace BeamStatica.Results.OnSpan
 {
-    public class RotationResult : IGetResult
+    public class RotationResult : Result
     {
         public IResultValue Result { get; private set; }
         private double _currentLength;
         private double _distanceFromLeftSide;
 
         private double _spanRotation;
-        private readonly IBeam _beam;
         private readonly bool _adjustRotation;
 
-        public RotationResult(IBeam beam)
+        public RotationResult(IBeam beam) : base(beam)
         {
-            _beam = beam ?? throw new ArgumentNullException(nameof(beam));
         }
 
         private RotationResult(IBeam beam, bool adjustRotation) : this(beam)
@@ -29,10 +27,10 @@ namespace BeamStatica.Results.OnSpan
             _adjustRotation = adjustRotation;
         }
 
-        public IResultValue GetValue(double distanceFromLeftSide)
+        protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
         {
             _distanceFromLeftSide = distanceFromLeftSide;
-            Result = new Rotation() { Value = 0 };
+            Result = new Rotation(_distanceFromLeftSide) { Value = 0 };
 
             _currentLength = 0;
 
@@ -50,7 +48,7 @@ namespace BeamStatica.Results.OnSpan
         private void CalculateRotation()
         {
             double calculatedLength = 0;
-            foreach (var span in _beam.Spans)
+            foreach (var span in Beam.Spans)
             {
                 calculatedLength += span.Length;
                 if (calculatedLength <= _distanceFromLeftSide &&
@@ -76,7 +74,7 @@ namespace BeamStatica.Results.OnSpan
         }
 
         private bool IsLastNode(ISpan span) =>
-            span == _beam.Spans.Last() && _distanceFromLeftSide == _beam.Length;
+            span == Beam.Spans.Last() && _distanceFromLeftSide == Beam.Length;
 
         private void CalculateRotationFromCalculatedForcesAndDisplacements(ISpan span)
         {
@@ -84,12 +82,12 @@ namespace BeamStatica.Results.OnSpan
 
             if (_currentLength != 0)
             {
-                _spanRotation += _beam.ShearResult.GetValue(_currentLength).Value
+                _spanRotation += Beam.ShearResult.GetValue(_currentLength).Value
                 * (_distanceFromLeftSide - _currentLength)
                 * (_distanceFromLeftSide - _currentLength) / 2
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
 
-                _spanRotation += _beam.BendingMomentResult.GetValue(_currentLength).Value
+                _spanRotation += Beam.BendingMomentResult.GetValue(_currentLength).Value
                     * (_distanceFromLeftSide - _currentLength)
                     / (span.Material.YoungModulus * span.Section.MomentOfInteria);
             }

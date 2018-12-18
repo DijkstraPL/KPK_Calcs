@@ -9,5 +9,6 @@ namespace BeamStatica.Results.Interfaces
     public interface IResultValue
     {
         double Value { get; set; }
+        double? Position { get; }
     }
 }

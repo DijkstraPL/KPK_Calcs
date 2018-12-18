@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Results.Displacements
 {
-   public  class HorizontalDeflection : Displacement
+    public class HorizontalDeflection : Displacement
     {
+        public HorizontalDeflection(double? position = null) : base(position)
+        {
+        }
     }
 }

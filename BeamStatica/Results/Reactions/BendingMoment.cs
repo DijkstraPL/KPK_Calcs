@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace BeamStatica.Results.Reactions
 {
-    public class BendingMoment  : Reaction
+    public class BendingMoment : Reaction
     {
+        public BendingMoment(double? position = null) : base(position)
+        {
+        }
     }
 }

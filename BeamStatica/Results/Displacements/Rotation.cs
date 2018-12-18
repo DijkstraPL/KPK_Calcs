@@ -9,5 +9,8 @@ namespace BeamStatica.Results.Displacements
 {
     public class Rotation : Displacement
     {
+        public Rotation(double? position = null) : base(position)
+        {
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BeamStatica.Results.Interfaces;
+﻿using BeamStatica.Beams.Interfaces;
+using BeamStatica.Results.Interfaces;
 using BeamStatica.Results.Reactions;
 using BeamStatica.Spans;
 using BeamStatica.Spans.Interfaces;
@@ -8,20 +9,18 @@ using System.Linq;
 
 namespace BeamStatica.Results.OnSpan
 {
-    public class ShearResult : IGetResult
+    public class ShearResult : Result
     {
         public IResultValue Result { get; private set; }
-        private IList<ISpan> _spans { get; }
         private double _currentLength;
 
-        public ShearResult(IList<ISpan> spans)
+        public ShearResult(IBeam beam) : base(beam)
         {
-            _spans = spans ?? throw new ArgumentNullException(nameof(spans));
         }
-        
-        public IResultValue GetValue(double distanceFromLeftSide)
+
+        protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
         {
-            Result = new ShearForce() { Value = 0 };
+            Result = new ShearForce(distanceFromLeftSide) { Value = 0 };
             _currentLength = 0;
 
             CalculateShear(distanceFromLeftSide);
@@ -31,7 +30,7 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateShear(double distanceFromLeftSide)
         {
-            foreach (var span in _spans)
+            foreach (var span in Spans)
             {
                 CalculateShearForceFromNodeForces(span);
                 CalculateShearFromContinousLoads(distanceFromLeftSide, span);

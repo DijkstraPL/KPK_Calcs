@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace BeamStatica.Results.OnSpan
 {
-    class HorizontalDeflectionResult : IGetResult
+    class HorizontalDeflectionResult : Result
     {
         private const double _nextToNodePosition = 0.00000001;
 
@@ -21,18 +21,15 @@ namespace BeamStatica.Results.OnSpan
         private double _distanceFromLeftSide;
 
         private double _spanDeflection;
-
-        private readonly IBeam _beam;
-
-        public HorizontalDeflectionResult(IBeam beam)
+        
+        public HorizontalDeflectionResult(IBeam beam) : base(beam)
         {
-            _beam = beam ?? throw new ArgumentNullException(nameof(beam));
         }
 
-        public IResultValue GetValue(double distanceFromLeftSide)
+        protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
         {
             _distanceFromLeftSide = distanceFromLeftSide;
-            Result = new Rotation() { Value = 0 };
+            Result = new Rotation(distanceFromLeftSide) { Value = 0 };
 
             _currentLength = 0;
 
@@ -49,7 +46,7 @@ namespace BeamStatica.Results.OnSpan
         private void CalculateDeflection()
         {
             double calculatedLength = 0;
-            foreach (var span in _beam.Spans)
+            foreach (var span in Beam.Spans)
             {
                 calculatedLength += span.Length;
                 if (calculatedLength <= _distanceFromLeftSide &&
@@ -71,7 +68,7 @@ namespace BeamStatica.Results.OnSpan
         }
 
         private bool IsLastNode(ISpan span) =>
-            span == _beam.Spans.Last() && _distanceFromLeftSide == _beam.Length;
+            span == Beam.Spans.Last() && _distanceFromLeftSide == Beam.Length;
 
         private void CalculateDeflectionFromCalculatedForcesAndDisplacements(ISpan span)
         {
@@ -79,7 +76,7 @@ namespace BeamStatica.Results.OnSpan
 
             if (_currentLength != 0)
             {
-                _spanDeflection -= _beam.NormalForceResult.GetValue(_currentLength).Value
+                _spanDeflection -= Beam.NormalForceResult.GetValue(_currentLength).Value
                     * (_distanceFromLeftSide - _currentLength)
                     / (span.Material.YoungModulus * span.Section.Area);
             }

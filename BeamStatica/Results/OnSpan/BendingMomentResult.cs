@@ -1,4 +1,5 @@
-﻿using BeamStatica.Results.Interfaces;
+﻿using BeamStatica.Beams.Interfaces;
+using BeamStatica.Results.Interfaces;
 using BeamStatica.Spans;
 using BeamStatica.Spans.Interfaces;
 using System;
@@ -7,20 +8,19 @@ using System.Linq;
 
 namespace BeamStatica.Results.OnSpan
 {
-    public class BendingMomentResult : IGetResult
+    public class BendingMomentResult : Result
     {
         public IResultValue Result { get; private set; }
-        private IList<ISpan> _spans { get; }
+
         private double _currentLength;
 
-        public BendingMomentResult(IList<ISpan> spans)
+        public BendingMomentResult(IBeam beam) : base(beam)
         {
-            _spans = spans ?? throw new ArgumentNullException(nameof(spans));
         }
-
-        public IResultValue GetValue(double distanceFromLeftSide)
+        
+        protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
         {
-            Result = new Reactions.BendingMoment() { Value = 0 };
+            Result = new Reactions.BendingMoment(distanceFromLeftSide) { Value = 0 };
             _currentLength = 0;
             CalculateBendingMoment(distanceFromLeftSide);
 
@@ -29,7 +29,7 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateBendingMoment(double distanceFromLeftSide)
         {
-            foreach (var span in _spans)
+            foreach (var span in Spans)
             {
                 CalculateBendingMomentFromNodeForces(distanceFromLeftSide, span);
                 CalculateBendingMomentFromContinousLoads(distanceFromLeftSide, span);
@@ -60,6 +60,6 @@ namespace BeamStatica.Results.OnSpan
             foreach (var load in span.PointLoads)
                 if (distanceFromLeftSide > load.Position + _currentLength)                    
                     Result.Value += load.CalculateBendingMoment(distanceFromLeftSide - load.Position - _currentLength);            
-        }     
+        }
     }
 }

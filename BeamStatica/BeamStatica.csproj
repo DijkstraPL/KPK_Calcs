@@ -120,6 +120,7 @@
     <Compile Include="Results\Interfaces\IGetResult.cs" />
     <Compile Include="Results\OnSpan\BendingMomentResult.cs" />
     <Compile Include="Results\OnSpan\HorizontalDeflectionResult.cs" />
+    <Compile Include="Results\OnSpan\Result.cs" />
     <Compile Include="Results\OnSpan\VerticalDeflectionResult.cs" />
     <Compile Include="Results\OnSpan\NormalForceResult.cs" />
     <Compile Include="Results\OnSpan\RotationResult.cs" />

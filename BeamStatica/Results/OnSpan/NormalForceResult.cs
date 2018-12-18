@@ -1,4 +1,5 @@
-﻿using BeamStatica.Results.Interfaces;
+﻿using BeamStatica.Beams.Interfaces;
+using BeamStatica.Results.Interfaces;
 using BeamStatica.Results.Reactions;
 using BeamStatica.Spans;
 using BeamStatica.Spans.Interfaces;
@@ -8,20 +9,18 @@ using System.Linq;
 
 namespace BeamStatica.Results.OnSpan
 {
-    public class NormalForceResult : IGetResult
+    public class NormalForceResult : Result
     {
         public IResultValue Result { get; private set; }
-        private IList<ISpan> _spans;
         private double _currentLength;
 
-        public NormalForceResult(IList<ISpan> spans)
+        public NormalForceResult(IBeam beam) : base(beam)
         {
-            _spans = spans ?? throw new ArgumentNullException(nameof(spans));
         }
 
-        public IResultValue GetValue(double distanceFromLeftSide)
+        protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
         {
-            Result = new NormalForce() { Value = 0 };
+            Result = new NormalForce(distanceFromLeftSide) { Value = 0 };
             _currentLength = 0;
 
             CalculateNormalForce(distanceFromLeftSide);
@@ -31,7 +30,7 @@ namespace BeamStatica.Results.OnSpan
 
         private void CalculateNormalForce(double distanceFromLeftSide)
         {
-            foreach (var span in _spans)
+            foreach (var span in Spans)
             {
                 CalculateNormalForceFromNodeForces(span);
                 CalculateNormalForceFromContinousLoads(distanceFromLeftSide, span);

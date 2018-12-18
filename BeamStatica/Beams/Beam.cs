@@ -42,9 +42,9 @@ namespace BeamStatica.Beams
             Nodes = nodes ?? throw new ArgumentNullException(nameof(nodes));
 
             GlobalStiffnessMatrix = new GlobalStiffnessMatrix(this);
-            NormalForceResult = new NormalForceResult(Spans);
-            ShearResult = new ShearResult(Spans);
-            BendingMomentResult = new BendingMomentResult(Spans);
+            NormalForceResult = new NormalForceResult(this);
+            ShearResult = new ShearResult(this);
+            BendingMomentResult = new BendingMomentResult(this);
             HorizontalDeflectionResult = new HorizontalDeflectionResult(this);
             VerticalDeflectionResult = new VerticalDeflectionResult(this);
             RotationResult = new RotationResult(this);

@@ -193,6 +193,78 @@ namespace BeamStaticaTests.BeamsTests
 
             Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }
+
+        [Test()]
+        public void CheckMaxNormalForce_Successful()
+        {
+            var result = _beam.NormalForceResult.GetMaxValue();
+
+            Assert.That(result.Value, Is.EqualTo(140.259).Within(0.001), message: $"At {result.Position}m.");
+            Assert.That(result.Position, Is.EqualTo(15.01).Within(0.001), message: $"At {result.Position}m.");
+        }
+
+        [Test()]
+        public void CheckMinNormalForce_Successful()
+        {
+            var result = _beam.NormalForceResult.GetMinValue();
+
+            Assert.That(result.Value, Is.EqualTo(-124.367).Within(0.001), message: $"At {result.Position}m.");
+            Assert.That(result.Position, Is.EqualTo(0).Within(0.001), message: $"At {result.Position}m.");
+        }
+
+        [Test()]
+        public void CheckMaxShear_Successful()
+        {
+            var result = _beam.ShearResult.GetMaxValue();
+
+            Assert.That(result.Value, Is.EqualTo(62.014).Within(0.001), message: $"At {result.Position}m.");
+            Assert.That(result.Position, Is.EqualTo(10.01).Within(0.001), message: $"At {result.Position}m.");
+        }
+
+        [Test()]
+        public void CheckMinShear_Successful()
+        {
+            var result = _beam.ShearResult.GetMinValue();
+
+            Assert.That(result.Value, Is.EqualTo(-91.220).Within(0.001), message: $"At {result.Position}m.");
+            Assert.That(result.Position, Is.EqualTo(5.01).Within(0.001), message: $"At {result.Position}m.");
+        }
+
+        [Test()]
+        public void CheckMaxBendingMoment_Successful()
+        {
+            var result = _beam.BendingMomentResult.GetMaxValue();
+
+            Assert.That(result.Value, Is.EqualTo(251.006).Within(0.001), message: $"At {result.Position}m.");
+            Assert.That(result.Position, Is.EqualTo(5).Within(0.001), message: $"At {result.Position}m.");
+        }
+
+        [Test()]
+        public void CheckMinBendingMoment_Successful()
+        {
+            var result = _beam.BendingMomentResult.GetMinValue();
+
+            Assert.That(result.Value, Is.EqualTo(-205.094).Within(0.001), message: $"At {result.Position}m.");
+            Assert.That(result.Position, Is.EqualTo(10).Within(0.001), message: $"At {result.Position}m.");
+        }
+
+        [Test()]
+        public void CheckMaxVerticalDisplacement_Successful()
+        {
+            var result = _beam.VerticalDeflectionResult.GetMaxValue();
+
+            Assert.That(result.Value, Is.EqualTo(1.178).Within(0.001), message: $"At {result.Position}m.");
+            Assert.That(result.Position, Is.EqualTo(11.19).Within(0.001), message: $"At {result.Position}m.");
+        }
+
+        [Test()]
+        public void CheckMinVerticalDisplacement_Successful()
+        {
+            var result = _beam.VerticalDeflectionResult.GetMinValue();
+
+            Assert.That(result.Value, Is.EqualTo(-17.913).Within(0.001), message: $"At {result.Position}m.");
+            Assert.That(result.Position, Is.EqualTo(4.65).Within(0.001), message: $"At {result.Position}m.");
+        }
     }
 }
 
