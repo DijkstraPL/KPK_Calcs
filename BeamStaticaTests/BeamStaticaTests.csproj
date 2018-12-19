@@ -144,12 +144,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BeamStatica\BeamStatica.csproj">
-      <Project>{5BA4928E-A4D5-4B5E-A8CC-95EE66ADEADC}</Project>
-      <Name>BeamStatica</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="UnitTests\Loads\PointLoads\" />
   </ItemGroup>
   <Choose>
