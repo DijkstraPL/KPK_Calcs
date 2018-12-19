@@ -1,13 +1,7 @@
-﻿using Build_IT_BeamStatica.Beams;
-using Build_IT_BeamStatica.Beams.Interfaces;
-using Build_IT_BeamStatica.Loads.ContinousLoads;
-using Build_IT_BeamStatica.Loads.PointLoads;
-using Build_IT_BeamStatica.Nodes;
+﻿using Build_IT_BeamStatica.Beams.Interfaces;
 using Build_IT_BeamStatica.Results.Displacements;
 using Build_IT_BeamStatica.Results.Interfaces;
-using Build_IT_BeamStatica.Spans;
 using Build_IT_BeamStatica.Spans.Interfaces;
-using System;
 using System.Linq;
 
 namespace Build_IT_BeamStatica.Results.OnSpan

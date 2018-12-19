@@ -1,5 +1,4 @@
-﻿using Build_IT_BeamStatica;
-using Build_IT_BeamStatica.Beams;
+﻿using Build_IT_BeamStatica.Beams;
 using Build_IT_BeamStatica.Beams.Interfaces;
 using Build_IT_BeamStatica.Loads;
 using Build_IT_BeamStatica.Loads.ContinousLoads;

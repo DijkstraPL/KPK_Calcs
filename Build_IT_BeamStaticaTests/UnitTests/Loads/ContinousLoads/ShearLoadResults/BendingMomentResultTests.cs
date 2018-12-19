@@ -1,12 +1,7 @@
-﻿using Moq;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults;
+﻿using Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults;
 using Build_IT_BeamStatica.Loads.Interfaces;
+using Moq;
+using NUnit.Framework;
 
 namespace Build_IT_BeamStaticaTests.UnitTests.Loads.ContinousLoads.ShearLoadResults
 {

@@ -1,10 +1,8 @@
 ﻿using Build_IT_BeamStatica.Beams.Interfaces;
-using Build_IT_BeamStatica.Loads.PointLoads;
 using Build_IT_BeamStatica.Nodes;
 using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Results.Interfaces;
 using Build_IT_BeamStatica.Results.OnSpan;
-using Build_IT_BeamStatica.Spans;
 using Build_IT_BeamStatica.Spans.Interfaces;
 using MathNet.Numerics.LinearAlgebra;
 using System;

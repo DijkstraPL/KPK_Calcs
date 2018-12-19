@@ -1,7 +1,4 @@
-﻿using Build_IT_BeamStatica;
-using Build_IT_BeamStatica.Beams;
-using Build_IT_BeamStatica.Loads;
-using Build_IT_BeamStatica.Loads.ContinousLoads;
+﻿using Build_IT_BeamStatica.Beams;
 using Build_IT_BeamStatica.Loads.PointLoads;
 using Build_IT_BeamStatica.Materials;
 using Build_IT_BeamStatica.Nodes;

@@ -1,9 +1,6 @@
 ﻿using Build_IT_BeamStatica.Beams.Interfaces;
 using Build_IT_BeamStatica.Results.Interfaces;
-using Build_IT_BeamStatica.Spans;
 using Build_IT_BeamStatica.Spans.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Build_IT_BeamStatica.Results.OnSpan

@@ -1,6 +1,5 @@
 ﻿using Build_IT_BeamStatica.Loads.ContinousLoads.LoadResults;
 using Build_IT_BeamStatica.Loads.Interfaces;
-using Build_IT_BeamStatica.Materials.Intefaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads.AlongTemperatureDifferenceResult

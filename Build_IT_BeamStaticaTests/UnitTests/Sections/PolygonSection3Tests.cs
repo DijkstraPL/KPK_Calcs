@@ -1,12 +1,8 @@
 ﻿using Build_IT_BeamStatica.Sections;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using Build_IT_BeamStatica.Sections.Additional;
 using Build_IT_BeamStatica.Sections.Additional.Interfaces;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace BeamStaticaTests.UnitTests.Sections
 {

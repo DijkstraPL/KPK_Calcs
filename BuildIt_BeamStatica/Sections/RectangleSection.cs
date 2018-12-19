@@ -1,7 +1,6 @@
 ﻿using Build_IT_BeamStatica.Sections.Additional;
-using System;
-using System.Collections.Generic;
 using Build_IT_Tools;
+using System;
 
 namespace Build_IT_BeamStatica.Sections
 {

@@ -1,10 +1,4 @@
-﻿using Build_IT_BeamStatica.Loads.Interfaces;
-using Build_IT_BeamStatica.Spans.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.PointLoads
 {

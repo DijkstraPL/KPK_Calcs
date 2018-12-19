@@ -1,5 +1,4 @@
 ﻿using Build_IT_BeamStatica.Spans.Interfaces;
-using System;
 
 namespace Build_IT_BeamStatica.Loads.PointLoads
 {

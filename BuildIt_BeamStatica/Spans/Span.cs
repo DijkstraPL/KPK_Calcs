@@ -1,7 +1,5 @@
-﻿using Build_IT_BeamStatica.Loads.ContinousLoads;
-using Build_IT_BeamStatica.Loads.Interfaces;
+﻿using Build_IT_BeamStatica.Loads.Interfaces;
 using Build_IT_BeamStatica.Materials.Intefaces;
-using Build_IT_BeamStatica.Nodes;
 using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Sections.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
