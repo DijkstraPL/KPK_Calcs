@@ -10,7 +10,7 @@ using BeamStatica.Loads.Interfaces;
 using BeamStatica.Loads.ContinousLoads.UpDownTemperatureDifferenceResults;
 using BeamStatica.Spans.Interfaces;
 
-namespace BeamStatica.UnitTests.Loads.ContinousLoads.UpDownTemperatureDifferenceResults
+namespace BeamStaticaTests.UnitTests.Loads.ContinousLoads.UpDownTemperatureDifferenceResults
 {
     [TestFixture()]
     public class RotationResultTests

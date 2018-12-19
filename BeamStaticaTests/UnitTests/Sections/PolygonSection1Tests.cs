@@ -8,7 +8,7 @@ using NUnit.Framework;
 using BeamStatica.Sections.Additional;
 using BeamStatica.Sections.Additional.Interfaces;
 
-namespace BeamStatica.UnitTests.Sections.Tests
+namespace BeamStaticaTests.UnitTests.Sections
 {
     [TestFixture()]
     public class PolygonSection1Tests

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BeamStatica.Beams.Tests
+namespace BeamStaticaTests.UnitTests.Beams
 {
     [TestFixture()]
     public class GlobalStiffnessMatrixTests

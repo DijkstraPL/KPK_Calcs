@@ -9,7 +9,7 @@ using Moq;
 using BeamStatica.Materials.Intefaces;
 using BeamStatica.Loads.Interfaces;
 
-namespace BeamStatica.UnitTests.Loads.ContinousLoads.SpanExtendLoadResult
+namespace BeamStaticaTests.UnitTests.Loads.ContinousLoads.SpanExtendLoadResult
 {
     [TestFixture()]
     public class HorizontalDeflectionResultTests

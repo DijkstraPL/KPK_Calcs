@@ -10,7 +10,7 @@ using BeamStatica.Loads.Interfaces;
 using BeamStatica.Spans.Interfaces;
 using BeamStatica.Loads.ContinousLoads.ShearLoadResults;
 
-namespace BeamStatica.UnitTests.Loads.ContinousLoads.ShearLoadResults
+namespace BeamStaticaTests.UnitTests.Loads.ContinousLoads.ShearLoadResults
 {
     [TestFixture()]
     public class ShearResultTests

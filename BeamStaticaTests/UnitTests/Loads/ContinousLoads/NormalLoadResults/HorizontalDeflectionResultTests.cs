@@ -10,7 +10,7 @@ using BeamStatica.Materials.Intefaces;
 using BeamStatica.Loads.Interfaces;
 using BeamStatica.Spans.Interfaces;
 
-namespace BeamStatica.UnitTests.Loads.ContinousLoads.NormalLoadResults.Tests
+namespace BeamStaticaTests.UnitTests.Loads.ContinousLoads.NormalLoadResults
 {
     [TestFixture()]
     public class HorizontalDeflectionResultTests

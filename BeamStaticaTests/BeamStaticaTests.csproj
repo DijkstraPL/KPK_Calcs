@@ -131,6 +131,7 @@
     <Compile Include="UnitTests\Loads\ContinousLoads\SpanExtendLoadResult\HorizontalDeflectionResultTests.cs" />
     <Compile Include="UnitTests\Loads\ContinousLoads\UpDownTemperatureDifferenceResults\RotationResultTests.cs" />
     <Compile Include="UnitTests\Loads\ContinousLoads\UpDownTemperatureDifferenceResults\VerticalDeflectionResultTests.cs" />
+    <Compile Include="UnitTests\Sections\IBeamSectionTests.cs" />
     <Compile Include="UnitTests\Sections\PolygonSection3Tests.cs" />
     <Compile Include="UnitTests\Sections\PolygonSection2Tests.cs" />
     <Compile Include="UnitTests\Sections\PolygonSection1Tests.cs" />
