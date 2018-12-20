@@ -3,11 +3,12 @@ using Build_IT_ScriptInterpreter.Parameters.Interfaces;
 using NCalc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Build_IT_ScriptInterpreter.Expressions
 {
-    public class ExpressionEvaluator
+    public class ExpressionEvaluator : IExpressionEvaluator
     {
         public ICollection<string> Functions { get; private set; }
 
@@ -18,7 +19,7 @@ namespace Build_IT_ScriptInterpreter.Expressions
             => new ExpressionEvaluator(expression, parameters);
 
         public static ExpressionEvaluator Create(
-            string expression, IEnumerable<IParameter> parameters = null)
+            string expression, IEnumerable<IParameter> parameters)
         {
             var parametersDict = new Dictionary<string, object>();
             parametersDict = parameters.ToDictionary(p => p.Name, p => (object)p.Value);
@@ -35,13 +36,36 @@ namespace Build_IT_ScriptInterpreter.Expressions
 
             SetAdditionalFunctions();
         }
+
         public object Evaluate()
-            => _expression.Evaluate();
+        {
+            try
+            {
+                return _expression.Evaluate();
+            }
+            catch (EvaluationException ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return null;
+            }
+        }
 
         private void SetAdditionalFunctions()
         {
+            SetErrorFunction();
             SetMaxxFunction();
             SetMinnFunction();
+        }
+
+        private void SetErrorFunction()
+        {
+            string name = "ERROR";
+            Func<FunctionArgs, object> function = (e) =>
+            {
+                throw new ArgumentException(e.Parameters[0].Evaluate().ToString());
+            };
+            _expression.SetAdditionalFunction(name, function);
+            Functions.Add(name);
         }
 
         private void SetMaxxFunction()

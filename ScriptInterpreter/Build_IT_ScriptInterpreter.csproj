@@ -9,4 +9,8 @@
     <PackageReference Include="CoreCLR-NCalc" Version="2.2.51" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Build-IT_Tools\Build_IT_Tools.csproj" />
+  </ItemGroup>
+
 </Project>

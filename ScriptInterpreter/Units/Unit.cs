@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Build_IT_ScriptInterpreter.Units
 {
-    public abstract class Unit : IUnit
+    public class Unit : IUnit
     {
         public IDictionary<Enum, double> UnitMultiplerPairs { get; }
         public double CurrentUnitMultipler { get; protected set; }
@@ -17,19 +17,29 @@ namespace Build_IT_ScriptInterpreter.Units
             SetUnits();
 
             CurrentUnit = currentUnit;
-            CurrentUnitMultipler = UnitMultiplerPairs[currentUnit];
+
+            if (UnitMultiplerPairs != null && UnitMultiplerPairs.Count > 0)
+                CurrentUnitMultipler = UnitMultiplerPairs[currentUnit];
         }
 
         public bool TryChangeUnit(Enum newUnit)
         {
-            if (!UnitMultiplerPairs.ContainsKey(newUnit))
-                return false;
+            try
+            {
+                if (!UnitMultiplerPairs.ContainsKey(newUnit))
+                    throw new MissingMemberException(
+                        message: nameof(UnitMultiplerPairs) + " doesn't contain " + newUnit.ToString());
 
-            CurrentUnit = newUnit;
-            CurrentUnitMultipler = UnitMultiplerPairs[newUnit];
-            return true;
+                CurrentUnit = newUnit;
+                CurrentUnitMultipler = UnitMultiplerPairs[newUnit];
+                return true;
+            }
+            catch (MissingMemberException)
+            {
+                return false;
+            }
         }
 
-        protected abstract void SetUnits();
+        protected virtual void SetUnits() { }
     }
 }

@@ -3,7 +3,7 @@ using Build_IT_ScriptInterpreter.Expressions;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace Build_IT_ScriptInterpreterTests
+namespace Build_IT_ScriptInterpreterTests.Expressions
 {
     [TestFixture]
     public class ExpressionEvaluatorTests
