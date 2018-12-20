@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Build_IT_ScriptInterpreter.Parameters.Interfaces;
+using System;
 using System.Collections.Generic;
 
-namespace ScriptInterpreter
+namespace Build_IT_ScriptInterpreter
 {
     public class Script
     {
         public string Name { get; }
         public string Decription { get; }
         public IEnumerable<string> Tags { get; set; }
+
+        public IEnumerable<IParameter> DataParameters { get; }
 
         public Script(string name, string decription)
         {
