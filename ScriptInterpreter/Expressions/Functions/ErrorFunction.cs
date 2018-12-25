@@ -1,0 +1,32 @@
+﻿using Build_IT_ScriptInterpreter.Expressions.Functions.Interfaces;
+using NCalc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Build_IT_ScriptInterpreter.Expressions.Functions
+{
+
+    public class ErrorFunction : IFunction
+    {
+        public string Name { get; private set; }
+        public Func<FunctionArgs, object> Function { get; private set; }
+
+        public ErrorFunction()
+        {
+            SetFunction();
+        }
+
+        private void SetFunction()
+        {
+            Name = "ERROR";
+            Function = (e) =>
+            {
+                if(e.Parameters.Count() != 1 )
+                    throw new ArgumentException("Wrong number of parameters.");
+                throw new ArgumentException(e.Parameters[0].Evaluate().ToString());
+            };
+        }
+    }
+}

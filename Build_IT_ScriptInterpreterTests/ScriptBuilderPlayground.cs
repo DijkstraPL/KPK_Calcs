@@ -17,24 +17,33 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 description: "Calculate moment of interia for rectangle",
                 "Section", "Moment of interia", "Rectangle");
 
-            scriptBuilder.AppendParameter(new DataParameter(number: 1, name: "b")
+            scriptBuilder.AppendParameter(new Parameter()
             {
-                ValueType = ValueTypes.Number
+                Number = 1,
+                Name = "b",
+                ValueType = ValueTypes.Number,
+                Context = ParameterOptions.Editable | ParameterOptions.Visible
             })
-            .AppendParameter(new DataParameter(number: 2, name: "h")
+            .AppendParameter(new Parameter()
             {
-                ValueType = ValueTypes.Number
+                Number = 2,
+                Name = "h",
+                ValueType = ValueTypes.Number,
+                Context = ParameterOptions.Editable | ParameterOptions.Visible
             });
 
-            scriptBuilder.AppendParameter(new CalculationParameter(
-                number: 3, name: "I", value: "[b]*Pow([h],3)/12")
+            scriptBuilder.AppendParameter(new Parameter()
             {
-                ValueType = ValueTypes.Number
+                Number = 3,
+                Name = "I",
+                Value= "[b]*Pow([h],3)/12",
+                ValueType = ValueTypes.Number,
+                Context = ParameterOptions.Calculation | ParameterOptions.Visible
             });
 
             scriptBuilder.Calculate(50, 70);
 
-            StringAssert.StartsWith("1429166,666", scriptBuilder.GetParameterByName("I").Value.ToString());
+            Assert.That(1429166.667, Is.EqualTo(scriptBuilder.GetParameterByName("I").Value).Within(0.001));
         }
     }
 }

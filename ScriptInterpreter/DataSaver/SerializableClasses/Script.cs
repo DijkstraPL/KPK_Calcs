@@ -42,11 +42,10 @@ namespace Build_IT_ScriptInterpreter.DataSaver.SerializableClasses
                 script.Parameters.Add(
                     new KeyValuePair<int, Parameters.Interfaces.IParameter>(
                         parameter.Number,
-                        new Parameters.Parameter(
-                            number: parameter.Number,
-                            name: parameter.Name
-                            )
+                        new Parameters.Parameter()
                         {
+                            Number = parameter.Number,
+                            Name = parameter.Name,
                             Description = parameter.Description,
                             Value = parameter.Value,
                             Context = parameter.Context,

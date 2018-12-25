@@ -7,7 +7,8 @@ namespace Build_IT_ScriptInterpreter.Scripts
 {
     public class ScriptBuilder : Script
     {
-        public ScriptBuilder(string name, string description, params string[] tags) : base(name, description, tags)
+        public ScriptBuilder(string name, string description, params string[] tags) 
+            : base(name, description, tags)
         {
         }
         

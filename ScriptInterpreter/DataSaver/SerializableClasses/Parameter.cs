@@ -34,5 +34,8 @@ namespace Build_IT_ScriptInterpreter.DataSaver.SerializableClasses
                 foreach (var valueOption in parameter.ValueOptions)
                     ValueOptions.Add(new ValueOption(valueOption));
         }
+
+        public override string ToString() 
+            => Value.ToString() + Unit;
     }
 }

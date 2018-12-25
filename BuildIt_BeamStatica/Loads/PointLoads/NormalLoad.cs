@@ -26,7 +26,6 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
 
         public override double CalculateSpanLoadVectorNormalForceMember(ISpan span, bool leftNode)
         {
-            double distanceFromCloserNode = leftNode ? this.Position : span.Length - this.Position;
             double distanceFromOtherNode = leftNode ? span.Length - this.Position : this.Position;
             return -this.Value * distanceFromOtherNode / span.Length;
         }
