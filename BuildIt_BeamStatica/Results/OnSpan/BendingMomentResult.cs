@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Build_IT_BeamStatica.Results.OnSpan
 {
-    public class BendingMomentResult : Result
+    internal class BendingMomentResult : Result
     {
         public IResultValue Result { get; private set; }
 

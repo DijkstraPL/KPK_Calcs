@@ -8,19 +8,20 @@ using NUnit.Framework;
 
 namespace Build_IT_BeamStaticaTests.BeamsTests
 {
-    [TestFixture(Description = "18.12.12-14")]
-    public class BeamWithPointBendingMomentLoadTests
+    [TestFixture(Description = "18.12.25-01")]
+    public class BeamWithSingleSpanSelfWeightTests
     {
         private Beam _beam;
 
         [SetUp]
         public void SetUpBeam()
         {
-            var material = new Concrete(youngModulus: 30, withReinforcement: false);
+            var material = new Concrete(youngModulus: 30, withReinforcement: true);
             var section = new RectangleSection(width: 300, height: 500);
 
             var node1 = new FixedNode();
             var node2 = new FixedNode();
+
             var nodes = new Node[] { node1, node2 };
 
             var span1 = new Span(
@@ -29,14 +30,11 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 rightNode: node2,
                 material: material,
                 section: section,
-                includeSelfWeight: false
+                includeSelfWeight: true
                 );
 
-             var spans = new Span[] { span1 };
+            var spans = new Span[] { span1 };
 
-            var pointLoad3 = new BendingMoment(value: 100, position: 8);
-            span1.PointLoads.Add(pointLoad3);
-            
             _beam = new Beam(spans, nodes, includeSelfWeight: false);
 
             _beam.Calculate();
@@ -45,11 +43,11 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [Test()]
         public void NodeForcesCalculationsTest_Successful()
         {
-            Assert.That(_beam.Spans[0].LeftNode.ShearForce.Value, Is.EqualTo(-9.6).Within(0.001));
-            Assert.That(_beam.Spans[0].LeftNode.BendingMoment.Value, Is.EqualTo(28).Within(0.001));
+            Assert.That(_beam.Spans[0].LeftNode.ShearForce.Value, Is.EqualTo(18.398).Within(0.001));
+            Assert.That(_beam.Spans[0].LeftNode.BendingMoment.Value, Is.EqualTo(-30.663).Within(0.001));
 
-            Assert.That(_beam.Spans[0].RightNode.ShearForce.Value, Is.EqualTo(9.6).Within(0.001));
-            Assert.That(_beam.Spans[0].RightNode.BendingMoment.Value, Is.EqualTo(-32).Within(0.001));
+            Assert.That(_beam.Spans[0].RightNode.ShearForce.Value, Is.EqualTo(18.398).Within(0.001));
+            Assert.That(_beam.Spans[0].RightNode.BendingMoment.Value, Is.EqualTo(30.663).Within(0.001));
         }
 
         [Test()]
@@ -63,12 +61,11 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         }
 
         [Test()]
-        [TestCase(0, -9.6)]
-        [TestCase(2, -9.6)]
-        [TestCase(3, -9.6)]
-        [TestCase(5, -9.6)]
-        [TestCase(7, -9.6)]
-        [TestCase(10, -9.6)]
+        [TestCase(0, 18.398)]
+        [TestCase(3, 7.359)]
+        [TestCase(5, 0)]
+        [TestCase(7, -7.359)]
+        [TestCase(10, -18.398)]
         public void ShearForceAtPositionCalculationsTest_Successful(double position, double result)
         {
             double calculatedShear = _beam.ShearResult.GetValue(position).Value;
@@ -77,13 +74,11 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         }
 
         [Test()]
-        [TestCase(0, 28)]
-        [TestCase(2, 8.8)]
-        [TestCase(3, -0.8)]
-        [TestCase(5, -20)]
-        [TestCase(8, -48.8)]
-        [TestCase(8.0001, 51.2)]
-        [TestCase(10, 32)]
+        [TestCase(0, -30.663)]
+        [TestCase(3, 7.972)]
+        [TestCase(5, 15.331)]
+        [TestCase(7, 7.972)]
+        [TestCase(10, -30.663)]
         public void BendingMomentAtPositionCalculationsTest_Successful(double position, double result)
         {
             double calculatedMoment = _beam.BendingMomentResult.GetValue(position).Value;
@@ -93,12 +88,10 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
 
         [Test()]
         [TestCase(0, 0)]
-        [TestCase(2, 0.000393)]
-        [TestCase(3, 0.000435)]
-        [TestCase(4, 0.000375)]
-        [TestCase(5, 0.000213)]
-        [TestCase(7, -0.000418)]
-        [TestCase(8, -0.000887)]
+        [TestCase(1, -0.000235)]
+        [TestCase(3, -0.000275)]
+        [TestCase(5, 0)]
+        [TestCase(7, 0.000275)]
         [TestCase(10, 0)]
         public void RotationAtPositionCalculationsTest_Successful(double position, double result)
         {
@@ -109,13 +102,10 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
 
         [Test()]
         [TestCase(0, 0)]
-        [TestCase(2, 0.461)]
-        [TestCase(3, 0.883)]
-        [TestCase(4, 1.297)]
-        [TestCase(5, 1.6)]
-        [TestCase(7, 1.463)]
-        [TestCase(8, 0.819)]
-        [TestCase(9, 0.188)]
+        [TestCase(1, -0.132)]
+        [TestCase(3, -0.721)]
+        [TestCase(5, -1.022)]
+        [TestCase(7, -0.721)]
         [TestCase(10, 0)]
         public void VerticalDeflectionAtPositionCalculationsTest_Successful(double position, double result)
         {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Build_IT_BeamStatica.Spans
 {
-    public class StiffnessMatrix : IStiffnessMatrix
+    internal class StiffnessMatrix : IStiffnessMatrix
     {
         public ICollection<IStiffnessMatrixPosition> MatrixOfPositions { get; private set; } = new List<IStiffnessMatrixPosition>();
         public Matrix<double> Matrix { get; private set; }

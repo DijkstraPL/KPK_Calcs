@@ -3,7 +3,7 @@ using Build_IT_BeamStatica.Loads.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults
 {
-    public class BendingMomentResult : ForceResultBase
+    internal class BendingMomentResult : ForceResultBase
     {
         public BendingMomentResult(IContinousLoad continousLoad) : base(continousLoad)
         {

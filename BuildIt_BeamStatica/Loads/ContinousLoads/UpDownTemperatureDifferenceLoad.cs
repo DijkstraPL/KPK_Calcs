@@ -4,7 +4,7 @@ using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
-    public class UpDownTemperatureDifferenceLoad : ContinousLoad
+    internal class UpDownTemperatureDifferenceLoad : ContinousLoad
     {
         private double _temperatureDifference => EndPosition.Value - StartPosition.Value;
 

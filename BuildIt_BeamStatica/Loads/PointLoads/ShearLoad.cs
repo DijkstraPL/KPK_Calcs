@@ -3,7 +3,7 @@ using System;
 
 namespace Build_IT_BeamStatica.Loads.PointLoads
 {
-    public class ShearLoad : SpanConcentratedLoad
+    internal class ShearLoad : SpanConcentratedLoad
     {
         /// <summary>
         /// Use in node loads.

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Build_IT_BeamStatica.Beams
 {
-    public class GlobalStiffnessMatrix : IGlobalStiffnessMatrix
+    internal class GlobalStiffnessMatrix : IGlobalStiffnessMatrix
     {
         public Matrix<double> Matrix { get; private set; }
         public Matrix<double> InversedMatrix => Matrix.Inverse();

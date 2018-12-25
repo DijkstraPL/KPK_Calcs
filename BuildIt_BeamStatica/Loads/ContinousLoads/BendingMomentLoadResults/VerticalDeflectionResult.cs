@@ -4,7 +4,7 @@ using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads.BendingMomentLoadResults
 {
-    public class VerticalDeflectionResult : DisplacementResultBase
+    internal class VerticalDeflectionResult : DisplacementResultBase
     {
         public VerticalDeflectionResult(IContinousLoad continousLoad) : base(continousLoad)
         {

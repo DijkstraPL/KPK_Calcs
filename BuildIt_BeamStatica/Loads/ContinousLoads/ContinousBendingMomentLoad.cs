@@ -4,7 +4,7 @@ using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
-    public class ContinousBendingMomentLoad : ContinousLoad
+    internal class ContinousBendingMomentLoad : ContinousLoad
     {
         public static IContinousLoad Create(ISpan span, double value)
         {

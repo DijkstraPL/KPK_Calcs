@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Build_IT_BeamStatica.Results.OnSpan
 {
-    public class ShearResult : Result
+    internal class ShearResult : Result
     {
         public IResultValue Result { get; private set; }
         private double _currentLength;

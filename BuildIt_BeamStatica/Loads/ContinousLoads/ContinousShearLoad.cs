@@ -5,7 +5,7 @@ using System;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
-    public class ContinousShearLoad : ContinousLoad
+    internal class ContinousShearLoad : ContinousLoad
     {
         public static IContinousLoad Create(double startPosition, double startValue, double endPosition, double endValue)
         {

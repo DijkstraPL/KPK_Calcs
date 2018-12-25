@@ -4,7 +4,7 @@ using Build_IT_BeamStatica.Results.Reactions;
 
 namespace Build_IT_BeamStatica.Nodes
 {
-    public class SupportedNodeWithHinge : Node
+    internal class SupportedNodeWithHinge : Node
     {
         public override short DegreesOfFreedom => 2;
 

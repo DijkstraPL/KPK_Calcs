@@ -1,9 +1,13 @@
 ﻿namespace Build_IT_BeamStatica.Materials
 {
-    public class Concrete : Material
+    internal class Concrete : Material
     {
-        public Concrete(double youngModulus) : base(youngModulus, thermalExpansionCoefficient: 0.000010)
+        public Concrete(double youngModulus, bool withReinforcement) : base(youngModulus, thermalExpansionCoefficient: 0.000010)
         {
+            if (withReinforcement)
+                Density = 2500;
+            else
+                Density = 2400;
         }
     }
 }

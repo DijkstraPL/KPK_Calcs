@@ -4,7 +4,7 @@ using System;
 
 namespace Build_IT_BeamStatica.Sections
 {
-    public sealed class RectangleSection : Section
+    internal class RectangleSection : Section
     {
         [Abbreviation("b")]
         [Unit("mm")]

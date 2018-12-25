@@ -13,5 +13,6 @@ namespace Build_IT_BeamStatica.Spans.Interfaces
 
         Vector<double> Forces { get; }
         Vector<double> LoadVector { get; }
+        bool IncludeSelfWeight { get; set; }
     }
 }

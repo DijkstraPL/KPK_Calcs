@@ -4,7 +4,7 @@ using System;
 
 namespace Build_IT_BeamStatica.Loads.PointLoads
 {
-    public class AngledLoad : SpanConcentratedLoad
+    internal class AngledLoad : SpanConcentratedLoad
     {
         private ISpanLoad _horizontalLoad;
         private ISpanLoad _verticalLoad;

@@ -3,7 +3,7 @@ using System;
 
 namespace Build_IT_BeamStatica.Loads.PointLoads
 {
-    public class RotationDisplacement : SpanConcentratedLoad
+    internal class RotationDisplacement : SpanConcentratedLoad
     {
         public override bool IncludeInSpanLoadCalculations => true;
 

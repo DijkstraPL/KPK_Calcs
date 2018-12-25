@@ -2,7 +2,7 @@
 
 namespace Build_IT_BeamStatica.Results.Reactions
 {
-    public abstract class Reaction : IResultValue
+    internal abstract class Reaction : IResultValue
     {
         public double Value { get; set; }
         public double? Position { get; }

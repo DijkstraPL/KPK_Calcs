@@ -8,10 +8,12 @@ using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Build_IT_BeamStaticaTests")]
 namespace Build_IT_BeamStatica.Beams
 {
-    public class Beam : IBeam
+    internal class Beam : IBeam
     {
         public IGetResult NormalForceResult { get; }
         public IGetResult ShearResult { get; }
@@ -34,7 +36,9 @@ namespace Build_IT_BeamStatica.Beams
 
         public Vector<double> DeflectionVector { get; private set; }
 
-        public Beam(IList<ISpan> spans, ICollection<INode> nodes)
+        public bool IncludeSelfWeight { get; }
+
+        public Beam(IList<ISpan> spans, ICollection<INode> nodes, bool includeSelfWeight)
         {
             Spans = spans ?? throw new ArgumentNullException(nameof(spans));
             Nodes = nodes ?? throw new ArgumentNullException(nameof(nodes));
@@ -46,6 +50,8 @@ namespace Build_IT_BeamStatica.Beams
             HorizontalDeflectionResult = new HorizontalDeflectionResult(this);
             VerticalDeflectionResult = new VerticalDeflectionResult(this);
             RotationResult = new RotationResult(this);
+
+            IncludeSelfWeight = includeSelfWeight;
         }
 
         public void Calculate()
@@ -53,6 +59,8 @@ namespace Build_IT_BeamStatica.Beams
             SetNumeration();
             CalculateStiffnessMatrixes();
             GlobalStiffnessMatrix.Calculate();
+            if (IncludeSelfWeight)
+                AddSelfWeightLoad();
             CaluclateJointLoadVector();
             CalculateSpanLoadVectors();
             CalculateSpanLoadVector();
@@ -61,6 +69,12 @@ namespace Build_IT_BeamStatica.Beams
             CalculateForces();
             CalculateReactions();
             AddForcesLocatedAtSupports();
+        }
+
+        private void AddSelfWeightLoad()
+        {
+            foreach (var span in Spans)
+                span.IncludeSelfWeight = true;
         }
 
         private void SetNumeration()
@@ -142,30 +156,39 @@ namespace Build_IT_BeamStatica.Beams
 
             for (int i = NumberOfDegreesOfFreedom; i < numberOfReactions + NumberOfDegreesOfFreedom; i++)
             {
-                if (Spans.SingleOrDefault(s => s.LeftNode.HorizontalMovementNumber == i)?.LeftNode.NormalForce != null)
-                    Spans.SingleOrDefault(s => s.LeftNode.HorizontalMovementNumber == i).LeftNode.NormalForce.Value
-                        += Spans.Where(s => s.LeftNode.HorizontalMovementNumber == i).Sum(s => s.Forces[0]);
-
-                if (Spans.SingleOrDefault(s => s.LeftNode.VerticalMovementNumber == i)?.LeftNode.ShearForce != null)
-                    Spans.SingleOrDefault(s => s.LeftNode.VerticalMovementNumber == i).LeftNode.ShearForce.Value
-                        += Spans.Where(s => s.LeftNode.VerticalMovementNumber == i).Sum(s => s.Forces[1]);
-
-                if (Spans.SingleOrDefault(s => s.LeftNode.RightRotationNumber == i)?.LeftNode.BendingMoment != null)
-                    Spans.SingleOrDefault(s => s.LeftNode.RightRotationNumber == i).LeftNode.BendingMoment.Value
-                        -= Spans.Where(s => s.LeftNode.RightRotationNumber == i).Sum(s => s.Forces[2]);
-
-                if (Spans.SingleOrDefault(s => s.RightNode.HorizontalMovementNumber == i)?.RightNode.NormalForce != null)
-                    Spans.SingleOrDefault(s => s.RightNode.HorizontalMovementNumber == i).RightNode.NormalForce.Value
-                        += Spans.Where(s => s.RightNode.HorizontalMovementNumber == i).Sum(s => s.Forces[3]);
-
-                if (Spans.SingleOrDefault(s => s.RightNode.VerticalMovementNumber == i)?.RightNode.ShearForce != null)
-                    Spans.SingleOrDefault(s => s.RightNode.VerticalMovementNumber == i).RightNode.ShearForce.Value
-                        += Spans.Where(s => s.RightNode.VerticalMovementNumber == i).Sum(s => s.Forces[4]);
-
-                if (Spans.SingleOrDefault(s => s.RightNode.LeftRotationNumber == i)?.RightNode.BendingMoment != null)
-                    Spans.SingleOrDefault(s => s.RightNode.LeftRotationNumber == i).RightNode.BendingMoment.Value
-                        -= Spans.Where(s => s.RightNode.LeftRotationNumber == i).Sum(s => s.Forces[5]);
+                SetLeftNodeReactions(i);
+                SetRightNodeReactions(i);
             }
+        }
+
+        private void SetLeftNodeReactions(int i)
+        {
+            if (Spans.SingleOrDefault(s => s.LeftNode.HorizontalMovementNumber == i)?.LeftNode.NormalForce != null)
+                Spans.SingleOrDefault(s => s.LeftNode.HorizontalMovementNumber == i).LeftNode.NormalForce.Value
+                    += Spans.Where(s => s.LeftNode.HorizontalMovementNumber == i).Sum(s => s.Forces[0]);
+
+            if (Spans.SingleOrDefault(s => s.LeftNode.VerticalMovementNumber == i)?.LeftNode.ShearForce != null)
+                Spans.SingleOrDefault(s => s.LeftNode.VerticalMovementNumber == i).LeftNode.ShearForce.Value
+                    += Spans.Where(s => s.LeftNode.VerticalMovementNumber == i).Sum(s => s.Forces[1]);
+
+            if (Spans.SingleOrDefault(s => s.LeftNode.RightRotationNumber == i)?.LeftNode.BendingMoment != null)
+                Spans.SingleOrDefault(s => s.LeftNode.RightRotationNumber == i).LeftNode.BendingMoment.Value
+                    -= Spans.Where(s => s.LeftNode.RightRotationNumber == i).Sum(s => s.Forces[2]);
+        }
+
+        private void SetRightNodeReactions(int i)
+        {
+            if (Spans.SingleOrDefault(s => s.RightNode.HorizontalMovementNumber == i)?.RightNode.NormalForce != null)
+                Spans.SingleOrDefault(s => s.RightNode.HorizontalMovementNumber == i).RightNode.NormalForce.Value
+                    += Spans.Where(s => s.RightNode.HorizontalMovementNumber == i).Sum(s => s.Forces[3]);
+
+            if (Spans.SingleOrDefault(s => s.RightNode.VerticalMovementNumber == i)?.RightNode.ShearForce != null)
+                Spans.SingleOrDefault(s => s.RightNode.VerticalMovementNumber == i).RightNode.ShearForce.Value
+                    += Spans.Where(s => s.RightNode.VerticalMovementNumber == i).Sum(s => s.Forces[4]);
+
+            if (Spans.SingleOrDefault(s => s.RightNode.LeftRotationNumber == i)?.RightNode.BendingMoment != null)
+                Spans.SingleOrDefault(s => s.RightNode.LeftRotationNumber == i).RightNode.BendingMoment.Value
+                    -= Spans.Where(s => s.RightNode.LeftRotationNumber == i).Sum(s => s.Forces[5]);
         }
 
         private void AddForcesLocatedAtSupports()
@@ -213,7 +236,7 @@ namespace Build_IT_BeamStatica.Beams
                     SpanLoadVector[i] += span.LoadVector[1];
                 else if (span.LeftNode.RightRotationNumber == i)
                     SpanLoadVector[i] += span.LoadVector[2];
-                else if(span.RightNode.HorizontalMovementNumber == i)
+                else if (span.RightNode.HorizontalMovementNumber == i)
                     SpanLoadVector[i] += span.LoadVector[3];
                 else if (span.RightNode.VerticalMovementNumber == i)
                     SpanLoadVector[i] += span.LoadVector[4];

@@ -2,7 +2,7 @@
 
 namespace Build_IT_BeamStatica.Loads.PointLoads
 {
-    public class HorizontalDisplacement : SpanConcentratedLoad
+    internal class HorizontalDisplacement : SpanConcentratedLoad
     {
         public override bool IncludeInSpanLoadCalculations => true;
 

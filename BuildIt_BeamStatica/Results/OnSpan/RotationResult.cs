@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Build_IT_BeamStatica.Results.OnSpan
 {
-    public class RotationResult : Result
+    internal class RotationResult : Result
     {
         public IResultValue Result { get; private set; }
         private double _currentLength;

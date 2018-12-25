@@ -3,7 +3,7 @@ using Build_IT_BeamStatica.Loads.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads.LoadResults
 {
-    public abstract class ForceResultBase : ResultBase, IForceResult
+    internal abstract class ForceResultBase : ResultBase, IForceResult
     {
         protected ForceResultBase(IContinousLoad continousLoad) : base(continousLoad)
         {

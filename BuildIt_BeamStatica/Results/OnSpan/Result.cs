@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Build_IT_BeamStatica.Results.OnSpan
 {
-    public abstract class Result : IGetResult
+    internal abstract class Result : IGetResult
     {
         protected const double tick = 100;
 

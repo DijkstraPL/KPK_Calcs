@@ -4,7 +4,7 @@ using Build_IT_BeamStatica.Results.Reactions;
 
 namespace Build_IT_BeamStatica.Nodes
 {
-    public class TelescopeNode : Node
+    internal class TelescopeNode : Node
     {
         public override short DegreesOfFreedom => 1;
 

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Build_IT_BeamStatica.Results.OnSpan
 {
-    class HorizontalDeflectionResult : Result
+    internal class HorizontalDeflectionResult : Result
     {
         private const double _nextToNodePosition = 0.00000001;
 

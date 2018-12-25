@@ -2,7 +2,7 @@
 
 namespace Build_IT_BeamStatica.Sections.Additional
 {
-    public class Point : IPoint
+    internal class Point : IPoint
     {
         public double X { get; }
         public double Y { get; }

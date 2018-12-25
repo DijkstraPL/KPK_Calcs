@@ -4,7 +4,7 @@ using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults
 {
-    public class RotationResult : DisplacementResultBase
+    internal class RotationResult : DisplacementResultBase
     {
         public RotationResult(IContinousLoad continousLoad) : base(continousLoad)
         {

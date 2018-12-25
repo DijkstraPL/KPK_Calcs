@@ -2,7 +2,7 @@
 
 namespace Build_IT_BeamStatica.Loads.PointLoads
 {
-    public abstract class ConcentratedLoad : INodeLoad
+    internal abstract class ConcentratedLoad : INodeLoad
     {
         public double Value { get; }
         public virtual bool IncludeInSpanLoadCalculations => false;

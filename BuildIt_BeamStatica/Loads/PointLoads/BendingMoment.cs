@@ -3,7 +3,7 @@ using System;
 
 namespace Build_IT_BeamStatica.Loads.PointLoads
 {
-    public class BendingMoment : SpanConcentratedLoad
+    internal class BendingMoment : SpanConcentratedLoad
     {
         /// <summary>
         /// Use in node loads.

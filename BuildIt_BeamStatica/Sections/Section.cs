@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Build_IT_BeamStatica.Sections
 {
-    public class Section : ISection
+    internal class Section : ISection
     {
         [Abbreviation("I")]
         [Unit("cm4")]

@@ -4,7 +4,7 @@ using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
-    public class ContinousNormalLoad : ContinousLoad
+    internal class ContinousNormalLoad : ContinousLoad
     {
         public static IContinousLoad Create(double startPosition, double startValue, double endPosition, double endValue)
         {

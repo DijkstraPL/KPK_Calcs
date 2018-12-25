@@ -4,7 +4,7 @@ using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
-    public class AlongTemperatureDifferenceLoad : ContinousLoad
+    internal class AlongTemperatureDifferenceLoad : ContinousLoad
     {
         public static IContinousLoad Create(ISpan span, double temperatureDifference)
         {

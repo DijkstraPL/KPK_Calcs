@@ -5,7 +5,7 @@ using System;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
-    public abstract class ContinousLoad : IContinousLoad
+    internal abstract class ContinousLoad : IContinousLoad
     {
         public ILoadWithPosition StartPosition { get; }
         public ILoadWithPosition EndPosition { get; }

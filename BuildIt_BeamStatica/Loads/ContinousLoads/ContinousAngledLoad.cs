@@ -6,7 +6,7 @@ using System;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
-    public class ContinousAngledLoad : ContinousLoad
+    internal class ContinousAngledLoad : ContinousLoad
     {
         public double Angle { get; }
 

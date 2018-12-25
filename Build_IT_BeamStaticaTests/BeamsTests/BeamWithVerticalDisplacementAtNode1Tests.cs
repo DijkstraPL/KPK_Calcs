@@ -18,8 +18,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material1 = new Concrete(youngModulus: 30);
-            var material2 = new Concrete(youngModulus: 33);
+            var material1 = new Concrete(youngModulus: 30, withReinforcement: false);
+            var material2 = new Concrete(youngModulus: 33, withReinforcement: false);
             var section1 = new RectangleSection(width: 300, height: 700);
             var section2 = new RectangleSection(width: 300, height: 500);
 
@@ -35,7 +35,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 length: 7,
                 rightNode: node2,
                 material: material1,
-                section: section1
+                section: section1,
+                includeSelfWeight: false
                 );
 
             var span2 = new Span(
@@ -43,7 +44,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 length: 3,
                 rightNode: node3,
                 material: material1,
-                section: section2
+                section: section2,
+                includeSelfWeight: false
                 );
 
             var span3 = new Span(
@@ -51,7 +53,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 length: 5,
                 rightNode: node4,
                 material: material2,
-                section: section2
+                section: section2,
+                includeSelfWeight: false
                 );
 
             var spans = new Span[] { span1, span2, span3 };
@@ -66,7 +69,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
             var endLoad = new LoadData(value: -10, position: 7);
             span1.ContinousLoads.Add( ContinousShearLoad.Create(startLoad, endLoad));
 
-            _beam = new Beam(spans, nodes);
+            _beam = new Beam(spans, nodes, includeSelfWeight: false);
 
             _beam.Calculate();
         }

@@ -4,7 +4,7 @@ using Build_IT_BeamStatica.Results.Reactions;
 
 namespace Build_IT_BeamStatica.Nodes
 {
-    public class PinNode : Node
+    internal class PinNode : Node
     {
         public override short DegreesOfFreedom => 2;
         

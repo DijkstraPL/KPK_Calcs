@@ -6,24 +6,17 @@ using NUnit.Framework;
 namespace Build_IT_ScriptInterpreterTests.Scripts
 {
     [TestFixture]
-    public class ShearResistanceWithoutShearReinforcement
+    [Ignore("Not finished")]
+    public class ShearResistanceWithShearReinforcement
     {
         [Test]
         public void CreationTest_Success()
         {
-            var scriptBuilder = new ScriptBuilder(name: "Shear resistance without shear reinforcement",
-                description: "Calculate shear resistance without shear reinforcement. Base on [PN-EN-1992-1-1:2002 6.2.2].",
+            var scriptBuilder = new ScriptBuilder(name: "Shear resistance with shear reinforcement",
+                description: "Calculate shear resistance with shear reinforcement. Base on [PN-EN-1992-1-1:2002 6.2.3].",
                 "Eurocode 1992", "Concrete", "Shear", "Resistance");
 
             scriptBuilder
-                .AppendParameter(new DataParameter(
-                    number: 1,
-                    name: "V_Ed")
-                {
-                    Description = "Shear force at calculated position.",
-                    ValueType = ValueTypes.Number,
-                    Unit = "kN"
-                })
                 .AppendParameter(new DataParameter(
                     number: 2,
                     name: "f_ck")
@@ -165,20 +158,10 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 Unit = "kN"
             });
 
-            scriptBuilder.AppendParameter(new CalculationParameter(
-                number: 27,
-                name: "Resistance",
-                value: "[V_Ed]/[V_Rd,c]*100")
-            {
-                Description = "Resistance of the element without shear reinforcement.",
-                ValueType = ValueTypes.Number,
-                Unit = "%"
-            });
-
             scriptBuilder.Save(new XmlSave(),
                 @"C:\Users\Disseminate\Desktop\Beam Statica\" + scriptBuilder.Name + ".xml");
 
-            scriptBuilder.Calculate(100, 30, 240, 461, 339, 100, 150000);
+            scriptBuilder.Calculate(30, 240, 461, 339, 100, 150000);
 
             StringAssert.StartsWith("0,128571", scriptBuilder.GetParameterByName("C_Rd,c").Value.ToString());
             StringAssert.StartsWith("1,658664", scriptBuilder.GetParameterByName("k").Value.ToString());
@@ -187,7 +170,6 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             StringAssert.StartsWith("0,000666", scriptBuilder.GetParameterByName("sigma_cp").Value.ToString());
             StringAssert.StartsWith("0,409512", scriptBuilder.GetParameterByName("v_min").Value.ToString());
             StringAssert.StartsWith("49,436619", scriptBuilder.GetParameterByName("V_Rd,c").Value.ToString());
-            StringAssert.StartsWith("202,279", scriptBuilder.GetParameterByName("Resistance").Value.ToString());
         }
 
         [Test]
@@ -199,7 +181,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
 
             var script = scriptData.Initialize();
           //  script.Calculate(30, 240, 461, 339, 100, 150000);
-            script.CalculateFromText("[V_Ed]=100,[f_ck]=30,[b_w]=240,[d]=461,[A_sl]=339,[N_Ed]=100,[A_c]=150000");
+            script.CalculateFromText("[f_ck]=30,[b_w]=240,[d]=461,[A_sl]=339,[N_Ed]=100,[A_c]=150000");
 
             StringAssert.StartsWith("0,128571", script.GetParameterByName("C_Rd,c").Value.ToString());
             StringAssert.StartsWith("1,658664", script.GetParameterByName("k").Value.ToString());
@@ -208,7 +190,6 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             StringAssert.StartsWith("0,000666", script.GetParameterByName("sigma_cp").Value.ToString());
             StringAssert.StartsWith("0,409512", script.GetParameterByName("v_min").Value.ToString());
             StringAssert.StartsWith("49,436619", script.GetParameterByName("V_Rd,c").Value.ToString());
-            StringAssert.StartsWith("202,279", script.GetParameterByName("Resistance").Value.ToString());
         }
     }
 }

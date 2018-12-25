@@ -3,7 +3,7 @@ using Build_IT_BeamStatica.Results.Reactions;
 
 namespace Build_IT_BeamStatica.Nodes
 {
-    public class FixedNode : Node
+    internal class FixedNode : Node
     {
         public override short DegreesOfFreedom => 0;
 

@@ -1,4 +1,5 @@
-﻿using Build_IT_BeamStatica.Loads.Interfaces;
+﻿using Build_IT_BeamStatica.Loads.ContinousLoads;
+using Build_IT_BeamStatica.Loads.Interfaces;
 using Build_IT_BeamStatica.Materials.Intefaces;
 using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Sections.Interfaces;
@@ -11,7 +12,7 @@ using System.Linq;
 
 namespace Build_IT_BeamStatica.Spans
 {
-    public class Span : ISpan
+    internal class Span : ISpan
     {
         public short Number { get; set; }
 
@@ -35,7 +36,12 @@ namespace Build_IT_BeamStatica.Spans
         public Vector<double> Displacements { get; private set; }
         public Vector<double> Forces { get; private set; }
 
-        public Span(INode leftNode, double length, INode rightNode, IMaterial material, ISection section)
+        public bool IncludeSelfWeight { get; set; }
+
+        private const double g = 9.812;
+
+        public Span(INode leftNode, double length, INode rightNode, 
+            IMaterial material, ISection section, bool includeSelfWeight)
         {
             LeftNode = leftNode ?? throw new ArgumentNullException(nameof(leftNode));
             Length = length;
@@ -46,10 +52,15 @@ namespace Build_IT_BeamStatica.Spans
             ContinousLoads = new List<IContinousLoad>();
             PointLoads = new List<ISpanLoad>();
             StiffnessMatrix = new StiffnessMatrix(this);
+
+            IncludeSelfWeight = includeSelfWeight;
         }
 
         public void CalculateSpanLoadVector()
         {
+            if (IncludeSelfWeight)
+                AddSelfWeightLoad();
+
             LoadVector = Vector<double>.Build.Dense(StiffnessMatrix.Size);
 
             LoadVector[0] = SetNormalForceLoadVector(isLeftNode: true);
@@ -59,6 +70,12 @@ namespace Build_IT_BeamStatica.Spans
             LoadVector[3] = SetNormalForceLoadVector(isLeftNode: false);
             LoadVector[4] = SetShearForceLoadVector(isLeftNode: false);
             LoadVector[5] = SetBendingMomentForceLoadVector(isLeftNode: false);
+        }
+
+        private void AddSelfWeightLoad()
+        {
+            double load = - Material.Density * g / 1000 * Section.Area / 10000;
+            ContinousLoads.Add(ContinousShearLoad.Create(0, load, this.Length, load));
         }
 
         private double SetNormalForceLoadVector(bool isLeftNode)

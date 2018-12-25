@@ -2,7 +2,7 @@
 
 namespace Build_IT_BeamStatica.Loads.PointLoads
 {
-    public class NormalLoad : SpanConcentratedLoad
+    internal class NormalLoad : SpanConcentratedLoad
     {
         /// <summary>
         /// Use in node loads.

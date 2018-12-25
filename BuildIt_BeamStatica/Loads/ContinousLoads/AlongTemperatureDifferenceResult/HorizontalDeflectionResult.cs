@@ -4,7 +4,7 @@ using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads.AlongTemperatureDifferenceResult
 {
-    public class HorizontalDeflectionResult : DisplacementResultBase
+    internal class HorizontalDeflectionResult : DisplacementResultBase
     {
         public HorizontalDeflectionResult(IContinousLoad continousLoad)
             : base(continousLoad)

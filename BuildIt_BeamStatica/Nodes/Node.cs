@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Build_IT_BeamStatica.Nodes
 {
-    public abstract class Node : INode
+    internal abstract class Node : INode
     {
         public double Angle { get; protected set; } 
 

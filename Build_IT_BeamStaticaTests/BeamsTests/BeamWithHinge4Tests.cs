@@ -18,8 +18,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material1 = new Concrete(youngModulus: 27);
-            var material2 = new Concrete(youngModulus: 37);
+            var material1 = new Concrete(youngModulus: 27, withReinforcement: false);
+            var material2 = new Concrete(youngModulus: 37, withReinforcement: false);
             var section = new RectangleSection(width: 300, height: 500);
 
             var node1 = new FixedNode();
@@ -33,7 +33,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 length: 4,
                 rightNode: node2,
                 material: material1,
-                section: section
+                section: section,
+                includeSelfWeight: false
                 );
 
             var span2 = new Span(
@@ -41,7 +42,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 length: 4,
                 rightNode: node3,
                 material: material2,
-                section: section
+                section: section,
+                includeSelfWeight: false
                 );
 
             var spans = new Span[] { span1, span2 };
@@ -51,7 +53,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 new LoadData(value: -9, position: 0), 
                 new LoadData(value: -9, position: 4)));
 
-            _beam = new Beam(spans, nodes);
+            _beam = new Beam(spans, nodes, includeSelfWeight: false);
 
             _beam.Calculate();
         }

@@ -3,7 +3,7 @@ using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.PointLoads
 {
-    public abstract class SpanConcentratedLoad : ConcentratedLoad, ISpanLoad
+    internal abstract class SpanConcentratedLoad : ConcentratedLoad, ISpanLoad
     {
         public double Position { get; }
 

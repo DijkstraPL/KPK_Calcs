@@ -5,7 +5,7 @@ using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
-    public class SpanExtendLoad : ContinousLoad
+    internal class SpanExtendLoad : ContinousLoad
     {
         public static IContinousLoad Create(ISpan span, double lengthIncrease)
         {

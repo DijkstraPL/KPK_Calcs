@@ -4,7 +4,7 @@ using Build_IT_BeamStatica.Spans.Interfaces;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads.LoadResults
 {
-    public abstract class DisplacementResultBase : ResultBase, IDisplacementResult
+    internal abstract class DisplacementResultBase : ResultBase, IDisplacementResult
     {
         protected DisplacementResultBase(IContinousLoad continousLoad) : base(continousLoad)
         {

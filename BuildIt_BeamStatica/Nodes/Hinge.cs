@@ -3,7 +3,7 @@ using Build_IT_BeamStatica.Results.Interfaces;
 
 namespace Build_IT_BeamStatica.Nodes
 {
-    public class Hinge : Node
+    internal class Hinge : Node
     {
         public override short DegreesOfFreedom => 4;
 

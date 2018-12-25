@@ -3,7 +3,7 @@ using System;
 
 namespace Build_IT_BeamStatica.Loads.ContinousLoads.LoadResults
 {
-    public abstract class ResultBase
+    internal abstract class ResultBase
     {
         protected IContinousLoad ContinousLoad { get; }
 

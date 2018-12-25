@@ -19,7 +19,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material = new Concrete(youngModulus: 30);
+            var material = new Concrete(youngModulus: 30, withReinforcement: false);
             var section = new RectangleSection(width: 300, height: 500);
 
             var node1 = new FixedNode();
@@ -32,14 +32,15 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 length: 10,
                 rightNode: node2,
                 material: material,
-                section: section
+                section: section,
+                includeSelfWeight: false
                 );
 
             var spans = new Span[] { span1 };
 
             span1.ContinousLoads.Add(ContinousBendingMomentLoad.Create(span1, value: 50));
 
-            _beam = new Beam(spans, nodes);
+            _beam = new Beam(spans, nodes, includeSelfWeight: false);
 
             _beam.Calculate();
         }

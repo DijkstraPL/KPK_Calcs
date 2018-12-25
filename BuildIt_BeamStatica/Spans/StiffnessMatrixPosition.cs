@@ -2,7 +2,7 @@
 
 namespace Build_IT_BeamStatica.Spans
 {
-    public class StiffnessMatrixPosition : IStiffnessMatrixPosition
+    internal class StiffnessMatrixPosition : IStiffnessMatrixPosition
     {
         public short RowNumber { get; }
         public short ColumnNumber { get; }

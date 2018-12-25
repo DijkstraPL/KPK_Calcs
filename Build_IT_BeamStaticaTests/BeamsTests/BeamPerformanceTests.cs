@@ -33,7 +33,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [Random(1.1, 3.0, 2)] double divider
         )
         {
-            var material = new Concrete(youngModulus: youngModulus);
+            var material = new Concrete(youngModulus: youngModulus, withReinforcement: false);
             var section = new RectangleSection(width: width, height: height);
 
             var node1 = new FixedNode();
@@ -49,7 +49,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 length: length1,
                 rightNode: node2,
                 material: material,
-                section: section
+                section: section,
+                includeSelfWeight: false
                 );
 
             var span2 = new Span(
@@ -57,7 +58,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 length: length2,
                 rightNode: node3,
                 material: material,
-                section: section
+                section: section,
+                includeSelfWeight: false
                 );
 
             var span3 = new Span(
@@ -65,7 +67,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 length: length3,
                 rightNode: node4,
                 material: material,
-                section: section
+                section: section,
+                includeSelfWeight: false
                 );
 
             var span4 = new Span(
@@ -73,7 +76,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
                 length: length4,
                 rightNode: node5,
                 material: material,
-                section: section
+                section: section,
+                includeSelfWeight: false
                 );
 
             var spans = new Span[] { span1, span2, span3, span4 };
@@ -87,7 +91,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
             var pointLoad1 = new ShearLoad(value: pointLoad, position: length2 / divider);
             span2.PointLoads.Add(pointLoad1);
 
-            _beam = new Beam(spans, nodes);
+            _beam = new Beam(spans, nodes, includeSelfWeight: false);
 
             _beam.Calculate();
 
