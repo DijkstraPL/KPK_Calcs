@@ -176,7 +176,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             });
 
             scriptBuilder.Save(new XmlSave(),
-                @"C:\Users\Disseminate\Desktop\Beam Statica\" + scriptBuilder.Name + ".xml");
+                @"C:\Users\User\Desktop\Visual Studio\KPK_Calcs_Scripts\" + scriptBuilder.Name + ".xml");
 
             scriptBuilder.Calculate(100, 30, 240, 461, 339, 100, 150000);
 
@@ -195,7 +195,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
         {
             string name = "Shear resistance without shear reinforcement";
             var loader = new XmlLoad<Build_IT_ScriptInterpreter.DataSaver.SerializableClasses.Script>();
-            var scriptData = loader.LoadData(@"C:\Users\Disseminate\Desktop\Beam Statica\" + name + ".xml");
+            var scriptData = loader.LoadData(@"C:\Users\User\Desktop\Visual Studio\KPK_Calcs_Scripts\" + name + ".xml");
 
             var script = scriptData.Initialize();
           //  script.Calculate(30, 240, 461, 339, 100, 150000);

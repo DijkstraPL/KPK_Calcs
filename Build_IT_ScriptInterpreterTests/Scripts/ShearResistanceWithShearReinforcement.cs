@@ -6,7 +6,6 @@ using NUnit.Framework;
 namespace Build_IT_ScriptInterpreterTests.Scripts
 {
     [TestFixture]
-    [Ignore("Not finished")]
     public class ShearResistanceWithShearReinforcement
     {
         [Test]
@@ -175,21 +174,15 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
         [Test]
         public void LoadTest_Success()
         {
-            string name = "Shear resistance without shear reinforcement";
+            string name = "Test";
             var loader = new XmlLoad<Build_IT_ScriptInterpreter.DataSaver.SerializableClasses.Script>();
-            var scriptData = loader.LoadData(@"C:\Users\Disseminate\Desktop\Beam Statica\" + name + ".xml");
+            var scriptData = loader.LoadData(@"C:\Users\User\Desktop\Visual Studio\KPK_Calcs_Scripts\" + name + ".xml");
 
             var script = scriptData.Initialize();
           //  script.Calculate(30, 240, 461, 339, 100, 150000);
-            script.CalculateFromText("[f_ck]=30,[b_w]=240,[d]=461,[A_sl]=339,[N_Ed]=100,[A_c]=150000");
+            script.CalculateFromText("[a]=30,[b]=20");
 
-            StringAssert.StartsWith("0,128571", script.GetParameterByName("C_Rd,c").Value.ToString());
-            StringAssert.StartsWith("1,658664", script.GetParameterByName("k").Value.ToString());
-            StringAssert.StartsWith("0,003063", script.GetParameterByName("rho_l").Value.ToString());
-            StringAssert.StartsWith("21,428571", script.GetParameterByName("f_cd").Value.ToString());
-            StringAssert.StartsWith("0,000666", script.GetParameterByName("sigma_cp").Value.ToString());
-            StringAssert.StartsWith("0,409512", script.GetParameterByName("v_min").Value.ToString());
-            StringAssert.StartsWith("49,436619", script.GetParameterByName("V_Rd,c").Value.ToString());
+            Assert.That(70, Is.EqualTo(script.GetParameterByName("c").Value));
         }
     }
 }
