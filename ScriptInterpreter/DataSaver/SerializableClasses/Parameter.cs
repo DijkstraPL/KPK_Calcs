@@ -1,9 +1,11 @@
 ﻿using Build_IT_ScriptInterpreter.Parameters;
 using Build_IT_ScriptInterpreter.Parameters.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Build_IT_ScriptInterpreter.DataSaver.SerializableClasses
 {
+    [Serializable]
     public class Parameter
     {
         public string Name { get; set; }
@@ -26,6 +28,7 @@ namespace Build_IT_ScriptInterpreter.DataSaver.SerializableClasses
             Number = parameter.Number;
             Name = parameter.Name;
             Value = parameter.Value;
+            Description = parameter.Description;
             Unit = parameter.Unit;
             Context = parameter.Context;
             ValueType = parameter.ValueType;

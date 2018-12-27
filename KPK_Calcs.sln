@@ -39,15 +39,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPK_CalcSiteTests", "KPK_Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWPF", "TestWPF\TestWPF.csproj", "{41BAE15A-F81F-4FBD-8D91-44D4C04303D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_ScriptInterpreter", "ScriptInterpreter\Build_IT_ScriptInterpreter.csproj", "{BC15039C-F640-42BC-99C8-C10265033021}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_ScriptInterpreter", "ScriptInterpreter\Build_IT_ScriptInterpreter.csproj", "{BC15039C-F640-42BC-99C8-C10265033021}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_BeamStatica", "BuildIt_BeamStatica\Build_IT_BeamStatica.csproj", "{E2157D66-D207-40B1-8CE9-C38AFDBC33F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_BeamStatica", "BuildIt_BeamStatica\Build_IT_BeamStatica.csproj", "{E2157D66-D207-40B1-8CE9-C38AFDBC33F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_Tools", "Build-IT_Tools\Build_IT_Tools.csproj", "{53AB3D6E-EBA5-4FD3-BF7F-4BC6BEBDBE6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_Tools", "Build-IT_Tools\Build_IT_Tools.csproj", "{53AB3D6E-EBA5-4FD3-BF7F-4BC6BEBDBE6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_BeamStaticaTests", "Build_IT_BeamStaticaTests\Build_IT_BeamStaticaTests.csproj", "{7B0840BC-254C-41A0-9B80-344C97820C14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_BeamStaticaTests", "Build_IT_BeamStaticaTests\Build_IT_BeamStaticaTests.csproj", "{7B0840BC-254C-41A0-9B80-344C97820C14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_ScriptInterpreterTests", "Build_IT_ScriptInterpreterTests\Build_IT_ScriptInterpreterTests.csproj", "{CC1C1A78-C157-4A62-98AE-27BC98F77F59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_ScriptInterpreterTests", "Build_IT_ScriptInterpreterTests\Build_IT_ScriptInterpreterTests.csproj", "{CC1C1A78-C157-4A62-98AE-27BC98F77F59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebTest", "WebTest\WebTest.csproj", "{6942BA10-6809-4428-AA04-4BE4D9D35D93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,6 +137,10 @@ Global
 		{CC1C1A78-C157-4A62-98AE-27BC98F77F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC1C1A78-C157-4A62-98AE-27BC98F77F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC1C1A78-C157-4A62-98AE-27BC98F77F59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6942BA10-6809-4428-AA04-4BE4D9D35D93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6942BA10-6809-4428-AA04-4BE4D9D35D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6942BA10-6809-4428-AA04-4BE4D9D35D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6942BA10-6809-4428-AA04-4BE4D9D35D93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

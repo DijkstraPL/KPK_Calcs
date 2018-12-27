@@ -13,6 +13,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
         public string Name { get; }
         public string Description { get; }
         public ICollection<string> Tags { get; set; }
+        public string GroupName { get; set; }
 
         public ICollection<KeyValuePair<int, IParameter>> Parameters { get; }
 

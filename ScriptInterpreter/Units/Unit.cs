@@ -6,9 +6,12 @@ namespace Build_IT_ScriptInterpreter.Units
 {
     public class Unit : IUnit
     {
+        public Enum DefaultUnit { get; protected set; }
+
         public IDictionary<Enum, double> UnitMultiplerPairs { get; }
         public double CurrentUnitMultipler { get; protected set; }
         public Enum CurrentUnit { get; protected set; }
+        public double Value { get; set; }
 
         public Unit(Enum currentUnit)
         {
@@ -41,5 +44,6 @@ namespace Build_IT_ScriptInterpreter.Units
         }
 
         protected virtual void SetUnits() { }
+               
     }
 }

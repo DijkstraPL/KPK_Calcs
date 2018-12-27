@@ -7,11 +7,13 @@ using Build_IT_ScriptInterpreter.Scripts;
 
 namespace Build_IT_ScriptInterpreter.DataSaver.SerializableClasses
 {
+    [Serializable]
     public class Script
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public List<string> Tags { get; set; }
+        public string GroupName { get; set; }
 
         public List<Parameter> Parameters { get; set; }
 
@@ -24,6 +26,7 @@ namespace Build_IT_ScriptInterpreter.DataSaver.SerializableClasses
             Name = script.Name;
             Description = script.Description;
             Tags = new List<string>(script.Tags);
+            GroupName = script.GroupName;
             Parameters = new List<Parameter>();
           
             foreach (var parameter in script.Parameters)

@@ -10,7 +10,7 @@ namespace Build_IT_ScriptInterpreter.Parameters
 
         public ValueOption(object value, string description = null)
         {
-            Value = value ?? throw new ArgumentNullException(nameof(value));
+            Value = value;
             Description = description;
         }
     }

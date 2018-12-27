@@ -5,6 +5,7 @@ using Build_IT_ScriptInterpreter.Parameters.Interfaces;
 
 namespace Build_IT_ScriptInterpreter.DataSaver.SerializableClasses
 {
+    [Serializable]
     public class ValueOption
     {
         public ValueOption()

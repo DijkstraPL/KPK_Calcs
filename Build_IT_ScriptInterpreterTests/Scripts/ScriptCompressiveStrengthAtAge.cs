@@ -115,7 +115,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             });
 
             scriptBuilder.Save(new XmlSave(),
-                @"C:\Users\User\Desktop\Visual Studio\KPK_Calcs_Scripts\" + scriptBuilder.Name + ".xml");
+                @"C:\Users\Disseminate\Desktop\Beam Statica\" + scriptBuilder.Name + ".xml");
 
             scriptBuilder.Calculate(30, 38, "CEM 42,5R", 5);
 
@@ -132,7 +132,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
         {
             string name = "Compressive strength of concrete at an age";
             var loader = new XmlLoad<Build_IT_ScriptInterpreter.DataSaver.SerializableClasses.Script>();
-            var scriptData = loader.LoadData(@"C:\Users\User\Desktop\Visual Studio\KPK_Calcs_Scripts\" + name + ".xml");
+            var scriptData = loader.LoadData(@"C:\Users\Disseminate\Desktop\Beam Statica\" + name + ".xml");
 
             var script = scriptData.Initialize();
             script.Calculate(30, 38, "CEM 42,5R", 5);
