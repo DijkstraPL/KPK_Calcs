@@ -38,14 +38,19 @@ namespace Build_IT_ScriptInterpreter.Scripts
             foreach (var ch in parameterValues)
             {
                 if (ch == '=')
+                {
                     continue;
+                }
                 else if (ch == '[')
                     inParameter = true;
                 else if (ch == ']')
                     inParameter = false;
-                else if (ch == ',' && !inParameter)
+                else if (ch == '|' && !inParameter)
                 {
-                    parameters.Add(parameterName, Convert.ToDouble(parameterValue));
+                    if (Parameters.SingleOrDefault(p => p.Value.Name == parameterName).Value.ValueType == ValueTypes.Number)
+                        parameters.Add(parameterName, Convert.ToDouble(parameterValue));
+                    else
+                        parameters.Add(parameterName, parameterValue.ToString());
                     parameterName = string.Empty;
                     parameterValue = string.Empty;
                 }
@@ -56,9 +61,14 @@ namespace Build_IT_ScriptInterpreter.Scripts
             }
             parameters.Add(parameterName, Convert.ToDouble(parameterValue));
 
-            foreach (var parameter in Parameters.Where(p=>(p.Value.Context & ParameterOptions.StaticData) != 0))
+            foreach (var parameter in Parameters.Where(p => (p.Value.Context & ParameterOptions.StaticData) != 0))
             {
                 parameters.Add(parameter.Value.Name, parameter.Value.Value);
+            }
+
+            foreach (var parameter in Parameters.Where(p=>(p.Value.Context & ParameterOptions.Editable) != 0))
+            {
+                parameter.Value.Value = parameters.SingleOrDefault(p => p.Key == parameter.Value.Name).Value;
             }
 
             foreach (var parameter in Parameters.Where(p =>

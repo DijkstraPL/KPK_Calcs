@@ -1,4 +1,4 @@
-<h1>Weather forecast</h1>
+<h1>Data</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
@@ -16,11 +16,24 @@
   <tbody>
     <tr *ngFor="let parameter of parameters">
       <td>{{ parameter.name }}</td>
-      <td><input value="{{ parameter.value }}"/></td>
+      <td>
+        <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
+          <input *ngIf="parameter.valueOptions.length == 0"
+                 [(ngModel)]="parameter.value"
+                 placeholder="value" />
+          <select *ngIf="parameter.valueOptions.length > 0"
+                  [(ngModel)]="parameter.value">
+            <option *ngFor="let valueOption of parameter.valueOptions">
+              {{valueOption.value }}
+            </option>
+          </select>
+        </div>
+        <span *ngIf="parameter.context % (2 * parameterOptions.Calculation) >= parameterOptions.Calculation">{{parameter.value }}</span>
+      </td>
       <td>{{ parameter.unit }}</td>
       <td>{{ parameter.description }}</td>
     </tr>
   </tbody>
 </table>
 
-<button (click)="calculate()">Calculate</button>
+<button (click)="calculate()" >Calculate</button>

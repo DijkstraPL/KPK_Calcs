@@ -193,7 +193,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             });
 
             scriptBuilder.Save(new XmlSave(),
-                @"C:\Users\Disseminate\Desktop\Beam Statica\" + scriptBuilder.Name + ".xml");
+                @"C:\Users\Disseminate\Desktop\Script Interpreter\" + scriptBuilder.Name + ".xml");
 
             scriptBuilder.Calculate(100, 30, 240, 461, 339, 100, 150000);
 
@@ -212,11 +212,11 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
         {
             string name = "Shear resistance without shear reinforcement";
             var loader = new XmlLoad<Build_IT_ScriptInterpreter.DataSaver.SerializableClasses.Script>();
-            var scriptData = loader.LoadData(@"C:\Users\Disseminate\Desktop\Beam Statica\" + name + ".xml");
+            var scriptData = loader.LoadData(@"C:\Users\Disseminate\Desktop\Script Interpreter\" + name + ".xml");
 
             var script = scriptData.Initialize();
           //  script.Calculate(30, 240, 461, 339, 100, 150000);
-            script.CalculateFromText("[V_Ed]=100,[f_ck]=30,[b_w]=240,[d]=461,[A_sl]=339,[N_Ed]=100,[A_c]=150000");
+            script.CalculateFromText("[V_Ed]=100|[f_ck]=30|[b_w]=240|[d]=461|[A_sl]=339|[N_Ed]=100|[A_c]=150000");
 
             Assert.That(0.128571, Is.EqualTo(script.GetParameterByName("C_Rd,c").Value).Within(0.000001));
             Assert.That(1.658664, Is.EqualTo(script.GetParameterByName("k").Value).Within(0.000001));

@@ -90,9 +90,9 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             });
 
             scriptBuilder.Save(new XmlSave(),
-                @"C:\Users\Disseminate\Desktop\Beam Statica\" + scriptBuilder.Name + ".xml");
+                @"C:\Users\Disseminate\Desktop\Script Interpreter\" + scriptBuilder.Name + ".xml");
 
-            scriptBuilder.CalculateFromText("[A]=60,[f_y]=235,[N_Ed]=1400");
+            scriptBuilder.CalculateFromText("[A]=60|[f_y]=235|[N_Ed]=1400");
 
             Assert.That(scriptBuilder.GetParameterByName("N_pl,Rd").Value, Is.EqualTo(1410).Within(0.000001));
             Assert.That(scriptBuilder.GetParameterByName("Resistance").Value, Is.EqualTo(99.29078).Within(0.000001));

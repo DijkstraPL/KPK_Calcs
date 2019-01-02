@@ -1,59 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Build_IT_ScriptInterpreter.DataSaver;
 using Build_IT_ScriptInterpreter.Parameters;
 using Build_IT_ScriptInterpreter.Parameters.Interfaces;
 using Build_IT_ScriptInterpreter.Scripts;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WebTest.Controllers
 {
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
-        private Script _script;
-
         [HttpGet("[action]")]
-        public async Task<IEnumerable<IParameter>> Parameters()
+        public IEnumerable<IParameter> Parameters()
         {
-            string name = "Shear resistance without shear reinforcement";
+            string name = "Compressive strength of concrete at an age";
             var loader = new XmlLoad<Build_IT_ScriptInterpreter.DataSaver.SerializableClasses.Script>();
-            var scriptData = loader.LoadData(@"C:\Users\Disseminate\Desktop\Beam Statica\" + name + ".xml");
+            var scriptData = loader.LoadData(@"C:\Users\Disseminate\Desktop\Script Interpreter\" + name + ".xml");
 
-            _script = scriptData.Initialize();
+            var script = scriptData.Initialize();
 
-            return _script.Parameters.Where(p => (p.Value.Context & ParameterOptions.Visible) != 0 
-            && (p.Value.Context & ParameterOptions.Calculation) == 0)
-                .Select(p => p.Value);
+            return script.Parameters
+                .Where(p=>(p.Value.Context & ParameterOptions.Editable) != 0)
+                .Select(p=>p.Value);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Calculate([FromBody] string test)
+        [HttpGet("[action]/{parameters}")]
+        public IEnumerable<IParameter> Calculate(string parameters)
         {
-            return Ok(test);
+            string name = "Compressive strength of concrete at an age";
+            var loader = new XmlLoad<Build_IT_ScriptInterpreter.DataSaver.SerializableClasses.Script>();
+            var scriptData = loader.LoadData(@"C:\Users\Disseminate\Desktop\Script Interpreter\" + name + ".xml");
+
+            var script = scriptData.Initialize();
+
+            script.CalculateFromText(parameters);
+
+            return script.Parameters
+                .Where(p => (p.Value.Context & ParameterOptions.Visible) != 0)
+                .Select(p => p.Value); ;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Calculate([FromBody] IParameter parametersData)
-        {
-            StringBuilder sb = new StringBuilder();
-           // foreach (var parameter in parametersData)
-            {
-
-                sb.Append("[")
-                  .Append(parametersData.Name)
-                  .Append("]")
-                  .Append("=")
-                  .Append(parametersData.Value)
-                  .Append(",");
-            }
-            sb.Remove(sb.Length - 1, 1);
-
-            _script.CalculateFromText(sb.ToString());
-
-            return Ok(parametersData);
-        }
     }
 }
