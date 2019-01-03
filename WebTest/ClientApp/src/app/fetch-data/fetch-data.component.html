@@ -1,39 +1,50 @@
-<h1>Data</h1>
+<div>
+  <select [(ngModel)]="selectedScript">
+    <option *ngFor="let script of scripts" [ngValue]="script">
+      {{script.name }}
+    </option>
+  </select>
+</div>
+<div *ngIf="selectedScript">
+  <h1>{{selectedScript.name}}</h1>
+  <p>{{selectedScript.description}}</p>
+  <ul>
+    <li *ngFor="let tag of selectedScript.tags">{{tag}}</li>
+  </ul>
 
-<p>This component demonstrates fetching data from the server.</p>
+  <p *ngIf="!selectedScript.parameters"><em>Loading...</em></p>
 
-<p *ngIf="!parameters"><em>Loading...</em></p>
+  <table class='table' *ngIf="parameters ">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Unit</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let parameter of parameters">
+        <td [innerHTML]="parameter.name | html"></td>
+        <td>
+          <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
+            <input *ngIf="parameter.valueOptions.length == 0"
+                   [(ngModel)]="parameter.value"
+                   placeholder="value" />
+            <select *ngIf="parameter.valueOptions.length > 0"
+                    [(ngModel)]="parameter.value">
+              <option *ngFor="let valueOption of parameter.valueOptions">
+                {{valueOption.value }}
+              </option>
+            </select>
+          </div>
+          <span *ngIf="parameter.context % (2 * parameterOptions.Calculation) >= parameterOptions.Calculation">{{parameter.value }}</span>
+        </td>
+        <td [innerHTML]="parameter.unit | html"></td>
+        <td>{{ parameter.description }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-<table class='table' *ngIf="parameters">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Value</th>
-      <th>Unit</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let parameter of parameters">
-      <td>{{ parameter.name }}</td>
-      <td>
-        <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
-          <input *ngIf="parameter.valueOptions.length == 0"
-                 [(ngModel)]="parameter.value"
-                 placeholder="value" />
-          <select *ngIf="parameter.valueOptions.length > 0"
-                  [(ngModel)]="parameter.value">
-            <option *ngFor="let valueOption of parameter.valueOptions">
-              {{valueOption.value }}
-            </option>
-          </select>
-        </div>
-        <span *ngIf="parameter.context % (2 * parameterOptions.Calculation) >= parameterOptions.Calculation">{{parameter.value }}</span>
-      </td>
-      <td>{{ parameter.unit }}</td>
-      <td>{{ parameter.description }}</td>
-    </tr>
-  </tbody>
-</table>
-
-<button (click)="calculate()" >Calculate</button>
+  <button (click)="calculate()">Calculate</button>
+</div>

@@ -34,7 +34,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             scriptBuilder.AppendParameter(new Parameter()
             {
                 Number = 1,
-                Name = "f_ck",
+                Name = "f_ck_",
                 Description = "Characteristic compressive cylinder strength of concrete at 28 days.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Editable | ParameterOptions.Visible,
@@ -43,7 +43,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 .AppendParameter(new Parameter()
                 {
                     Number = 2,
-                    Name = "f_cm",
+                    Name = "f_cm_",
                     Description = "Mean compressive strength at 28 days.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
@@ -52,7 +52,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 .AppendParameter(new Parameter()
                 {
                     Number = 3,
-                    Name = "cement_type",
+                    Name = "cement_type_",
                     Description = "Type of cement.",
                     ValueOptions = cementTypes,
                     ValueType = ValueTypes.Text,
@@ -73,9 +73,9 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             {
                 Number = 10,
                 Name = "s",
-                Value = "if(in([cement_type],'CEM 42,5R','CEM 52,5N', 'CEM 52,5R') == true,0.2," +
-                "if(in([cement_type],'CEM 32,5R','CEM 42,5') == true,0.25," +
-                "if(in([cement_type],'CEM 32,5N') == true,0.38, ERROR('Invalid cement type.'))))",
+                Value = "if(in([cement_type_],'CEM 42,5R','CEM 52,5N', 'CEM 52,5R') == true,0.2," +
+                "if(in([cement_type_],'CEM 32,5R','CEM 42,5') == true,0.25," +
+                "if(in([cement_type_],'CEM 32,5N') == true,0.38, ERROR('Invalid cement type.'))))",
                 Description = "Coefficient which depends on the type of cement.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Calculation | ParameterOptions.Visible,
@@ -85,7 +85,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             scriptBuilder.AppendParameter(new Parameter()
             {
                 Number = 11,
-                Name = "beta_cc(t)",
+                Name = "β_cc_(t)",
                 Value = "Exp([s]*(1-Sqrt(28/[t])))",
                 Description = "Coefficient which depends on the age of the concrete t.",
                 ValueType = ValueTypes.Number,
@@ -96,8 +96,8 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             scriptBuilder.AppendParameter(new Parameter()
             {
                 Number = 12,
-                Name = "f_cm(t)",
-                Value = "[beta_cc(t)]*[f_cm]",
+                Name = "f_cm_(t)",
+                Value = "[β_cc_(t)]*[f_cm_]",
                 Description = "Mean concrete compressive strength at an age of t days.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Calculation | ParameterOptions.Visible,
@@ -107,8 +107,8 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             scriptBuilder.AppendParameter(new Parameter()
             {
                 Number = 13,
-                Name = "f_ck(t)",
-                Value = "if([t]>=28,[f_ck],if([t]>3,[f_cm(t)]-8,ERROR('Not even 3 days.')))",
+                Name = "f_ck_(t)",
+                Value = "if([t]>=28,[f_ck_],if([t]>3,[f_cm_(t)]-8,ERROR('Not even 3 days.')))",
                 Description = "Concrete compressive strength at time t.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Calculation | ParameterOptions.Visible,
@@ -121,11 +121,11 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             scriptBuilder.Calculate(30, 38, "CEM 42,5R", 5);
 
             Assert.That(0.2, Is.EqualTo(scriptBuilder.GetParameterByName("s").Value).Within(0.000001));
-            Assert.That(0.760874, Is.EqualTo(scriptBuilder.GetParameterByName("beta_cc(t)").Value).Within(0.000001));
-            Assert.That(28.913244, Is.EqualTo(scriptBuilder.GetParameterByName("f_cm(t)").Value).Within(0.000001));
-            Assert.That(20.913244, Is.EqualTo(scriptBuilder.GetParameterByName("f_ck(t)").Value).Within(0.000001));
+            Assert.That(0.760874, Is.EqualTo(scriptBuilder.GetParameterByName("β_cc_(t)").Value).Within(0.000001));
+            Assert.That(28.913244, Is.EqualTo(scriptBuilder.GetParameterByName("f_cm_(t)").Value).Within(0.000001));
+            Assert.That(20.913244, Is.EqualTo(scriptBuilder.GetParameterByName("f_ck_(t)").Value).Within(0.000001));
 
-            StringAssert.Contains("MPa", scriptBuilder.GetParameterByName("f_ck(t)").ToString());
+            StringAssert.Contains("MPa", scriptBuilder.GetParameterByName("f_ck_(t)").ToString());
         }
 
         [Test]
@@ -139,11 +139,11 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             script.Calculate(30, 38, "CEM 42,5R", 5);
 
             Assert.That(0.2, Is.EqualTo(script.GetParameterByName("s").Value).Within(0.000001));
-            Assert.That(0.760874, Is.EqualTo(script.GetParameterByName("beta_cc(t)").Value).Within(0.000001));
-            Assert.That(28.913244, Is.EqualTo(script.GetParameterByName("f_cm(t)").Value).Within(0.000001));
-            Assert.That(20.913244, Is.EqualTo(script.GetParameterByName("f_ck(t)").Value).Within(0.000001));
+            Assert.That(0.760874, Is.EqualTo(script.GetParameterByName("β_cc_(t)").Value).Within(0.000001));
+            Assert.That(28.913244, Is.EqualTo(script.GetParameterByName("f_cm_(t)").Value).Within(0.000001));
+            Assert.That(20.913244, Is.EqualTo(script.GetParameterByName("f_ck_(t)").Value).Within(0.000001));
 
-            StringAssert.Contains("MPa", script.GetParameterByName("f_ck(t)").ToString());
+            StringAssert.Contains("MPa", script.GetParameterByName("f_ck_(t)").ToString());
         }
     }
 }

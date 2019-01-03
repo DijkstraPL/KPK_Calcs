@@ -23,7 +23,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 .AppendParameter(new Parameter()
                 {
                     Number = 1,
-                    Name = "N_Ed",
+                    Name = "N_Ed_",
                     Description = "Normal design force at calculated position.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
@@ -41,7 +41,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 .AppendParameter(new Parameter()
                 {
                     Number = 3,
-                    Name = "f_y",
+                    Name = "f_y_",
                     Description = "Yield strength.",
                     ValueType = ValueTypes.Number,
                     ValueOptions = new List<IValueOption>()
@@ -60,7 +60,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 .AppendParameter(new Parameter()
                 {
                     Number = 4,
-                    Name = "gamma_M0",
+                    Name = "γ_M0_",
                     Description = "Partial safety factor.",
                     Value = 1.0,
                     ValueType = ValueTypes.Number,
@@ -70,8 +70,8 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 .AppendParameter(new Parameter()
                 {
                     Number = 5,
-                    Name = "N_pl,Rd",
-                    Value = "[A]*[f_y]/[gamma_M0]/10",
+                    Name = "N_pl,Rd_",
+                    Value = "[A]*[f_y_]/[γ_M0_]/10",
                     Description = "Design plastic resistance of the gross cross-section.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Calculation | ParameterOptions.Visible,
@@ -82,7 +82,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             {
                 Number = 27,
                 Name = "Resistance",
-                Value = "[N_Ed]/[N_pl,Rd]*100",
+                Value = "[N_Ed_]/[N_pl,Rd_]*100",
                 Description = "Resistance of the element loaded with normal force.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Calculation | ParameterOptions.Visible,
@@ -92,9 +92,9 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             scriptBuilder.Save(new XmlSave(),
                 @"C:\Users\Disseminate\Desktop\Script Interpreter\" + scriptBuilder.Name + ".xml");
 
-            scriptBuilder.CalculateFromText("[A]=60|[f_y]=235|[N_Ed]=1400");
+            scriptBuilder.CalculateFromText("[A]=60|[f_y_]=235|[N_Ed_]=1400");
 
-            Assert.That(scriptBuilder.GetParameterByName("N_pl,Rd").Value, Is.EqualTo(1410).Within(0.000001));
+            Assert.That(scriptBuilder.GetParameterByName("N_pl,Rd_").Value, Is.EqualTo(1410).Within(0.000001));
             Assert.That(scriptBuilder.GetParameterByName("Resistance").Value, Is.EqualTo(99.29078).Within(0.000001));
         }
     }

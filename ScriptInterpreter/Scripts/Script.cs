@@ -4,7 +4,9 @@ using Build_IT_ScriptInterpreter.Parameters;
 using Build_IT_ScriptInterpreter.Parameters.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using static Build_IT_Tools.ParseExtended;
 
 namespace Build_IT_ScriptInterpreter.Scripts
 {
@@ -48,7 +50,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
                 else if (ch == '|' && !inParameter)
                 {
                     if (Parameters.SingleOrDefault(p => p.Value.Name == parameterName).Value.ValueType == ValueTypes.Number)
-                        parameters.Add(parameterName, Convert.ToDouble(parameterValue));
+                        parameters.Add(parameterName, parameterValue.GetDouble());
                     else
                         parameters.Add(parameterName, parameterValue.ToString());
                     parameterName = string.Empty;
@@ -59,7 +61,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
                 else
                     parameterValue += ch;
             }
-            parameters.Add(parameterName, Convert.ToDouble(parameterValue));
+            parameters.Add(parameterName, parameterValue.GetDouble());
 
             foreach (var parameter in Parameters.Where(p => (p.Value.Context & ParameterOptions.StaticData) != 0))
             {
@@ -76,7 +78,14 @@ namespace Build_IT_ScriptInterpreter.Scripts
             {
                 var expressionEvaluator = ExpressionEvaluator.Create(parameter.Value.Value.ToString(), parameters);
 
-                parameter.Value.Value = expressionEvaluator.Evaluate();
+                try
+                {
+                    parameter.Value.Value = expressionEvaluator.Evaluate();
+                }
+                catch (ArgumentException ex)
+                {
+                    parameter.Value.Value = ex.Message;
+                }
                 parameters.Add(parameter.Value.Name, parameter.Value.Value);
             }
         }
