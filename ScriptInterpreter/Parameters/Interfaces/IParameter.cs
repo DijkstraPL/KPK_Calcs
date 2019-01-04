@@ -1,9 +1,10 @@
 ﻿using Build_IT_ScriptInterpreter.Units.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Build_IT_ScriptInterpreter.Parameters.Interfaces
 {
-    public interface IParameter
+    public interface IParameter : IComparer<IParameter>, IComparable<IParameter>
     {
         int Number { get; set; }
         string Name { get; set; }

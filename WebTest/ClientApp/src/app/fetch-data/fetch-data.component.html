@@ -1,6 +1,7 @@
 <div>
   <select [(ngModel)]="selectedScript">
-    <option *ngFor="let script of scripts" [ngValue]="script">
+    <option *ngFor="let script of scripts"
+            [ngValue]="script">
       {{script.name }}
     </option>
   </select>
@@ -14,7 +15,7 @@
 
   <p *ngIf="!selectedScript.parameters"><em>Loading...</em></p>
 
-  <table class='table' *ngIf="parameters ">
+  <table class='table' *ngIf="selectedScript.parameters">
     <thead>
       <tr>
         <th>Name</th>
@@ -24,7 +25,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let parameter of parameters">
+      <tr *ngFor="let parameter of selectedScript.parameters">
         <td [innerHTML]="parameter.name | html"></td>
         <td>
           <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">

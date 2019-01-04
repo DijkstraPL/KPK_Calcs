@@ -19,6 +19,21 @@ namespace Build_IT_ScriptInterpreter.Parameters
         public virtual ParameterOptions Context { get; set; }
         public string GroupName { get; set; }
 
+        public int Compare(IParameter x, IParameter y)
+        {
+            if (x.Number.CompareTo(y.Number) != 0)
+                return x.Number.CompareTo(y.Number);
+            else
+                return 0;
+        }
+
+        public int CompareTo(IParameter other)
+        {
+            if (other == null)
+                return 1;
+            return this.Number.CompareTo(other.Number);
+        }
+
         public override string ToString() 
             => Value.ToString() + Unit;
     }

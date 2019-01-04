@@ -17,14 +17,14 @@ namespace Build_IT_ScriptInterpreter.Scripts
         public ICollection<string> Tags { get; set; }
         public string GroupName { get; set; }
 
-        public ICollection<KeyValuePair<int, IParameter>> Parameters { get; }
+        public ICollection<IParameter> Parameters { get; set; }
 
         public Script(string name, string description, params string[] tags)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Description = description ?? throw new ArgumentNullException(nameof(description));
             Tags = new List<string>(tags);
-            Parameters = new SortedList<int, IParameter>();
+            Parameters = new SortedSet<IParameter>();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
                     inParameter = false;
                 else if (ch == '|' && !inParameter)
                 {
-                    if (Parameters.SingleOrDefault(p => p.Value.Name == parameterName).Value.ValueType == ValueTypes.Number)
+                    if (Parameters.SingleOrDefault(p => p.Name == parameterName).ValueType == ValueTypes.Number)
                         parameters.Add(parameterName, parameterValue.GetDouble());
                     else
                         parameters.Add(parameterName, parameterValue.ToString());
@@ -63,30 +63,30 @@ namespace Build_IT_ScriptInterpreter.Scripts
             }
             parameters.Add(parameterName, parameterValue.GetDouble());
 
-            foreach (var parameter in Parameters.Where(p => (p.Value.Context & ParameterOptions.StaticData) != 0))
+            foreach (var parameter in Parameters.Where(p => (p.Context & ParameterOptions.StaticData) != 0))
             {
-                parameters.Add(parameter.Value.Name, parameter.Value.Value);
+                parameters.Add(parameter.Name, parameter.Value);
             }
 
-            foreach (var parameter in Parameters.Where(p=>(p.Value.Context & ParameterOptions.Editable) != 0))
+            foreach (var parameter in Parameters.Where(p=>(p.Context & ParameterOptions.Editable) != 0))
             {
-                parameter.Value.Value = parameters.SingleOrDefault(p => p.Key == parameter.Value.Name).Value;
+                parameter.Value = parameters.SingleOrDefault(p => p.Key == parameter.Name).Value;
             }
 
             foreach (var parameter in Parameters.Where(p =>
-                (p.Value.Context & ParameterOptions.Calculation) != 0))
+                (p.Context & ParameterOptions.Calculation) != 0))
             {
-                var expressionEvaluator = ExpressionEvaluator.Create(parameter.Value.Value.ToString(), parameters);
+                var expressionEvaluator = ExpressionEvaluator.Create(parameter.Value.ToString(), parameters);
 
                 try
                 {
-                    parameter.Value.Value = expressionEvaluator.Evaluate();
+                    parameter.Value = expressionEvaluator.Evaluate();
                 }
                 catch (ArgumentException ex)
                 {
-                    parameter.Value.Value = ex.Message;
+                    parameter.Value = ex.Message;
                 }
-                parameters.Add(parameter.Value.Name, parameter.Value.Value);
+                parameters.Add(parameter.Name, parameter.Value);
             }
         }
 
@@ -95,12 +95,12 @@ namespace Build_IT_ScriptInterpreter.Scripts
             var parameters = PrepareDataParameters(values).ToList();
 
             foreach (var parameter in Parameters.Where(p =>
-            (p.Value.Context & ParameterOptions.Calculation) != 0))
+            (p.Context & ParameterOptions.Calculation) != 0))
             {
-                var expressionEvaluator = ExpressionEvaluator.Create(parameter.Value.Value.ToString(), parameters);
+                var expressionEvaluator = ExpressionEvaluator.Create(parameter.Value.ToString(), parameters);
 
-                parameter.Value.Value = expressionEvaluator.Evaluate();
-                parameters.Add(parameter.Value);
+                parameter.Value = expressionEvaluator.Evaluate();
+                parameters.Add(parameter);
             }
         }
 
@@ -115,15 +115,15 @@ namespace Build_IT_ScriptInterpreter.Scripts
         {
             int i = 0;
             foreach (var parameter in Parameters.Where(p
-                => (p.Value.Context & ParameterOptions.Calculation) == 0))
+                => (p.Context & ParameterOptions.Calculation) == 0))
             {
-                if ((parameter.Value.Context & ParameterOptions.StaticData) == 0)
-                    parameter.Value.Value = values[i++];
-                yield return parameter.Value;
+                if ((parameter.Context & ParameterOptions.StaticData) == 0)
+                    parameter.Value = values[i++];
+                yield return parameter;
             }
         }
 
         public IParameter GetParameterByName(string name)
-            => Parameters.FirstOrDefault(p => p.Value.Name == name).Value;
+            => Parameters.FirstOrDefault(p => p.Name == name);
     }
 }

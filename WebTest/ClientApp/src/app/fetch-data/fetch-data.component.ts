@@ -21,7 +21,6 @@ export class FetchDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.getScripts();
-    this.getParameters();
   }
 
   getScripts() {
@@ -30,15 +29,9 @@ export class FetchDataComponent implements OnInit {
         error => console.error(error));
   }
 
-  getParameters() {
-    this.http.get<Parameter[]>(this.baseUrl + 'api/SampleData/Parameters')
-      .subscribe(result => { this.parameters = result; },
-      error => console.error(error));
-  }
-
   calculate() {
     let parameters: string = "";
-    this.parameters.filter(parameter => (parameter.context & ParameterOptions.Editable) != 0)
+    this.selectedScript.parameters.filter(parameter => (parameter.context & ParameterOptions.Editable) != 0)
       .forEach(parameter => {
         parameters += "[";
         parameters += parameter.name;
@@ -48,8 +41,8 @@ export class FetchDataComponent implements OnInit {
       });
     parameters = parameters.substr(0, parameters.length - 1);
 
-    this.http.get<Parameter[]>(this.baseUrl + 'api/SampleData/Calculate/' + parameters)
-      .subscribe(result => { this.parameters = result; },
+    this.http.get<Parameter[]>(this.baseUrl + 'api/SampleData/Calculate/' + this.selectedScript.name + '/' + parameters)
+      .subscribe(result => { this.selectedScript.parameters = result; },
         error => console.error(error));
   }
 }
@@ -88,7 +81,7 @@ export class HtmlPipe implements PipeTransform {
 interface Script {
   name: string;
   description: string;
-  parameters: KeyValue<number, Parameter>[];
+  parameters: Parameter[];
   tags: string[];
 }
 

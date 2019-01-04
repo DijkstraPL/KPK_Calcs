@@ -30,7 +30,7 @@ namespace Build_IT_ScriptInterpreter.DataSaver.SerializableClasses
             Parameters = new List<Parameter>();
           
             foreach (var parameter in script.Parameters)
-                this.Parameters.Add(new Parameter(parameter.Value));
+                this.Parameters.Add(new Parameter(parameter));
         }
 
         public Scripts.Script Initialize()
@@ -43,9 +43,7 @@ namespace Build_IT_ScriptInterpreter.DataSaver.SerializableClasses
             foreach (var parameter in Parameters)
             {
                 script.Parameters.Add(
-                    new KeyValuePair<int, Parameters.Interfaces.IParameter>(
-                        parameter.Number,
-                        new Parameters.Parameter()
+                    new Parameters.Parameter()
                         {
                             Number = parameter.Number,
                             Name = parameter.Name,
@@ -55,11 +53,11 @@ namespace Build_IT_ScriptInterpreter.DataSaver.SerializableClasses
                             ValueType = parameter.ValueType,
                             Unit = parameter.Unit,
                             ValueOptions = new List<IValueOption>()
-                        }));
+                        });
 
                 foreach (var valueOption in parameter.ValueOptions)
                     script.Parameters.SingleOrDefault(p =>
-                    p.Value.Name == parameter.Name).Value.ValueOptions.Add(new Parameters.ValueOption(
+                    p.Name == parameter.Name).ValueOptions.Add(new Parameters.ValueOption(
                         value: valueOption.Value,
                         description: valueOption.Description
                     ));

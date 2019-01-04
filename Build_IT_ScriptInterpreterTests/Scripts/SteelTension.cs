@@ -36,7 +36,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                     Description = "Area of the section.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
-                    Unit = "cm2"
+                    Unit = "cm^2^"
                 })
                 .AppendParameter(new Parameter()
                 {

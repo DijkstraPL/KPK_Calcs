@@ -59,7 +59,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                     Description = "Area of the tensile reinforcement, which extends ≥ (lbd + d) beyond the section considered.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
-                    Unit = "cm^2"
+                    Unit = "cm^2^"
                 })
                 .AppendParameter(new Parameter()
                 {
@@ -79,7 +79,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                     Description = "Area of concrete cross section [mm2].",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
-                    Unit = "mm^2"
+                    Unit = "mm^2^"
                 })
                 .AppendParameter(new Parameter()
                 {

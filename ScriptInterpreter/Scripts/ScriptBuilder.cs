@@ -27,7 +27,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
 
         public ScriptBuilder AppendParameter(IParameter parameter)
         {
-            Parameters.Add(new KeyValuePair<int, IParameter>(parameter.Number, parameter));
+            Parameters.Add(parameter);
             return this;
         }
     }
