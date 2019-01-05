@@ -1,6 +1,6 @@
 ﻿using Build_IT_ScriptInterpreter.DataSaver;
 using Build_IT_ScriptInterpreter.Parameters;
-using Build_IT_ScriptInterpreter.Parameters.Interfaces;
+using Build_IT_ScriptInterpreter.Parameters.ValueOptions;
 using Build_IT_ScriptInterpreter.Scripts;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -13,11 +13,16 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
         [Test]
         public void CreationTest_Success()
         {
-            var scriptBuilder = new ScriptBuilder(name: "Compressive strength of concrete at an age",
+            string name = "Mean compresive strength of concrete at 28 days";
+            var loader = new XmlLoad<Script>();
+            var scriptFcm = loader.LoadData(@"C:\Users\Disseminate\Desktop\Script Interpreter\Scripts\" + name + ".xml");
+
+
+            var scriptBuilder = ScriptBuilder.Create(name: "Compressive strength of concrete at an age",
                 description: "Calculate compressive strength of concrete at an age. Base on [PN-EN-1992-1-1:2002 3.1.2].",
                 "Eurocode 1992", "Concrete", "Materials", "Strength", "Time", "Compressive");
 
-            var cementTypes = new List<IValueOption>();
+            var cementTypes = new List<ValueOption>();
             cementTypes.Add(new ValueOption(value: "CEM 42,5R",
                 description: "Rapid hardening high strength cements (R)."));
             cementTypes.Add(new ValueOption(value: "CEM 52,5N",
@@ -35,6 +40,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             {
                 Number = 1,
                 Name = "f_ck_",
+                DataValidator = "[f_ck_]>0",
                 Description = "Characteristic compressive cylinder strength of concrete at 28 days.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Editable | ParameterOptions.Visible,
@@ -44,10 +50,15 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 {
                     Number = 2,
                     Name = "f_cm_",
+                    DataValidator = "[f_cm_]>0",
                     Description = "Mean compressive strength at 28 days.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
-                    Unit = "MPa"
+                    Unit = "MPa",
+                    Scripts = new List<Script>()
+                    {
+                        scriptFcm
+                    }
                 })
                 .AppendParameter(new Parameter()
                 {
@@ -63,6 +74,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 {
                     Number = 4,
                     Name = "t",
+                    DataValidator = "[t]>3",
                     Description = "Age of the concrete in days.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
@@ -115,28 +127,31 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 Unit = "MPa"
             });
 
-            scriptBuilder.Save(new XmlSave(),
-                @"C:\Users\Disseminate\Desktop\Script Interpreter\" + scriptBuilder.Name + ".xml");
+            var script = scriptBuilder.Build();
+            new XmlSave().SaveData(script,
+                @"C:\Users\Disseminate\Desktop\Script Interpreter\Scripts\" + script.Name + ".xml");
 
-            scriptBuilder.Calculate(30, 38, "CEM 42,5R", 5);
+            var calculationEngine = new CalculationEngine(script);
 
-            Assert.That(0.2, Is.EqualTo(scriptBuilder.GetParameterByName("s").Value).Within(0.000001));
-            Assert.That(0.760874, Is.EqualTo(scriptBuilder.GetParameterByName("β_cc_(t)").Value).Within(0.000001));
-            Assert.That(28.913244, Is.EqualTo(scriptBuilder.GetParameterByName("f_cm_(t)").Value).Within(0.000001));
-            Assert.That(20.913244, Is.EqualTo(scriptBuilder.GetParameterByName("f_ck_(t)").Value).Within(0.000001));
+            calculationEngine.Calculate(30, 38, "CEM 42,5R", 5);
 
-            StringAssert.Contains("MPa", scriptBuilder.GetParameterByName("f_ck_(t)").ToString());
+            Assert.That(0.2, Is.EqualTo(script.GetParameterByName("s").Value).Within(0.000001));
+            Assert.That(0.760874, Is.EqualTo(script.GetParameterByName("β_cc_(t)").Value).Within(0.000001));
+            Assert.That(28.913244, Is.EqualTo(script.GetParameterByName("f_cm_(t)").Value).Within(0.000001));
+            Assert.That(20.913244, Is.EqualTo(script.GetParameterByName("f_ck_(t)").Value).Within(0.000001));
+
+            StringAssert.Contains("MPa", script.GetParameterByName("f_ck_(t)").ToString());
         }
 
         [Test]
         public void LoadTest_Success()
         {
             string name = "Compressive strength of concrete at an age";
-            var loader = new XmlLoad<Build_IT_ScriptInterpreter.DataSaver.SerializableClasses.Script>();
-            var scriptData = loader.LoadData(@"C:\Users\Disseminate\Desktop\Script Interpreter\" + name + ".xml");
+            var loader = new XmlLoad<Script>();
+            var script = loader.LoadData(@"C:\Users\Disseminate\Desktop\Script Interpreter\Scripts\" + name + ".xml");
 
-            var script = scriptData.Initialize();
-            script.Calculate(30, 38, "CEM 42,5R", 5);
+            var calculationEngine = new CalculationEngine(script);
+            calculationEngine.Calculate(30, 38, "CEM 42,5R", 5);
 
             Assert.That(0.2, Is.EqualTo(script.GetParameterByName("s").Value).Within(0.000001));
             Assert.That(0.760874, Is.EqualTo(script.GetParameterByName("β_cc_(t)").Value).Within(0.000001));

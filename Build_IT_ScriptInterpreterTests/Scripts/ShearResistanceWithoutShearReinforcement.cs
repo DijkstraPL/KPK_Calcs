@@ -11,7 +11,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
         [Test]
         public void CreationTest_Success()
         {
-            var scriptBuilder = new ScriptBuilder(name: "Shear resistance without shear reinforcement",
+            var scriptBuilder = ScriptBuilder.Create(name: "Shear resistance without shear reinforcement",
                 description: "Calculate shear resistance without shear reinforcement. Base on [PN-EN-1992-1-1:2002 6.2.2].",
                 "Eurocode 1992", "Concrete", "Shear", "Resistance");
 
@@ -192,31 +192,33 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 Unit = "%"
             });
 
-            scriptBuilder.Save(new XmlSave(),
-                @"C:\Users\Disseminate\Desktop\Script Interpreter\" + scriptBuilder.Name + ".xml");
+            var script = scriptBuilder.Build();
+            new XmlSave().SaveData(script,
+                @"C:\Users\Disseminate\Desktop\Script Interpreter\Scripts\" + script.Name + ".xml");
 
-            scriptBuilder.Calculate(100, 30, 240, 461, 339, 100, 150000);
+            var calculationEngine = new CalculationEngine(script);
+            calculationEngine.Calculate(100, 30, 240, 461, 339, 100, 150000);
 
-            Assert.That(0.128571, Is.EqualTo(scriptBuilder.GetParameterByName("C_Rd,c_").Value).Within(0.000001));
-            Assert.That(1.658664, Is.EqualTo(scriptBuilder.GetParameterByName("k").Value).Within(0.000001));
-            Assert.That(0.003063, Is.EqualTo(scriptBuilder.GetParameterByName("ρ_l_").Value).Within(0.000001));
-            Assert.That(21.428571, Is.EqualTo(scriptBuilder.GetParameterByName("f_cd_").Value).Within(0.000001));
-            Assert.That(0.000666, Is.EqualTo(scriptBuilder.GetParameterByName("σ _cp_").Value).Within(0.000001));
-            Assert.That(0.409512, Is.EqualTo(scriptBuilder.GetParameterByName("v_min_").Value).Within(0.000001));
-            Assert.That(49.436619, Is.EqualTo(scriptBuilder.GetParameterByName("V_Rd,c_").Value).Within(0.000001));
-            Assert.That(202.279, Is.EqualTo(scriptBuilder.GetParameterByName("Resistance").Value).Within(0.001));
+            Assert.That(0.128571, Is.EqualTo(script.GetParameterByName("C_Rd,c_").Value).Within(0.000001));
+            Assert.That(1.658664, Is.EqualTo(script.GetParameterByName("k").Value).Within(0.000001));
+            Assert.That(0.003063, Is.EqualTo(script.GetParameterByName("ρ_l_").Value).Within(0.000001));
+            Assert.That(21.428571, Is.EqualTo(script.GetParameterByName("f_cd_").Value).Within(0.000001));
+            Assert.That(0.000666, Is.EqualTo(script.GetParameterByName("σ _cp_").Value).Within(0.000001));
+            Assert.That(0.409512, Is.EqualTo(script.GetParameterByName("v_min_").Value).Within(0.000001));
+            Assert.That(49.436619, Is.EqualTo(script.GetParameterByName("V_Rd,c_").Value).Within(0.000001));
+            Assert.That(202.279, Is.EqualTo(script.GetParameterByName("Resistance").Value).Within(0.001));
         }
 
         [Test]
         public void LoadTest_Success()
         {
             string name = "Shear resistance without shear reinforcement";
-            var loader = new XmlLoad<Build_IT_ScriptInterpreter.DataSaver.SerializableClasses.Script>();
-            var scriptData = loader.LoadData(@"C:\Users\Disseminate\Desktop\Script Interpreter\" + name + ".xml");
+            var loader = new XmlLoad<Script>();
+            var script = loader.LoadData(@"C:\Users\Disseminate\Desktop\Script Interpreter\Scripts\" + name + ".xml");
 
-            var script = scriptData.Initialize();
-          //  script.Calculate(30, 240, 461, 339, 100, 150000);
-            script.CalculateFromText("[V_Ed_]=100|[f_ck_]=30|[b_w_]=240|[d]=461|[A_sl_]=339|[N_Ed_]=100|[A_c_]=150000");
+            //  script.Calculate(30, 240, 461, 339, 100, 150000);
+            var calculationEngine = new CalculationEngine(script);
+            calculationEngine.CalculateFromText("[V_Ed_]=100|[f_ck_]=30|[b_w_]=240|[d]=461|[A_sl_]=339|[N_Ed_]=100|[A_c_]=150000");
 
             Assert.That(0.128571, Is.EqualTo(script.GetParameterByName("C_Rd,c_").Value).Within(0.000001));
             Assert.That(1.658664, Is.EqualTo(script.GetParameterByName("k").Value).Within(0.000001));

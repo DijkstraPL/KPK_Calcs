@@ -1,4 +1,5 @@
-﻿using Build_IT_ScriptInterpreter.Units.Interfaces;
+﻿using Build_IT_ScriptInterpreter.Parameters.ValueOptions;
+using Build_IT_ScriptInterpreter.Units.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -10,11 +11,13 @@ namespace Build_IT_ScriptInterpreter.Parameters.Interfaces
         string Name { get; set; }
         object Value { get; set; }
         string Description { get; set; }
-        IList<IValueOption> ValueOptions { get; set; }
+        List<ValueOption> ValueOptions { get; set; }
         object DataValidator { get; set; }
         string Unit { get; set; }
         ParameterOptions Context { get; }
         ValueTypes ValueType { get; set; }
         string GroupName { get; set; }
+        string AccordingTo { get; set; }
+        string Notes { get; set; }
     }
 }

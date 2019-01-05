@@ -1,6 +1,7 @@
 ﻿using Build_IT_ScriptInterpreter.DataSaver;
 using Build_IT_ScriptInterpreter.Parameters;
 using Build_IT_ScriptInterpreter.Parameters.Interfaces;
+using Build_IT_ScriptInterpreter.Parameters.ValueOptions;
 using Build_IT_ScriptInterpreter.Scripts;
 using NUnit.Framework;
 using System;
@@ -15,9 +16,14 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
         [Test]
         public void CreationTest_Success()
         {
-            var scriptBuilder = new ScriptBuilder(name: "Steel tension",
+            var scriptBuilder = ScriptBuilder.Create(name: "Steel tension",
                 description: "Calculate tension resistance. Base on [PN-EN-1993-1-1:2005 6.2.3.(2)a)].",
                 "Eurocode 1993", "Steel", "Tension", "Resistance");
+
+            scriptBuilder.SetAuthor("Konrad Kania");
+            scriptBuilder.SetDocument("PN-EN-1993-1-1:2005");
+            scriptBuilder.SetGroupName("Eurocode 3");
+            scriptBuilder.SetNotes("Net area not included.");
 
             scriptBuilder
                 .AppendParameter(new Parameter()
@@ -44,7 +50,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                     Name = "f_y_",
                     Description = "Yield strength.",
                     ValueType = ValueTypes.Number,
-                    ValueOptions = new List<IValueOption>()
+                    ValueOptions = new List<ValueOption>()
                     {
                         new ValueOption(235),
                         new ValueOption(275),
@@ -89,13 +95,15 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 Unit = "%"
             });
 
-            scriptBuilder.Save(new XmlSave(),
-                @"C:\Users\Disseminate\Desktop\Script Interpreter\" + scriptBuilder.Name + ".xml");
+            var script = scriptBuilder.Build();
+            new XmlSave().SaveData(script,
+                @"C:\Users\Disseminate\Desktop\Script Interpreter\Scripts\" + script.Name + ".xml");
 
-            scriptBuilder.CalculateFromText("[A]=60|[f_y_]=235|[N_Ed_]=1400");
+            var calculationEngine = new CalculationEngine(script);
+            calculationEngine.CalculateFromText("[A]=60|[f_y_]=235|[N_Ed_]=1400");
 
-            Assert.That(scriptBuilder.GetParameterByName("N_pl,Rd_").Value, Is.EqualTo(1410).Within(0.000001));
-            Assert.That(scriptBuilder.GetParameterByName("Resistance").Value, Is.EqualTo(99.29078).Within(0.000001));
+            Assert.That(script.GetParameterByName("N_pl,Rd_").Value, Is.EqualTo(1410).Within(0.000001));
+            Assert.That(script.GetParameterByName("Resistance").Value, Is.EqualTo(99.29078).Within(0.000001));
         }
     }
 }

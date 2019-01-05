@@ -19,6 +19,7 @@
     <PackageId>ASP.NET Core 2.1 with Angular 7 Template</PackageId>
     <Description>ASP.NET Core 2.1 with Angular 7</Description>
     <PackageProjectUrl>https://github.com/blfuentes/NETCore2_Angular7_Template</PackageProjectUrl>
+    <UserSecretsId>181aec44-9761-47e6-895f-f94047fbd665</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

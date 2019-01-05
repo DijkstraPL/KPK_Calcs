@@ -13,7 +13,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
         [Test]
         public void MomentOfInteriaScriptTest_Success()
         {
-            var scriptBuilder = new ScriptBuilder(name: "Moment of interia for rectangle",
+            var scriptBuilder = ScriptBuilder.Create(name: "Moment of interia for rectangle",
                 description: "Calculate moment of interia for rectangle",
                 "Section", "Moment of interia", "Rectangle");
 
@@ -41,9 +41,11 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 Context = ParameterOptions.Calculation | ParameterOptions.Visible
             });
 
-            scriptBuilder.Calculate(50, 70);
+            var script = scriptBuilder.Build();
+            var calculationEngine = new CalculationEngine(script);
+            calculationEngine.Calculate(50, 70);
 
-            Assert.That(1429166.667, Is.EqualTo(scriptBuilder.GetParameterByName("I").Value).Within(0.001));
+            Assert.That(1429166.667, Is.EqualTo(script.GetParameterByName("I").Value).Within(0.001));
         }
     }
 }
