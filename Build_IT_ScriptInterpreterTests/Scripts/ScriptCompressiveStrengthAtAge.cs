@@ -13,11 +13,6 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
         [Test]
         public void CreationTest_Success()
         {
-            string name = "Mean compresive strength of concrete at 28 days";
-            var loader = new XmlLoad<Script>();
-            var scriptFcm = loader.LoadData(@"C:\Users\Disseminate\Desktop\Script Interpreter\Scripts\" + name + ".xml");
-
-
             var scriptBuilder = ScriptBuilder.Create(name: "Compressive strength of concrete at an age",
                 description: "Calculate compressive strength of concrete at an age. Base on [PN-EN-1992-1-1:2002 3.1.2].",
                 "Eurocode 1992", "Concrete", "Materials", "Strength", "Time", "Compressive");
@@ -55,10 +50,6 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
                     Unit = "MPa",
-                    Scripts = new List<Script>()
-                    {
-                        scriptFcm
-                    }
                 })
                 .AppendParameter(new Parameter()
                 {

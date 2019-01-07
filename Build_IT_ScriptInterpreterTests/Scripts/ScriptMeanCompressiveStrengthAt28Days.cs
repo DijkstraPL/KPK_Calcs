@@ -19,7 +19,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 "Eurocode 1992", "Concrete", "Materials", "Strength", "Compressive");
 
             scriptBuilder.SetDocument("PN-EN-1992-1-1:2002")
-                .SetAuthor("Konnrad Kania")
+                .SetAuthor("Konrad Kania")
                 .SetGroupName("Eurocode 2")
                 .AppendParameter(new Parameter()
                 {
