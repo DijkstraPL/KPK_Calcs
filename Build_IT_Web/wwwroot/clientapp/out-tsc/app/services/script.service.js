@@ -17,6 +17,12 @@ var ScriptService = /** @class */ (function () {
     ScriptService.prototype.getScripts = function () {
         return this.http.get('/api/scripts');
     };
+    ScriptService.prototype.getParameters = function (scriptId) {
+        return this.http.get('/api/scripts/' + scriptId + '/parameters');
+    };
+    ScriptService.prototype.calculate = function (scriptName, parameters) {
+        return this.http.get('/api/scripts/calculate/' + scriptName + '/' + parameters);
+    };
     ScriptService = __decorate([
         Injectable({ providedIn: 'root' }),
         __metadata("design:paramtypes", [HttpClient])

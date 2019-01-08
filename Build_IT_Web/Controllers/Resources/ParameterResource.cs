@@ -15,7 +15,7 @@ namespace Build_IT_Web.Controllers.Resources
         public string Unit { get; set; }
         public ICollection<ValueOptionResource> ValueOptions { get; set; }
         public ValueOptionSettings ValueOptionSetting { get; set; }
-        public virtual ParameterOptions Context { get; set; }
+        public ParameterOptions Context { get; set; }
         public string GroupName { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }

@@ -1,5 +1,6 @@
 ﻿<div class="container">
     <form>
+        <h2>Script</h2>
         <div class="row">
             <div class="form-group col-md-7 col-lg-3">
                 <label for="scriptName">Name</label>
@@ -49,10 +50,10 @@
         <div class="row">
             <div class="col-lg-1">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" 
-                           data-toggle="toggle" 
-                           class="custom-control-input" 
-                           id="scriptNoteIncluded" 
+                    <input type="checkbox"
+                           data-toggle="toggle"
+                           class="custom-control-input"
+                           id="scriptNoteIncluded"
                            [checked]="checked"
                            (change)="checked = !checked">
                     <label class="custom-control-label" for="scriptNoteIncluded">Include note</label>
@@ -60,6 +61,132 @@
             </div>
             <div *ngIf="checked" class="form-group col-lg-11">
                 <textarea class="form-control" id="scriptNote" rows="2" placeholder="Note"></textarea>
+            </div>
+        </div>
+
+        <h2>Parameters</h2>
+        <label for="dataParameters" class="radio-inline ml-3">
+            <input type="radio"
+                   name="parametersType"
+                   id="dataParameters"
+                   value="dataParameters"
+                   [(ngModel)]="parametersToShow" /> Data Parameters
+        </label>
+        <label for="staticParameters" class="radio-inline ml-3">
+            <input type="radio"
+                   name="parametersType"
+                   id="staticParameters"
+                   value="staticParameters"
+                   [(ngModel)]="parametersToShow" /> Static Parameters
+        </label>
+        <label for="calculationParameters" class="radio-inline ml-3">
+            <input type="radio"
+                   name="parametersType"
+                   id="calculationParameters"
+                   value="calculationParameters"
+                   [(ngModel)]="parametersToShow" /> Calculation Parameters
+        </label>
+
+        <div class="data-parameter" *ngIf="parametersToShow == 'dataParameters'">
+            <div class="row">
+                <div class="form-group col-md-7 col-lg-3">
+                    <label for="parameterName">Name</label>
+                    <input type="text" class="form-control" id="parameterName" placeholder="Name">
+                </div>
+                <div class="form-group col-sm-6 col-md-5 col-lg-3">
+                    <label for="parameterUnit">Unit</label>
+                    <input type="text" class="form-control" id="parameterUnit" placeholder="Unit">
+                </div>
+                <div class="form-group col-sm-6 col-md-7 col-lg-3">
+                    <label for="parameterDocument">Document</label>
+                    <input type="text" class="form-control" id="parameterDocument" placeholder="Document">
+                </div>
+                <div class="form-group col-sm-6 col-md-5 col-lg-3">
+                    <label for="parameterValueType">Value Type</label>
+                    <select class="form-control" id="parameterValueType" placeholder="Number">
+                        <option>Number</option>
+                        <option>Text</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="parameterDescription">Description</label>
+                    <textarea class="form-control" id="parameterDescription" rows="2" placeholder="Description"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-parameter" *ngIf="parametersToShow == 'staticParameters'">
+            <div class="row">
+                <div class="form-group col-md-7 col-lg-3">
+                    <label for="staticParameterName">Name</label>
+                    <input type="text" class="form-control" id="staticParameterName" placeholder="Name">
+                </div>
+                <div class="form-group col-sm-6 col-md-5 col-lg-3">
+                    <label for="staticParameterUnit">Unit</label>
+                    <input type="text" class="form-control" id="staticParameterUnit" placeholder="Unit">
+                </div>
+                <div class="form-group col-sm-6 col-md-7 col-lg-3">
+                    <label for="staticParameterDocument">Document</label>
+                    <input type="text" class="form-control" id="staticParameterDocument" placeholder="Document">
+                </div>
+                <div class="form-group col-sm-6 col-md-5 col-lg-3">
+                    <label for="staticParameterValueType">Value Type</label>
+                    <select class="form-control" id="staticParameterValueType" placeholder="Number">
+                        <option>Number</option>
+                        <option>Text</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4 col-lg-3">
+                    <label for="staticParameterName">Value</label>
+                    <input type="text" class="form-control" id="staticParameterValue" placeholder="Value">
+                </div>
+                <div class="form-group col-md-8 col-lg-9">
+                    <label for="staticParameterDescription">Description</label>
+                    <textarea class="form-control" id="staticParameterDescription" rows="2" placeholder="Description"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-parameter" *ngIf="parametersToShow == 'calculationParameters'">
+            <div class="row">
+                <div class="form-group col-md-7 col-lg-3">
+                    <label for="calculationParameterName">Name</label>
+                    <input type="text" class="form-control" id="calculationParameterName" placeholder="Name">
+                </div>
+                <div class="form-group col-sm-6 col-md-5 col-lg-3">
+                    <label for="calculationParameterUnit">Unit</label>
+                    <input type="text" class="form-control" id="calculationParameterUnit" placeholder="Unit">
+                </div>
+                <div class="form-group col-sm-6 col-md-7 col-lg-3">
+                    <label for="calculationParameterDocument">Document</label>
+                    <input type="text" class="form-control" id="calculationParameterDocument" placeholder="Document">
+                </div>
+                <div class="form-group col-sm-6 col-md-5 col-lg-3">
+                    <label for="calculationParameterValueType">Value Type</label>
+                    <select class="form-control" id="calculationParameterValueType" placeholder="Number">
+                        <option>Number</option>
+                        <option>Text</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label for="calculationParameterName">Value</label>
+                    <textarea class="form-control" id="calculationParameterDescription" rows="2" placeholder="Value"></textarea>
+                </div>
+                <div class="form-group col-md-4">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label for="calculationParameterDescription">Description</label>
+                    <textarea class="form-control" id="calculationParameterDescription" rows="2" placeholder="Description"></textarea>
+                </div>
             </div>
         </div>
 

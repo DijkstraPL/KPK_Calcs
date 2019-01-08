@@ -9,16 +9,49 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { ScriptService } from '../../services/script.service';
+import { ParameterOptions } from '../../models/parameterOptions';
 var ScriptCalculatorComponent = /** @class */ (function () {
     function ScriptCalculatorComponent(scriptService) {
         this.scriptService = scriptService;
         this.scripts = [];
+        this.parameterOptions = ParameterOptions;
     }
     ScriptCalculatorComponent.prototype.ngOnInit = function () {
+        this.setScript();
+    };
+    ScriptCalculatorComponent.prototype.setScript = function () {
         var _this = this;
         this.scriptService.getScripts().subscribe(function (scripts) {
             _this.scripts = scripts;
             console.log("Scripts", _this.scripts);
+        }, function (error) { return console.error(error); });
+    };
+    ScriptCalculatorComponent.prototype.onChange = function () {
+        this.setParameters();
+    };
+    ScriptCalculatorComponent.prototype.setParameters = function () {
+        var _this = this;
+        this.scriptService.getParameters(this.selectedScript.id).subscribe(function (parameters) {
+            _this.parameters = parameters;
+            console.log("Parameters", _this.parameters);
+        }, function (error) { return console.error(error); });
+    };
+    ScriptCalculatorComponent.prototype.calculate = function () {
+        var _this = this;
+        var parameters = "";
+        this.parameters.filter(function (parameter) { return (parameter.context & ParameterOptions.Editable) != 0; })
+            .forEach(function (parameter) {
+            parameters += "[";
+            parameters += parameter.name;
+            parameters += "]=";
+            parameters += parameter.value;
+            parameters += "|";
+        });
+        parameters = parameters.substr(0, parameters.length - 1);
+        this.scriptService.calculate(this.selectedScript.name, parameters)
+            .subscribe(function (params) {
+            _this.resultParameters = params;
+            console.log("Results", _this.resultParameters);
         }, function (error) { return console.error(error); });
     };
     ScriptCalculatorComponent = __decorate([

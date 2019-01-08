@@ -9,6 +9,7 @@
 export class ScriptFormComponent {
     checked: boolean = false;   
     counter: number = 0;
+    parametersToShow: string = 'dataParameters';
 
     addTag() {
         if (this.counter > 11) {

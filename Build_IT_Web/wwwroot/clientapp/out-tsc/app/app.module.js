@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { ScriptFormComponent } from './components/script-form/script-form.component';
 import { ScriptCalculatorComponent } from './components/script-calculator/script-calculator.component';
+import { HtmlPipeModule } from './pipes/html-pipe.module';
 import { ScriptService } from './services/script.service';
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -23,12 +24,14 @@ var AppModule = /** @class */ (function () {
                 AppComponent,
                 NavMenuComponent,
                 ScriptFormComponent,
-                ScriptCalculatorComponent
+                ScriptCalculatorComponent,
+                HtmlPipeModule
             ],
             imports: [
                 BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
                 HttpClientModule,
                 FormsModule,
+                HtmlPipeModule,
                 AppRoutingModule
             ],
             providers: [ScriptService],
