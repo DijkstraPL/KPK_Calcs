@@ -1,0 +1,68 @@
+﻿<div class="container">
+    <form>
+        <div class="row">
+            <div class="form-group col-md-7 col-lg-3">
+                <label for="scriptName">Name</label>
+                <input type="text" class="form-control" id="scriptName" placeholder="Name">
+            </div>
+            <div class="form-group col-sm-6 col-md-5 col-lg-3">
+                <label for="scriptAuthor">Author</label>
+                <input type="text" class="form-control" id="scriptAuthor" placeholder="Author">
+            </div>
+            <div class="form-group col-sm-6 col-md-7 col-lg-3">
+                <label for="scriptAccordingTo">Document</label>
+                <input type="text" class="form-control" id="scriptAccordingTo" placeholder="Document">
+            </div>
+            <div class="form-group col-sm-6 col-md-5 col-lg-3">
+                <label for="scriptGroup">Group</label>
+                <select class="form-control" id="scriptGroup" placeholder="Group">
+                    <option class="font-weight-bold">Eurocode 0</option>
+                    <option class="font-weight-bold">Eurocode 1</option>
+                    <option class="font-weight-bold">Eurocode 2</option>
+                    <option class="font-weight-bold">Eurocode 3</option>
+                    <option class="font-weight-bold">Eurocode 4</option>
+                    <option class="font-weight-bold">Eurocode 5</option>
+                    <option class="font-weight-bold">Eurocode 6</option>
+                    <option class="font-weight-bold">Eurocode 7</option>
+                    <option class="font-weight-bold">Eurocode 8</option>
+                    <option class="font-weight-bold">Eurocode 9</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label for="scriptDescription">Description</label>
+                <textarea class="form-control" id="scriptDescription" rows="3" placeholder="Description"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xl-1 col-lg-2 col-md-2 col-sm-3 col-3">
+                <button type="button" class="btn btn-info" (click)="addTag()">Add tag</button>
+            </div>
+            <div class="form-group col-xl-11 col-lg-10 col-md-10 col-sm-9 col-9">
+                <button type="button" class="btn btn-danger" (click)="removeTag()">Remove Last</button>
+            </div>
+        </div>
+        <label *ngIf="counter > 0">Tags</label>
+        <div class="row" id="tags">
+        </div>
+        <div class="row">
+            <div class="col-lg-1">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" 
+                           data-toggle="toggle" 
+                           class="custom-control-input" 
+                           id="scriptNoteIncluded" 
+                           [checked]="checked"
+                           (change)="checked = !checked">
+                    <label class="custom-control-label" for="scriptNoteIncluded">Include note</label>
+                </div>
+            </div>
+            <div *ngIf="checked" class="form-group col-lg-11">
+                <textarea class="form-control" id="scriptNote" rows="2" placeholder="Note"></textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Script</button>
+    </form>
+</div>
