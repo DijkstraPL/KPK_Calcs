@@ -36,6 +36,9 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             console.log("Parameters", _this.parameters);
         }, function (error) { return console.error(error); });
     };
+    ScriptCalculatorComponent.prototype.setValueChanged = function () {
+        this.valueChanged = true;
+    };
     ScriptCalculatorComponent.prototype.calculate = function () {
         var _this = this;
         var parameters = "";
@@ -53,6 +56,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             _this.resultParameters = params;
             console.log("Results", _this.resultParameters);
         }, function (error) { return console.error(error); });
+        this.valueChanged = false;
     };
     ScriptCalculatorComponent = __decorate([
         Component({

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Build_IT_Web.Models.Enums;
 
 namespace Build_IT_Web.Controllers.Resources
@@ -13,12 +14,18 @@ namespace Build_IT_Web.Controllers.Resources
         public string Value { get; set; }
         public string DataValidator { get; set; }
         public string Unit { get; set; }
-        public ICollection<ValueOptionResource> ValueOptions { get; set; }
+        public ICollection<ValueResource> ValueOptions { get; set; }
         public ValueOptionSettings ValueOptionSetting { get; set; }
         public ParameterOptions Context { get; set; }
         public string GroupName { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
         public ICollection<AlternativeScriptResource> NestedScripts { get; set; }
+
+        public ParameterResource()
+        {
+            ValueOptions = new Collection<ValueResource>();
+            NestedScripts = new Collection<AlternativeScriptResource>();
+        }
     }
 }

@@ -19,6 +19,8 @@ namespace WebTest.Migrations
                     $"VALUES ('{s.Name}', '{s.Description}', '{s.GroupName}', '{s.Author}', '{s.Added}', '{s.Modified}', '{s.AccordingTo}', '{s.Notes}')");
 
                 string scriptIdSelection = $"(SELECT ID FROM Scripts WHERE Name = '{s.Name}')";
+
+
                 foreach (var tag in s.Tags)
                     migrationBuilder.Sql($"INSERT INTO Tags (Name, ScriptId) VALUES ('{tag.Name}', {scriptIdSelection})");
 

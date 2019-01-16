@@ -18,7 +18,7 @@ namespace Build_IT_Web.Models
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }
-        public ICollection<Tag> Tags { get; set; } = new Collection<Tag>();
+        public ICollection<ScriptTag> Tags { get; set; } 
         [StringLength(255)]
         public string GroupName { get; set; }
         [StringLength(255)]
@@ -28,6 +28,13 @@ namespace Build_IT_Web.Models
         [StringLength(255)]
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
-        public ICollection<Parameter> Parameters { get; set; } = new Collection<Parameter>();
+        public float Version { get; set; }
+        public ICollection<Parameter> Parameters { get; set; } 
+
+        public Script()
+        {
+            Tags = new Collection<ScriptTag>();
+            Parameters = new Collection<Parameter>();
+        }
     }
 }

@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Build_IT_Web.Models;
+using Build_IT_Web.Models.Enums;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Build_IT_Web.Models;
-using Build_IT_Web.Models.Enums;
 
 namespace Build_IT_Web.Migrations
 {
@@ -15,12 +15,19 @@ namespace Build_IT_Web.Migrations
 
             foreach (var s in scripts)
             {
-                migrationBuilder.Sql("INSERT INTO Scripts (Name, Description, GroupName, Author, Added, Modified, AccordingTo, Notes) " +
-                    $"VALUES ('{s.Name}', '{s.Description}', '{s.GroupName}', '{s.Author}', '{s.Added}', '{s.Modified}', '{s.AccordingTo}', '{s.Notes}')");
+                migrationBuilder.Sql("INSERT INTO Scripts (Name, Description, GroupName, Author, Added, Modified, AccordingTo, Notes, Version) " +
+                    $"VALUES ('{s.Name}', '{s.Description}', '{s.GroupName}', '{s.Author}', '{s.Added}', '{s.Modified}', '{s.AccordingTo}', '{s.Notes}', '{s.Version}')");
 
                 string scriptIdSelection = $"(SELECT ID FROM Scripts WHERE Name = '{s.Name}')";
-                foreach (var tag in s.Tags)
-                    migrationBuilder.Sql($"INSERT INTO Tags (Name, ScriptId) VALUES ('{tag.Name}', {scriptIdSelection})");
+                if (s.Tags != null)
+                    foreach (var st in s.Tags)
+                    {
+                        migrationBuilder.Sql($"INSERT INTO Tags (Name) VALUES ('{st.Tag.Name}')");
+
+                        string tagIdSelection = $"(SELECT ID FROM Tags WHERE Name = '{st.Tag.Name}')";
+
+                        migrationBuilder.Sql($"INSERT INTO ScriptTags (ScriptId, TagId) VALUES ({scriptIdSelection}, {tagIdSelection})");
+                    }
 
                 if (s.Parameters != null)
                     foreach (var p in s.Parameters)
@@ -61,14 +68,15 @@ namespace Build_IT_Web.Migrations
                 AccordingTo = "PN-EN-1993-1-1:2005",
                 GroupName = "Eurocode 3",
                 Notes = "Net area not included.",
+                Version = 1.0f,
                 Added = DateTime.Now,
                 Modified = DateTime.Now,
-                Tags = new Collection<Tag>()
+                Tags = new Collection<ScriptTag>()
                 {
-                    new Tag(){ Name = "Eurocode 1993" },
-                    new Tag(){ Name = "Steel" },
-                    new Tag(){ Name = "Tension" },
-                    new Tag(){ Name = "Resistance" },
+                    new ScriptTag(){ Tag = new Tag(){ Name = "Eurocode 1993" }},
+                    new ScriptTag(){ Tag = new Tag(){ Name = "Steel" }},
+                    new ScriptTag(){ Tag = new Tag(){ Name = "Tension" }},
+                    new ScriptTag(){ Tag = new Tag(){ Name = "Resistance" }},
                 },
                 Parameters = new Collection<Parameter>()
                 {
@@ -124,7 +132,7 @@ namespace Build_IT_Web.Migrations
                     {
                         Number = 5,
                         Name = "N_pl,Rd_",
-                        Value = "[A]*[f_y_]/[γ_M0_]/10", 
+                        Value = "[A]*[f_y_]/[γ_M0_]/10",
                         Description = "Design plastic resistance of the gross cross-section.",
                         ValueType = ValueTypes.Number,
                         Context = ParameterOptions.Calculation | ParameterOptions.Visible,

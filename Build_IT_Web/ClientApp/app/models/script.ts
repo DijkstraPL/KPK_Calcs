@@ -7,6 +7,7 @@ export interface Script {
     groupName: string;
     author: string;
     added: Date;
+    version: number;
     modified: Date;
     accordingTo: string;
     notes: string;

@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Build_IT_ScriptInterpreter.DataSaver;
 using Build_IT_Web.Controllers.Resources;
 using Build_IT_Web.Models;
-using Build_IT_Web.Persistance;
 using Build_IT_Web.Models.Enums;
-using Interpreter = Build_IT_ScriptInterpreter.Scripts;
-using Build_IT_ScriptInterpreter.DataSaver;
+using Build_IT_Web.Persistance;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using Interpreter = Build_IT_ScriptInterpreter.Scripts;
 
 namespace Build_IT_Web.Controllers
 {
+    [Route("/api/scripts")]
     public class ScriptsController : Controller
     {
         private readonly BuildItDbContext _context;
@@ -23,30 +24,89 @@ namespace Build_IT_Web.Controllers
         public ScriptsController(BuildItDbContext context, IMapper mapper)
         {
             _context = context;
-           _mapper = mapper;
+            _mapper = mapper;
         }
 
-        [HttpGet("/api/scripts")]
-        public async Task<IEnumerable<ScriptResource>> GetScripts()
+        [HttpGet()]
+        public async Task<IActionResult> GetScripts()
         {
-            var scripts = await _context.Scripts.Include(s => s.Tags).ToListAsync();
+            var scripts = await _context.Scripts.Include(s => s.Tags).ThenInclude(t => t.Tag).ToListAsync();
 
-            return _mapper.Map<List<Script>, List<ScriptResource>>(scripts);
+            if (scripts?.Count == 0)
+                return NotFound();
+
+            var scriptViewModels = _mapper.Map<List<Script>, List<ScriptResource>>(scripts);
+            return Ok(scriptViewModels);
         }
-
-        [HttpGet("/api/scripts/{id}/parameters")]
-        public async Task<IEnumerable<ParameterResource>> GetParameters(int id)
+    
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetScript(long id)
         {
-            var parameters = await _context.Parameters
-                .Where(p => p.ScriptId == id && (p.Context & ParameterOptions.Editable) != 0)
-                .Include(p => p.ValueOptions)
-                .Include(p => p.NestedScripts)
-                .ToListAsync();
+            var script = await _context.Scripts.Include(s => s.Tags).SingleOrDefaultAsync(s => s.Id == id);
 
-            return _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
+            if (script == null)
+                return NotFound();
+
+            var scriptViewModel = _mapper.Map<Script, ScriptResource>(script);
+
+            return Ok(scriptViewModel);
         }
-        
-        [HttpGet("/api/scripts/calculate/{name}/{parameters}")]
+
+        [HttpPost()]
+        public async Task<IActionResult> CreateScript([FromBody] ScriptResource scriptViewModel)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var script = _mapper.Map<ScriptResource, Script>(scriptViewModel);
+
+            script.Added = DateTime.Now;
+            script.Modified = DateTime.Now;
+            script.Version = 1.0f;
+            _context.Scripts.Add(script);
+            await _context.SaveChangesAsync();
+
+            var result = _mapper.Map<Script, ScriptResource>(script);
+            return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateScript(int id, [FromBody] ScriptResource scriptResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var script = await _context.Scripts.Include(s => s.Tags)
+                .SingleOrDefaultAsync(s => s.Id == id);
+
+            if (script == null)
+                return NotFound();
+
+            _mapper.Map<ScriptResource, Script>(scriptResource, script);
+            script.Modified = DateTime.Now;
+            script.Version += 0.1f;
+
+            await _context.SaveChangesAsync();
+
+            var result = _mapper.Map<Script, ScriptResource>(script);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteScript(int id)
+        {
+            var script = await _context.Scripts.FindAsync(id);
+
+            if (script == null)
+                return NotFound();
+
+            _context.Remove(script);
+            await _context.SaveChangesAsync();
+
+            return Ok(id);
+        }
+
+        [HttpGet("calculate/{name}/{parameters}")]
         public IEnumerable<ParameterResource> Calculate(string name, string parameters)
         {
             //var scr = _context.Scripts.SingleAsync(s => s.Id == scriptId);
@@ -65,7 +125,7 @@ namespace Build_IT_Web.Controllers
             //{
             //    scriptBuilder.AppendParameter(new Build_IT_ScriptInterpreter.Parameters.Parameter()
             //    {
-                    
+
             //    })
             //}
 
@@ -89,7 +149,7 @@ namespace Build_IT_Web.Controllers
                     Notes = parameter.Notes,
                     Unit = parameter.Unit,
                     NestedScripts = new Collection<AlternativeScriptResource>(),
-                    ValueOptions = new Collection<ValueOptionResource>(),
+                    ValueOptions = new Collection<ValueResource>(),
                     ValueOptionSetting = ValueOptionSettings.None,
                     ValueType = (ValueTypes)parameter.ValueType
                 };

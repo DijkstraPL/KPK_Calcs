@@ -1,4 +1,5 @@
 ﻿import { Component, Input } from '@angular/core';
+import { Script } from '../../models/script';
 
 @Component({
     selector: 'app-script-form',
@@ -10,6 +11,8 @@ export class ScriptFormComponent {
     checked: boolean = false;   
     counter: number = 0;
     parametersToShow: string = 'dataParameters';
+
+    script: Script;
 
     addTag() {
         if (this.counter > 11) {
@@ -40,5 +43,9 @@ export class ScriptFormComponent {
         let tags = document.getElementById("tags");
         let div = tags.lastElementChild;
         div.remove();
+    }
+
+    onSubmit() {
+        alert(this.script.name);
     }
 }

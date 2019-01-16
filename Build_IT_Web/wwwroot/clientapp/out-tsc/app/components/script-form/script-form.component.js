@@ -9,6 +9,7 @@ var ScriptFormComponent = /** @class */ (function () {
     function ScriptFormComponent() {
         this.checked = false;
         this.counter = 0;
+        this.parametersToShow = 'dataParameters';
     }
     ScriptFormComponent.prototype.addTag = function () {
         if (this.counter > 11) {
@@ -34,6 +35,9 @@ var ScriptFormComponent = /** @class */ (function () {
         var tags = document.getElementById("tags");
         var div = tags.lastElementChild;
         div.remove();
+    };
+    ScriptFormComponent.prototype.onSubmit = function () {
+        alert(this.script.name);
     };
     ScriptFormComponent = __decorate([
         Component({
