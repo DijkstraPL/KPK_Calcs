@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Build_IT_Web.Models
+namespace Build_IT_Web.Core.Models
 {
     [Table("AlternativeScripts")]
     public class AlternativeScript

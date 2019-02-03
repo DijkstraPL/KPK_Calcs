@@ -10,28 +10,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { ScriptService } from '../../services/script.service';
 import { ParameterOptions } from '../../models/parameterOptions';
+import { ActivatedRoute } from '@angular/router';
 var ScriptCalculatorComponent = /** @class */ (function () {
-    function ScriptCalculatorComponent(scriptService) {
+    function ScriptCalculatorComponent(route, scriptService) {
+        this.route = route;
         this.scriptService = scriptService;
-        this.scripts = [];
         this.parameterOptions = ParameterOptions;
     }
     ScriptCalculatorComponent.prototype.ngOnInit = function () {
-        this.setScript();
-    };
-    ScriptCalculatorComponent.prototype.setScript = function () {
         var _this = this;
-        this.scriptService.getScripts().subscribe(function (scripts) {
-            _this.scripts = scripts;
-            console.log("Scripts", _this.scripts);
-        }, function (error) { return console.error(error); });
-    };
-    ScriptCalculatorComponent.prototype.onChange = function () {
-        this.setParameters();
+        var id;
+        var sub = this.route.params.subscribe(function (params) {
+            id = +params['id'];
+        });
+        if (id != undefined) {
+            this.scriptService.getScript(id).subscribe(function (script) {
+                _this.script = script;
+                console.log("Script", _this.script);
+                _this.setParameters();
+            }, function (error) { return console.error(error); });
+        }
+        sub.unsubscribe();
     };
     ScriptCalculatorComponent.prototype.setParameters = function () {
         var _this = this;
-        this.scriptService.getParameters(this.selectedScript.id).subscribe(function (parameters) {
+        this.scriptService.getParameters(this.script.id).subscribe(function (parameters) {
             _this.parameters = parameters;
             console.log("Parameters", _this.parameters);
         }, function (error) { return console.error(error); });
@@ -51,7 +54,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             parameters += "|";
         });
         parameters = parameters.substr(0, parameters.length - 1);
-        this.scriptService.calculate(this.selectedScript.name, parameters)
+        this.scriptService.calculate(this.script.name, parameters)
             .subscribe(function (params) {
             _this.resultParameters = params;
             console.log("Results", _this.resultParameters);
@@ -64,7 +67,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             templateUrl: './script-calculator.component.html',
             styleUrls: ['./script-calculator.component.css']
         }),
-        __metadata("design:paramtypes", [ScriptService])
+        __metadata("design:paramtypes", [ActivatedRoute, ScriptService])
     ], ScriptCalculatorComponent);
     return ScriptCalculatorComponent;
 }());

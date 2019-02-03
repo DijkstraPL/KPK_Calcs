@@ -6,9 +6,6 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ScriptService {
-
-    scripts: Script[] = [];
-
     constructor(private http: HttpClient) {
 
     }
@@ -17,12 +14,27 @@ export class ScriptService {
         return this.http.get<Script[]>('/api/scripts');
     }
 
+    getScript(id: number): Observable<Script> {
+        return this.http.get<Script>('/api/scripts/'+id);
+    }
+
+    deleteScript(id: number): Observable<Script> {
+        return this.http.delete<Script>('/api/scripts/' + id);
+    }
+
     getParameters(scriptId: number): Observable<Parameter[]> {
         return this.http.get<Parameter[]>('/api/scripts/' + scriptId + '/parameters');
+    }
+
+    create(script: Script) {
+        return this.http.post('/api/scripts', script);
+    }
+
+    update(script: Script): any {
+        return this.http.put('/api/scripts/' + script.id, script);
     }
 
     calculate(scriptName: string, parameters: string): Observable<Parameter[]> {
         return this.http.get<Parameter[]>('/api/scripts/calculate/' + scriptName + '/' + parameters);
     }
-
 }

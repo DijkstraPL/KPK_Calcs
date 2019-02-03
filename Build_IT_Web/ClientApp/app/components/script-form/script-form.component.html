@@ -1,25 +1,44 @@
 ﻿<div class="container">
-    <form (ngSubmit)="onSubmit()" #scriptForm="ngForm">
+    <p>{{ script | json }}</p>
+    <p>{{ newTag | json }}</p>
+
+    <form (ngSubmit)="onSubmit()">
         <h2>Script</h2>
         <div class="row">
             <div class="form-group col-md-7 col-lg-3">
                 <label for="scriptName">Name</label>
-                <input type="text" 
+                <input type="text"
                        class="form-control"
-                       id="scriptName" 
+                       id="scriptName"
+                       [(ngModel)]="script.name"
+                       name="name"
                        placeholder="Name">
             </div>
             <div class="form-group col-sm-6 col-md-5 col-lg-3">
                 <label for="scriptAuthor">Author</label>
-                <input type="text" class="form-control" id="scriptAuthor" placeholder="Author">
+                <input type="text"
+                       class="form-control"
+                       id="scriptAuthor"
+                       [(ngModel)]="script.author"
+                       name="author"
+                       placeholder="Author">
             </div>
             <div class="form-group col-sm-6 col-md-7 col-lg-3">
                 <label for="scriptAccordingTo">Document</label>
-                <input type="text" class="form-control" id="scriptAccordingTo" placeholder="Document">
+                <input type="text"
+                       class="form-control"
+                       id="scriptAccordingTo"
+                       [(ngModel)]="script.accordingTo"
+                       name="document"
+                       placeholder="Document">
             </div>
             <div class="form-group col-sm-6 col-md-5 col-lg-3">
                 <label for="scriptGroup">Group</label>
-                <select class="form-control" id="scriptGroup" placeholder="Group">
+                <select class="form-control"
+                        id="scriptGroup"
+                        [(ngModel)]="script.groupName"
+                        name="group"
+                        placeholder="Group">
                     <option class="font-weight-bold">Eurocode 0</option>
                     <option class="font-weight-bold">Eurocode 1</option>
                     <option class="font-weight-bold">Eurocode 2</option>
@@ -30,26 +49,61 @@
                     <option class="font-weight-bold">Eurocode 7</option>
                     <option class="font-weight-bold">Eurocode 8</option>
                     <option class="font-weight-bold">Eurocode 9</option>
+                    <option class="font-weight-bold">Other</option>
                 </select>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-12">
                 <label for="scriptDescription">Description</label>
-                <textarea class="form-control" id="scriptDescription" rows="3" placeholder="Description"></textarea>
+                <textarea class="form-control"
+                          id="scriptDescription"
+                          rows="3"
+                          [(ngModel)]="script.description"
+                          name="description"
+                          placeholder="Description"></textarea>
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-xl-1 col-lg-2 col-md-2 col-sm-3 col-3">
-                <button type="button" class="btn btn-info" (click)="addTag()">Add tag</button>
-            </div>
-            <div class="form-group col-xl-11 col-lg-10 col-md-10 col-sm-9 col-9">
-                <button type="button" class="btn btn-danger" (click)="removeTag()">Remove Last</button>
+            <div class="col-md-12 col-sm-12">
+                <div class="row">
+                    <div class="form-group col-xl-1 col-lg-2 col-md-2 col-sm-3 col-3">
+                        <button type="button" class="btn btn-info" (click)="addTag()">Add tag</button>
+                    </div>
+                    <div class="form-group col-xl-11 col-lg-10 col-md-10 col-sm-9 col-9">
+                        <button type="button" class="btn btn-danger" (click)="removeTag()">Remove Last</button>
+                    </div>
+                </div>
+                <label *ngIf="script.tags.length > 0">Tags</label>
+                <div class="row" id="tags">
+                    <div *ngFor="let tag of script.tags" class="form-group col-md-2">
+                        <select class="form-control"
+                                [(ngModel)]="tag.id"
+                                name="tag{{tag.id}}"
+                                (change)="selectedTagChanged(tag)"
+                                placeholder="Tag">
+                            <option *ngFor="let t of tags" [ngValue]="t.id">{{t.name}}</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
-        <label *ngIf="counter > 0">Tags</label>
-        <div class="row" id="tags">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <label>Add new tag:</label>
+                <input type="text"
+                       class="ml-2"
+                       [(ngModel)]="newTag.name" 
+                       name="tagName"/>
+                <button type="button"
+                        class="bg-primary border-primary text-light"
+                        (click)="addNewTag()">
+                    Add tag
+                </button>
+            </div>
         </div>
+
         <div class="row">
             <div class="col-lg-1">
                 <div class="custom-control custom-checkbox">
@@ -57,20 +111,32 @@
                            data-toggle="toggle"
                            class="custom-control-input"
                            id="scriptNoteIncluded"
-                           [checked]="checked"
+                           [checked]="checked "
                            (change)="checked = !checked">
                     <label class="custom-control-label" for="scriptNoteIncluded">Include note</label>
                 </div>
             </div>
             <div *ngIf="checked" class="form-group col-lg-11">
-                <textarea class="form-control" id="scriptNote" rows="2" placeholder="Note"></textarea>
+                <textarea class="form-control"
+                          id="scriptNote"
+                          rows="2"
+                          [(ngModel)]="script.notes"
+                          name="notes"
+                          placeholder="Note"></textarea>
             </div>
         </div>
 
 
-        <button [disabled]="!scriptForm.form.valid"
-                type="submit" 
-                class="btn btn-primary mt-3">Add Script</button>
+        <button *ngIf="!editMode"
+                type="submit"
+                class="btn btn-primary mt-3">
+            Add Script
+        </button>
+        <button *ngIf="editMode"
+                type="submit"
+                class="btn btn-primary mt-3">
+            Update Script
+        </button>
     </form>
 
     <h2>Parameters</h2>

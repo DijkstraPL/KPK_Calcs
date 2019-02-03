@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Build_IT_Web.Models
+namespace Build_IT_Web.Core.Models
 {
     [Table("Tags")]
     public class Tag

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Build_IT_Web.Core;
 using Build_IT_Web.Persistance;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,10 +24,13 @@ namespace Build_IT_Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IScriptRepository, ScriptRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddDbContext<BuildItDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddAutoMapper();
-
-
+            
             services.AddMvc()
                 .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1); //validate api rules
@@ -77,6 +81,7 @@ namespace Build_IT_Web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
         }
     }
 }

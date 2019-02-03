@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Build_IT_Web.Controllers.Resources;
-using Build_IT_Web.Models;
-using Build_IT_Web.Models.Enums;
+using Build_IT_Web.Core.Models;
+using Build_IT_Web.Core.Models.Enums;
 using Build_IT_Web.Persistance;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

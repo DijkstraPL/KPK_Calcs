@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Build_IT_Web.Controllers.Resources;
-using Build_IT_Web.Models;
+using Build_IT_Web.Core.Models;
 using System;
 using System.Linq;
 
@@ -32,8 +32,8 @@ namespace Build_IT_Web.Mapping
 
         private void RemoveNotAddedTags(ScriptResource scriptResource, Script script)
         {
-            var removedTags = script.Tags.Where(t => 
-            !scriptResource.Tags.Select(tvm => tvm.Id).Contains(t.TagId));
+            var removedTags = script.Tags.Where(t =>
+            !scriptResource.Tags.Select(tvm => tvm.Id).Contains(t.TagId)).ToList();
             foreach (var tag in removedTags)
                 script.Tags.Remove(tag);
         }
@@ -41,7 +41,7 @@ namespace Build_IT_Web.Mapping
         private void AddNewTags(ScriptResource scriptResource, Script script)
         {
             var addedTags = scriptResource.Tags.Where(tvm => !script.Tags.Any(t => t.TagId == tvm.Id))
-                 .Select(tvm => new ScriptTag { TagId = tvm.Id });
+                 .Select(tvm => new ScriptTag { TagId = tvm.Id }).ToList();
             foreach (var tag in addedTags)
                 script.Tags.Add(tag);
         }

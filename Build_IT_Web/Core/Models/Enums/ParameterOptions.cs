@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Build_IT_Web.Models.Enums
+namespace Build_IT_Web.Core.Models.Enums
 {
     [Flags]
     public enum ParameterOptions

@@ -1,4 +1,4 @@
-﻿namespace Build_IT_Web.Models.Enums
+﻿namespace Build_IT_Web.Core.Models.Enums
 {
     public enum ValueTypes
     {

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using Build_IT_Web.Models.Enums;
 
-namespace Build_IT_Web.Models
+namespace Build_IT_Web.Core.Models
 {
     [Table("ValueOptions")]
     public class ValueOption

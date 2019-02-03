@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Build_IT_Web.Models
+namespace Build_IT_Web.Core.Models
 {
     [Table("ScriptTags")]
     public class ScriptTag

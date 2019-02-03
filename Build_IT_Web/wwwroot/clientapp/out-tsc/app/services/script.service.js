@@ -12,13 +12,24 @@ import { HttpClient } from '@angular/common/http';
 var ScriptService = /** @class */ (function () {
     function ScriptService(http) {
         this.http = http;
-        this.scripts = [];
     }
     ScriptService.prototype.getScripts = function () {
         return this.http.get('/api/scripts');
     };
+    ScriptService.prototype.getScript = function (id) {
+        return this.http.get('/api/scripts/' + id);
+    };
+    ScriptService.prototype.deleteScript = function (id) {
+        return this.http.delete('/api/scripts/' + id);
+    };
     ScriptService.prototype.getParameters = function (scriptId) {
         return this.http.get('/api/scripts/' + scriptId + '/parameters');
+    };
+    ScriptService.prototype.create = function (script) {
+        return this.http.post('/api/scripts', script);
+    };
+    ScriptService.prototype.update = function (script) {
+        return this.http.put('/api/scripts/' + script.id, script);
     };
     ScriptService.prototype.calculate = function (scriptName, parameters) {
         return this.http.get('/api/scripts/calculate/' + scriptName + '/' + parameters);

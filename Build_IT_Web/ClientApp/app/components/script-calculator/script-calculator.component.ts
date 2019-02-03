@@ -3,6 +3,7 @@ import { ScriptService } from '../../services/script.service';
 import { Script } from '../../models/script';
 import { Parameter } from '../../models/parameter';
 import { ParameterOptions } from '../../models/parameterOptions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-script-calculator',
@@ -12,35 +13,33 @@ import { ParameterOptions } from '../../models/parameterOptions';
 
 export class ScriptCalculatorComponent implements OnInit {
 
-    scripts: Script[] = [];
-    selectedScript: Script;
+    script: Script;
     parameters: Parameter[];
     parameterOptions = ParameterOptions;
     resultParameters: Parameter[];
 
     valueChanged: boolean;
 
-    constructor(private scriptService: ScriptService) {
-
+    constructor(private route: ActivatedRoute, private scriptService: ScriptService) {
     }
 
     ngOnInit(): void {
-        this.setScript();
-    }
-
-    private setScript(): void {
-        this.scriptService.getScripts().subscribe(scripts => {
-            this.scripts = scripts;
-            console.log("Scripts", this.scripts);
-        }, error => console.error(error));
-    }
-
-    onChange() {
-        this.setParameters();
+        let id;
+        let sub = this.route.params.subscribe(params => {
+            id = +params['id'];
+        });
+        if (id != undefined) {
+            this.scriptService.getScript(id).subscribe(script => {
+                this.script = script;
+                console.log("Script", this.script);
+                this.setParameters();
+            }, error => console.error(error));
+        }
+        sub.unsubscribe();
     }
 
     private setParameters(): void {
-        this.scriptService.getParameters(this.selectedScript.id).subscribe(parameters => {
+        this.scriptService.getParameters(this.script.id).subscribe(parameters => {
             this.parameters = parameters;
             console.log("Parameters", this.parameters);
         }, error => console.error(error));
@@ -62,7 +61,7 @@ export class ScriptCalculatorComponent implements OnInit {
             });
         parameters = parameters.substr(0, parameters.length - 1);
 
-        this.scriptService.calculate(this.selectedScript.name, parameters)
+        this.scriptService.calculate(this.script.name, parameters)
             .subscribe(params => {
                 this.resultParameters = params;
                 console.log("Results", this.resultParameters);

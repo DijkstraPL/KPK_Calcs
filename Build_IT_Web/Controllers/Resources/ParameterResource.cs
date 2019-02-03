@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Build_IT_Web.Core.Models.Enums;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Build_IT_Web.Models.Enums;
 
 namespace Build_IT_Web.Controllers.Resources
 {

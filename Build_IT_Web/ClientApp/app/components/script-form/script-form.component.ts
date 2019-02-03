@@ -1,5 +1,11 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, Pipe, OnInit } from '@angular/core';
+import { ScriptImpl } from '../../models/scriptImpl';
+import { ScriptService } from '../../services/script.service';
+import { ActivatedRoute } from '@angular/router';
 import { Script } from '../../models/script';
+import { TagImpl } from '../../models/tagImpl';
+import { TagService } from '../../services/tag.service';
+import { Tag } from '../../models/tag';
 
 @Component({
     selector: 'app-script-form',
@@ -7,45 +13,86 @@ import { Script } from '../../models/script';
     styleUrls: ['./script-form.component.css']
 })
 /** script-form component*/
-export class ScriptFormComponent {
-    checked: boolean = false;   
-    counter: number = 0;
+export class ScriptFormComponent implements OnInit {
+    checked: boolean;
     parametersToShow: string = 'dataParameters';
+    editMode: boolean = true;
 
-    script: Script;
+    script: Script = new ScriptImpl();
+    tags: Tag[];
+    newTag: Tag = new TagImpl();
+
+    constructor(
+        private scriptService: ScriptService,
+        private tagService: TagService,
+        private route: ActivatedRoute) {
+    }
+
+    ngOnInit() {
+        let id;
+        let sub = this.route.params.subscribe(params => {
+            id = +params['id'];
+        });
+
+        if (isNaN(id)) {
+            this.editMode = false;
+            return;
+        }
+
+        this.getScripts(id);
+        this.getTags();
+    }
+
+    private getScripts(id: number) {
+        this.scriptService.getScript(id).subscribe(script => {
+            this.script = script,
+                console.log("Script", this.script),
+                this.checked = this.script.notes != null && this.script.notes != '';
+        }, error => console.error(error));
+    }
+
+    private getTags() {
+        this.tagService.getTags().subscribe(tags => {
+            this.tags = tags,
+                console.log("Tags", this.tags)
+        }, error => console.error(error));
+    }
 
     addTag() {
-        if (this.counter > 11) {
+        if (this.script.tags.length > 10) {
             alert("Too many tags");
             return;
         }
 
-        let input = document.createElement("input");
-        input.type = "text";
-        input.classList.add("form-control");
-        input.classList.add("scriptTag");
-
-        let div = document.createElement("div");
-        div.classList.add("form-group");
-        div.classList.add("col-md-2");
-        div.appendChild(input);
-
-        let tags = document.getElementById("tags");
-        tags.appendChild(div);
-        this.counter++;
+        this.script.tags.push(new TagImpl());
     }
 
     removeTag() {
-        if (this.counter == 0)
+        if (this.script.tags.length == 0)
             return;
-        this.counter--;
 
-        let tags = document.getElementById("tags");
-        let div = tags.lastElementChild;
-        div.remove();
+        this.script.tags.pop();
+    }
+
+    selectedTagChanged(tag: Tag) {
+        let tagName = this.tags.find(t => t.id == tag.id).name;
+        this.script.tags.find(t => t.id == tag.id).name = tagName;
     }
 
     onSubmit() {
-        alert(this.script.name);
+        if (!this.editMode)
+            this.scriptService.create(this.script)
+                .subscribe(s => console.log(s));
+        else
+            this.scriptService.update(this.script)
+                .subscribe(s => console.log(s));
+    }
+
+    addNewTag() {
+        this.tagService.create(this.newTag)
+            .subscribe(t => {
+                console.log(t),
+                this.getTags()
+            });
     }
 }

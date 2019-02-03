@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Build_IT_Web.Models
+namespace Build_IT_Web.Core.Models
 {
     [Table("Scripts")]
     public class Script

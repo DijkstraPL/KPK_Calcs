@@ -1,22 +1,12 @@
 ﻿
-<div class="text-center">
-    <h1 *ngIf="selectedScript">{{selectedScript.name}}</h1>
-    <h1 *ngIf="!selectedScript">Name</h1>
-</div>
+<div *ngIf="script">
+    <div class="text-center">
+        <h1>{{script.name}}</h1>
+    </div>
 
-<div class="text-center">
-    <select [(ngModel)]="selectedScript" (change)="onChange()" class="text-center">
-        <option *ngFor="let script of scripts"
-                [ngValue]="script">
-            {{script.name }}
-        </option>
-    </select>
-</div>
-
-<div *ngIf="selectedScript">
-    <p>{{selectedScript.description}}</p>
+    <p>{{script.description}}</p>
     <ul>
-        <li *ngFor="let tag of selectedScript.tags">
+        <li *ngFor="let tag of script.tags">
             {{tag.name}}
         </li>
     </ul>
@@ -38,8 +28,8 @@
                     <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
                         <input *ngIf="parameter.valueOptions.length == 0"
                                [(ngModel)]="parameter.value"
-                               placeholder="value" 
-                               (change)="setValueChanged()"/>
+                               placeholder="value"
+                               (change)="setValueChanged()" />
                         <select *ngIf="parameter.valueOptions.length > 0"
                                 [(ngModel)]="parameter.value"
                                 (change)="setValueChanged()">
