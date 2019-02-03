@@ -94,8 +94,8 @@
                 <label>Add new tag:</label>
                 <input type="text"
                        class="ml-2"
-                       [(ngModel)]="newTag.name" 
-                       name="tagName"/>
+                       [(ngModel)]="newTag.name"
+                       name="tagName" />
                 <button type="button"
                         class="bg-primary border-primary text-light"
                         (click)="addNewTag()">
@@ -140,6 +140,23 @@
     </form>
 
     <h2>Parameters</h2>
+    <div *ngIf="parametersToShow == 'dataParameters'">
+        <div class="border-dark" *ngFor="let parameter of dataParameters">
+            <p [innerHTML]="parameter.name | html"></p>
+        </div>
+    </div>
+    <div *ngIf="parametersToShow == 'staticParameters'">
+        <div class="border-dark" *ngFor="let parameter of staticParameters">
+            <p [innerHTML]="parameter.name | html"></p>
+        </div>
+    </div>
+    <div *ngIf="parametersToShow == 'calculationParameters'">
+        <div class="border-dark" *ngFor="let parameter of calculationParameters">
+            <p [innerHTML]="parameter.name | html"></p>
+        </div>
+    </div>
+
+
     <label for="dataParameters" class="radio-inline ml-3">
         <input type="radio"
                name="parametersType"

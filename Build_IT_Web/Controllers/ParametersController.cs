@@ -24,11 +24,23 @@ namespace Build_IT_Web.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}/parameters")]
-        public async Task<IEnumerable<ParameterResource>> GetParameters(int id)
+        [HttpGet("{id}/editable_parameters")]
+        public async Task<IEnumerable<ParameterResource>> GetEditableParameters(int id)
         {
             var parameters = await _context.Parameters
                 .Where(p => p.ScriptId == id && (p.Context & ParameterOptions.Editable) != 0)
+                .Include(p => p.ValueOptions)
+                .Include(p => p.NestedScripts)
+                .ToListAsync();
+
+            return _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
+        }
+
+        [HttpGet("{id}/parameters")]
+        public async Task<IEnumerable<ParameterResource>> GetAllParameters(int id)
+        {
+            var parameters = await _context.Parameters
+                .Where(p => p.ScriptId == id)
                 .Include(p => p.ValueOptions)
                 .Include(p => p.NestedScripts)
                 .ToListAsync();

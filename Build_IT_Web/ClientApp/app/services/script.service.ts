@@ -22,6 +22,10 @@ export class ScriptService {
         return this.http.delete<Script>('/api/scripts/' + id);
     }
 
+    getEditableParameters(scriptId: number): Observable<Parameter[]> {
+        return this.http.get<Parameter[]>('/api/scripts/' + scriptId + '/editable_parameters');
+    }
+
     getParameters(scriptId: number): Observable<Parameter[]> {
         return this.http.get<Parameter[]>('/api/scripts/' + scriptId + '/parameters');
     }

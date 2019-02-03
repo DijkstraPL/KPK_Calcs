@@ -39,7 +39,7 @@ export class ScriptCalculatorComponent implements OnInit {
     }
 
     private setParameters(): void {
-        this.scriptService.getParameters(this.script.id).subscribe(parameters => {
+        this.scriptService.getEditableParameters(this.script.id).subscribe(parameters => {
             this.parameters = parameters;
             console.log("Parameters", this.parameters);
         }, error => console.error(error));

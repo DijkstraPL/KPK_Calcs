@@ -18,15 +18,7 @@ namespace Build_IT_Web.Persistance
 
         public async Task<List<Script>> GetScripts()
         {
-            try
-            {
             return await _context.Scripts.Include(s => s.Tags).ThenInclude(t => t.Tag).ToListAsync();
-
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
         }
 
         public async Task<Script> GetScript(long id, bool includeRelated = true)

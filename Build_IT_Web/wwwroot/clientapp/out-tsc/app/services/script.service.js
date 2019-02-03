@@ -22,6 +22,9 @@ var ScriptService = /** @class */ (function () {
     ScriptService.prototype.deleteScript = function (id) {
         return this.http.delete('/api/scripts/' + id);
     };
+    ScriptService.prototype.getEditableParameters = function (scriptId) {
+        return this.http.get('/api/scripts/' + scriptId + '/editable_parameters');
+    };
     ScriptService.prototype.getParameters = function (scriptId) {
         return this.http.get('/api/scripts/' + scriptId + '/parameters');
     };

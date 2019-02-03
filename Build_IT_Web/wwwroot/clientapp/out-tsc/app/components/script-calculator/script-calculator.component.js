@@ -34,7 +34,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     };
     ScriptCalculatorComponent.prototype.setParameters = function () {
         var _this = this;
-        this.scriptService.getParameters(this.script.id).subscribe(function (parameters) {
+        this.scriptService.getEditableParameters(this.script.id).subscribe(function (parameters) {
             _this.parameters = parameters;
             console.log("Parameters", _this.parameters);
         }, function (error) { return console.error(error); });

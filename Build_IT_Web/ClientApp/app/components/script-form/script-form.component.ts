@@ -6,6 +6,7 @@ import { Script } from '../../models/script';
 import { TagImpl } from '../../models/tagImpl';
 import { TagService } from '../../services/tag.service';
 import { Tag } from '../../models/tag';
+import { Parameter } from '../../models/parameter';
 
 @Component({
     selector: 'app-script-form',
@@ -21,6 +22,9 @@ export class ScriptFormComponent implements OnInit {
     script: Script = new ScriptImpl();
     tags: Tag[];
     newTag: Tag = new TagImpl();
+    dataParameters: Parameter[];
+    staticParameters: Parameter[];
+    calculationParameters: Parameter[];
 
     constructor(
         private scriptService: ScriptService,
@@ -41,6 +45,7 @@ export class ScriptFormComponent implements OnInit {
 
         this.getScripts(id);
         this.getTags();
+        this.getParameters(id);
     }
 
     private getScripts(id: number) {
@@ -55,6 +60,17 @@ export class ScriptFormComponent implements OnInit {
         this.tagService.getTags().subscribe(tags => {
             this.tags = tags,
                 console.log("Tags", this.tags)
+        }, error => console.error(error));
+    }
+
+    getParameters(id: number) {
+        this.scriptService.getParameters(id).subscribe(parameters => {
+            this.dataParameters = parameters.filter(p => (p.context & 2) != 0);
+            this.staticParameters = parameters.filter(p => (p.context & 8) != 0);
+            this.calculationParameters = parameters.filter(p => (p.context & 4) != 0),
+                console.log("Data parameters", this.dataParameters);
+                console.log("Static parameters", this.staticParameters);
+                console.log("Calculation parameters", this.calculationParameters);
         }, error => console.error(error));
     }
 
@@ -92,7 +108,7 @@ export class ScriptFormComponent implements OnInit {
         this.tagService.create(this.newTag)
             .subscribe(t => {
                 console.log(t),
-                this.getTags()
+                    this.getTags()
             });
     }
 }
