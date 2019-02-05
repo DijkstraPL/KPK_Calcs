@@ -14,6 +14,8 @@ namespace Build_IT_BeamStatica.Spans
 {
     internal class Span : ISpan
     {
+        #region Properties
+
         public short Number { get; set; }
 
         public INode LeftNode { get; }
@@ -38,8 +40,16 @@ namespace Build_IT_BeamStatica.Spans
 
         public bool IncludeSelfWeight { get; set; }
 
+        #endregion // Properties
+
+        #region Fields
+
         private const double g = 9.812;
 
+        #endregion // Fields
+
+        #region Constructors
+        
         public Span(INode leftNode, double length, INode rightNode, 
             IMaterial material, ISection section, bool includeSelfWeight)
         {
@@ -56,6 +66,10 @@ namespace Build_IT_BeamStatica.Spans
             IncludeSelfWeight = includeSelfWeight;
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+
         public void CalculateSpanLoadVector()
         {
             if (IncludeSelfWeight)
@@ -71,6 +85,49 @@ namespace Build_IT_BeamStatica.Spans
             LoadVector[4] = SetShearForceLoadVector(isLeftNode: false);
             LoadVector[5] = SetBendingMomentForceLoadVector(isLeftNode: false);
         }
+        
+        public void CalculateDisplacement(Vector<double> deflectionVector, int numberOfDegreesOfFreedom)
+        {
+            Displacements = Vector<double>.Build.Dense(StiffnessMatrix.Size);
+
+            if (LeftNode.HorizontalMovementNumber < numberOfDegreesOfFreedom)
+                Displacements[0] = deflectionVector[LeftNode.HorizontalMovementNumber];
+            if (LeftNode.VerticalMovementNumber < numberOfDegreesOfFreedom)
+                Displacements[1] = deflectionVector[LeftNode.VerticalMovementNumber];
+            if (LeftNode.RightRotationNumber < numberOfDegreesOfFreedom)
+                Displacements[2] = deflectionVector[LeftNode.RightRotationNumber];
+            if (RightNode.HorizontalMovementNumber < numberOfDegreesOfFreedom)
+                Displacements[3] = deflectionVector[RightNode.HorizontalMovementNumber];
+            if (RightNode.VerticalMovementNumber < numberOfDegreesOfFreedom)
+                Displacements[4] = deflectionVector[RightNode.VerticalMovementNumber];
+            if (RightNode.LeftRotationNumber < numberOfDegreesOfFreedom)
+                Displacements[5] = deflectionVector[RightNode.LeftRotationNumber];
+        }
+
+        public void SetDisplacement()
+        {
+            if (LeftNode.HorizontalDeflection != null)
+                LeftNode.HorizontalDeflection.Value = Displacements[0] * 1000; // mm
+            if (LeftNode.VerticalDeflection != null)
+                LeftNode.VerticalDeflection.Value = Displacements[1] * 1000; // mm
+            if (LeftNode.RightRotation != null)
+                LeftNode.RightRotation.Value = Displacements[2];
+            if (RightNode.HorizontalDeflection != null)
+                RightNode.HorizontalDeflection.Value = Displacements[3] * 1000; // mm
+            if (RightNode.VerticalDeflection != null)
+                RightNode.VerticalDeflection.Value = Displacements[4] * 1000; // mm
+            if (RightNode.LeftRotation != null)
+                RightNode.LeftRotation.Value = Displacements[5];
+        }
+
+        public void CalculateForce()
+        {
+            Forces = StiffnessMatrix.Matrix.Multiply(Displacements).Add(LoadVector);
+        }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
 
         private void AddSelfWeightLoad()
         {
@@ -101,45 +158,8 @@ namespace Build_IT_BeamStatica.Spans
                 .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadBendingMomentMember(this, isLeftNode) ?? 0) +
                 RightNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
                 .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadBendingMomentMember(this, isLeftNode) ?? 0);
-
-
-        public void CalculateDisplacement(Vector<double> deflectionVector, int numberOfDegreesOfFreedom)
-        {
-            Displacements = Vector<double>.Build.Dense(StiffnessMatrix.Size);
-
-            if(LeftNode.HorizontalMovementNumber < numberOfDegreesOfFreedom)
-                Displacements[0] = deflectionVector[LeftNode.HorizontalMovementNumber];
-            if (LeftNode.VerticalMovementNumber < numberOfDegreesOfFreedom)
-                Displacements[1] = deflectionVector[LeftNode.VerticalMovementNumber];
-            if (LeftNode.RightRotationNumber < numberOfDegreesOfFreedom)
-                Displacements[2] = deflectionVector[LeftNode.RightRotationNumber];
-            if (RightNode.HorizontalMovementNumber < numberOfDegreesOfFreedom)
-                Displacements[3] = deflectionVector[RightNode.HorizontalMovementNumber];
-            if (RightNode.VerticalMovementNumber < numberOfDegreesOfFreedom)
-                Displacements[4] = deflectionVector[RightNode.VerticalMovementNumber];
-            if (RightNode.LeftRotationNumber < numberOfDegreesOfFreedom)
-                Displacements[5] = deflectionVector[RightNode.LeftRotationNumber];
-        }
-               
-        public void SetDisplacement()
-        {
-            if (LeftNode.HorizontalDeflection != null)
-                LeftNode.HorizontalDeflection.Value = Displacements[0] * 1000; // mm
-            if (LeftNode.VerticalDeflection != null)
-                LeftNode.VerticalDeflection.Value = Displacements[1] * 1000; // mm
-            if (LeftNode.RightRotation != null)
-                LeftNode.RightRotation.Value = Displacements[2];
-            if (RightNode.HorizontalDeflection != null)
-                RightNode.HorizontalDeflection.Value = Displacements[3] * 1000; // mm
-            if (RightNode.VerticalDeflection != null)
-                RightNode.VerticalDeflection.Value = Displacements[4] * 1000; // mm
-            if (RightNode.LeftRotation != null)
-                RightNode.LeftRotation.Value = Displacements[5];
-        }
-
-        public void CalculateForce()
-        {
-            Forces = StiffnessMatrix.Matrix.Multiply(Displacements).Add(LoadVector);
-        }      
+        
+        #endregion // Private_Methods
+  
     }
 }

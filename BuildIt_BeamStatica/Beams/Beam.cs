@@ -15,6 +15,8 @@ namespace Build_IT_BeamStatica.Beams
 {
     internal class Beam : IBeam
     {
+        #region Properties
+
         public IGetResult NormalForceResult { get; }
         public IGetResult ShearResult { get; }
         public IGetResult BendingMomentResult { get; }
@@ -38,11 +40,15 @@ namespace Build_IT_BeamStatica.Beams
 
         public bool IncludeSelfWeight { get; }
 
+        #endregion // Properties
+
+        #region Constructors
+        
         public Beam(IList<ISpan> spans, ICollection<INode> nodes, bool includeSelfWeight)
         {
             Spans = spans ?? throw new ArgumentNullException(nameof(spans));
             Nodes = nodes ?? throw new ArgumentNullException(nameof(nodes));
-
+            
             GlobalStiffnessMatrix = new GlobalStiffnessMatrix(this);
             NormalForceResult = new NormalForceResult(this);
             ShearResult = new ShearResult(this);
@@ -54,6 +60,10 @@ namespace Build_IT_BeamStatica.Beams
             IncludeSelfWeight = includeSelfWeight;
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         public void Calculate()
         {
             SetNumeration();
@@ -71,6 +81,10 @@ namespace Build_IT_BeamStatica.Beams
             AddForcesLocatedAtSupports();
         }
 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+        
         private void AddSelfWeightLoad()
         {
             foreach (var span in Spans)
@@ -244,5 +258,7 @@ namespace Build_IT_BeamStatica.Beams
                     SpanLoadVector[i] += span.LoadVector[5];
             }
         }
+
+        #endregion // Private_Methods
     }
 }

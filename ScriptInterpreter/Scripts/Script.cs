@@ -26,7 +26,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
 
-        public List<Parameter> Parameters { get; set; } = new List<Parameter>();
+        public List<IParameter> Parameters { get; set; } = new List<IParameter>();
 
         internal Script()
         {

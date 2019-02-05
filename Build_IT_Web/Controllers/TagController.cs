@@ -1,20 +1,15 @@
 ﻿using AutoMapper;
-using Build_IT_ScriptInterpreter.DataSaver;
 using Build_IT_Web.Controllers.Resources;
 using Build_IT_Web.Core;
 using Build_IT_Web.Core.Models;
-using Build_IT_Web.Core.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Interpreter = Build_IT_ScriptInterpreter.Scripts;
 
 namespace Build_IT_Web.Controllers
 {
-    [Route("/api/tags")]
+    [Route("api/tags")]
     public class TagController : Controller
     {
         private readonly IMapper _mapper;

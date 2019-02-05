@@ -1,9 +1,10 @@
-﻿using Build_IT_Web.Core.Models;
-using Build_IT_Web.Core.Models.Enums;
+﻿using SI = Build_IT_ScriptInterpreter.Parameters;
+using Build_IT_Web.Core.Models;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using VO = Build_IT_ScriptInterpreter.Parameters.ValueOptions;
 
 namespace Build_IT_Web.Migrations
 {
@@ -44,7 +45,7 @@ namespace Build_IT_Web.Migrations
 
                         if (p.NestedScripts != null)
                             foreach (var alt in p.NestedScripts)
-                                migrationBuilder.Sql("INSERT INTO AlternativeScripts (ScriptName, ParameterId)" +
+                                migrationBuilder.Sql("INSERT INTO AlternativeScripts (ScriptId, ParameterId)" +
                                     $"VALUES ('{alt.ScriptName}', {parameterIdSelection})");
                     }
             }
@@ -99,8 +100,8 @@ namespace Build_IT_Web.Migrations
                         Number = 1,
                         Name = "N_Ed_",
                         Description = "Normal design force at calculated position.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "kN",
                     },
                     new Parameter()
@@ -108,8 +109,8 @@ namespace Build_IT_Web.Migrations
                         Number = 2,
                         Name = "A",
                         Description = "Area of the section.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "cm^2^",
                     },
                     new Parameter()
@@ -117,7 +118,7 @@ namespace Build_IT_Web.Migrations
                         Number = 3,
                         Name = "f_y_",
                         Description = "Yield strength.",
-                        ValueType = ValueTypes.Number,
+                        ValueType = SI.ValueTypes.Number,
                         ValueOptions = new Collection<ValueOption>()
                         {
                            new ValueOption() { Value = "235" },
@@ -128,8 +129,8 @@ namespace Build_IT_Web.Migrations
                            new ValueOption() { Value = "460" },
 
                         },
-                        ValueOptionSetting = ValueOptionSettings.UserInput,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueOptionSetting = VO.ValueOptionSettings.UserInput,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "MPa",
                     },
                     new Parameter()
@@ -138,8 +139,8 @@ namespace Build_IT_Web.Migrations
                         Name = "γ_M0_",
                         Description = "Partial safety factor.",
                         Value = "1.0",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.StaticData,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.StaticData,
                         Unit = "",
                     },
                     new Parameter()
@@ -148,8 +149,8 @@ namespace Build_IT_Web.Migrations
                         Name = "N_pl,Rd_",
                         Value = "[A]*[f_y_]/[γ_M0_]/10",
                         Description = "Design plastic resistance of the gross cross-section.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "kN",
                     },
                     new Parameter()
@@ -158,8 +159,8 @@ namespace Build_IT_Web.Migrations
                         Name = "Resistance",
                         Value = "[N_Ed_]/[N_pl,Rd_]*100",
                         Description = "Resistance of the element loaded with normal force.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "%",
                     }
                 }
@@ -230,8 +231,8 @@ namespace Build_IT_Web.Migrations
                         Name = "f_ck_",
                         DataValidator = "[f_ck_]>0",
                         Description = "Characteristic compressive cylinder strength of concrete at 28 days.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "MPa"
                     },
                     new Parameter()
@@ -240,8 +241,8 @@ namespace Build_IT_Web.Migrations
                         Name = "f_cm_",
                         DataValidator = "[f_cm_]>0",
                         Description = "Mean compressive strength at 28 days.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "MPa",
                     },
                     new Parameter()
@@ -250,8 +251,8 @@ namespace Build_IT_Web.Migrations
                         Name = "cement_type_",
                         Description = "Type of cement.",
                         ValueOptions = cementTypes,
-                        ValueType = ValueTypes.Text,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Text,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "-"
                     },
                     new Parameter()
@@ -260,8 +261,8 @@ namespace Build_IT_Web.Migrations
                         Name = "t",
                         DataValidator = "[t]>3",
                         Description = "Age of the concrete in days.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "day"
                     },
                     new Parameter()
@@ -272,8 +273,8 @@ namespace Build_IT_Web.Migrations
                         "if(in([cement_type_],'CEM 32,5R','CEM 42,5') == true,0.25," +
                         "if(in([cement_type_],'CEM 32,5N') == true,0.38, ERROR('Invalid cement type.'))))",
                         Description = "Coefficient which depends on the type of cement.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "-"
                     },
                     new Parameter()
@@ -282,8 +283,8 @@ namespace Build_IT_Web.Migrations
                         Name = "β_cc_(t)",
                         Value = "Exp([s]*(1-Sqrt(28/[t])))",
                         Description = "Coefficient which depends on the age of the concrete t.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "-"
                     },
                     new Parameter()
@@ -292,8 +293,8 @@ namespace Build_IT_Web.Migrations
                         Name = "f_cm_(t)",
                         Value = "[β_cc_(t)]*[f_cm_]",
                         Description = "Mean concrete compressive strength at an age of t days.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "MPa"
                     },
                     new Parameter()
@@ -302,8 +303,8 @@ namespace Build_IT_Web.Migrations
                         Name = "f_ck_(t)",
                         Value = "if([t]>=28,[f_ck_],if([t]>3,[f_cm_(t)]-8,ERROR('Not even 3 days.')))",
                         Description = "Concrete compressive strength at time t.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "MPa"
                     }
                 }
@@ -340,8 +341,8 @@ namespace Build_IT_Web.Migrations
                         Name = "f_ck_",
                         DataValidator = "[f_ck_]>0",
                         Description = "Characteristic compressive cylinder strength of concrete at 28 days.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "MPa"
                     },
                     new Parameter()
@@ -351,8 +352,8 @@ namespace Build_IT_Web.Migrations
                         DataValidator = "[f_cm_]>0",
                         Description = "Mean compressive strength at 28 days.",
                         Value = "[f_ck_]+8",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "MPa"
                     }
                 }
@@ -388,8 +389,8 @@ namespace Build_IT_Web.Migrations
                         Number = 1,
                         Name = "V_Ed_",
                         Description = "Shear force at calculated position.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "kN"
                     },
                     new Parameter()
@@ -397,8 +398,8 @@ namespace Build_IT_Web.Migrations
                         Number = 2,
                         Name = "f_ck_",
                         Description = "Mean compressive strength at 28 days.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "MPa"
                     },
                     new Parameter()
@@ -406,8 +407,8 @@ namespace Build_IT_Web.Migrations
                         Number = 4,
                         Name = "b_w_",
                         Description = "Section width.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "mm"
                     },
                     new Parameter()
@@ -415,8 +416,8 @@ namespace Build_IT_Web.Migrations
                         Number = 5,
                         Name = "d",
                         Description = "Effective depth of a cross-section.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "mm"
                     },
                     new Parameter()
@@ -424,8 +425,8 @@ namespace Build_IT_Web.Migrations
                         Number = 6,
                         Name = "A_sl_",
                         Description = "Area of the tensile reinforcement, which extends ≥ (lbd + d) beyond the section considered.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "cm^2^"
                     },
                     new Parameter()
@@ -435,8 +436,8 @@ namespace Build_IT_Web.Migrations
                         Description = "Axial force in the cross-section due to loading or prestressing in newtons (NEd>0 for compression)." +
                         " The influence of imposed deformations on NEd may be ignored.",
                         Value = "0",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "N"
                     },
                     new Parameter()
@@ -444,8 +445,8 @@ namespace Build_IT_Web.Migrations
                         Number = 8,
                         Name = "A_c_",
                         Description = "Area of concrete cross section [mm2].",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Editable | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Editable | SI.ParameterOptions.Visible,
                         Unit = "mm^2^"
                     },
                     new Parameter()
@@ -454,8 +455,8 @@ namespace Build_IT_Web.Migrations
                         Name = "k_1_",
                         Value = "0.15",
                         Description = "Coefficient",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.StaticData,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.StaticData,
                         Unit = "-"
                     },
                     new Parameter()
@@ -464,8 +465,8 @@ namespace Build_IT_Web.Migrations
                         Name = "γ_c_",
                         Value = "1.4",
                         Description = "Partial factors for concrete.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.StaticData,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.StaticData,
                         Unit = "-"
                     },
                     new Parameter()
@@ -474,8 +475,8 @@ namespace Build_IT_Web.Migrations
                         Name = "C_Rd,c_",
                         Value = "0.18/[γ_c_]",
                         Description = "Coefficient.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "-"
                     },
                     new Parameter()
@@ -484,8 +485,8 @@ namespace Build_IT_Web.Migrations
                         Name = "k",
                         Value = "Min(1+Sqrt(200/[d]),2)",
                         Description = "Coefficient.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "-"
                     },
                     new Parameter()
@@ -494,8 +495,8 @@ namespace Build_IT_Web.Migrations
                         Name = "ρ_l_",
                         Value = "Min(0.02,[A_sl_]/([b_w_]*[d]))",
                         Description = "Reinforcement ratio for longitudinal reinforcement.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "-"
                     },
                     new Parameter()
@@ -504,8 +505,8 @@ namespace Build_IT_Web.Migrations
                         Name = "f_cd_",
                         Value = "[f_ck_]/[γ_c_]",
                         Description = "Design value of concrete compressive strength.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "MPa"
                     },
                     new Parameter()
@@ -514,8 +515,8 @@ namespace Build_IT_Web.Migrations
                         Name = "σ_cp_",
                         Value = "Min([N_Ed_]/[A_c_],0.2*[f_cd_])",
                         Description = "Compressive stress in the concrete from axial load or prestressing.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "MPa"
                     },
                     new Parameter()
@@ -524,8 +525,8 @@ namespace Build_IT_Web.Migrations
                         Name = "v_min_",
                         Value = "0.035*Pow([k],3/2)*Pow([f_ck_],1/2)",
                         Description = "Coefficient.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "MPa"
                     },
                     new Parameter()
@@ -536,8 +537,8 @@ namespace Build_IT_Web.Migrations
                         "([C_Rd,c_]*[k]*Pow(100*[ρ_l_]*[f_ck_],1/3)+[k_1_]*[σ_cp_])*[b_w_]*[d])" +
                         "/1000",
                         Description = "Design value for the shear resistance.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "kN"
                     },
                     new Parameter()
@@ -546,8 +547,8 @@ namespace Build_IT_Web.Migrations
                         Name = "Resistance",
                         Value = "[V_Ed_]/[V_Rd,c_]*100",
                         Description = "Resistance of the element without shear reinforcement.",
-                        ValueType = ValueTypes.Number,
-                        Context = ParameterOptions.Calculation | ParameterOptions.Visible,
+                        ValueType = SI.ValueTypes.Number,
+                        Context = SI.ParameterOptions.Calculation | SI.ParameterOptions.Visible,
                         Unit = "%"
                     },
                 }

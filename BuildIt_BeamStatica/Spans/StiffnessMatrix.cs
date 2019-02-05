@@ -7,23 +7,41 @@ namespace Build_IT_BeamStatica.Spans
 {
     internal class StiffnessMatrix : IStiffnessMatrix
     {
+        #region Properties
+
         public ICollection<IStiffnessMatrixPosition> MatrixOfPositions { get; private set; } = new List<IStiffnessMatrixPosition>();
         public Matrix<double> Matrix { get; private set; }
         public int Size { get; private set; }
 
+        #endregion // Properties
+
+        #region Fields
+        
         private Matrix<double> _transformationMatrix;
         private readonly ISpan _span;
 
+        #endregion // Fields
+
+        #region Constructors
+        
         public StiffnessMatrix(ISpan span)
         {
             _span = span;
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         public void Calculate()
         {
             CalculateStiffnessMatrixForGeneralBeam();
         }
-        
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
+
         private void CalculateStiffnessMatrixForGeneralBeam()
         {
             var horizontalValue = _span.Section.Area * _span.Material.YoungModulus / _span.Length * 100; // kN
@@ -165,5 +183,7 @@ namespace Build_IT_BeamStatica.Spans
                 }
             }
         }
+
+        #endregion // Private_Methods
     }
 }

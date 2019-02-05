@@ -1,4 +1,5 @@
-﻿using Build_IT_Web.Core.Models.Enums;
+﻿using Build_IT_ScriptInterpreter.Parameters;
+using Build_IT_ScriptInterpreter.Parameters.ValueOptions;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

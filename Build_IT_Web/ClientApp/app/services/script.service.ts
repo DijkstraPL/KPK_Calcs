@@ -34,11 +34,11 @@ export class ScriptService {
         return this.http.post('/api/scripts', script);
     }
 
-    update(script: Script): any {
+    update(script: Script) {
         return this.http.put('/api/scripts/' + script.id, script);
     }
 
-    calculate(scriptName: string, parameters: string): Observable<Parameter[]> {
-        return this.http.get<Parameter[]>('/api/scripts/calculate/' + scriptName + '/' + parameters);
+    calculate(scriptId: number, parameters: Parameter[]): Observable<Parameter[]> {
+        return this.http.put<Parameter[]>('/api/scripts/' + scriptId + '/calculate', parameters);
     }
 }

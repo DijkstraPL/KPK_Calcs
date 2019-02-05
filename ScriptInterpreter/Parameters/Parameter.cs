@@ -24,7 +24,7 @@ namespace Build_IT_ScriptInterpreter.Parameters
         public string Notes { get; set; }
         public List<Script> Scripts { get; set; }
 
-        internal Parameter()
+        public Parameter()
         {
         }
 

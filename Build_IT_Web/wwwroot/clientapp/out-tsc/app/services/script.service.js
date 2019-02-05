@@ -34,8 +34,8 @@ var ScriptService = /** @class */ (function () {
     ScriptService.prototype.update = function (script) {
         return this.http.put('/api/scripts/' + script.id, script);
     };
-    ScriptService.prototype.calculate = function (scriptName, parameters) {
-        return this.http.get('/api/scripts/calculate/' + scriptName + '/' + parameters);
+    ScriptService.prototype.calculate = function (scriptId, parameters) {
+        return this.http.put('/api/scripts/' + scriptId + '/calculate', parameters);
     };
     ScriptService = __decorate([
         Injectable({ providedIn: 'root' }),

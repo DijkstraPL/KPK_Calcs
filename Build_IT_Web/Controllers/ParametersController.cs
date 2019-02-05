@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Build_IT_Web.Controllers.Resources;
+using Build_IT_Web.Core;
 using Build_IT_Web.Core.Models;
-using Build_IT_Web.Core.Models.Enums;
-using Build_IT_Web.Persistance;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Build_IT_Web.Controllers
@@ -15,38 +12,31 @@ namespace Build_IT_Web.Controllers
     [ApiController]
     public class ParametersController : ControllerBase
     {
-        private readonly BuildItDbContext _context;
+        private readonly IParameterRepository _parameterRepository;
         private readonly IMapper _mapper;
 
-        public ParametersController(BuildItDbContext context, IMapper mapper)
+        public ParametersController(
+            IParameterRepository parameterRepository, 
+            IMapper mapper)
         {
-            _context = context;
+            _parameterRepository = parameterRepository;
             _mapper = mapper;
         }
 
         [HttpGet("{id}/editable_parameters")]
-        public async Task<IEnumerable<ParameterResource>> GetEditableParameters(int id)
+        public async Task<IEnumerable<ParameterResource>> GetEditableParameters(long id)
         {
-            var parameters = await _context.Parameters
-                .Where(p => p.ScriptId == id && (p.Context & ParameterOptions.Editable) != 0)
-                .Include(p => p.ValueOptions)
-                .Include(p => p.NestedScripts)
-                .ToListAsync();
+            var parameters = await _parameterRepository.GetEditableParameters(id);
 
             return _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
         }
 
         [HttpGet("{id}/parameters")]
-        public async Task<IEnumerable<ParameterResource>> GetAllParameters(int id)
+        public async Task<IEnumerable<ParameterResource>> GetAllParameters(long id)
         {
-            var parameters = await _context.Parameters
-                .Where(p => p.ScriptId == id)
-                .Include(p => p.ValueOptions)
-                .Include(p => p.NestedScripts)
-                .ToListAsync();
+            var parameters = await _parameterRepository.GetAllParameters(id);
 
             return _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
         }
-
     }
 }

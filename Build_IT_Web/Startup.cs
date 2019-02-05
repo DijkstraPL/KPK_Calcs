@@ -26,6 +26,7 @@ namespace Build_IT_Web
         {
             services.AddScoped<IScriptRepository, ScriptRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IParameterRepository, ParameterRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<BuildItDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
@@ -44,8 +45,6 @@ namespace Build_IT_Web
             {
                 configuration.RootPath = "wwwroot/clientapp/dist";
             });
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,5 @@
 ﻿using Build_IT_ScriptInterpreter.Parameters.ValueOptions;
+using Build_IT_ScriptInterpreter.Scripts;
 using Build_IT_ScriptInterpreter.Units.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,6 @@ namespace Build_IT_ScriptInterpreter.Parameters.Interfaces
         string GroupName { get; set; }
         string AccordingTo { get; set; }
         string Notes { get; set; }
+        List<Script> Scripts { get; set; }
     }
 }

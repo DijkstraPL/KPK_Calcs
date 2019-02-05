@@ -5,7 +5,11 @@ namespace Build_IT_BeamStatica.Spans.Interfaces
 {
     public interface ILoadProvider
     {
-         ICollection<IContinousLoad> ContinousLoads { get; set; }
+        #region Properties
+
+        ICollection<IContinousLoad> ContinousLoads { get; set; }
          ICollection<ISpanLoad> PointLoads { get; set; }
+
+        #endregion // Properties
     }
 }

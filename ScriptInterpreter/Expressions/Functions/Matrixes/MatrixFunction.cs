@@ -17,6 +17,11 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions
     /// 4, 5, 6
     /// 7, 8, 9
     /// </remarks>
+    /// <example>
+    /// <code>
+    /// MATRIX(3,3,1,2,3,4,5,6,7,8,9)
+    /// </code>
+    /// </example>
     public class MatrixFunction : IFunction
     {
         public string Name { get; private set; }

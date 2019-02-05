@@ -6,6 +6,8 @@ namespace Build_IT_BeamStatica.Spans.Interfaces
 {
     public interface ISpan : ILengthProvider, INodesProvider, ILoadProvider, ISpanCalculations
     {
+        #region Properties
+
         short Number { get; set; }
         ISection Section { get; }
         IMaterial Material { get; }
@@ -14,5 +16,7 @@ namespace Build_IT_BeamStatica.Spans.Interfaces
         Vector<double> Forces { get; }
         Vector<double> LoadVector { get; }
         bool IncludeSelfWeight { get; set; }
+        
+        #endregion // Properties
     }
 }

@@ -6,7 +6,7 @@ namespace Build_IT_ScriptInterpreter.Scripts.Interfaces
 {
     public interface ICalculatable
     {
-        List<Parameter> Parameters { get; set; } // TODO: Remove setter
+        List<IParameter> Parameters { get; set; } // TODO: Remove setter
 
         IParameter GetParameterByName(string name);
     }

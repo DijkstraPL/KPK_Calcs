@@ -5,6 +5,7 @@ using Build_IT_ScriptInterpreter.Scripts.Interfaces;
 using Build_IT_Tools;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Build_IT_ScriptInterpreter.Scripts
@@ -12,7 +13,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
     public class CalculationEngine
     {
         private readonly ICalculatable _script;
-        private readonly ICollection<Parameter> _scriptParameters;
+        private readonly ICollection<IParameter> _scriptParameters;
 
         public CalculationEngine(ICalculatable script)
         {
@@ -33,15 +34,30 @@ namespace Build_IT_ScriptInterpreter.Scripts
             Calculate(parameters);
         }
 
-        public void Calculate(params object[] values)
+        //public void Calculate(params object[] values)
+        //{
+        //    var parameters = PrepareDataParameters(values).ToList();
+
+        //    foreach (var parameter in _scriptParameters.Where(p =>
+        //    (p.Context & ParameterOptions.Calculation) != 0))
+        //    {
+        //        CalculateParameter(parameter, parameters.ToDictionary(p => p.Name, p => p.Value));
+        //        parameters.Add(parameter);
+        //    }
+        //}
+
+        public void Calculate(Dictionary<string, object> parameters)
         {
-            var parameters = PrepareDataParameters(values).ToList();
+            var staticParameters = _scriptParameters
+                .Where(p => (p.Context & ParameterOptions.StaticData) != 0).ToList();
+            foreach (var parameter in staticParameters)
+                parameters.Add(parameter.Name, double.Parse(parameter.Value.ToString(), CultureInfo.InvariantCulture));
 
             foreach (var parameter in _scriptParameters.Where(p =>
-            (p.Context & ParameterOptions.Calculation) != 0))
+                (p.Context & ParameterOptions.Calculation) != 0))
             {
-                CalculateParameter(parameter, parameters.ToDictionary(p => p.Name, p => p.Value));
-                parameters.Add(parameter);
+                CalculateParameter(parameter, parameters);
+                parameters.Add(parameter.Name, parameter.Value);
             }
         }
 
@@ -106,16 +122,6 @@ namespace Build_IT_ScriptInterpreter.Scripts
                     calculateEngine.CalculateFromText(parameterValues);
                     parameter.Value = parameter.Scripts[0].Parameters.FirstOrDefault(p => p.Name == parameter.Name).Value;
                 }
-            }
-        }
-
-        private void Calculate(Dictionary<string, object> parameters)
-        {
-            foreach (var parameter in _scriptParameters.Where(p =>
-                (p.Context & ParameterOptions.Calculation) != 0))
-            {
-                CalculateParameter(parameter, parameters);
-                parameters.Add(parameter.Name, parameter.Value);
             }
         }
 
