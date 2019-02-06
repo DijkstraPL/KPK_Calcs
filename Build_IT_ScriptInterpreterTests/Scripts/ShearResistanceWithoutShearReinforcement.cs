@@ -197,7 +197,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 @"C:\Users\Disseminate\Desktop\Script Interpreter\Scripts\" + script.Name + ".xml");
 
             var calculationEngine = new CalculationEngine(script);
-            calculationEngine.Calculate(100, 30, 240, 461, 339, 100, 150000);
+            calculationEngine.CalculateFromText("[V_Ed_]=100|[f_ck_]=30|[b_w_]=240|[d]=461|[A_sl_]=339|[N_Ed_]=100|[A_c_]=150000");
 
             Assert.That(0.128571, Is.EqualTo(script.GetParameterByName("C_Rd,c_").Value).Within(0.000001));
             Assert.That(1.658664, Is.EqualTo(script.GetParameterByName("k").Value).Within(0.000001));

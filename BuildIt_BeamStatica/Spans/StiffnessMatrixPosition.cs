@@ -1,4 +1,5 @@
 ﻿using Build_IT_BeamStatica.Spans.Interfaces;
+using System;
 
 namespace Build_IT_BeamStatica.Spans
 {
@@ -16,6 +17,9 @@ namespace Build_IT_BeamStatica.Spans
         
         public StiffnessMatrixPosition(double value, short rowNumber, short columnNumber)
         {
+            if (rowNumber < 0 || columnNumber < 0)
+                throw new ArgumentOutOfRangeException();
+
             Value = value;
             RowNumber = rowNumber;
             ColumnNumber = columnNumber;

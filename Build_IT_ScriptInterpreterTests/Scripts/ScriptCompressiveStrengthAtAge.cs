@@ -124,7 +124,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
 
             var calculationEngine = new CalculationEngine(script);
 
-            calculationEngine.Calculate(30, 38, "CEM 42,5R", 5);
+            calculationEngine.CalculateFromText("[f_ck_]=30,[f_cm_]=38,[cement_type_]=CEM 42,5R,[t]=5");
 
             Assert.That(0.2, Is.EqualTo(script.GetParameterByName("s").Value).Within(0.000001));
             Assert.That(0.760874, Is.EqualTo(script.GetParameterByName("β_cc_(t)").Value).Within(0.000001));
@@ -142,7 +142,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             var script = loader.LoadData(@"C:\Users\Disseminate\Desktop\Script Interpreter\Scripts\" + name + ".xml");
 
             var calculationEngine = new CalculationEngine(script);
-            calculationEngine.Calculate(30, 38, "CEM 42,5R", 5);
+            calculationEngine.CalculateFromText("[f_ck_]=30,[f_cm_]=38,[cement_type_]='CEM 42,5R',[t]=5");
 
             Assert.That(0.2, Is.EqualTo(script.GetParameterByName("s").Value).Within(0.000001));
             Assert.That(0.760874, Is.EqualTo(script.GetParameterByName("β_cc_(t)").Value).Within(0.000001));

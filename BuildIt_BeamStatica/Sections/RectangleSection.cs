@@ -15,7 +15,7 @@ namespace Build_IT_BeamStatica.Sections
 
         public override double SolidHeight => Height;
 
-        public RectangleSection(double width, double height) 
+        public RectangleSection(double width, double height)
         {
             Width = width;
             Height = height;
@@ -35,7 +35,7 @@ namespace Build_IT_BeamStatica.Sections
 
         protected override void CalculateCimcuference()
         {
-            Circumference = 2 * Width + 2 * Height;
+            Circumference = (2 * Width + 2 * Height) / 10;
         }
 
         protected override void CalculateArea()

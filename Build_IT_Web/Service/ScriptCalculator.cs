@@ -47,11 +47,8 @@ namespace Build_IT_Web.Service
             }
         }
 
-        internal IEnumerable<Parameter> GetResult()
-        {
-            return _parameters.Where(p => (p.Context & SIP.ParameterOptions.Calculation) != 0);
-            //return MapParametersBack(parameters);
-        }
+        internal IEnumerable<Parameter> GetResult() 
+            => _parameters.Where(p => (p.Context & SIP.ParameterOptions.Calculation) != 0);
 
         private async Task<IScript> MapScript()
         {
@@ -83,19 +80,5 @@ namespace Build_IT_Web.Service
                 return parameters;
             });
         }
-
-        //private IEnumerable<ParameterResource> MapParametersBack(IEnumerable<IParameter> parameters)
-        //{
-        //    foreach (var parameter in parameters)
-        //    {
-        //        yield return new ParameterResource()
-        //        {
-        //            Number = parameter.Number,
-        //            Name = parameter.Name,
-        //            Value = parameter.Value.ToString(),
-        //            Context = parameter.Context
-        //        };
-        //    }
-        //}
     }
 }

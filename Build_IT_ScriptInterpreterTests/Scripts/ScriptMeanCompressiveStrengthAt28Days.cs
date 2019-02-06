@@ -49,7 +49,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
 
             var calculationEngine = new CalculationEngine(script);
 
-            calculationEngine.Calculate(30);
+            calculationEngine.CalculateFromText("[f_ck_]=30");
 
             Assert.That(38, Is.EqualTo(script.GetParameterByName("f_cm_").Value));
         }

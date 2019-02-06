@@ -43,7 +43,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
 
             var script = scriptBuilder.Build();
             var calculationEngine = new CalculationEngine(script);
-            calculationEngine.Calculate(50, 70);
+            calculationEngine.CalculateFromText("[b]=50,[h]=70");
 
             Assert.That(1429166.667, Is.EqualTo(script.GetParameterByName("I").Value).Within(0.001));
         }
