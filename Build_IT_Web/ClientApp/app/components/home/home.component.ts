@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
     private delete(script: Script): void {
         if (confirm(`Are you sure that you want to remove \"${script.name}\"?`)) {
-            this.scriptService.deleteScript(script.id).subscribe(s =>
+            this.scriptService.delete(script.id).subscribe(s =>
                 console.log("Scripts", s));
             this.scripts = this.scripts.filter(s => s.id != script.id);
         }

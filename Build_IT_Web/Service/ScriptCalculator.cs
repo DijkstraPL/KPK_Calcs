@@ -3,6 +3,7 @@ using Build_IT_ScriptInterpreter.Scripts.Interfaces;
 using Build_IT_Web.Controllers.Resources;
 using Build_IT_Web.Core.Models;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using SI = Build_IT_ScriptInterpreter.Scripts;
@@ -36,7 +37,8 @@ namespace Build_IT_Web.Service
                 .ToDictionary(
                 p => p.Name,
                 p => p.ValueType == SIP.ValueTypes.Number ?
-                double.Parse(p.Value) : (object)p.Value);
+                double.Parse(p.Value.Replace(',','.'), NumberStyles.Any, CultureInfo.InvariantCulture) : 
+                (object)p.Value);
             _calculationEngine.Calculate(parameterValues);
 
             foreach (var par in parameterValues)

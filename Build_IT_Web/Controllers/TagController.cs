@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 namespace Build_IT_Web.Controllers
 {
     [Route("api/tags")]
-    public class TagController : Controller
+    [ApiController]
+    public class TagController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly ITagRepository _tagRepository;

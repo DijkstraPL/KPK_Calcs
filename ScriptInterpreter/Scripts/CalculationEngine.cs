@@ -56,6 +56,9 @@ namespace Build_IT_ScriptInterpreter.Scripts
             foreach (var parameter in _scriptParameters.Where(p =>
                 (p.Context & ParameterOptions.Calculation) != 0))
             {
+                //if (string.IsNullOrWhiteSpace(parameter.DataValidator.ToString()))
+                //    continue;
+
                 CalculateParameter(parameter, parameters);
                 parameters.Add(parameter.Name, parameter.Value);
             }
@@ -104,7 +107,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
                     parameter.Value = parameters.SingleOrDefault(p => p.Key == parameter.Name).Value;
                 else if (parameter.Scripts.Count > 0)
                 {
-                    var neededParameters = parameter.Scripts[0].Parameters.Where(p 
+                    var neededParameters = parameter.Scripts[0].Parameters.Where(p
                         => (p.Context & ParameterOptions.Editable) != 0);
                     var providedParameters = parameters.Where(p => neededParameters.Select(np => np.Name).Contains(p.Key));
                     string parameterValues = "";

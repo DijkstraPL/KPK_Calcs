@@ -9,30 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-var ScriptService = /** @class */ (function () {
-    function ScriptService(http) {
+var DataService = /** @class */ (function () {
+    function DataService(http) {
         this.http = http;
     }
-    ScriptService.prototype.getScripts = function () {
-        return this.http.get('/api/scripts');
+    DataService.prototype.save = function (id) {
+        this.http.get("/api/scripts/" + id + "/save");
     };
-    ScriptService.prototype.getScript = function (id) {
-        return this.http.get('/api/scripts/' + id);
-    };
-    ScriptService.prototype.delete = function (id) {
-        return this.http.delete('/api/scripts/' + id);
-    };
-    ScriptService.prototype.create = function (script) {
-        return this.http.post('/api/scripts', script);
-    };
-    ScriptService.prototype.update = function (script) {
-        return this.http.put('/api/scripts/' + script.id, script);
-    };
-    ScriptService = __decorate([
+    DataService = __decorate([
         Injectable({ providedIn: 'root' }),
         __metadata("design:paramtypes", [HttpClient])
-    ], ScriptService);
-    return ScriptService;
+    ], DataService);
+    return DataService;
 }());
-export { ScriptService };
-//# sourceMappingURL=script.service.js.map
+export { DataService };
+//# sourceMappingURL=data.service.js.map

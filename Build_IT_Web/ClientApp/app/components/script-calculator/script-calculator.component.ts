@@ -4,6 +4,8 @@ import { Script } from '../../models/script';
 import { Parameter } from '../../models/parameter';
 import { ParameterOptions } from '../../models/parameterOptions';
 import { ActivatedRoute } from '@angular/router';
+import { ParameterService } from '../../services/parameter.service';
+import { CalculationService } from '../../services/calculation.service';
 
 @Component({
     selector: 'app-script-calculator',
@@ -20,7 +22,11 @@ export class ScriptCalculatorComponent implements OnInit {
 
     valueChanged: boolean;
 
-    constructor(private route: ActivatedRoute, private scriptService: ScriptService) {
+    constructor(
+        private route: ActivatedRoute,
+        private scriptService: ScriptService,
+        private parameterService: ParameterService,
+        private calculationService: CalculationService) {
     }
 
     ngOnInit(): void {
@@ -39,7 +45,7 @@ export class ScriptCalculatorComponent implements OnInit {
     }
 
     private setParameters(): void {
-        this.scriptService.getEditableParameters(this.script.id).subscribe(parameters => {
+        this.parameterService.getEditableParameters(this.script.id).subscribe(parameters => {
             this.parameters = parameters;
             console.log("Parameters", this.parameters);
         }, error => console.error(error));
@@ -61,7 +67,7 @@ export class ScriptCalculatorComponent implements OnInit {
         //    });
         //parameters = parameters.substr(0, parameters.length - 1);
 
-        this.scriptService.calculate(this.script.id, this.parameters)
+        this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(params => {
                 this.resultParameters = params;
                 console.log("Results", this.resultParameters);

@@ -7,8 +7,8 @@ namespace Build_IT_BeamStatica.Spans.Interfaces
     {
         #region Properties
 
-        ICollection<IContinousLoad> ContinousLoads { get; set; }
-         ICollection<ISpanLoad> PointLoads { get; set; }
+        ICollection<IContinousLoad> ContinousLoads { get;  }
+         ICollection<ISpanLoad> PointLoads { get;  }
 
         #endregion // Properties
     }

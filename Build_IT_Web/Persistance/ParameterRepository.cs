@@ -17,22 +17,40 @@ namespace Build_IT_Web.Persistance
             _context = context;
         }
 
-        public async Task<List<Parameter>> GetAllParameters(long id)
+        public async Task<List<Parameter>> GetAllParameters(long scriptId)
         {
             return await _context.Parameters
-                .Where(p => p.ScriptId == id)
+                .Where(p => p.ScriptId == scriptId)
                 .Include(p => p.ValueOptions)
                 .Include(p => p.NestedScripts)
                 .ToListAsync();
         }
 
-        public async Task<List<Parameter>> GetEditableParameters(long id)
+        public async Task<List<Parameter>> GetEditableParameters(long scriptId)
         {
           return await _context.Parameters
-                .Where(p => p.ScriptId == id && (p.Context & SI.ParameterOptions.Editable) != 0)
+                .Where(p => p.ScriptId == scriptId && (p.Context & SI.ParameterOptions.Editable) != 0)
                 .Include(p => p.ValueOptions)
                 .Include(p => p.NestedScripts)
                 .ToListAsync();
+        }
+
+        public async Task<Parameter> GetParameter(long parameterId)
+        {
+            return await _context.Parameters
+                .Include(p => p.ValueOptions)
+                .Include(p => p.NestedScripts)
+                .SingleOrDefaultAsync(p => p.Id == parameterId);
+        }
+
+        public void Add(Parameter parameter)
+        {
+            _context.Parameters.Add(parameter);
+        }
+
+        public void Remove(Parameter parameter)
+        {
+            _context.Remove(parameter);
         }
     }
 }

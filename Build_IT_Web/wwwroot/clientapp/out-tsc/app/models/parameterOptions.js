@@ -5,5 +5,6 @@ export var ParameterOptions;
     ParameterOptions[ParameterOptions["Editable"] = 2] = "Editable";
     ParameterOptions[ParameterOptions["Calculation"] = 4] = "Calculation";
     ParameterOptions[ParameterOptions["StaticData"] = 8] = "StaticData";
+    ParameterOptions[ParameterOptions["Important"] = 16] = "Important";
 })(ParameterOptions || (ParameterOptions = {}));
 //# sourceMappingURL=parameterOptions.js.map

@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 namespace Build_IT_Web.Controllers
 {
     [Route("api/scripts")]
-    public class ScriptsController : Controller
+    [ApiController]
+    public class ScriptsController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly IScriptRepository _scriptRepository;

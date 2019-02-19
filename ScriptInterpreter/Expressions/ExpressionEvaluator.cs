@@ -1,13 +1,12 @@
 ﻿using Build_IT_ScriptInterpreter.Expressions.Functions.Interfaces;
 using Build_IT_ScriptInterpreter.Expressions.Interfaces;
+using Build_IT_ScriptInterpreter.Expressions.Parameters.Interfaces;
 using Build_IT_ScriptInterpreter.Parameters.Interfaces;
-using MathNet.Numerics.LinearAlgebra;
 using NCalc;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 
 namespace Build_IT_ScriptInterpreter.Expressions
 {
@@ -31,9 +30,10 @@ namespace Build_IT_ScriptInterpreter.Expressions
 
         private ExpressionEvaluator(string expression, IDictionary<string, object> parameters = null)
         {
-            Functions = new List<string>();
-
+            Functions = new List<string>();            
             _expression = new ExpressionWrapper(expression);
+
+            SetAdditionalParameters(parameters);
             if (parameters != null)
                 _expression.SetParameters(parameters);
 
@@ -53,6 +53,27 @@ namespace Build_IT_ScriptInterpreter.Expressions
             }
         }
 
+        private IDictionary<string, object> SetAdditionalParameters(
+            IDictionary<string, object> parameters)
+        {
+            if (parameters == null)
+                parameters = new Dictionary<string, object>();
+
+            var type = typeof(ICustomParameter);
+            var customParameters = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface);
+            foreach (var customParameter in customParameters)
+            {
+                var instance = (ICustomParameter)Activator.CreateInstance(customParameter);
+                foreach (var name in instance.Names)
+                    if (!parameters.ContainsKey(name))
+                        parameters.Add(name, instance.Value);
+            }
+
+            return parameters;
+        }
+
         private void SetAdditionalFunctions()
         {
             var type = typeof(IFunction);
@@ -61,7 +82,7 @@ namespace Build_IT_ScriptInterpreter.Expressions
                 .Where(p => type.IsAssignableFrom(p) && !p.IsInterface);
             foreach (var function in functions)
             {
-               var instance = (IFunction)Activator.CreateInstance(function);
+                var instance = (IFunction)Activator.CreateInstance(function);
                 _expression.SetAdditionalFunction(instance.Name, instance.Function);
                 Functions.Add(instance.Name);
             }

@@ -11,10 +11,14 @@ import { Component } from '@angular/core';
 import { ScriptService } from '../../services/script.service';
 import { ParameterOptions } from '../../models/parameterOptions';
 import { ActivatedRoute } from '@angular/router';
+import { ParameterService } from '../../services/parameter.service';
+import { CalculationService } from '../../services/calculation.service';
 var ScriptCalculatorComponent = /** @class */ (function () {
-    function ScriptCalculatorComponent(route, scriptService) {
+    function ScriptCalculatorComponent(route, scriptService, parameterService, calculationService) {
         this.route = route;
         this.scriptService = scriptService;
+        this.parameterService = parameterService;
+        this.calculationService = calculationService;
         this.parameterOptions = ParameterOptions;
     }
     ScriptCalculatorComponent.prototype.ngOnInit = function () {
@@ -34,7 +38,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     };
     ScriptCalculatorComponent.prototype.setParameters = function () {
         var _this = this;
-        this.scriptService.getEditableParameters(this.script.id).subscribe(function (parameters) {
+        this.parameterService.getEditableParameters(this.script.id).subscribe(function (parameters) {
             _this.parameters = parameters;
             console.log("Parameters", _this.parameters);
         }, function (error) { return console.error(error); });
@@ -54,7 +58,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         //    });
         //parameters = parameters.substr(0, parameters.length - 1);
         var _this = this;
-        this.scriptService.calculate(this.script.id, this.parameters)
+        this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(function (params) {
             _this.resultParameters = params;
             console.log("Results", _this.resultParameters);
@@ -67,7 +71,10 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             templateUrl: './script-calculator.component.html',
             styleUrls: ['./script-calculator.component.css']
         }),
-        __metadata("design:paramtypes", [ActivatedRoute, ScriptService])
+        __metadata("design:paramtypes", [ActivatedRoute,
+            ScriptService,
+            ParameterService,
+            CalculationService])
     ], ScriptCalculatorComponent);
     return ScriptCalculatorComponent;
 }());

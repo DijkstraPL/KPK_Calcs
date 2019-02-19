@@ -32,11 +32,10 @@ var ScriptFormComponent = /** @class */ (function () {
             this.editMode = false;
             return;
         }
-        this.getScripts(id);
+        this.getScript(id);
         this.getTags();
-        this.getParameters(id);
     };
-    ScriptFormComponent.prototype.getScripts = function (id) {
+    ScriptFormComponent.prototype.getScript = function (id) {
         var _this = this;
         this.scriptService.getScript(id).subscribe(function (script) {
             _this.script = script,
@@ -49,17 +48,6 @@ var ScriptFormComponent = /** @class */ (function () {
         this.tagService.getTags().subscribe(function (tags) {
             _this.tags = tags,
                 console.log("Tags", _this.tags);
-        }, function (error) { return console.error(error); });
-    };
-    ScriptFormComponent.prototype.getParameters = function (id) {
-        var _this = this;
-        this.scriptService.getParameters(id).subscribe(function (parameters) {
-            _this.dataParameters = parameters.filter(function (p) { return (p.context & 2) != 0; });
-            _this.staticParameters = parameters.filter(function (p) { return (p.context & 8) != 0; });
-            _this.calculationParameters = parameters.filter(function (p) { return (p.context & 4) != 0; }),
-                console.log("Data parameters", _this.dataParameters);
-            console.log("Static parameters", _this.staticParameters);
-            console.log("Calculation parameters", _this.calculationParameters);
         }, function (error) { return console.error(error); });
     };
     ScriptFormComponent.prototype.addTag = function () {

@@ -28,6 +28,9 @@ namespace Build_IT_Web.Mapping
                     AddNewTags(svm, s);
                 });
             CreateMap<TagResource, Tag>();
+            CreateMap<ParameterResource, Parameter>()
+                .ForMember(p=>p.Script, operation => operation.Ignore())
+                .ForMember(p => p.ScriptId, operation => operation.Ignore());
         }
 
         private void RemoveNotAddedTags(ScriptResource scriptResource, Script script)

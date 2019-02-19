@@ -9,9 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { ScriptService } from '../../services/script.service';
+import { DataService } from '../../services/data.service';
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(scriptService) {
+    function HomeComponent(scriptService, dataService) {
         this.scriptService = scriptService;
+        this.dataService = dataService;
     }
     HomeComponent.prototype.ngOnInit = function () {
         this.setScript();
@@ -25,11 +27,17 @@ var HomeComponent = /** @class */ (function () {
     };
     HomeComponent.prototype.delete = function (script) {
         if (confirm("Are you sure that you want to remove \"" + script.name + "\"?")) {
-            this.scriptService.deleteScript(script.id).subscribe(function (s) {
+            this.scriptService.delete(script.id).subscribe(function (s) {
                 return console.log("Scripts", s);
             });
             this.scripts = this.scripts.filter(function (s) { return s.id != script.id; });
         }
+    };
+    HomeComponent.prototype.save = function (id) {
+        this.dataService.save(id).subscribe(function (s) {
+            return console.log("Save", s);
+        });
+        ;
     };
     HomeComponent = __decorate([
         Component({
@@ -37,7 +45,8 @@ var HomeComponent = /** @class */ (function () {
             templateUrl: './home.component.html',
             styleUrls: ['./home.component.css']
         }),
-        __metadata("design:paramtypes", [ScriptService])
+        __metadata("design:paramtypes", [ScriptService,
+            DataService])
     ], HomeComponent);
     return HomeComponent;
 }());

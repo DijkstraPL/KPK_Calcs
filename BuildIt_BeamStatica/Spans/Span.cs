@@ -30,8 +30,8 @@ namespace Build_IT_BeamStatica.Spans
 
         public ISection Section { get; }
 
-        public ICollection<IContinousLoad> ContinousLoads { get; set; }
-        public ICollection<ISpanLoad> PointLoads { get; set; }
+        public ICollection<IContinousLoad> ContinousLoads { get; private set; }
+        public ICollection<ISpanLoad> PointLoads { get; private set; }
 
         public IStiffnessMatrix StiffnessMatrix { get; }
         public Vector<double> LoadVector { get; private set; }

@@ -22,9 +22,6 @@ export class ScriptFormComponent implements OnInit {
     script: Script = new ScriptImpl();
     tags: Tag[];
     newTag: Tag = new TagImpl();
-    dataParameters: Parameter[];
-    staticParameters: Parameter[];
-    calculationParameters: Parameter[];
 
     constructor(
         private scriptService: ScriptService,
@@ -43,12 +40,11 @@ export class ScriptFormComponent implements OnInit {
             return;
         }
 
-        this.getScripts(id);
+        this.getScript(id);
         this.getTags();
-        this.getParameters(id);
     }
 
-    private getScripts(id: number) {
+    private getScript(id: number) {
         this.scriptService.getScript(id).subscribe(script => {
             this.script = script,
                 console.log("Script", this.script),
@@ -60,17 +56,6 @@ export class ScriptFormComponent implements OnInit {
         this.tagService.getTags().subscribe(tags => {
             this.tags = tags,
                 console.log("Tags", this.tags)
-        }, error => console.error(error));
-    }
-
-    getParameters(id: number) {
-        this.scriptService.getParameters(id).subscribe(parameters => {
-            this.dataParameters = parameters.filter(p => (p.context & 2) != 0);
-            this.staticParameters = parameters.filter(p => (p.context & 8) != 0);
-            this.calculationParameters = parameters.filter(p => (p.context & 4) != 0),
-                console.log("Data parameters", this.dataParameters);
-                console.log("Static parameters", this.staticParameters);
-                console.log("Calculation parameters", this.calculationParameters);
         }, error => console.error(error));
     }
 

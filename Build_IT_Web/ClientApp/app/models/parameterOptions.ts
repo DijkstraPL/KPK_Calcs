@@ -4,4 +4,5 @@
     Editable = 2,
     Calculation = 4,
     StaticData = 8,
+    Important = 16,
 }

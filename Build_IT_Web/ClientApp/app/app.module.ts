@@ -9,12 +9,15 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { ScriptFormComponent } from './components/script-form/script-form.component';
+import { ParametersFormComponent } from './components/parameters-form/parameters-form.component';
 import { ScriptCalculatorComponent } from './components/script-calculator/script-calculator.component';
 
 import { HtmlPipeModule } from './pipes/html-pipe.module';
 
 import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
+import { CalculationService } from './services/calculation.service';
+import { ParameterService } from './services/parameter.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,7 @@ import { TagService } from './services/tag.service';
       NavMenuComponent,
       HomeComponent,
       ScriptFormComponent,
+      ParametersFormComponent,
       ScriptCalculatorComponent,
       HtmlPipeModule
   ],
@@ -34,7 +38,9 @@ import { TagService } from './services/tag.service';
     ],
     providers: [
         ScriptService,
-        TagService
+        TagService,
+        CalculationService,
+        ParameterService
     ],
   bootstrap: [AppComponent]
 })
