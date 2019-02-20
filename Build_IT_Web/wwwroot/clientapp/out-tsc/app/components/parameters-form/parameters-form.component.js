@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ParameterImpl } from '../../models/parameterImpl';
 import { ParameterService } from '../../services/parameter.service';
 import { ParameterOptions } from '../../models/parameterOptions';
+import { ValueOptionImpl } from '../../models/valueOptionImpl';
 var ParametersFormComponent = /** @class */ (function () {
     function ParametersFormComponent(parameterService, route) {
         this.parameterService = parameterService;
@@ -23,7 +24,7 @@ var ParametersFormComponent = /** @class */ (function () {
     }
     ParametersFormComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var sub = this.route.params.subscribe(function (params) {
+        this.route.snapshot.params.subscribe(function (params) {
             _this.scriptId = +params['id'];
         });
         if (isNaN(this.scriptId)) {
@@ -108,6 +109,14 @@ var ParametersFormComponent = /** @class */ (function () {
     ParametersFormComponent.prototype.editCalculationParameter = function (parameter) {
         this.editMode = true;
         this.calculationParameter = parameter;
+    };
+    ParametersFormComponent.prototype.addValueOption = function () {
+        this.dataParameter.valueOptions.push(new ValueOptionImpl());
+    };
+    ParametersFormComponent.prototype.removeValueOption = function (valueOption) {
+        this.dataParameter.valueOptions =
+            this.dataParameter.valueOptions
+                .filter(function (vo) { return vo !== valueOption; });
     };
     ParametersFormComponent = __decorate([
         Component({

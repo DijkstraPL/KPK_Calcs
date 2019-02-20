@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ParameterImpl } from '../../models/parameterImpl';
 import { ParameterService } from '../../services/parameter.service';
 import { ParameterOptions } from '../../models/parameterOptions';
+import { ValueOptionImpl } from '../../models/valueOptionImpl';
+import { ValueOption } from '../../models/valueOption';
 
 @Component({
     selector: 'app-parameters-form',
@@ -27,9 +29,9 @@ export class ParametersFormComponent implements OnInit {
     constructor(private parameterService: ParameterService,
                 private route: ActivatedRoute) {
     }
-
+    
     ngOnInit() {
-        let sub = this.route.params.subscribe(params => {
+        this.route.params.subscribe(params => {
             this.scriptId = +params['id'];
         });
 
@@ -39,7 +41,7 @@ export class ParametersFormComponent implements OnInit {
 
         this.getParameters(this.scriptId);
     }
-
+    
     getParameters(id: number) {
         this.parameterService.getParameters(id).subscribe(parameters => {
             this.dataParameters = parameters.filter(p => (p.context & 2) != 0);
@@ -124,5 +126,15 @@ export class ParametersFormComponent implements OnInit {
     editCalculationParameter(parameter: Parameter) {
         this.editMode = true;
         this.calculationParameter = parameter;
+    }
+
+    addValueOption() {
+        this.dataParameter.valueOptions.push(new ValueOptionImpl());
+    }
+
+    removeValueOption(valueOption: ValueOption) {
+        this.dataParameter.valueOptions =
+            this.dataParameter.valueOptions
+                .filter(vo => vo !== valueOption);
     }
 }

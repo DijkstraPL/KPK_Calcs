@@ -9,11 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { ScriptService } from '../../services/script.service';
-import { DataService } from '../../services/data.service';
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(scriptService, dataService) {
+    function HomeComponent(scriptService) {
         this.scriptService = scriptService;
-        this.dataService = dataService;
     }
     HomeComponent.prototype.ngOnInit = function () {
         this.setScript();
@@ -33,20 +31,13 @@ var HomeComponent = /** @class */ (function () {
             this.scripts = this.scripts.filter(function (s) { return s.id != script.id; });
         }
     };
-    HomeComponent.prototype.save = function (id) {
-        this.dataService.save(id).subscribe(function (s) {
-            return console.log("Save", s);
-        });
-        ;
-    };
     HomeComponent = __decorate([
         Component({
             selector: 'app-home',
             templateUrl: './home.component.html',
             styleUrls: ['./home.component.css']
         }),
-        __metadata("design:paramtypes", [ScriptService,
-            DataService])
+        __metadata("design:paramtypes", [ScriptService])
     ], HomeComponent);
     return HomeComponent;
 }());

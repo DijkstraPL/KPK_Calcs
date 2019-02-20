@@ -56,17 +56,6 @@ export class ScriptCalculatorComponent implements OnInit {
     }
 
     calculate() {
-        //let parameters: string = "";
-        //this.parameters.filter(parameter => (parameter.context & ParameterOptions.Editable) != 0)
-        //    .forEach(parameter => {
-        //        parameters += "[";
-        //        parameters += parameter.name;
-        //        parameters += "]=";
-        //        parameters += parameter.value;
-        //        parameters += "|";
-        //    });
-        //parameters = parameters.substr(0, parameters.length - 1);
-
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(params => {
                 this.resultParameters = params;

@@ -20,7 +20,6 @@ import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
 import { ParameterService } from './services/parameter.service';
-import { DataService } from './services/data.service';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -46,8 +45,7 @@ var AppModule = /** @class */ (function () {
                 ScriptService,
                 TagService,
                 CalculationService,
-                ParameterService,
-                DataService
+                ParameterService
             ],
             bootstrap: [AppComponent]
         })

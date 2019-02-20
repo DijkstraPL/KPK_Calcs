@@ -132,6 +132,38 @@
                           name="description"></textarea>
             </div>
         </div>
+        <div class="row">
+            <div class="form-group col-md-8">
+                <label for="parameterDataValidator">Data Validator</label>
+                <textarea class="form-control"
+                          id="parameterDataValidator"
+                          rows="2"
+                          [(ngModel)]="dataParameter.dataValidator"
+                          name="dataValidator"
+                          placeholder="Data validator"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label>Value Options</label>
+                <button class="btn btn-primary"
+                        (click)="addValueOption()">Add</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6 col-md-5 col-lg-3"
+                 *ngFor="let valueOption of dataParameter.valueOptions">
+                <input type="text"
+                       class="form-control"
+                       id="parameterValueOption"
+                       placeholder="Value option"
+                       [(ngModel)]="valueOption.value"
+                       name="valueOption{{valueOption.value}}"
+                       autocomplete="off">
+                <button class="btn btn-danger"
+                        (click)="removeValueOption(valueOption)"><span class="fa fa-remove"></span></button>
+            </div>
+        </div>
         <button type="submit"
                 class="btn btn-primary mt-3">
             Add
@@ -281,6 +313,17 @@
                           [(ngModel)]="calculationParameter.description"
                           name="description"
                           placeholder="Description"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-8">
+                <label for="calculationParameterDataValidator">Data Validator</label>
+                <textarea class="form-control"
+                          id="calculationParameterDataValidator"
+                          rows="2"
+                          [(ngModel)]="calculationParameter.dataValidator"
+                          name="dataValidator"
+                          placeholder="Data validator"></textarea>
             </div>
         </div>
         <button type="submit"

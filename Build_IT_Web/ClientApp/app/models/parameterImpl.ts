@@ -20,5 +20,5 @@ export class ParameterImpl implements Parameter {
     notes: string;
     valueOptionSetting: ValueOptionSettings;
     nestedScripts: AlternativeScript[];
-    valueOptions: ValueOption[];
+    valueOptions: ValueOption[] = [];
 }

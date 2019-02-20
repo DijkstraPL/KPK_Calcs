@@ -33,14 +33,7 @@ namespace Build_IT_Web.Controllers
         {
             var script = await _scriptRepository.GetScript(id, includeRelated: true);
             var parameters = await _parameterRepository.GetAllParameters(id);
-
-            //foreach (var par in userParameters)
-            //{
-            //    var pp = parameters.SingleOrDefault(p => p.Name == par.Name);
-            //    if (pp != null)
-            //        pp.Value = par.Value;
-            //}
-
+            
             var scriptCalculator = new ScriptCalculator(script, parameters);
 
             await scriptCalculator.CalculateAsync(userParameters);

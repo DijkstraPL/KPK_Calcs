@@ -56,8 +56,8 @@ namespace Build_IT_ScriptInterpreter.Scripts
             foreach (var parameter in _scriptParameters.Where(p =>
                 (p.Context & ParameterOptions.Calculation) != 0))
             {
-                //if (string.IsNullOrWhiteSpace(parameter.DataValidator.ToString()))
-                //    continue;
+                if (!IsValid(parameter, parameters))
+                    continue;
 
                 CalculateParameter(parameter, parameters);
                 parameters.Add(parameter.Name, parameter.Value);
@@ -158,6 +158,23 @@ namespace Build_IT_ScriptInterpreter.Scripts
             catch (ArgumentException ex)
             {
                 parameter.Value = ex.Message;
+            }
+        }
+        
+        private bool IsValid(IParameter parameter, Dictionary<string, object> parameters)
+        {
+            var value = parameter.DataValidator?.ToString();
+            if (string.IsNullOrWhiteSpace(value))
+                return true;
+
+            var expressionEvaluator = ExpressionEvaluator.Create(value, parameters);
+            try
+            {
+                return (bool)expressionEvaluator.Evaluate();
+            }
+            catch (ArgumentException)
+            {
+                return true;
             }
         }
     }

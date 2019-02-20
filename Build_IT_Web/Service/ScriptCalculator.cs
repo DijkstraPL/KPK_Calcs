@@ -40,6 +40,7 @@ namespace Build_IT_Web.Service
                 double.Parse(p.Value.Replace(',','.'), NumberStyles.Any, CultureInfo.InvariantCulture) : 
                 (object)p.Value);
             _calculationEngine.Calculate(parameterValues);
+            _parameters.RemoveAll(p => !parameterValues.ContainsKey(p.Name));
 
             foreach (var par in parameterValues)
             {
@@ -76,6 +77,7 @@ namespace Build_IT_Web.Service
                         Number = parameter.Number,
                         Name = parameter.Name,
                         Value = parameter.Value,
+                        DataValidator = parameter.DataValidator,
                         Context = parameter.Context
                     });
                 }

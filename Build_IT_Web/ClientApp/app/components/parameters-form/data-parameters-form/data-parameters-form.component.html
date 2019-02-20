@@ -1,0 +1,97 @@
+﻿
+<form (ngSubmit)="onSubmitDataParameter()">
+    <div class="row">
+        <div class="form-group col-md-7 col-lg-3">
+            <label for="parameterName">Name</label>
+            <input type="text"
+                   class="form-control"
+                   id="parameterName"
+                   placeholder="Name"
+                   [(ngModel)]="dataParameter.name"
+                   name="name"
+                   autocomplete="off">
+        </div>
+        <div class="form-group col-sm-6 col-md-5 col-lg-3">
+            <label for="parameterUnit">Unit</label>
+            <input type="text"
+                   class="form-control"
+                   id="parameterUnit"
+                   placeholder="Unit"
+                   [(ngModel)]="dataParameter.unit"
+                   name="unit"
+                   autocomplete="off">
+        </div>
+        <div class="form-group col-sm-6 col-md-7 col-lg-3">
+            <label for="parameterDocument">Document</label>
+            <input type="text"
+                   class="form-control"
+                   id="parameterDocument"
+                   placeholder="Document"
+                   [(ngModel)]="dataParameter.accordingTo"
+                   name="document"
+                   autocomplete="off">
+        </div>
+        <div class="form-group col-sm-6 col-md-5 col-lg-3">
+            <label for="parameterValueType">Value Type</label>
+            <select class="form-control"
+                    id="parameterValueType"
+                    placeholder="Number"
+                    [(ngModel)]="dataParameter.valueType"
+                    name="valueType">
+                <option value="0">Number</option>
+                <option value="1">Text</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label for="parameterDescription">Description</label>
+            <textarea class="form-control"
+                      id="parameterDescription"
+                      rows="2"
+                      placeholder="Description"
+                      [(ngModel)]="dataParameter.description"
+                      name="description"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-8">
+            <label for="parameterDataValidator">Data Validator</label>
+            <textarea class="form-control"
+                      id="parameterDataValidator"
+                      rows="2"
+                      [(ngModel)]="dataParameter.dataValidator"
+                      name="dataValidator"
+                      placeholder="Data validator"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label>Value Options</label>
+            <button class="btn btn-primary"
+                    (click)="addValueOption()">
+                Add
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-6 col-md-5 col-lg-3"
+             *ngFor="let valueOption of dataParameter.valueOptions">
+            <input type="text"
+                   class="form-control"
+                   id="parameterValueOption"
+                   placeholder="Value option"
+                   [(ngModel)]="valueOption.value"
+                   name="valueOption{{valueOption.value}}"
+                   autocomplete="off">
+            <button class="btn btn-danger"
+                    (click)="removeValueOption(valueOption)">
+                <span class="fa fa-remove"></span>
+            </button>
+        </div>
+    </div>
+    <button type="submit"
+            class="btn btn-primary mt-3">
+        Add
+    </button>
+</form>
