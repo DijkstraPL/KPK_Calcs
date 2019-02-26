@@ -15,7 +15,7 @@ namespace Build_IT_Web.Controllers.Resources
         public string Value { get; set; }
         public string DataValidator { get; set; }
         public string Unit { get; set; }
-        public ICollection<ValueResource> ValueOptions { get; set; }
+        public ICollection<ValueOptionResource> ValueOptions { get; set; }
         public ValueOptionSettings ValueOptionSetting { get; set; }
         public ParameterOptions Context { get; set; }
         public string GroupName { get; set; }
@@ -25,7 +25,7 @@ namespace Build_IT_Web.Controllers.Resources
 
         public ParameterResource()
         {
-            ValueOptions = new Collection<ValueResource>();
+            ValueOptions = new Collection<ValueOptionResource>();
             NestedScripts = new Collection<AlternativeScriptResource>();
         }
     }

@@ -7,56 +7,60 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ParameterImpl } from '../../../models/parameterImpl';
 import { ParameterService } from '../../../services/parameter.service';
-import { ParameterOptions } from '../../../models/parameterOptions';
 import { ValueOptionImpl } from '../../../models/valueOptionImpl';
 var DataParametersFormComponent = /** @class */ (function () {
     function DataParametersFormComponent(parameterService) {
         this.parameterService = parameterService;
-        this.dataParameter = new ParameterImpl();
+        this.newParameter = new ParameterImpl();
     }
-    DataParametersFormComponent.prototype.getParameters = function (id) {
-        var _this = this;
-        this.parameterService.getParameters(id).subscribe(function (parameters) {
-            _this.dataParameters = parameters.filter(function (p) { return (p.context & 2) != 0; });
-            console.log("Data parameters", _this.dataParameters);
-        }, function (error) { return console.error(error); });
-    };
-    DataParametersFormComponent.prototype.onSubmitDataParameter = function () {
-        var _this = this;
-        var maxNumber = Math.max.apply(Math, this.dataParameters.map(function (dp) { return dp.number; }));
-        if (maxNumber < 0)
-            maxNumber = 0;
-        this.dataParameter.number = ++maxNumber;
-        this.dataParameter.context = ParameterOptions.Editable | ParameterOptions.Visible;
-        this.parameterService.create(this.scriptId, this.dataParameter)
-            .subscribe(function (p) {
-            console.log(p);
-            _this.dataParameters.push(p);
-        });
-    };
-    DataParametersFormComponent.prototype.remove = function (parameterId) {
-        var _this = this;
-        this.parameterService.delete(this.scriptId, parameterId)
-            .subscribe(function (p) {
-            console.log("Parameters", p),
-                _this.dataParameters = _this.dataParameters.filter(function (p) { return p.id != parameterId; });
-        }, function (error) { return console.error(error); });
-    };
-    DataParametersFormComponent.prototype.editDataParameter = function (parameter) {
-        this.editMode = true;
-        this.dataParameter = parameter;
+    DataParametersFormComponent.prototype.ngOnChanges = function (changes) {
+        if (changes.editMode) {
+            var newParameter = changes.newParameter;
+            console.log('Previous parameter: ', newParameter.previousValue);
+            console.log('New parameter: ', newParameter.currentValue);
+            this.newParameter = newParameter.currentValue;
+        }
+        if (changes.editMode)
+            this.editMode = changes.editMode.currentValue;
     };
     DataParametersFormComponent.prototype.addValueOption = function () {
-        this.dataParameter.valueOptions.push(new ValueOptionImpl());
+        this.newParameter.valueOptions.push(new ValueOptionImpl());
     };
     DataParametersFormComponent.prototype.removeValueOption = function (valueOption) {
-        this.dataParameter.valueOptions =
-            this.dataParameter.valueOptions
+        this.newParameter.valueOptions =
+            this.newParameter.valueOptions
                 .filter(function (vo) { return vo !== valueOption; });
     };
+    DataParametersFormComponent.prototype.onSubmitParameter = function () {
+        //if ((this.newParameter.context & ParameterFilter.data) != 0)
+        //    this.newParameter.number = this.parameters.filter(p => (p.context & ParameterFilter.data) != 0).length;
+        //this.parameterService.create(this.scriptId, this.newParameter)
+        //    .subscribe((p: Parameter) => {
+        //        console.log(p);
+        //        this.parameters.push(p);
+        //    });
+    };
+    DataParametersFormComponent.prototype.update = function () {
+        this.parameterService.update(this.scriptId, this.newParameter)
+            .subscribe(function (p) {
+            console.log(p);
+        }, function (error) { return console.error(error); });
+    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], DataParametersFormComponent.prototype, "editMode", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], DataParametersFormComponent.prototype, "scriptId", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], DataParametersFormComponent.prototype, "newParameter", void 0);
     DataParametersFormComponent = __decorate([
         Component({
             selector: 'app-data-parameters-form',

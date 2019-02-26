@@ -11,20 +11,18 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ParameterImpl } from '../../models/parameterImpl';
 import { ParameterService } from '../../services/parameter.service';
-import { ParameterOptions } from '../../models/parameterOptions';
-import { ValueOptionImpl } from '../../models/valueOptionImpl';
+import { ParameterFilter } from '../../models/enums/parameter-filter';
 var ParametersFormComponent = /** @class */ (function () {
     function ParametersFormComponent(parameterService, route) {
         this.parameterService = parameterService;
         this.route = route;
-        this.dataParameter = new ParameterImpl();
-        this.staticParameter = new ParameterImpl();
-        this.calculationParameter = new ParameterImpl();
+        this.newParameter = new ParameterImpl();
         this.editMode = false;
+        this.parametersToShow = "all";
     }
     ParametersFormComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.route.snapshot.params.subscribe(function (params) {
+        this.route.params.subscribe(function (params) {
             _this.scriptId = +params['id'];
         });
         if (isNaN(this.scriptId)) {
@@ -35,88 +33,34 @@ var ParametersFormComponent = /** @class */ (function () {
     ParametersFormComponent.prototype.getParameters = function (id) {
         var _this = this;
         this.parameterService.getParameters(id).subscribe(function (parameters) {
-            _this.dataParameters = parameters.filter(function (p) { return (p.context & 2) != 0; });
-            _this.staticParameters = parameters.filter(function (p) { return (p.context & 8) != 0; });
-            _this.calculationParameters = parameters.filter(function (p) { return (p.context & 4) != 0; }),
-                console.log("Data parameters", _this.dataParameters);
-            console.log("Static parameters", _this.staticParameters);
-            console.log("Calculation parameters", _this.calculationParameters);
+            _this.parameters = parameters;
+            _this.onParametersToShowChange();
+            console.log("Parameters", _this.parameters);
         }, function (error) { return console.error(error); });
     };
-    ParametersFormComponent.prototype.onSubmitDataParameter = function () {
-        var _this = this;
-        var maxNumber = Math.max.apply(Math, this.dataParameters.map(function (dp) { return dp.number; }));
-        if (maxNumber < 0)
-            maxNumber = 0;
-        this.dataParameter.number = ++maxNumber;
-        this.dataParameter.context = ParameterOptions.Editable | ParameterOptions.Visible;
-        this.parameterService.create(this.scriptId, this.dataParameter)
-            .subscribe(function (p) {
-            console.log(p);
-            _this.dataParameters.push(p);
-        });
-    };
-    ParametersFormComponent.prototype.onSubmitStaticDataParameter = function () {
-        var _this = this;
-        var maxNumber = Math.max.apply(Math, this.staticParameters.map(function (dp) { return dp.number; }));
-        if (maxNumber < 800)
-            maxNumber = 800;
-        this.staticParameter.number = ++maxNumber;
-        this.staticParameter.context = ParameterOptions.StaticData;
-        this.parameterService.create(this.scriptId, this.staticParameter)
-            .subscribe(function (p) {
-            console.log(p);
-            _this.staticParameters.push(p);
-        });
-    };
-    ParametersFormComponent.prototype.onSubmitCalculationParameter = function () {
-        var _this = this;
-        var maxNumber = Math.max.apply(Math, this.calculationParameters.map(function (dp) { return dp.number; }));
-        if (maxNumber < 1000)
-            maxNumber = 1000;
-        this.calculationParameter.number = ++maxNumber;
-        this.calculationParameter.context = ParameterOptions.Calculation | ParameterOptions.Visible;
-        this.parameterService.create(this.scriptId, this.calculationParameter)
-            .subscribe(function (p) {
-            console.log(p);
-            _this.calculationParameters.push(p);
-        }, function (error) { return console.error(error); });
-    };
-    ParametersFormComponent.prototype.edit = function (parameter) {
-        this.parameterService.update(this.scriptId, parameter)
-            .subscribe(function (p) {
-            console.log(p);
-        }, function (error) { return console.error(error); });
+    ParametersFormComponent.prototype.onParametersToShowChange = function () {
+        var parametersFilterCriteria = ParameterFilter[this.parametersToShow];
+        switch (parametersFilterCriteria) {
+            case ParameterFilter.all:
+                this.filteredParameters = this.parameters;
+                break;
+            default:
+                this.filteredParameters = this.parameters.filter(function (p) { return (p.context & parametersFilterCriteria) != 0; });
+                break;
+        }
     };
     ParametersFormComponent.prototype.remove = function (parameterId) {
         var _this = this;
         this.parameterService.delete(this.scriptId, parameterId)
             .subscribe(function (p) {
-            console.log("Parameters", p),
-                _this.dataParameters = _this.dataParameters.filter(function (p) { return p.id != parameterId; }),
-                _this.staticParameters = _this.staticParameters.filter(function (p) { return p.id != parameterId; }),
-                _this.calculationParameters = _this.calculationParameters.filter(function (p) { return p.id != parameterId; });
+            _this.parameters = _this.parameters.filter(function (p) { return p.id != parameterId; });
+            _this.onParametersToShowChange();
+            console.log("Parameters", p);
         }, function (error) { return console.error(error); });
     };
-    ParametersFormComponent.prototype.editDataParameter = function (parameter) {
+    ParametersFormComponent.prototype.editParameter = function (parameter) {
         this.editMode = true;
-        this.dataParameter = parameter;
-    };
-    ParametersFormComponent.prototype.editStaticParameter = function (parameter) {
-        this.editMode = true;
-        this.staticParameter = parameter;
-    };
-    ParametersFormComponent.prototype.editCalculationParameter = function (parameter) {
-        this.editMode = true;
-        this.calculationParameter = parameter;
-    };
-    ParametersFormComponent.prototype.addValueOption = function () {
-        this.dataParameter.valueOptions.push(new ValueOptionImpl());
-    };
-    ParametersFormComponent.prototype.removeValueOption = function (valueOption) {
-        this.dataParameter.valueOptions =
-            this.dataParameter.valueOptions
-                .filter(function (vo) { return vo !== valueOption; });
+        this.newParameter = parameter;
     };
     ParametersFormComponent = __decorate([
         Component({

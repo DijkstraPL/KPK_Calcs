@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, Output } from '@angular/core';
 import { Parameter } from '../../models/parameter';
 import { ScriptService } from '../../services/script.service';
 import { ActivatedRoute } from '@angular/router';
@@ -7,6 +7,7 @@ import { ParameterService } from '../../services/parameter.service';
 import { ParameterOptions } from '../../models/parameterOptions';
 import { ValueOptionImpl } from '../../models/valueOptionImpl';
 import { ValueOption } from '../../models/valueOption';
+import { ParameterFilter } from '../../models/enums/parameter-filter';
 
 @Component({
     selector: 'app-parameters-form',
@@ -15,16 +16,13 @@ import { ValueOption } from '../../models/valueOption';
 })
 /** parameters-form component*/
 export class ParametersFormComponent implements OnInit {
-    dataParameters: Parameter[];
-    staticParameters: Parameter[];
-    calculationParameters: Parameter[];
+    parameters: Parameter[];
+    filteredParameters: Parameter[];
+    newParameter: Parameter = new ParameterImpl();
 
     scriptId: number;
-
-    dataParameter: Parameter = new ParameterImpl();
-    staticParameter: Parameter = new ParameterImpl();
-    calculationParameter: Parameter = new ParameterImpl();
     editMode: boolean = false;
+    parametersToShow: string = "all";
 
     constructor(private parameterService: ParameterService,
                 private route: ActivatedRoute) {
@@ -34,107 +32,46 @@ export class ParametersFormComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.scriptId = +params['id'];
         });
-
-        if (isNaN(this.scriptId)) {
+        
+        if (isNaN(this.scriptId)) 
             return;
-        }
 
         this.getParameters(this.scriptId);
     }
     
     getParameters(id: number) {
         this.parameterService.getParameters(id).subscribe(parameters => {
-            this.dataParameters = parameters.filter(p => (p.context & 2) != 0);
-            this.staticParameters = parameters.filter(p => (p.context & 8) != 0);
-            this.calculationParameters = parameters.filter(p => (p.context & 4) != 0),
-                console.log("Data parameters", this.dataParameters);
-            console.log("Static parameters", this.staticParameters);
-            console.log("Calculation parameters", this.calculationParameters);
+            this.parameters = parameters;
+            this.onParametersToShowChange();
+            console.log("Parameters", this.parameters);
         }, error => console.error(error));
     }
 
-    onSubmitDataParameter() {
-        let maxNumber = Math.max.apply(Math, this.dataParameters.map(function (dp) { return dp.number; }))
-        if (maxNumber < 0)
-            maxNumber = 0;
-        this.dataParameter.number = ++maxNumber;
-        this.dataParameter.context = ParameterOptions.Editable | ParameterOptions.Visible;
+    onParametersToShowChange() {
+        let parametersFilterCriteria = ParameterFilter[this.parametersToShow];
 
-        this.parameterService.create(this.scriptId, this.dataParameter)
-            .subscribe((p: Parameter) => {
-                console.log(p);
-                this.dataParameters.push(p);
-            });
-    }  
-
-    onSubmitStaticDataParameter() {
-        let maxNumber = Math.max.apply(Math, this.staticParameters.map(function (dp) { return dp.number; }))
-        if (maxNumber < 800)
-            maxNumber = 800;
-        this.staticParameter.number = ++maxNumber;
-        this.staticParameter.context = ParameterOptions.StaticData;
-
-        this.parameterService.create(this.scriptId, this.staticParameter)
-            .subscribe((p: Parameter) => {
-                console.log(p);
-                this.staticParameters.push(p);
-            });
-    }
-
-    onSubmitCalculationParameter() {
-        let maxNumber = Math.max.apply(Math, this.calculationParameters.map(function (dp) { return dp.number; }))
-        if (maxNumber < 1000)
-            maxNumber = 1000;
-        this.calculationParameter.number = ++maxNumber;
-        this.calculationParameter.context = ParameterOptions.Calculation | ParameterOptions.Visible;
-
-        this.parameterService.create(this.scriptId, this.calculationParameter)
-            .subscribe((p: Parameter) => {
-                console.log(p);
-                this.calculationParameters.push(p);
-            },
-            error => console.error(error));
-    }
-
-    edit(parameter: Parameter) {
-        this.parameterService.update(this.scriptId, parameter)
-            .subscribe((p: Parameter) => {
-                console.log(p);
-            },
-                error => console.error(error));
+        switch (parametersFilterCriteria) {
+            case ParameterFilter.all:
+                this.filteredParameters = this.parameters;
+                break;
+            default:
+                this.filteredParameters = this.parameters.filter(p => (p.context & parametersFilterCriteria) != 0);
+                break;
+        }
     }
 
     remove(parameterId: number) {
         this.parameterService.delete(this.scriptId, parameterId)
             .subscribe((p: Parameter) =>
             {
-                console.log("Parameters", p),
-                this.dataParameters = this.dataParameters.filter(p => p.id != parameterId),
-                this.staticParameters = this.staticParameters.filter(p => p.id != parameterId),
-                this.calculationParameters = this.calculationParameters.filter(p => p.id != parameterId)
+                this.parameters = this.parameters.filter(p => p.id != parameterId)
+                this.onParametersToShowChange();
+                console.log("Parameters", p)
             }, error => console.error(error));
     }
 
-    editDataParameter(parameter: Parameter) {
+    editParameter(parameter: Parameter) {
         this.editMode = true;
-        this.dataParameter = parameter;
-    }
-    editStaticParameter(parameter: Parameter) {
-        this.editMode = true;
-        this.staticParameter = parameter;
-    }
-    editCalculationParameter(parameter: Parameter) {
-        this.editMode = true;
-        this.calculationParameter = parameter;
-    }
-
-    addValueOption() {
-        this.dataParameter.valueOptions.push(new ValueOptionImpl());
-    }
-
-    removeValueOption(valueOption: ValueOption) {
-        this.dataParameter.valueOptions =
-            this.dataParameter.valueOptions
-                .filter(vo => vo !== valueOption);
+        this.newParameter = parameter;
     }
 }

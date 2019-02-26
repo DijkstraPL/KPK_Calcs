@@ -15,28 +15,29 @@ namespace Build_IT_Web.Mapping
                 .ForMember(svm => svm.Tags, operation => operation.MapFrom(s => s.Tags.Select(st => st.Tag)));
             CreateMap<Tag, TagResource>();
             CreateMap<Parameter, ParameterResource>();
-            CreateMap<ValueOption, ValueResource>();
+            CreateMap<ValueOption, ValueOptionResource>();
             CreateMap<AlternativeScript, AlternativeScriptResource>();
 
             // API Resource to Domain
             CreateMap<ScriptResource, Script>()
                 .ForMember(s => s.Id, operation => operation.Ignore())
                 .ForMember(s => s.Tags, operation => operation.Ignore())
-                .AfterMap((svm, s) =>
+                .AfterMap((sr, s) =>
                 {
-                    RemoveNotAddedTags(svm, s);
-                    AddNewTags(svm, s);
+                    RemoveNotAddedTags(sr, s);
+                    AddNewTags(sr, s);
                 });
             CreateMap<TagResource, Tag>();
             CreateMap<ParameterResource, Parameter>()
-                .ForMember(p=>p.Script, operation => operation.Ignore())
+                .ForMember(p => p.Script, operation => operation.Ignore())
                 .ForMember(p => p.ScriptId, operation => operation.Ignore());
+            CreateMap<ValueOptionResource, ValueOption>();
         }
 
         private void RemoveNotAddedTags(ScriptResource scriptResource, Script script)
         {
             var removedTags = script.Tags.Where(t =>
-            !scriptResource.Tags.Select(tvm => tvm.Id).Contains(t.TagId)).ToList();
+            !scriptResource.Tags.Select(tr => tr.Id).Contains(t.TagId)).ToList();
             foreach (var tag in removedTags)
                 script.Tags.Remove(tag);
         }

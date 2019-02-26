@@ -18,6 +18,7 @@ import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
 import { ParameterService } from './services/parameter.service';
+import { DataParametersFormComponent } from './components/parameters-form/data-parameters-form/data-parameters-form.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ParameterService } from './services/parameter.service';
       HomeComponent,
       ScriptFormComponent,
       ParametersFormComponent,
+      DataParametersFormComponent,
       ScriptCalculatorComponent,
       HtmlPipeModule
   ],

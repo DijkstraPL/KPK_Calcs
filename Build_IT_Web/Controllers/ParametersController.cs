@@ -71,24 +71,24 @@ namespace Build_IT_Web.Controllers
         [HttpPut("{id}/parameters/{parId}")]
         public async Task<IActionResult> UpdateParameter(long id, long parId, [FromBody] ParameterResource parameterResource)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-            var script = await _scriptRepository.GetScript(id);
-            var parameter = await _parameterRepository.GetParameter(parId);
+                var script = await _scriptRepository.GetScript(id);
+                var parameter = await _parameterRepository.GetParameter(parId);
 
-            if (script == null || parameter == null)
-                return NotFound();
+                if (script == null || parameter == null)
+                    return NotFound();
 
-            _mapper.Map<ParameterResource, Parameter>(parameterResource, parameter);
-            script.Modified = DateTime.Now;
+                _mapper.Map<ParameterResource, Parameter>(parameterResource, parameter);
+                script.Modified = DateTime.Now;
 
-            await _unitOfWork.CompleteAsync();
+                await _unitOfWork.CompleteAsync();
 
-            parameter = await _parameterRepository.GetParameter(parId);
+                parameter = await _parameterRepository.GetParameter(parId);
 
-            var result = _mapper.Map<Parameter, ParameterResource>(parameter);
-            return Ok(result);
+                var result = _mapper.Map<Parameter, ParameterResource>(parameter);
+                return Ok(result);
         }
 
         [HttpDelete("{id}/parameters/{parId}")]

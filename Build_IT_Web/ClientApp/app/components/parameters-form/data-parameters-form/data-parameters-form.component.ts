@@ -1,10 +1,12 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, Input, SimpleChanges, SimpleChange } from '@angular/core';
 import { Parameter } from '../../../models/parameter';
 import { ParameterImpl } from '../../../models/parameterImpl';
 import { ParameterService } from '../../../services/parameter.service';
 import { ParameterOptions } from '../../../models/parameterOptions';
 import { ValueOption } from '../../../models/valueOption';
 import { ValueOptionImpl } from '../../../models/valueOptionImpl';
+import { ParameterFilter } from '../../../models/enums/parameter-filter';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-data-parameters-form',
@@ -13,56 +15,90 @@ import { ValueOptionImpl } from '../../../models/valueOptionImpl';
 })
 
 export class DataParametersFormComponent {
-    dataParameters: Parameter[];
-    dataParameter: Parameter = new ParameterImpl();
-    editMode: boolean;
-    scriptId: number;
+    @Input() editMode: boolean;
+    @Input() scriptId: number;
+    @Input() newParameter: Parameter = new ParameterImpl();
+
+    type: string = ParameterFilter[ParameterFilter.data];
 
     constructor(private parameterService: ParameterService) {
-
     }
 
-    private getParameters(id: number) {
-        this.parameterService.getParameters(id).subscribe(parameters => {
-            this.dataParameters = parameters.filter(p => (p.context & 2) != 0);
-                console.log("Data parameters", this.dataParameters);
-        }, error => console.error(error));
+    ngOnChanges(changes: SimpleChanges) {
+
+        if (changes.newParameter) {
+            const newParameter = changes.newParameter;
+            console.log('Previous parameter: ', newParameter.previousValue);
+            console.log('New parameter: ', newParameter.currentValue);
+            this.newParameter = newParameter.currentValue;
+
+            this.setDataType();
+        }
+
+        if (changes.editMode)
+            this.editMode = changes.editMode.currentValue;
     }
 
-    private onSubmitDataParameter() {
-        let maxNumber = Math.max.apply(Math, this.dataParameters.map(function (dp) { return dp.number; }))
-        if (maxNumber < 0)
-            maxNumber = 0;
-        this.dataParameter.number = ++maxNumber;
-        this.dataParameter.context = ParameterOptions.Editable | ParameterOptions.Visible;
+    setDataType() {
+        if ((this.newParameter.context & ParameterFilter.data) != 0)
+            this.type = ParameterFilter[ParameterFilter.data];
+        else if ((this.newParameter.context & ParameterFilter.static) != 0)
+            this.type = ParameterFilter[ParameterFilter.static];
+        else if ((this.newParameter.context & ParameterFilter.calculation) != 0)
+            this.type = ParameterFilter[ParameterFilter.calculation];
+    }
 
-        this.parameterService.create(this.scriptId, this.dataParameter)
+    setContext() {
+        if (this.type === ParameterFilter[ParameterFilter.data])
+            this.newParameter.context = ParameterOptions.Editable | ParameterOptions.Visible;
+        else if (this.type === ParameterFilter[ParameterFilter.static])
+            this.newParameter.context = ParameterOptions.StaticData;
+        else if (this.type === ParameterFilter[ParameterFilter.calculation])
+            this.newParameter.context = ParameterOptions.Calculation | ParameterOptions.Visible;
+    }
+
+    addValueOption() {
+        this.newParameter.valueOptions.push(new ValueOptionImpl());
+    }
+
+    removeValueOption(valueOption: ValueOption) {
+        this.newParameter.valueOptions =
+            this.newParameter.valueOptions
+                .filter(vo => vo !== valueOption);
+    }
+
+    onSubmit() {
+        this.adjustProperties();
+
+        if (!this.editMode)
+            this.create();
+        else
+            this.update();
+    }
+
+    private adjustProperties() {
+        if (this.type === ParameterFilter[ParameterFilter.static])
+            this.newParameter.dataValidator = null;
+    }
+
+    private create() {
+        //if ((this.newParameter.context & ParameterFilter.data) != 0)
+        //    this.newParameter.number = this.parameters.filter(p => (p.context & ParameterFilter.data) != 0).length;
+
+        //this.parameterService.create(this.scriptId, this.newParameter)
+        //    .subscribe((p: Parameter) => {
+        //        console.log(p);
+        //        this.parameters.push(p);
+        //    });
+    }
+
+    private update() {
+        this.setContext();
+
+        this.parameterService.update(this.scriptId, this.newParameter)
             .subscribe((p: Parameter) => {
                 console.log(p);
-                this.dataParameters.push(p);
-            });
-    }
-
-    private remove(parameterId: number) {
-        this.parameterService.delete(this.scriptId, parameterId)
-            .subscribe((p: Parameter) => {
-                console.log("Parameters", p),
-                    this.dataParameters = this.dataParameters.filter(p => p.id != parameterId)
-            }, error => console.error(error));
-    }
-
-    private editDataParameter(parameter: Parameter) {
-        this.editMode = true;
-        this.dataParameter = parameter;
-    }
-
-    private addValueOption() {
-        this.dataParameter.valueOptions.push(new ValueOptionImpl());
-    }
-
-    private removeValueOption(valueOption: ValueOption) {
-        this.dataParameter.valueOptions =
-            this.dataParameter.valueOptions
-                .filter(vo => vo !== valueOption);
+            },
+                error => console.error(error));
     }
 }

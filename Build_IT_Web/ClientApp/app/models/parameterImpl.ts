@@ -10,7 +10,7 @@ export class ParameterImpl implements Parameter {
     name: string;
     number: number;
     description: string;
-    valueType: ValueType;
+    valueType: ValueType = ValueType.number;
     value: string;
     dataValidator: string;
     unit: string;

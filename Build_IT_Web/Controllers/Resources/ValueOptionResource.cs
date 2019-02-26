@@ -1,6 +1,6 @@
 ﻿namespace Build_IT_Web.Controllers.Resources
 {
-    public class ValueResource
+    public class ValueOptionResource
     {
         public long Id { get; set; }
         public string Value { get; set; }

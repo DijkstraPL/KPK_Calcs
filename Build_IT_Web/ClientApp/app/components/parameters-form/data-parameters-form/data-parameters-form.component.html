@@ -1,5 +1,34 @@
-﻿
-<form (ngSubmit)="onSubmitDataParameter()">
+﻿<h3>
+    <span innerHTML="{{newParameter.name | html}}"></span> - {{newParameter.description}}
+</h3>
+<form (ngSubmit)="onSubmit()">
+
+    <div class="row">
+        <div class="form-group form-inline">
+            <input type="radio"
+                   value="data"
+                   id="dataType"
+                   [(ngModel)]="type"
+                   name="dataType"
+                   class="ml-3" />
+            <label for="dataType"> Data</label>
+            <input type="radio"
+                   value="static"
+                   id="staticType"
+                   [(ngModel)]="type"
+                   name="staticType"
+                   class="ml-3" />
+            <label for="staticType"> Static</label>
+            <input type="radio"
+                   value="calculation"
+                   id="calculationType"
+                   [(ngModel)]="type"
+                   name="calculationType"
+                   class="ml-3" />
+            <label for="calculationType"> Calculation</label>
+        </div>
+    </div>
+
     <div class="row">
         <div class="form-group col-md-7 col-lg-3">
             <label for="parameterName">Name</label>
@@ -7,7 +36,7 @@
                    class="form-control"
                    id="parameterName"
                    placeholder="Name"
-                   [(ngModel)]="dataParameter.name"
+                   [(ngModel)]="newParameter.name"
                    name="name"
                    autocomplete="off">
         </div>
@@ -17,7 +46,7 @@
                    class="form-control"
                    id="parameterUnit"
                    placeholder="Unit"
-                   [(ngModel)]="dataParameter.unit"
+                   [(ngModel)]="newParameter.unit"
                    name="unit"
                    autocomplete="off">
         </div>
@@ -27,7 +56,7 @@
                    class="form-control"
                    id="parameterDocument"
                    placeholder="Document"
-                   [(ngModel)]="dataParameter.accordingTo"
+                   [(ngModel)]="newParameter.accordingTo"
                    name="document"
                    autocomplete="off">
         </div>
@@ -36,62 +65,79 @@
             <select class="form-control"
                     id="parameterValueType"
                     placeholder="Number"
-                    [(ngModel)]="dataParameter.valueType"
+                    [(ngModel)]="newParameter.valueType"
                     name="valueType">
                 <option value="0">Number</option>
                 <option value="1">Text</option>
             </select>
         </div>
+        <div class="form-group"
+             [ngClass]="(type=='calculation') ? 'col-md-12' : 'col-sm-6 col-md-5 col-lg-3'">
+            <label for="parameterValue">Value</label>
+            <textarea class="form-control"
+                      id="parameterValue"
+                      rows="2"
+                      [(ngModel)]="newParameter.value"
+                      name="value"
+                      placeholder="Value"></textarea>
+        </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-8">
             <label for="parameterDescription">Description</label>
             <textarea class="form-control"
                       id="parameterDescription"
                       rows="2"
                       placeholder="Description"
-                      [(ngModel)]="dataParameter.description"
+                      [(ngModel)]="newParameter.description"
                       name="description"></textarea>
         </div>
     </div>
-    <div class="row">
+    <div class="row"
+         *ngIf="type != 'static'">
         <div class="form-group col-md-8">
             <label for="parameterDataValidator">Data Validator</label>
             <textarea class="form-control"
                       id="parameterDataValidator"
                       rows="2"
-                      [(ngModel)]="dataParameter.dataValidator"
+                      [(ngModel)]="newParameter.dataValidator"
                       name="dataValidator"
                       placeholder="Data validator"></textarea>
         </div>
     </div>
-    <div class="row">
+    <div class="row" 
+         *ngIf="type == 'data'">
         <div class="form-group col-md-4">
-            <label>Value Options</label>
+            <label class="d-block">Value Options</label>
             <button class="btn btn-primary"
                     (click)="addValueOption()">
-                Add
+                Add value option
             </button>
         </div>
     </div>
-    <div class="row">
+    <div class="row" 
+         *ngIf="type == 'data'">
         <div class="form-group col-sm-6 col-md-5 col-lg-3"
-             *ngFor="let valueOption of dataParameter.valueOptions">
-            <input type="text"
-                   class="form-control"
-                   id="parameterValueOption"
-                   placeholder="Value option"
-                   [(ngModel)]="valueOption.value"
-                   name="valueOption{{valueOption.value}}"
-                   autocomplete="off">
-            <button class="btn btn-danger"
-                    (click)="removeValueOption(valueOption)">
-                <span class="fa fa-remove"></span>
-            </button>
+             *ngFor="let valueOption of newParameter.valueOptions">
+            <div class="input-group">
+                <input type="text"
+                       class="form-control"
+                       id="parameterValueOption"
+                       placeholder="Value option"
+                       [(ngModel)]="valueOption.value"
+                       name="valueOption{{valueOption.value}}"
+                       autocomplete="off">
+                <span class="input-group-append">
+                    <button class="btn btn-danger"
+                            (click)="removeValueOption(valueOption)">
+                        <span class="fa fa-remove"></span>
+                    </button>
+                </span>
+            </div>
         </div>
     </div>
     <button type="submit"
             class="btn btn-primary mt-3">
-        Add
+        {{ editMode ? 'Update' : 'Add'}}
     </button>
 </form>
