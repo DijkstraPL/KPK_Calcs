@@ -23,6 +23,8 @@ namespace Build_IT_Web.Controllers.Resources
         public string Notes { get; set; }
         public ICollection<AlternativeScriptResource> NestedScripts { get; set; }
 
+        public string Equation { get; set; }
+
         public ParameterResource()
         {
             ValueOptions = new Collection<ValueOptionResource>();

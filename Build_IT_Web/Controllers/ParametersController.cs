@@ -29,15 +29,7 @@ namespace Build_IT_Web.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
-        [HttpGet("{id}/editable_parameters")]
-        public async Task<IEnumerable<ParameterResource>> GetEditableParameters(long id)
-        {
-            var parameters = await _parameterRepository.GetEditableParameters(id);
-
-            return _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
-        }
-
+        
         [HttpGet("{id}/parameters")]
         public async Task<IEnumerable<ParameterResource>> GetAllParameters(long id)
         {
@@ -71,6 +63,8 @@ namespace Build_IT_Web.Controllers
         [HttpPut("{id}/parameters/{parId}")]
         public async Task<IActionResult> UpdateParameter(long id, long parId, [FromBody] ParameterResource parameterResource)
         {
+            try
+            {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
@@ -89,6 +83,13 @@ namespace Build_IT_Web.Controllers
 
                 var result = _mapper.Map<Parameter, ParameterResource>(parameter);
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
 
         [HttpDelete("{id}/parameters/{parId}")]

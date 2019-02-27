@@ -33,12 +33,16 @@ namespace Build_IT_Web.Controllers
         {
             var script = await _scriptRepository.GetScript(id, includeRelated: true);
             var parameters = await _parameterRepository.GetAllParameters(id);
+
+            var equations = new Dictionary<long,string> (parameters.ToDictionary(p => p.Id, p => p.Value));
             
             var scriptCalculator = new ScriptCalculator(script, parameters);
 
             await scriptCalculator.CalculateAsync(userParameters);
 
-            return _mapper.Map<List<Parameter>, List<ParameterResource>>(scriptCalculator.GetResult().ToList()); 
+            var calculatedParameters =  _mapper.Map<List<Parameter>, List<ParameterResource>>(scriptCalculator.GetResult().ToList());
+            calculatedParameters.ForEach(cp => cp.Equation = equations.SingleOrDefault(p => p.Key == cp.Id).Value);
+            return calculatedParameters;
         }
     }
 }

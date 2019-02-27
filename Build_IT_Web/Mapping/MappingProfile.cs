@@ -14,7 +14,8 @@ namespace Build_IT_Web.Mapping
             CreateMap<Script, ScriptResource>()
                 .ForMember(svm => svm.Tags, operation => operation.MapFrom(s => s.Tags.Select(st => st.Tag)));
             CreateMap<Tag, TagResource>();
-            CreateMap<Parameter, ParameterResource>();
+            CreateMap<Parameter, ParameterResource>()
+                .ForMember(p => p.Equation, operation => operation.Ignore());
             CreateMap<ValueOption, ValueOptionResource>();
             CreateMap<AlternativeScript, AlternativeScriptResource>();
 
@@ -31,7 +32,9 @@ namespace Build_IT_Web.Mapping
             CreateMap<ParameterResource, Parameter>()
                 .ForMember(p => p.Script, operation => operation.Ignore())
                 .ForMember(p => p.ScriptId, operation => operation.Ignore());
-            CreateMap<ValueOptionResource, ValueOption>();
+            CreateMap<ValueOptionResource, ValueOption>()
+                .ForMember(vo => vo.Parameter, operation => operation.Ignore())
+                .ForMember(vo => vo.ParameterId, operation => operation.Ignore()); ;
         }
 
         private void RemoveNotAddedTags(ScriptResource scriptResource, Script script)

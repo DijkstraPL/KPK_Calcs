@@ -10,7 +10,7 @@
     </select>
 </div>
 
-<div class="border-dark" *ngFor="let parameter of filteredParameters">
+<div class="border-dark" *ngFor="let parameter of sortParameters(filteredParameters, 'number')">
     <p class="list-group-item">
         <span [innerHTML]="parameter.name | html"></span> - {{parameter.description}}
         <button (click)="remove(parameter.id)"
@@ -23,12 +23,30 @@
                 class="btn btn-info float-right mr-2">
             Edit
         </button>
+        <button (click)="moveDown(parameter)"
+                type="button"
+                class="btn btn-info float-right">
+            Up
+        </button>
+        <button (click)="moveUp(parameter)"
+                type="button"
+                class="btn btn-info float-right">
+            Down
+        </button>
     </p>
 </div>
 
+<div class="btn-group btn-group-toggle m-3">
+    <label>
+        <input type="checkbox"
+               [(ngModel)]="editMode"
+               (change)="changeEditMode()" /> Edit mode
+    </label>
+</div>
 
 <div class="container">
     <app-data-parameters-form [editMode]="editMode"
                               [scriptId]="scriptId"
-                              [newParameter]="newParameter"></app-data-parameters-form>
+                              [newParameter]="newParameter"
+                              (created)="onCreated($event)"></app-data-parameters-form>
 </div>

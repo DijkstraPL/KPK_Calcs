@@ -2,11 +2,11 @@
 import { ScriptImpl } from '../../models/scriptImpl';
 import { ScriptService } from '../../services/script.service';
 import { ActivatedRoute } from '@angular/router';
-import { Script } from '../../models/script';
+import { Script } from '../../models/interfaces/script';
 import { TagImpl } from '../../models/tagImpl';
 import { TagService } from '../../services/tag.service';
-import { Tag } from '../../models/tag';
-import { Parameter } from '../../models/parameter';
+import { Tag } from '../../models/interfaces/tag';
+import { Parameter } from '../../models/interfaces/parameter';
 
 @Component({
     selector: 'app-script-form',

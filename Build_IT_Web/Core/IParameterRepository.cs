@@ -8,7 +8,6 @@ namespace Build_IT_Web.Core
 {
     public interface IParameterRepository
     {
-        Task<List<Parameter>> GetEditableParameters(long scriptId);
         Task<List<Parameter>> GetAllParameters(long scriptId);
         Task<Parameter> GetParameter(long parameterId);
         void Add(Parameter parameter);

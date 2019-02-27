@@ -1,4 +1,4 @@
-﻿import { Tag } from "./tag";
+﻿import { Tag } from "./interfaces/tag";
 
 export class TagImpl implements Tag {
     id: number;

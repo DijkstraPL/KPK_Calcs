@@ -12,7 +12,7 @@ import { ScriptFormComponent } from './components/script-form/script-form.compon
 import { ParametersFormComponent } from './components/parameters-form/parameters-form.component';
 import { ScriptCalculatorComponent } from './components/script-calculator/script-calculator.component';
 
-import { HtmlPipeModule } from './pipes/html-pipe.module';
+import { HtmlPipe } from './pipes/html-pipe';
 
 import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
@@ -29,13 +29,13 @@ import { DataParametersFormComponent } from './components/parameters-form/data-p
       ParametersFormComponent,
       DataParametersFormComponent,
       ScriptCalculatorComponent,
-      HtmlPipeModule
+      HtmlPipe
   ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
         FormsModule,
-        HtmlPipeModule,
+        HtmlPipe,
         AppRoutingModule
     ],
     providers: [

@@ -1,5 +1,5 @@
-﻿import { Tag } from "./tag";
-import { Script } from "./script";
+﻿import { Tag } from "./interfaces/tag";
+import { Script } from "./interfaces/script";
 import { TagImpl } from "./tagImpl";
 
 export class ScriptImpl implements Script {

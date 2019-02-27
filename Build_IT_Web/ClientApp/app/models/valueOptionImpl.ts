@@ -1,4 +1,4 @@
-﻿import { ValueOption } from "./valueOption";
+﻿import { ValueOption } from "./interfaces/valueOption";
 
 export class ValueOptionImpl implements ValueOption {
     value: string;

@@ -1,6 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Parameter } from '../models/parameter';
+import { Parameter } from '../models/interfaces/parameter';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -12,11 +12,7 @@ export class ParameterService {
     delete(scriptId: number, parameterId: number): Observable<Parameter> {
         return this.http.delete<Parameter>('/api/scripts/' + scriptId + '/parameters/' + parameterId);
     }
-
-    getEditableParameters(scriptId: number): Observable<Parameter[]> {
-        return this.http.get<Parameter[]>('/api/scripts/' + scriptId + '/editable_parameters');
-    }
-
+    
     getParameters(scriptId: number): Observable<Parameter[]> {
         return this.http.get<Parameter[]>('/api/scripts/' + scriptId + '/parameters');
     }

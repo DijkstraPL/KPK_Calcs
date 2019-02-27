@@ -2,8 +2,11 @@
 
 @NgModule({})
 @Pipe({ name: 'html' })
-export class HtmlPipeModule implements PipeTransform {
+export class HtmlPipe implements PipeTransform {
     transform(html: string): string {
+        if (!html)
+            return "";
+
         let finalHtml = "";
         let inSubScript = false;
         let inSupScript = false;

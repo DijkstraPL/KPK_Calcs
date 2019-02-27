@@ -1,12 +1,11 @@
-﻿import { Component, Input, SimpleChanges, SimpleChange } from '@angular/core';
-import { Parameter } from '../../../models/parameter';
+﻿import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Parameter } from '../../../models/interfaces/parameter';
 import { ParameterImpl } from '../../../models/parameterImpl';
 import { ParameterService } from '../../../services/parameter.service';
-import { ParameterOptions } from '../../../models/parameterOptions';
-import { ValueOption } from '../../../models/valueOption';
+import { ParameterOptions } from '../../../models/enums/parameterOptions';
+import { ValueOption } from '../../../models/interfaces/valueOption';
 import { ValueOptionImpl } from '../../../models/valueOptionImpl';
 import { ParameterFilter } from '../../../models/enums/parameter-filter';
-import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-data-parameters-form',
@@ -18,6 +17,8 @@ export class DataParametersFormComponent {
     @Input() editMode: boolean;
     @Input() scriptId: number;
     @Input() newParameter: Parameter = new ParameterImpl();
+
+    @Output() created = new EventEmitter<Parameter>();
 
     type: string = ParameterFilter[ParameterFilter.data];
 
@@ -38,25 +39,7 @@ export class DataParametersFormComponent {
         if (changes.editMode)
             this.editMode = changes.editMode.currentValue;
     }
-
-    setDataType() {
-        if ((this.newParameter.context & ParameterFilter.data) != 0)
-            this.type = ParameterFilter[ParameterFilter.data];
-        else if ((this.newParameter.context & ParameterFilter.static) != 0)
-            this.type = ParameterFilter[ParameterFilter.static];
-        else if ((this.newParameter.context & ParameterFilter.calculation) != 0)
-            this.type = ParameterFilter[ParameterFilter.calculation];
-    }
-
-    setContext() {
-        if (this.type === ParameterFilter[ParameterFilter.data])
-            this.newParameter.context = ParameterOptions.Editable | ParameterOptions.Visible;
-        else if (this.type === ParameterFilter[ParameterFilter.static])
-            this.newParameter.context = ParameterOptions.StaticData;
-        else if (this.type === ParameterFilter[ParameterFilter.calculation])
-            this.newParameter.context = ParameterOptions.Calculation | ParameterOptions.Visible;
-    }
-
+    
     addValueOption() {
         this.newParameter.valueOptions.push(new ValueOptionImpl());
     }
@@ -69,6 +52,7 @@ export class DataParametersFormComponent {
 
     onSubmit() {
         this.adjustProperties();
+        this.setContext();
 
         if (!this.editMode)
             this.create();
@@ -76,25 +60,38 @@ export class DataParametersFormComponent {
             this.update();
     }
 
+    private setDataType() {
+        if ((this.newParameter.context & ParameterFilter.data) != 0)
+            this.type = ParameterFilter[ParameterFilter.data];
+        else if ((this.newParameter.context & ParameterFilter.static) != 0)
+            this.type = ParameterFilter[ParameterFilter.static];
+        else if ((this.newParameter.context & ParameterFilter.calculation) != 0)
+            this.type = ParameterFilter[ParameterFilter.calculation];
+    }
+
     private adjustProperties() {
-        if (this.type === ParameterFilter[ParameterFilter.static])
+        if (this.type === ParameterFilter[ParameterFilter.static]) {
             this.newParameter.dataValidator = null;
+            this.newParameter.valueOptions = null;
+        }
+        else if (this.type === ParameterFilter[ParameterFilter.calculation])
+            this.newParameter.valueOptions = null;
+    }
+
+    private setContext() {
+        if (this.type === ParameterFilter[ParameterFilter.data])
+            this.newParameter.context = ParameterOptions.Editable | ParameterOptions.Visible;
+        else if (this.type === ParameterFilter[ParameterFilter.static])
+            this.newParameter.context = ParameterOptions.StaticData;
+        else if (this.type === ParameterFilter[ParameterFilter.calculation])
+            this.newParameter.context = ParameterOptions.Calculation | ParameterOptions.Visible;
     }
 
     private create() {
-        //if ((this.newParameter.context & ParameterFilter.data) != 0)
-        //    this.newParameter.number = this.parameters.filter(p => (p.context & ParameterFilter.data) != 0).length;
-
-        //this.parameterService.create(this.scriptId, this.newParameter)
-        //    .subscribe((p: Parameter) => {
-        //        console.log(p);
-        //        this.parameters.push(p);
-        //    });
+        this.created.emit(this.newParameter);
     }
 
     private update() {
-        this.setContext();
-
         this.parameterService.update(this.scriptId, this.newParameter)
             .subscribe((p: Parameter) => {
                 console.log(p);

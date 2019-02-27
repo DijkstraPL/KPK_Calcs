@@ -1,8 +1,8 @@
 ﻿import { AlternativeScript } from "./alternativeScript";
 import { ValueOption } from "./valueOption";
-import { ValueType } from "./valueType";
-import { ParameterOptions } from "./parameterOptions";
-import { ValueOptionSettings } from "./valueOptionSettings";
+import { ValueType } from "../enums/valueType";
+import { ParameterOptions } from "../enums/parameterOptions";
+import { ValueOptionSettings } from "../enums/valueOptionSettings";
 
 export interface Parameter {
     id: number;
@@ -20,4 +20,6 @@ export interface Parameter {
     valueOptionSetting: ValueOptionSettings;
     nestedScripts: AlternativeScript[];
     valueOptions: ValueOption[];
+
+    equation: string;
 }

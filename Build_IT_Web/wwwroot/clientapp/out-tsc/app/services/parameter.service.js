@@ -16,9 +16,6 @@ var ParameterService = /** @class */ (function () {
     ParameterService.prototype.delete = function (scriptId, parameterId) {
         return this.http.delete('/api/scripts/' + scriptId + '/parameters/' + parameterId);
     };
-    ParameterService.prototype.getEditableParameters = function (scriptId) {
-        return this.http.get('/api/scripts/' + scriptId + '/editable_parameters');
-    };
     ParameterService.prototype.getParameters = function (scriptId) {
         return this.http.get('/api/scripts/' + scriptId + '/parameters');
     };

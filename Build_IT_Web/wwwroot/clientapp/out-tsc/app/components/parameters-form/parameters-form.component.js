@@ -25,9 +25,8 @@ var ParametersFormComponent = /** @class */ (function () {
         this.route.params.subscribe(function (params) {
             _this.scriptId = +params['id'];
         });
-        if (isNaN(this.scriptId)) {
+        if (isNaN(this.scriptId))
             return;
-        }
         this.getParameters(this.scriptId);
     };
     ParametersFormComponent.prototype.getParameters = function (id) {
@@ -49,6 +48,10 @@ var ParametersFormComponent = /** @class */ (function () {
                 break;
         }
     };
+    ParametersFormComponent.prototype.editParameter = function (parameter) {
+        this.editMode = true;
+        this.newParameter = parameter;
+    };
     ParametersFormComponent.prototype.remove = function (parameterId) {
         var _this = this;
         this.parameterService.delete(this.scriptId, parameterId)
@@ -58,9 +61,53 @@ var ParametersFormComponent = /** @class */ (function () {
             console.log("Parameters", p);
         }, function (error) { return console.error(error); });
     };
-    ParametersFormComponent.prototype.editParameter = function (parameter) {
-        this.editMode = true;
-        this.newParameter = parameter;
+    ParametersFormComponent.prototype.onCreated = function (parameter) {
+        var _this = this;
+        parameter.number = Math.max.apply(Math, this.parameters.map(function (p) { return p.number; })) + 1;
+        this.parameterService.create(this.scriptId, parameter)
+            .subscribe(function (p) {
+            console.log(p);
+            _this.parameters.push(p);
+        });
+    };
+    ParametersFormComponent.prototype.changeEditMode = function () {
+        if (!this.editMode)
+            this.newParameter = new ParameterImpl();
+    };
+    ParametersFormComponent.prototype.sortParameters = function (parameters, prop) {
+        if (parameters)
+            return parameters.sort(function (a, b) { return a[prop] > b[prop] ? 1 :
+                a[prop] === b[prop] ? 0 :
+                    -1; });
+    };
+    ParametersFormComponent.prototype.moveUp = function (parameter) {
+        var sortedParameters = this.sortParameters(this.parameters, 'number');
+        var currentIndex = sortedParameters.indexOf(parameter);
+        if (currentIndex === sortedParameters.length - 1)
+            return;
+        var tempNumber = parameter.number;
+        parameter.number = sortedParameters[currentIndex + 1].number;
+        sortedParameters[currentIndex + 1].number = tempNumber;
+        this.saveParameters();
+    };
+    ParametersFormComponent.prototype.moveDown = function (parameter) {
+        var sortedParameters = this.sortParameters(this.parameters, 'number');
+        var currentIndex = sortedParameters.indexOf(parameter);
+        if (currentIndex === 0)
+            return;
+        var tempNumber = parameter.number;
+        parameter.number = sortedParameters[currentIndex - 1].number;
+        sortedParameters[currentIndex - 1].number = tempNumber;
+        this.saveParameters();
+    };
+    ParametersFormComponent.prototype.saveParameters = function () {
+        var _this = this;
+        this.parameters.forEach(function (p) {
+            _this.parameterService.update(_this.scriptId, p)
+                .subscribe(function (p) {
+                console.log(p);
+            }, function (error) { return console.error(error); });
+        });
     };
     ParametersFormComponent = __decorate([
         Component({

@@ -1,9 +1,9 @@
-﻿import { AlternativeScript } from "./alternativeScript";
-import { ValueOption } from "./valueOption";
-import { ValueType } from "./valueType";
-import { ParameterOptions } from "./parameterOptions";
-import { ValueOptionSettings } from "./valueOptionSettings";
-import { Parameter } from "./parameter";
+﻿import { AlternativeScript } from "./interfaces/alternativeScript";
+import { ValueOption } from "./interfaces/valueOption";
+import { ValueType } from "./enums/valueType";
+import { ParameterOptions } from "./enums/parameterOptions";
+import { ValueOptionSettings } from "./enums/valueOptionSettings";
+import { Parameter } from "./interfaces/parameter";
 
 export class ParameterImpl implements Parameter {
     id: number;
@@ -21,4 +21,6 @@ export class ParameterImpl implements Parameter {
     valueOptionSetting: ValueOptionSettings;
     nestedScripts: AlternativeScript[];
     valueOptions: ValueOption[] = [];
+
+    equation: string;
 }

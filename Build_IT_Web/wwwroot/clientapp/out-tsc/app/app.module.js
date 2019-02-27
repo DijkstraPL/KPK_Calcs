@@ -15,7 +15,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ScriptFormComponent } from './components/script-form/script-form.component';
 import { ParametersFormComponent } from './components/parameters-form/parameters-form.component';
 import { ScriptCalculatorComponent } from './components/script-calculator/script-calculator.component';
-import { HtmlPipeModule } from './pipes/html-pipe.module';
+import { HtmlPipe } from './pipes/html-pipe';
 import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
@@ -34,13 +34,13 @@ var AppModule = /** @class */ (function () {
                 ParametersFormComponent,
                 DataParametersFormComponent,
                 ScriptCalculatorComponent,
-                HtmlPipeModule
+                HtmlPipe
             ],
             imports: [
                 BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
                 HttpClientModule,
                 FormsModule,
-                HtmlPipeModule,
+                HtmlPipe,
                 AppRoutingModule
             ],
             providers: [

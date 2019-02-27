@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let parameter of parameters">
+            <tr *ngFor="let parameter of sortParameters(parameters, 'number')">
                 <td [innerHTML]="parameter.name | html"></td>
                 <td>
                     <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
@@ -67,7 +67,8 @@
                                placeholder="value" />
                         <select *ngIf="parameter.valueOptions.length > 0"
                                 [(ngModel)]="parameter.value">
-                            <option *ngFor="let valueOption of parameter.valueOptions">
+                            <option *ngFor="let valueOption of parameter.valueOptions"
+                                    value="{{valueOption.value}}">
                                 {{valueOption.value }}
                             </option>
                         </select>

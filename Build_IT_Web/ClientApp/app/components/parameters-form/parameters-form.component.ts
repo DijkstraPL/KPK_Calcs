@@ -1,13 +1,14 @@
 ﻿import { Component, OnInit, Output } from '@angular/core';
-import { Parameter } from '../../models/parameter';
+import { Parameter } from '../../models/interfaces/parameter';
 import { ScriptService } from '../../services/script.service';
 import { ActivatedRoute } from '@angular/router';
 import { ParameterImpl } from '../../models/parameterImpl';
 import { ParameterService } from '../../services/parameter.service';
-import { ParameterOptions } from '../../models/parameterOptions';
+import { ParameterOptions } from '../../models/enums/parameterOptions';
 import { ValueOptionImpl } from '../../models/valueOptionImpl';
-import { ValueOption } from '../../models/valueOption';
+import { ValueOption } from '../../models/interfaces/valueOption';
 import { ParameterFilter } from '../../models/enums/parameter-filter';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'app-parameters-form',
@@ -25,20 +26,20 @@ export class ParametersFormComponent implements OnInit {
     parametersToShow: string = "all";
 
     constructor(private parameterService: ParameterService,
-                private route: ActivatedRoute) {
+        private route: ActivatedRoute) {
     }
-    
+
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.scriptId = +params['id'];
         });
-        
-        if (isNaN(this.scriptId)) 
+
+        if (isNaN(this.scriptId))
             return;
 
         this.getParameters(this.scriptId);
     }
-    
+
     getParameters(id: number) {
         this.parameterService.getParameters(id).subscribe(parameters => {
             this.parameters = parameters;
@@ -60,18 +61,75 @@ export class ParametersFormComponent implements OnInit {
         }
     }
 
+    editParameter(parameter: Parameter) {
+        this.editMode = true;
+        this.newParameter = parameter;
+    }
+
     remove(parameterId: number) {
         this.parameterService.delete(this.scriptId, parameterId)
-            .subscribe((p: Parameter) =>
-            {
+            .subscribe((p: Parameter) => {
                 this.parameters = this.parameters.filter(p => p.id != parameterId)
                 this.onParametersToShowChange();
                 console.log("Parameters", p)
             }, error => console.error(error));
     }
 
-    editParameter(parameter: Parameter) {
-        this.editMode = true;
-        this.newParameter = parameter;
+    onCreated(parameter: Parameter) {
+        parameter.number = Math.max.apply(Math, this.parameters.map(function (p) { return p.number })) + 1;
+        this.parameterService.create(this.scriptId, parameter)
+            .subscribe((p: Parameter) => {
+                console.log(p);
+                this.parameters.push(p);
+            });
+    }
+
+    changeEditMode() {
+        if (!this.editMode) 
+            this.newParameter = new ParameterImpl();
+    }
+
+    sortParameters(parameters: Parameter[], prop: string) {
+        if (parameters)
+            return parameters.sort(
+                (a, b) => a[prop] > b[prop] ? 1 :
+                    a[prop] === b[prop] ? 0 :
+                        -1);
+    }
+
+    moveUp(parameter: Parameter) {
+        let sortedParameters = this.sortParameters(this.parameters, 'number');
+        let currentIndex = sortedParameters.indexOf(parameter);
+        if (currentIndex === sortedParameters.length - 1)
+            return;
+
+        let tempNumber = parameter.number;
+        parameter.number = sortedParameters[currentIndex + 1].number;
+        sortedParameters[currentIndex + 1].number = tempNumber;
+
+        this.saveParameters();
+    }
+
+    moveDown(parameter: Parameter) {
+        let sortedParameters = this.sortParameters(this.parameters, 'number');
+        let currentIndex = sortedParameters.indexOf(parameter);
+        if (currentIndex === 0)
+            return;
+
+        let tempNumber = parameter.number;
+        parameter.number = sortedParameters[currentIndex - 1].number;
+        sortedParameters[currentIndex - 1].number = tempNumber;
+
+        this.saveParameters();
+    }
+
+    private saveParameters() {
+        this.parameters.forEach(p => {
+            this.parameterService.update(this.scriptId, p)
+                .subscribe((p: Parameter) => {
+                    console.log(p);
+                },
+                    error => console.error(error))
+        });
     }
 }

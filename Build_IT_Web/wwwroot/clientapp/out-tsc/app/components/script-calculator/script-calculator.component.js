@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { ScriptService } from '../../services/script.service';
-import { ParameterOptions } from '../../models/parameterOptions';
+import { ParameterOptions } from '../../models/enums/parameterOptions';
 import { ActivatedRoute } from '@angular/router';
 import { ParameterService } from '../../services/parameter.service';
 import { CalculationService } from '../../services/calculation.service';
@@ -38,10 +38,16 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     };
     ScriptCalculatorComponent.prototype.setParameters = function () {
         var _this = this;
-        this.parameterService.getEditableParameters(this.script.id).subscribe(function (parameters) {
-            _this.parameters = parameters;
-            console.log("Parameters", _this.parameters);
+        this.parameterService.getParameters(this.script.id).subscribe(function (parameters) {
+            _this.parameters = parameters.filter(function (p) { return (p.context & ParameterOptions.Editable) != 0; }),
+                console.log("Parameters", _this.parameters);
         }, function (error) { return console.error(error); });
+    };
+    ScriptCalculatorComponent.prototype.sortParameters = function (parameters, prop) {
+        if (parameters)
+            return parameters.sort(function (a, b) { return a[prop] > b[prop] ? 1 :
+                a[prop] === b[prop] ? 0 :
+                    -1; });
     };
     ScriptCalculatorComponent.prototype.setValueChanged = function () {
         this.valueChanged = true;

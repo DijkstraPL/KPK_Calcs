@@ -37,7 +37,7 @@ namespace Build_IT_Web.Service
                 .ToDictionary(
                 p => p.Name,
                 p => p.ValueType == SIP.ValueTypes.Number ?
-                double.Parse(p.Value.Replace(',','.'), NumberStyles.Any, CultureInfo.InvariantCulture) : 
+                double.Parse(p.Value?.Replace(',','.'), NumberStyles.Any, CultureInfo.InvariantCulture) : 
                 (object)p.Value);
             _calculationEngine.Calculate(parameterValues);
             _parameters.RemoveAll(p => !parameterValues.ContainsKey(p.Name));

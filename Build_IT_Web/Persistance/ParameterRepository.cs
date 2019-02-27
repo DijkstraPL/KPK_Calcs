@@ -23,18 +23,10 @@ namespace Build_IT_Web.Persistance
                 .Where(p => p.ScriptId == scriptId)
                 .Include(p => p.ValueOptions)
                 .Include(p => p.NestedScripts)
+                .OrderBy(p => p.Number)
                 .ToListAsync();
         }
-
-        public async Task<List<Parameter>> GetEditableParameters(long scriptId)
-        {
-          return await _context.Parameters
-                .Where(p => p.ScriptId == scriptId && (p.Context & SI.ParameterOptions.Editable) != 0)
-                .Include(p => p.ValueOptions)
-                .Include(p => p.NestedScripts)
-                .ToListAsync();
-        }
-
+        
         public async Task<Parameter> GetParameter(long parameterId)
         {
             return await _context.Parameters
