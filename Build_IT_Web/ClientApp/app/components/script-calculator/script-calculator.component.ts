@@ -17,6 +17,7 @@ export class ScriptCalculatorComponent implements OnInit {
 
     script: Script;
     parameters: Parameter[];
+    visibleParameters: Parameter[];
     parameterOptions = ParameterOptions;
     resultParameters: Parameter[];
 
@@ -47,7 +48,8 @@ export class ScriptCalculatorComponent implements OnInit {
     private setParameters(): void {
         this.parameterService.getParameters(this.script.id).subscribe(parameters => {
             this.parameters = parameters.filter(p => (p.context & ParameterOptions.Editable) != 0),
-            console.log("Parameters", this.parameters);
+                this.filterParameters(),
+                console.log("Parameters", this.parameters);
         }, error => console.error(error));
     }
 
@@ -59,8 +61,31 @@ export class ScriptCalculatorComponent implements OnInit {
                         -1);
     }
 
-    setValueChanged() {
+    setValueChanged(parameter: Parameter) {
         this.valueChanged = true;
+        //let index = this.visibleParameters.indexOf(parameter);
+
+        //let properties: { [name: string]: string } = {};
+        //for (let i = 0; i <= index; i++) {
+        //    properties[`[${this.visibleParameters[i].name}]`] = this.visibleParameters[i].value;
+        //}
+
+        //for (let i = index + 1; i < this.visibleParameters.length; i++) {
+        //    if (!this.visibleParameters[i].dataValidator)
+        //        continue;
+        //    let dataValidator = this.visibleParameters[i].dataValidator.slice(
+        //        this.visibleParameters[i].dataValidator.indexOf('(') + 1,
+        //        this.visibleParameters[i].dataValidator.length - 1)
+
+        //    properties.forEach(p => {
+        //       dataValidator.replace(p.name, p.value);
+        //    });
+
+        //}
+    }
+    
+    filterParameters() {
+        this.visibleParameters = this.parameters.filter(p => (p.context & ParameterOptions.Visible) != 0);
     }
 
     calculate() {

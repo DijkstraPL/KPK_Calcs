@@ -109,7 +109,8 @@
          *ngIf="type == 'data'">
         <div class="form-group col-md-4">
             <label class="d-block">Value Options</label>
-            <button class="btn btn-primary"
+            <button type="button"
+                    class="btn btn-primary"
                     (click)="addValueOption()">
                 Add value option
             </button>
@@ -125,10 +126,11 @@
                        id="parameterValueOption"
                        placeholder="Value option"
                        [(ngModel)]="valueOption.value"
-                       name="valueOption{{valueOption.value}}"
-                       autocomplete="off">
+                       name="valueOption{{newParameter.valueOptions.length}}"
+                       autocomplete="off"/>
                 <span class="input-group-append">
-                    <button class="btn btn-danger"
+                    <button type="button"
+                            class="btn btn-danger"
                             (click)="removeValueOption(valueOption)">
                         <span class="fa fa-remove"></span>
                     </button>
