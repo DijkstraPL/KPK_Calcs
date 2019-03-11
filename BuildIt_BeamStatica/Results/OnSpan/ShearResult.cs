@@ -8,13 +8,28 @@ namespace Build_IT_BeamStatica.Results.OnSpan
 {
     internal class ShearResult : Result
     {
+        #region Properties
+
         public IResultValue Result { get; private set; }
+
+        #endregion // Properties
+
+        #region Fields
+
         private double _currentLength;
 
+        #endregion // Fields
+
+        #region Constructors
+        
         public ShearResult(IBeam beam) : base(beam)
         {
         }
 
+        #endregion // Constructors
+
+        #region Protected_Methods
+        
         protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
         {
             Result = new ShearForce(distanceFromLeftSide) { Value = 0 };
@@ -25,6 +40,10 @@ namespace Build_IT_BeamStatica.Results.OnSpan
             return Result;
         }
 
+        #endregion // Protected_Methods
+
+        #region Private_Methods
+        
         private void CalculateShear(double distanceFromLeftSide)
         {
             foreach (var span in Spans)
@@ -58,5 +77,7 @@ namespace Build_IT_BeamStatica.Results.OnSpan
                 if (distanceFromLeftSide - _currentLength > load.Position)
                     Result.Value += load.CalculateShear();
         }
+
+        #endregion // Private_Methods
     }
 }

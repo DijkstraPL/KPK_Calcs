@@ -1,6 +1,7 @@
 ﻿using Build_IT_ScriptInterpreter.Parameters;
 using Build_IT_ScriptInterpreter.Parameters.ValueOptions;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,5 +32,10 @@ namespace Build_IT_Web.Core.Models
 
         public Script Script { get; set; }
         public long ScriptId { get; set; }
+
+        public Parameter()
+        {
+            ValueOptions = new Collection<ValueOption>();
+        }
     }
 }

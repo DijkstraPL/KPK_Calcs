@@ -85,7 +85,7 @@
                                 name="tag{{tag.id}}"
                                 (change)="selectedTagChanged(tag)"
                                 placeholder="Tag">
-                            <option *ngFor="let t of tags" [ngValue]="t.id">{{t.name}}</option>
+                            <option *ngFor="let t of tags" [ngValue]="t.id" [attr.selected]="t.id == tag.id ? true : null">{{t.name}}</option>
                         </select>
                     </div>
                 </div>

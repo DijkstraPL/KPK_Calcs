@@ -2,6 +2,8 @@
 using Build_IT_Web.Controllers.Resources;
 using Build_IT_Web.Core.Models;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Build_IT_Web.Mapping
@@ -31,10 +33,51 @@ namespace Build_IT_Web.Mapping
             CreateMap<TagResource, Tag>();
             CreateMap<ParameterResource, Parameter>()
                 .ForMember(p => p.Script, operation => operation.Ignore())
-                .ForMember(p => p.ScriptId, operation => operation.Ignore());
+                .ForMember(p => p.ScriptId, operation => operation.Ignore())
+                .ForMember(s => s.ValueOptions, operation => operation.Ignore())
+                .AfterMap((pr, p) =>
+                {
+                    if (pr.ValueOptions == null)
+                        pr.ValueOptions = new Collection<ValueOptionResource>();
+                    UpdateValueOptions(pr, p);
+                    RemoveNotAddedValueOptions(pr, p);
+                    AddNewValueOptions(pr, p);
+                });
             CreateMap<ValueOptionResource, ValueOption>()
+                .ForMember(vo => vo.Id, operation => operation.Ignore())
                 .ForMember(vo => vo.Parameter, operation => operation.Ignore())
-                .ForMember(vo => vo.ParameterId, operation => operation.Ignore()); ;
+                .ForMember(vo => vo.ParameterId, operation => operation.Ignore());
+        }
+
+        private void UpdateValueOptions(ParameterResource parameterResource, Parameter parameter)
+        {
+            foreach (var valueOptionResource in parameterResource.ValueOptions)
+            {
+                var valueOption = parameter.ValueOptions.FirstOrDefault(vo => vo.Id == valueOptionResource.Id);
+                if (valueOption == null)
+                    continue;
+                valueOption.Value = valueOptionResource.Value;
+                valueOption.Description = valueOptionResource.Description;
+            }
+        }
+
+        private void RemoveNotAddedValueOptions(ParameterResource parameterResource, Parameter parameter)
+        {
+            var removedValueOptions = parameter.ValueOptions.Where(vo =>
+            !parameterResource.ValueOptions.Select(vor => vor.Id).Contains(vo.Id)).ToList();
+            foreach (var valueOption in removedValueOptions)
+                parameter.ValueOptions.Remove(valueOption);
+        }
+
+        private void AddNewValueOptions(ParameterResource parameterResource, Parameter parameter)
+        {
+            var addedValueOptions = parameterResource.ValueOptions
+                .Where(vor => !parameter.ValueOptions.Any(vo => vo.Id == vor.Id))
+                 .Select(vor => 
+                 new ValueOption { Description = vor.Description, Value = vor.Value }
+                 ).ToList();
+            foreach (var valueOption in addedValueOptions)
+                parameter.ValueOptions.Add(valueOption);
         }
 
         private void RemoveNotAddedTags(ScriptResource scriptResource, Script script)
@@ -47,8 +90,8 @@ namespace Build_IT_Web.Mapping
 
         private void AddNewTags(ScriptResource scriptResource, Script script)
         {
-            var addedTags = scriptResource.Tags.Where(tvm => !script.Tags.Any(t => t.TagId == tvm.Id))
-                 .Select(tvm => new ScriptTag { TagId = tvm.Id }).ToList();
+            var addedTags = scriptResource.Tags.Where(tr => !script.Tags.Any(t => t.TagId == tr.Id))
+                 .Select(tr => new ScriptTag { TagId = tr.Id }).ToList();
             foreach (var tag in addedTags)
                 script.Tags.Add(tag);
         }

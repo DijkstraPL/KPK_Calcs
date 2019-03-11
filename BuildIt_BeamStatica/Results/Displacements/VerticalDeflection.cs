@@ -2,8 +2,12 @@
 {
     internal class VerticalDeflection : Displacement
     {
+        #region Constructors
+
         public VerticalDeflection(double? position = null) : base(position)
         {
         }
+
+        #endregion // Constructors
     }
 }

@@ -1,6 +1,6 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 
-namespace Build_IT_BeamStatica.Beams.Interfaces
+namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams.Interfaces
 {
     public interface IGlobalStiffnessMatrix
     {

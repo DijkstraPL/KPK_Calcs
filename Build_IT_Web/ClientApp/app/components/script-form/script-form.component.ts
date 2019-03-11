@@ -13,7 +13,7 @@ import { Parameter } from '../../models/interfaces/parameter';
     templateUrl: './script-form.component.html',
     styleUrls: ['./script-form.component.css']
 })
-/** script-form component*/
+
 export class ScriptFormComponent implements OnInit {
     checked: boolean;
     parametersToShow: string = 'dataParameters';
@@ -30,6 +30,8 @@ export class ScriptFormComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getTags();
+
         let id;
         let sub = this.route.params.subscribe(params => {
             id = +params['id'];
@@ -41,7 +43,6 @@ export class ScriptFormComponent implements OnInit {
         }
 
         this.getScript(id);
-        this.getTags();
     }
 
     private getScript(id: number) {

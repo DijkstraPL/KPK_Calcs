@@ -1,9 +1,10 @@
-﻿using Build_IT_BeamStatica.Spans.Interfaces;
+﻿using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
+using Build_IT_BeamStatica.Spans.Interfaces;
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 
-namespace Build_IT_BeamStatica.Spans
+namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
 {
     internal class StiffnessMatrix : IStiffnessMatrix
     {

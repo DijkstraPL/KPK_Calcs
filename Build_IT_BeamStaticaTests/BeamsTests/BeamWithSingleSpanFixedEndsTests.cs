@@ -40,7 +40,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
 
             _beam = new Beam(spans, nodes, includeSelfWeight: false);
 
-            _beam.Calculate();
+            _beam.CalculationEngine.Calculate();
         }
 
         [Test()]
@@ -72,7 +72,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [TestCase(10, -21.6)]
         public void ShearForceAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double calculatedShear = _beam.ShearResult.GetValue(position).Value;
+            double calculatedShear = _beam.Results.Shear.GetValue(position).Value;
 
             Assert.That(calculatedShear, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }
@@ -85,7 +85,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [TestCase(10, -63)]
         public void BendingMomentAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double calculatedMoment = _beam.BendingMomentResult.GetValue(position).Value;
+            double calculatedMoment = _beam.Results.BendingMoment.GetValue(position).Value;
 
             Assert.That(calculatedMoment, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }
@@ -99,7 +99,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [TestCase(10, 0)]
         public void RotationAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double rotation = _beam.RotationResult.GetValue(position).Value;
+            double rotation = _beam.Results.Rotation.GetValue(position).Value;
 
             Assert.That(rotation, Is.EqualTo(result).Within(0.000001), message: $"At {position}m.");
         }
@@ -113,7 +113,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [TestCase(10, 0)]
         public void VerticalDeflectionAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double deflection = _beam.VerticalDeflectionResult.GetValue(position).Value;
+            double deflection = _beam.Results.VerticalDeflection.GetValue(position).Value;
 
             Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }

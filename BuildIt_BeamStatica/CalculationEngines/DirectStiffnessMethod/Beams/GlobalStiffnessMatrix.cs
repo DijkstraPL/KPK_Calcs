@@ -1,10 +1,14 @@
 ﻿using Build_IT_BeamStatica.Beams.Interfaces;
+using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams.Interfaces;
+using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
+using Build_IT_BeamStatica.Spans.Interfaces;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Complex;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace Build_IT_BeamStatica.Beams
+namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
 {
     internal class GlobalStiffnessMatrix : IGlobalStiffnessMatrix
     {
@@ -18,14 +22,17 @@ namespace Build_IT_BeamStatica.Beams
         #region Fields
 
         private readonly IBeam _beam;
+        private readonly IList<(ISpan span, ISpanCalculationEngine calculationEngine)> _spanCalculationEngines;
 
         #endregion //  Fields
 
         #region Constructors
 
-        public GlobalStiffnessMatrix(IBeam beam)
+        public GlobalStiffnessMatrix(IBeam beam,
+            IList<(ISpan span, ISpanCalculationEngine calculationEngine)> spanCalculationEngines)
         {
             _beam = beam ?? throw new ArgumentNullException(nameof(beam));
+            _spanCalculationEngines = spanCalculationEngines ?? throw new ArgumentNullException(nameof(spanCalculationEngines));
         }
 
         #endregion //  Constructors
@@ -48,7 +55,7 @@ namespace Build_IT_BeamStatica.Beams
 
         private void SetMatrixValues(int row, int col)
         {
-            Matrix[row, col] += _beam.Spans.SelectMany(s => s.StiffnessMatrix.MatrixOfPositions)
+            Matrix[row, col] += _spanCalculationEngines.SelectMany(s => s.calculationEngine.StiffnessMatrix.MatrixOfPositions)
                 .Where(m => m.RowNumber == row && m.ColumnNumber == col).Sum(m => m.Value);
         }
         

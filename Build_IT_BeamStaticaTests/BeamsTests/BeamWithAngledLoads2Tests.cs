@@ -56,7 +56,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
 
             _beam = new Beam(spans, nodes, includeSelfWeight: false);
 
-            _beam.Calculate();
+            _beam.CalculationEngine.Calculate();
         }
 
         [Test()]
@@ -106,7 +106,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [TestCase(20, 140.259)]
         public void NormalForceAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double calculatedShear = _beam.NormalForceResult.GetValue(position).Value;
+            double calculatedShear = _beam.Results.NormalForce.GetValue(position).Value;
 
             Assert.That(calculatedShear, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }
@@ -125,7 +125,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [TestCase(20, -37.986)]
         public void ShearForceAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double calculatedShear = _beam.ShearResult.GetValue(position).Value;
+            double calculatedShear = _beam.Results.Shear.GetValue(position).Value;
 
             Assert.That(calculatedShear, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }
@@ -141,7 +141,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [TestCase(20, -84.953)]
         public void BendingMomentAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double calculatedMoment = _beam.BendingMomentResult.GetValue(position).Value;
+            double calculatedMoment = _beam.Results.BendingMoment.GetValue(position).Value;
 
             Assert.That(calculatedMoment, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }
@@ -157,7 +157,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [TestCase(20, 0)]
         public void RotationAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double rotation = _beam.RotationResult.GetValue(position).Value;
+            double rotation = _beam.Results.Rotation.GetValue(position).Value;
 
             Assert.That(rotation, Is.EqualTo(result).Within(0.000001), message: $"At {position}m.");
         }
@@ -174,7 +174,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [TestCase(20, 0)]
         public void HorizontalDeflectionAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double deflection = _beam.HorizontalDeflectionResult.GetValue(position).Value;
+            double deflection = _beam.Results.HorizontalDeflection.GetValue(position).Value;
 
             Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }
@@ -191,7 +191,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [TestCase(20, 0)]
         public void VerticalDeflectionAtPositionCalculationsTest_Successful(double position, double result)
         {
-            double deflection = _beam.VerticalDeflectionResult.GetValue(position).Value;
+            double deflection = _beam.Results.VerticalDeflection.GetValue(position).Value;
 
             Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
         }
@@ -199,7 +199,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [Test()]
         public void CheckMaxNormalForce_Successful()
         {
-            var result = _beam.NormalForceResult.GetMaxValue();
+            var result = _beam.Results.NormalForce.GetMaxValue();
 
             Assert.That(result.Value, Is.EqualTo(140.259).Within(0.001), message: $"At {result.Position}m.");
             Assert.That(result.Position, Is.EqualTo(15.01).Within(0.001), message: $"At {result.Position}m.");
@@ -208,7 +208,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [Test()]
         public void CheckMinNormalForce_Successful()
         {
-            var result = _beam.NormalForceResult.GetMinValue();
+            var result = _beam.Results.NormalForce.GetMinValue();
 
             Assert.That(result.Value, Is.EqualTo(-124.367).Within(0.001), message: $"At {result.Position}m.");
             Assert.That(result.Position, Is.EqualTo(0).Within(0.001), message: $"At {result.Position}m.");
@@ -217,7 +217,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [Test()]
         public void CheckMaxShear_Successful()
         {
-            var result = _beam.ShearResult.GetMaxValue();
+            var result = _beam.Results.Shear.GetMaxValue();
 
             Assert.That(result.Value, Is.EqualTo(62.014).Within(0.001), message: $"At {result.Position}m.");
             Assert.That(result.Position, Is.EqualTo(10.01).Within(0.001), message: $"At {result.Position}m.");
@@ -226,7 +226,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [Test()]
         public void CheckMinShear_Successful()
         {
-            var result = _beam.ShearResult.GetMinValue();
+            var result = _beam.Results.Shear.GetMinValue();
 
             Assert.That(result.Value, Is.EqualTo(-91.220).Within(0.001), message: $"At {result.Position}m.");
             Assert.That(result.Position, Is.EqualTo(5.01).Within(0.001), message: $"At {result.Position}m.");
@@ -235,7 +235,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [Test()]
         public void CheckMaxBendingMoment_Successful()
         {
-            var result = _beam.BendingMomentResult.GetMaxValue();
+            var result = _beam.Results.BendingMoment.GetMaxValue();
 
             Assert.That(result.Value, Is.EqualTo(251.006).Within(0.001), message: $"At {result.Position}m.");
             Assert.That(result.Position, Is.EqualTo(5).Within(0.001), message: $"At {result.Position}m.");
@@ -244,7 +244,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [Test()]
         public void CheckMinBendingMoment_Successful()
         {
-            var result = _beam.BendingMomentResult.GetMinValue();
+            var result = _beam.Results.BendingMoment.GetMinValue();
 
             Assert.That(result.Value, Is.EqualTo(-205.094).Within(0.001), message: $"At {result.Position}m.");
             Assert.That(result.Position, Is.EqualTo(10).Within(0.001), message: $"At {result.Position}m.");
@@ -253,7 +253,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [Test()]
         public void CheckMaxVerticalDisplacement_Successful()
         {
-            var result = _beam.VerticalDeflectionResult.GetMaxValue();
+            var result = _beam.Results.VerticalDeflection.GetMaxValue();
 
             Assert.That(result.Value, Is.EqualTo(1.178).Within(0.001), message: $"At {result.Position}m.");
             Assert.That(result.Position, Is.EqualTo(11.19).Within(0.001), message: $"At {result.Position}m.");
@@ -262,7 +262,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [Test()]
         public void CheckMinVerticalDisplacement_Successful()
         {
-            var result = _beam.VerticalDeflectionResult.GetMinValue();
+            var result = _beam.Results.VerticalDeflection.GetMinValue();
 
             Assert.That(result.Value, Is.EqualTo(-17.913).Within(0.001), message: $"At {result.Position}m.");
             Assert.That(result.Position, Is.EqualTo(4.65).Within(0.001), message: $"At {result.Position}m.");

@@ -1,4 +1,4 @@
-﻿namespace Build_IT_BeamStatica.Spans.Interfaces
+﻿namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces
 {
     public interface IStiffnessMatrixPosition
     {

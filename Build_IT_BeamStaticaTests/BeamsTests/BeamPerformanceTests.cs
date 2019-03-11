@@ -93,14 +93,14 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
 
             _beam = new Beam(spans, nodes, includeSelfWeight: false);
 
-            _beam.Calculate();
+            _beam.CalculationEngine.Calculate();
 
             for (int i = 0; i < _beam.Length*100; i++)
             {
-                _beam.ShearResult.GetValue(i);
-                _beam.BendingMomentResult.GetValue(i);
-                _beam.VerticalDeflectionResult.GetValue(i);
-                _beam.RotationResult.GetValue(i);
+                _beam.Results.Shear.GetValue(i);
+                _beam.Results.BendingMoment.GetValue(i);
+                _beam.Results.VerticalDeflection.GetValue(i);
+                _beam.Results.Rotation.GetValue(i);
             }
             
             Assert.That(_beam.Spans[0].LeftNode.NormalForce?.Value, Is.Not.Null);

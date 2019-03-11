@@ -40,6 +40,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         var _this = this;
         this.parameterService.getParameters(this.script.id).subscribe(function (parameters) {
             _this.parameters = parameters.filter(function (p) { return (p.context & ParameterOptions.Editable) != 0; }),
+                _this.filterParameters(),
                 console.log("Parameters", _this.parameters);
         }, function (error) { return console.error(error); });
     };
@@ -49,8 +50,26 @@ var ScriptCalculatorComponent = /** @class */ (function () {
                 a[prop] === b[prop] ? 0 :
                     -1; });
     };
-    ScriptCalculatorComponent.prototype.setValueChanged = function () {
+    ScriptCalculatorComponent.prototype.setValueChanged = function (parameter) {
         this.valueChanged = true;
+        //let index = this.visibleParameters.indexOf(parameter);
+        //let properties: { [name: string]: string } = {};
+        //for (let i = 0; i <= index; i++) {
+        //    properties[`[${this.visibleParameters[i].name}]`] = this.visibleParameters[i].value;
+        //}
+        //for (let i = index + 1; i < this.visibleParameters.length; i++) {
+        //    if (!this.visibleParameters[i].dataValidator)
+        //        continue;
+        //    let dataValidator = this.visibleParameters[i].dataValidator.slice(
+        //        this.visibleParameters[i].dataValidator.indexOf('(') + 1,
+        //        this.visibleParameters[i].dataValidator.length - 1)
+        //    properties.forEach(p => {
+        //       dataValidator.replace(p.name, p.value);
+        //    });
+        //}
+    };
+    ScriptCalculatorComponent.prototype.filterParameters = function () {
+        this.visibleParameters = this.parameters.filter(function (p) { return (p.context & ParameterOptions.Visible) != 0; });
     };
     ScriptCalculatorComponent.prototype.calculate = function () {
         var _this = this;

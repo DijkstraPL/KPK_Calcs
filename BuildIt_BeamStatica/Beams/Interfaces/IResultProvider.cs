@@ -6,12 +6,7 @@ namespace Build_IT_BeamStatica.Beams.Interfaces
     {
         #region Properties
 
-        IGetResult NormalForceResult { get; }
-        IGetResult ShearResult { get; }
-        IGetResult BendingMomentResult { get; }
-        IGetResult HorizontalDeflectionResult { get; }
-        IGetResult VerticalDeflectionResult { get; }
-        IGetResult RotationResult { get; }
+        IResultsContainer Results { get; }
 
         #endregion // Properties
     }

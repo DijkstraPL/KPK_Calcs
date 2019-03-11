@@ -1,7 +1,7 @@
-﻿using Build_IT_BeamStatica.Spans.Interfaces;
+﻿using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
 using System;
 
-namespace Build_IT_BeamStatica.Spans
+namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
 {
     internal class StiffnessMatrixPosition : IStiffnessMatrixPosition
     {

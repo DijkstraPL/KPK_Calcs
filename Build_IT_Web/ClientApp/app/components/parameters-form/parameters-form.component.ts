@@ -76,7 +76,10 @@ export class ParametersFormComponent implements OnInit {
     }
 
     onCreated(parameter: Parameter) {
-        parameter.number = Math.max.apply(Math, this.parameters.map(function (p) { return p.number })) + 1;
+        if (this.parameters.length > 0)
+            parameter.number = Math.max.apply(Math, this.parameters.map(function (p) { return p.number })) + 1;
+        else
+            parameter.number = 0;
         this.parameterService.create(this.scriptId, parameter)
             .subscribe((p: Parameter) => {
                 console.log(p);
@@ -85,7 +88,7 @@ export class ParametersFormComponent implements OnInit {
     }
 
     changeEditMode() {
-        if (!this.editMode) 
+        if (!this.editMode)
             this.newParameter = new ParameterImpl();
     }
 

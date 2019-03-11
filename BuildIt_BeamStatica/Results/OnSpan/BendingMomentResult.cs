@@ -7,13 +7,27 @@ namespace Build_IT_BeamStatica.Results.OnSpan
 {
     internal class BendingMomentResult : Result
     {
+        #region Properties
+
         public IResultValue Result { get; private set; }
+
+        #endregion // Properties
+
+        #region Fields
 
         private double _currentLength;
 
+        #endregion // Fields
+
+        #region Constructors
+        
         public BendingMomentResult(IBeam beam) : base(beam)
         {
         }
+
+        #endregion //Constructors
+
+        #region Protected_Methods
         
         protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
         {
@@ -23,6 +37,10 @@ namespace Build_IT_BeamStatica.Results.OnSpan
 
             return Result;
         }
+
+        #endregion // Protected_Methods
+
+        #region Private_Methods
 
         private void CalculateBendingMoment(double distanceFromLeftSide)
         {
@@ -56,7 +74,9 @@ namespace Build_IT_BeamStatica.Results.OnSpan
         {
             foreach (var load in span.PointLoads)
                 if (distanceFromLeftSide > load.Position + _currentLength)                    
-                    Result.Value += load.CalculateBendingMoment(distanceFromLeftSide - load.Position - _currentLength);            
+                    Result.Value += load.CalculateBendingMoment(distanceFromLeftSide - load.Position - _currentLength);
         }
+
+        #endregion // Private_Methods
     }
 }

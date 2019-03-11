@@ -8,18 +8,33 @@ namespace Build_IT_BeamStatica.Results.OnSpan
 {
     internal class HorizontalDeflectionResult : Result
     {
-        private const double _nextToNodePosition = 0.00000001;
+        #region Properties
 
         public IResultValue Result { get; private set; }
+
+        #endregion // Properties
+
+        #region Fields
+        
+        private const double _nextToNodePosition = 0.00000001;
+
         private double _currentLength;
         private double _distanceFromLeftSide;
 
         private double _spanDeflection;
-        
+
+        #endregion // Fields
+
+        #region Constructors
+
         public HorizontalDeflectionResult(IBeam beam) : base(beam)
         {
         }
 
+        #endregion // Constructors
+
+        #region Protected_Methods
+        
         protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
         {
             _distanceFromLeftSide = distanceFromLeftSide;
@@ -36,6 +51,10 @@ namespace Build_IT_BeamStatica.Results.OnSpan
 
             return Result;
         }
+
+        #endregion // Protected_Methods
+
+        #region Private_Methods
 
         private void CalculateDeflection()
         {
@@ -70,7 +89,7 @@ namespace Build_IT_BeamStatica.Results.OnSpan
 
             if (_currentLength != 0)
             {
-                _spanDeflection -= Beam.NormalForceResult.GetValue(_currentLength).Value
+                _spanDeflection -= Beam.Results.NormalForce.GetValue(_currentLength).Value
                     * (_distanceFromLeftSide - _currentLength)
                     / (span.Material.YoungModulus * span.Section.Area);
             }
@@ -122,5 +141,7 @@ namespace Build_IT_BeamStatica.Results.OnSpan
                 * (_distanceFromLeftSide - _currentLength)
                 / (span.Material.YoungModulus * span.Section.Area);
         }
+
+        #endregion // Private_Methods
     }
 }

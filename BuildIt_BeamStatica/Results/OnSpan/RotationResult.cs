@@ -8,13 +8,24 @@ namespace Build_IT_BeamStatica.Results.OnSpan
 {
     internal class RotationResult : Result
     {
+        #region Properties
+
         public IResultValue Result { get; private set; }
+
+        #endregion // Properties
+
+        #region Fields
+
         private double _currentLength;
         private double _distanceFromLeftSide;
 
         private double _spanRotation;
         private readonly bool _adjustRotation;
 
+        #endregion // Fields
+
+        #region Constructors
+        
         public RotationResult(IBeam beam) : base(beam)
         {
         }
@@ -23,6 +34,10 @@ namespace Build_IT_BeamStatica.Results.OnSpan
         {
             _adjustRotation = adjustRotation;
         }
+
+        #endregion // Constructors
+
+        #region Protected_Methods
 
         protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
         {
@@ -42,6 +57,10 @@ namespace Build_IT_BeamStatica.Results.OnSpan
             return Result;
         }
 
+        #endregion // Protected_Methods
+
+        #region Private_Methods
+        
         private void CalculateRotation()
         {
             double calculatedLength = 0;
@@ -79,12 +98,12 @@ namespace Build_IT_BeamStatica.Results.OnSpan
 
             if (_currentLength != 0)
             {
-                _spanRotation += Beam.ShearResult.GetValue(_currentLength).Value
+                _spanRotation += Beam.Results.Shear.GetValue(_currentLength).Value
                 * (_distanceFromLeftSide - _currentLength)
                 * (_distanceFromLeftSide - _currentLength) / 2
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
 
-                _spanRotation += Beam.BendingMomentResult.GetValue(_currentLength).Value
+                _spanRotation += Beam.Results.BendingMoment.GetValue(_currentLength).Value
                     * (_distanceFromLeftSide - _currentLength)
                     / (span.Material.YoungModulus * span.Section.MomentOfInteria);
             }
@@ -160,5 +179,7 @@ namespace Build_IT_BeamStatica.Results.OnSpan
                 (_distanceFromLeftSide - _currentLength) * (_distanceFromLeftSide - _currentLength) / 2
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
         }
+
+        #endregion // Private_Methods
     }
 }

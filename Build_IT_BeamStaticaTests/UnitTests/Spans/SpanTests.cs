@@ -20,7 +20,6 @@ namespace Build_IT_BeamStaticaTests.UnitTests.Spans
         private INode _rightNode;
         private IMaterial _material;
         private ISection _section;
-        private IStiffnessMatrix _stiffnessMatrix;
 
         [SetUp]
         public void SetUp()
@@ -29,7 +28,6 @@ namespace Build_IT_BeamStaticaTests.UnitTests.Spans
             var rightNode = new Mock<INode>();
             var material = new Mock<IMaterial>();
             var section = new Mock<ISection>();
-            var stiffnessMatrix = new Mock<IStiffnessMatrix>();
 
             section.Setup(s => s.Area).Returns(3);
             section.Setup(s => s.MomentOfInteria).Returns(11);
@@ -50,7 +48,6 @@ namespace Build_IT_BeamStaticaTests.UnitTests.Spans
             _rightNode = rightNode.Object;
             _material = material.Object;
             _section = section.Object;
-            _stiffnessMatrix = stiffnessMatrix.Object;
 
         }
 
@@ -69,11 +66,6 @@ namespace Build_IT_BeamStaticaTests.UnitTests.Spans
             Assert.That(span.IncludeSelfWeight, Is.EqualTo(true));
             Assert.That(span.ContinousLoads, Is.Not.Null);
             Assert.That(span.PointLoads, Is.Not.Null);
-            Assert.That(span.StiffnessMatrix, Is.Not.Null);
-
-            Assert.That(span.LoadVector, Is.Null);
-            Assert.That(span.Displacements, Is.Null);
-            Assert.That(span.Forces, Is.Null);
         }
 
         [Test]
@@ -89,71 +81,5 @@ namespace Build_IT_BeamStaticaTests.UnitTests.Spans
             new Span(_leftNode, 7, _rightNode, _material, null, false));
         }
         
-        [Test]
-        public void SpanCalculate_SpanLoadVector_Success()
-        {
-            var span = new Span(
-                _leftNode, length: 7, _rightNode,
-                _material, _section, includeSelfWeight: true);
-
-            span.StiffnessMatrix.Calculate();
-
-            span.CalculateSpanLoadVector();
-
-            var selfWeightLoad = span.ContinousLoads.First();
-
-            Assert.That(selfWeightLoad.StartPosition.Position, Is.EqualTo(0));
-            Assert.That(selfWeightLoad.StartPosition.Value, Is.EqualTo(-0.0000206052).Within(0.0000000001));
-            Assert.That(selfWeightLoad.EndPosition.Position, Is.EqualTo(7));
-            Assert.That(selfWeightLoad.EndPosition.Value, Is.EqualTo(-0.0000206052).Within(0.0000000001));
-            Assert.That(selfWeightLoad.Length, Is.EqualTo(7));
-
-            Assert.That(span.LoadVector[0], Is.EqualTo(0));
-            Assert.That(span.LoadVector[1], Is.EqualTo(0.0000721182).Within(0.0000000001));
-            Assert.That(span.LoadVector[2], Is.EqualTo(0.0000841379).Within(0.0000000001));
-            Assert.That(span.LoadVector[3], Is.EqualTo(0));
-            Assert.That(span.LoadVector[4], Is.EqualTo(0.0000721182).Within(0.0000000001));
-            Assert.That(span.LoadVector[5], Is.EqualTo(-0.0000841379).Within(0.0000000001));
-        }
-
-        [Test]
-        public void SpanCalculate_Displacement_Success()
-        {
-            var span = new Span(
-                _leftNode, length: 7, _rightNode,
-                _material, _section, includeSelfWeight: true);
-
-            span.StiffnessMatrix.Calculate();
-
-            var deflectionVector = Vector<double>.Build.Dense(8);
-            deflectionVector[0] = 1;
-            deflectionVector[1] = 2;
-            deflectionVector[2] = 3;
-            deflectionVector[3] = 4;
-            deflectionVector[4] = 5;
-            deflectionVector[5] = 6;
-            deflectionVector[6] = 7;
-            deflectionVector[7] = 8;
-            span.CalculateDisplacement(deflectionVector, 4);
-
-            Assert.That(span.Displacements[0], Is.EqualTo(1));
-            Assert.That(span.Displacements[1], Is.EqualTo(2));
-            Assert.That(span.Displacements[2], Is.EqualTo(4));
-            Assert.That(span.Displacements[3], Is.EqualTo(0));
-            Assert.That(span.Displacements[4], Is.EqualTo(0));
-            Assert.That(span.Displacements[5], Is.EqualTo(0));
-        }
-
-        [Test]
-        public void SpanCalculate_SetDisplacement_Success()
-        {
-            // TODO: Add this
-        }
-
-        [Test]
-        public void SpanCalculate_Force_Success()
-        {
-            // TODO: Add this
-        }
     }
 }

@@ -44,7 +44,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
 
             _beam = new Beam(spans, nodes, includeSelfWeight: false);
 
-            _beam.Calculate();
+            _beam.CalculationEngine.Calculate();
         }
 
         [Test()]

@@ -1,10 +1,11 @@
-﻿using Build_IT_BeamStatica.Spans;
+﻿using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans;
+using Build_IT_BeamStatica.Spans;
 using Build_IT_BeamStatica.Spans.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System.Linq;
 
-namespace Build_IT_BeamStaticaTests.UnitTests.Spans
+namespace Build_IT_BeamStaticaTests.UnitTests.CalculatorEnignes.DirectStiffnessMethod.Spans
 {
     [TestFixture]
     public class StiffnessMatrixTests

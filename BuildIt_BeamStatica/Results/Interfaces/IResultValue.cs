@@ -2,7 +2,11 @@
 {
     public interface IResultValue
     {
+        #region Properties
+
         double Value { get; set; }
         double? Position { get; }
+
+        #endregion // Properties
     }
 }

@@ -6,6 +6,7 @@ import { ParameterOptions } from '../../../models/enums/parameterOptions';
 import { ValueOption } from '../../../models/interfaces/valueOption';
 import { ValueOptionImpl } from '../../../models/valueOptionImpl';
 import { ParameterFilter } from '../../../models/enums/parameter-filter';
+import { validateConfig } from '@angular/router/src/config';
 
 @Component({
     selector: 'app-data-parameters-form',
@@ -24,7 +25,7 @@ export class DataParametersFormComponent {
 
     constructor(private parameterService: ParameterService) {
     }
-
+    
     ngOnChanges(changes: SimpleChanges) {
 
         if (changes.newParameter) {
@@ -41,7 +42,12 @@ export class DataParametersFormComponent {
     }
     
     addValueOption() {
-        this.newParameter.valueOptions.push(new ValueOptionImpl());
+        let valueOption = new ValueOptionImpl();
+        if (this.newParameter.valueOptions.length > 0)
+            valueOption.id = Math.max.apply(Math, this.newParameter.valueOptions.map(function (vo) { return vo.id })) + 1;
+        else
+            valueOption.id = 0;
+        this.newParameter.valueOptions.push(valueOption);
     }
 
     removeValueOption(valueOption: ValueOption) {

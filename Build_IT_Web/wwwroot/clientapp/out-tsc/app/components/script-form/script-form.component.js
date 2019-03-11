@@ -24,6 +24,7 @@ var ScriptFormComponent = /** @class */ (function () {
         this.newTag = new TagImpl();
     }
     ScriptFormComponent.prototype.ngOnInit = function () {
+        this.getTags();
         var id;
         var sub = this.route.params.subscribe(function (params) {
             id = +params['id'];
@@ -33,7 +34,6 @@ var ScriptFormComponent = /** @class */ (function () {
             return;
         }
         this.getScript(id);
-        this.getTags();
     };
     ScriptFormComponent.prototype.getScript = function (id) {
         var _this = this;
@@ -87,9 +87,7 @@ var ScriptFormComponent = /** @class */ (function () {
             selector: 'app-script-form',
             templateUrl: './script-form.component.html',
             styleUrls: ['./script-form.component.css']
-        })
-        /** script-form component*/
-        ,
+        }),
         __metadata("design:paramtypes", [ScriptService,
             TagService,
             ActivatedRoute])

@@ -29,7 +29,7 @@ namespace Build_IT_Web.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        
+
         [HttpGet("{id}/parameters")]
         public async Task<IEnumerable<ParameterResource>> GetAllParameters(long id)
         {
@@ -63,33 +63,25 @@ namespace Build_IT_Web.Controllers
         [HttpPut("{id}/parameters/{parId}")]
         public async Task<IActionResult> UpdateParameter(long id, long parId, [FromBody] ParameterResource parameterResource)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                var script = await _scriptRepository.GetScript(id);
-                var parameter = await _parameterRepository.GetParameter(parId);
+            var script = await _scriptRepository.GetScript(id);
+            var parameter = await _parameterRepository.GetParameter(parId);
 
-                if (script == null || parameter == null)
-                    return NotFound();
+            if (script == null || parameter == null)
+                return NotFound();
 
-                _mapper.Map<ParameterResource, Parameter>(parameterResource, parameter);
-                script.Modified = DateTime.Now;
+            _mapper.Map<ParameterResource, Parameter>(parameterResource, parameter);
 
-                await _unitOfWork.CompleteAsync();
+            script.Modified = DateTime.Now;
 
-                parameter = await _parameterRepository.GetParameter(parId);
+            await _unitOfWork.CompleteAsync();
 
-                var result = _mapper.Map<Parameter, ParameterResource>(parameter);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
+            parameter = await _parameterRepository.GetParameter(parId);
 
-                throw;
-            }
-
+            var result = _mapper.Map<Parameter, ParameterResource>(parameter);
+            return Ok(result);
         }
 
         [HttpDelete("{id}/parameters/{parId}")]

@@ -32,7 +32,12 @@ var DataParametersFormComponent = /** @class */ (function () {
             this.editMode = changes.editMode.currentValue;
     };
     DataParametersFormComponent.prototype.addValueOption = function () {
-        this.newParameter.valueOptions.push(new ValueOptionImpl());
+        var valueOption = new ValueOptionImpl();
+        if (this.newParameter.valueOptions.length > 0)
+            valueOption.id = Math.max.apply(Math, this.newParameter.valueOptions.map(function (vo) { return vo.id; })) + 1;
+        else
+            valueOption.id = 0;
+        this.newParameter.valueOptions.push(valueOption);
     };
     DataParametersFormComponent.prototype.removeValueOption = function (valueOption) {
         this.newParameter.valueOptions =

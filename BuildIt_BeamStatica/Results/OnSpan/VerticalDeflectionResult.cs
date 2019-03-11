@@ -9,18 +9,33 @@ namespace Build_IT_BeamStatica.Results.OnSpan
 {
     internal class VerticalDeflectionResult : Result
     {
-        private const double _nextToNodePosition = 0.00000001;
+        #region Properties
 
         public IResultValue Result { get; private set; }
+
+        #endregion // Properties
+
+        #region Fields
+        
+        private const double _nextToNodePosition = 0.00000001;
+
         private double _currentLength;
         private double _distanceFromLeftSide;
 
         private double _spanDeflection;
+
+        #endregion // Fields
+
+        #region Constructors
         
         public VerticalDeflectionResult(IBeam beam) : base(beam)
         {
         }
 
+        #endregion // Constructors
+
+        #region Protected_Methods
+        
         protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
         {
             _distanceFromLeftSide = distanceFromLeftSide;
@@ -37,6 +52,10 @@ namespace Build_IT_BeamStatica.Results.OnSpan
 
             return Result;
         }
+
+        #endregion // Protected_Methods
+
+        #region Private_Methods
 
         private void CalculateDeflection()
         {
@@ -72,13 +91,13 @@ namespace Build_IT_BeamStatica.Results.OnSpan
 
             if (_currentLength != 0)
             {
-                _spanDeflection += Beam.ShearResult.GetValue(_currentLength).Value
+                _spanDeflection += Beam.Results.Shear.GetValue(_currentLength).Value
                     * (_distanceFromLeftSide - _currentLength)
                     * (_distanceFromLeftSide - _currentLength) / 2
                     * (_distanceFromLeftSide - _currentLength) / 3
                     / (span.Material.YoungModulus * span.Section.MomentOfInteria);
 
-                _spanDeflection += Beam.BendingMomentResult.GetValue(_currentLength).Value
+                _spanDeflection += Beam.Results.BendingMoment.GetValue(_currentLength).Value
                     * (_distanceFromLeftSide - _currentLength)
                     * (_distanceFromLeftSide - _currentLength) / 2
                     / (span.Material.YoungModulus * span.Section.MomentOfInteria);
@@ -180,4 +199,6 @@ namespace Build_IT_BeamStatica.Results.OnSpan
                 (_distanceFromLeftSide - _currentLength - load.StartPosition.Position) +
                 load.StartPosition.Value;
     }
+
+    #endregion // Private_Methods
 }
