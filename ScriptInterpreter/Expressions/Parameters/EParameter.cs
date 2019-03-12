@@ -5,9 +5,15 @@ using System.Text;
 
 namespace Build_IT_ScriptInterpreter.Expressions.Parameters
 {
-    public class EParameter : ICustomParameter
+    public class EParameter : ICustomParameter<double>
     {
+        #region Properties
+
         public string[] Names { get; } = { "e" };
-        public object Value { get; } = Math.E;
+        public double Value { get; } = Math.E;
+        
+        object ICustomParameter.Value => Value;
+
+        #endregion // Properties
     }
 }

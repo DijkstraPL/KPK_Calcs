@@ -10,14 +10,24 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions
 
     public class ErrorFunction : IFunction
     {
+        #region Properties
+
         public string Name { get; private set; }
         public Func<FunctionArgs, object> Function { get; private set; }
+
+        #endregion // Properties
+
+        #region Constructors
 
         public ErrorFunction()
         {
             SetFunction();
         }
 
+        #endregion // Constructors
+
+        #region Private_Methods
+        
         private void SetFunction()
         {
             Name = "ERROR";
@@ -28,5 +38,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions
                 throw new ArgumentException(e.Parameters[0].Evaluate().ToString());
             };
         }
+
+        #endregion // Private_Methods
     }
 }

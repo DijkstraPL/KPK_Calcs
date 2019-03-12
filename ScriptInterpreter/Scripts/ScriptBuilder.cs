@@ -7,9 +7,19 @@ namespace Build_IT_ScriptInterpreter.Scripts
 {
     public class ScriptBuilder
     {
+        #region Fields
+
         private readonly Script _script;
 
+        #endregion // Fields
+
+        #region Events
+
         public event EventHandler Modification;
+
+        #endregion // Events
+
+        #region Factories
 
         public static ScriptBuilder Create(string name, string description, params string[] tags)
         {
@@ -21,6 +31,10 @@ namespace Build_IT_ScriptInterpreter.Scripts
             return sb;
         }
 
+        #endregion // Factories
+
+        #region Constructors
+        
         private ScriptBuilder()
         {
             _script = new Script();
@@ -28,15 +42,18 @@ namespace Build_IT_ScriptInterpreter.Scripts
             Modification += OnModification;
         }
 
+        #endregion // Constructors
+
+        #region Destructor
+
         ~ScriptBuilder()
         {
             Modification -= OnModification;
         }
 
-        private void OnModification(object sender, EventArgs e)
-        {
-            _script.Modified = DateTime.Now;
-        }
+        #endregion // Destructor
+
+        #region Public_Methods
 
         public IScript Build() => _script;
 
@@ -104,5 +121,16 @@ namespace Build_IT_ScriptInterpreter.Scripts
             Modification(this, EventArgs.Empty);
             return this;
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
+
+        private void OnModification(object sender, EventArgs e)
+        {
+            _script.Modified = DateTime.Now;
+        }
+
+        #endregion // Private_Methods
     }
 }

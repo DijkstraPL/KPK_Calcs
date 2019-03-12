@@ -10,7 +10,9 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
     {
         #region Properties
 
-        public ICollection<IStiffnessMatrixPosition> MatrixOfPositions { get; private set; } = new List<IStiffnessMatrixPosition>();
+        public ICollection<IStiffnessMatrixPosition> MatrixOfPositions { get; private set; } 
+            = new List<IStiffnessMatrixPosition>();
+
         public Matrix<double> Matrix { get; private set; }
         public int Size { get; private set; }
 

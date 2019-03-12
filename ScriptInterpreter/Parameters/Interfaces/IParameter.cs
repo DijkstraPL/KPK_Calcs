@@ -8,6 +8,8 @@ namespace Build_IT_ScriptInterpreter.Parameters.Interfaces
 {
     public interface IParameter : IComparer<IParameter>, IComparable<IParameter>
     {
+        #region Properties
+
         int Number { get; set; }
         string Name { get; set; }
         object Value { get; set; }
@@ -21,5 +23,7 @@ namespace Build_IT_ScriptInterpreter.Parameters.Interfaces
         string AccordingTo { get; set; }
         string Notes { get; set; }
         List<Script> Scripts { get; set; }
+
+        #endregion // Properties
     }
 }

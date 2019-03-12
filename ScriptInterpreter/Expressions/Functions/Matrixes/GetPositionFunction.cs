@@ -8,14 +8,24 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Matrixes
 {
     public class GetPositionFunction : IFunction
     {
+        #region Properties
+
         public string Name { get; private set; }
         public Func<FunctionArgs, object> Function { get; private set; }
+
+        #endregion // Properties
+
+        #region Constructors
 
         public GetPositionFunction()
         {
             SetFunction();
         }
 
+        #endregion // Constructors
+
+        #region Private_Methods
+        
         private void SetFunction()
         {
             Name = "GETPOSITION";
@@ -32,5 +42,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Matrixes
                 return matrix[(int)e.Parameters[1].Evaluate(), (int)e.Parameters[2].Evaluate()];
             };
         }
+
+        #endregion // Private_Methods
     }
 }

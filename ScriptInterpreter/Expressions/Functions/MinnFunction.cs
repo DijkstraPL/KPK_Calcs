@@ -9,13 +9,23 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions
 {
     public class MinnFunction : IFunction
     {
+        #region Properties
+
         public string Name { get; private set; }
         public Func<FunctionArgs, object> Function { get; private set; }
+
+        #endregion // Properties
+
+        #region Constructors
         
         public MinnFunction()
         {
             SetFunction();
         }
+
+        #endregion // Constructors
+
+        #region Private_Methods
 
         private void SetFunction()
         {
@@ -25,5 +35,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions
                 return e.Parameters.Select(p => p.Evaluate()).Min();
             };
         }
+
+        #endregion // Private_Methods
     }
 }

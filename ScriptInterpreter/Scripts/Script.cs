@@ -16,6 +16,8 @@ namespace Build_IT_ScriptInterpreter.Scripts
 {
     public class Script : IScript
     {
+        #region Properties
+
         public string Name { get; set; }
         public string Description { get; set; }
         public List<string> Tags { get; set; } = new List<string>();
@@ -28,11 +30,21 @@ namespace Build_IT_ScriptInterpreter.Scripts
 
         public List<IParameter> Parameters { get; set; } = new List<IParameter>();
 
+        #endregion // Properties
+
+        #region Constructors
+        
         internal Script()
         {
-        }             
+        }
+
+        #endregion // Constructors
+
+        #region Public_Methods
         
         public IParameter GetParameterByName(string name)
             => Parameters.FirstOrDefault(p => p.Name == name);
+
+        #endregion // Public_Methods
     }
 }

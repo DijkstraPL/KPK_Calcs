@@ -21,7 +21,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.In
         
         void CalculateSpanLoadVector();
         void CalculateDisplacement(Vector<double> deflectionVector, int numberOfDegreesOfFreedom);
-        void CalculateForce();
+        void CalculateForce(Vector<double> loadVector, Vector<double> displacements);
 
         #endregion // Public_Methods
     }

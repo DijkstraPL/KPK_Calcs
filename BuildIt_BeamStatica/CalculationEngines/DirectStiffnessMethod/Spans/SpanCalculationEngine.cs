@@ -13,7 +13,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
     {
         #region Properties
 
-        public IStiffnessMatrix StiffnessMatrix { get; set; }
+        public IStiffnessMatrix StiffnessMatrix { get; }
 
         public Vector<double> LoadVector { get; private set; }
         public Vector<double> Displacements { get; private set; }
@@ -59,9 +59,9 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
             SetDisplacement();
         }
 
-        public void CalculateForce()
+        public void CalculateForce(Vector<double> loadVector, Vector<double> displacements )
         {
-            Forces = StiffnessMatrix.Matrix.Multiply(Displacements).Add(LoadVector);
+            Forces = StiffnessMatrix.Matrix.Multiply(displacements).Add(loadVector);
         }
 
         #endregion // Public_Methods

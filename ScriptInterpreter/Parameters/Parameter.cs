@@ -10,6 +10,8 @@ namespace Build_IT_ScriptInterpreter.Parameters
 {
     public class Parameter : IParameter
     {
+        #region Properties
+
         public string Name { get; set; }
         public int Number { get; set; }
         public string Description { get; set; }
@@ -24,9 +26,17 @@ namespace Build_IT_ScriptInterpreter.Parameters
         public string Notes { get; set; }
         public List<Script> Scripts { get; set; }
 
+        #endregion // Properties
+
+        #region Constructors
+
         public Parameter()
         {
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public int Compare(IParameter x, IParameter y)
         {
@@ -45,5 +55,7 @@ namespace Build_IT_ScriptInterpreter.Parameters
 
         public override string ToString() 
             => Value.ToString() + Unit;
+
+        #endregion // Public_Methods
     }
 }

@@ -24,14 +24,24 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions
     /// </example>
     public class MatrixFunction : IFunction
     {
+        #region Properties
+
         public string Name { get; private set; }
         public Func<FunctionArgs, object> Function { get; private set; }
 
+        #endregion // Properties
+
+        #region Constructors
+        
         public MatrixFunction()
         {
             SetFunction();
         }
 
+        #endregion // Constructors
+
+        #region Private_Methods
+        
         private void SetFunction()
         {
             Name = "MATRIX";
@@ -51,5 +61,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions
                 return matrix;
             };
         }
+
+        #endregion // Private_Methods
     }
 }

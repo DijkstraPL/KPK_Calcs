@@ -10,8 +10,6 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams.In
     {
         #region Properties
 
-        IGlobalStiffnessMatrix GlobalStiffnessMatrix { get; }
-
         #endregion // Properties
     }
 }

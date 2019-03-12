@@ -9,20 +9,33 @@ namespace Build_IT_ScriptInterpreter.DataSaver
 {
     public class XmlLoad<T> : ILoad<T>
     {
-        public static Type type;
+        #region Fields
+
+        private Type _type;
+
+        #endregion // Fields
+
+        #region Constructors
+
         public XmlLoad()
         {
-            type = typeof(T);
+            _type = typeof(T);
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
+
         public T LoadData(string filename)
         {
             T result;
-            XmlSerializer xmlserializer = new XmlSerializer(type);
+            XmlSerializer xmlserializer = new XmlSerializer(_type);
             FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
             result = (T)xmlserializer.Deserialize(fs);
             fs.Close();
-            fs.Dispose();
             return result;
         }
+
+        #endregion // Public_Methods
     }
 }

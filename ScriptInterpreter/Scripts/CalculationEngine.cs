@@ -12,14 +12,24 @@ namespace Build_IT_ScriptInterpreter.Scripts
 {
     public class CalculationEngine
     {
+        #region Fields
+
         private readonly ICalculatable _script;
         private readonly ICollection<IParameter> _scriptParameters;
 
+        #endregion // Fields
+
+        #region Constructors
+        
         public CalculationEngine(ICalculatable script)
         {
             _script = script;
             _scriptParameters = _script.Parameters;
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         /// <summary>
         /// 
@@ -63,6 +73,10 @@ namespace Build_IT_ScriptInterpreter.Scripts
                 parameters.Add(parameter.Name, parameter.Value);
             }
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
 
         private Dictionary<string, object> ExtractParameters(string parameterValues)
         {
@@ -177,5 +191,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
                 return true;
             }
         }
+
+        #endregion // Private_Methods
     }
 }

@@ -8,14 +8,24 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Matrixes
 {
     public class AddMatrixFunction : IFunction
     {
+        #region Properties
+
         public string Name { get; private set; }
         public Func<FunctionArgs, object> Function { get; private set; }
 
+        #endregion // Properties
+
+        #region Constructors
+        
         public AddMatrixFunction()
         {
             SetFunction();
         }
 
+        #endregion // Constructors
+
+        #region Private_Methods
+        
         private void SetFunction()
         {
             Name = "ADDMATRIX";
@@ -33,5 +43,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Matrixes
                return matrix1.Add(matrix2);
             };
         }
+
+        #endregion // Private_Methods
     }
 }

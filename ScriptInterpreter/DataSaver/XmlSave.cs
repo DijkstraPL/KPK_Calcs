@@ -9,6 +9,8 @@ namespace Build_IT_ScriptInterpreter.DataSaver
 {
     public class XmlSave : ISave
     {
+        #region Public_Methods
+
         public void SaveData(object IClass, string filename)
         {
             StreamWriter writer = null;
@@ -22,12 +24,11 @@ namespace Build_IT_ScriptInterpreter.DataSaver
             finally
             {
                 if (writer != null)
-                {
                     writer.Close();
-                    writer.Dispose();
-                }
                 writer = null;
             }
         }
+
+        #endregion // Public_Methods
     }
 }

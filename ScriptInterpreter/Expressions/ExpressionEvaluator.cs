@@ -12,9 +12,19 @@ namespace Build_IT_ScriptInterpreter.Expressions
 {
     public class ExpressionEvaluator : IExpressionEvaluator
     {
+        #region Properties
+
         public ICollection<string> Functions { get; private set; }
 
+        #endregion // Properties
+
+        #region Fields
+
         private readonly IExpression _expression;
+
+        #endregion // Fields
+
+        #region Factories
 
         public static ExpressionEvaluator Create(
             string expression, IDictionary<string, object> parameters = null)
@@ -28,6 +38,10 @@ namespace Build_IT_ScriptInterpreter.Expressions
             return new ExpressionEvaluator(expression, parametersDict);
         }
 
+        #endregion // Factories
+
+        #region Constructors
+        
         private ExpressionEvaluator(string expression, IDictionary<string, object> parameters = null)
         {
             Functions = new List<string>();            
@@ -39,6 +53,10 @@ namespace Build_IT_ScriptInterpreter.Expressions
 
             SetAdditionalFunctions();
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public object Evaluate()
         {
@@ -53,6 +71,10 @@ namespace Build_IT_ScriptInterpreter.Expressions
             }
         }
 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+        
         private IDictionary<string, object> SetAdditionalParameters(
             IDictionary<string, object> parameters)
         {
@@ -87,5 +109,7 @@ namespace Build_IT_ScriptInterpreter.Expressions
                 Functions.Add(instance.Name);
             }
         }
+
+        #endregion // Private_Methods
     }
 }

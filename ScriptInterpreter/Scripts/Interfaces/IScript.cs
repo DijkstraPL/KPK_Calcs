@@ -7,7 +7,9 @@ namespace Build_IT_ScriptInterpreter.Scripts.Interfaces
 {
     public interface IScript : ICalculatable
     {
-       string Name { get; }
+        #region Properties
+
+        string Name { get; }
        string Description { get; }
        List<string> Tags { get; }
        string GroupName { get; }
@@ -16,5 +18,7 @@ namespace Build_IT_ScriptInterpreter.Scripts.Interfaces
        DateTime Modified { get; }
        string AccordingTo { get;}
        string Notes { get;  }
+
+        #endregion // Properties
     }
 }

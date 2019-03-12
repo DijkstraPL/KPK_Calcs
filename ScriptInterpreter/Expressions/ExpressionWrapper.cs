@@ -7,12 +7,22 @@ namespace Build_IT_ScriptInterpreter.Expressions
 {
     public class ExpressionWrapper : IExpression
     {
+        #region Fields
+
         private readonly Expression _original;
 
+        #endregion // Fields
+
+        #region Constructors
+        
         public ExpressionWrapper(string expression)
         {
             _original = new Expression(expression, EvaluateOptions.IgnoreCase);
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public void SetParameters(IDictionary<string, object> parameters)
         {
@@ -29,5 +39,7 @@ namespace Build_IT_ScriptInterpreter.Expressions
                     args.Result = function.Invoke(args);
             };
         }
+
+        #endregion // Public_Methods
     }
 }

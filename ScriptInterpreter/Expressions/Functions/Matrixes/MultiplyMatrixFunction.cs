@@ -8,13 +8,23 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Matrixes
 {
     public class MultiplyMatrixFunction : IFunction
     {
+        #region Properties
+
         public string Name { get; private set; }
         public Func<FunctionArgs, object> Function { get; private set; }
 
+        #endregion // Properties
+
+        #region Constructors
+        
         public MultiplyMatrixFunction()
         {
             SetFunction();
         }
+
+        #endregion // Constructors
+
+        #region Private_Methods
 
         private void SetFunction()
         {
@@ -33,5 +43,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Matrixes
                return matrix1.Multiply(matrix2);
             };
         }
+
+        #endregion // Private_Methods
     }
 }
