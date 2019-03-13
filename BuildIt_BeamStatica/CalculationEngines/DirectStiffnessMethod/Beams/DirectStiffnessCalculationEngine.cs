@@ -137,7 +137,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
         {
             int numberOfReactions = _beam.Spans.Count * 3 + 3 - _beam.NumberOfDegreesOfFreedom;
 
-            numberOfReactions += _beam.Nodes.Count(n => n is Hinge); // HACK: Check if needed
+            numberOfReactions += _beam.Nodes.Count(n => n is Hinge);
 
             for (int i = _beam.NumberOfDegreesOfFreedom; i < numberOfReactions + _beam.NumberOfDegreesOfFreedom; i++)
             {

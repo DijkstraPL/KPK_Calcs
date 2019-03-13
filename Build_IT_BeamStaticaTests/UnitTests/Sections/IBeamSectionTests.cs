@@ -15,7 +15,7 @@ namespace Build_IT_BeamStaticaTests.UnitTests.Sections
                 width: 91, height: 180, 
                 flangeWidth: 8, webWidth: 5.3, radius: 9);
         }
-
+        
         [Test()]
         public void PolygonSection_CalculatedCircumferenceTest_Success()
         {
@@ -117,7 +117,7 @@ namespace Build_IT_BeamStaticaTests.UnitTests.Sections
         [Test()]
         public void PolygonSection_CalculatedMomentOfInteriaTest_Success()
         {
-            Assert.That(_iBeamSection.MomentOfInteria, Is.EqualTo(1317.474).Within(0.001));
+            Assert.That(_iBeamSection.MomentOfInteria, Is.EqualTo(1316.959).Within(0.001));
         }
 
         [Test()]

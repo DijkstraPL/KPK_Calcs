@@ -13,6 +13,7 @@ import { ParameterOptions } from '../../models/enums/parameterOptions';
 import { ActivatedRoute } from '@angular/router';
 import { ParameterService } from '../../services/parameter.service';
 import { CalculationService } from '../../services/calculation.service';
+import { ValueType } from '../../models/enums/valueType';
 var ScriptCalculatorComponent = /** @class */ (function () {
     function ScriptCalculatorComponent(route, scriptService, parameterService, calculationService) {
         this.route = route;
@@ -40,9 +41,13 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         var _this = this;
         this.parameterService.getParameters(this.script.id).subscribe(function (parameters) {
             _this.parameters = parameters.filter(function (p) { return (p.context & ParameterOptions.Editable) != 0; }),
+                _this.parameters.forEach(function (p) { return _this.prepareParameter(p); }),
                 _this.filterParameters(),
                 console.log("Parameters", _this.parameters);
         }, function (error) { return console.error(error); });
+    };
+    ScriptCalculatorComponent.prototype.prepareParameter = function (parameter) {
+        parameter.equation = parameter.value;
     };
     ScriptCalculatorComponent.prototype.sortParameters = function (parameters, prop) {
         if (parameters)
@@ -52,24 +57,11 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     };
     ScriptCalculatorComponent.prototype.setValueChanged = function (parameter) {
         this.valueChanged = true;
-        //let index = this.visibleParameters.indexOf(parameter);
-        //let properties: { [name: string]: string } = {};
-        //for (let i = 0; i <= index; i++) {
-        //    properties[`[${this.visibleParameters[i].name}]`] = this.visibleParameters[i].value;
-        //}
-        //for (let i = index + 1; i < this.visibleParameters.length; i++) {
-        //    if (!this.visibleParameters[i].dataValidator)
-        //        continue;
-        //    let dataValidator = this.visibleParameters[i].dataValidator.slice(
-        //        this.visibleParameters[i].dataValidator.indexOf('(') + 1,
-        //        this.visibleParameters[i].dataValidator.length - 1)
-        //    properties.forEach(p => {
-        //       dataValidator.replace(p.name, p.value);
-        //    });
-        //}
+        this.filterParameters();
     };
     ScriptCalculatorComponent.prototype.filterParameters = function () {
-        this.visibleParameters = this.parameters.filter(function (p) { return (p.context & ParameterOptions.Visible) != 0; });
+        var _this = this;
+        this.visibleParameters = this.parameters.filter(function (p) { return (p.context & ParameterOptions.Visible) != 0 && _this.validateData(p); });
     };
     ScriptCalculatorComponent.prototype.calculate = function () {
         var _this = this;
@@ -79,6 +71,27 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             console.log("Results", _this.resultParameters);
         }, function (error) { return console.error(error); });
         this.valueChanged = false;
+    };
+    ScriptCalculatorComponent.prototype.validateData = function (parameter) {
+        if (!parameter.dataValidator)
+            return true;
+        var dataValidatorEquation = parameter.dataValidator.slice(parameter.dataValidator.indexOf('(') + 1, parameter.dataValidator.lastIndexOf(')'));
+        this.parameters.forEach(function (p) {
+            var value = p.valueType == ValueType.number ? p.value : "'" + p.value + "'";
+            dataValidatorEquation = dataValidatorEquation.replace("[" + p.name + "]", value);
+        });
+        try {
+            var result = eval(dataValidatorEquation);
+            if (result != null && !result && parameter.value != parameter.equation)
+                parameter.value = parameter.equation;
+            if (result != null)
+                return result;
+            else
+                return true;
+        }
+        catch (e) {
+            return true;
+        }
     };
     ScriptCalculatorComponent = __decorate([
         Component({

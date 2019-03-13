@@ -15,11 +15,11 @@ import { validateConfig } from '@angular/router/src/config';
 })
 
 export class DataParametersFormComponent {
-    @Input() editMode: boolean;
-    @Input() scriptId: number;
-    @Input() newParameter: Parameter = new ParameterImpl();
+    @Input('editMode') editMode: boolean;
+    @Input('scriptId') scriptId: number;
+    @Input('newParameter') newParameter: Parameter = new ParameterImpl();
 
-    @Output() created = new EventEmitter<Parameter>();
+    @Output('created') created = new EventEmitter<Parameter>();
 
     type: string = ParameterFilter[ParameterFilter.data];
 
@@ -56,7 +56,7 @@ export class DataParametersFormComponent {
                 .filter(vo => vo !== valueOption);
     }
 
-    onSubmit() {
+    onSubmit($event) {
         this.adjustProperties();
         this.setContext();
 

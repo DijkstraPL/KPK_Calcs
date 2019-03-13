@@ -44,7 +44,7 @@ var DataParametersFormComponent = /** @class */ (function () {
             this.newParameter.valueOptions
                 .filter(function (vo) { return vo !== valueOption; });
     };
-    DataParametersFormComponent.prototype.onSubmit = function () {
+    DataParametersFormComponent.prototype.onSubmit = function ($event) {
         this.adjustProperties();
         this.setContext();
         if (!this.editMode)
@@ -86,19 +86,19 @@ var DataParametersFormComponent = /** @class */ (function () {
         }, function (error) { return console.error(error); });
     };
     __decorate([
-        Input(),
+        Input('editMode'),
         __metadata("design:type", Boolean)
     ], DataParametersFormComponent.prototype, "editMode", void 0);
     __decorate([
-        Input(),
+        Input('scriptId'),
         __metadata("design:type", Number)
     ], DataParametersFormComponent.prototype, "scriptId", void 0);
     __decorate([
-        Input(),
+        Input('newParameter'),
         __metadata("design:type", Object)
     ], DataParametersFormComponent.prototype, "newParameter", void 0);
     __decorate([
-        Output(),
+        Output('created'),
         __metadata("design:type", Object)
     ], DataParametersFormComponent.prototype, "created", void 0);
     DataParametersFormComponent = __decorate([

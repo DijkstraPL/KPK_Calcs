@@ -113,7 +113,7 @@ namespace Build_IT_BeamStatica.Sections
                 + WebWidth * Math.Pow(Height - 2 * FlangeWidth, 3) / 12 
                 + 4 * Math.Pow(Radius, 4) / 12
                 + 4 * Math.Pow(Radius, 2) * Math.Pow(Height / 2 - FlangeWidth - Radius / 2, 2)
-                - 4 *  Math.Pow(Radius, 4 ) * (1 / 16 * Math.PI - 4 / (9 * Math.PI))
+                - 4 *  Math.Pow(Radius, 4 ) * (1.0 / 16 * Math.PI - 4 / (9 * Math.PI))
                 - 4 * Math.PI * Math.Pow(Radius,2) / 4 * Math.Pow(Height / 2 - FlangeWidth - Radius + 4* Radius / (3 * Math.PI),2)
                 ) / 10000;
         }

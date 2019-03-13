@@ -1,7 +1,8 @@
 ﻿<h3>
     <span innerHTML="{{ newParameter.name | html }}"></span> - {{newParameter.description}}
 </h3>
-<form (ngSubmit)="onSubmit()">
+
+<form (ngSubmit)="onSubmit($event)">
 
     <div class="row">
         <div class="form-group form-inline">

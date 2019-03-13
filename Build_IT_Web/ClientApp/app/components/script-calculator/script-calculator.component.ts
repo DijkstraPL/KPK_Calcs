@@ -6,6 +6,7 @@ import { ParameterOptions } from '../../models/enums/parameterOptions';
 import { ActivatedRoute } from '@angular/router';
 import { ParameterService } from '../../services/parameter.service';
 import { CalculationService } from '../../services/calculation.service';
+import { ValueType } from '../../models/enums/valueType';
 
 @Component({
     selector: 'app-script-calculator',
@@ -48,9 +49,14 @@ export class ScriptCalculatorComponent implements OnInit {
     private setParameters(): void {
         this.parameterService.getParameters(this.script.id).subscribe(parameters => {
             this.parameters = parameters.filter(p => (p.context & ParameterOptions.Editable) != 0),
+                this.parameters.forEach(p => this.prepareParameter(p)),
                 this.filterParameters(),
                 console.log("Parameters", this.parameters);
         }, error => console.error(error));
+    }
+
+    private prepareParameter(parameter: Parameter): void {
+        parameter.equation = parameter.value;
     }
 
     sortParameters(parameters: Parameter[], prop: string) {
@@ -63,29 +69,12 @@ export class ScriptCalculatorComponent implements OnInit {
 
     setValueChanged(parameter: Parameter) {
         this.valueChanged = true;
-        //let index = this.visibleParameters.indexOf(parameter);
 
-        //let properties: { [name: string]: string } = {};
-        //for (let i = 0; i <= index; i++) {
-        //    properties[`[${this.visibleParameters[i].name}]`] = this.visibleParameters[i].value;
-        //}
-
-        //for (let i = index + 1; i < this.visibleParameters.length; i++) {
-        //    if (!this.visibleParameters[i].dataValidator)
-        //        continue;
-        //    let dataValidator = this.visibleParameters[i].dataValidator.slice(
-        //        this.visibleParameters[i].dataValidator.indexOf('(') + 1,
-        //        this.visibleParameters[i].dataValidator.length - 1)
-
-        //    properties.forEach(p => {
-        //       dataValidator.replace(p.name, p.value);
-        //    });
-
-        //}
+        this.filterParameters();
     }
     
     filterParameters() {
-        this.visibleParameters = this.parameters.filter(p => (p.context & ParameterOptions.Visible) != 0);
+        this.visibleParameters = this.parameters.filter(p => (p.context & ParameterOptions.Visible) != 0 && this.validateData(p));
     }
 
     calculate() {
@@ -96,5 +85,31 @@ export class ScriptCalculatorComponent implements OnInit {
             }, error => console.error(error));
 
         this.valueChanged = false;
+    }
+
+    private validateData(parameter: Parameter): boolean {
+        if (!parameter.dataValidator)
+            return true;
+
+        let dataValidatorEquation = parameter.dataValidator.slice(
+            parameter.dataValidator.indexOf('(') + 1,
+            parameter.dataValidator.lastIndexOf(')'));
+
+        this.parameters.forEach(p => {
+            let value = p.valueType == ValueType.number ? p.value : `'${p.value}'`;
+            dataValidatorEquation = dataValidatorEquation.replace(`[${p.name}]`, value)
+        });
+
+        try {
+            let result = eval(dataValidatorEquation) as boolean;
+            if (result != null && !result && parameter.value != parameter.equation)
+                parameter.value = parameter.equation;
+            if (result != null)
+                return result;
+            else
+                return true;
+        } catch (e) {
+            return true;
+        }
     }
 }

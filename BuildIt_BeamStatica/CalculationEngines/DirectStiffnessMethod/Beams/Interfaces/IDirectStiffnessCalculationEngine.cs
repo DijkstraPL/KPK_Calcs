@@ -8,8 +8,5 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams.In
 {
     public interface IDirectStiffnessCalculationEngine : IBeamCalculationEngine
     {
-        #region Properties
-
-        #endregion // Properties
     }
 }

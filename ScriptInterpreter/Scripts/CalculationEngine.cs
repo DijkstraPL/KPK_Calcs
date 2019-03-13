@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Build_IT_ScriptInterpreter.Scripts
 {
@@ -164,7 +165,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
 
         private static void CalculateParameter(IParameter parameter, Dictionary<string, object> parameters)
         {
-            var expressionEvaluator = ExpressionEvaluator.Create(parameter.Value.ToString(), parameters);
+            var expressionEvaluator = ExpressionEvaluator.Create(Regex.Replace(parameter.Value.ToString(), @"\s+", string.Empty), parameters);
             try
             {
                 parameter.Value = expressionEvaluator.Evaluate();

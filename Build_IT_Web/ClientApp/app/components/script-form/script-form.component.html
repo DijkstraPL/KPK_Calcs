@@ -79,10 +79,10 @@
                 </div>
                 <label *ngIf="script.tags.length > 0">Tags</label>
                 <div class="row" id="tags">
-                    <div *ngFor="let tag of script.tags" class="form-group col-md-2">
+                    <div *ngFor="let tag of script.tags; index as i" class="form-group col-md-2">
                         <select class="form-control"
                                 [(ngModel)]="tag.id"
-                                name="tag{{tag.id}}"
+                                name="tag{{i}}"
                                 (change)="selectedTagChanged(tag)"
                                 placeholder="Tag">
                             <option *ngFor="let t of tags" [ngValue]="t.id" [attr.selected]="t.id == tag.id ? true : null">{{t.name}}</option>

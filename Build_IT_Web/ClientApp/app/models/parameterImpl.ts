@@ -21,6 +21,6 @@ export class ParameterImpl implements Parameter {
     valueOptionSetting: ValueOptionSettings;
     nestedScripts: AlternativeScript[];
     valueOptions: ValueOption[] = [];
-
+    
     equation: string;
 }

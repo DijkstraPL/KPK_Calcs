@@ -30,7 +30,20 @@
                                [(ngModel)]="parameter.value"
                                placeholder="value"
                                (change)="setValueChanged(parameter)" />
-                        <select *ngIf="parameter.valueOptions.length > 0"
+                        <div class="form-inline"
+                             *ngIf="parameter.valueOptions.length > 0 && parameter.valueOptions.length <= 3">
+                            <label *ngFor="let valueOption of parameter.valueOptions; index as i">
+                                <input type="radio"
+                                       value="{{valueOption.value}}"
+                                       id="{{parameter.id}}_valueOption{{i}}"
+                                       [(ngModel)]="parameter.value"
+                                       name="{{parameter.id}}_valueOption{{i}}"
+                                       (change)="setValueChanged(parameter)" />
+                                <label class="ml-1 mr-3"
+                                       for="{{parameter.id}}_valueOption{{i}}">{{valueOption.value }}</label>
+                            </label>
+                        </div>
+                        <select *ngIf="parameter.valueOptions.length > 3"
                                 [(ngModel)]="parameter.value"
                                 (change)="setValueChanged(parameter)">
                             <option *ngFor="let valueOption of parameter.valueOptions">
