@@ -4,14 +4,16 @@ using Build_IT_Web.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Build_IT_Web.Migrations
 {
     [DbContext(typeof(BuildItDbContext))]
-    partial class BuildItDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190317103341_ValidateVisibility")]
+    partial class ValidateVisibility
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,8 +49,6 @@ namespace Build_IT_Web.Migrations
                     b.Property<string>("AccordingTo");
 
                     b.Property<int>("Context");
-
-                    b.Property<string>("DataValidator");
 
                     b.Property<string>("Description");
 

@@ -15,6 +15,7 @@ namespace Build_IT_ScriptInterpreter.Parameters.Interfaces
         object Value { get; set; }
         string Description { get; set; }
         List<ValueOption> ValueOptions { get; set; }
+        object VisibilityValidator { get; set; }
         object DataValidator { get; set; }
         string Unit { get; set; }
         ParameterOptions Context { get; }

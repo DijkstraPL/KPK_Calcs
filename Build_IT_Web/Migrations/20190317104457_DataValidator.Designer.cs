@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Build_IT_Web.Migrations
 {
     [DbContext(typeof(BuildItDbContext))]
-    [Migration("20190114194329_SeedDatabase")]
-    partial class SeedDatabase
+    [Migration("20190317104457_DataValidator")]
+    partial class DataValidator
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace Build_IT_Web.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Build_IT_Web.Models.AlternativeScript", b =>
+            modelBuilder.Entity("Build_IT_Web.Core.Models.AlternativeScript", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,7 @@ namespace Build_IT_Web.Migrations
                     b.ToTable("AlternativeScripts");
                 });
 
-            modelBuilder.Entity("Build_IT_Web.Models.Parameter", b =>
+            modelBuilder.Entity("Build_IT_Web.Core.Models.Parameter", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,6 +74,8 @@ namespace Build_IT_Web.Migrations
 
                     b.Property<int>("ValueType");
 
+                    b.Property<string>("VisibilityValidator");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ScriptId");
@@ -81,7 +83,7 @@ namespace Build_IT_Web.Migrations
                     b.ToTable("Parameters");
                 });
 
-            modelBuilder.Entity("Build_IT_Web.Models.Script", b =>
+            modelBuilder.Entity("Build_IT_Web.Core.Models.Script", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,7 +118,7 @@ namespace Build_IT_Web.Migrations
                     b.ToTable("Scripts");
                 });
 
-            modelBuilder.Entity("Build_IT_Web.Models.ScriptTag", b =>
+            modelBuilder.Entity("Build_IT_Web.Core.Models.ScriptTag", b =>
                 {
                     b.Property<long>("ScriptId");
 
@@ -129,7 +131,7 @@ namespace Build_IT_Web.Migrations
                     b.ToTable("ScriptTags");
                 });
 
-            modelBuilder.Entity("Build_IT_Web.Models.Tag", b =>
+            modelBuilder.Entity("Build_IT_Web.Core.Models.Tag", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -144,7 +146,7 @@ namespace Build_IT_Web.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("Build_IT_Web.Models.ValueOption", b =>
+            modelBuilder.Entity("Build_IT_Web.Core.Models.ValueOption", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -164,38 +166,38 @@ namespace Build_IT_Web.Migrations
                     b.ToTable("ValueOptions");
                 });
 
-            modelBuilder.Entity("Build_IT_Web.Models.AlternativeScript", b =>
+            modelBuilder.Entity("Build_IT_Web.Core.Models.AlternativeScript", b =>
                 {
-                    b.HasOne("Build_IT_Web.Models.Parameter", "Parameter")
+                    b.HasOne("Build_IT_Web.Core.Models.Parameter", "Parameter")
                         .WithMany("NestedScripts")
                         .HasForeignKey("ParameterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Build_IT_Web.Models.Parameter", b =>
+            modelBuilder.Entity("Build_IT_Web.Core.Models.Parameter", b =>
                 {
-                    b.HasOne("Build_IT_Web.Models.Script", "Script")
+                    b.HasOne("Build_IT_Web.Core.Models.Script", "Script")
                         .WithMany("Parameters")
                         .HasForeignKey("ScriptId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Build_IT_Web.Models.ScriptTag", b =>
+            modelBuilder.Entity("Build_IT_Web.Core.Models.ScriptTag", b =>
                 {
-                    b.HasOne("Build_IT_Web.Models.Script", "Script")
+                    b.HasOne("Build_IT_Web.Core.Models.Script", "Script")
                         .WithMany("Tags")
                         .HasForeignKey("ScriptId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Build_IT_Web.Models.Tag", "Tag")
+                    b.HasOne("Build_IT_Web.Core.Models.Tag", "Tag")
                         .WithMany()
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Build_IT_Web.Models.ValueOption", b =>
+            modelBuilder.Entity("Build_IT_Web.Core.Models.ValueOption", b =>
                 {
-                    b.HasOne("Build_IT_Web.Models.Parameter", "Parameter")
+                    b.HasOne("Build_IT_Web.Core.Models.Parameter", "Parameter")
                         .WithMany("ValueOptions")
                         .HasForeignKey("ParameterId")
                         .OnDelete(DeleteBehavior.Cascade);

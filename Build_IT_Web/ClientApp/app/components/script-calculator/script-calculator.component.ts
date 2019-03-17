@@ -9,6 +9,7 @@ import { CalculationService } from '../../services/calculation.service';
 import { ValueType } from '../../models/enums/valueType';
 import { isNullOrUndefined } from 'util';
 import { ValueOption } from '../../models/interfaces/valueOption';
+import { ValueOptionSettings } from '../../models/enums/valueOptionSettings';
 
 @Component({
     selector: 'app-script-calculator',
@@ -21,10 +22,11 @@ export class ScriptCalculatorComponent implements OnInit {
     script: Script;
     parameters: Parameter[];
     visibleParameters: Parameter[];
-    parameterOptions = ParameterOptions;
     resultParameters: Parameter[];
 
     valueChanged: boolean;
+    parameterOptions = ParameterOptions;
+    valueOptionSetting = ValueOptionSettings;
 
     constructor(
         private route: ActivatedRoute,
@@ -74,40 +76,40 @@ export class ScriptCalculatorComponent implements OnInit {
 
         this.filterParameters();
     }
+
+    isImportant(parameter: Parameter): boolean {
+        return (parameter.context & ParameterOptions.Important) != 0
+    }
     
     filterParameters() {
-        this.visibleParameters = this.parameters.filter(p => (p.context & ParameterOptions.Visible) != 0 && this.validateData(p));
+        this.visibleParameters = this.parameters.filter(p => (p.context & ParameterOptions.Visible) != 0 && this.validateVisibility(p));
     }
-
-    checkValues(valueOptions: ValueOption[]): boolean {
-        return !valueOptions.every(vo => !isNullOrUndefined(vo.value));
-    }
-
+    
     calculate() {
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(params => {
-                this.resultParameters = params;
+                this.resultParameters = params.filter(p => (p.context & ParameterOptions.Visible) != 0);
                 console.log("Results", this.resultParameters);
             }, error => console.error(error));
-
+               
         this.valueChanged = false;
     }
 
-    private validateData(parameter: Parameter): boolean {
-        if (!parameter.dataValidator)
+    private validateVisibility(parameter: Parameter): boolean {
+        if (!parameter.visibilityValidator)
             return true;
 
-        let dataValidatorEquation = parameter.dataValidator.slice(
-            parameter.dataValidator.indexOf('(') + 1,
-            parameter.dataValidator.lastIndexOf(')'));
+        let visibilityValidatorEquation = parameter.visibilityValidator.slice(
+            parameter.visibilityValidator.indexOf('(') + 1,
+            parameter.visibilityValidator.lastIndexOf(')'));
 
         this.parameters.forEach(p => {
             let value = p.valueType == ValueType.number ? p.value : `'${p.value}'`;
-            dataValidatorEquation = dataValidatorEquation.replace(`[${p.name}]`, value)
+            visibilityValidatorEquation = visibilityValidatorEquation.replace(`[${p.name}]`, value)
         });
 
         try {
-            let result = eval(dataValidatorEquation) as boolean;
+            let result = eval(visibilityValidatorEquation) as boolean;
             if (result != null && !result && parameter.value != parameter.equation)
                 parameter.value = parameter.equation;
             if (result != null)

@@ -11,6 +11,7 @@ export interface Parameter {
     description: string;
     valueType: ValueType;
     value: string;
+    visibilityValidator: string;
     dataValidator: string;
     unit: string;
     context: ParameterOptions;

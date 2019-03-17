@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ParameterService } from '../../services/parameter.service';
 import { CalculationService } from '../../services/calculation.service';
 import { ValueType } from '../../models/enums/valueType';
+import { ValueOptionSettings } from '../../models/enums/valueOptionSettings';
 var ScriptCalculatorComponent = /** @class */ (function () {
     function ScriptCalculatorComponent(route, scriptService, parameterService, calculationService) {
         this.route = route;
@@ -21,6 +22,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         this.parameterService = parameterService;
         this.calculationService = calculationService;
         this.parameterOptions = ParameterOptions;
+        this.valueOptionSetting = ValueOptionSettings;
     }
     ScriptCalculatorComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -61,7 +63,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     };
     ScriptCalculatorComponent.prototype.filterParameters = function () {
         var _this = this;
-        this.visibleParameters = this.parameters.filter(function (p) { return (p.context & ParameterOptions.Visible) != 0 && _this.validateData(p); });
+        this.visibleParameters = this.parameters.filter(function (p) { return (p.context & ParameterOptions.Visible) != 0 && _this.validateVisibility(p); });
     };
     ScriptCalculatorComponent.prototype.calculate = function () {
         var _this = this;
@@ -72,16 +74,16 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         }, function (error) { return console.error(error); });
         this.valueChanged = false;
     };
-    ScriptCalculatorComponent.prototype.validateData = function (parameter) {
-        if (!parameter.dataValidator)
+    ScriptCalculatorComponent.prototype.validateVisibility = function (parameter) {
+        if (!parameter.visibilityValidator)
             return true;
-        var dataValidatorEquation = parameter.dataValidator.slice(parameter.dataValidator.indexOf('(') + 1, parameter.dataValidator.lastIndexOf(')'));
+        var visibilityValidatorEquation = parameter.visibilityValidator.slice(parameter.visibilityValidator.indexOf('(') + 1, parameter.visibilityValidator.lastIndexOf(')'));
         this.parameters.forEach(function (p) {
             var value = p.valueType == ValueType.number ? p.value : "'" + p.value + "'";
-            dataValidatorEquation = dataValidatorEquation.replace("[" + p.name + "]", value);
+            visibilityValidatorEquation = visibilityValidatorEquation.replace("[" + p.name + "]", value);
         });
         try {
-            var result = eval(dataValidatorEquation);
+            var result = eval(visibilityValidatorEquation);
             if (result != null && !result && parameter.value != parameter.equation)
                 parameter.value = parameter.equation;
             if (result != null)

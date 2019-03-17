@@ -179,7 +179,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
         
         private bool IsValid(IParameter parameter, Dictionary<string, object> parameters)
         {
-            var value = parameter.DataValidator?.ToString();
+            var value = parameter.VisibilityValidator?.ToString();
             if (string.IsNullOrWhiteSpace(value))
                 return true;
 

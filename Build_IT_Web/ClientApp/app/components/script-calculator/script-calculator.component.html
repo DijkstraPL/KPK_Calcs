@@ -26,7 +26,7 @@
                 <td [innerHTML]="parameter.name | html"></td>
                 <td>
                     <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
-                        <input *ngIf="parameter.valueOptions.length == 0 || checkValues(parameter.valueOptions)"
+                        <input *ngIf="parameter.valueOptions.length == 0 || parameter.valueOptionSetting == valueOptionSetting.UserInput"
                                [(ngModel)]="parameter.value"
                                placeholder="value"
                                (change)="setValueChanged(parameter)" />
@@ -71,7 +71,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let parameter of resultParameters">
+            <tr *ngFor="let parameter of resultParameters"
+                [ngClass]="{'table table-warning': isImportant(parameter)}">
                 <td [innerHTML]="parameter.name | html"></td>
                 <td>
                     <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">

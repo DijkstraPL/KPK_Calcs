@@ -17,6 +17,7 @@ namespace Build_IT_ScriptInterpreter.Parameters
         public string Description { get; set; }
         public ValueTypes ValueType { get; set; }
         public object Value { get; set; }
+        public object VisibilityValidator { get; set; }
         public object DataValidator { get; set; }
         public string Unit { get; set; }
         public List<ValueOption> ValueOptions { get; set; }

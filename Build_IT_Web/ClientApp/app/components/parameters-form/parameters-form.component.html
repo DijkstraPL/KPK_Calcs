@@ -10,8 +10,10 @@
     </select>
 </div>
 
-<div class="border-dark" [ngClass]="{'alert alert-info' : parameter == newParameter}" *ngFor="let parameter of sortParameters(filteredParameters, 'number')">
-    <p class="list-group-item">
+<div class="border-dark"
+     [ngClass]="{'alert alert-info' : parameter == newParameter}"
+     *ngFor="let parameter of sortParameters(filteredParameters, 'number')">
+    <div class="list-group-item">
         <span [innerHTML]="parameter.name | html"></span> - {{parameter.description}}
         <button (click)="remove(parameter.id)"
                 type="button"
@@ -33,7 +35,7 @@
                 class="btn btn-info float-right">
             Down
         </button>
-    </p>
+    </div>
 </div>
 
 <div class="btn-group btn-group-toggle m-3" *ngIf="editMode">

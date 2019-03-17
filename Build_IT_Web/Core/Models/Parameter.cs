@@ -20,6 +20,7 @@ namespace Build_IT_Web.Core.Models
         [Required]
         public ValueTypes ValueType { get; set; }
         public string Value { get; set; }
+        public string VisibilityValidator { get; set; }
         public string DataValidator { get; set; }
         public string Unit { get; set; }
         public ICollection<ValueOption> ValueOptions { get; set; }

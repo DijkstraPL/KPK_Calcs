@@ -13,21 +13,18 @@ import { ParameterService } from '../../../services/parameter.service';
 import { ParameterOptions } from '../../../models/enums/parameterOptions';
 import { ValueOptionImpl } from '../../../models/valueOptionImpl';
 import { ParameterFilter } from '../../../models/enums/parameter-filter';
+import { ValueOptionSettings } from '../../../models/enums/valueOptionSettings';
 var DataParametersFormComponent = /** @class */ (function () {
     function DataParametersFormComponent(parameterService) {
         this.parameterService = parameterService;
         this.newParameter = new ParameterImpl();
         this.created = new EventEmitter();
         this.type = ParameterFilter[ParameterFilter.data];
+        this.allowUserValues = false;
     }
     DataParametersFormComponent.prototype.ngOnChanges = function (changes) {
-        if (changes.newParameter) {
-            var newParameter = changes.newParameter;
-            console.log('Previous parameter: ', newParameter.previousValue);
-            console.log('New parameter: ', newParameter.currentValue);
-            this.newParameter = newParameter.currentValue;
-            this.setDataType();
-        }
+        if (changes.newParameter)
+            this.setNewParameterChanges(changes.newParameter);
         if (changes.editMode)
             this.editMode = changes.editMode.currentValue;
     };
@@ -43,6 +40,13 @@ var DataParametersFormComponent = /** @class */ (function () {
         this.newParameter.valueOptions =
             this.newParameter.valueOptions
                 .filter(function (vo) { return vo !== valueOption; });
+        if (this.newParameter.valueOptions.length == 0)
+            this.newParameter.valueOptionSetting = ValueOptionSettings.None;
+    };
+    DataParametersFormComponent.prototype.onAllowUserValues = function () {
+        this.newParameter.valueOptionSetting =
+            this.allowUserValues ? ValueOptionSettings.UserInput : ValueOptionSettings.None;
+        alert(this.newParameter.valueOptionSetting);
     };
     DataParametersFormComponent.prototype.onSubmit = function ($event) {
         this.adjustProperties();
@@ -52,6 +56,13 @@ var DataParametersFormComponent = /** @class */ (function () {
         else
             this.update();
     };
+    DataParametersFormComponent.prototype.setNewParameterChanges = function (newParameter) {
+        console.log('Previous parameter: ', newParameter.previousValue);
+        console.log('New parameter: ', newParameter.currentValue);
+        this.newParameter = newParameter.currentValue;
+        this.setDataType();
+        this.setValueOptionsSettings();
+    };
     DataParametersFormComponent.prototype.setDataType = function () {
         if ((this.newParameter.context & ParameterFilter.data) != 0)
             this.type = ParameterFilter[ParameterFilter.data];
@@ -59,6 +70,9 @@ var DataParametersFormComponent = /** @class */ (function () {
             this.type = ParameterFilter[ParameterFilter.static];
         else if ((this.newParameter.context & ParameterFilter.calculation) != 0)
             this.type = ParameterFilter[ParameterFilter.calculation];
+    };
+    DataParametersFormComponent.prototype.setValueOptionsSettings = function () {
+        this.allowUserValues = this.newParameter.valueOptionSetting == ValueOptionSettings.UserInput;
     };
     DataParametersFormComponent.prototype.adjustProperties = function () {
         if (this.type === ParameterFilter[ParameterFilter.static]) {

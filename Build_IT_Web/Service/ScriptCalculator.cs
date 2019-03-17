@@ -77,7 +77,7 @@ namespace Build_IT_Web.Service
                         Number = parameter.Number,
                         Name = parameter.Name,
                         Value = parameter.Value,
-                        DataValidator = parameter.DataValidator,
+                        VisibilityValidator = parameter.VisibilityValidator,
                         Context = parameter.Context
                     });
                 }

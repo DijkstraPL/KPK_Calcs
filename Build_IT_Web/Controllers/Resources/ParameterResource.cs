@@ -13,6 +13,7 @@ namespace Build_IT_Web.Controllers.Resources
         public string Description { get; set; }
         public ValueTypes ValueType { get; set; }
         public string Value { get; set; }
+        public string VisibilityValidator { get; set; }
         public string DataValidator { get; set; }
         public string Unit { get; set; }
         public ICollection<ValueOptionResource> ValueOptions { get; set; }

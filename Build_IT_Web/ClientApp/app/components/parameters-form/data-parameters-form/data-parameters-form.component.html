@@ -97,11 +97,11 @@
     <div class="row"
          *ngIf="type != 'static'">
         <div class="form-group col-md-8">
-            <label for="parameterDataValidator">Data Validator</label>
+            <label for="parameterDataValidator">Visibility Validator</label>
             <textarea class="form-control"
                       id="parameterDataValidator"
                       rows="2"
-                      [(ngModel)]="newParameter.dataValidator"
+                      [(ngModel)]="newParameter.visibilityValidator"
                       name="dataValidator"
                       placeholder="Data validator"></textarea>
         </div>
@@ -116,6 +116,13 @@
                 Add value option
             </button>
         </div>
+        <label *ngIf="newParameter.valueOptions.length > 0">
+            <input type="checkbox"
+                   [(ngModel)]="allowUserValues" 
+                   name="allowUserValues"
+                   (change)="onAllowUserValues()"/>
+            Allow values provide by user
+        </label>
     </div>
     <div class="row" 
          *ngIf="type == 'data'">

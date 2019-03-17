@@ -1,4 +1,4 @@
-﻿import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
+﻿import { Component, Input, SimpleChanges, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { Parameter } from '../../../models/interfaces/parameter';
 import { ParameterImpl } from '../../../models/parameterImpl';
 import { ParameterService } from '../../../services/parameter.service';
@@ -7,6 +7,7 @@ import { ValueOption } from '../../../models/interfaces/valueOption';
 import { ValueOptionImpl } from '../../../models/valueOptionImpl';
 import { ParameterFilter } from '../../../models/enums/parameter-filter';
 import { validateConfig } from '@angular/router/src/config';
+import { ValueOptionSettings } from '../../../models/enums/valueOptionSettings';
 
 @Component({
     selector: 'app-data-parameters-form',
@@ -22,20 +23,15 @@ export class DataParametersFormComponent {
     @Output('created') created = new EventEmitter<Parameter>();
 
     type: string = ParameterFilter[ParameterFilter.data];
+    allowUserValues = false;
 
     constructor(private parameterService: ParameterService) {
     }
     
     ngOnChanges(changes: SimpleChanges) {
 
-        if (changes.newParameter) {
-            const newParameter = changes.newParameter;
-            console.log('Previous parameter: ', newParameter.previousValue);
-            console.log('New parameter: ', newParameter.currentValue);
-            this.newParameter = newParameter.currentValue;
-
-            this.setDataType();
-        }
+        if (changes.newParameter) 
+            this.setNewParameterChanges(changes.newParameter);
 
         if (changes.editMode)
             this.editMode = changes.editMode.currentValue;
@@ -54,6 +50,15 @@ export class DataParametersFormComponent {
         this.newParameter.valueOptions =
             this.newParameter.valueOptions
                 .filter(vo => vo !== valueOption);
+
+        if (this.newParameter.valueOptions.length == 0) 
+            this.newParameter.valueOptionSetting = ValueOptionSettings.None;
+    }
+
+    onAllowUserValues() {
+        this.newParameter.valueOptionSetting =
+            this.allowUserValues ? ValueOptionSettings.UserInput : ValueOptionSettings.None;
+        alert(this.newParameter.valueOptionSetting);
     }
 
     onSubmit($event) {
@@ -66,6 +71,14 @@ export class DataParametersFormComponent {
             this.update();
     }
 
+    private setNewParameterChanges(newParameter: SimpleChange) {
+        console.log('Previous parameter: ', newParameter.previousValue);
+        console.log('New parameter: ', newParameter.currentValue);
+        this.newParameter = newParameter.currentValue;
+        this.setDataType();
+        this.setValueOptionsSettings();
+    }
+
     private setDataType() {
         if ((this.newParameter.context & ParameterFilter.data) != 0)
             this.type = ParameterFilter[ParameterFilter.data];
@@ -73,6 +86,10 @@ export class DataParametersFormComponent {
             this.type = ParameterFilter[ParameterFilter.static];
         else if ((this.newParameter.context & ParameterFilter.calculation) != 0)
             this.type = ParameterFilter[ParameterFilter.calculation];
+    }
+
+    private setValueOptionsSettings() {
+        this.allowUserValues = this.newParameter.valueOptionSetting == ValueOptionSettings.UserInput;
     }
 
     private adjustProperties() {

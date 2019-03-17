@@ -35,7 +35,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
             {
                 Number = 1,
                 Name = "f_ck_",
-                DataValidator = "[f_ck_]>0",
+                VisibilityValidator = "[f_ck_]>0",
                 Description = "Characteristic compressive cylinder strength of concrete at 28 days.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Editable | ParameterOptions.Visible,
@@ -45,7 +45,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 {
                     Number = 2,
                     Name = "f_cm_",
-                    DataValidator = "[f_cm_]>0",
+                    VisibilityValidator = "[f_cm_]>0",
                     Description = "Mean compressive strength at 28 days.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
@@ -65,7 +65,7 @@ namespace Build_IT_ScriptInterpreterTests.Scripts
                 {
                     Number = 4,
                     Name = "t",
-                    DataValidator = "[t]>3",
+                    VisibilityValidator = "[t]>3",
                     Description = "Age of the concrete in days.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
