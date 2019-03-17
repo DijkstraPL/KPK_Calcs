@@ -61,6 +61,9 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         this.valueChanged = true;
         this.filterParameters();
     };
+    ScriptCalculatorComponent.prototype.isImportant = function (parameter) {
+        return (parameter.context & ParameterOptions.Important) != 0;
+    };
     ScriptCalculatorComponent.prototype.filterParameters = function () {
         var _this = this;
         this.visibleParameters = this.parameters.filter(function (p) { return (p.context & ParameterOptions.Visible) != 0 && _this.validateVisibility(p); });
@@ -69,7 +72,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         var _this = this;
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(function (params) {
-            _this.resultParameters = params;
+            _this.resultParameters = params.filter(function (p) { return (p.context & ParameterOptions.Visible) != 0; });
             console.log("Results", _this.resultParameters);
         }, function (error) { return console.error(error); });
         this.valueChanged = false;

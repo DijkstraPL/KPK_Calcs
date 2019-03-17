@@ -106,7 +106,7 @@
                       placeholder="Data validator"></textarea>
         </div>
     </div>
-    <div class="row" 
+    <div class="row"
          *ngIf="type == 'data'">
         <div class="form-group col-md-4">
             <label class="d-block">Value Options</label>
@@ -118,13 +118,13 @@
         </div>
         <label *ngIf="newParameter.valueOptions.length > 0">
             <input type="checkbox"
-                   [(ngModel)]="allowUserValues" 
+                   [(ngModel)]="allowUserValues"
                    name="allowUserValues"
-                   (change)="onAllowUserValues()"/>
+                   (change)="onAllowUserValues()" />
             Allow values provide by user
         </label>
     </div>
-    <div class="row" 
+    <div class="row"
          *ngIf="type == 'data'">
         <div class="form-group col-sm-6 col-md-5 col-lg-3"
              *ngFor="let valueOption of newParameter.valueOptions">
@@ -135,7 +135,7 @@
                        placeholder="Value option"
                        [(ngModel)]="valueOption.value"
                        name="valueOption{{valueOption.id}}"
-                       autocomplete="off"/>
+                       autocomplete="off" />
                 <span class="input-group-append">
                     <button type="button"
                             class="btn btn-danger"
@@ -145,6 +145,14 @@
                 </span>
             </div>
         </div>
+    </div>
+    <div class="input-group">
+        <label>
+            <input type="checkbox"
+                   name="important"
+                   [(ngModel)]="important" />
+            Important
+        </label>
     </div>
     <button type="submit"
             class="btn btn-primary mt-3">

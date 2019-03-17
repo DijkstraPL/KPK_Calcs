@@ -6,7 +6,6 @@ import { ParameterOptions } from '../../../models/enums/parameterOptions';
 import { ValueOption } from '../../../models/interfaces/valueOption';
 import { ValueOptionImpl } from '../../../models/valueOptionImpl';
 import { ParameterFilter } from '../../../models/enums/parameter-filter';
-import { validateConfig } from '@angular/router/src/config';
 import { ValueOptionSettings } from '../../../models/enums/valueOptionSettings';
 
 @Component({
@@ -24,12 +23,12 @@ export class DataParametersFormComponent {
 
     type: string = ParameterFilter[ParameterFilter.data];
     allowUserValues = false;
+    important: boolean;
 
     constructor(private parameterService: ParameterService) {
     }
     
     ngOnChanges(changes: SimpleChanges) {
-
         if (changes.newParameter) 
             this.setNewParameterChanges(changes.newParameter);
 
@@ -51,14 +50,22 @@ export class DataParametersFormComponent {
             this.newParameter.valueOptions
                 .filter(vo => vo !== valueOption);
 
-        if (this.newParameter.valueOptions.length == 0) 
-            this.newParameter.valueOptionSetting = ValueOptionSettings.None;
+        if (this.newParameter.valueOptions.length == 0) {
+            this.allowUserValues = false;
+            this.onAllowUserValues();
+        }
     }
 
     onAllowUserValues() {
         this.newParameter.valueOptionSetting =
             this.allowUserValues ? ValueOptionSettings.UserInput : ValueOptionSettings.None;
-        alert(this.newParameter.valueOptionSetting);
+    }
+
+    setImportant() {
+        if ((this.newParameter.context & ParameterOptions.Important) != 0)
+            this.important = true;
+        else
+            this.important = false;
     }
 
     onSubmit($event) {
@@ -77,6 +84,7 @@ export class DataParametersFormComponent {
         this.newParameter = newParameter.currentValue;
         this.setDataType();
         this.setValueOptionsSettings();
+        this.setImportant();
     }
 
     private setDataType() {
@@ -103,11 +111,21 @@ export class DataParametersFormComponent {
 
     private setContext() {
         if (this.type === ParameterFilter[ParameterFilter.data])
-            this.newParameter.context = ParameterOptions.Editable | ParameterOptions.Visible;
+            this.setDataContext([ParameterOptions.Editable, ParameterOptions.Visible] );           
         else if (this.type === ParameterFilter[ParameterFilter.static])
-            this.newParameter.context = ParameterOptions.StaticData;
+            this.setDataContext([ParameterOptions.StaticData]);   
         else if (this.type === ParameterFilter[ParameterFilter.calculation])
-            this.newParameter.context = ParameterOptions.Calculation | ParameterOptions.Visible;
+            this.setDataContext([ParameterOptions.Calculation, ParameterOptions.Visible]);   
+    }
+
+    private setDataContext(options: ParameterOptions[] ) {
+        this.newParameter.context = 0;
+        options.forEach(o => {
+            if ((this.newParameter.context & o) == 0)
+                this.newParameter.context += o;
+        });
+        if (this.important)
+            this.newParameter.context += ParameterOptions.Important;
     }
 
     private create() {

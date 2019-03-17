@@ -22,7 +22,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let parameter of sortParameters(visibleParameters, 'number')">
+            <tr *ngFor="let parameter of sortParameters(visibleParameters, 'number')"                
+                [ngClass]="{'table table-warning': isImportant(parameter)}">
                 <td [innerHTML]="parameter.name | html"></td>
                 <td>
                     <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
