@@ -4,6 +4,10 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.Interfaces
 {
     public interface IDisplacementResult
     {
+        #region Public_Methods
+
         double GetValue(ISpan span, double distanceFromLeftSide, double currentLength);
+
+        #endregion // Public_Methods
     }
 }

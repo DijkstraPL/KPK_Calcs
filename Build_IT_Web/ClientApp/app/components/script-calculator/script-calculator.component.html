@@ -26,7 +26,7 @@
                 <td [innerHTML]="parameter.name | html"></td>
                 <td>
                     <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
-                        <input *ngIf="parameter.valueOptions.length == 0"
+                        <input *ngIf="parameter.valueOptions.length == 0 || checkValues(parameter.valueOptions)"
                                [(ngModel)]="parameter.value"
                                placeholder="value"
                                (change)="setValueChanged(parameter)" />

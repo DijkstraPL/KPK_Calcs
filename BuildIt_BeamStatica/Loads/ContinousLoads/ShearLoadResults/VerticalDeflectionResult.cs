@@ -6,10 +6,16 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults
 {
     internal class VerticalDeflectionResult : DisplacementResultBase
     {
+        #region Constructors
+
         public VerticalDeflectionResult(IContinousLoad continousLoad) : base(continousLoad)
         {
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         public override double GetValue(ISpan span, double distanceFromLeftSide, double currentLength)
         {
             if (distanceFromLeftSide > ContinousLoad.EndPosition.Position + currentLength)
@@ -18,6 +24,10 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults
                 return CalculateDeflectionInsideLoadLength(span, distanceFromLeftSide, currentLength);
             return 0;
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
 
         private double CalculateDeflectionOutsideLoadLength(ISpan span, double distanceFromLeftSide, double currentLength)
         {
@@ -75,5 +85,7 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults
 
             return deflection;
         }
+
+        #endregion // Private_Methods
     }
 }

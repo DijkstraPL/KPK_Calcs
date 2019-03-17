@@ -5,9 +5,15 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults
 {
     internal class BendingMomentResult : ForceResultBase
     {
+        #region Constructors
+
         public BendingMomentResult(IContinousLoad continousLoad) : base(continousLoad)
         {
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public override double GetValue(double distanceFromLoadStartPosition)
         {
@@ -16,6 +22,10 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults
             else
                 return CalculateBendingMomentInsideLoadLength(distanceFromLoadStartPosition);
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
 
         private double CalculateBendingMomentOutsideLoadLength(double distanceFromLoadStartPosition)
         {
@@ -44,5 +54,7 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults
 
             return bendingMoment;
         }
+
+        #endregion // Private_Methods
     }
 }

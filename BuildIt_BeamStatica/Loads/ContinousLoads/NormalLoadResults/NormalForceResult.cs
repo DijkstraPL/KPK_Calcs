@@ -5,10 +5,16 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.NormalLoadResults
 {
     internal class NormalForceResult : ForceResultBase
     {
+        #region Constructors
+
         public NormalForceResult(IContinousLoad continousLoad) : base(continousLoad)
         {
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         public override double GetValue(double distanceFromLoadStartPosition)
         {
             if (distanceFromLoadStartPosition >= ContinousLoad.Length)
@@ -17,6 +23,10 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.NormalLoadResults
                 return CalculateNormalForceInsideLoadLength(distanceFromLoadStartPosition);
         }
 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+        
         private double CalculateNormalForceOutsideLoadLength()
             => ((ContinousLoad.StartPosition.Value + ContinousLoad.EndPosition.Value) * ContinousLoad.Length) / 2;
 
@@ -28,5 +38,7 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.NormalLoadResults
             return (ContinousLoad.StartPosition.Value + (lineAngle * distanceFromLoadStartPosition
                  + ContinousLoad.StartPosition.Value)) * distanceFromLoadStartPosition / 2;
         }
+
+        #endregion // Private_Methods
     }
 }

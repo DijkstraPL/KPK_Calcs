@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ParameterService } from '../../services/parameter.service';
 import { CalculationService } from '../../services/calculation.service';
 import { ValueType } from '../../models/enums/valueType';
+import { isNullOrUndefined } from 'util';
+import { ValueOption } from '../../models/interfaces/valueOption';
 
 @Component({
     selector: 'app-script-calculator',
@@ -75,6 +77,10 @@ export class ScriptCalculatorComponent implements OnInit {
     
     filterParameters() {
         this.visibleParameters = this.parameters.filter(p => (p.context & ParameterOptions.Visible) != 0 && this.validateData(p));
+    }
+
+    checkValues(valueOptions: ValueOption[]): boolean {
+        return !valueOptions.every(vo => !isNullOrUndefined(vo.value));
     }
 
     calculate() {

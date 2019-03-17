@@ -6,10 +6,16 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults
 {
     internal class RotationResult : DisplacementResultBase
     {
+        #region Constructors
+
         public RotationResult(IContinousLoad continousLoad) : base(continousLoad)
         {
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         public override double GetValue(ISpan span, double distanceFromLeftSide, double currentLength)
         {
             double distanceFromTheClosestLeftNode = distanceFromLeftSide - currentLength;
@@ -20,6 +26,10 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults
                 return CalculateRotationInsideLoadLength(span, distanceFromLeftSide, currentLength);
             return 0;
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
 
         private double CalculateRotationOutsideLoadLength(ISpan span,
          double distanceFromLeftSide, double currentLength)
@@ -73,5 +83,7 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults
 
             return rotation;
         }
+
+        #endregion // Private_Methods
     }
 }
