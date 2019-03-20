@@ -1,0 +1,40 @@
+﻿<div class="card flex-grow-1">
+    <div class="card-header bg-dark text-light">
+        <h5>{{ script.name }}</h5>
+    </div>
+    <div class="card-body  bg-light">
+        <div class="row">
+            <div class="col-md-8 card-text">
+                {{script.description}}
+            </div>
+            <div class="col-md-4 card-img">
+                <img class="img-fluid rounded-circle"
+                     title="{{script.name}}"
+                     src="https://lorempixel.com/150/150/?random={{script.id}}" />
+            </div>
+        </div>
+    </div>
+
+    <div class=" bg-dark">
+        <div class="btn-group">
+            <button type="button"
+                    class="btn btn-dark"
+                    [routerLink]="['/scripts/calculator', script.id]">
+                <span class="fa fa-calculator"></span> Calculate
+            </button>
+            <button type="button"
+                    class="btn btn-dark"
+                    [routerLink]="['/scripts/edit', script.id]">
+                <span class="fa fa-edit"></span> Edit
+            </button>
+        </div>
+        <button type="button"
+                class="btn btn-danger float-right"
+                (click)="delete(script)">
+            <span class="fa fa-remove"></span> Delete
+        </button>
+    </div>
+    <div class="card-footer text-light bg-secondary">
+        {{ script.accordingTo }}
+    </div>
+</div>

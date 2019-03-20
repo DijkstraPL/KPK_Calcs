@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = 'Welcome to Angular';
-    subtitle = '.NET Core + Angular CLI v7 + Bootstrap & FontAwesome + Swagger Template';
+    title = 'Build IT';
+    subtitle = 'Site with civil engineering calculators';
 }

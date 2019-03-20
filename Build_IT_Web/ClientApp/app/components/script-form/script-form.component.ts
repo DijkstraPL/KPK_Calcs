@@ -1,7 +1,7 @@
 ﻿import { Component, Input, Pipe, OnInit } from '@angular/core';
 import { ScriptImpl } from '../../models/scriptImpl';
 import { ScriptService } from '../../services/script.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Script } from '../../models/interfaces/script';
 import { TagImpl } from '../../models/tagImpl';
 import { TagService } from '../../services/tag.service';
@@ -20,17 +20,14 @@ export class ScriptFormComponent implements OnInit {
     editMode: boolean = true;
 
     script: Script = new ScriptImpl();
-    tags: Tag[];
-    newTag: Tag = new TagImpl();
 
     constructor(
         private scriptService: ScriptService,
-        private tagService: TagService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private router: Router) {
     }
 
     ngOnInit() {
-        this.getTags();
 
         let id;
         let sub = this.route.params.subscribe(params => {
@@ -53,48 +50,17 @@ export class ScriptFormComponent implements OnInit {
         }, error => console.error(error));
     }
 
-    private getTags() {
-        this.tagService.getTags().subscribe(tags => {
-            this.tags = tags,
-                console.log("Tags", this.tags)
-        }, error => console.error(error));
-    }
-
-    addTag() {
-        if (this.script.tags.length > 10) {
-            alert("Too many tags");
-            return;
-        }
-
-        this.script.tags.push(new TagImpl());
-    }
-
-    removeTag() {
-        if (this.script.tags.length == 0)
-            return;
-
-        this.script.tags.pop();
-    }
-
-    selectedTagChanged(tag: Tag) {
-        let tagName = this.tags.find(t => t.id == tag.id).name;
-        this.script.tags.find(t => t.id == tag.id).name = tagName;
-    }
 
     onSubmit() {
         if (!this.editMode)
             this.scriptService.create(this.script)
-                .subscribe(s => console.log(s));
+                .subscribe((s: Script) => {
+                    console.log(s),
+                        this.router.navigateByUrl('/scripts/edit/' + s.id);
+                });
         else
             this.scriptService.update(this.script)
                 .subscribe(s => console.log(s));
     }
 
-    addNewTag() {
-        this.tagService.create(this.newTag)
-            .subscribe(t => {
-                console.log(t),
-                    this.getTags()
-            });
-    }
 }

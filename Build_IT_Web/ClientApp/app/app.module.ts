@@ -11,6 +11,9 @@ import { HomeComponent } from './components/home/home.component';
 import { ScriptFormComponent } from './components/script-form/script-form.component';
 import { ParametersFormComponent } from './components/parameters-form/parameters-form.component';
 import { ScriptCalculatorComponent } from './components/script-calculator/script-calculator.component';
+import { DataParametersFormComponent } from './components/parameters-form/data-parameters-form/data-parameters-form.component';
+import { ScriptCardComponent } from './components/script-card/script-card.component';
+import { ScriptCardsComponent } from './components/script-cards/script-cards.component';
 
 import { HtmlPipe } from './pipes/html-pipe';
 
@@ -18,7 +21,7 @@ import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
 import { ParameterService } from './services/parameter.service';
-import { DataParametersFormComponent } from './components/parameters-form/data-parameters-form/data-parameters-form.component';
+import { TagFormComponent } from './components/script-form/tag-form/tag-form.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { DataParametersFormComponent } from './components/parameters-form/data-p
       ParametersFormComponent,
       DataParametersFormComponent,
       ScriptCalculatorComponent,
+      ScriptCardComponent,
+      ScriptCardsComponent,
+      TagFormComponent,
       HtmlPipe
   ],
     imports: [

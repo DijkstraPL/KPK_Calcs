@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ParameterService } from '../../services/parameter.service';
 import { CalculationService } from '../../services/calculation.service';
 import { ValueType } from '../../models/enums/valueType';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined, log } from 'util';
 import { ValueOption } from '../../models/interfaces/valueOption';
 import { ValueOptionSettings } from '../../models/enums/valueOptionSettings';
 
@@ -98,7 +98,7 @@ export class ScriptCalculatorComponent implements OnInit {
     private validateVisibility(parameter: Parameter): boolean {
         if (!parameter.visibilityValidator)
             return true;
-
+               
         let visibilityValidatorEquation = parameter.visibilityValidator.slice(
             parameter.visibilityValidator.indexOf('(') + 1,
             parameter.visibilityValidator.lastIndexOf(')'));

@@ -40,13 +40,20 @@ var DataParametersFormComponent = /** @class */ (function () {
         this.newParameter.valueOptions =
             this.newParameter.valueOptions
                 .filter(function (vo) { return vo !== valueOption; });
-        if (this.newParameter.valueOptions.length == 0)
-            this.newParameter.valueOptionSetting = ValueOptionSettings.None;
+        if (this.newParameter.valueOptions.length == 0) {
+            this.allowUserValues = false;
+            this.onAllowUserValues();
+        }
     };
     DataParametersFormComponent.prototype.onAllowUserValues = function () {
         this.newParameter.valueOptionSetting =
             this.allowUserValues ? ValueOptionSettings.UserInput : ValueOptionSettings.None;
-        alert(this.newParameter.valueOptionSetting);
+    };
+    DataParametersFormComponent.prototype.setImportant = function () {
+        if ((this.newParameter.context & ParameterOptions.Important) != 0)
+            this.important = true;
+        else
+            this.important = false;
     };
     DataParametersFormComponent.prototype.onSubmit = function ($event) {
         this.adjustProperties();
@@ -62,6 +69,7 @@ var DataParametersFormComponent = /** @class */ (function () {
         this.newParameter = newParameter.currentValue;
         this.setDataType();
         this.setValueOptionsSettings();
+        this.setImportant();
     };
     DataParametersFormComponent.prototype.setDataType = function () {
         if ((this.newParameter.context & ParameterFilter.data) != 0)
@@ -84,11 +92,21 @@ var DataParametersFormComponent = /** @class */ (function () {
     };
     DataParametersFormComponent.prototype.setContext = function () {
         if (this.type === ParameterFilter[ParameterFilter.data])
-            this.newParameter.context = ParameterOptions.Editable | ParameterOptions.Visible;
+            this.setDataContext([ParameterOptions.Editable, ParameterOptions.Visible]);
         else if (this.type === ParameterFilter[ParameterFilter.static])
-            this.newParameter.context = ParameterOptions.StaticData;
+            this.setDataContext([ParameterOptions.StaticData]);
         else if (this.type === ParameterFilter[ParameterFilter.calculation])
-            this.newParameter.context = ParameterOptions.Calculation | ParameterOptions.Visible;
+            this.setDataContext([ParameterOptions.Calculation, ParameterOptions.Visible]);
+    };
+    DataParametersFormComponent.prototype.setDataContext = function (options) {
+        var _this = this;
+        this.newParameter.context = 0;
+        options.forEach(function (o) {
+            if ((_this.newParameter.context & o) == 0)
+                _this.newParameter.context += o;
+        });
+        if (this.important)
+            this.newParameter.context += ParameterOptions.Important;
     };
     DataParametersFormComponent.prototype.create = function () {
         this.created.emit(this.newParameter);

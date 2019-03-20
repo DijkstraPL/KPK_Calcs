@@ -8,29 +8,9 @@ import { Script } from '../../models/interfaces/script';
     styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent implements OnInit {
-    scripts: Script[];
+export class HomeComponent {
 
-    constructor(private scriptService: ScriptService) {
+    constructor() {
 
-    }
-
-    ngOnInit(): void {
-        this.setScript();
-    }
-
-    private setScript(): void {
-        this.scriptService.getScripts().subscribe(scripts => {
-            this.scripts = scripts;
-            console.log("Scripts", this.scripts);
-        }, error => console.error(error));
-    }
-
-    private delete(script: Script): void {
-        if (confirm(`Are you sure that you want to remove \"${script.name}\"?`)) {
-            this.scriptService.delete(script.id).subscribe(s =>
-                console.log("Scripts", s));
-            this.scripts = this.scripts.filter(s => s.id != script.id);
-        }
-    }
+    }     
 }

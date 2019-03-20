@@ -1,5 +1,6 @@
 ﻿
-<div *ngIf="script">
+<div *ngIf="script"
+     class="text-light">
     <div class="text-center">
         <h1>{{script.name}}</h1>
     </div>
@@ -60,7 +61,8 @@
         </tbody>
     </table>
 
-    <button (click)="calculate()">Calculate</button>
+    <button (click)="calculate()"
+            class="btn btn-primary">Calculate</button>
 
     <table class='table' *ngIf="resultParameters && !valueChanged">
         <thead>

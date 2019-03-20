@@ -10,14 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { ScriptImpl } from '../../models/scriptImpl';
 import { ScriptService } from '../../services/script.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TagImpl } from '../../models/tagImpl';
 import { TagService } from '../../services/tag.service';
 var ScriptFormComponent = /** @class */ (function () {
-    function ScriptFormComponent(scriptService, tagService, route) {
+    function ScriptFormComponent(scriptService, tagService, route, router) {
         this.scriptService = scriptService;
         this.tagService = tagService;
         this.route = route;
+        this.router = router;
         this.parametersToShow = 'dataParameters';
         this.editMode = true;
         this.script = new ScriptImpl();
@@ -67,9 +68,13 @@ var ScriptFormComponent = /** @class */ (function () {
         this.script.tags.find(function (t) { return t.id == tag.id; }).name = tagName;
     };
     ScriptFormComponent.prototype.onSubmit = function () {
+        var _this = this;
         if (!this.editMode)
             this.scriptService.create(this.script)
-                .subscribe(function (s) { return console.log(s); });
+                .subscribe(function (s) {
+                console.log(s),
+                    _this.router.navigateByUrl('/scripts/edit/' + s.id);
+            });
         else
             this.scriptService.update(this.script)
                 .subscribe(function (s) { return console.log(s); });
@@ -90,7 +95,8 @@ var ScriptFormComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [ScriptService,
             TagService,
-            ActivatedRoute])
+            ActivatedRoute,
+            Router])
     ], ScriptFormComponent);
     return ScriptFormComponent;
 }());
