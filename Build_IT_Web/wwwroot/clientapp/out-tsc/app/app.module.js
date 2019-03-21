@@ -8,6 +8,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -23,6 +26,7 @@ import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
 import { ParameterService } from './services/parameter.service';
+import { TagFormComponent } from './components/script-form/tag-form/tag-form.component';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -38,6 +42,7 @@ var AppModule = /** @class */ (function () {
                 ScriptCalculatorComponent,
                 ScriptCardComponent,
                 ScriptCardsComponent,
+                TagFormComponent,
                 HtmlPipe
             ],
             imports: [
@@ -45,7 +50,10 @@ var AppModule = /** @class */ (function () {
                 HttpClientModule,
                 FormsModule,
                 HtmlPipe,
-                AppRoutingModule
+                AppRoutingModule,
+                BrowserAnimationsModule,
+                MatTableModule,
+                MatCardModule
             ],
             providers: [
                 ScriptService,

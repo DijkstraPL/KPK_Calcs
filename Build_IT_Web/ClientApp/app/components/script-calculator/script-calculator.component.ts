@@ -14,7 +14,7 @@ import { ValueOptionSettings } from '../../models/enums/valueOptionSettings';
 @Component({
     selector: 'app-script-calculator',
     templateUrl: './script-calculator.component.html',
-    styleUrls: ['./script-calculator.component.css']
+    styleUrls: ['./script-calculator.component.less']
 })
 
 export class ScriptCalculatorComponent implements OnInit {
@@ -27,6 +27,8 @@ export class ScriptCalculatorComponent implements OnInit {
     valueChanged: boolean;
     parameterOptions = ParameterOptions;
     valueOptionSetting = ValueOptionSettings;
+
+    displayedColumns: string[] = ['name', 'value', 'unit', 'description'];
 
     constructor(
         private route: ActivatedRoute,

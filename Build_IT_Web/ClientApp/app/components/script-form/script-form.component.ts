@@ -1,12 +1,9 @@
-﻿import { Component, Input, Pipe, OnInit } from '@angular/core';
-import { ScriptImpl } from '../../models/scriptImpl';
-import { ScriptService } from '../../services/script.service';
+﻿import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Script } from '../../models/interfaces/script';
-import { TagImpl } from '../../models/tagImpl';
-import { TagService } from '../../services/tag.service';
-import { Tag } from '../../models/interfaces/tag';
-import { Parameter } from '../../models/interfaces/parameter';
+import { ScriptImpl } from '../../models/scriptImpl';
+import { ScriptService } from '../../services/script.service';
 
 @Component({
     selector: 'app-script-form',
@@ -21,10 +18,23 @@ export class ScriptFormComponent implements OnInit {
 
     script: Script = new ScriptImpl();
 
+    scriptForm = new FormGroup({
+        name: new FormControl('', Validators.required),
+        description: new FormControl('', Validators.required)
+    });
+
+    get scriptName() {
+        return this.scriptForm.get('name');
+    }
+    get scriptDescription() {
+        return this.scriptForm.get('description');
+    }
+
     constructor(
         private scriptService: ScriptService,
         private route: ActivatedRoute,
         private router: Router) {
+
     }
 
     ngOnInit() {
@@ -38,7 +48,6 @@ export class ScriptFormComponent implements OnInit {
             this.editMode = false;
             return;
         }
-
         this.getScript(id);
     }
 

@@ -23,6 +23,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         this.calculationService = calculationService;
         this.parameterOptions = ParameterOptions;
         this.valueOptionSetting = ValueOptionSettings;
+        this.displayedColumns = ['name', 'value', 'unit', 'description'];
     }
     ScriptCalculatorComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -102,7 +103,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         Component({
             selector: 'app-script-calculator',
             templateUrl: './script-calculator.component.html',
-            styleUrls: ['./script-calculator.component.css']
+            styleUrls: ['./script-calculator.component.less']
         }),
         __metadata("design:paramtypes", [ActivatedRoute,
             ScriptService,
