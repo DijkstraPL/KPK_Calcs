@@ -5,12 +5,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -27,6 +28,7 @@ import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
 import { ParameterService } from './services/parameter.service';
 import { TagFormComponent } from './components/script-form/tag-form/tag-form.component';
+import { AppErrorHandler } from './common/errors/app-error-handler';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -53,13 +55,16 @@ var AppModule = /** @class */ (function () {
                 AppRoutingModule,
                 BrowserAnimationsModule,
                 MatTableModule,
-                MatCardModule
+                MatCardModule,
+                ReactiveFormsModule,
+                MatAutocompleteModule
             ],
             providers: [
                 ScriptService,
                 TagService,
                 CalculationService,
-                ParameterService
+                ParameterService,
+                { provide: ErrorHandler, useClass: AppErrorHandler }
             ],
             bootstrap: [AppComponent]
         })

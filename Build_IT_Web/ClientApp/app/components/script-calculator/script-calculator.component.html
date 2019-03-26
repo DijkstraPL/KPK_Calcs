@@ -10,16 +10,24 @@
             {{tag.name}}
         </li>
     </ul>
-    <p *ngIf="!parameters"><em>Loading...</em></p>
+    <p *ngIf="!visibleParameters"><em>Loading...</em></p>
 
-    <table mat-table [dataSource]="parameters" *ngIf="parameters" class="mat-elevation-z8">
+    <table mat-table 
+           [dataSource]="visibleParameters"
+           *ngIf="visibleParameters"
+           class="mat-elevation-z8">
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let parameter"> <span [innerHtml]="parameter.name | html"></span> </td>
+            <th mat-header-cell 
+                *matHeaderCellDef> Name </th>
+            <td mat-cell
+                *matCellDef="let parameter">
+                <span [innerHtml]="parameter.name | html"></span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="value">
-            <th mat-header-cell *matHeaderCellDef> Value </th>
+            <th mat-header-cell 
+                *matHeaderCellDef> Value </th>
             <td mat-cell *matCellDef="let parameter">
                 <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
                     <input *ngIf="parameter.valueOptions.length == 0 || parameter.valueOptionSetting == valueOptionSetting.UserInput"
@@ -52,55 +60,90 @@
         </ng-container>
 
         <ng-container matColumnDef="unit">
-            <th mat-header-cell *matHeaderCellDef> Unit </th>
-            <td mat-cell *matCellDef="let parameter"> <span [innerHtml]="parameter.unit | html"></span> </td>
+            <th mat-header-cell
+                *matHeaderCellDef>
+                Unit
+            </th>
+            <td mat-cell
+                *matCellDef="let parameter">
+                <span [innerHtml]="parameter.unit | html"></span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef> Description </th>
-            <td mat-cell *matCellDef="let parameter"> {{ parameter.description }} </td>
+            <th mat-header-cell
+                *matHeaderCellDef>
+                Description
+            </th>
+            <td mat-cell
+                *matCellDef="let parameter">
+                {{ parameter.description }}
+            </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-header-row
+            *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row
+            *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    
-    <button (click)="calculate()"
-            class="btn btn-primary">
-        Calculate
-    </button>
 
-    <table class='table' *ngIf="resultParameters && !valueChanged">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Value</th>
-                <th>Unit</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let parameter of resultParameters"
-                [ngClass]="{'table table-warning': isImportant(parameter)}">
-                <td [innerHTML]="parameter.name | html"></td>
-                <td>
-                    <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
-                        <input *ngIf="parameter.valueOptions.length == 0"
-                               [(ngModel)]="parameter.value"
-                               placeholder="value" />
-                        <select *ngIf="parameter.valueOptions.length > 0"
-                                [(ngModel)]="parameter.value">
-                            <option *ngFor="let valueOption of parameter.valueOptions"
-                                    value="{{valueOption.value}}">
-                                {{valueOption.value }}
-                            </option>
-                        </select>
-                    </div>
-                    <span *ngIf="parameter.context % (2 * parameterOptions.Calculation) >= parameterOptions.Calculation">{{parameter.value }}</span>
-                </td>
-                <td [innerHTML]="parameter.unit | html"></td>
-                <td>{{ parameter.description }}</td>
-            </tr>
-        </tbody>
+    <div class="text-center"
+         *ngIf="visibleParameters">
+        <button (click)="calculate()"
+                class="btn btn-primary">
+           <span class="fa fa-calculator"></span> Calculate
+        </button>
+    </div>
+
+    <table mat-table 
+           [dataSource]="resultParameters"
+           *ngIf="resultParameters && !valueChanged"
+           class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell 
+                *matHeaderCellDef> Name </th>
+            <td mat-cell
+                *matCellDef="let parameter">
+                <span [innerHtml]="parameter.name | html"></span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="value">
+            <th mat-header-cell 
+                *matHeaderCellDef> Value </th>
+            <td mat-cell 
+                *matCellDef="let parameter">                
+                <span *ngIf="parameter.context % (2 * parameterOptions.Calculation) >= parameterOptions.Calculation">{{parameter.value }}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unit">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                Unit
+            </th>
+            <td mat-cell
+                *matCellDef="let parameter">
+                <span [innerHtml]="parameter.unit | html"></span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                Description
+            </th>
+            <td mat-cell
+                *matCellDef="let parameter">
+                {{ parameter.description }}
+            </td>
+        </ng-container>
+
+        <tr mat-header-row
+            *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row
+            [ngClass]="{'bg-info': isImportant(row)}"
+            *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
 </div>

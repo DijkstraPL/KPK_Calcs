@@ -1,5 +1,6 @@
 ﻿<div class="container">
-    <form (ngSubmit)="onSubmit()" [formGroup]="scriptForm">
+    <form (ngSubmit)="onSubmit()"
+          [formGroup]="scriptForm">
         <h2>Script</h2>
         <div class="row">
             <div class="form-group col-md-7 col-lg-3">
@@ -8,13 +9,13 @@
                        class="form-control"
                        id="scriptName"
                        formControlName="name"
-                       [(ngModel)]="script.name"
-                       name="name"
-                       placeholder="Name"
-                       autocomplete="off">
+                       autocomplete="off"
+                       placeholder="Name">
                 <div *ngIf="scriptName.touched && scriptName.invalid"
                      class="alert alert-danger">
-                    Name is required.
+                    <div *ngIf="scriptName.errors.required">Name is required.</div>
+                    <div *ngIf="scriptName.errors.minlength">Name should be minimum {{ scriptName.errors.minlength.requiredLength }} characters.</div>
+                    <div *ngIf="scriptName.errors.maxlength">Name should be maximum {{ scriptName.errors.maxlength.requiredLength }} characters.</div>
                 </div>
             </div>
             <div class="form-group col-sm-6 col-md-5 col-lg-3">
@@ -22,27 +23,32 @@
                 <input type="text"
                        class="form-control"
                        id="scriptAuthor"
-                       [(ngModel)]="script.author"
-                       name="author"
+                       formControlName="author"
                        placeholder="Author"
                        autocomplete="off">
+                <div *ngIf="scriptAuthor.touched && scriptAuthor.invalid"
+                     class="alert alert-danger">
+                    <div *ngIf="scriptAuthor.errors.maxlength">Author should be maximum {{ scriptAuthor.errors.maxlength.requiredLength }} characters.</div>
+                </div>
             </div>
             <div class="form-group col-sm-6 col-md-7 col-lg-3">
                 <label for="scriptAccordingTo">Document</label>
                 <input type="text"
                        class="form-control"
                        id="scriptAccordingTo"
-                       [(ngModel)]="script.accordingTo"
-                       name="document"
+                       formControlName="accordingTo"
                        placeholder="Document"
                        autocomplete="off">
+                <div *ngIf="scriptDocument.touched && scriptDocument.invalid"
+                     class="alert alert-danger">
+                    <div *ngIf="scriptDocument.errors.maxlength">Document should be maximum {{ scriptDocument.errors.maxlength.requiredLength }} characters.</div>
+                </div>
             </div>
             <div class="form-group col-sm-6 col-md-5 col-lg-3">
                 <label for="scriptGroup">Group</label>
                 <select class="form-control"
                         id="scriptGroup"
-                        [(ngModel)]="script.groupName"
-                        name="group"
+                        formControlName="groupName"
                         placeholder="Group">
                     <option class="font-weight-bold">Eurocode 0</option>
                     <option class="font-weight-bold">Eurocode 1</option>
@@ -65,12 +71,12 @@
                           id="scriptDescription"
                           rows="3"
                           formControlName="description"
-                          [(ngModel)]="script.description"
-                          name="description"
                           placeholder="Description"></textarea>
                 <div *ngIf="scriptDescription.touched && scriptDescription.invalid"
                      class="alert alert-danger">
-                    Description is required.
+                    <div *ngIf="scriptDescription.errors.required">Description is required.</div>
+                    <div *ngIf="scriptDescription.errors.minlength">Description should be minimum {{ scriptDescription.errors.minlength.requiredLength }} characters.</div>
+                    <div *ngIf="scriptDescription.errors.maxlength">Description should be maximum {{ scriptDescription.errors.maxlength.requiredLength }} characters.</div>
                 </div>
             </div>
         </div>
@@ -91,21 +97,26 @@
                 <textarea class="form-control"
                           id="scriptNote"
                           rows="2"
-                          [(ngModel)]="script.notes"
-                          name="notes"
+                          formControlName="notes"
                           placeholder="Note"></textarea>
+            </div>
+            <div *ngIf="scriptNotes.touched && scriptNotes.invalid"
+                 class="alert alert-danger">
+                <div *ngIf="scriptNotes.errors.maxlength">Note should be maximum {{ scriptNotes.errors.maxlength.requiredLength }} characters.</div>
             </div>
         </div>
 
-        <app-tag-form [script]="script"></app-tag-form>
+        <!--<app-tag-form [script]="script"></app-tag-form>-->
 
         <button *ngIf="!editMode"
                 type="submit"
+                [disabled]="!scriptForm.valid"
                 class="btn btn-primary mt-3">
             Add Script
         </button>
         <button *ngIf="editMode"
                 type="submit"
+                [disabled]="!scriptForm.valid"
                 class="btn btn-primary mt-3">
             Update Script
         </button>

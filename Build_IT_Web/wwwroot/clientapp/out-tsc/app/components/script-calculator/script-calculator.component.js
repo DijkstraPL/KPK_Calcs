@@ -15,12 +15,14 @@ import { ParameterService } from '../../services/parameter.service';
 import { CalculationService } from '../../services/calculation.service';
 import { ValueType } from '../../models/enums/valueType';
 import { ValueOptionSettings } from '../../models/enums/valueOptionSettings';
+import { FormControl } from '@angular/forms';
 var ScriptCalculatorComponent = /** @class */ (function () {
     function ScriptCalculatorComponent(route, scriptService, parameterService, calculationService) {
         this.route = route;
         this.scriptService = scriptService;
         this.parameterService = parameterService;
         this.calculationService = calculationService;
+        this.myControl = new FormControl();
         this.parameterOptions = ParameterOptions;
         this.valueOptionSetting = ValueOptionSettings;
         this.displayedColumns = ['name', 'value', 'unit', 'description'];

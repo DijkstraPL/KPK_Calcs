@@ -8,20 +8,69 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { ScriptImpl } from '../../models/scriptImpl';
-import { ScriptService } from '../../services/script.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { ScriptService } from '../../services/script.service';
+import 'rxjs/observable/throw';
 var ScriptFormComponent = /** @class */ (function () {
     function ScriptFormComponent(scriptService, route, router) {
         this.scriptService = scriptService;
         this.route = route;
         this.router = router;
+        this.scriptForm = new FormGroup({
+            id: new FormControl(),
+            name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
+            author: new FormControl('', Validators.maxLength(40)),
+            accordingTo: new FormControl('', Validators.maxLength(50)),
+            groupName: new FormControl('Other'),
+            description: new FormControl('', [Validators.required, Validators.minLength(25), Validators.maxLength(500)]),
+            notes: new FormControl('', Validators.maxLength(1000))
+        });
         this.parametersToShow = 'dataParameters';
         this.editMode = true;
-        this.script = new ScriptImpl();
-        this.form = new FormGroup({});
     }
+    Object.defineProperty(ScriptFormComponent.prototype, "scriptName", {
+        get: function () {
+            return this.scriptForm.get('name');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ScriptFormComponent.prototype, "scriptAuthor", {
+        get: function () {
+            return this.scriptForm.get('author');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ScriptFormComponent.prototype, "scriptDocument", {
+        get: function () {
+            return this.scriptForm.get('accordingTo');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ScriptFormComponent.prototype, "scriptGroup", {
+        get: function () {
+            return this.scriptForm.get('groupName');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ScriptFormComponent.prototype, "scriptDescription", {
+        get: function () {
+            return this.scriptForm.get('description');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ScriptFormComponent.prototype, "scriptNotes", {
+        get: function () {
+            return this.scriptForm.get('notes');
+        },
+        enumerable: true,
+        configurable: true
+    });
     ScriptFormComponent.prototype.ngOnInit = function () {
         var id;
         var sub = this.route.params.subscribe(function (params) {
@@ -36,22 +85,22 @@ var ScriptFormComponent = /** @class */ (function () {
     ScriptFormComponent.prototype.getScript = function (id) {
         var _this = this;
         this.scriptService.getScript(id).subscribe(function (script) {
-            _this.script = script,
-                console.log("Script", _this.script),
-                _this.checked = _this.script.notes != null && _this.script.notes != '';
-        }, function (error) { return console.error(error); });
+            console.log("Script", script);
+            _this.checked = script.notes != null && script.notes != '';
+            _this.scriptForm.patchValue(script);
+        }, function (error) { throw error; });
     };
     ScriptFormComponent.prototype.onSubmit = function () {
         var _this = this;
         if (!this.editMode)
-            this.scriptService.create(this.script)
-                .subscribe(function (s) {
-                console.log(s),
-                    _this.router.navigateByUrl('/scripts/edit/' + s.id);
-            });
+            this.scriptService.create(this.scriptForm.value)
+                .subscribe(function (script) {
+                console.log(script);
+                _this.router.navigateByUrl('/scripts/edit/' + script.id);
+            }, function (error) { throw error; });
         else
-            this.scriptService.update(this.script)
-                .subscribe(function (s) { return console.log(s); });
+            this.scriptService.update(this.scriptForm.value)
+                .subscribe(function (script) { return console.log(script); });
     };
     ScriptFormComponent = __decorate([
         Component({

@@ -10,6 +10,7 @@ import { ValueType } from '../../models/enums/valueType';
 import { isNullOrUndefined, log } from 'util';
 import { ValueOption } from '../../models/interfaces/valueOption';
 import { ValueOptionSettings } from '../../models/enums/valueOptionSettings';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-script-calculator',
@@ -18,6 +19,7 @@ import { ValueOptionSettings } from '../../models/enums/valueOptionSettings';
 })
 
 export class ScriptCalculatorComponent implements OnInit {
+    myControl = new FormControl();
 
     script: Script;
     parameters: Parameter[];

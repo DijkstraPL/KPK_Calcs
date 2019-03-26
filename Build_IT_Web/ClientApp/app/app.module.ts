@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
 import { ParameterService } from './services/parameter.service';
 import { TagFormComponent } from './components/script-form/tag-form/tag-form.component';
+import { AppErrorHandler } from './common/errors/app-error-handler';
 
 @NgModule({
   declarations: [
@@ -49,13 +51,15 @@ import { TagFormComponent } from './components/script-form/tag-form/tag-form.com
         BrowserAnimationsModule,
         MatTableModule,
         MatCardModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatAutocompleteModule
     ],
     providers: [
         ScriptService,
         TagService,
         CalculationService,
-        ParameterService
+        ParameterService,
+        { provide: ErrorHandler, useClass: AppErrorHandler }
     ],
   bootstrap: [AppComponent]
 })

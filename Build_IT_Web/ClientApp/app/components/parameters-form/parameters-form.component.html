@@ -13,7 +13,7 @@
 <div class="border-dark"
      [ngClass]="{'alert alert-info' : parameter == newParameter}"
      *ngFor="let parameter of sortParameters(filteredParameters, 'number')">
-    <div class="list-group-item">
+    <div class="list-group-item bg-dark">
         <span [innerHTML]="parameter.name | html"></span> - {{parameter.description}}
         <button (click)="remove(parameter.id)"
                 type="button"
