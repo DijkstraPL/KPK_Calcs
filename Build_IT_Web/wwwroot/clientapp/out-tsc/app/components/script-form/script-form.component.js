@@ -11,14 +11,13 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScriptService } from '../../services/script.service';
-import 'rxjs/observable/throw';
 var ScriptFormComponent = /** @class */ (function () {
     function ScriptFormComponent(scriptService, route, router) {
         this.scriptService = scriptService;
         this.route = route;
         this.router = router;
         this.scriptForm = new FormGroup({
-            id: new FormControl(),
+            id: new FormControl('0'),
             name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
             author: new FormControl('', Validators.maxLength(40)),
             accordingTo: new FormControl('', Validators.maxLength(50)),

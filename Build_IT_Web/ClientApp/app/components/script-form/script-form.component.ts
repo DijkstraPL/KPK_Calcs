@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Script } from '../../models/interfaces/script';
 import { ScriptImpl } from '../../models/scriptImpl';
@@ -14,7 +14,7 @@ import { ScriptService } from '../../services/script.service';
 export class ScriptFormComponent implements OnInit {
 
     scriptForm = new FormGroup({
-        id: new FormControl(),
+        id: new FormControl('0'),
         name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
         author: new FormControl('', Validators.maxLength(40)),
         accordingTo: new FormControl('', Validators.maxLength(50)),
