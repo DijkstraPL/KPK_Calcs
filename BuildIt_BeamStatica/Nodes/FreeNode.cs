@@ -7,7 +7,9 @@ namespace Build_IT_BeamStatica.Nodes
     {
         public override short DegreesOfFreedom => 3;
 
-        public FreeNode(IResultValue horizontalDeflection = null, IResultValue verticalDeflection = null,
+        public FreeNode(
+            IResultValue horizontalDeflection = null, 
+            IResultValue verticalDeflection = null,
             IResultValue rotation = null)
         {
             HorizontalDeflection = horizontalDeflection ?? new HorizontalDeflection();

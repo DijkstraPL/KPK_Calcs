@@ -1,6 +1,7 @@
 ﻿using Build_IT_BeamStatica.Results.Displacements;
 using Build_IT_BeamStatica.Results.Interfaces;
 using Build_IT_BeamStatica.Results.Reactions;
+using System;
 
 namespace Build_IT_BeamStatica.Nodes
 {
@@ -8,8 +9,10 @@ namespace Build_IT_BeamStatica.Nodes
     {
         public override short DegreesOfFreedom => 2;
         
-        public PinNode(IResultValue shearForce = null,
-            IResultValue horizontalDeflection = null, IResultValue rotation = null,
+        public PinNode(
+            IResultValue shearForce = null,
+            IResultValue horizontalDeflection = null,
+            IResultValue rotation = null,
             double angle = 0)
         {
             ShearForce = shearForce ?? new ShearForce();
@@ -17,7 +20,17 @@ namespace Build_IT_BeamStatica.Nodes
             LeftRotation = rotation ?? new Rotation();
             RightRotation = LeftRotation;
 
-            Angle = angle;
+            Angle = angle % 360;
+            if (Angle != 0 && Angle != 180 )
+            {
+                NormalForce = new NormalForce();
+                VerticalDeflection = new VerticalDeflection();
+            }
+            if(Angle == 90 || Angle == 270)
+            {
+                ShearForce = null;
+                HorizontalDeflection = null;
+            }
         }
 
         public override void SetDisplacementNumeration(ref short currentCounter)

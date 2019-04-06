@@ -7,8 +7,11 @@ namespace Build_IT_BeamStatica.Nodes
     {
         public override short DegreesOfFreedom => 4;
 
-        public Hinge(IResultValue horizontalDeflection = null, IResultValue verticalDeflection = null, 
-            IResultValue leftRotation = null, IResultValue rightRotation = null)
+        public Hinge(
+            IResultValue horizontalDeflection = null,
+            IResultValue verticalDeflection = null, 
+            IResultValue leftRotation = null, 
+            IResultValue rightRotation = null)
         {
             HorizontalDeflection = horizontalDeflection ?? new VerticalDeflection();
             VerticalDeflection = verticalDeflection ?? new VerticalDeflection();

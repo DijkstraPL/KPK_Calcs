@@ -8,7 +8,10 @@ namespace Build_IT_BeamStatica.Nodes
     {
         public override short DegreesOfFreedom => 1;
 
-        public TelescopeNode(IResultValue normalForce = null, IResultValue bendingMoment = null, IResultValue verticalDeflection = null)
+        public TelescopeNode(
+            IResultValue normalForce = null, 
+            IResultValue bendingMoment = null, 
+            IResultValue verticalDeflection = null)
         {
             NormalForce = normalForce ?? new NormalForce();
             BendingMoment = bendingMoment ?? new BendingMoment();

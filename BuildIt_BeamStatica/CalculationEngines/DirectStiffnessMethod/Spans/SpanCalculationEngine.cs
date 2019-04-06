@@ -1,7 +1,7 @@
 ﻿using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
-using Build_IT_BeamStatica.CalculationEngines.Interfaces;
 using Build_IT_BeamStatica.Loads.ContinousLoads;
 using Build_IT_BeamStatica.Loads.Interfaces;
+using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
 using MathNet.Numerics.LinearAlgebra;
 using System;
@@ -36,7 +36,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
         }
 
         #region Public_Methods
-        
+
         public void CalculateSpanLoadVector()
         {
             if (_span.IncludeSelfWeight)
@@ -51,6 +51,11 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
             LoadVector[3] = SetNormalForceLoadVector(isLeftNode: false);
             LoadVector[4] = SetShearForceLoadVector(isLeftNode: false);
             LoadVector[5] = SetBendingMomentForceLoadVector(isLeftNode: false);
+
+            if (_span.LeftNode.Angle != 0)
+                SetLoadVectorsWithAngle(isLeftNode: true);
+            if (_span.RightNode.Angle != 0)
+                SetLoadVectorsWithAngle(isLeftNode: false);
         }
 
         public void CalculateDisplacement(Vector<double> deflectionVector, int numberOfDegreesOfFreedom)
@@ -59,7 +64,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
             SetDisplacement();
         }
 
-        public void CalculateForce(Vector<double> loadVector, Vector<double> displacements )
+        public void CalculateForce(Vector<double> loadVector, Vector<double> displacements)
         {
             Forces = StiffnessMatrix.Matrix.Multiply(displacements).Add(loadVector);
         }
@@ -97,7 +102,23 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
                 .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadBendingMomentMember(_span, isLeftNode) ?? 0) +
                 _span.RightNode.ConcentratedForces.Where(cf => cf.IncludeInSpanLoadCalculations)
                 .Sum(cf => (cf as ISpanLoad)?.CalculateSpanLoadBendingMomentMember(_span, isLeftNode) ?? 0);
-        
+
+        private void SetLoadVectorsWithAngle(bool isLeftNode)
+        {
+            int index = isLeftNode ? 0 : 3;
+            double angle = isLeftNode ? _span.LeftNode.RadiansAngle : _span.RightNode.RadiansAngle;
+
+            double normalForceLoadVector = LoadVector[index];
+            double shearForceLoadVector = LoadVector[index + 1];
+
+            LoadVector[index] =
+                normalForceLoadVector * Math.Cos(angle) -
+                shearForceLoadVector * Math.Sin(angle);
+            LoadVector[index + 1] =
+                shearForceLoadVector * Math.Cos(angle) -
+                normalForceLoadVector * Math.Sin(angle);
+        }
+
         private void SetDisplacement()
         {
             if (_span.LeftNode.HorizontalDeflection != null)
@@ -112,6 +133,11 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
                 _span.RightNode.VerticalDeflection.Value = Displacements[4] * 1000; // mm
             if (_span.RightNode.LeftRotation != null)
                 _span.RightNode.LeftRotation.Value = Displacements[5];
+
+            if (_span.LeftNode.RadiansAngle != 0)
+                SetDisplacementsInAngledSupport(_span.LeftNode);
+            if (_span.RightNode.RadiansAngle != 0)
+                SetDisplacementsInAngledSupport(_span.RightNode);
         }
 
         private void CalculateDisplacementVector(Vector<double> deflectionVector, int numberOfDegreesOfFreedom)
@@ -132,6 +158,13 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
                 Displacements[5] = deflectionVector[_span.RightNode.LeftRotationNumber];
         }
 
+        private void SetDisplacementsInAngledSupport(INode node)
+        {
+            if (node.VerticalDeflection != null)
+                node.VerticalDeflection.Value = node.HorizontalDeflection.Value * Math.Sin(-node.RadiansAngle);
+            if (node.HorizontalDeflection != null)
+                node.HorizontalDeflection.Value *= Math.Cos(node.RadiansAngle);
+        }
         #endregion // Private_Methods
     }
 }

@@ -8,7 +8,10 @@ namespace Build_IT_BeamStatica.Nodes
     {
         public override short DegreesOfFreedom => 1;
 
-        public SleeveNode(IResultValue shearForce = null, IResultValue bendingMoment = null, IResultValue horizontalDeflection = null)
+        public SleeveNode(
+            IResultValue shearForce = null, 
+            IResultValue bendingMoment = null, 
+            IResultValue horizontalDeflection = null)
         {
             ShearForce = shearForce ?? new ShearForce();
             BendingMoment = bendingMoment ?? new BendingMoment();

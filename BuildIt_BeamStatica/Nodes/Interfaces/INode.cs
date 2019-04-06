@@ -7,6 +7,8 @@ namespace Build_IT_BeamStatica.Nodes.Interfaces
         IDeflectionProvider, IRotationProvider, INumeration
     {
         double Angle { get; }
+        double RadiansAngle { get; }
+
         short DegreesOfFreedom { get; }
         ICollection<INodeLoad> ConcentratedForces { get; set; }
     }

@@ -1,13 +1,15 @@
 ﻿using Build_IT_BeamStatica.Loads.Interfaces;
 using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Results.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Build_IT_BeamStatica.Nodes
 {
     internal abstract class Node : INode
     {
-        public double Angle { get; protected set; } 
+        public double Angle { get; protected set; }
+        public double RadiansAngle => Angle * Math.PI / 180;
 
         public short HorizontalMovementNumber { get; protected set; }
         public short VerticalMovementNumber { get; protected set; }

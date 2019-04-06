@@ -7,7 +7,10 @@ namespace Build_IT_BeamStatica.Nodes
     {
         public override short DegreesOfFreedom => 0;
 
-        public FixedNode(IResultValue normalForce = null, IResultValue shearForce = null, IResultValue bendingMoment = null)
+        public FixedNode(
+            IResultValue normalForce = null,
+            IResultValue shearForce = null, 
+            IResultValue bendingMoment = null)
         {
             NormalForce = normalForce ?? new NormalForce();
             ShearForce = shearForce ?? new ShearForce();

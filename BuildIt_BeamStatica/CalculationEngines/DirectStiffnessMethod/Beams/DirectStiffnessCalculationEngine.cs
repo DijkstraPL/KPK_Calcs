@@ -3,6 +3,7 @@ using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams.Interf
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans;
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
 using Build_IT_BeamStatica.Nodes;
+using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
 using MathNet.Numerics.LinearAlgebra;
 using System;
@@ -186,6 +187,9 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
         {
             foreach (var node in _beam.Nodes)
             {
+                if(node.RadiansAngle != 0)
+                    SetAngledForces(node);
+
                 if (node.NormalForce != null)
                     node.NormalForce.Value -= node.ConcentratedForces.Sum(cf => cf.CalculateNormalForce());
                 if (node.ShearForce != null)
@@ -195,7 +199,8 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
             }
         }
 
-        private void CalculateSpanLoadVectorForCurrentSpan((ISpan span, ISpanCalculationEngine calculationEngine) spanEnginePair)
+        private void CalculateSpanLoadVectorForCurrentSpan
+            ((ISpan span, ISpanCalculationEngine calculationEngine) spanEnginePair)
         {
             for (int i = 0; i < _beam.NumberOfDegreesOfFreedom; i++)
             {
@@ -212,6 +217,20 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
                 else if (spanEnginePair.span.RightNode.LeftRotationNumber == i)
                     _spanLoadVector[i] += spanEnginePair.calculationEngine.LoadVector[5];
             }
+        }
+
+        private static void SetAngledForces(INode node)
+        {
+            double normalForce = node.NormalForce.Value;
+            double shearForce = node.ShearForce.Value;
+
+            node.NormalForce.Value =
+                normalForce * Math.Cos(node.RadiansAngle) +
+                shearForce * Math.Sin(node.RadiansAngle);
+
+            node.ShearForce.Value =
+                shearForce * Math.Cos(node.RadiansAngle) +
+                normalForce * Math.Sin(node.RadiansAngle);
         }
 
         #endregion // Private_Methods

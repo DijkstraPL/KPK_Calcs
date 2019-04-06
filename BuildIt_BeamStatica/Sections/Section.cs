@@ -10,6 +10,8 @@ namespace Build_IT_BeamStatica.Sections
 {
     internal class Section : ISection
     {
+        #region Properties
+
         [Abbreviation("I")]
         [Unit("cm4")]
         public double MomentOfInteria { get; protected set; }
@@ -29,6 +31,10 @@ namespace Build_IT_BeamStatica.Sections
 
         public IPoint Centroid { get; protected set; }
 
+        #endregion // Properties
+
+        #region Constructors
+
         protected Section()
         {
             Points = new List<IPoint>();
@@ -43,7 +49,11 @@ namespace Build_IT_BeamStatica.Sections
             SetSectionProperties();
         }
 
-        public void SetSectionProperties()
+        #endregion // Constructors
+
+        #region Public_Methods
+               
+        public virtual void SetSectionProperties()
         {
             CalculateCimcuference();
             CalculateArea();
@@ -51,6 +61,10 @@ namespace Build_IT_BeamStatica.Sections
             AdjustPoints();
             CalculateMomentOfInteria();
         }
+
+        #endregion // Public_Methods
+
+        #region Protected_Methods
 
         protected virtual void CalculateCimcuference()
         {
@@ -128,8 +142,14 @@ namespace Build_IT_BeamStatica.Sections
             }
             MomentOfInteria = 1.0 / 12 * Math.Abs(value) / 10000;
         }
-        
+
+        #endregion // Protected_Methods
+
+        #region Private_Methods
+
         private IPoint SubstractPoints(IPoint a, IPoint b)
             => new Point(a.X - b.X, a.Y - b.Y);
+
+        #endregion // Private_Methods
     }
 }
