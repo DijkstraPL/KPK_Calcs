@@ -7,6 +7,8 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
     internal abstract class ContinousLoad : IContinousLoad
     {
+        #region Properties
+
         public ILoadWithPosition StartPosition { get; }
         public ILoadWithPosition EndPosition { get; }
         public double Length => EndPosition.Position - StartPosition.Position;
@@ -19,11 +21,19 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
         protected IDisplacementResult VerticalDeflectionResult { get; set; }
         protected IDisplacementResult RotationResult { get; set; }
 
+        #endregion // Properties
+
+        #region Constructors
+
         protected ContinousLoad(ILoadWithPosition startPosition, ILoadWithPosition endPosition)
         {
             StartPosition = startPosition ?? throw new ArgumentNullException(nameof(startPosition));
             EndPosition = endPosition ?? throw new ArgumentNullException(nameof(endPosition));
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public virtual double CalculateNormalForce(double distanceFromLoadStartPosition)
             => NormalForceResult?.GetValue(distanceFromLoadStartPosition) ?? 0;
@@ -46,6 +56,7 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
         public virtual double CalculateSpanLoadVectorNormalForceMember(ISpan span, bool leftNode) => 0;
         public virtual double CalculateSpanLoadVectorShearMember(ISpan span, bool leftNode) => 0;
         public virtual double CalculateSpanLoadVectorBendingMomentMember(ISpan span, bool leftNode) => 0;
-
+        
+        #endregion // Public_Methods
     }
 }

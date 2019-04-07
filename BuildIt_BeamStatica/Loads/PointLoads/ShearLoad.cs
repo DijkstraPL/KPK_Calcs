@@ -5,6 +5,8 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
 {
     internal class ShearLoad : SpanConcentratedLoad
     {
+        #region Constructors
+
         /// <summary>
         /// Use in node loads.
         /// </summary>
@@ -21,7 +23,11 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
         public ShearLoad(double value, double position) : base(value, position)
         {
         }
-        
+
+        #endregion // Constructors
+
+        #region Public_Methods
+
         public override double CalculateShear() 
             => this.Value;
 
@@ -46,5 +52,7 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
         }
 
         public override double CalculateJointLoadVectorShearMember() => this.Value;
+
+        #endregion // Public_Methods
     }
 }

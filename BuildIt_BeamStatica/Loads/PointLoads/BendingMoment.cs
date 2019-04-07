@@ -5,6 +5,8 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
 {
     internal class BendingMoment : SpanConcentratedLoad
     {
+        #region Constructors
+
         /// <summary>
         /// Use in node loads.
         /// </summary>
@@ -21,6 +23,10 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
         public BendingMoment(double value, double position) : base(value, position)
         {
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public override double CalculateBendingMoment(double distanceFromLoad)
             => this.Value;
@@ -43,5 +49,7 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
         }
 
         public override double CalculateJointLoadVectorBendingMomentMember() => -this.Value;
+
+        #endregion // Public_Methods
     }
 }

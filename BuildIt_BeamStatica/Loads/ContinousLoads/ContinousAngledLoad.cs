@@ -8,10 +8,20 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
     internal class ContinousAngledLoad : ContinousLoad
     {
+        #region Properties
+
         public double Angle { get; }
 
+        #endregion // Properties
+
+        #region Fields
+        
         private IContinousLoad _horizontalContinousLoad;
         private IContinousLoad _verticalContinousLoad;
+
+        #endregion // Fields
+
+        #region Factories
 
         public static IContinousLoad Create(double startPosition, double startValue, 
             double endPosition, double endValue, double angle)
@@ -30,6 +40,10 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
             return new ContinousAngledLoad(startLoadWithPosition, endLoadWithPosition, angle);
         }
 
+        #endregion // Factories
+
+        #region Constructors
+
         private ContinousAngledLoad(ILoadWithPosition startPosition, ILoadWithPosition endPosition, double angle)
             : base(startPosition, endPosition)
         {
@@ -45,6 +59,10 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
             VerticalDeflectionResult = new VerticalDeflectionResult(_verticalContinousLoad);
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+
         public override double CalculateSpanLoadVectorNormalForceMember(ISpan span, bool leftNode) 
             => _horizontalContinousLoad.CalculateSpanLoadVectorNormalForceMember(span, leftNode);
 
@@ -54,6 +72,10 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
         public override double CalculateSpanLoadVectorBendingMomentMember(ISpan span, bool leftNode)
             => _verticalContinousLoad.CalculateSpanLoadVectorBendingMomentMember(span, leftNode);
 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+        
         private void SetContinousLoads()
         {
             double angleInRadians = Angle * Math.PI / 180;
@@ -69,5 +91,7 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
                 this.EndPosition.Position,
                 this.EndPosition.Value * Math.Cos(angleInRadians));
         }
+
+        #endregion // Private_Methods
     }
 }

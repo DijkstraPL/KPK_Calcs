@@ -6,8 +6,14 @@ namespace Build_IT_BeamStatica.Nodes
 {
     internal class SupportedNode : Node
     {
+        #region Properties
+
         public override short DegreesOfFreedom => 1;
 
+        #endregion // Properties
+
+        #region Constructors
+        
         public SupportedNode(
             IResultValue normalForce = null, 
             IResultValue shearForce = null, 
@@ -18,6 +24,10 @@ namespace Build_IT_BeamStatica.Nodes
             LeftRotation = rotation ?? new Rotation();
             RightRotation = LeftRotation;
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
@@ -30,5 +40,7 @@ namespace Build_IT_BeamStatica.Nodes
             HorizontalMovementNumber = currentCounter++;
             VerticalMovementNumber = currentCounter++;
         }
+
+        #endregion // Public_Methods
     }
 }

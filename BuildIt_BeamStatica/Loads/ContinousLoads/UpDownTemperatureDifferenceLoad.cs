@@ -6,7 +6,13 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
     internal class UpDownTemperatureDifferenceLoad : ContinousLoad
     {
+        #region Properties
+
         private double _temperatureDifference => EndPosition.Value - StartPosition.Value;
+
+        #endregion // Properties
+
+        #region Factories
 
         public static IContinousLoad Create(ISpan span,
             double upperTemperature, double lowerTemperature)
@@ -16,6 +22,10 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
                            new LoadData(span.Length, upperTemperature));
         }
 
+        #endregion // Factories
+
+        #region Constructors
+
         private UpDownTemperatureDifferenceLoad(ILoadWithPosition startPosition, ILoadWithPosition endPosition)
             : base(startPosition, endPosition)
         {
@@ -23,11 +33,17 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
             VerticalDeflectionResult = new VerticalDeflectionResult(this);
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+
         public override double CalculateSpanLoadVectorBendingMomentMember(ISpan span, bool leftNode)
         {
             double sign = leftNode ? -1.0 : 1.0;
             return sign * span.Material.ThermalExpansionCoefficient * _temperatureDifference / span.Section.SolidHeight
                            * span.Section.MomentOfInteria * span.Material.YoungModulus * 10;
         }
+
+        #endregion // Public_Methods
     }
 }

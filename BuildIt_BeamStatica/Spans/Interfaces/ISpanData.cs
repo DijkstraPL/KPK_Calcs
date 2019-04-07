@@ -10,6 +10,8 @@ namespace Build_IT_BeamStatica.Spans.Interfaces
 {
     public interface ISpanData
     {
+        #region Properties
+
         INode LeftNode { get; }
         [Abbreviation("L")]
         [Unit("m")]
@@ -17,5 +19,7 @@ namespace Build_IT_BeamStatica.Spans.Interfaces
         INode RightNode { get; }
         IMaterial Material { get; }
         ISection Section { get; }
+
+        #endregion // Properties
     }
 }

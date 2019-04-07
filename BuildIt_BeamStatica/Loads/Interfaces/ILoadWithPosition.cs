@@ -2,6 +2,10 @@
 {
     public interface ILoadWithPosition : ILoad
     {
+        #region Properties
+
         double Position { get; }
+
+        #endregion // Properties
     }
 }

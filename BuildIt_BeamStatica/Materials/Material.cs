@@ -5,6 +5,8 @@ namespace Build_IT_BeamStatica.Materials
 {
     internal class Material : IMaterial
     {
+        #region Properties
+
         [Abbreviation("E")]
         [Unit("GPa")]
         public double YoungModulus { get; }
@@ -17,6 +19,10 @@ namespace Build_IT_BeamStatica.Materials
         [Unit("1/K")]
         public double ThermalExpansionCoefficient { get; }
 
+        #endregion // Properties
+
+        #region Public_Methods
+
         protected Material(double youngModulus, double thermalExpansionCoefficient)
         {
             YoungModulus = youngModulus;
@@ -28,5 +34,7 @@ namespace Build_IT_BeamStatica.Materials
         {
             Density = density;
         }
+
+        #endregion // Public_Methods
     }
 }

@@ -5,7 +5,13 @@ namespace Build_IT_BeamStatica.Nodes
 {
     internal class FreeNode : Node
     {
+        #region Properties
+
         public override short DegreesOfFreedom => 3;
+
+        #endregion // Properties
+
+        #region Constructors 
 
         public FreeNode(
             IResultValue horizontalDeflection = null, 
@@ -17,7 +23,11 @@ namespace Build_IT_BeamStatica.Nodes
             LeftRotation = rotation ?? new Rotation();
             RightRotation = LeftRotation;
         }
-        
+
+        #endregion // Constructors
+
+        #region Public_Methods
+
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
             HorizontalMovementNumber = currentCounter++;
@@ -29,5 +39,7 @@ namespace Build_IT_BeamStatica.Nodes
         public override void SetReactionNumeration(ref short currentCounter)
         {
         }
+
+        #endregion // Public_Methods
     }
 }

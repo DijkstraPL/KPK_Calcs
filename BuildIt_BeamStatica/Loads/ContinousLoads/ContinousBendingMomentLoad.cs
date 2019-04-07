@@ -6,12 +6,18 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
     internal class ContinousBendingMomentLoad : ContinousLoad
     {
+        #region Factories
+
         public static IContinousLoad Create(ISpan span, double value)
         {
             return new ContinousBendingMomentLoad(
                 new LoadData(0, value),
                 new LoadData(span.Length, value));
         }
+
+        #endregion // Factories
+
+        #region Constructors
 
         private ContinousBendingMomentLoad(ILoadWithPosition startPosition, ILoadWithPosition endPosition)
             : base(startPosition, endPosition)
@@ -22,11 +28,17 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
             VerticalDeflectionResult = new VerticalDeflectionResult(this);
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+
         public override double CalculateSpanLoadVectorShearMember(ISpan span, bool leftNode)
         {
             double sign = leftNode ? -1.0 : 1.0;
 
             return sign * this.EndPosition.Value;
         }
+
+        #endregion // Public_Methods
     }
 }

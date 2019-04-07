@@ -115,7 +115,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
                 normalForceLoadVector * Math.Cos(angle) -
                 shearForceLoadVector * Math.Sin(angle);
             LoadVector[index + 1] =
-                shearForceLoadVector * Math.Cos(angle) -
+                shearForceLoadVector * Math.Cos(angle) +
                 normalForceLoadVector * Math.Sin(angle);
         }
 
@@ -160,10 +160,17 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
 
         private void SetDisplacementsInAngledSupport(INode node)
         {
+            double horizontalDeflection =  node.HorizontalDeflection?.Value ?? 0;
+            double verticalDeflection = node.VerticalDeflection?.Value ?? 0;
+
             if (node.VerticalDeflection != null)
-                node.VerticalDeflection.Value = node.HorizontalDeflection.Value * Math.Sin(-node.RadiansAngle);
+                node.VerticalDeflection.Value =
+                    verticalDeflection * Math.Cos(node.RadiansAngle) -
+                    horizontalDeflection * Math.Sin(node.RadiansAngle) ;
             if (node.HorizontalDeflection != null)
-                node.HorizontalDeflection.Value *= Math.Cos(node.RadiansAngle);
+                node.HorizontalDeflection.Value =
+                   horizontalDeflection * Math.Cos(node.RadiansAngle) -
+                     verticalDeflection * Math.Sin(node.RadiansAngle);
         }
         #endregion // Private_Methods
     }

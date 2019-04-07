@@ -5,7 +5,13 @@ namespace Build_IT_BeamStatica.Nodes
 {
     internal class Hinge : Node
     {
+        #region Properties
+
         public override short DegreesOfFreedom => 4;
+
+        #endregion // Properties
+
+        #region Constructors
 
         public Hinge(
             IResultValue horizontalDeflection = null,
@@ -19,6 +25,10 @@ namespace Build_IT_BeamStatica.Nodes
             RightRotation = rightRotation ?? new Rotation();
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
             HorizontalMovementNumber = currentCounter++;
@@ -28,7 +38,9 @@ namespace Build_IT_BeamStatica.Nodes
         }
 
         public override void SetReactionNumeration(ref short currentCounter)
-        {            
+        {
         }
+
+        #endregion // Public_Methods
     }
 }

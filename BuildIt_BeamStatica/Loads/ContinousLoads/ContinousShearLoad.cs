@@ -7,6 +7,8 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
 {
     internal class ContinousShearLoad : ContinousLoad
     {
+        #region Factories
+
         public static IContinousLoad Create(double startPosition, double startValue, double endPosition, double endValue)
         {
             return new ContinousShearLoad(
@@ -21,6 +23,10 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
             return new ContinousShearLoad(startLoadWithPosition, endLoadWithPosition);
         }
 
+        #endregion // Factories
+
+        #region Constructors
+
         private ContinousShearLoad(ILoadWithPosition startPosition, ILoadWithPosition endPosition) 
             : base(startPosition, endPosition)
         {
@@ -30,6 +36,10 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
             RotationResult = new RotationResult(this);
             VerticalDeflectionResult = new VerticalDeflectionResult(this);
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public override double CalculateSpanLoadVectorShearMember(ISpan span, bool leftNode)
         {
@@ -84,6 +94,8 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
                    10 * Math.Pow(loadLength, 2) * distanceToOtherNode +
                    20 * distanceFromCalculatedNode * loadLength * distanceToOtherNode) /
                    Math.Pow(span.Length, 2);
-        }     
+        }
+
+        #endregion // Public_Methods
     }
 }

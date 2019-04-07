@@ -6,8 +6,14 @@ namespace Build_IT_BeamStatica.Nodes
 {
     internal class TelescopeNode : Node
     {
+        #region Properties
+
         public override short DegreesOfFreedom => 1;
 
+        #endregion // Properties
+
+        #region Constructors
+        
         public TelescopeNode(
             IResultValue normalForce = null, 
             IResultValue bendingMoment = null, 
@@ -17,6 +23,10 @@ namespace Build_IT_BeamStatica.Nodes
             BendingMoment = bendingMoment ?? new BendingMoment();
             VerticalDeflection = verticalDeflection ?? new VerticalDeflection();
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
@@ -29,5 +39,7 @@ namespace Build_IT_BeamStatica.Nodes
             LeftRotationNumber = currentCounter++;
             RightRotationNumber = LeftRotationNumber;
         }
+
+        #endregion // Public_Methods
     }
 }

@@ -6,6 +6,8 @@ namespace Build_IT_BeamStatica.Sections
 {
     internal class RectangleSection : Section
     {
+        #region Properties
+
         [Abbreviation("b")]
         [Unit("mm")]
         public double Width { get; }
@@ -14,6 +16,10 @@ namespace Build_IT_BeamStatica.Sections
         public double Height { get; }
 
         public override double SolidHeight => Height;
+
+        #endregion // Properties
+
+        #region Constructors
 
         public RectangleSection(double width, double height)
         {
@@ -25,13 +31,9 @@ namespace Build_IT_BeamStatica.Sections
             SetSectionProperties();
         }
 
-        private void SetPoints()
-        {
-            Points.Add(new Point(0, 0));
-            Points.Add(new Point(Width, 0));
-            Points.Add(new Point(Width, Height));
-            Points.Add(new Point(0, Height));
-        }
+        #endregion // Constructors
+
+        #region Protected_Methods
 
         protected override void CalculateCimcuference()
         {
@@ -55,5 +57,19 @@ namespace Build_IT_BeamStatica.Sections
         {
             MomentOfInteria = Width * Math.Pow(Height, 3) / 12 / 10000;
         }
+
+        #endregion // Protected_Methods
+
+        #region Private_Methods
+
+        private void SetPoints()
+        {
+            Points.Add(new Point(0, 0));
+            Points.Add(new Point(Width, 0));
+            Points.Add(new Point(Width, Height));
+            Points.Add(new Point(0, Height));
+        }
+
+        #endregion // Private_Methods
     }
 }

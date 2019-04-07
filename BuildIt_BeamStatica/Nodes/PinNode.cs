@@ -7,31 +7,44 @@ namespace Build_IT_BeamStatica.Nodes
 {
     internal class PinNode : Node
     {
+        #region Properties
+
         public override short DegreesOfFreedom => 2;
-        
+
+        #endregion // Properties
+
+        #region Constructors
+
         public PinNode(
             IResultValue shearForce = null,
             IResultValue horizontalDeflection = null,
-            IResultValue rotation = null,
-            double angle = 0)
+            IResultValue rotation = null)
         {
             ShearForce = shearForce ?? new ShearForce();
             HorizontalDeflection = horizontalDeflection ?? new HorizontalDeflection();
             LeftRotation = rotation ?? new Rotation();
             RightRotation = LeftRotation;
+        }
 
+        public PinNode(double angle,
+            IResultValue shearForce = null,
+            IResultValue horizontalDeflection = null,
+            IResultValue rotation = null,
+            IResultValue normalForce = null,
+            IResultValue verticalDeflection = null
+            ) : this(shearForce, horizontalDeflection, rotation)
+        {
             Angle = angle % 360;
-            if (Angle != 0 && Angle != 180 )
+            if (Angle != 0 && Angle != 180 && Angle != -180)
             {
-                NormalForce = new NormalForce();
-                VerticalDeflection = new VerticalDeflection();
-            }
-            if(Angle == 90 || Angle == 270)
-            {
-                ShearForce = null;
-                HorizontalDeflection = null;
+                NormalForce = normalForce ?? new NormalForce();
+                VerticalDeflection = verticalDeflection ?? new VerticalDeflection();
             }
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
@@ -44,5 +57,7 @@ namespace Build_IT_BeamStatica.Nodes
         {
             VerticalMovementNumber = currentCounter++;
         }
+
+        #endregion // Public_Methods
     }
 }

@@ -2,6 +2,10 @@
 {
     public interface ISection : IArea, IMomentOfInteria
     {
+        #region Properties
+
         double SolidHeight { get; }
+
+        #endregion // Properties
     }
 }

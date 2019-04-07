@@ -2,7 +2,13 @@
 {
     public interface INodeLoad : ILoad
     {
+        #region Properties
+
         bool IncludeInSpanLoadCalculations { get; }
+
+        #endregion // Properties
+
+        #region Public_Methods
 
         double CalculateNormalForce();
         double CalculateShear();
@@ -15,5 +21,7 @@
         double CalculateJointLoadVectorNormalForceMember();
         double CalculateJointLoadVectorShearMember();
         double CalculateJointLoadVectorBendingMomentMember();
+
+        #endregion // Public_Methods
     }
 }

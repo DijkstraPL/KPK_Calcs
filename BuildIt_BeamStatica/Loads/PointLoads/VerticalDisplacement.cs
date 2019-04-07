@@ -5,7 +5,13 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
 {
     internal class VerticalDisplacement : SpanConcentratedLoad
     {
+        #region Properties
+
         public override bool IncludeInSpanLoadCalculations => true;
+
+        #endregion // Properties
+
+        #region Constructors
 
         /// <summary>
         /// Use in node loads.
@@ -14,6 +20,10 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
         public VerticalDisplacement(double value) : base(value)
         {
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public override double CalculateVerticalDisplacement() => this.Value;
 
@@ -34,5 +44,7 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
             return sign * 6 * span.Material.YoungModulus * span.Section.MomentOfInteria * Value
                 / Math.Pow(span.Length, 2) / 100000; // kNm
         }
+
+        #endregion // Public_Methods
     }
 }

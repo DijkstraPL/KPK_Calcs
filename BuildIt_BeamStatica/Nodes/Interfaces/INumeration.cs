@@ -2,12 +2,20 @@
 {
     public interface INumeration
     {
-         short HorizontalMovementNumber { get;  }
-         short VerticalMovementNumber { get;  }
-         short LeftRotationNumber { get;  }
-         short RightRotationNumber { get; }
+        #region Properties
+
+        short HorizontalMovementNumber { get; }
+        short VerticalMovementNumber { get; }
+        short LeftRotationNumber { get; }
+        short RightRotationNumber { get; }
+
+        #endregion // Properties
+
+        #region Public_Methods
 
         void SetDisplacementNumeration(ref short currentCounter);
-         void SetReactionNumeration(ref short currentCounter);
+        void SetReactionNumeration(ref short currentCounter);
+
+        #endregion // Public_Methods
     }
 }

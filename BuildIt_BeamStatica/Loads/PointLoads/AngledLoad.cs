@@ -6,8 +6,14 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
 {
     internal class AngledLoad : SpanConcentratedLoad
     {
+        #region Fields
+
         private ISpanLoad _horizontalLoad;
         private ISpanLoad _verticalLoad;
+
+        #endregion // Fields
+
+        #region Constructors
 
         /// <summary>
         /// Use in node loads.
@@ -34,6 +40,10 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
             _verticalLoad = new ShearLoad(value * Math.Cos(angleInRadians), position);
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+
         public override double CalculateNormalForce()
             => _horizontalLoad.CalculateNormalForce();
 
@@ -58,9 +68,13 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
         public override double CalculateJointLoadVectorShearMember()
             => _verticalLoad.CalculateJointLoadVectorShearMember();
 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+
         private double ConvertToRadians(double angle)
-        {
-            return angle * Math.PI / 180;
-        }
+            => angle * Math.PI / 180;
+
+        #endregion // Private_Methods
     }
 }

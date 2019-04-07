@@ -6,6 +6,8 @@ namespace Build_IT_BeamStatica.Sections
 {
     internal class IBeamSection : Section
     {
+        #region Properties
+
         [Abbreviation("b")]
         [Unit("mm")]
         public double Width { get; }
@@ -25,6 +27,10 @@ namespace Build_IT_BeamStatica.Sections
 
         public override double SolidHeight => Height;
 
+        #endregion // Properties
+
+        #region Constructors
+
         public IBeamSection(double width, double height,
             double flangeWidth, double webWidth, double radius)
         {
@@ -39,48 +45,9 @@ namespace Build_IT_BeamStatica.Sections
             SetSectionProperties();
         }
 
-        private void SetPoints()
-        {
-            Points.Add(new Point(0, 0));
-            Points.Add(new Point(Width, 0));
-            Points.Add(new Point(Width, FlangeWidth));
-            for (int i = 0; i < 7; i++)
-            {
-                Points.Add(new Point(
-                    Width / 2 + WebWidth / 2 + Radius - Radius * Math.Sin(Math.PI * 15 * i / 180),
-                    FlangeWidth + Radius - Radius * Math.Cos(Math.PI  * 15 * i / 180)
-                    ));
-            }
-            for (int i = 0; i < 7; i++)
-            {
-                Points.Add(new Point(
-                    Width / 2 + WebWidth / 2 + Radius - Radius * Math.Cos(Math.PI * 15 * i / 180),
-                    Height - FlangeWidth - Radius + Radius * Math.Sin(Math.PI * 15 * i / 180)
-                    ));
-            }
-
-            Points.Add(new Point(Width, Height - FlangeWidth));
-            Points.Add(new Point(Width, Height));
-            Points.Add(new Point(0, Height));
-            Points.Add(new Point(0, Height - FlangeWidth));
-
-            for (int i = 0; i < 7; i++)
-            {
-                Points.Add(new Point(
-                    Width / 2 - WebWidth / 2 -Radius + Radius * Math.Sin(Math.PI / 180 * 15 * i),
-                    Height - FlangeWidth - Radius + Radius * Math.Cos(Math.PI / 180 * 15 * i)
-                    ));
-            }
-            for (int i = 0; i < 7; i++)
-            {
-                Points.Add(new Point(
-                    Width / 2 - WebWidth / 2 - Radius + Radius * Math.Cos(Math.PI / 180 * 15 * i),
-                    FlangeWidth + Radius - Radius * Math.Sin(Math.PI / 180 * 15 * i)
-                    ));
-            }
-
-            Points.Add(new Point(0, FlangeWidth));
-        }
+        #endregion // Constructors
+        
+        #region Protected_Methods
 
         protected override void CalculateCimcuference()
         {
@@ -117,5 +84,54 @@ namespace Build_IT_BeamStatica.Sections
                 - 4 * Math.PI * Math.Pow(Radius,2) / 4 * Math.Pow(Height / 2 - FlangeWidth - Radius + 4* Radius / (3 * Math.PI),2)
                 ) / 10000;
         }
+
+        #endregion // Protected_Methods
+
+        #region Private_Methods
+
+        private void SetPoints()
+        {
+            Points.Add(new Point(0, 0));
+            Points.Add(new Point(Width, 0));
+            Points.Add(new Point(Width, FlangeWidth));
+            for (int i = 0; i < 7; i++)
+            {
+                Points.Add(new Point(
+                    Width / 2 + WebWidth / 2 + Radius - Radius * Math.Sin(Math.PI * 15 * i / 180),
+                    FlangeWidth + Radius - Radius * Math.Cos(Math.PI * 15 * i / 180)
+                    ));
+            }
+            for (int i = 0; i < 7; i++)
+            {
+                Points.Add(new Point(
+                    Width / 2 + WebWidth / 2 + Radius - Radius * Math.Cos(Math.PI * 15 * i / 180),
+                    Height - FlangeWidth - Radius + Radius * Math.Sin(Math.PI * 15 * i / 180)
+                    ));
+            }
+
+            Points.Add(new Point(Width, Height - FlangeWidth));
+            Points.Add(new Point(Width, Height));
+            Points.Add(new Point(0, Height));
+            Points.Add(new Point(0, Height - FlangeWidth));
+
+            for (int i = 0; i < 7; i++)
+            {
+                Points.Add(new Point(
+                    Width / 2 - WebWidth / 2 - Radius + Radius * Math.Sin(Math.PI / 180 * 15 * i),
+                    Height - FlangeWidth - Radius + Radius * Math.Cos(Math.PI / 180 * 15 * i)
+                    ));
+            }
+            for (int i = 0; i < 7; i++)
+            {
+                Points.Add(new Point(
+                    Width / 2 - WebWidth / 2 - Radius + Radius * Math.Cos(Math.PI / 180 * 15 * i),
+                    FlangeWidth + Radius - Radius * Math.Sin(Math.PI / 180 * 15 * i)
+                    ));
+            }
+
+            Points.Add(new Point(0, FlangeWidth));
+        }
+
+        #endregion // Private_Methods
     }
 }

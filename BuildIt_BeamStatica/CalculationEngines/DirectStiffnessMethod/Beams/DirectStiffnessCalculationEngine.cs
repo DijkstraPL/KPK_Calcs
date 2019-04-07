@@ -56,6 +56,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
             CalculateDisplacements();
             CalculateForces();
             CalculateReactions();
+            SetAngledForces();
             AddForcesLocatedAtSupports();
         }
 
@@ -183,13 +184,33 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
                     .Sum(sep => sep.calculationEngine.Forces[5]);
         }
 
+        private void SetAngledForces()
+        {
+            foreach (var node in _beam.Nodes)
+                if (node.RadiansAngle != 0)
+                    SetAngledForces(node);
+        }
+
+        private void SetAngledForces(INode node)
+        {
+            double normalForce = node.NormalForce?.Value ?? 0;
+            double shearForce = node.ShearForce?.Value ?? 0;
+
+            if (node.NormalForce != null)
+                node.NormalForce.Value =
+                    normalForce * Math.Cos(node.RadiansAngle) +
+                    shearForce * Math.Sin(node.RadiansAngle);
+
+            if (node.ShearForce != null)
+                node.ShearForce.Value =
+                    shearForce * Math.Cos(node.RadiansAngle) +
+                    normalForce * Math.Sin(node.RadiansAngle);
+        }
+
         private void AddForcesLocatedAtSupports()
         {
             foreach (var node in _beam.Nodes)
             {
-                if(node.RadiansAngle != 0)
-                    SetAngledForces(node);
-
                 if (node.NormalForce != null)
                     node.NormalForce.Value -= node.ConcentratedForces.Sum(cf => cf.CalculateNormalForce());
                 if (node.ShearForce != null)
@@ -217,20 +238,6 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
                 else if (spanEnginePair.span.RightNode.LeftRotationNumber == i)
                     _spanLoadVector[i] += spanEnginePair.calculationEngine.LoadVector[5];
             }
-        }
-
-        private static void SetAngledForces(INode node)
-        {
-            double normalForce = node.NormalForce.Value;
-            double shearForce = node.ShearForce.Value;
-
-            node.NormalForce.Value =
-                normalForce * Math.Cos(node.RadiansAngle) +
-                shearForce * Math.Sin(node.RadiansAngle);
-
-            node.ShearForce.Value =
-                shearForce * Math.Cos(node.RadiansAngle) +
-                normalForce * Math.Sin(node.RadiansAngle);
         }
 
         #endregion // Private_Methods

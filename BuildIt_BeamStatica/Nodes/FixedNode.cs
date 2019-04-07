@@ -5,7 +5,13 @@ namespace Build_IT_BeamStatica.Nodes
 {
     internal class FixedNode : Node
     {
+        #region Properties
+
         public override short DegreesOfFreedom => 0;
+
+        #endregion // Properties
+
+        #region Constructors
 
         public FixedNode(
             IResultValue normalForce = null,
@@ -16,6 +22,10 @@ namespace Build_IT_BeamStatica.Nodes
             ShearForce = shearForce ?? new ShearForce();
             BendingMoment = bendingMoment ?? new BendingMoment();
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public override void SetDisplacementNumeration(ref short currentCounter)
         {           
@@ -28,5 +38,7 @@ namespace Build_IT_BeamStatica.Nodes
             LeftRotationNumber = currentCounter++;
             RightRotationNumber = LeftRotationNumber;
         }
+
+        #endregion // Public_Methods
     }
 }

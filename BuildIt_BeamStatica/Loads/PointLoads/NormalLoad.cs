@@ -4,6 +4,8 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
 {
     internal class NormalLoad : SpanConcentratedLoad
     {
+        #region Constructors
+
         /// <summary>
         /// Use in node loads.
         /// </summary>
@@ -22,6 +24,10 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
         {
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+
         public override double CalculateNormalForce() => this.Value;
 
         public override double CalculateSpanLoadVectorNormalForceMember(ISpan span, bool leftNode)
@@ -31,5 +37,7 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
         }
 
         public override double CalculateJointLoadVectorNormalForceMember() => this.Value;
+
+        #endregion // Public_Methods
     }
 }

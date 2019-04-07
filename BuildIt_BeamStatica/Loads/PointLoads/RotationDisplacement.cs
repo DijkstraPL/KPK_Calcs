@@ -5,7 +5,13 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
 {
     internal class RotationDisplacement : SpanConcentratedLoad
     {
+        #region Properties
+
         public override bool IncludeInSpanLoadCalculations => true;
+
+        #endregion // Properties
+
+        #region Constructors
 
         /// <summary>
         /// Use in node loads.
@@ -14,6 +20,10 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
         public RotationDisplacement(double value) : base(value * Math.PI / 180)
         {
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public override double CalculateRotationDisplacement() => -this.Value;
 
@@ -37,5 +47,7 @@ namespace Build_IT_BeamStatica.Loads.PointLoads
             return multipler * span.Material.YoungModulus * span.Section.MomentOfInteria * Value
                 / Math.Pow(span.Length, 2) / 10; // kNm
         }
+
+        #endregion // Public_Methods
     }
 }

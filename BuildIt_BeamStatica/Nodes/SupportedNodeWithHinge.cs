@@ -6,7 +6,13 @@ namespace Build_IT_BeamStatica.Nodes
 {
     internal class SupportedNodeWithHinge : Node
     {
+        #region Properties
+
         public override short DegreesOfFreedom => 2;
+
+        #endregion // Properties
+
+        #region Constructors
 
         public SupportedNodeWithHinge(
             IResultValue normalForce = null, 
@@ -20,6 +26,10 @@ namespace Build_IT_BeamStatica.Nodes
             RightRotation = rightRotation ?? new Rotation();
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
             LeftRotationNumber = currentCounter++;
@@ -31,5 +41,7 @@ namespace Build_IT_BeamStatica.Nodes
             HorizontalMovementNumber = currentCounter++;
             VerticalMovementNumber = currentCounter++;
         }
+
+        #endregion // Public_Methods
     }
 }

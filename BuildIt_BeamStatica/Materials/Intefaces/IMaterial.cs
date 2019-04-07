@@ -4,6 +4,8 @@ namespace Build_IT_BeamStatica.Materials.Intefaces
 {
     public interface IMaterial
     {
+        #region Properties
+
         [Abbreviation("E")]
         [Unit("GPa")]
         double YoungModulus { get; }
@@ -15,5 +17,7 @@ namespace Build_IT_BeamStatica.Materials.Intefaces
         [Abbreviation("alpha")]
         [Unit("1/K")]
         double ThermalExpansionCoefficient { get; }
+
+        #endregion // Properties
     }
 }
