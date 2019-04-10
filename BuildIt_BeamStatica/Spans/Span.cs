@@ -1,7 +1,4 @@
-﻿using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans;
-using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
-using Build_IT_BeamStatica.CalculationEngines.Interfaces;
-using Build_IT_BeamStatica.Loads.Interfaces;
+﻿using Build_IT_BeamStatica.Loads.Interfaces;
 using Build_IT_BeamStatica.Materials.Intefaces;
 using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Sections.Interfaces;

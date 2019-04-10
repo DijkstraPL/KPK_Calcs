@@ -8,11 +8,11 @@ namespace Build_IT_Tools
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public sealed class UnitAttribute : Attribute
     {
-        private string unit;
+        private string _unit;
         /// <value>
         /// Parameter which describes the unit of the property or field.
         /// </value>
-        public string Unit => unit;
+        public string Unit => _unit;
 
         /// <summary>
         /// Constructor for unit attribute.
@@ -20,7 +20,7 @@ namespace Build_IT_Tools
         /// <param name="unit">Unit for the field or property.</param>
         public UnitAttribute(string unit)
         {
-            this.unit = unit;
+            _unit = unit;
         }
     }
 }

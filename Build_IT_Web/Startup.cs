@@ -29,11 +29,13 @@ namespace Build_IT_Web
             services.AddScoped<IParameterRepository, ParameterRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddDbContext<BuildItDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<BuildItDbContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddAutoMapper();
             
             services.AddMvc()
-                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
+                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = 
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1); //validate api rules
             
             services.AddSwaggerGen(c =>

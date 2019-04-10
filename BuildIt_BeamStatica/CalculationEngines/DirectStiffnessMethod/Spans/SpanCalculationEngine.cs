@@ -1,9 +1,9 @@
 ﻿using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
 using Build_IT_BeamStatica.Loads.ContinousLoads;
 using Build_IT_BeamStatica.Loads.Interfaces;
+using Build_IT_BeamStatica.MatrixMath.Wrappers;
 using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
-using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Linq;
 
@@ -15,9 +15,9 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
 
         public IStiffnessMatrix StiffnessMatrix { get; }
 
-        public Vector<double> LoadVector { get; private set; }
-        public Vector<double> Displacements { get; private set; }
-        public Vector<double> Forces { get; private set; }
+        public VectorAdapter LoadVector { get; private set; }
+        public VectorAdapter Displacements { get; private set; }
+        public VectorAdapter Forces { get; private set; }
 
         #endregion // Properties
 
@@ -42,7 +42,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
             if (_span.IncludeSelfWeight)
                 AddSelfWeightLoad();
 
-            LoadVector = Vector<double>.Build.Dense(StiffnessMatrix.Size);
+            LoadVector = VectorAdapter.Create(StiffnessMatrix.Size);
 
             LoadVector[0] = SetNormalForceLoadVector(isLeftNode: true);
             LoadVector[1] = SetShearForceLoadVector(isLeftNode: true);
@@ -58,13 +58,13 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
                 SetLoadVectorsWithAngle(isLeftNode: false);
         }
 
-        public void CalculateDisplacement(Vector<double> deflectionVector, int numberOfDegreesOfFreedom)
+        public void CalculateDisplacement(VectorAdapter deflectionVector, int numberOfDegreesOfFreedom)
         {
             CalculateDisplacementVector(deflectionVector, numberOfDegreesOfFreedom);
             SetDisplacement();
         }
 
-        public void CalculateForce(Vector<double> loadVector, Vector<double> displacements)
+        public void CalculateForce(VectorAdapter loadVector, VectorAdapter displacements)
         {
             Forces = StiffnessMatrix.Matrix.Multiply(displacements).Add(loadVector);
         }
@@ -140,9 +140,9 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
                 SetDisplacementsInAngledSupport(_span.RightNode);
         }
 
-        private void CalculateDisplacementVector(Vector<double> deflectionVector, int numberOfDegreesOfFreedom)
+        private void CalculateDisplacementVector(VectorAdapter deflectionVector, int numberOfDegreesOfFreedom)
         {
-            Displacements = Vector<double>.Build.Dense(StiffnessMatrix.Size);
+            Displacements = VectorAdapter.Create(StiffnessMatrix.Size);
 
             if (_span.LeftNode.HorizontalMovementNumber < numberOfDegreesOfFreedom)
                 Displacements[0] = deflectionVector[_span.LeftNode.HorizontalMovementNumber];

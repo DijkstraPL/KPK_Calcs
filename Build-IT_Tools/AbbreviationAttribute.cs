@@ -8,11 +8,11 @@ namespace Build_IT_Tools
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class AbbreviationAttribute : Attribute
     {
-        private string abbreviation;
+        private string _abbreviation;
         /// <summary>
         /// Parameter which describes the abbreviation of the property or field.
         /// </summary>
-        public string Abbreviation => abbreviation;
+        public string Abbreviation => _abbreviation;
 
         /// <summary>
         /// Constructor for abbreviation attribute.
@@ -20,7 +20,7 @@ namespace Build_IT_Tools
         /// <param name="abbreviation">Abbreviation for the field or property.</param>
         public AbbreviationAttribute(string abbreviation)
         {
-            this.abbreviation = abbreviation;
+            _abbreviation = abbreviation;
         }
     }
 }

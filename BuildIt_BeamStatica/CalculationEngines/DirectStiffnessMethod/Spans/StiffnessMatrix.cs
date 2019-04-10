@@ -1,6 +1,6 @@
 ﻿using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
+using Build_IT_BeamStatica.MatrixMath.Wrappers;
 using Build_IT_BeamStatica.Spans.Interfaces;
-using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 
@@ -13,14 +13,14 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
         public ICollection<IStiffnessMatrixPosition> MatrixOfPositions { get; private set; } 
             = new List<IStiffnessMatrixPosition>();
 
-        public Matrix<double> Matrix { get; private set; }
+        public MatrixAdapter Matrix { get; private set; }
         public int Size { get; private set; }
 
         #endregion // Properties
 
         #region Fields
         
-        private Matrix<double> _transformationMatrix;
+        private MatrixAdapter _transformationMatrix;
         private readonly ISpan _span;
 
         #endregion // Fields
@@ -131,7 +131,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
 
         private void SetMatrix()
         {
-            Matrix = Matrix<double>.Build.Dense(Size, Size);
+            Matrix = MatrixAdapter.Create(Size, Size);
 
             int i = 0;
             int j = 0;
@@ -156,7 +156,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
 
         private void CalculateTransformationMatrix()
         {
-            _transformationMatrix = Matrix<double>.Build.Dense(Size, Size);
+            _transformationMatrix = MatrixAdapter.Create(Size, Size);
             double leftAngle = _span.LeftNode.Angle * Math.PI / 180;
             double rightAngle = _span.RightNode.Angle * Math.PI / 180;
             _transformationMatrix[0, 0] = Math.Cos(leftAngle);

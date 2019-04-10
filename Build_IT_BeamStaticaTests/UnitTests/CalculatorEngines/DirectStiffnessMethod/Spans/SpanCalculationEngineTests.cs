@@ -1,6 +1,7 @@
 ﻿using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans;
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
 using Build_IT_BeamStatica.Loads.Interfaces;
+using Build_IT_BeamStatica.MatrixMath.Wrappers;
 using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
 using MathNet.Numerics.LinearAlgebra;
@@ -139,7 +140,7 @@ namespace Build_IT_BeamStaticaTests.UnitTests.CalculatorEngines.DirectStiffnessM
             Mock<ISpan> span = new Mock<ISpan>();
             SetUpSpan(span);
 
-            Vector<double> deflectionVector = SetUpDeflectionVector();
+            VectorAdapter deflectionVector = SetUpDeflectionVector();
 
             var spanCalculationEngine = new SpanCalculationEngine(span.Object, stiffnessMatrix.Object);
             spanCalculationEngine.CalculateDisplacement(deflectionVector, numberOfDegreesOfFreedom: 8);
@@ -170,7 +171,7 @@ namespace Build_IT_BeamStaticaTests.UnitTests.CalculatorEngines.DirectStiffnessM
             Mock<ISpan> span = new Mock<ISpan>();
             SetUpSpan(span);
 
-            Vector<double> deflectionVector = SetUpDeflectionVector();
+            VectorAdapter deflectionVector = SetUpDeflectionVector();
 
             var spanCalculationEngine = new SpanCalculationEngine(span.Object, stiffnessMatrix.Object);
             spanCalculationEngine.CalculateDisplacement(deflectionVector, numberOfDegreesOfFreedom: 0);
@@ -193,9 +194,9 @@ namespace Build_IT_BeamStaticaTests.UnitTests.CalculatorEngines.DirectStiffnessM
             Assert.That(span.Object.RightNode.RightRotation, Is.Null);
         }
 
-        private static Vector<double> SetUpDeflectionVector()
+        private static VectorAdapter SetUpDeflectionVector()
         {
-            var deflectionVector = Vector<double>.Build.Dense(8);
+            var deflectionVector = VectorAdapter.Create(8);
             deflectionVector[0] = 1;
             deflectionVector[1] = 2;
             deflectionVector[2] = 3;
@@ -229,13 +230,13 @@ namespace Build_IT_BeamStaticaTests.UnitTests.CalculatorEngines.DirectStiffnessM
         {
             Mock<IStiffnessMatrix> stiffnessMatrix = new Mock<IStiffnessMatrix>();
             stiffnessMatrix.Setup(sm => sm.Matrix)
-                .Returns(Matrix<double>.Build.Dense(2, 2, new double[4] { 1, 2, 3, 4 }));
+                .Returns(MatrixAdapter.Create(rows: 2, columns: 2, values: new double[4] { 1, 2, 3, 4 }));
 
             Mock<ISpan> span = new Mock<ISpan>();
 
             var spanCalculationEngine = new SpanCalculationEngine(span.Object, stiffnessMatrix.Object);
-            var loadVector = Vector<double>.Build.Dense(new double[2] { 2, 1 });
-            var displacements = Vector<double>.Build.Dense(new double[2] { 1, 3 });
+            var loadVector = VectorAdapter.Create(values: new double[2] { 2, 1 });
+            var displacements = VectorAdapter.Create(values: new double[2] { 1, 3 });
 
             spanCalculationEngine.CalculateForce(loadVector, displacements);
 

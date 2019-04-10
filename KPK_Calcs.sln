@@ -57,6 +57,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebTest", "WebTest\WebTest.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_Web", "Build_IT_Web\Build_IT_Web.csproj", "{248D2978-8520-4800-9118-AF4A8D748C80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_FrameStatica", "Build_IT_FrameStatica\Build_IT_FrameStatica.csproj", "{BE190A6C-3C51-4BB3-B71A-DA8D33E267FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_FrameStaticaTests", "Build_IT_FrameStaticaTests\Build_IT_FrameStaticaTests.csproj", "{E7BE1D4A-7D44-4A71-A17B-1E4D77D0F4CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +163,14 @@ Global
 		{248D2978-8520-4800-9118-AF4A8D748C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{248D2978-8520-4800-9118-AF4A8D748C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{248D2978-8520-4800-9118-AF4A8D748C80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE190A6C-3C51-4BB3-B71A-DA8D33E267FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE190A6C-3C51-4BB3-B71A-DA8D33E267FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE190A6C-3C51-4BB3-B71A-DA8D33E267FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE190A6C-3C51-4BB3-B71A-DA8D33E267FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7BE1D4A-7D44-4A71-A17B-1E4D77D0F4CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7BE1D4A-7D44-4A71-A17B-1E4D77D0F4CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7BE1D4A-7D44-4A71-A17B-1E4D77D0F4CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7BE1D4A-7D44-4A71-A17B-1E4D77D0F4CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

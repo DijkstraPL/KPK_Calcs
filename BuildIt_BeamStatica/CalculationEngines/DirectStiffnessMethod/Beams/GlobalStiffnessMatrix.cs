@@ -1,21 +1,20 @@
 ﻿using Build_IT_BeamStatica.Beams.Interfaces;
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams.Interfaces;
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
+using Build_IT_BeamStatica.MatrixMath.Wrappers;
 using Build_IT_BeamStatica.Spans.Interfaces;
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Complex;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
 {
-    internal class GlobalStiffnessMatrix : IGlobalStiffnessMatrix
+    public class GlobalStiffnessMatrix : IGlobalStiffnessMatrix
     {
         #region Properties
 
-        public Matrix<double> Matrix { get; private set; }
-        public Matrix<double> InversedMatrix => Matrix.Inverse();
+        public MatrixAdapter Matrix { get; private set; }
+        public MatrixAdapter InversedMatrix => Matrix.Inverse();
 
         #endregion //  Properties
 
@@ -42,7 +41,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
         public void Calculate()
         {
             if (_beam.NumberOfDegreesOfFreedom != 0)
-                Matrix = Matrix<double>.Build.Dense(_beam.NumberOfDegreesOfFreedom, _beam.NumberOfDegreesOfFreedom);
+                Matrix = MatrixAdapter.Create(_beam.NumberOfDegreesOfFreedom, _beam.NumberOfDegreesOfFreedom);
 
             for (int row = 0; row < _beam.NumberOfDegreesOfFreedom; row++)
                 for (int col = 0; col < _beam.NumberOfDegreesOfFreedom; col++)

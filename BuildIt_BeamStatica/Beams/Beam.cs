@@ -1,14 +1,10 @@
 ﻿using Build_IT_BeamStatica.Beams.Interfaces;
-using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod;
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams;
 using Build_IT_BeamStatica.CalculationEngines.Interfaces;
-using Build_IT_BeamStatica.Nodes;
 using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Results.Interfaces;
 using Build_IT_BeamStatica.Results.OnSpan;
-using Build_IT_BeamStatica.Spans;
 using Build_IT_BeamStatica.Spans.Interfaces;
-using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 using System.Linq;

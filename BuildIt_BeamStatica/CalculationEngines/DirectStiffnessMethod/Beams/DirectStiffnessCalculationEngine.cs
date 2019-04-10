@@ -2,17 +2,17 @@
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams.Interfaces;
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans;
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
+using Build_IT_BeamStatica.MatrixMath.Wrappers;
 using Build_IT_BeamStatica.Nodes;
 using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
-using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
 {
-    public class DirectStiffnessCalculationEngine : IDirectStiffnessCalculationEngine
+    internal class DirectStiffnessCalculationEngine : IDirectStiffnessCalculationEngine
     {
         #region Fields
 
@@ -22,9 +22,9 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
         private IList<(ISpan span, ISpanCalculationEngine calculationEngine)> _spanCalculationEngines
             = new List<(ISpan, ISpanCalculationEngine)>();
 
-        private Vector<double> _jointLoadVector;
-        private Vector<double> _spanLoadVector;
-        private Vector<double> _deflectionVector;
+        private VectorAdapter _jointLoadVector;
+        private VectorAdapter _spanLoadVector;
+        private VectorAdapter _deflectionVector;
 
         #endregion // Fields
 
@@ -53,6 +53,8 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
             CalculateSpanLoadVectors();
             CalculateSpanLoadVector();
             CalculateDeflectionVector();
+            if (CheckDeflectionVector())
+                throw new ArgumentException("Mechanism");
             CalculateDisplacements();
             CalculateForces();
             CalculateReactions();
@@ -85,7 +87,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
         private void CaluclateJointLoadVector()
         {
             if (_beam.NumberOfDegreesOfFreedom != 0)
-                _jointLoadVector = Vector<double>.Build.Dense(_beam.NumberOfDegreesOfFreedom);
+                _jointLoadVector = VectorAdapter.Create(_beam.NumberOfDegreesOfFreedom);
 
             for (int i = 0; i < _beam.NumberOfDegreesOfFreedom; i++)
             {
@@ -110,7 +112,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
         private void CalculateSpanLoadVector()
         {
             if (_beam.NumberOfDegreesOfFreedom != 0)
-                _spanLoadVector = Vector<double>.Build.Dense(_beam.NumberOfDegreesOfFreedom);
+                _spanLoadVector = VectorAdapter.Create(_beam.NumberOfDegreesOfFreedom);
             foreach (var spanEnginePair in _spanCalculationEngines)
                 CalculateSpanLoadVectorForCurrentSpan(spanEnginePair);
         }
@@ -120,6 +122,9 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
             if (_beam.NumberOfDegreesOfFreedom != 0)
                 _deflectionVector = _globalStiffnessMatrix.InversedMatrix * (_jointLoadVector - _spanLoadVector);
         }
+
+        private bool CheckDeflectionVector()
+            => _deflectionVector != null && _deflectionVector.Any(dv => double.IsNaN(dv));
 
         private void CalculateDisplacements()
         {

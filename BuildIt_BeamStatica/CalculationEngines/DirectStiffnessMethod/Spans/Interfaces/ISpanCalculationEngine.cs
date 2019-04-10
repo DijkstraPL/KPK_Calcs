@@ -1,7 +1,4 @@
-﻿
-using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
-using Build_IT_BeamStatica.Spans.Interfaces;
-using MathNet.Numerics.LinearAlgebra;
+﻿using Build_IT_BeamStatica.MatrixMath.Wrappers;
 
 namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces
 {
@@ -11,17 +8,17 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.In
 
         IStiffnessMatrix StiffnessMatrix { get; }
                 
-        Vector<double> LoadVector { get; }
-        Vector<double> Displacements { get; }
-        Vector<double> Forces { get; }
+        VectorAdapter LoadVector { get; }
+        VectorAdapter Displacements { get; }
+        VectorAdapter Forces { get; }
 
         #endregion // Properties
 
         #region Public_Methods
         
         void CalculateSpanLoadVector();
-        void CalculateDisplacement(Vector<double> deflectionVector, int numberOfDegreesOfFreedom);
-        void CalculateForce(Vector<double> loadVector, Vector<double> displacements);
+        void CalculateDisplacement(VectorAdapter deflectionVector, int numberOfDegreesOfFreedom);
+        void CalculateForce(VectorAdapter loadVector, VectorAdapter displacements);
 
         #endregion // Public_Methods
     }

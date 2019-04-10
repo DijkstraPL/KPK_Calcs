@@ -1,13 +1,13 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿using Build_IT_BeamStatica.MatrixMath.Wrappers;
 
 namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams.Interfaces
 {
-    public interface IGlobalStiffnessMatrix
+    internal interface IGlobalStiffnessMatrix
     {
         #region Properties
 
-        Matrix<double> Matrix { get; }
-        Matrix<double> InversedMatrix { get; }
+        MatrixAdapter Matrix { get; }
+        MatrixAdapter InversedMatrix { get; }
 
         #endregion // Properties
 

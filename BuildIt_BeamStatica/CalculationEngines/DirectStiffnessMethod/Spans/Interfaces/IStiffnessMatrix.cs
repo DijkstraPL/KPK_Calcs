@@ -1,4 +1,4 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿using Build_IT_BeamStatica.MatrixMath.Wrappers;
 using System.Collections.Generic;
 
 namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces
@@ -8,7 +8,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.In
         #region Properties
 
         ICollection<IStiffnessMatrixPosition> MatrixOfPositions { get; }
-        Matrix<double> Matrix { get; }
+        MatrixAdapter Matrix { get; }
         int Size { get; }
 
         #endregion // Properties
