@@ -1,6 +1,6 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 
-namespace Build_IT_BeamStatica.MatrixMath.Wrappers
+namespace Build_IT_CommonTools.MatrixMath.Wrappers
 {
     public class MatrixAdapter
     {
@@ -44,18 +44,18 @@ namespace Build_IT_BeamStatica.MatrixMath.Wrappers
 
         #region Public_Methods
 
-        internal Matrix<double> GetOriginal() => _matrix;
+        public Matrix<double> GetOriginal() => _matrix;
 
         public MatrixAdapter Inverse() 
             => new MatrixAdapter(_matrix.Inverse());
 
-        internal MatrixAdapter Multiply(MatrixAdapter matrix) 
+        public MatrixAdapter Multiply(MatrixAdapter matrix) 
             => new MatrixAdapter(_matrix.Multiply(matrix.GetOriginal()));
 
-        internal VectorAdapter Multiply(VectorAdapter vector)
+        public VectorAdapter Multiply(VectorAdapter vector)
             => new VectorAdapter(_matrix.Multiply(vector.GetOriginal()));
 
-        internal MatrixAdapter Transpose()
+        public MatrixAdapter Transpose()
             => new MatrixAdapter(_matrix.Transpose());
 
         #endregion // Public_Methods

@@ -2,8 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>Build_IT_Tools</RootNamespace>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Build-IT_Tools\Build_IT_CommonTools.csproj" />
+  </ItemGroup>
 
 </Project>

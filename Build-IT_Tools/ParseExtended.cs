@@ -1,9 +1,11 @@
 ﻿using System.Globalization;
 
-namespace Build_IT_Tools
+namespace Build_IT_CommonTools
 {
     public static class ParseExtended
     {
+        #region Public_Methods
+
         public static double GetDouble(this string value)
         {
             double result;
@@ -22,5 +24,7 @@ namespace Build_IT_Tools
             }
             return result;
         }
+
+        #endregion // Public_Methods
     }
 }

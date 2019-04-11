@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Build-IT_Tools\Build_IT_Tools.csproj" />
+    <ProjectReference Include="..\Build-IT_Tools\Build_IT_CommonTools.csproj" />
   </ItemGroup>
 
 </Project>

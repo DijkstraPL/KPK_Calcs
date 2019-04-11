@@ -6,6 +6,7 @@ using NUnit.Framework;
 namespace Build_IT_ScriptInterpreterTests.Scripts
 {
     [TestFixture]
+    [Ignore("Not finished")]
     public class ShearResistanceWithoutShearReinforcement
     {
         [Test]

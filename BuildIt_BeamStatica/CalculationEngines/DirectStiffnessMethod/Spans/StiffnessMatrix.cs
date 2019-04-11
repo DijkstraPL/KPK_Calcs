@@ -1,6 +1,6 @@
 ﻿using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
-using Build_IT_BeamStatica.MatrixMath.Wrappers;
 using Build_IT_BeamStatica.Spans.Interfaces;
+using Build_IT_CommonTools.MatrixMath.Wrappers;
 using System;
 using System.Collections.Generic;
 

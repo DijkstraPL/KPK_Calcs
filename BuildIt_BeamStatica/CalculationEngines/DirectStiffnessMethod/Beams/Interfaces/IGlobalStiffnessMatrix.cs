@@ -1,4 +1,4 @@
-﻿using Build_IT_BeamStatica.MatrixMath.Wrappers;
+﻿using Build_IT_CommonTools.MatrixMath.Wrappers;
 
 namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams.Interfaces
 {

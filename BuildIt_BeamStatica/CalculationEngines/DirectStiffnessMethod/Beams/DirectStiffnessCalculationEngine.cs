@@ -2,10 +2,10 @@
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams.Interfaces;
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans;
 using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
-using Build_IT_BeamStatica.MatrixMath.Wrappers;
 using Build_IT_BeamStatica.Nodes;
 using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
+using Build_IT_CommonTools.MatrixMath.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

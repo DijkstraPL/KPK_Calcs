@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Build_IT_Tools
+namespace Build_IT_CommonTools
 {
     /// <summary>
     /// Class which contain information about abbreviation of the property or field.
@@ -8,11 +8,22 @@ namespace Build_IT_Tools
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class AbbreviationAttribute : Attribute
     {
+        #region Fields
+
         private string _abbreviation;
+
+        #endregion // Fields
+
+        #region Properties
+        
         /// <summary>
         /// Parameter which describes the abbreviation of the property or field.
         /// </summary>
         public string Abbreviation => _abbreviation;
+
+        #endregion // Properties
+
+        #region Constructors
 
         /// <summary>
         /// Constructor for abbreviation attribute.
@@ -22,5 +33,7 @@ namespace Build_IT_Tools
         {
             _abbreviation = abbreviation;
         }
+
+        #endregion // Constructors
     }
 }

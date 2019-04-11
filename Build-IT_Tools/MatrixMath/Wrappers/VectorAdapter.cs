@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Build_IT_BeamStatica.MatrixMath.Wrappers
+namespace Build_IT_CommonTools.MatrixMath.Wrappers
 {
     public class VectorAdapter
     {
@@ -42,12 +42,12 @@ namespace Build_IT_BeamStatica.MatrixMath.Wrappers
 
         #region Public_Methods
 
-        internal Vector<double> GetOriginal() => _vector;
+        public Vector<double> GetOriginal() => _vector;
 
         public bool Any(Func<double, bool> function) 
             => _vector.Any(dv => function(dv));
 
-        internal VectorAdapter Add(VectorAdapter vector) 
+        public VectorAdapter Add(VectorAdapter vector) 
             => new VectorAdapter(_vector.Add(vector.GetOriginal()));
 
         #endregion // Public_Methods

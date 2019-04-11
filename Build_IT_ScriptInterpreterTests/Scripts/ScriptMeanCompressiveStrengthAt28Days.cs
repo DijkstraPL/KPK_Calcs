@@ -9,6 +9,7 @@ using System.Text;
 namespace Build_IT_ScriptInterpreterTests.Scripts
 {
     [TestFixture]
+    [Ignore("Not finished")]
     public class ScriptMeanCompressiveStrengthAt28Days
     {
         [Test]

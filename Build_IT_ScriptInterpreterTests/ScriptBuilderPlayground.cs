@@ -8,6 +8,7 @@ using System.Collections.Generic;
 namespace Build_IT_ScriptInterpreterTests.Scripts
 {
     [TestFixture]
+    [Ignore("Not finished")]
     public class ScriptBuilderPlayground
     {
         [Test]
