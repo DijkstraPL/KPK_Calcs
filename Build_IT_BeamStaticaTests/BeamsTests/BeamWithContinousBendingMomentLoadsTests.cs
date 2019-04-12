@@ -1,12 +1,10 @@
 ﻿using Build_IT_BeamStatica.Beams;
 using Build_IT_BeamStatica.Beams.Interfaces;
-using Build_IT_BeamStatica.Loads;
 using Build_IT_BeamStatica.Loads.ContinousLoads;
-using Build_IT_BeamStatica.Loads.PointLoads;
-using Build_IT_BeamStatica.Materials;
 using Build_IT_BeamStatica.Nodes;
-using Build_IT_BeamStatica.Sections;
 using Build_IT_BeamStatica.Spans;
+using Build_IT_Data.Materials;
+using Build_IT_Data.Sections;
 using NUnit.Framework;
 
 namespace Build_IT_BeamStaticaTests.BeamsTests

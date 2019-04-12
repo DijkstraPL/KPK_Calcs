@@ -1,9 +1,9 @@
 ﻿using Build_IT_BeamStatica.Loads.Interfaces;
-using Build_IT_BeamStatica.Materials.Intefaces;
 using Build_IT_BeamStatica.Nodes.Interfaces;
-using Build_IT_BeamStatica.Sections.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
 using Build_IT_CommonTools;
+using Build_IT_Data.Materials.Intefaces;
+using Build_IT_Data.Sections.Interfaces;
 using System;
 using System.Collections.Generic;
 

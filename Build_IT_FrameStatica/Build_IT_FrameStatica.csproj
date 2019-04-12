@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Build-IT_Tools\Build_IT_CommonTools.csproj" />
+    <ProjectReference Include="..\Build_IT_Data\Build_IT_Data.csproj" />
   </ItemGroup>
 
 </Project>

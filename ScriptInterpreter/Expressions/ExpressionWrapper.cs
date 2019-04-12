@@ -2,7 +2,6 @@
 using NCalc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Build_IT_ScriptInterpreter.Expressions
 {
@@ -15,7 +14,7 @@ namespace Build_IT_ScriptInterpreter.Expressions
         #endregion // Fields
 
         #region Constructors
-        
+
         public ExpressionWrapper(string expression)
         {
             _original = new Expression(expression, EvaluateOptions.IgnoreCase);
@@ -27,7 +26,7 @@ namespace Build_IT_ScriptInterpreter.Expressions
 
         public void SetParameters(IDictionary<string, object> parameters)
         {
-            _original.Parameters = parameters as Dictionary<string, object>;// new Dictionary<string, object>(parameters);
+            _original.Parameters = parameters as Dictionary<string, object>;
         }
 
         public object Evaluate() => _original.Evaluate();
@@ -40,6 +39,11 @@ namespace Build_IT_ScriptInterpreter.Expressions
                     args.Result = function.Invoke(args);
             };
         }
+
+        //public Func<ExpressionContext, T> ToLambda<T>()
+        //{
+        //    return _original.ToLambda<ExpressionContext, T>();
+        //}
 
         #endregion // Public_Methods
     }

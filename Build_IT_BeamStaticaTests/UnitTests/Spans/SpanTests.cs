@@ -1,15 +1,12 @@
 ﻿using Build_IT_BeamStatica.Loads.Interfaces;
-using Build_IT_BeamStatica.Materials.Intefaces;
 using Build_IT_BeamStatica.Nodes.Interfaces;
-using Build_IT_BeamStatica.Sections.Interfaces;
 using Build_IT_BeamStatica.Spans;
-using Build_IT_BeamStatica.Spans.Interfaces;
-using MathNet.Numerics.LinearAlgebra;
+using Build_IT_Data.Materials.Intefaces;
+using Build_IT_Data.Sections.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Build_IT_BeamStaticaTests.UnitTests.Spans
 {

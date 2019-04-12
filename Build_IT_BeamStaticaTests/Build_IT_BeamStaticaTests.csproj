@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BuildIt_BeamStatica\Build_IT_BeamStatica.csproj" />
+    <ProjectReference Include="..\Build_IT_Data\Build_IT_Data.csproj" />
   </ItemGroup>
 
 </Project>

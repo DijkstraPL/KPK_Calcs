@@ -63,6 +63,7 @@ namespace Build_IT_ScriptInterpreter.Expressions
             try
             {
                 return _expression.Evaluate();
+                //return _expression.ToLambda<string>().Invoke();
             }
             catch (EvaluationException ex)
             {
