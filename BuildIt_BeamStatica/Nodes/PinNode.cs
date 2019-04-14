@@ -35,6 +35,10 @@ namespace Build_IT_BeamStatica.Nodes
             ) : this(shearForce, horizontalDeflection, rotation)
         {
             Angle = angle % 360;
+            //if(Angle = 90 || Angle == -90)
+            //{
+            //    NormalForce = ShearForce;
+            //}
             if (Angle != 0 && Angle != 180 && Angle != -180)
             {
                 NormalForce = normalForce ?? new NormalForce();
