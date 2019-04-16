@@ -14,6 +14,11 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod
         {
             _frame = frame;
         }
+
+        public void Calculate()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

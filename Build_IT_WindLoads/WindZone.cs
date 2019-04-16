@@ -6,8 +6,10 @@ namespace Build_IT_WindLoads
 {
     public enum WindZone
     {
-        I,
-        II,
-        III
+        I = 1,
+        II = 2,
+        III = 4,
+        I_II = 3,
+        I_III = 5
     }
 }

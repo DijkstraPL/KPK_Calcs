@@ -27,6 +27,7 @@ namespace Build_IT_WindLoadsTests
         [TestCase(350, WindZone.I, 22.66)]
         [TestCase(350, WindZone.II, 26)]
         [TestCase(350, WindZone.III, 22.66)]
+        [TestCase(250, WindZone.I_II, 24)]
         public void FundamentalValueBasicWindVelocityTest_Success(
             double heightAboveSeaLevel, WindZone windZone, double expectedResult)
         {

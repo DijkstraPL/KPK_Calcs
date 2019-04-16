@@ -1,7 +1,5 @@
 ﻿using Build_IT_CommonTools;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_WindLoads
 {
@@ -75,15 +73,23 @@ namespace Build_IT_WindLoads
             {
                 case WindZone.I:
                 case WindZone.III:
-                    if (HeightAboveSeaLevel <= 300)
-                        return 22;
-                    else
-                        return 22 * (1 + 0.0006 * (HeightAboveSeaLevel - 300));
+                case WindZone.I_III:
+                    return GetFundamentalValueBasicWindVelocityForZoneIAndIII();
                 case WindZone.II:
                     return 26;
+                case WindZone.I_II:
+                    return (26 + GetFundamentalValueBasicWindVelocityForZoneIAndIII()) / 2;
                 default:
                     throw new ArgumentException("Wrong wind zone");
             }
+        }
+
+        private double GetFundamentalValueBasicWindVelocityForZoneIAndIII()
+        {
+            if (HeightAboveSeaLevel <= 300)
+                return 22;
+            else
+                return 22 * (1 + 0.0006 * (HeightAboveSeaLevel - 300));
         }
     }
 }

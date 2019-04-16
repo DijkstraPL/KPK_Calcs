@@ -6,5 +6,6 @@ namespace Build_IT_FrameStatica.CalculationEngines.Interfaces
 {
     public interface IFrameCalculationEngine
     {
+        void Calculate();
     }
 }

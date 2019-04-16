@@ -1,4 +1,5 @@
 ﻿using Build_IT_WindLoads;
+using Build_IT_WindLoads.TerrainOrographies.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -60,6 +61,61 @@ namespace Build_IT_WindLoadsTests
             Assert.That(windLoad.GetReferenceHeightAt(20.001), Is.EqualTo(30));
             Assert.That(windLoad.GetReferenceHeightAt(25), Is.EqualTo(30));
             Assert.That(windLoad.GetReferenceHeightAt(30), Is.EqualTo(30));
+        }
+
+        [Test]
+        public void GetMeanWindVelocityAtTest_Success()
+        {
+            var terrainOrography = new Mock<ITerrainOrography>();
+            terrainOrography.Setup(to => to.GetOrographicFactorAt(2)).Returns(2);
+            var terrain = new Mock<ITerrain>();
+            terrain.Setup(t => t.TerrainOrography).Returns(terrainOrography.Object);
+            terrain.Setup(t => t.GetRoughnessFactorAt(2)).Returns(3);
+            var buildingSite = new Mock<IBuildingSite>();
+            buildingSite.Setup(bs => bs.BasicWindVelocity).Returns(5);
+            buildingSite.Setup(bs => bs.Terrain).Returns(terrain.Object);
+            var building = new Mock<IBuilding>();
+            var windLoad = new WindLoad(buildingSite.Object, building.Object, buildingRotated: false);
+
+            Assert.That(windLoad.GetMeanWindVelocityAt(2), Is.EqualTo(30));
+        }
+
+        [Test]
+        [TestCase(1, 1.738)]
+        [TestCase(5, 0.979)]
+        public void GetTurbulenceIntensityAtTest_Success(double minimumHeight, double result )
+        {
+            var terrainOrography = new Mock<ITerrainOrography>();
+            terrainOrography.Setup(to => to.GetOrographicFactorAt(It.IsAny<double>())).Returns(2);
+            var terrain = new Mock<ITerrain>();
+            terrain.Setup(t => t.RoughnessLength).Returns(3);
+            terrain.Setup(t => t.MinimumHeight).Returns(minimumHeight);
+            terrain.Setup(t => t.TerrainOrography).Returns(terrainOrography.Object);
+            var buildingSite = new Mock<IBuildingSite>();
+            buildingSite.Setup(bs => bs.Terrain).Returns(terrain.Object);
+            var building = new Mock<IBuilding>();
+            var windLoad = new WindLoad(buildingSite.Object, building.Object, buildingRotated: false);
+
+            Assert.That(windLoad.GetTurbulenceIntensityAt(4), Is.EqualTo(result).Within(0.001));
+        }
+        
+        [Test]
+        public void GetPeakVelocityPressureAtTest_Success()
+        {
+            var terrainOrography = new Mock<ITerrainOrography>();
+            terrainOrography.Setup(to => to.GetOrographicFactorAt(It.IsAny<double>())).Returns(2);
+            var terrain = new Mock<ITerrain>();
+            terrain.Setup(t => t.RoughnessLength).Returns(1);
+            terrain.Setup(t => t.MinimumHeight).Returns(1);
+            terrain.Setup(t => t.GetRoughnessFactorAt(It.IsAny<double>())).Returns(3);
+            terrain.Setup(t => t.TerrainOrography).Returns(terrainOrography.Object);
+            var buildingSite = new Mock<IBuildingSite>();
+            buildingSite.Setup(bs => bs.BasicWindVelocity).Returns(5);
+            buildingSite.Setup(bs => bs.Terrain).Returns(terrain.Object);
+            var building = new Mock<IBuilding>();
+            var windLoad = new WindLoad(buildingSite.Object, building.Object, buildingRotated: false);
+
+            Assert.That(windLoad.GetPeakVelocityPressureAt(2), Is.EqualTo(3.403).Within(0.001));
         }
     }
 }
