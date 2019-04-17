@@ -19,7 +19,7 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         private Frame _frame;
 
         [SetUp]
-        public void SetUpBeam()
+        public void SetUpFrame()
         {
             var material = new Material(youngModulus: 200, density:0, thermalExpansionCoefficient:0);
             var section = new SectionProperties(area: 600, momentOfInteria: 6000);

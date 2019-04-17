@@ -1,10 +1,11 @@
 ﻿using Build_IT_WindLoads;
+using Build_IT_WindLoads.Terrains;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Build_IT_WindLoadsTests
+namespace Build_IT_WindLoadsTests.UnitTests.TerrainsTests
 {
     [TestFixture]
     public class TerrainTests

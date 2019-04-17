@@ -1,10 +1,13 @@
 ﻿using Build_IT_CommonTools;
 using Build_IT_WindLoads;
+using Build_IT_WindLoads.BuildingData;
+using Build_IT_WindLoads.Factors.Interfaces;
+using Build_IT_WindLoads.Terrains.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System;
 
-namespace Build_IT_WindLoadsTests
+namespace Build_IT_WindLoadsTests.UnitTests.BuildingDataTests
 {
     [TestFixture]
     public class BuildingSiteTests

@@ -1,7 +1,8 @@
 ﻿using Build_IT_CommonTools;
+using Build_IT_WindLoads.BuildingData.Interfaces;
 using System;
 
-namespace Build_IT_WindLoads
+namespace Build_IT_WindLoads.BuildingData
 {
     public class Building : IBuilding
     {

@@ -16,9 +16,8 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
     {
         private IBeam _beam;
 
-        [Test]
-        [MaxTime(300)]      
-        public void FullBeamCalculationsTest_TimeoutPerformanceChecking_Success(
+        [Test]     
+        public void FullBeamCalculationsTest_RandomBeams_Success(
         [Random(27.0,37.0,1)] double youngModulus,
         [Random(150.0, 500.0, 1)] double width,
         [Random(240.0, 1000.0, 1)] double height,

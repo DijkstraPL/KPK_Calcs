@@ -1,7 +1,7 @@
 ﻿using Build_IT_WindLoads.TerrainOrographies.Interfaces;
 using System;
 
-namespace Build_IT_WindLoads
+namespace Build_IT_WindLoads.Terrains
 {
     public class TerrainCategory0 : Terrain
     {

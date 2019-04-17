@@ -1,12 +1,14 @@
 ﻿using Build_IT_WindLoads;
+using Build_IT_WindLoads.BuildingData.Interfaces;
 using Build_IT_WindLoads.TerrainOrographies.Interfaces;
+using Build_IT_WindLoads.Terrains.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Build_IT_WindLoadsTests
+namespace Build_IT_WindLoadsTests.UnitTests
 {
     [TestFixture]
     public class WindLoadTests

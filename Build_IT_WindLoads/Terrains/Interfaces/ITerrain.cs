@@ -1,7 +1,7 @@
 ﻿using Build_IT_CommonTools;
 using Build_IT_WindLoads.TerrainOrographies.Interfaces;
 
-namespace Build_IT_WindLoads
+namespace Build_IT_WindLoads.Terrains.Interfaces
 {
     public interface ITerrain
     {

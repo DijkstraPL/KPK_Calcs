@@ -1,10 +1,12 @@
 ﻿using Build_IT_WindLoads;
+using Build_IT_WindLoads.BuildingData;
+using Build_IT_WindLoads.Terrains;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Build_IT_WindLoadsTests
+namespace Build_IT_WindLoadsTests.IntegrationTests
 {
     [TestFixture]
     public class WindLoadsOnRectangleBuildingTests

@@ -1,17 +1,19 @@
 ﻿using Build_IT_CommonTools;
+using Build_IT_WindLoads.BuildingData.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Build_IT_WindLoads
 {
-    public class WindLoad
+    public class WindLoad : IWindLoad
     {
-        private IDictionary<double, double> _referenceHeights { get; } = new Dictionary<double, double>();
+        public bool BuildingRotated { get; }
+
+        private IDictionary<double, double> _referenceHeights = new Dictionary<double, double>();
 
         private readonly IBuildingSite _buildingSite;
         private readonly IBuilding _building;
-        private readonly bool _buildingRotated;
         private readonly double _heightStrip;
         private double _windwardWallWidth;
 
@@ -28,7 +30,7 @@ namespace Build_IT_WindLoads
         {
             _buildingSite = buildingSite;
             _building = building;
-            _buildingRotated = buildingRotated;
+            BuildingRotated = buildingRotated;
             _heightStrip = heightStrip;
 
             SetAirDensity();
@@ -90,7 +92,7 @@ namespace Build_IT_WindLoads
 
         private void SetWindwardWall()
         {
-            if (_buildingRotated)
+            if (BuildingRotated)
                 _windwardWallWidth = _building.Length;
             else
                 _windwardWallWidth = _building.Width;

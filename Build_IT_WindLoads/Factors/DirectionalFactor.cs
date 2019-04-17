@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Build_IT_WindLoads.Factors.Interfaces;
+using System;
 
-namespace Build_IT_WindLoads
+namespace Build_IT_WindLoads.Factors
 {
     public class DirectionalFactor : IFactor
     {

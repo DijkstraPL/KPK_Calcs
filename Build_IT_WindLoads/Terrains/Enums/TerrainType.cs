@@ -1,4 +1,4 @@
-﻿namespace Build_IT_WindLoads
+﻿namespace Build_IT_WindLoads.Terrains.Enums
 {
     public enum TerrainType
     {

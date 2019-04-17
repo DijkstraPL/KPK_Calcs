@@ -1,7 +1,7 @@
 ﻿using Build_IT_WindLoads.TerrainOrographies;
 using NUnit.Framework;
 
-namespace Build_IT_WindLoadsTests
+namespace Build_IT_WindLoadsTests.UnitTests.TerrainOrographiesTests
 {
     [TestFixture]
     public class HillRidgeOrographyTests

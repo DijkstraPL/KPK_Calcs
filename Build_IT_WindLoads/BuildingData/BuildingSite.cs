@@ -1,7 +1,10 @@
 ﻿using Build_IT_CommonTools;
+using Build_IT_WindLoads.BuildingData.Interfaces;
+using Build_IT_WindLoads.Factors.Interfaces;
+using Build_IT_WindLoads.Terrains.Interfaces;
 using System;
 
-namespace Build_IT_WindLoads
+namespace Build_IT_WindLoads.BuildingData
 {
     public class BuildingSite : IBuildingSite
     {

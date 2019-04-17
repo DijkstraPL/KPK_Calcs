@@ -1,6 +1,6 @@
 ﻿using Build_IT_CommonTools;
 
-namespace Build_IT_WindLoads
+namespace Build_IT_WindLoads.BuildingData.Interfaces
 {
     public interface IBuilding
     {

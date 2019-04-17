@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Build_IT_WindLoadsTests
+namespace Build_IT_WindLoadsTests.UnitTests.TerrainOrographiesTests
 {
     [TestFixture]
     public class CliffEscarpmentOrographyTests
