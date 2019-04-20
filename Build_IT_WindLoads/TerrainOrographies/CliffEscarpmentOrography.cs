@@ -7,16 +7,22 @@ namespace Build_IT_WindLoads.TerrainOrographies
 {
     public class CliffEscarpmentOrography : TerrainOrography
     {
+        #region Constructors
+
         public CliffEscarpmentOrography(
-            double actualLengthUpwindSlope, 
-            double effectiveFeatureHeight, 
-            double horizontalDistanceFromCrestTop) 
-            : base(actualLengthUpwindSlope, 
-                  0, 
-                  effectiveFeatureHeight, 
+            double actualLengthUpwindSlope,
+            double effectiveFeatureHeight,
+            double horizontalDistanceFromCrestTop)
+            : base(actualLengthUpwindSlope,
+                  0,
+                  effectiveFeatureHeight,
                   horizontalDistanceFromCrestTop)
         {
         }
+
+        #endregion // Constructors
+
+        #region Protected_Methods
 
         protected override bool IsOrographicFactorNeeded()
         {
@@ -40,7 +46,7 @@ namespace Build_IT_WindLoads.TerrainOrographies
             double verticalRatio = verticalDistanceFromCrestTop / EffectiveLengthUpwindSlope;
             double horizontalRatio = HorizontalDistanceFromCrestTop / EffectiveLengthUpwindSlope;
 
-            if (horizontalRatio > 3.5 || 
+            if (horizontalRatio > 3.5 ||
                 verticalRatio > 2)
                 return 0;
             if (verticalRatio < 0.1)
@@ -54,23 +60,27 @@ namespace Build_IT_WindLoads.TerrainOrographies
             }
             else if (0 <= horizontalRatio && horizontalRatio < 0.1)
             {
-               return Interpolation.InterpolateLinearBetween(
-                    start: (0, GetOrographicLocationFactorAtUpwindSide(verticalRatio, horizontalRatio: 0)),
-                    end: (0.1, GetOrographicLocationFactorAtFurtherDistance(verticalRatio, horizontalRatio)),
-                    at: horizontalRatio);
+                return Interpolation.InterpolateLinearBetween(
+                     start: (0, GetOrographicLocationFactorAtUpwindSide(verticalRatio, horizontalRatio: 0)),
+                     end: (0.1, GetOrographicLocationFactorAtFurtherDistance(verticalRatio, horizontalRatio)),
+                     at: horizontalRatio);
             }
             throw new ArgumentException("Wrong ratio.");
         }
 
+        #endregion // Protected_Methods
+
+        #region Private_Methods
+
         private double GetOrographicLocationFactorAtFurtherDistance(double verticalRatio, double horizontalRatio)
         {
             double coefficientA =
-                - 1.3420 * Math.Pow(Math.Log10(verticalRatio), 3)
+                -1.3420 * Math.Pow(Math.Log10(verticalRatio), 3)
                 - 0.8222 * Math.Pow(Math.Log10(verticalRatio), 2)
                 + 0.4609 * Math.Log10(verticalRatio)
                 - 0.0791;
             double coefficientB =
-                - 1.0196 * Math.Pow(Math.Log10(verticalRatio), 3)
+                -1.0196 * Math.Pow(Math.Log10(verticalRatio), 3)
                 - 0.8910 * Math.Pow(Math.Log10(verticalRatio), 2)
                 + 0.5343 * Math.Log10(verticalRatio)
                 - 0.1156;
@@ -84,9 +94,6 @@ namespace Build_IT_WindLoads.TerrainOrographies
                 + coefficientC;
         }
 
-        //private double GetOrographicLocationFactor()
-        //{
-        //    double coefficientA = 1.3420 * 
-        //}
+        #endregion // Private_Methods
     }
 }

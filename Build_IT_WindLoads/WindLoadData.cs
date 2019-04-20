@@ -1,21 +1,22 @@
 ﻿using Build_IT_CommonTools;
 using Build_IT_WindLoads.BuildingData.Interfaces;
+using Build_IT_WindLoads.Terrains;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Build_IT_WindLoads
 {
-    public class WindLoad : IWindLoad
+    public class WindLoadData : IWindLoadData
     {
-        public bool BuildingRotated { get; }
+        #region Fields
 
         private IDictionary<double, double> _referenceHeights = new Dictionary<double, double>();
 
         private readonly IBuildingSite _buildingSite;
-        private readonly IBuilding _building;
+        private readonly IStructure _building;
         private readonly double _heightStrip;
-        private double _windwardWallWidth;
+        private readonly bool _customReferenceHeight;
 
         [Abbreviation("k_l")]
         [Unit("")]
@@ -25,29 +26,25 @@ namespace Build_IT_WindLoads
         [Unit("kg/m3")]
         private double _airDensity;
 
-        public WindLoad(IBuildingSite buildingSite, IBuilding building, 
-            bool buildingRotated, double heightStrip = 1)
+        #endregion // Fields
+
+        #region Constructors
+
+        public WindLoadData(IBuildingSite buildingSite, IStructure building,
+            double heightStrip = 1, bool customReferenceHeight = false)
         {
             _buildingSite = buildingSite;
             _building = building;
-            BuildingRotated = buildingRotated;
             _heightStrip = heightStrip;
+            _customReferenceHeight = customReferenceHeight;
 
             SetAirDensity();
-            SetWindwardWall();
             SetReferenceHeights();
         }
 
-        private void SetAirDensity()
-        {
-            if (_buildingSite.WindZone == WindZone.III ||
-                _buildingSite.WindZone == WindZone.I_III)
-                _airDensity = 1.25 *
-                        (20000 - _buildingSite.HeightAboveSeaLevel) /
-                        (20000 + _buildingSite.HeightAboveSeaLevel);
-            else
-                _airDensity = 1.25;
-        }
+        #endregion // Constructors
+
+        #region Public_Methods
 
         public double GetReferenceHeightAt(double height)
         {
@@ -63,11 +60,14 @@ namespace Build_IT_WindLoads
         /// <remarks>[PN-EN 1991-1-4 Eq.4.3]</remarks>
         public double GetMeanWindVelocityAt(double height)
         {
+            height = SetHeight(height);
+
             var terrain = _buildingSite.Terrain;
             return terrain.GetRoughnessFactorAt(height) *
-                           terrain.TerrainOrography.GetOrographicFactorAt(height) *
+                           terrain.TerrainOrography.GetFactorAt(height) *
                            _buildingSite.BasicWindVelocity;
         }
+
 
         /// <summary>
         /// 
@@ -75,52 +75,75 @@ namespace Build_IT_WindLoads
         /// <remarks>[PN-EN 1991-1-4 Eq.4.7]</remarks>
         public double GetTurbulenceIntensityAt(double height)
         {
+            height = SetHeight(height);
+
             var terrain = _buildingSite.Terrain;
             if (height < terrain.MinimumHeight)
                 height = terrain.MinimumHeight;
 
-            return _turbulenceFactor / 
-                (terrain.TerrainOrography.GetOrographicFactorAt(height) * 
+            return _turbulenceFactor /
+                (terrain.TerrainOrography.GetFactorAt(height) *
                 Math.Log(height / terrain.RoughnessLength));
         }
 
         public double GetPeakVelocityPressureAt(double height)
         {
+            height = SetHeight(height);
+
             return (1 + 7 * GetTurbulenceIntensityAt(height)) * 0.5 * _airDensity *
                 Math.Pow(GetMeanWindVelocityAt(height), 2) / 1000; // Change to kN/m2
         }
 
-        private void SetWindwardWall()
+        #endregion // Public_Methods
+
+        #region Private_Methods
+
+        private double SetHeight(double height)
         {
-            if (BuildingRotated)
-                _windwardWallWidth = _building.Length;
+            if (!_customReferenceHeight)
+                height = GetReferenceHeightAt(height);
+            if (_buildingSite.Terrain.HeightDisplacement != null)
+                height -= _buildingSite.Terrain.HeightDisplacement.GetFactor();
+
+            return height;
+        }
+
+        private void SetAirDensity()
+        {
+            if (_buildingSite.WindZone == WindZone.III ||
+                _buildingSite.WindZone == WindZone.I_III)
+                _airDensity = 1.25 *
+                        (20000 - _buildingSite.HeightAboveSeaLevel) /
+                        (20000 + _buildingSite.HeightAboveSeaLevel);
             else
-                _windwardWallWidth = _building.Width;
+                _airDensity = 1.25;
         }
 
         private void SetReferenceHeights()
         {
-            if (_building.Height <= _windwardWallWidth)
+            if (_building.Height <= _building.Width)
                 _referenceHeights.Add(_building.Height, _building.Height);
-            else if (_building.Height <= 2 * _windwardWallWidth)
+            else if (_building.Height <= 2 * _building.Width)
             {
-                _referenceHeights.Add(_windwardWallWidth, _windwardWallWidth);
+                _referenceHeights.Add(_building.Width, _building.Width);
                 _referenceHeights.Add(_building.Height, _building.Height);
             }
             else
             {
-                _referenceHeights.Add(_windwardWallWidth, _windwardWallWidth);
+                _referenceHeights.Add(_building.Width, _building.Width);
                 int index = 1;
-                while (_windwardWallWidth + index * _heightStrip < _building.Height - _windwardWallWidth)
+                while (_building.Width + index * _heightStrip < _building.Height - _building.Width)
                 {
-                    var referenceHeightAtStrip = _windwardWallWidth + index * _heightStrip;
+                    var referenceHeightAtStrip = _building.Width + index * _heightStrip;
                     _referenceHeights.Add(referenceHeightAtStrip, referenceHeightAtStrip);
                     index++;
                 }
-                if(!_referenceHeights.ContainsKey(_building.Height - _windwardWallWidth))
-                    _referenceHeights.Add(_building.Height - _windwardWallWidth, _building.Height - _windwardWallWidth);
+                if (!_referenceHeights.ContainsKey(_building.Height - _building.Width))
+                    _referenceHeights.Add(_building.Height - _building.Width, _building.Height - _building.Width);
                 _referenceHeights.Add(_building.Height, _building.Height);
             }
         }
+
+        #endregion // Private_Methods
     }
 }

@@ -1,20 +1,30 @@
 ﻿using Build_IT_CommonTools;
-using Build_IT_WindLoads.TerrainOrographies.Interfaces;
+using Build_IT_WindLoads.Factors.Interfaces;
 
 namespace Build_IT_WindLoads.Terrains.Interfaces
 {
     public interface ITerrain
     {
-        ITerrainOrography TerrainOrography { get; }
+        #region Properties
+
+        IFactorAt TerrainOrography { get; }
 
         [Abbreviation("z_min")]
         [Unit("m")]
-         double MinimumHeight { get; }
+        double MinimumHeight { get; }
 
         [Abbreviation("z_0")]
         [Unit("m")]
-         double RoughnessLength { get; }
+        double RoughnessLength { get; }
+
+        IFactor HeightDisplacement { get; }
+
+        #endregion // Properties
+
+        #region Public_Methods
 
         double GetRoughnessFactorAt(double height);
+
+        #endregion // Public_Methods
     }
 }

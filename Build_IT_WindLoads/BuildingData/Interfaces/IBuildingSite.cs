@@ -5,6 +5,8 @@ namespace Build_IT_WindLoads.BuildingData.Interfaces
 {
     public interface IBuildingSite
     {
+        #region Properties
+
         [Abbreviation("a")]
         [Unit("m")]
          double HeightAboveSeaLevel { get; }
@@ -12,5 +14,7 @@ namespace Build_IT_WindLoads.BuildingData.Interfaces
 
         ITerrain Terrain { get; }
         double BasicWindVelocity { get; }
+
+        #endregion // Properties
     }
 }

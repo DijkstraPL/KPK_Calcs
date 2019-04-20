@@ -6,6 +6,8 @@ namespace Build_IT_WindLoads.TerrainOrographies
 {
     public class HillRidgeOrography : TerrainOrography
     {
+        #region Constructors
+
         public HillRidgeOrography(
             double actualLengthUpwindSlope, 
             double actualLengthDownwindSlope, 
@@ -17,6 +19,10 @@ namespace Build_IT_WindLoads.TerrainOrographies
                   horizontalDistanceFromCrestTop)
         {
         }
+
+        #endregion // Constructors
+
+        #region Protected_Methods
 
         protected override bool IsOrographicFactorNeeded()
         {
@@ -63,5 +69,7 @@ namespace Build_IT_WindLoads.TerrainOrographies
             }
             throw new ArgumentException("Wrong ratio.");
         }
+
+        #endregion // Protected_Methods
     }
 }

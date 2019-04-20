@@ -5,9 +5,19 @@ namespace Build_IT_WindLoads.Factors
 {
     public class DirectionalFactor : IFactor
     {
+        #region Properties
+
         public double WindDirection { get; }
 
+        #endregion // Properties
+
+        #region Fields
+
         private readonly WindZone _windZone;
+
+        #endregion // Fields
+
+        #region Constructors
 
         public DirectionalFactor(WindZone windZone, double windDirection)
         {
@@ -16,6 +26,10 @@ namespace Build_IT_WindLoads.Factors
                 windDirection = 360 + windDirection % 360;
             WindDirection = windDirection % 360;
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         /// <summary>
         /// 
@@ -35,6 +49,10 @@ namespace Build_IT_WindLoads.Factors
                     throw new ArgumentException("wrong wind zone.");
             }
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
 
         private double GetFactoryForFirstWindZone()
         {
@@ -87,5 +105,7 @@ namespace Build_IT_WindLoads.Factors
             else
                 return 0.8;
         }
+
+        #endregion // Private_Methods
     }
 }

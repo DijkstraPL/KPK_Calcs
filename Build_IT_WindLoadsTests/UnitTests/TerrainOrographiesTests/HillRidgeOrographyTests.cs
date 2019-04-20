@@ -29,7 +29,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.TerrainOrographiesTests
                 effectiveFeatureHeight,
                 horizontalDistanceFromCrestTop);
 
-            Assert.That(hillRidgeOrography.GetOrographicFactorAt(verticalDistanceFromCrestTop: 1),
+            Assert.That(hillRidgeOrography.GetFactorAt(verticalDistanceFromCrestTop: 1),
                 Is.EqualTo(expectedResult).Within(0.001));
         }
     }

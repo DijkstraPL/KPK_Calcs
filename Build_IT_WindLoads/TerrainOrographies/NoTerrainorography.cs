@@ -1,10 +1,14 @@
-﻿using Build_IT_WindLoads.TerrainOrographies.Interfaces;
+﻿using Build_IT_WindLoads.Factors.Interfaces;
 
 namespace Build_IT_WindLoads.TerrainOrographies
 {
-    internal class NoTerrainorography : ITerrainOrography
+    internal class NoTerrainorography : IFactorAt
     {
-        public double GetOrographicFactorAt(double verticalDistanceFromCrestTop)
+        #region Public_Methods
+
+        public double GetFactorAt(double verticalDistanceFromCrestTop)
             => 1;
+
+        #endregion // Public_Methods
     }
 }

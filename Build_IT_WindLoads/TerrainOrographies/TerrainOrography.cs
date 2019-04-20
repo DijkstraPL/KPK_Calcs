@@ -1,11 +1,13 @@
 ﻿using Build_IT_CommonTools;
-using Build_IT_WindLoads.TerrainOrographies.Interfaces;
+using Build_IT_WindLoads.Factors.Interfaces;
 using System;
 
-namespace Build_IT_WindLoads
+namespace Build_IT_WindLoads.TerrainOrographies
 {
-    public abstract class TerrainOrography : ITerrainOrography
+    public abstract class TerrainOrography : IFactorAt
     {
+        #region Properties
+
         /// <summary>
         /// 
         /// </summary>
@@ -42,6 +44,10 @@ namespace Build_IT_WindLoads
         [Unit("m")]
         public double HorizontalDistanceFromCrestTop { get; }
 
+        #endregion // Properties
+
+        #region Constructors
+
         public TerrainOrography(
             double actualLengthUpwindSlope,
             double actualLengthDownwindSlope,
@@ -54,7 +60,11 @@ namespace Build_IT_WindLoads
             HorizontalDistanceFromCrestTop = horizontalDistanceFromCrestTop;
         }
 
-        public double GetOrographicFactorAt(double verticalDistanceFromCrestTop)
+        #endregion // Constructors
+
+        #region Public_Methods
+
+        public double GetFactorAt(double verticalDistanceFromCrestTop)
         {
             if (!IsOrographicFactorNeeded())
                 return 1;
@@ -69,17 +79,12 @@ namespace Build_IT_WindLoads
                 return 1 + 0.6 * orographicLocationFactor;
         }
 
+        #endregion // Public_Methods
+
+        #region Protected_Methods
+
         protected abstract bool IsOrographicFactorNeeded();
         protected abstract double GetOrographicLocationFactorAtDownwindSide(double verticalDistanceFromCrestTop);
-
-        private double GetOrographicLocationFactorAt(double verticalDistanceFromCrestTop)
-        {
-            if (HorizontalDistanceFromCrestTop < 0)
-                return GetOrographicLocationFactorAtUpwindSide(
-                    verticalDistanceFromCrestTop / EffectiveLengthUpwindSlope,
-                    HorizontalDistanceFromCrestTop / ActualLengthUpwindSlope);
-            return GetOrographicLocationFactorAtDownwindSide(verticalDistanceFromCrestTop);
-        }
 
         protected double GetOrographicLocationFactorAtUpwindSide(double verticalRatio, double horizontalRatio)
         {
@@ -98,6 +103,19 @@ namespace Build_IT_WindLoads
                 Math.E, coefficientB * horizontalRatio);
         }
 
+        #endregion // Protected_Methods
+
+        #region Private_Methods
+
+        private double GetOrographicLocationFactorAt(double verticalDistanceFromCrestTop)
+        {
+            if (HorizontalDistanceFromCrestTop < 0)
+                return GetOrographicLocationFactorAtUpwindSide(
+                    verticalDistanceFromCrestTop / EffectiveLengthUpwindSlope,
+                    HorizontalDistanceFromCrestTop / ActualLengthUpwindSlope);
+            return GetOrographicLocationFactorAtDownwindSide(verticalDistanceFromCrestTop);
+        }
+        
         private double GetEffectiveLengthUpwindSlope()
         {
             if (UpwindSlope == 0.3)
@@ -108,5 +126,7 @@ namespace Build_IT_WindLoads
                 return EffectiveFeatureHeight / 0.3;
             throw new ArgumentOutOfRangeException("Wrong slope.");
         }
+
+        #endregion // Private_Methods
     }
 }

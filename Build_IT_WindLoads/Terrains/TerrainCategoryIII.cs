@@ -1,20 +1,28 @@
-﻿using Build_IT_WindLoads.TerrainOrographies.Interfaces;
+﻿using Build_IT_WindLoads.Factors.Interfaces;
 using System;
 
 namespace Build_IT_WindLoads.Terrains
 {
     public class TerrainCategoryIII : Terrain
     {
-        public TerrainCategoryIII(ITerrainOrography terrainOrography = null)
+        #region Constructors
+
+        public TerrainCategoryIII(IFactorAt terrainOrography = null)
             : base(roughnessLength: 0.3, minimumHeight: 5,
                   maximumHeight: 400, terrainOrography: terrainOrography)
         {
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         public override double GetRoughnessFactorAt(double height)
         {
             height = CheckMinimumHeight(height);
             return 0.8 * Math.Pow(height / 10, 0.19);
         }
+
+        #endregion // Public_Methods
     }
 }

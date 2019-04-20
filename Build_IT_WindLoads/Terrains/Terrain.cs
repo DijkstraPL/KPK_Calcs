@@ -1,16 +1,16 @@
 ﻿using Build_IT_CommonTools;
+using Build_IT_WindLoads.Factors.Interfaces;
 using Build_IT_WindLoads.TerrainOrographies;
-using Build_IT_WindLoads.TerrainOrographies.Interfaces;
+using Build_IT_WindLoads.Terrains.Enums;
 using Build_IT_WindLoads.Terrains.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_WindLoads.Terrains
 {
-
     public abstract class Terrain : ITerrain
     {
+        #region Properties
+
         /// <summary>
         /// 
         /// </summary>
@@ -43,7 +43,7 @@ namespace Build_IT_WindLoads.Terrains
         [Unit("m")]
         public double MaximumHeight { get; }
 
-        public ITerrainOrography TerrainOrography { get; }
+        public IFactorAt TerrainOrography { get; }
 
         /// <summary>
         /// 
@@ -53,18 +53,54 @@ namespace Build_IT_WindLoads.Terrains
         [Unit("")]
         public double TerrainFactor 
             => 0.19 * Math.Pow(RoughnessLength / RoughnessLengthInSecondTerrainType, 0.07);
-        
+
+        public IFactor HeightDisplacement { get; protected set; }
+
+        #endregion // Properties
+
+        #region Factories
+
+        public static Terrain Create(
+            TerrainType terrainType,
+            IFactor heightDisplacement = null, 
+            IFactorAt terrainOrography = null)
+        {
+            switch (terrainType)
+            {
+                case TerrainType.Terrain_0:
+                    return new TerrainCategory0(terrainOrography);
+                case TerrainType.Terrain_I:
+                    return new TerrainCategoryI(terrainOrography);
+                case TerrainType.Terrain_II:
+                    return new TerrainCategoryII(terrainOrography);
+                case TerrainType.Terrain_III:
+                    return new TerrainCategoryIII(terrainOrography);
+                case TerrainType.Terrain_IV:
+                    return new TerrainCategoryIV(heightDisplacement, terrainOrography);
+                default:
+                    throw new ArgumentException(nameof(terrainType));
+            }
+        }
+
+        #endregion // Factories
+
+        #region Constructors
+
         protected Terrain(
             double roughnessLength,
             double minimumHeight, 
             double maximumHeight, 
-            ITerrainOrography terrainOrography)
+            IFactorAt terrainOrography)
         {
             TerrainOrography = terrainOrography ?? new NoTerrainorography();
             RoughnessLength = roughnessLength;
             MinimumHeight = minimumHeight;
             MaximumHeight = maximumHeight;
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
 
         /// <summary>
         /// c_r(z)
@@ -77,6 +113,10 @@ namespace Build_IT_WindLoads.Terrains
             return TerrainFactor * Math.Log(height / RoughnessLength);
         }
 
+        #endregion // Public_Methods
+
+        #region Protected_Methods
+
         protected double CheckMinimumHeight(double height)
         {
             if (height > MaximumHeight)
@@ -85,5 +125,7 @@ namespace Build_IT_WindLoads.Terrains
                 height = MinimumHeight;
             return height;
         }
+
+        #endregion // Protected_Methods
     }
 }

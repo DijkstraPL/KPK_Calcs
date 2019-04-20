@@ -8,6 +8,8 @@ namespace Build_IT_WindLoads.BuildingData
 {
     public class BuildingSite : IBuildingSite
     {
+        #region Properties
+
         [Abbreviation("a")]
         [Unit("m")]
         public double HeightAboveSeaLevel { get; }
@@ -23,26 +25,27 @@ namespace Build_IT_WindLoads.BuildingData
         /// <remarks>[PN-EN 1991-1-4 Tab.4.1]</remarks>
         public ITerrain Terrain { get; }
 
-        [Abbreviation("v_b,0")]
-        [Unit("m/s")]
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>[PN-EN 1991-1-4 Tab.NB.1]</remarks>
+        [Abbreviation("v_b,0")]
+        [Unit("m/s")]
         public double FundamentalValueBasicWindVelocity { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>[PN-EN 1991-1-4 NB.1.5]</remarks>
         [Abbreviation("c_season")]
         [Unit("-")]
+        public double SeasonalFactor => _seasonalFactor?.GetFactor() ?? 1;
+
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>[PN-EN 1991-1-4 NB.1.5]</remarks>
-        public double SeasonalFactor => _seasonalFactor?.GetFactor() ?? 1;
         [Abbreviation("c_dir")]
         [Unit("-")]
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>[PN-EN 1991-1-4 NB.1.5]</remarks>
         public double DirectionalFactor => _directionalFactor?.GetFactor() ?? 1;
 
         /// <summary>
@@ -51,8 +54,16 @@ namespace Build_IT_WindLoads.BuildingData
         /// <remarks>[PN-EN 1991-1-4 Eq.4.1]</remarks>
         public double BasicWindVelocity => SeasonalFactor * DirectionalFactor * FundamentalValueBasicWindVelocity;
 
+        #endregion // Properties
+
+        #region Fields
+
         private readonly IFactor _seasonalFactor;
         private readonly IFactor _directionalFactor;
+
+        #endregion // Fields
+
+        #region Constructors
 
         public BuildingSite(double heightAboveSeaLevel, WindZone windZone, ITerrain terrain,
             IFactor seasonalFactor = null, IFactor directionalFactor = null)
@@ -65,6 +76,10 @@ namespace Build_IT_WindLoads.BuildingData
 
             FundamentalValueBasicWindVelocity = GetFundamentalValueBasicWindVelocity();
         }
+
+        #endregion // Constructors
+
+        #region Private_Methods
 
         /// <summary>
         /// 
@@ -94,5 +109,7 @@ namespace Build_IT_WindLoads.BuildingData
             else
                 return 22 * (1 + 0.0006 * (HeightAboveSeaLevel - 300));
         }
+
+        #endregion // Private_Methods
     }
 }

@@ -82,7 +82,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.TerrainOrographiesTests
                 Math.Abs(cliffEscarpmentOrography.HorizontalDistanceFromCrestTop) 
                 <= cliffEscarpmentOrography.ActualLengthUpwindSlope / 2, Is.True);
 
-            Assert.That(cliffEscarpmentOrography.GetOrographicFactorAt(verticalDistanceFromCrestTop: 1), 
+            Assert.That(cliffEscarpmentOrography.GetFactorAt(verticalDistanceFromCrestTop: 1), 
                 Is.EqualTo(1));
         }
 
@@ -101,7 +101,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.TerrainOrographiesTests
                 Math.Abs(cliffEscarpmentOrography.HorizontalDistanceFromCrestTop)
                 <= cliffEscarpmentOrography.ActualLengthUpwindSlope / 2, Is.False);
 
-            Assert.That(cliffEscarpmentOrography.GetOrographicFactorAt(verticalDistanceFromCrestTop: 1), 
+            Assert.That(cliffEscarpmentOrography.GetFactorAt(verticalDistanceFromCrestTop: 1), 
                 Is.EqualTo(1));
         }
 
@@ -119,7 +119,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.TerrainOrographiesTests
                 < 1.5 * cliffEscarpmentOrography.EffectiveLengthUpwindSlope, Is.False);
 
 
-            Assert.That(cliffEscarpmentOrography.GetOrographicFactorAt(verticalDistanceFromCrestTop: 1), 
+            Assert.That(cliffEscarpmentOrography.GetFactorAt(verticalDistanceFromCrestTop: 1), 
                 Is.EqualTo(1));
         }
 
@@ -137,7 +137,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.TerrainOrographiesTests
                 < 5 * cliffEscarpmentOrography.EffectiveFeatureHeight, Is.False);
 
 
-            Assert.That(cliffEscarpmentOrography.GetOrographicFactorAt(verticalDistanceFromCrestTop: 1),
+            Assert.That(cliffEscarpmentOrography.GetFactorAt(verticalDistanceFromCrestTop: 1),
                 Is.EqualTo(1));
         }
 
@@ -149,7 +149,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.TerrainOrographiesTests
                 effectiveFeatureHeight: 1,
                 horizontalDistanceFromCrestTop: -1);
 
-            Assert.That(cliffEscarpmentOrography.GetOrographicFactorAt(verticalDistanceFromCrestTop: 1), 
+            Assert.That(cliffEscarpmentOrography.GetFactorAt(verticalDistanceFromCrestTop: 1), 
                 Is.EqualTo(1));
         }
 
@@ -173,7 +173,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.TerrainOrographiesTests
                 effectiveFeatureHeight,
                 horizontalDistanceFromCrestTop);
 
-            Assert.That(cliffEscarpmentOrography.GetOrographicFactorAt(verticalDistanceFromCrestTop: 1),
+            Assert.That(cliffEscarpmentOrography.GetFactorAt(verticalDistanceFromCrestTop: 1),
                 Is.EqualTo(expectedResult).Within(0.001));
         }
     }
