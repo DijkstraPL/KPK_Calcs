@@ -11,9 +11,39 @@ namespace Build_IT_WindLoads.Factors
     /// <remarks>[PN-EN 1991-1-4 Eq.6.2]</remarks>
     public class SizeFactor : IFactor
     {
+        #region Fields
+
+        private readonly IFactor _referenceHeight;
+        private readonly IWindLoadData _windLoadData;
+        private readonly IFactor _backgroundFactor;
+
+        #endregion // Fields
+
+        #region Constructors
+        
+        public SizeFactor(IFactor referenceHeight,
+        IWindLoadData windLoadData,
+        IFactor backgroundFactor)
+        {
+            _referenceHeight = referenceHeight;
+            _windLoadData = windLoadData;
+            _backgroundFactor = backgroundFactor;
+        }
+
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         public double GetFactor()
         {
-            throw new NotImplementedException();
+            var referenceHeight = _referenceHeight.GetFactor();
+            var turbulenceIntensity = _windLoadData.GetTurbulenceIntensityAt(referenceHeight);
+            var backgroundFactor = _backgroundFactor.GetFactor();
+
+            return (1 + 7 * turbulenceIntensity * Math.Sqrt(backgroundFactor)) /
+                (1 + 7 * turbulenceIntensity);
         }
+
+        #endregion // Public_Methods
     }
 }

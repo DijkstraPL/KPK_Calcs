@@ -1,9 +1,7 @@
-﻿using Build_IT_WindLoads.Factors.Interfaces;
+﻿using Build_IT_WindLoads.DynamicCharacteristics;
+using Build_IT_WindLoads.Factors.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_WindLoadsTests.UnitTests.DynamicCharacteristicsTests
 {

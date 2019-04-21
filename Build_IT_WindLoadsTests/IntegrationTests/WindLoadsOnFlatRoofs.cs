@@ -14,6 +14,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
         [Test]
         public void ExternalWindPressureCalculationsTest_Roof_MaxValues_Success()
         {
+            //Arrange:
             var windZone = WindZone.III;
             var building = new FlatRoofBuilding(20, 10, 15);
             var terrainOrography = new CliffEscarpmentOrography(
@@ -28,17 +29,23 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
             var windLoadData = new WindLoadData(buildingSite, building);
             var flatRoofWindLoads = new FlatRoofWindLoads(building, windLoadData);
 
+            //Act:
             var result = flatRoofWindLoads.GetExternalWindPressureMaxAt(building.Height);
 
-            Assert.That(result[Field.F], Is.EqualTo(-0.818).Within(0.001));
-            Assert.That(result[Field.G], Is.EqualTo(-0.530).Within(0.001));
-            Assert.That(result[Field.H], Is.EqualTo(-0.258).Within(0.001));
-            Assert.That(result[Field.I], Is.EqualTo(0.074).Within(0.001));
+            //Assert:
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[Field.F], Is.EqualTo(-0.818).Within(0.001));
+                Assert.That(result[Field.G], Is.EqualTo(-0.530).Within(0.001));
+                Assert.That(result[Field.H], Is.EqualTo(-0.258).Within(0.001));
+                Assert.That(result[Field.I], Is.EqualTo(0.074).Within(0.001));
+            });
         }
 
         [Test]
         public void ExternalWindPressureCalculationsTest_Roof_MinValues_Success()
         {
+            //Arrange:
             var windZone = WindZone.III;
             var building = new FlatRoofBuilding(20, 10, 15);
             var terrainOrography = new CliffEscarpmentOrography(
@@ -53,12 +60,17 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
             var windLoadData = new WindLoadData(buildingSite, building);
             var flatRoofWindLoads = new FlatRoofWindLoads(building, windLoadData);
 
+            //Act:
             var result = flatRoofWindLoads.GetExternalWindPressureMinAt(building.Height);
 
-            Assert.That(result[Field.F], Is.EqualTo(-0.818).Within(0.001));
-            Assert.That(result[Field.G], Is.EqualTo(-0.530).Within(0.001));
-            Assert.That(result[Field.H], Is.EqualTo(-0.258).Within(0.001));
-            Assert.That(result[Field.I], Is.EqualTo(-0.074).Within(0.001));
+            //Assert:
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[Field.F], Is.EqualTo(-0.818).Within(0.001));
+                Assert.That(result[Field.G], Is.EqualTo(-0.530).Within(0.001));
+                Assert.That(result[Field.H], Is.EqualTo(-0.258).Within(0.001));
+                Assert.That(result[Field.I], Is.EqualTo(-0.074).Within(0.001));
+            });
         }
     }
 }

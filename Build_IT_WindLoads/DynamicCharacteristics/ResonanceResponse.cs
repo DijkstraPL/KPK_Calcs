@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Build_IT_WindLoadsTests.UnitTests.DynamicCharacteristicsTests
+namespace Build_IT_WindLoads.DynamicCharacteristics
 {
     /// <summary>
     /// R^2
