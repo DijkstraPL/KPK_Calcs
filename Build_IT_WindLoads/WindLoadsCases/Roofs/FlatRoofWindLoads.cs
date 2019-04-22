@@ -4,7 +4,7 @@ using System.Text;
 using Build_IT_WindLoads.BuildingData;
 using Build_IT_WindLoads.BuildingData.Interfaces;
 
-namespace Build_IT_WindLoads.WindLoadsCases
+namespace Build_IT_WindLoads.WindLoadsCases.Roofs
 {
     public class FlatRoofWindLoads : WindLoadCase
     {
@@ -58,7 +58,12 @@ namespace Build_IT_WindLoads.WindLoadsCases
         #endregion // Constructors
 
         #region Public_Methods
-        
+        public override IEnumerable<IDictionary<Field, double>> CalculatePressureCoeffiicients()
+        {
+            yield return GetExternalPressureCoefficientsMax();
+            yield return GetExternalPressureCoefficientsMin();
+        }
+
         public override IDictionary<Field, double> GetExternalPressureCoefficientsMax() 
             => GetExternalPressureCoefficients(
                 _ratioFor10SquareMetersMax, _ratioFor1SquareMeterMax);

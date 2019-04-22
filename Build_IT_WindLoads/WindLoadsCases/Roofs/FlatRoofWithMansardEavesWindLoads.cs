@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Build_IT_WindLoads.WindLoadsCases
+namespace Build_IT_WindLoads.WindLoadsCases.Roofs
 {
     public class FlatRoofWithMansardEavesWindLoads : FlatRoofWindLoads
     {

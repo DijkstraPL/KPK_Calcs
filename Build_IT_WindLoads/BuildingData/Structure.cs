@@ -38,20 +38,14 @@ namespace Build_IT_WindLoads.BuildingData
         public double EdgeDistance 
             => Math.Min(Width, 2 * Height);
         
-        public IDictionary<Field, double> Areas { get;  }
+        public IDictionary<Field, double> Areas { get; }
 
         #endregion // Properties
 
         #region Constructors
-        public Structure(double length, double width, double height)
+      
+        protected Structure()
         {
-            if (length < 0 || width < 0 || height < 0)
-                throw new ArgumentOutOfRangeException("Wrong building dimensions.");
-
-            Length = length;
-            Width = width;
-            Height = height;
-
             Areas = new Dictionary<Field, double>();
         }
 

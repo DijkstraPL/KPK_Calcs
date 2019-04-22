@@ -1,5 +1,6 @@
 ﻿using Build_IT_WindLoads;
 using Build_IT_WindLoads.BuildingData;
+using Build_IT_WindLoads.BuildingData.Walls;
 using Build_IT_WindLoads.DynamicCharacteristics;
 using Build_IT_WindLoads.DynamicCharacteristics.Enums;
 using Build_IT_WindLoads.Factors;
@@ -16,7 +17,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
         public void GetPeakVelocityPressureTest_Success()
         {
             //Arrange:
-            var building = new FlatRoofBuilding(10, 10, 10);
+            var building = new EqualHeightWalls(10, 10, 10);
             var terrain = new TerrainCategoryI();
 
             var buildingSite = new BuildingSite(325, WindZone.I, terrain);
@@ -33,7 +34,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
         public void ExternalWindPressureCalculationsTest_Walls_Success()
         {
             //Arrange:
-            var building = new FlatRoofBuilding(10, 10, 15);
+            var building = new EqualHeightWalls(10, 10, 15);
             var terrain = new TerrainCategoryIII();
             var buildingSite = new BuildingSite(325, WindZone.I_III, terrain);
             var windLoadData = new WindLoadData(buildingSite, building);
@@ -56,7 +57,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
         public void ExternalWindPressureCalculationsTest_AS_SX01a_Success()
         {
             //Arrange:
-            var building = new FlatRoofBuilding(
+            var building = new EqualHeightWalls(
                 length: 72, width: 30, height: 7.3);
             var terrain = new TerrainCategoryII();
             var buildingSite = new BuildingSite(325, WindZone.II, terrain);
@@ -78,7 +79,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
         public void ExternalWindPressureCalculationsTest_8_1a_Success()
         {
             //Arrange:
-            var building = new FlatRoofBuilding(
+            var building = new EqualHeightWalls(
                 length: 28.8, width: 42, height: 10.6);
             var terrain = new TerrainCategoryIII();
             var buildingSite = new BuildingSite(175, WindZone.I, terrain);
@@ -103,7 +104,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
         public void ExternalWindPressureCalculationsTest_8_1b_Success()
         {
             //Arrange:
-            var building = new FlatRoofBuilding(
+            var building = new EqualHeightWalls(
                 length: 28.8, width: 42, height: 10.6, rotated: true);
             var terrain = new TerrainCategoryIII();
             var buildingSite = new BuildingSite(175, WindZone.I, terrain);
@@ -128,7 +129,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
         public void ExternalWindPressureForceCalculationsTest_8_2_48m_Success()
         {
             //Arrange:
-            var building = new FlatRoofBuilding(
+            var building = new EqualHeightWalls(
                 length: 16, width: 20, height: 48);
             var heightDisplacement = new HeightDisplacement(
                 building,
@@ -166,7 +167,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
         public void ExternalWindPressureForceCalculationsTest_8_2_28m_Success()
         {
             //Arrange:
-            var building = new FlatRoofBuilding(
+            var building = new EqualHeightWalls(
                 length: 16, width: 20, height: 48);
             var heightDisplacement = new HeightDisplacement(
                 building,
@@ -204,7 +205,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
         public void ExternalWindPressureForceCalculationsTest_8_2_24m_Success()
         {
             //Arrange:
-            var building = new FlatRoofBuilding(
+            var building = new EqualHeightWalls(
                 length: 16, width: 20, height: 48);
             var heightDisplacement = new HeightDisplacement(
                 building,
@@ -242,7 +243,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
         public void ExternalWindPressureForceCalculationsTest_8_2_20m_Success()
         {
             //Arrange:
-            var building = new FlatRoofBuilding(
+            var building = new EqualHeightWalls(
                 length: 16, width: 20, height: 48);
             var heightDisplacement = new HeightDisplacement(
                 building,

@@ -13,10 +13,14 @@ namespace Build_IT_WindLoads.BuildingData
         E,
         F,
         Fup,
-        Fdown,
+        Flow,
         G,
         H,
         I,
-        J           
+        J,
+        K,
+        L,
+        M,
+        N
     }
 }

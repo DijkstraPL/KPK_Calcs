@@ -3,6 +3,7 @@ using Build_IT_WindLoads.BuildingData;
 using Build_IT_WindLoads.BuildingData.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Build_IT_WindLoads.WindLoadsCases
@@ -83,6 +84,10 @@ namespace Build_IT_WindLoads.WindLoadsCases
         #endregion // Constructors
 
         #region Public_Methods
+        public override IEnumerable<IDictionary<Field, double>> CalculatePressureCoeffiicients()
+        {
+            yield return GetExternalPressureCoefficientsMax();
+        }
 
         public override IDictionary<Field, double> GetExternalPressureCoefficientsMax() 
             => GetExternalPressureCoefficients(

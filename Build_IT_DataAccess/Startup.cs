@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Build_IT_DataAccess.DeadLoads;
 using Build_IT_DataAccess.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter;
@@ -47,6 +48,7 @@ namespace Build_IT_DataAccess
                 .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2); //validate api rules
+            services.AddAutoMapper();
 
             services.AddSwaggerGen(c =>
             {

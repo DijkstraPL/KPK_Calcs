@@ -28,7 +28,8 @@ namespace Build_IT_WindLoads.WindLoadsCases
         #endregion // Constructors
 
         #region Public_Methods
-        
+
+        public abstract IEnumerable<IDictionary<Field, double>> CalculatePressureCoeffiicients();
         public abstract IDictionary<Field, double> GetExternalPressureCoefficientsMax();
         public abstract IDictionary<Field, double> GetExternalPressureCoefficientsMin();
         public IDictionary<Field, double> GetExternalWindPressureMaxAt(double height) 

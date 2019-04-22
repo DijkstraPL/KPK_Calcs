@@ -83,7 +83,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_WindLoadsTests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_CommonToolsTests", "Build_IT_CommonToolsTests\Build_IT_CommonToolsTests.csproj", "{3525816F-B0CE-4E34-A8C8-63BEAF833767}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_DataAccess", "Build_IT_DataAccess\Build_IT_DataAccess.csproj", "{94C5B27B-04E4-4079-9042-61438FB55233}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_DataAccess", "Build_IT_DataAccess\Build_IT_DataAccess.csproj", "{94C5B27B-04E4-4079-9042-61438FB55233}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{61760961-630E-4700-BAC6-2B4146EF2378}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -223,6 +225,10 @@ Global
 		{94C5B27B-04E4-4079-9042-61438FB55233}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94C5B27B-04E4-4079-9042-61438FB55233}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94C5B27B-04E4-4079-9042-61438FB55233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61760961-630E-4700-BAC6-2B4146EF2378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61760961-630E-4700-BAC6-2B4146EF2378}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61760961-630E-4700-BAC6-2B4146EF2378}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61760961-630E-4700-BAC6-2B4146EF2378}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -256,6 +262,7 @@ Global
 		{668246E3-39E5-4B1A-8CEA-841126D5F928} = {1FDA7CCD-245E-4EC6-8FFE-7516EF1B6653}
 		{1F109729-7F45-40BE-9C2B-0461679F11BC} = {6165029B-5A29-4072-8AEC-846930E60CC8}
 		{56E60EB5-3A84-4EB3-95F9-F614DF6B7810} = {6165029B-5A29-4072-8AEC-846930E60CC8}
+		{61760961-630E-4700-BAC6-2B4146EF2378} = {A40DE304-E38C-474C-A505-14DCCFCB2F87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CA0BB8B8-AA0B-4BDB-A7E3-BD809F704A43}
