@@ -16,7 +16,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.DynamicCharacteristicsTests
         public void GetFactorTest_Success()
         {
             var windLoadData = new Mock<IWindLoadData>();
-            windLoadData.Setup(b => b.GetMeanWindVelocityAt(2)).Returns(1);
+            windLoadData.Setup(b => b.GetMeanWindVelocityAt(2, false)).Returns(1);
             var fundamentalFlexuralFrequency = new Mock<IFactor>();
             fundamentalFlexuralFrequency.Setup(rh => rh.GetFactor()).Returns(3);
             var turbulentLengthScale = new Mock<IFactorAt>();
