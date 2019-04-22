@@ -13,7 +13,6 @@ namespace Build_IT_WindLoads.Terrains
     {
         #region Fields
 
-        private readonly ITerrain _terrain;
         private readonly IStructure _building;
 
         #endregion // Fields
@@ -32,12 +31,10 @@ namespace Build_IT_WindLoads.Terrains
 
         #region Constructors
 
-        public HeightDisplacement(ITerrain terrain,
-            IStructure building,
+        public HeightDisplacement(IStructure building,
             double horizontalDistanceToObstruction,
             double obstructionHeight = 15)
         {
-            _terrain = terrain;
             _building = building;
             HorizontalDistanceToObstruction = horizontalDistanceToObstruction;
             ObstructionsHeight = obstructionHeight;

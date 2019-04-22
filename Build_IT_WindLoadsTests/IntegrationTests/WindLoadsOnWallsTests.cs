@@ -1,5 +1,8 @@
 ﻿using Build_IT_WindLoads;
 using Build_IT_WindLoads.BuildingData;
+using Build_IT_WindLoads.DynamicCharacteristics;
+using Build_IT_WindLoads.DynamicCharacteristics.Enums;
+using Build_IT_WindLoads.Factors;
 using Build_IT_WindLoads.Terrains;
 using Build_IT_WindLoads.WindLoadsCases;
 using NUnit.Framework;
@@ -118,6 +121,158 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
                 Assert.That(result[Field.C], Is.EqualTo(-0.294).Within(0.001));
                 Assert.That(result[Field.D], Is.EqualTo(0.411).Within(0.001));
                 Assert.That(result[Field.E], Is.EqualTo(-0.177).Within(0.001));
+            });
+        }
+        
+        [Test]
+        public void ExternalWindPressureForceCalculationsTest_8_2_48m_Success()
+        {
+            //Arrange:
+            var building = new FlatRoofBuilding(
+                length: 16, width: 20, height: 48);
+            var heightDisplacement = new HeightDisplacement(
+                building,
+                horizontalDistanceToObstruction: 10,
+                obstructionHeight: 15);
+            var terrain = new TerrainCategoryIV(heightDisplacement);
+            var buildingSite = new BuildingSite(360, WindZone.III, terrain);
+            var windLoadData = new WindLoadData(buildingSite, building);
+            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+
+            var structuralFactorCalculator = new StructuralFactorCalculator(
+                building, terrain, windLoadData, StructuralType.SteelBuilding);
+
+            var externalPressureWindForce = 
+                new ExternalPressureWindForce(
+                    windLoadData, 
+                    verticalWallOfRectangularBuilding, 
+                    structuralFactorCalculator);
+
+            //Act:
+            var result = externalPressureWindForce.GetExternalPressureWindForceMaxAt(
+                building.Height, calculateStructuralFactor: true);
+
+            //Assert:
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[Field.A], Is.EqualTo(-0.628).Within(0.001));
+                Assert.That(result[Field.B], Is.EqualTo(-0.418).Within(0.001));
+                Assert.That(result[Field.D], Is.EqualTo(0.418).Within(0.001));
+                Assert.That(result[Field.E], Is.EqualTo(-0.314).Within(0.001));
+            });
+        }
+
+        [Test]
+        public void ExternalWindPressureForceCalculationsTest_8_2_28m_Success()
+        {
+            //Arrange:
+            var building = new FlatRoofBuilding(
+                length: 16, width: 20, height: 48);
+            var heightDisplacement = new HeightDisplacement(
+                building,
+                horizontalDistanceToObstruction: 10,
+                obstructionHeight: 15);
+            var terrain = new TerrainCategoryIV(heightDisplacement);
+            var buildingSite = new BuildingSite(360, WindZone.III, terrain);
+            var windLoadData = new WindLoadData(buildingSite, building);
+            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+
+            var structuralFactorCalculator = new StructuralFactorCalculator(
+                building, terrain, windLoadData, StructuralType.SteelBuilding);
+
+            var externalPressureWindForce =
+                new ExternalPressureWindForce(
+                    windLoadData,
+                    verticalWallOfRectangularBuilding,
+                    structuralFactorCalculator);
+
+            //Act:
+            var result = externalPressureWindForce.GetExternalPressureWindForceMaxAt(
+                28, calculateStructuralFactor: true);
+
+            //Assert:
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[Field.A], Is.EqualTo(-0.507).Within(0.001));
+                Assert.That(result[Field.B], Is.EqualTo(-0.338).Within(0.001));
+                Assert.That(result[Field.D], Is.EqualTo(0.338).Within(0.001));
+                Assert.That(result[Field.E], Is.EqualTo(-0.254).Within(0.001));
+            });
+        }
+        
+        [Test]
+        public void ExternalWindPressureForceCalculationsTest_8_2_24m_Success()
+        {
+            //Arrange:
+            var building = new FlatRoofBuilding(
+                length: 16, width: 20, height: 48);
+            var heightDisplacement = new HeightDisplacement(
+                building,
+                horizontalDistanceToObstruction: 10,
+                obstructionHeight: 15);
+            var terrain = new TerrainCategoryIV(heightDisplacement);
+            var buildingSite = new BuildingSite(360, WindZone.III, terrain);
+            var windLoadData = new WindLoadData(buildingSite, building);
+            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+
+            var structuralFactorCalculator = new StructuralFactorCalculator(
+                building, terrain, windLoadData, StructuralType.SteelBuilding);
+
+            var externalPressureWindForce =
+                new ExternalPressureWindForce(
+                    windLoadData,
+                    verticalWallOfRectangularBuilding,
+                    structuralFactorCalculator);
+
+            //Act:
+            var result = externalPressureWindForce.GetExternalPressureWindForceMaxAt(
+                24, calculateStructuralFactor: true);
+
+            //Assert:
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[Field.A], Is.EqualTo(-0.479).Within(0.001));
+                Assert.That(result[Field.B], Is.EqualTo(-0.319).Within(0.001));
+                Assert.That(result[Field.D], Is.EqualTo(0.319).Within(0.001));
+                Assert.That(result[Field.E], Is.EqualTo(-0.239).Within(0.001));
+            });
+        }
+
+        [Test]
+        public void ExternalWindPressureForceCalculationsTest_8_2_20m_Success()
+        {
+            //Arrange:
+            var building = new FlatRoofBuilding(
+                length: 16, width: 20, height: 48);
+            var heightDisplacement = new HeightDisplacement(
+                building,
+                horizontalDistanceToObstruction: 10,
+                obstructionHeight: 15);
+            var terrain = new TerrainCategoryIV(heightDisplacement);
+            var buildingSite = new BuildingSite(360, WindZone.III, terrain);
+            var windLoadData = new WindLoadData(buildingSite, building);
+            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+
+            var structuralFactorCalculator = new StructuralFactorCalculator(
+                building, terrain, windLoadData, StructuralType.SteelBuilding);
+
+            var externalPressureWindForce =
+                new ExternalPressureWindForce(
+                    windLoadData,
+                    verticalWallOfRectangularBuilding,
+                    structuralFactorCalculator);
+
+            //Act:
+            var result = externalPressureWindForce.GetExternalPressureWindForceMaxAt(
+                20, calculateStructuralFactor: true);
+
+            //Assert:
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[Field.A], Is.EqualTo(-0.464).Within(0.001));
+                Assert.That(result[Field.B], Is.EqualTo(-0.309).Within(0.001));
+                Assert.That(result[Field.D], Is.EqualTo(0.309).Within(0.001));
+                Assert.That(result[Field.E], Is.EqualTo(-0.232).Within(0.001));
             });
         }
     }

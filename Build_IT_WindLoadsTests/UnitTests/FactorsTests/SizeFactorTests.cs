@@ -19,7 +19,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.FactorsTests
             var referenceHeight = new Mock<IFactor>();
             referenceHeight.Setup(rh => rh.GetFactor()).Returns(2);
             var windLoadData = new Mock<IWindLoadData>();
-            windLoadData.Setup(wld => wld.GetTurbulenceIntensityAt(2)).Returns(3);
+            windLoadData.Setup(wld => wld.GetTurbulenceIntensityAt(2, false)).Returns(3);
             var backgroundFactor = new Mock<IFactor>();
             backgroundFactor.Setup(bf => bf.GetFactor()).Returns(5);
 

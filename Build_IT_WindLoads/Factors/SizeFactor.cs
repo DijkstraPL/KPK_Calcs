@@ -37,7 +37,9 @@ namespace Build_IT_WindLoads.Factors
         public double GetFactor()
         {
             var referenceHeight = _referenceHeight.GetFactor();
-            var turbulenceIntensity = _windLoadData.GetTurbulenceIntensityAt(referenceHeight);
+            var turbulenceIntensity = 
+                _windLoadData.GetTurbulenceIntensityAt(
+                    referenceHeight, adjustHeight: false);
             var backgroundFactor = _backgroundFactor.GetFactor();
 
             return (1 + 7 * turbulenceIntensity * Math.Sqrt(backgroundFactor)) /

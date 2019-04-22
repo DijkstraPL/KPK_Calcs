@@ -8,7 +8,7 @@ namespace Build_IT_DataAccess.DeadLoads.Models
     {
         public long Id { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(200)]
         public string Name { get; set; }
         [Required]
         public double MinimumDensity { get; set; }

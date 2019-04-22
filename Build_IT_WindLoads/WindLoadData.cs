@@ -58,9 +58,10 @@ namespace Build_IT_WindLoads
         /// 
         /// </summary>
         /// <remarks>[PN-EN 1991-1-4 Eq.4.3]</remarks>
-        public double GetMeanWindVelocityAt(double height)
+        public double GetMeanWindVelocityAt(double height, bool adjustHeight = true)
         {
-            height = SetHeight(height);
+            if (adjustHeight)
+                height = SetHeight(height);
 
             var terrain = _buildingSite.Terrain;
             return terrain.GetRoughnessFactorAt(height) *
@@ -73,9 +74,10 @@ namespace Build_IT_WindLoads
         /// 
         /// </summary>
         /// <remarks>[PN-EN 1991-1-4 Eq.4.7]</remarks>
-        public double GetTurbulenceIntensityAt(double height)
+        public double GetTurbulenceIntensityAt(double height, bool adjustHeight = true)
         {
-            height = SetHeight(height);
+            if (adjustHeight)
+                height = SetHeight(height);
 
             var terrain = _buildingSite.Terrain;
             if (height < terrain.MinimumHeight)
@@ -88,8 +90,6 @@ namespace Build_IT_WindLoads
 
         public double GetPeakVelocityPressureAt(double height)
         {
-            height = SetHeight(height);
-
             return (1 + 7 * GetTurbulenceIntensityAt(height)) * 0.5 * _airDensity *
                 Math.Pow(GetMeanWindVelocityAt(height), 2) / 1000; // Change to kN/m2
         }

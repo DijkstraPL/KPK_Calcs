@@ -20,8 +20,7 @@ namespace Build_IT_WindLoads.DynamicCharacteristics
         private readonly IFactorAt _nondimensionalFrequency;
 
         #endregion // Fields
-
-
+        
         #region Constructors
 
         public AerodynamicAdmittanceHeight(

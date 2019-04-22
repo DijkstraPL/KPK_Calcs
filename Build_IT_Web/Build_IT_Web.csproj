@@ -10,15 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190106200417_SeedDatabase.cs" />
-    <Compile Remove="Migrations\20190106200417_SeedDatabase.Designer.cs" />
-    <Compile Remove="Migrations\20190106233252_AddedParameterLink.cs" />
-    <Compile Remove="Migrations\20190106233252_AddedParameterLink.Designer.cs" />
-    <Compile Remove="Migrations\20190114192527_ManyToManyRelation.cs" />
-    <Compile Remove="Migrations\20190114192527_ManyToManyRelation.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="ClientApp\app\common\app-error.ts" />
     <None Remove="ClientApp\app\common\errors\app-error-handler.ts" />
     <None Remove="ClientApp\app\common\errors\bad-input-error.ts" />

@@ -17,7 +17,8 @@ namespace Build_IT_WindLoadsTests.UnitTests.FactorsTests
         {
             //Arrange:
             var referenceHeight = Mock.Of<IFactor>(rh => rh.GetFactor() == 2);
-            var windLoadData = Mock.Of<IWindLoadData>(wld => wld.GetTurbulenceIntensityAt(2) == 3);
+            var windLoadData = Mock.Of<IWindLoadData>(wld 
+                => wld.GetTurbulenceIntensityAt(2, false) == 3);
             var peakFactor = Mock.Of<IFactor>(f => f.GetFactor() == 7);
             var backgroundFactor = Mock.Of<IFactor>(bf => bf.GetFactor() == 5);
             var resonanceResponse = Mock.Of<IFactor>(bf => bf.GetFactor() == 11);

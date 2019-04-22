@@ -38,7 +38,7 @@ namespace Build_IT_WindLoads.DynamicCharacteristics
         {
             var fundamentalFlexuralFrequency  = _fundamentalFlexuralFrequency.GetFactor();
             var turbulentLengthScale = _turbulentLengthScale.GetFactorAt(height);
-            var meanWindVelocity = _windLoadData.GetMeanWindVelocityAt(height);
+            var meanWindVelocity = _windLoadData.GetMeanWindVelocityAt(height, adjustHeight:false);
             return fundamentalFlexuralFrequency * turbulentLengthScale / meanWindVelocity;
         }
 

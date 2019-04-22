@@ -15,7 +15,6 @@ namespace Build_IT_WindLoadsTests.UnitTests.TerrainsTests
             var terrain = new Mock<ITerrain>();
             var building = new Mock<IStructure>();
             var heightDisplacement = new HeightDisplacement(
-                terrain.Object, 
                 building.Object,
                 horizontalDistanceToObstruction: 10, 
                 obstructionHeight: 12);
@@ -39,7 +38,6 @@ namespace Build_IT_WindLoadsTests.UnitTests.TerrainsTests
             var building = new Mock<IStructure>();
             building.Setup(b => b.Height).Returns(10);
             var heightDisplacement = new HeightDisplacement(
-                terrain.Object,
                 building.Object,
                 horizontalDistanceToObstruction,
                 obstructionHeight);
