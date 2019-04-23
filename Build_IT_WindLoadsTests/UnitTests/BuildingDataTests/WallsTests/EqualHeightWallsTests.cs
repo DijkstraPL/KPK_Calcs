@@ -24,7 +24,8 @@ namespace Build_IT_WindLoadsTests.UnitTests.BuildingDataTests.WallsTests
         [Test]
         public void ConstructorTest_Walls_Rotated_Success()
         {
-            var building = new EqualHeightWalls(length: 10, width: 5, height: 3, rotated: true);
+            var building = new EqualHeightWalls(length: 10, width: 5, height: 3, 
+                EqualHeightWalls.Rotation.Degrees_90);
 
             Assert.That(building.Length, Is.EqualTo(5));
             Assert.That(building.Width, Is.EqualTo(10));

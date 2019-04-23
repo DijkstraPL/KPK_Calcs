@@ -11,7 +11,7 @@ using System.Text;
 namespace Build_IT_WindLoadsTests.UnitTests.WindLoadsCasesTesrs
 {
     [TestFixture]
-    public class VerticalWallsOfRectangularBuildingTests
+    public class WallsWindLoadsTests
     {
         [Test]
         [TestCase(0.5,-1.4)]
@@ -31,7 +31,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.WindLoadsCasesTesrs
             building.Setup(b => b.Width).Returns(10);
             var windLoadData = new Mock<IWindLoadData>();
             var verticalWallOfRectangularBuilding
-                = new VerticalWallsOfRectangularBuilding(
+                = new WallsWindLoads(
                     building.Object, windLoadData.Object);
 
             var result = verticalWallOfRectangularBuilding.GetExternalPressureCoefficientsMax();
@@ -57,7 +57,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.WindLoadsCasesTesrs
             building.Setup(b => b.Width).Returns(20);
             var windLoadData = new Mock<IWindLoadData>();
             var verticalWallOfRectangularBuilding
-                = new VerticalWallsOfRectangularBuilding(
+                = new WallsWindLoads(
                     building.Object, windLoadData.Object);
 
             var result = verticalWallOfRectangularBuilding.GetExternalPressureCoefficientsMax();
@@ -84,7 +84,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.WindLoadsCasesTesrs
             var windLoadData = new Mock<IWindLoadData>();
             windLoadData.Setup(wld => wld.GetPeakVelocityPressureAt(height)).Returns(3);
             var verticalWallOfRectangularBuilding
-                = new VerticalWallsOfRectangularBuilding(
+                = new WallsWindLoads(
                     building.Object, windLoadData.Object);
 
             var result = verticalWallOfRectangularBuilding.GetExternalWindPressureMaxAt(height);

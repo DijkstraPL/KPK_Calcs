@@ -12,12 +12,13 @@ namespace Build_IT_WindLoads.BuildingData.Walls
         #region Constructors
 
         public EqualHeightWalls(
-            double length, double width, double height, bool rotated = false) : base()
+            double length, double width, double height, 
+            Rotation rotation = Rotation.Degrees_0) : base()
         {
             if (length < 0 || width < 0 || height < 0)
                 throw new ArgumentOutOfRangeException("Wrong building dimensions.");
 
-            if (rotated)
+            if (rotation == Rotation.Degrees_90)
             {
                 Length = width;
                 Width = length;
@@ -58,5 +59,15 @@ namespace Build_IT_WindLoads.BuildingData.Walls
         }
 
         #endregion // Private_Methods
+
+        #region Enums
+
+        public enum Rotation
+        {
+            Degrees_0,
+            Degrees_90
+        }
+
+        #endregion // Enums
     }
 }

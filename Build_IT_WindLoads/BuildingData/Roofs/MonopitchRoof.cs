@@ -8,7 +8,7 @@ namespace Build_IT_WindLoads.BuildingData
     public class MonopitchRoof : Structure, IMonopitchRoof
     {
         #region Properties
-        
+
         public Rotation CurrentRotation { get; }
         public double MaxHeight { get; private set; }
         public double MinHeight { get; private set; }
@@ -28,7 +28,6 @@ namespace Build_IT_WindLoads.BuildingData
             MaxHeight = maxHeight;
             MinHeight = minHeight;
             Height = MaxHeight;
-            Angle = Math.Atan((MaxHeight - MinHeight) / Length) * 180 / Math.PI;
 
             if (CurrentRotation == Rotation.Degrees_0 ||
                 CurrentRotation == Rotation.Degrees_180)
@@ -44,6 +43,7 @@ namespace Build_IT_WindLoads.BuildingData
             else
                 throw new ArgumentException(nameof(CurrentRotation));
 
+            Angle = Math.Atan((MaxHeight - MinHeight) / Length) * 180 / Math.PI;
             SetRoofAreas();
         }
 
@@ -60,14 +60,14 @@ namespace Build_IT_WindLoads.BuildingData
 
         private void SetRoofAreas()
         {
-            if(CurrentRotation == Rotation.Degrees_0 ||
+            if (CurrentRotation == Rotation.Degrees_0 ||
                 CurrentRotation == Rotation.Degrees_180)
             {
                 Areas.Add(Field.F, EdgeDistance / 4 * EdgeDistance / 10);
                 Areas.Add(Field.G, (Width - 2 * EdgeDistance / 4) * EdgeDistance / 10);
                 Areas.Add(Field.H, (Length - EdgeDistance / 10) * Width);
             }
-            else if(CurrentRotation == Rotation.Degrees_90)
+            else if (CurrentRotation == Rotation.Degrees_90)
             {
                 Areas.Add(Field.Fup, EdgeDistance / 4 * EdgeDistance / 10);
                 Areas.Add(Field.Flow, EdgeDistance / 4 * EdgeDistance / 10);
@@ -75,13 +75,14 @@ namespace Build_IT_WindLoads.BuildingData
                 Areas.Add(Field.H, (EdgeDistance / 2 - EdgeDistance / 10) * Width);
                 Areas.Add(Field.I, (Length - EdgeDistance / 2) * Width);
             }
-            throw new ArgumentException(nameof(CurrentRotation));
+            else
+                throw new ArgumentException(nameof(CurrentRotation));
         }
 
         #endregion // Private_Methods
 
         #region Enums
-        
+
         public enum Rotation
         {
             Degrees_0,

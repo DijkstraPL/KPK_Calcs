@@ -24,7 +24,8 @@ namespace Build_IT_WindLoadsTests.UnitTests.BuildingDataTests.RoofsTests
         [Test]
         public void ConstructorTest_Roof_Rotated_Success()
         {
-            var building = new FlatRoof(length: 10, width: 5, height: 3, rotated: true);
+            var building = new FlatRoof(length: 10, width: 5, height: 3, 
+                FlatRoof.Rotation.Degrees_90);
 
             Assert.That(building.Length, Is.EqualTo(5));
             Assert.That(building.Width, Is.EqualTo(10));
@@ -35,7 +36,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.BuildingDataTests.RoofsTests
         [Test]
         [TestCase(3, 5)]
         [TestCase(1, 2)]
-        public void EdgeDistanceTest_Roof_WidthIsSmaller_Success(double height, double expectedResult)
+        public void EdgeDistanceTest_Roof_Success(double height, double expectedResult)
         {
             var building = new FlatRoof(length: 10, width: 5, height: height);
 

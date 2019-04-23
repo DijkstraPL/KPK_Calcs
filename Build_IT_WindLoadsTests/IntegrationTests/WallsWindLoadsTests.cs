@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Build_IT_WindLoadsTests.IntegrationTests
 {
     [TestFixture]
-    public class WindLoadsOnWallsTests
+    public class WallsWindLoadsTests
     {
         [Test]
         public void GetPeakVelocityPressureTest_Success()
@@ -38,7 +38,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
             var terrain = new TerrainCategoryIII();
             var buildingSite = new BuildingSite(325, WindZone.I_III, terrain);
             var windLoadData = new WindLoadData(buildingSite, building);
-            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+            var verticalWallOfRectangularBuilding = new WallsWindLoads(building, windLoadData);
 
             //Act:
             var result = verticalWallOfRectangularBuilding.GetExternalWindPressureMaxAt(building.Height);
@@ -62,7 +62,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
             var terrain = new TerrainCategoryII();
             var buildingSite = new BuildingSite(325, WindZone.II, terrain);
             var windLoadData = new WindLoadData(buildingSite, building);
-            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+            var verticalWallOfRectangularBuilding = new WallsWindLoads(building, windLoadData);
 
             //Act:
             var result = verticalWallOfRectangularBuilding.GetExternalWindPressureMaxAt(building.Height);
@@ -84,7 +84,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
             var terrain = new TerrainCategoryIII();
             var buildingSite = new BuildingSite(175, WindZone.I, terrain);
             var windLoadData = new WindLoadData(buildingSite, building);
-            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+            var verticalWallOfRectangularBuilding = new WallsWindLoads(building, windLoadData);
 
             //Act:
             var result = verticalWallOfRectangularBuilding.GetExternalWindPressureMaxAt(building.Height);
@@ -105,11 +105,12 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
         {
             //Arrange:
             var building = new EqualHeightWalls(
-                length: 28.8, width: 42, height: 10.6, rotated: true);
+                length: 28.8, width: 42, height: 10.6, 
+                EqualHeightWalls.Rotation.Degrees_90);
             var terrain = new TerrainCategoryIII();
             var buildingSite = new BuildingSite(175, WindZone.I, terrain);
             var windLoadData = new WindLoadData(buildingSite, building);
-            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+            var verticalWallOfRectangularBuilding = new WallsWindLoads(building, windLoadData);
 
             //Act:
             var result = verticalWallOfRectangularBuilding.GetExternalWindPressureMaxAt(building.Height);
@@ -138,7 +139,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
             var terrain = new TerrainCategoryIV(heightDisplacement);
             var buildingSite = new BuildingSite(360, WindZone.III, terrain);
             var windLoadData = new WindLoadData(buildingSite, building);
-            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+            var verticalWallOfRectangularBuilding = new WallsWindLoads(building, windLoadData);
 
             var structuralFactorCalculator = new StructuralFactorCalculator(
                 building, terrain, windLoadData, StructuralType.SteelBuilding);
@@ -176,7 +177,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
             var terrain = new TerrainCategoryIV(heightDisplacement);
             var buildingSite = new BuildingSite(360, WindZone.III, terrain);
             var windLoadData = new WindLoadData(buildingSite, building);
-            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+            var verticalWallOfRectangularBuilding = new WallsWindLoads(building, windLoadData);
 
             var structuralFactorCalculator = new StructuralFactorCalculator(
                 building, terrain, windLoadData, StructuralType.SteelBuilding);
@@ -214,7 +215,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
             var terrain = new TerrainCategoryIV(heightDisplacement);
             var buildingSite = new BuildingSite(360, WindZone.III, terrain);
             var windLoadData = new WindLoadData(buildingSite, building);
-            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+            var verticalWallOfRectangularBuilding = new WallsWindLoads(building, windLoadData);
 
             var structuralFactorCalculator = new StructuralFactorCalculator(
                 building, terrain, windLoadData, StructuralType.SteelBuilding);
@@ -252,7 +253,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
             var terrain = new TerrainCategoryIV(heightDisplacement);
             var buildingSite = new BuildingSite(360, WindZone.III, terrain);
             var windLoadData = new WindLoadData(buildingSite, building);
-            var verticalWallOfRectangularBuilding = new VerticalWallsOfRectangularBuilding(building, windLoadData);
+            var verticalWallOfRectangularBuilding = new WallsWindLoads(building, windLoadData);
 
             var structuralFactorCalculator = new StructuralFactorCalculator(
                 building, terrain, windLoadData, StructuralType.SteelBuilding);

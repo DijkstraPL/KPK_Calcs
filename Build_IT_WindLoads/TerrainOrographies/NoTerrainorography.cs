@@ -2,7 +2,7 @@
 
 namespace Build_IT_WindLoads.TerrainOrographies
 {
-    internal class NoTerrainorography : IFactorAt
+    internal class NoTerrainOrography : IFactorAt
     {
         #region Public_Methods
 

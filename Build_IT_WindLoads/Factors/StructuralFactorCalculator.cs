@@ -39,7 +39,7 @@ namespace Build_IT_WindLoads.Factors
 
         #region Public_Methods
 
-        public double GetStructuralFactor(bool calculate)
+        public double GetStructuralFactor(bool calculate = true)
         {
             if (!calculate || _building.Height < 15)
                 return 1;

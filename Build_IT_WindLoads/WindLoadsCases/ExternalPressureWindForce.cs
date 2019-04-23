@@ -33,6 +33,15 @@ namespace Build_IT_WindLoads.WindLoadsCases
 
         #region Public_Methods
 
+        public IEnumerable<IDictionary<Field, double>> CalculateExternalPressureWindForceAt(
+             double height, bool calculateStructuralFactor)
+        {
+            foreach (var pressureCoefficients in _windLoadCase.CalculatePressureCoeffiicients())
+                yield return GetExternalPressureWindForceFor(
+                 pressureCoefficients,
+                 calculateStructuralFactor);
+        }
+
         public IDictionary<Field, double> GetExternalPressureWindForceMaxAt(
             double height, bool calculateStructuralFactor)
              => GetExternalPressureWindForceFor(

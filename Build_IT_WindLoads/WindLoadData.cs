@@ -4,7 +4,9 @@ using Build_IT_WindLoads.Terrains;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Build_IT_WindLoadsTests")]
 namespace Build_IT_WindLoads
 {
     public class WindLoadData : IWindLoadData

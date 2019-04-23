@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Build_IT_WindLoads.WindLoadsCases
 {
-    public class VerticalWallsOfRectangularBuilding : WindLoadCase
+    public class WallsWindLoads : WindLoadCase
     {
         #region Fields
         
@@ -76,7 +76,7 @@ namespace Build_IT_WindLoads.WindLoadsCases
 
         #region Constructors
 
-        public VerticalWallsOfRectangularBuilding(IStructure building, IWindLoadData windLoadData)
+        public WallsWindLoads(IStructure building, IWindLoadData windLoadData)
             : base(building, windLoadData)
         {
         }

@@ -28,7 +28,6 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
             OuterHeight = outerHeight;
             MiddleHeight = middleHeight;
             Height = Math.Max(MiddleHeight, OuterHeight);
-            Angle = Math.Atan((MiddleHeight - OuterHeight) / (Length / 2)) * 180 / Math.PI;
 
             if (CurrentRotation == Rotation.Degrees_0)
             {
@@ -42,6 +41,8 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
             }
             else
                 throw new ArgumentException(nameof(CurrentRotation));
+
+            Angle = Math.Atan((MiddleHeight - OuterHeight) / (Length / 2)) * 180 / Math.PI;
 
             SetRoofAreas();
         }
@@ -74,7 +75,8 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
                 Areas.Add(Field.H, (EdgeDistance / 2 - EdgeDistance / 10) * Width);
                 Areas.Add(Field.I, (Length - EdgeDistance / 2) * Width);
             }
-            throw new ArgumentException(nameof(CurrentRotation));
+            else
+                throw new ArgumentException(nameof(CurrentRotation));
         }
 
         #endregion // Private_Methods

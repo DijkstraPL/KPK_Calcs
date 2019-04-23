@@ -92,7 +92,7 @@ namespace Build_IT_WindLoads.Terrains
             double maximumHeight, 
             IFactorAt terrainOrography)
         {
-            TerrainOrography = terrainOrography ?? new NoTerrainorography();
+            TerrainOrography = terrainOrography ?? new NoTerrainOrography();
             RoughnessLength = roughnessLength;
             MinimumHeight = minimumHeight;
             MaximumHeight = maximumHeight;
