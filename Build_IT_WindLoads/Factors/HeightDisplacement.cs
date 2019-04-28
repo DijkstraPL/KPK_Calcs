@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Build_IT_WindLoads.Terrains
+namespace Build_IT_WindLoads.Factors
 {
     public class HeightDisplacement : IFactor
     {

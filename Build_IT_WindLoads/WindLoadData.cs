@@ -1,5 +1,6 @@
 ﻿using Build_IT_CommonTools;
 using Build_IT_WindLoads.BuildingData.Interfaces;
+using Build_IT_WindLoads.Factors.Interfaces;
 using Build_IT_WindLoads.Terrains;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace Build_IT_WindLoads
         private readonly IBuildingSite _buildingSite;
         private readonly IStructure _building;
         private readonly double _heightStrip;
-        private readonly bool _customReferenceHeight;
+        private readonly bool _allowCustomReferenceHeight;
+        private readonly IFactorAt _referenceHeightDueToNeighbouringStructures;
 
         [Abbreviation("k_l")]
         [Unit("")]
@@ -33,12 +35,14 @@ namespace Build_IT_WindLoads
         #region Constructors
 
         public WindLoadData(IBuildingSite buildingSite, IStructure building,
-            double heightStrip = 1, bool customReferenceHeight = false)
+            double heightStrip = 1, bool allowCustomReferenceHeight = false, 
+            IFactorAt referenceHeightDueToNeighbouringStructures = null)
         {
             _buildingSite = buildingSite;
             _building = building;
             _heightStrip = heightStrip;
-            _customReferenceHeight = customReferenceHeight;
+            _allowCustomReferenceHeight = allowCustomReferenceHeight;
+            _referenceHeightDueToNeighbouringStructures = referenceHeightDueToNeighbouringStructures;
 
             SetAirDensity();
             SetReferenceHeights();
@@ -90,10 +94,10 @@ namespace Build_IT_WindLoads
                 Math.Log(height / terrain.RoughnessLength));
         }
 
-        public double GetPeakVelocityPressureAt(double height)
+        public double GetPeakVelocityPressureAt(double height, bool adjustHeight = true)
         {
-            return (1 + 7 * GetTurbulenceIntensityAt(height)) * 0.5 * _airDensity *
-                Math.Pow(GetMeanWindVelocityAt(height), 2) / 1000; // Change to kN/m2
+            return (1 + 7 * GetTurbulenceIntensityAt(height, adjustHeight)) * 0.5 * _airDensity *
+                Math.Pow(GetMeanWindVelocityAt(height, adjustHeight), 2) / 1000; // Change to kN/m2
         }
 
         #endregion // Public_Methods
@@ -102,18 +106,21 @@ namespace Build_IT_WindLoads
 
         private double SetHeight(double height)
         {
-            if (!_customReferenceHeight)
+            if (!_allowCustomReferenceHeight)
                 height = GetReferenceHeightAt(height);
             if (_buildingSite.Terrain.HeightDisplacement != null)
                 height -= _buildingSite.Terrain.HeightDisplacement.GetFactor();
+            if (_referenceHeightDueToNeighbouringStructures != null)
+                height = _referenceHeightDueToNeighbouringStructures.GetFactorAt(height);
 
             return height;
         }
 
         private void SetAirDensity()
         {
-            if (_buildingSite.WindZone == WindZone.III ||
-                _buildingSite.WindZone == WindZone.I_III)
+            if (_buildingSite.HeightAboveSeaLevel > 300 &&
+                (_buildingSite.WindZone == WindZone.III ||
+                _buildingSite.WindZone == WindZone.I_III))
                 _airDensity = 1.25 *
                         (20000 - _buildingSite.HeightAboveSeaLevel) /
                         (20000 + _buildingSite.HeightAboveSeaLevel);

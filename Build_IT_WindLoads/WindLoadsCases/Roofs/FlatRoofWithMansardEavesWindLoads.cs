@@ -186,19 +186,14 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
             IDictionary<Field, double> ratio45,
             IDictionary<Field, double> ratio60)
         {
-            if (Angle < 0)
-                throw new ArgumentOutOfRangeException("Parapet height or building height is less than 0.");
+            if (Angle < 30)
+                throw new ArgumentOutOfRangeException(nameof(Angle));
             if (Angle == 30)
                 return ratio30;
             else if (Angle == 45)
                 return ratio45;
             else if (Angle == 60)
                 return ratio60;
-            else if (Angle < 30)
-                return InterpolateBetweenFor(
-                    (30, ratio30),
-                    (0, ratio0),
-                    Angle);
             else if (Angle < 45)
                 return InterpolateBetweenFor(
                     (45, ratio45),
@@ -208,6 +203,11 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
                 return InterpolateBetweenFor(
                     (60, ratio60),
                     (45, ratio45),
+                    Angle);
+            else if (Angle > 60)
+                return InterpolateBetweenFor(
+                    (90, ratio0),
+                    (60, ratio60),
                     Angle);
 
             throw new ArgumentOutOfRangeException();

@@ -1,10 +1,11 @@
 ﻿using Build_IT_WindLoads.BuildingData.Interfaces;
+using Build_IT_WindLoads.Factors;
 using Build_IT_WindLoads.Terrains;
 using Build_IT_WindLoads.Terrains.Interfaces;
 using Moq;
 using NUnit.Framework;
 
-namespace Build_IT_WindLoadsTests.UnitTests.TerrainsTests
+namespace Build_IT_WindLoadsTests.UnitTests.FactorsTests
 {
     [TestFixture]
     public class HeightDisplacementTests

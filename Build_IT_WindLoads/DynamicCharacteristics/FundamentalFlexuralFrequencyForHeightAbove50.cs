@@ -31,7 +31,8 @@ namespace Build_IT_WindLoads.DynamicCharacteristics
         
         public double GetFactor()
         {
-            if (_building.Height >=  40) // HACK: should be 50
+            // HACK: should be included
+            //if (_building.Height >=  50) 
                 return 46 / _building.Height;
             throw new ArgumentOutOfRangeException();
         }

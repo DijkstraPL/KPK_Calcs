@@ -45,6 +45,10 @@ namespace Build_IT_WindLoads.Factors
                     return GetFactoryForSecondWindZone();
                 case WindZone.III:
                     return GetFactoryForThirdWindZone();
+                case WindZone.I_II:
+                    return Math.Max(GetFactoryForFirstWindZone(), GetFactoryForSecondWindZone());
+                case WindZone.I_III:
+                    return Math.Max(GetFactoryForFirstWindZone(), GetFactoryForThirdWindZone());
                 default:
                     throw new ArgumentException("wrong wind zone.");
             }

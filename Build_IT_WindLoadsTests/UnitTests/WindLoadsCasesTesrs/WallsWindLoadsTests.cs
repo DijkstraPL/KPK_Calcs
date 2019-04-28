@@ -82,7 +82,7 @@ namespace Build_IT_WindLoadsTests.UnitTests.WindLoadsCasesTesrs
             building.Setup(b => b.Length).Returns(10);
             building.Setup(b => b.Width).Returns(20);
             var windLoadData = new Mock<IWindLoadData>();
-            windLoadData.Setup(wld => wld.GetPeakVelocityPressureAt(height)).Returns(3);
+            windLoadData.Setup(wld => wld.GetPeakVelocityPressureAt(height, true)).Returns(3);
             var verticalWallOfRectangularBuilding
                 = new WallsWindLoads(
                     building.Object, windLoadData.Object);

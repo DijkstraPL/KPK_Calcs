@@ -1,4 +1,5 @@
 ﻿using Build_IT_WindLoads.BuildingData;
+using Build_IT_WindLoads.Factors;
 using Build_IT_WindLoads.Factors.Interfaces;
 using Build_IT_WindLoads.WindLoadsCases.Interfaces;
 using System;
@@ -22,11 +23,11 @@ namespace Build_IT_WindLoads.WindLoadsCases
         public ExternalPressureWindForce(
             IWindLoadData windLoadData,
             IWindLoadCase windLoadCase,
-            IStructuralFactorCalculator structuralFactorCalculator)
+            IStructuralFactorCalculator structuralFactorCalculator = null)
         {
             _windLoadData = windLoadData;
             _windLoadCase = windLoadCase;
-            _structuralFactorCalculator = structuralFactorCalculator;
+            _structuralFactorCalculator = structuralFactorCalculator ?? new NoStructuralFactorCalculator();
         }
 
         #endregion // Constructors
