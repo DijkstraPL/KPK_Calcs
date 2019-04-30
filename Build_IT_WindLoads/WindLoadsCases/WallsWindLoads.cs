@@ -84,7 +84,7 @@ namespace Build_IT_WindLoads.WindLoadsCases
         #endregion // Constructors
 
         #region Public_Methods
-        public override IEnumerable<IDictionary<Field, double>> CalculatePressureCoeffiicients()
+        public override IEnumerable<IDictionary<Field, double>> CalculatePressureCoefficients()
         {
             yield return GetExternalPressureCoefficientsMax();
         }

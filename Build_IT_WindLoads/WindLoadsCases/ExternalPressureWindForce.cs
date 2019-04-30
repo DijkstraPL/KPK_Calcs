@@ -37,7 +37,7 @@ namespace Build_IT_WindLoads.WindLoadsCases
         public IEnumerable<IDictionary<Field, double>> CalculateExternalPressureWindForceAt(
              double height, bool calculateStructuralFactor)
         {
-            foreach (var pressureCoefficients in _windLoadCase.CalculatePressureCoeffiicients())
+            foreach (var pressureCoefficients in _windLoadCase.CalculatePressureCoefficients())
                 yield return GetExternalPressureWindForceFor(
                  pressureCoefficients,
                  calculateStructuralFactor);

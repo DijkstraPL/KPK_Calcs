@@ -17,7 +17,7 @@ namespace Build_IT_WindLoads.BuildingData
         #endregion // Properties
 
         #region Constructors
-
+        
         public MonopitchRoof(
             double length, double width,
             double maxHeight, double minHeight, Rotation rotation)

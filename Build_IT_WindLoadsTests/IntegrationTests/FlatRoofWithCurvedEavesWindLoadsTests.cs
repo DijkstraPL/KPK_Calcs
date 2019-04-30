@@ -18,7 +18,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
     public class FlatRoofWithCurvedEavesWindLoadsTests
     {
         [Test]
-        public void ExternalWindPressureForceCalculationsTest_Example2019_04_28_Success()
+        public void ExternalWindPressureForceCalculationsTest_Success()
         {
             //Arrange:
             double heightAboveSeaLevel = 250;

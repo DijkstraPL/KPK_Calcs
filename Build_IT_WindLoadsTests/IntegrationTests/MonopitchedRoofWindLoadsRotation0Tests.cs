@@ -15,100 +15,76 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
     public class MonopitchedRoofWindLoadsRotation0Tests
     {
         [Test]
-        public void ExternalWindPressureForceCalculationsTest_Example2019_04_28_Success()
+        public void ExternalWindPressureForceCalculationsTest_Success()
         {
             //Arrange:
             double heightAboveSeaLevel = 250;
             double length = 30;
             double width = 30;
             double maxHeight = 20;
-            double minHeight = 10;
-            WindZone windZone = WindZone.II;
+            double minHeight = 14.71;
+            WindZone windZone = WindZone.I;
             double referenceHeight = maxHeight;
-
-            double actualLengthUpwindSlope = 70;
-            double actualLengthDownwindSlope = 10;
-            double effectiveFeatureHeight = 10;
-            double horizontalDistanceFromCrestTop = -7;
-
-            double windDirection = 0;
-
+            
             var building = new MonopitchRoof(
                 length, width, maxHeight, minHeight, MonopitchRoof.Rotation.Degrees_0);
-            var orographyFactor = new HillRidgeOrography(
-                actualLengthUpwindSlope,
-                actualLengthDownwindSlope,
-                effectiveFeatureHeight,
-                horizontalDistanceFromCrestTop);
-            var terrain = new TerrainCategoryIII(orographyFactor);
-            var directionalFactor = new DirectionalFactor(windZone, windDirection);
-            var buildingSite = new BuildingSite(heightAboveSeaLevel, windZone, terrain,
-                directionalFactor: directionalFactor);
-            var referenceHeightDueToNeighbouringStructures =
-                new ReferenceHeightDueToNeighbouringStructures(
-                    highBuildingWidth: 20, highBuildingLength: 100,
-                    highBuildingHeight: 100, distanceToBuilding: 30);
-            var windLoadData = new WindLoadData(buildingSite, building,
-                referenceHeightDueToNeighbouringStructures: referenceHeightDueToNeighbouringStructures);
+            var heightDisplacement = new HeightDisplacement(
+                building, horizontalDistanceToObstruction: 10, obstructionHeight: 15);
+            var terrain = new TerrainCategoryIV(heightDisplacement);
+            var buildingSite = new BuildingSite(heightAboveSeaLevel, windZone, terrain);
+            var windLoadData = new WindLoadData(buildingSite, building);
             var flatRoofWindLoads = new MonopitchedRoofWindLoadsRotation0(
                 building, windLoadData);
-
-            var structuralFactorCalculator = new StructuralFactorCalculator(
-                building, terrain, windLoadData, StructuralType.MixedStructuresConcrete_Steel);
-
+            
             var externalPressureWindForce =
                 new ExternalPressureWindForce(
                     windLoadData,
-                    flatRoofWindLoads,
-                    structuralFactorCalculator);
+                    flatRoofWindLoads);
 
-            referenceHeight = windLoadData.GetReferenceHeightAt(referenceHeight);
+            referenceHeight = windLoadData.GetReferenceHeightAt(referenceHeight) 
+                - heightDisplacement.GetFactor();
 
             //Act:
             var resultMax = externalPressureWindForce.GetExternalPressureWindForceMaxAt(
-                referenceHeight, calculateStructuralFactor: true);
+                building.Height, calculateStructuralFactor: true);
             var resultMin = externalPressureWindForce.GetExternalPressureWindForceMinAt(
-                referenceHeight, calculateStructuralFactor: true);
+                building.Height, calculateStructuralFactor: true);
 
             //Assert:
             Assert.Multiple(() =>
             {
                 // e
-                Assert.That(building.EdgeDistance, Is.EqualTo(20));
+                Assert.That(building.EdgeDistance, Is.EqualTo(30));
                 // v_b,0
                 Assert.That(buildingSite.FundamentalValueBasicWindVelocity, Is.EqualTo(22).Within(0.01));
                 // c_dir
-                Assert.That(directionalFactor.GetFactor(), Is.EqualTo(0.8));
+
                 // v_b
-                Assert.That(buildingSite.BasicWindVelocity, Is.EqualTo(17.6).Within(0.01));
+                Assert.That(buildingSite.BasicWindVelocity, Is.EqualTo(22).Within(0.01));
                 // z_e
 
                 // c_r(z_e)
-                Assert.That(terrain.GetRoughnessFactorAt(referenceHeight), Is.EqualTo(1.30).Within(0.01));
+                Assert.That(terrain.GetRoughnessFactorAt(referenceHeight), Is.EqualTo(0.6).Within(0.01));
                 // c_0(z_e)
-                Assert.That(orographyFactor.GetFactorAt(referenceHeight), Is.EqualTo(1.17).Within(0.01));
+
                 // v_m(z_e)
                 Assert.That(windLoadData.GetMeanWindVelocityAt(referenceHeight),
-                    Is.EqualTo(29.22).Within(0.01));
+                    Is.EqualTo(13.2).Within(0.01));
                 // I_v(z_e)
                 Assert.That(windLoadData.GetTurbulenceIntensityAt(referenceHeight),
-                    Is.EqualTo(0.096).Within(0.001));
+                    Is.EqualTo(0.434).Within(0.001));
                 // q_p(z_e)
                 Assert.That(windLoadData.GetPeakVelocityPressureAt(referenceHeight),
-                    Is.EqualTo(0.893).Within(0.001));
+                    Is.EqualTo(0.440).Within(0.001));
                 // c_sc_d
-                Assert.That(structuralFactorCalculator.GetStructuralFactor(true),
-                    Is.EqualTo(1).Within(0.001));
 
-                Assert.That(resultMax[Field.F], Is.EqualTo(-0.446).Within(0.001));
-                Assert.That(resultMax[Field.G], Is.EqualTo(-0.446).Within(0.001));
-                Assert.That(resultMax[Field.H], Is.EqualTo(-0.268).Within(0.001));
-                Assert.That(resultMax[Field.I], Is.EqualTo(0.179).Within(0.001));
+                Assert.That(resultMax[Field.F], Is.EqualTo(0.044).Within(0.001));
+                Assert.That(resultMax[Field.G], Is.EqualTo(0.044).Within(0.001));
+                Assert.That(resultMax[Field.H], Is.EqualTo(0.044).Within(0.001));
 
-                Assert.That(resultMin[Field.F], Is.EqualTo(-0.446).Within(0.001));
-                Assert.That(resultMin[Field.G], Is.EqualTo(-0.446).Within(0.001));
-                Assert.That(resultMin[Field.H], Is.EqualTo(-0.268).Within(0.001));
-                Assert.That(resultMin[Field.I], Is.EqualTo(-0.179).Within(0.001));
+                Assert.That(resultMin[Field.F], Is.EqualTo(-0.572).Within(0.001));
+                Assert.That(resultMin[Field.G], Is.EqualTo(-0.440).Within(0.001));
+                Assert.That(resultMin[Field.H], Is.EqualTo(-0.198).Within(0.001));
             });
         }
     }

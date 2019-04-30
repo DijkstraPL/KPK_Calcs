@@ -33,7 +33,7 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
         protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngleMinus15Max { get; }
 
         protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngleMinus15Min { get; }
-        
+
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngleMinus5Max { get; }
 
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngleMinus5Min { get; }
@@ -109,7 +109,8 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
 
         #region Public_Methods
 
-        public override IEnumerable<IDictionary<Field, double>> CalculatePressureCoeffiicients()
+        //TODO: Check that
+        public override IEnumerable<IDictionary<Field, double>> CalculatePressureCoefficients()
         {
             var maxCoefficients = GetExternalPressureCoefficientsMax();
             var minCoefficients = GetExternalPressureCoefficientsMin();
@@ -119,9 +120,9 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
             yield return minCoefficients
                 .ToDictionary(c => c.Key, c => c.Value <= 0 ? c.Value : 0);
 
-           var maxCoefficientsDict1 = maxCoefficients.Where(c =>
-            c.Key == Field.F || c.Key == Field.G || c.Key == Field.H)
-            .ToDictionary(c => c.Key, c => c.Value >= 0 ? c.Value : 0);
+            var maxCoefficientsDict1 = maxCoefficients.Where(c =>
+             c.Key == Field.F || c.Key == Field.G || c.Key == Field.H)
+             .ToDictionary(c => c.Key, c => c.Value >= 0 ? c.Value : 0);
             var minCoefficientsDict1 = minCoefficients.Where(c =>
             c.Key == Field.I || c.Key == Field.J)
             .ToDictionary(c => c.Key, c => c.Value <= 0 ? c.Value : 0);
@@ -147,8 +148,14 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
 
         public override IDictionary<Field, double> GetExternalPressureCoefficientsMin()
             => GetExternalPressureCoefficients(
-                GetExternalPressureCoefficientTenSquareMetersMin(),
-                GetExternalPressureCoefficientOneSquareMeterMin());
+               GetExternalPressureCoefficientTenSquareMetersMin(),
+               GetExternalPressureCoefficientOneSquareMeterMin());
+        //if (externalPressureCoefficients[Field.I] > 0 &&
+        //    externalPressureCoefficients[Field.J] < 0 ||
+        //    externalPressureCoefficients[Field.I] < 0 &&
+        //    externalPressureCoefficients[Field.J] > 0)
+        //    externalPressureCoefficients[Field.I] = 
+        // TODO: add logic from aware
 
         #endregion // Public_Methods
 
