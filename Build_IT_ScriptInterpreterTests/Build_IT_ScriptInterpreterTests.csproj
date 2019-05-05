@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ScriptInterpreter\Build_IT_ScriptInterpreter.csproj" />
+    <ProjectReference Include="..\Build_IT_ScriptInterpreter\Build_IT_ScriptInterpreter.csproj" />
   </ItemGroup>
 
 </Project>
