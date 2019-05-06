@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Build_IT_WindLoads.BuildingData;
 using Build_IT_WindLoads.BuildingData.Interfaces;
+using Build_IT_WindLoads.WindLoadsCases.Interfaces;
 
 namespace Build_IT_WindLoads.WindLoadsCases.Roofs
 {
@@ -11,58 +12,70 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
         #region Properties
 
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle5Max { get; }
- 
+
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle5Min { get; }
 
         protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle5Max { get; }
-    
+
         protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle5Min { get; }
-          
+
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle15Max { get; }
-      
+
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle15Min { get; }
-     
+
         protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle15Max { get; }
-  
+
         protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle15Min { get; }
-   
+
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle30Max { get; }
 
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle30Min { get; }
 
         protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle30Max { get; }
-     
+
         protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle30Min { get; }
-       
+
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle45Max { get; }
-   
+
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle45Min { get; }
-     
+
         protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle45Max { get; }
-           
-        protected  abstract IDictionary<Field, double> RatioFor1SquareMeterAngle45Min { get; }
+
+        protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle45Min { get; }
 
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle60Max { get; }
-     
-        protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle60Min  { get; }
-  
+
+        protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle60Min { get; }
+
         protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle60Max { get; }
 
-        protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle60Min        { get; }
+        protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle60Min { get; }
 
         protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle75Max { get; }
-      
-        protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle75Min{ get; }
 
-        protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle75Max{ get; }
+        protected abstract IDictionary<Field, double> RatioFor10SquareMetersAngle75Min { get; }
 
-        protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle75Min{ get; }
+        protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle75Max { get; }
+
+        protected abstract IDictionary<Field, double> RatioFor1SquareMeterAngle75Min { get; }
 
         public double Angle { get; }
 
         #endregion // Properties
 
         #region Constructors
+
+        public IWindLoadCase Create(
+            IMonopitchRoof building, IWindLoadData windLoadData)
+        {
+            if (building.CurrentRotation == MonopitchRoof.Rotation.Degrees_0)
+                return new MonopitchedRoofWindLoadsRotation0(building, windLoadData);
+            if (building.CurrentRotation == MonopitchRoof.Rotation.Degrees_90)
+                return new MonopitchedRoofWindLoadsRotation90(building, windLoadData);
+            if (building.CurrentRotation == MonopitchRoof.Rotation.Degrees_180)
+                return new MonopitchedRoofWindLoadsRotation180(building, windLoadData);
+            throw new ArgumentException(nameof(building.CurrentRotation));
+        }
 
         public MonopitchedRoofWindLoads(
             IMonopitchRoof building, IWindLoadData windLoadData)

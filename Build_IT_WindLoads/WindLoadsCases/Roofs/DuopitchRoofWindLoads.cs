@@ -1,5 +1,7 @@
 ﻿using Build_IT_WindLoads.BuildingData;
 using Build_IT_WindLoads.BuildingData.Interfaces;
+using Build_IT_WindLoads.BuildingData.Roofs;
+using Build_IT_WindLoads.WindLoadsCases.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,6 +98,16 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
         #endregion // Properties
 
         #region Constructors
+
+        public IWindLoadCase Create(
+            IDuopitchRoof building, IWindLoadData windLoadData)
+        {
+            if (building.CurrentRotation == DuopitchRoof.Rotation.Degrees_0)
+                return new DuopitchRoofWindLoadsRotation0(building, windLoadData);
+            if (building.CurrentRotation == DuopitchRoof.Rotation.Degrees_90)
+                return new DuopitchRoofWindLoadsRotation90(building, windLoadData);
+            throw new ArgumentException(nameof(building.CurrentRotation));
+        }
 
         public DuopitchRoofWindLoads(
             IDuopitchRoof building, IWindLoadData windLoadData)

@@ -1,4 +1,5 @@
-﻿using Build_IT_WindLoads.BuildingData.Interfaces;
+﻿using Build_IT_CommonTools;
+using Build_IT_WindLoads.BuildingData.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,8 +13,17 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
         public Rotation CurrentRotation { get; }
         public double MiddleHeight { get; private set; }
         public double OuterHeight { get; private set; }
-        public double Angle { get; private set; }
+
+        [Abbreviation("α_0")]
+        [Unit("°")]
+        public double Angle0 { get; private set; }
+        [Abbreviation("α_90")]
+        [Unit("°")]
+        public double Angle90 { get; private set; }
         public double RidgeLength { get; private set; }
+
+        public double Angle0InRadians => Angle0 * Math.PI / 180;
+        public double Angle90InRadians => Angle90 * Math.PI / 180;
 
         #endregion // Properties
 
@@ -35,19 +45,20 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
             {
                 Length = length;
                 Width = width;
-                Angle = Math.Atan((MiddleHeight - OuterHeight) / 
-                    (Length / 2)) * 180 / Math.PI;
             }
             else if (CurrentRotation == Rotation.Degrees_90)
             {
                 Length = width;
                 Width = length;
-                Angle = Math.Atan((MiddleHeight - OuterHeight) /
-                    ((Length - RidgeLength) / 2)) * 180 / Math.PI;
             }
             else
                 throw new ArgumentException(nameof(CurrentRotation));
-            
+
+            Angle0 = Math.Atan((MiddleHeight - OuterHeight) /
+                (length / 2)) * 180 / Math.PI;
+            Angle90 = Math.Atan((MiddleHeight - OuterHeight) /
+                ((width - RidgeLength) / 2)) * 180 / Math.PI;
+
             SetRoofAreas();
         }
 
@@ -70,7 +81,8 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
                     GetDistanceForParallelToRidgeWindAt(EdgeDistance / 10) / 2;
                 var areaForFField = ((EdgeDistance / 4 + 
                     (EdgeDistance / 4 - restDistance)) *
-                    EdgeDistance / 10) / 2;
+                    EdgeDistance / 10 /
+                    Math.Cos(Angle0InRadians)) / 2;
 
                 Areas.Add(Field.F, areaForFField);
                 Areas.Add(Field.G, (Width - 2 * EdgeDistance / 4) * EdgeDistance / 10);
@@ -79,14 +91,23 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
                 Areas.Add(Field.I, ((GetDistanceForParallelToRidgeWindAt(
                     Length/ 2 - EdgeDistance / 10)  + (Width -  EdgeDistance / 10 ) *2)) * 
                     (Length / 2 - EdgeDistance / 10));
-                //Areas.Add(Field.J, EdgeDistance / 10 * Width);
+                Areas.Add(Field.J, EdgeDistance / 10 * (Length / 2 - EdgeDistance / 10));
+                Areas.Add(Field.K, (GetDistanceForParallelToRidgeWindAt(
+                    Length / 2 - EdgeDistance / 10)));
+                // TODO: Add this + angles
+                Areas.Add(Field.L,  EdgeDistance / 10  );
+                Areas.Add(Field.M,  (Length - EdgeDistance / 10)  );
             }
             else if (CurrentRotation == Rotation.Degrees_90)
             {
-                //Areas.Add(Field.F, EdgeDistance / 4 * EdgeDistance / 10);
-                //Areas.Add(Field.G, (Width - 2 * EdgeDistance / 4) * EdgeDistance / 10);
-                //Areas.Add(Field.H, (EdgeDistance / 2 - EdgeDistance / 10) * Width);
-                //Areas.Add(Field.I, (Length - EdgeDistance / 2) * Width);
+                Areas.Add(Field.F, 1);
+                Areas.Add(Field.G, 1);
+                Areas.Add(Field.H, 1);
+                Areas.Add(Field.I, 1);
+                Areas.Add(Field.J, 1);
+                Areas.Add(Field.L, 1);
+                Areas.Add(Field.M, 1);
+                Areas.Add(Field.N, 1);
             }
             else
                 throw new ArgumentException(nameof(CurrentRotation));

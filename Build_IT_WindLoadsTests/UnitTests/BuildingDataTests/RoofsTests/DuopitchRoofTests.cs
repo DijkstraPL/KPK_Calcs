@@ -46,7 +46,37 @@ namespace Build_IT_WindLoadsTests.UnitTests.BuildingDataTests.RoofsTests
             Assert.That(duopitchRoof.Length, Is.EqualTo(2));
             Assert.That(duopitchRoof.Width, Is.EqualTo(1));
         }
-        
+
+        [Test]
+        public void AngleTest_0Degrees_Success()
+        {
+            var duopitchRoof = new DuopitchRoof(length: 2, width: 2,
+                outerHeight: 3, middleHeight: 4,
+                DuopitchRoof.Rotation.Degrees_0);
+
+            Assert.That(duopitchRoof.Angle, Is.EqualTo(45));
+        }
+
+        [Test]
+        public void AngleTest_90Degrees_Success()
+        {
+            var duopitchRoof = new DuopitchRoof(length: 2, width: 2,
+                outerHeight: 3, middleHeight: 4,
+                DuopitchRoof.Rotation.Degrees_90);
+
+            Assert.That(duopitchRoof.Angle, Is.EqualTo(45));
+        }
+
+        [Test]
+        public void AngleInRadiansTest_Success()
+        {
+            var duopitchRoof = new DuopitchRoof(length: 2, width: 2,
+                outerHeight: 3, middleHeight: 4,
+                DuopitchRoof.Rotation.Degrees_0);
+            
+            Assert.That(duopitchRoof.AngleInRadians, Is.EqualTo(0.785).Within(0.001));
+        }
+
         [Test]
         public void GetReferenceHeightTest_Success()
         {
@@ -78,11 +108,11 @@ namespace Build_IT_WindLoadsTests.UnitTests.BuildingDataTests.RoofsTests
                 outerHeight: 3, middleHeight: 1,
                 rotation: DuopitchRoof.Rotation.Degrees_0);
 
-            Assert.That(building.Areas[Field.F], Is.EqualTo(0.625));
-            Assert.That(building.Areas[Field.G], Is.EqualTo(1.25));
-            Assert.That(building.Areas[Field.H], Is.EqualTo(22.5));
-            Assert.That(building.Areas[Field.I], Is.EqualTo(22.5));
-            Assert.That(building.Areas[Field.J], Is.EqualTo(2.5));
+            Assert.That(building.Areas[Field.F], Is.EqualTo(0.673146).Within(0.000001));
+            Assert.That(building.Areas[Field.G], Is.EqualTo(1.346291).Within(0.000001));
+            Assert.That(building.Areas[Field.H], Is.EqualTo(24.233242).Within(0.000001));
+            Assert.That(building.Areas[Field.I], Is.EqualTo(24.233242).Within(0.000001));
+            Assert.That(building.Areas[Field.J], Is.EqualTo(2.692582).Within(0.000001));
         }
 
         [Test]
@@ -92,9 +122,9 @@ namespace Build_IT_WindLoadsTests.UnitTests.BuildingDataTests.RoofsTests
                 outerHeight: 6, middleHeight: 4,
                 rotation: DuopitchRoof.Rotation.Degrees_90);
 
-            Assert.That(building.Areas[Field.F], Is.EqualTo(2.5));
-            Assert.That(building.Areas[Field.G], Is.EqualTo(5));
-            Assert.That(building.Areas[Field.H], Is.EqualTo(40));
+            Assert.That(building.Areas[Field.F], Is.EqualTo(2.692582).Within(0.000001));
+            Assert.That(building.Areas[Field.G], Is.EqualTo(2.692582).Within(0.000001));
+            Assert.That(building.Areas[Field.H], Is.EqualTo(21.540659).Within(0.000001));
             Assert.That(building.Areas[Field.I], Is.EqualTo(0));
             Assert.That(building.Areas.ContainsKey(Field.J), Is.False);
         }

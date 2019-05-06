@@ -1,4 +1,5 @@
-﻿using Build_IT_WindLoads.BuildingData.Interfaces;
+﻿using Build_IT_CommonTools;
+using Build_IT_WindLoads.BuildingData.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +13,10 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
         public Rotation CurrentRotation { get; }
         public double MiddleHeight { get; private set; }
         public double OuterHeight { get; private set; }
+        [Abbreviation("α")]
+        [Unit("°")]
         public double Angle { get; private set; }
+        public double AngleInRadians => Angle * Math.PI / 180;
 
         #endregion // Properties
 
@@ -42,7 +46,7 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
             else
                 throw new ArgumentException(nameof(CurrentRotation));
 
-            Angle = Math.Atan((MiddleHeight - OuterHeight) / (Length / 2)) * 180 / Math.PI;
+            Angle = Math.Atan((MiddleHeight - OuterHeight) / (length / 2)) * 180 / Math.PI;
 
             SetRoofAreas();
         }
@@ -62,18 +66,45 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
         {
             if (CurrentRotation == Rotation.Degrees_0)
             {
-                Areas.Add(Field.F, EdgeDistance / 4 * EdgeDistance / 10);
-                Areas.Add(Field.G, (Width - 2 * EdgeDistance / 4) * EdgeDistance / 10);
-                Areas.Add(Field.H, (Length / 2 - EdgeDistance / 10) * Width);
-                Areas.Add(Field.J, EdgeDistance / 10 * Width);
-                Areas.Add(Field.I, (Length / 2 - EdgeDistance / 10) * Width);
+                Areas.Add(Field.F, 
+                    EdgeDistance / 4 * 
+                    EdgeDistance / 10 /
+                    Math.Cos(AngleInRadians));
+                Areas.Add(Field.G, 
+                    (Width - 2 * EdgeDistance / 4)  * 
+                    EdgeDistance / 10 /
+                    Math.Cos(AngleInRadians));
+                Areas.Add(Field.H, 
+                    (Length / 2 - EdgeDistance / 10) /
+                    Math.Cos(AngleInRadians) * 
+                    Width);
+                Areas.Add(Field.J, 
+                    EdgeDistance / 10 /
+                    Math.Cos(AngleInRadians) *
+                    Width);
+                Areas.Add(Field.I, 
+                    (Length / 2 - EdgeDistance / 10) /
+                    Math.Cos(AngleInRadians) * 
+                    Width);
             }
             else if (CurrentRotation == Rotation.Degrees_90)
             {
-                Areas.Add(Field.F, EdgeDistance / 4 * EdgeDistance / 10);
-                Areas.Add(Field.G, (Width - 2 * EdgeDistance / 4) * EdgeDistance / 10);
-                Areas.Add(Field.H, (EdgeDistance / 2 - EdgeDistance / 10) * Width);
-                Areas.Add(Field.I, (Length - EdgeDistance / 2) * Width);
+                Areas.Add(Field.F,
+                    EdgeDistance / 4 /
+                    Math.Cos(AngleInRadians) *
+                    EdgeDistance / 10);
+                Areas.Add(Field.G, 
+                    (Width - 2 * EdgeDistance / 4) / 2 /
+                    Math.Cos(AngleInRadians) * 
+                    EdgeDistance / 10);
+                Areas.Add(Field.H, 
+                    (EdgeDistance / 2 - EdgeDistance / 10) * 
+                    Width / 2 /
+                    Math.Cos(AngleInRadians));
+                Areas.Add(Field.I, 
+                    (Length - EdgeDistance / 2) * 
+                    Width / 2 /
+                    Math.Cos(AngleInRadians));
             }
             else
                 throw new ArgumentException(nameof(CurrentRotation));

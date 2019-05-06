@@ -82,7 +82,7 @@ namespace Build_IT_WindLoadsTests.IntegrationTests
                 Assert.That(resultMax[Field.F], Is.EqualTo(0.044).Within(0.001));
                 Assert.That(resultMax[Field.G], Is.EqualTo(0.044).Within(0.001));
                 Assert.That(resultMax[Field.H], Is.EqualTo(0.044).Within(0.001));
-                Assert.That(resultMax[Field.I], Is.EqualTo(0).Within(0.001));
+                Assert.That(resultMax[Field.I], Is.EqualTo(-0.132).Within(0.001));
                 Assert.That(resultMax[Field.J], Is.EqualTo(0.044).Within(0.001));
 
                 Assert.That(resultMin[Field.F], Is.EqualTo(-0.572).Within(0.001));
