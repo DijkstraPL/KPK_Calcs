@@ -7,27 +7,22 @@ using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.DeadLoads.Repositories
 {
-    public class MaterialRepository : IMaterialRepository
+    public class MaterialRepository : Repository<Material>, IMaterialRepository
     {
-        private readonly DeadLoadsDbContext _context;
+        public DeadLoadsDbContext DeadLoadsContext
+            => Context as DeadLoadsDbContext;
 
         public MaterialRepository(DeadLoadsDbContext context)
+            :base(context)
         {
-            _context = context;
         }
 
-        public async Task<List<Material>> GetAllMaterials(long subcategoryId)
+        public async Task<List<Material>> GetAllMaterialsForSubcategoryAsync(long subcategoryId)
         {
-            return await _context.Materials
+            return await DeadLoadsContext.Materials
                 .Where(m => m.Subcategory.Id == subcategoryId)
                 .OrderBy(p => p.Name)
                 .ToListAsync();
-        }
-
-        public async Task<Material> GetMaterial(long materialId)
-        {
-            return await _context.Materials
-                .SingleOrDefaultAsync(m => m.Id == materialId);
         }
     }
 }

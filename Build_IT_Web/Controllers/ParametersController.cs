@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
+using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.Resources;
-using Build_IT_Web.Core;
-using Build_IT_Web.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Build_IT_Web.Controllers
@@ -15,13 +17,13 @@ namespace Build_IT_Web.Controllers
     {
         private readonly IScriptRepository _scriptRepository;
         private readonly IParameterRepository _parameterRepository;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IScriptInterpreterUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public ParametersController(
             IScriptRepository scriptRepository,
             IParameterRepository parameterRepository,
-            IUnitOfWork unitOfWork,
+            IScriptInterpreterUnitOfWork unitOfWork,
             IMapper mapper)
         {
             _scriptRepository = scriptRepository;
@@ -33,9 +35,9 @@ namespace Build_IT_Web.Controllers
         [HttpGet("{id}/parameters")]
         public async Task<IEnumerable<ParameterResource>> GetAllParameters(long id)
         {
-            var parameters = await _parameterRepository.GetAllParameters(id);
+            var parameters = await _parameterRepository.GetAllParametersForScriptAsync(id);
 
-            return _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
+            return _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters.ToList());
         }
 
         [HttpPost("{id}/parameters")]
@@ -44,7 +46,7 @@ namespace Build_IT_Web.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var script = await _scriptRepository.GetScript(id);
+            var script = await _scriptRepository.GetAsync(id);
             if (script == null)
                 return NotFound();
 
@@ -53,7 +55,7 @@ namespace Build_IT_Web.Controllers
             script.Modified = DateTime.Now;
             parameter.Script = script;
 
-            _parameterRepository.Add(parameter);
+            _parameterRepository.AddAsync(parameter);
             await _unitOfWork.CompleteAsync();
 
             var result = _mapper.Map<Parameter, ParameterResource>(parameter);
@@ -66,8 +68,8 @@ namespace Build_IT_Web.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var script = await _scriptRepository.GetScript(id);
-            var parameter = await _parameterRepository.GetParameter(parId);
+            var script = await _scriptRepository.GetAsync(id);
+            var parameter = await _parameterRepository.GetParameterWithAllDependanciesAsync(parId);
 
             if (script == null || parameter == null)
                 return NotFound();
@@ -78,7 +80,7 @@ namespace Build_IT_Web.Controllers
 
             await _unitOfWork.CompleteAsync();
 
-            parameter = await _parameterRepository.GetParameter(parId);
+            parameter = await _parameterRepository.GetParameterWithAllDependanciesAsync(parId);
 
             var result = _mapper.Map<Parameter, ParameterResource>(parameter);
             return Ok(result);
@@ -87,7 +89,7 @@ namespace Build_IT_Web.Controllers
         [HttpDelete("{id}/parameters/{parId}")]
         public async Task<IActionResult> DeleteParameter(long parId)
         {
-            var parameter = await _parameterRepository.GetParameter(parId);
+            var parameter = await _parameterRepository.GetParameterWithAllDependanciesAsync(parId);
 
             if (parameter == null)
                 return NotFound();

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
+using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.Resources;
-using Build_IT_Web.Core;
-using Build_IT_Web.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Build_IT_Web.Controllers
@@ -15,12 +17,12 @@ namespace Build_IT_Web.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IScriptRepository _scriptRepository;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IScriptInterpreterUnitOfWork _unitOfWork;
 
         public ScriptsController(
             IMapper mapper,
             IScriptRepository scriptRepository,
-            IUnitOfWork unitOfWork)
+            IScriptInterpreterUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _scriptRepository = scriptRepository;
@@ -30,19 +32,19 @@ namespace Build_IT_Web.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetScripts()
         {
-            var scripts = await _scriptRepository.GetScripts();
+            var scripts = await _scriptRepository.GetAllScriptsWithTagsAsync();
 
-            if (scripts?.Count == 0)
+            if (scripts?.Count() == 0)
                 return NotFound();
 
-            var scriptViewModels = _mapper.Map<List<Script>, List<ScriptResource>>(scripts);
+            var scriptViewModels = _mapper.Map<List<Script>, List<ScriptResource>>(scripts.ToList());
             return Ok(scriptViewModels);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetScript(long id)
         {
-            var script = await _scriptRepository.GetScript(id);
+            var script = await _scriptRepository.GetScriptWithTagsAsync(id);
 
             if (script == null)
                 return NotFound();
@@ -63,7 +65,7 @@ namespace Build_IT_Web.Controllers
             script.Added = DateTime.Now;
             script.Modified = DateTime.Now;
             script.Version = 1.0f;
-            _scriptRepository.Add(script);
+            _scriptRepository.AddAsync(script);
             await _unitOfWork.CompleteAsync();
 
             var result = _mapper.Map<Script, ScriptResource>(script);
@@ -76,7 +78,7 @@ namespace Build_IT_Web.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var script = await _scriptRepository.GetScript(id);
+            var script = await _scriptRepository.GetScriptWithTagsAsync(id);
 
             if (script == null)
                 return NotFound();
@@ -87,7 +89,7 @@ namespace Build_IT_Web.Controllers
 
             await _unitOfWork.CompleteAsync();
 
-            script = await _scriptRepository.GetScript(id);
+            script = await _scriptRepository.GetScriptWithTagsAsync(id);
 
             var result = _mapper.Map<Script, ScriptResource>(script);
             return Ok(result);
@@ -96,7 +98,7 @@ namespace Build_IT_Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteScript(long id)
         {
-            var script = await _scriptRepository.GetScript(id, includeRelated: false);
+            var script = await _scriptRepository.GetAsync(id);
 
             if (script == null)
                 return NotFound();

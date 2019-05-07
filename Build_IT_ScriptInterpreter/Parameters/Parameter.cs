@@ -21,7 +21,7 @@ namespace Build_IT_ScriptInterpreter.Parameters
         public object DataValidator { get; set; }
         public string Unit { get; set; }
         public List<ValueOption> ValueOptions { get; set; }
-        public virtual ParameterOptions Context { get; set; }
+        public ParameterOptions Context { get; set; }
         public string GroupName { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }

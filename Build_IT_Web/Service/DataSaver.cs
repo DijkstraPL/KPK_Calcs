@@ -1,6 +1,5 @@
-﻿using Build_IT_ScriptInterpreter.DataSaver;
-using Build_IT_Web.Core.Models;
-using System.Collections.Generic;
+﻿using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_ScriptInterpreter.DataSaver;
 
 namespace Build_IT_Web.Service
 {

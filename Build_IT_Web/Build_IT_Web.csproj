@@ -7,6 +7,8 @@
     <Company></Company>
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
     <Product />
+    <AssemblyName>Build_IT_Web</AssemblyName>
+    <RootNamespace>Build_IT_Web</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Build_IT_DataAccess\Build_IT_DataAccess.csproj" />
     <ProjectReference Include="..\Build_IT_ScriptInterpreter\Build_IT_ScriptInterpreter.csproj" />
   </ItemGroup>
 

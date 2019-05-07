@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.Resources;
-using Build_IT_Web.Core;
-using Build_IT_Web.Core.Models;
 using Build_IT_Web.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -31,12 +31,12 @@ namespace Build_IT_Web.Controllers
         [HttpPut("{id}/calculate")]
         public async Task<IEnumerable<ParameterResource>> Calculate(long id, [FromBody] List<ParameterResource> userParameters)
         {
-            var script = await _scriptRepository.GetScript(id, includeRelated: true);
-            var parameters = await _parameterRepository.GetAllParameters(id);
+            var script = await _scriptRepository.GetScriptWithTagsAsync(id);
+            var parameters = await _parameterRepository.GetAllParametersForScriptAsync(id);
 
             var equations = new Dictionary<long,string> (parameters.ToDictionary(p => p.Id, p => p.Value));
             
-            var scriptCalculator = new ScriptCalculator(script, parameters);
+            var scriptCalculator = new ScriptCalculator(script, parameters.ToList());
 
             await scriptCalculator.CalculateAsync(userParameters);
 

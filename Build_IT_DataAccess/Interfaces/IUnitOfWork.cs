@@ -1,9 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
-        Task CompleteAsync();
+        #region Public_Methods
+
+        Task<int> CompleteAsync();
+
+        #endregion // Public_Methods
     }
 }

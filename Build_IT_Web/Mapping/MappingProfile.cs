@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
+using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_Web.Controllers.Resources;
-using Build_IT_Web.Core.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 

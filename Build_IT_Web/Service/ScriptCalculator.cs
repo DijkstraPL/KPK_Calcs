@@ -1,7 +1,7 @@
-﻿using Build_IT_ScriptInterpreter.Parameters.Interfaces;
+﻿using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_ScriptInterpreter.Parameters.Interfaces;
 using Build_IT_ScriptInterpreter.Scripts.Interfaces;
 using Build_IT_Web.Controllers.Resources;
-using Build_IT_Web.Core.Models;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -51,7 +51,7 @@ namespace Build_IT_Web.Service
         }
 
         internal IEnumerable<Parameter> GetResult() 
-            => _parameters.Where(p => (p.Context & SIP.ParameterOptions.Calculation) != 0);
+            => _parameters.Where(p => ((SIP.ParameterOptions)p.Context & SIP.ParameterOptions.Calculation) != 0);
 
         private async Task<IScript> MapScript()
         {
@@ -78,7 +78,7 @@ namespace Build_IT_Web.Service
                         Name = parameter.Name,
                         Value = parameter.Value,
                         VisibilityValidator = parameter.VisibilityValidator,
-                        Context = parameter.Context
+                        Context = (SIP.ParameterOptions)parameter.Context
                     });
                 }
                 return parameters;

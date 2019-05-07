@@ -6,38 +6,39 @@ using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
 {
-    public class ScriptRepository : IScriptRepository
+    public class ScriptRepository : Repository<Script>, IScriptRepository
     {
-        private readonly ScriptInterpreterDbContext _context;
+        #region Properties
+
+        public ScriptInterpreterDbContext ScriptInterpreterContext 
+            => Context as ScriptInterpreterDbContext;
+
+        #endregion // Properties
+
+        #region Constructors
 
         public ScriptRepository(ScriptInterpreterDbContext context)
+            : base(context)
         {
-            _context = context;
         }
 
-        public async Task<List<Script>> GetScripts()
+        #endregion // Constructors
+
+        #region Public_Methods
+        
+        public async Task<IEnumerable<Script>> GetAllScriptsWithTagsAsync()
         {
-            return await _context.Scripts.Include(s => s.Tags).ThenInclude(t => t.Tag).ToListAsync();
+            return await ScriptInterpreterContext.Scripts.Include(s => s.Tags).ThenInclude(t => t.Tag).ToListAsync();
         }
 
-        public async Task<Script> GetScript(long id, bool includeRelated = true)
+        public async Task<Script> GetScriptWithTagsAsync(long id)
         {
-            if (!includeRelated)
-                return await _context.Scripts.FindAsync(id);
-            return await _context.Scripts
+            return await ScriptInterpreterContext.Scripts
                 .Include(s => s.Tags)
                 .ThenInclude(s => s.Tag)
-                .SingleOrDefaultAsync(s => s.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public void Add(Script script)
-        {
-            _context.Scripts.Add(script);
-        }
-
-        public void Remove(Script script)
-        {
-            _context.Remove(script);
-        }
+        #endregion // Public_Methods
     }
 }

@@ -7,41 +7,44 @@ using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
 {
-    public class ParameterRepository : IParameterRepository
+    public class ParameterRepository : Repository<Parameter>, IParameterRepository
     {
-        private readonly ScriptInterpreterDbContext _context;
+        #region Public_Methods
+        
+        public ScriptInterpreterDbContext ScriptInterpreterContext
+        => Context as ScriptInterpreterDbContext;
 
+        #endregion // Public_Methods
+
+        #region Constructors
+        
         public ParameterRepository(ScriptInterpreterDbContext context)
+            : base(context)
         {
-            _context = context;
         }
 
-        public async Task<List<Parameter>> GetAllParameters(long scriptId)
+        #endregion // Constructors
+
+        #region Public_Methods
+        
+        public async Task<IEnumerable<Parameter>> GetAllParametersForScriptAsync(long scriptId)
         {
-            return await _context.Parameters
+            return await ScriptInterpreterContext.Parameters
                 .Where(p => p.ScriptId == scriptId)
                 .Include(p => p.ValueOptions)
                 .Include(p => p.NestedScripts)
                 .OrderBy(p => p.Number)
                 .ToListAsync();
         }
-        
-        public async Task<Parameter> GetParameter(long parameterId)
+
+        public async Task<Parameter> GetParameterWithAllDependanciesAsync(long parameterId)
         {
-            return await _context.Parameters
+            return await ScriptInterpreterContext.Parameters
                 .Include(p => p.ValueOptions)
                 .Include(p => p.NestedScripts)
                 .SingleOrDefaultAsync(p => p.Id == parameterId);
         }
 
-        public void Add(Parameter parameter)
-        {
-            _context.Parameters.Add(parameter);
-        }
-
-        public void Remove(Parameter parameter)
-        {
-            _context.Remove(parameter);
-        }
+        #endregion // Public_Methods
     }
 }

@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
-using Build_IT_Web.Core;
-using Build_IT_Web.Persistance;
+using Build_IT_DataAccess;
+using Build_IT_DataAccess.Interfaces;
+using Build_IT_DataAccess.ScriptInterpreter;
+using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
+using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
+using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,10 +31,12 @@ namespace Build_IT_Web
             services.AddScoped<IScriptRepository, ScriptRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IParameterRepository, ParameterRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddDbContext<BuildItDbContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();
+            services.AddDbContext<ScriptInterpreterDbContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("Scripts"), 
+                b => b.MigrationsAssembly("Build_IT_DataAccess")));
+
             services.AddAutoMapper();
             
             services.AddMvc()
