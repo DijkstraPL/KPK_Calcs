@@ -1,5 +1,9 @@
 ﻿using AutoMapper;
 using Build_IT_DataAccess;
+using Build_IT_DataAccess.DeadLoads;
+using Build_IT_DataAccess.DeadLoads.Interfaces;
+using Build_IT_DataAccess.DeadLoads.Repositories;
+using Build_IT_DataAccess.DeadLoads.Repositories.Interfaces;
 using Build_IT_DataAccess.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
@@ -35,6 +39,13 @@ namespace Build_IT_Web
             services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();
             services.AddDbContext<ScriptInterpreterDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("Scripts"), 
+                b => b.MigrationsAssembly("Build_IT_DataAccess")));
+            
+            services.AddScoped<IMaterialRepository, MaterialRepository>();
+
+            services.AddScoped<IDeadLoadsUnitOfWork, DeadLoadsUnitOfWork>();
+            services.AddDbContext<DeadLoadsDbContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("DeadLoads"),
                 b => b.MigrationsAssembly("Build_IT_DataAccess")));
 
             services.AddAutoMapper();

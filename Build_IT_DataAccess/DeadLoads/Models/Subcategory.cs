@@ -5,21 +5,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Build_IT_DataAccess.DeadLoads.Models
 {
-    [Table("Subcategories")]
     public class Subcategory
     {
+        #region Properties
+        
         public long Id { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Name { get; set; }
         public string DocumentName { get; set; }
-
         public Category Category { get; set; }
+        public long CategoryId { get; set; }
         public ICollection<Material> Materials { get; set; }
+
+        #endregion // Properties
+
+        #region Constructors
 
         public Subcategory()
         {
             Materials = new Collection<Material>();
         }
+
+        #endregion // Constructors
     }
 }
