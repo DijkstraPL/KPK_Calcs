@@ -3,6 +3,7 @@ using Build_IT_DataAccess.ScriptInterpreter;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess
@@ -25,12 +26,16 @@ namespace Build_IT_DataAccess
 
         #region Constructors
         
-        public ScriptInterpreterUnitOfWork(ScriptInterpreterDbContext context)
+        public ScriptInterpreterUnitOfWork(
+            ScriptInterpreterDbContext context,
+            IScriptRepository scriptRepository,
+            IParameterRepository parameterRepository,
+            ITagRepository tagRepository)
         {
-            _context = context;
-            Scripts = new ScriptRepository(_context);
-            Parameters = new ParameterRepository(_context);
-            Tags = new TagRepository(_context);
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            Scripts = scriptRepository ?? throw new ArgumentNullException(nameof(scriptRepository));
+            Parameters = parameterRepository ?? throw new ArgumentNullException(nameof(parameterRepository));
+            Tags = tagRepository ?? throw new ArgumentNullException(nameof(tagRepository));
         }
 
         #endregion // Constructors

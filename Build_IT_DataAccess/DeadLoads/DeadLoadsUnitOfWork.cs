@@ -12,6 +12,8 @@ namespace Build_IT_DataAccess.DeadLoads
     {
         #region Properties
 
+        public ICategoryRepository Categories { get; }
+        public ISubcategoryRepository Subcategories { get; }
         public IMaterialRepository Materials { get; }
 
         #endregion // Properties
@@ -24,10 +26,16 @@ namespace Build_IT_DataAccess.DeadLoads
 
         #region Constructors
 
-        public DeadLoadsUnitOfWork(DeadLoadsDbContext context)
+        public DeadLoadsUnitOfWork(
+            DeadLoadsDbContext context,
+            ICategoryRepository categoryRepository,
+            ISubcategoryRepository subcategoryRepository,
+            IMaterialRepository materialRepository)
         {
-            _context = context;
-            Materials = new MaterialRepository(_context);
+            _context = context ?? throw new ArgumentNullException(nameof(context)); 
+            Categories = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
+            Subcategories = subcategoryRepository ?? throw new ArgumentNullException(nameof(subcategoryRepository));
+            Materials = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
         }
 
         #endregion // Constructors

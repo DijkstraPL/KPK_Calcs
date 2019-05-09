@@ -7,12 +7,7 @@ using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.DeadLoads.Repositories.Interfaces
 {
-    public interface IMaterialRepository : IRepository<Material>
+    public interface ICategoryRepository : IRepository<Category>
     {
-        #region Public_Methods
-        
-        Task<List<Material>> GetAllMaterialsForSubcategoryAsync(long subcategoryId);
-
-        #endregion // Public_Methods
     }
 }

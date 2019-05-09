@@ -1,8 +1,10 @@
 ﻿using Build_IT_DataAccess;
 using Build_IT_DataAccess.DeadLoads;
+using Build_IT_DataAccess.DeadLoads.Repositories;
 using Build_IT_DataAccess.ScriptInterpreter;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 
 namespace TestApp
 {
@@ -13,34 +15,51 @@ namespace TestApp
             var dbContextOptions = new DbContextOptionsBuilder<DeadLoadsDbContext>()
                 .UseSqlServer("server=localhost; database=Build_IT_DeadLoads; Integrated Security=SSPI;");
 
-            var categoriesContext = new DeadLoadsDbContext(dbContextOptions.Options);
+            var deadLoadsContext = new DeadLoadsDbContext(dbContextOptions.Options);
 
-            var unitOfWork = new DeadLoadsUnitOfWork(categoriesContext);
-            var materialRepo = unitOfWork.Materials;
+            var unitOfWork = new DeadLoadsUnitOfWork(deadLoadsContext,
+                new CategoryRepository(deadLoadsContext),
+                new SubcategoryRepository(deadLoadsContext),
+                new MaterialRepository(deadLoadsContext));
+            //var materialRepo = unitOfWork.Materials;
 
-            foreach (var material in materialRepo.GetAllAsync().Result)
-            {
-                Console.WriteLine(material.Name);
-            }
-
-
-            var categories = categoriesContext.Categories;
-            foreach (var category in categories)
+            foreach (var category in unitOfWork.Categories.GetAllAsync().Result)
             {
                 Console.WriteLine(category.Name);
 
-                foreach (var subcategory in category.Subcategories)
+                foreach (var subcategory in unitOfWork.Subcategories
+                    .GetAllSubcategoriesForCategoryAsync(category.Id).Result)
                 {
                     Console.WriteLine("  " + subcategory.Name);
 
-                    foreach (var material in subcategory.Materials)
+                    foreach (var material in unitOfWork.Materials
+                        .GetAllMaterialsForSubcategoryAsync(subcategory.Id).Result)
                     {
                         Console.WriteLine("    " + material.Name);
                     }
                 }
             }
 
-            categoriesContext.Dispose();
+
+            var categories = deadLoadsContext.Categories;
+            foreach (var category in categories)
+            {
+                Console.WriteLine(category.Name);
+
+                foreach (var subcategory in deadLoadsContext.Subcategories
+                    .Where(s => s.CategoryId== category.Id))
+                {
+                    Console.WriteLine("  " + subcategory.Name);
+
+                    foreach (var material in deadLoadsContext.Materials
+                    .Where(s => s.SubcategoryId == subcategory.Id))
+                    {
+                        Console.WriteLine("    " + material.Name);
+                    }
+                }
+            }
+
+            deadLoadsContext.Dispose();
             Console.ReadLine();
         }
     }
