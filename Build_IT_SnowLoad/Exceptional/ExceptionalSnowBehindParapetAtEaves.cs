@@ -46,7 +46,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B4]</remarks>
         [Abbreviation("h_1")]
         [Unit("m")]
-        public double HeightDifference { get; set; }
+        public double HeightDifference { get; }
 
         /// <summary>
         /// Distance to the ridge of roof.
@@ -54,14 +54,14 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B4]</remarks>
         [Abbreviation("b_1")]
         [Unit("m")]
-        public double RidgeDistance { get; set; }
+        public double RidgeDistance { get;  }
         /// <summary>
         /// Width of roof.
         /// </summary>
         /// <remarks>[PN-EN 1991-1-3 Fig.B4]</remarks>
         [Abbreviation("b_2")]
         [Unit("m")]
-        public double BuildingWidth { get; set; }
+        public double BuildingWidth { get;  }
 
         /// <summary>
         /// Snow load shape coefficient.
@@ -109,9 +109,12 @@ namespace Build_IT_SnowLoads.Exceptional
         public ExceptionalSnowBehindParapetAtEaves(IBuilding building, double ridgeDistance, double buildingWidth, double heightDifference)
         {
             Building = building;
-            RidgeDistance = ridgeDistance;
-            BuildingWidth = buildingWidth;
-            HeightDifference = heightDifference;
+            RidgeDistance = ridgeDistance > 0 ? ridgeDistance
+                : throw new ArgumentOutOfRangeException(nameof(ridgeDistance));
+            BuildingWidth = buildingWidth > 0 ? buildingWidth
+                : throw new ArgumentOutOfRangeException(nameof(buildingWidth));
+            HeightDifference = heightDifference > 0 ? heightDifference
+                : throw new ArgumentOutOfRangeException(nameof(heightDifference));
             SetReferences();
         }
 

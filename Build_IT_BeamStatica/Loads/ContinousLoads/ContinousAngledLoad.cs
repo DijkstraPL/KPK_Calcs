@@ -47,7 +47,7 @@ namespace Build_IT_BeamStatica.Loads.ContinousLoads
         private ContinousAngledLoad(ILoadWithPosition startPosition, ILoadWithPosition endPosition, double angle)
             : base(startPosition, endPosition)
         {
-            Angle = angle;
+            Angle = angle % 360;
             SetContinousLoads();
 
             NormalForceResult = new NormalForceResult(_horizontalContinousLoad);

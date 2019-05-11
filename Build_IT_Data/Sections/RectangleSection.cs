@@ -23,8 +23,8 @@ namespace Build_IT_Data.Sections
 
         public RectangleSection(double width, double height)
         {
-            Width = width;
-            Height = height;
+            Width = width > 0 ? width : throw new ArgumentOutOfRangeException(nameof(width));
+            Height = height > 0 ? height : throw new ArgumentOutOfRangeException(nameof(height));
 
             SetPoints();
 

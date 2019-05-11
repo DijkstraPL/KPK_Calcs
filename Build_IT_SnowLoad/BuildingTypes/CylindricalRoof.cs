@@ -44,7 +44,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <remarks>[PN-EN 1991-1-3 Fig.5.6]</remarks>
         [Abbreviation("b")]
         [Unit("m")]
-        public double Width { get; set; }
+        public double Width { get; }
 
         /// <summary>
         /// Height of the roof.
@@ -52,7 +52,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <remarks>[PN-EN 1991-1-3 Fig.5.6]</remarks>
         [Abbreviation("h")]
         [Unit("m")]
-        public double Height { get; set; }
+        public double Height { get; }
 
         /// <summary>
         /// Length of the load.
@@ -111,8 +111,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
             RoofCasesSnowLoad = new Dictionary<int, double>();
 
             Building = building;
-            Width = width;
-            Height = height;
+            Width = width > 0 ? width : throw new ArgumentOutOfRangeException(nameof(width));
+            Height = height > 0 ? height : throw new ArgumentOutOfRangeException(nameof(height));
             SetReferences();
         }
 

@@ -49,8 +49,10 @@ namespace Build_IT_BeamStatica.Beams
             bool includeSelfWeight)
             : this(spans, nodes, includeSelfWeight)
         {
-            CalculationEngine = beamCalculationEngine;
-            Results = resultsContainer;
+            CalculationEngine = beamCalculationEngine ?? 
+                throw new ArgumentNullException(nameof(beamCalculationEngine));
+            Results = resultsContainer ??
+                throw new ArgumentNullException(nameof(beamCalculationEngine));
         }
 
         #endregion // Constructors

@@ -46,7 +46,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("h")]
         [Unit("m")]
-        public double HeightDifference { get; set; }
+        public double HeightDifference { get; }
 
         /// <summary>
         /// Length of the drift.
@@ -62,7 +62,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("b_1")]
         [Unit("m")]
-        public double LowerBuildingWidth { get; set; }
+        public double LowerBuildingWidth { get; }
 
         /// <summary>
         /// Upper building width.
@@ -70,7 +70,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("b_2")]
         [Unit("m")]
-        public double UpperBuildingWidth { get; set; }
+        public double UpperBuildingWidth { get; }
 
         /// <summary>
         /// Snow load shape coefficient 1.
@@ -115,7 +115,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("alfa")]
         [Unit("degree")]
-        public double Angle { get; set; }
+        public double Angle { get; }
 
         public IBuilding Building { get; private set; }
 
@@ -141,10 +141,14 @@ namespace Build_IT_SnowLoads.Exceptional
             double heightDifference, double angle)
         {
             Building = building;
-            UpperBuildingWidth = upperBuildingWidth;
-            LowerBuildingWidth = lowerBuildingWidth;
-            HeightDifference = heightDifference;
-            Angle = angle;
+            UpperBuildingWidth = upperBuildingWidth > 0 ? upperBuildingWidth 
+                : throw new ArgumentOutOfRangeException(nameof(upperBuildingWidth));
+            LowerBuildingWidth = lowerBuildingWidth > 0 ? lowerBuildingWidth
+                : throw new ArgumentOutOfRangeException(nameof(lowerBuildingWidth));
+            HeightDifference = heightDifference > 0 ? heightDifference
+                : throw new ArgumentOutOfRangeException(nameof(heightDifference));
+            Angle = angle >= 0 ? angle
+                : throw new ArgumentOutOfRangeException(nameof(angle));
             SetReferences();
         }
 

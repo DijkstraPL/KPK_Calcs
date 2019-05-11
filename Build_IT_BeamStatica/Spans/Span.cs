@@ -36,7 +36,7 @@ namespace Build_IT_BeamStatica.Spans
             IMaterial material, ISection section, bool includeSelfWeight)
         {
             LeftNode = leftNode ?? throw new ArgumentNullException(nameof(leftNode));
-            Length = length;
+            Length = length > 0 ? length : throw new ArgumentOutOfRangeException(nameof(length));
             RightNode = rightNode ?? throw new ArgumentNullException(nameof(rightNode));
             Material = material ?? throw new ArgumentNullException(nameof(material));
             Section = section ?? throw new ArgumentNullException(nameof(section));

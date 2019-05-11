@@ -32,7 +32,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
 
         public DirectStiffnessCalculationEngine(IBeam beam, IGlobalStiffnessMatrix globalStiffnessMatrix = null)
         {
-            _beam = beam ?? throw new ArgumentNullException();
+            _beam = beam ?? throw new ArgumentNullException(nameof(beam));
             _globalStiffnessMatrix = globalStiffnessMatrix ?? new GlobalStiffnessMatrix(_beam, _spanCalculationEngines);
 
             SetSpanCalculationEngines();

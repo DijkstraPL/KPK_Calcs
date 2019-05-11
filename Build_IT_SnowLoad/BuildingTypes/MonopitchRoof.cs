@@ -1,6 +1,7 @@
 ﻿using Build_IT_CommonTools;
 using Build_IT_SnowLoads.API;
 using Build_IT_SnowLoads.Interfaces;
+using System;
 
 namespace Build_IT_SnowLoads.BuildingTypes
 {
@@ -40,12 +41,12 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <remarks>[PN-EN 1991-1-3 Fig.5.2]</remarks>
         [Abbreviation("alpha")]
         [Unit("degree")]
-        public double Slope { get; set; }
+        public double Slope { get; }
 
         /// <summary>
         /// Is there any obstacles, like snow fences.
         /// </summary>
-        public bool SnowFences { get; set; }
+        public bool SnowFences { get; }
 
         /// <summary>
         /// Snow load shape coefficient 1.
@@ -88,7 +89,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         public MonopitchRoof(IBuilding building, double slope, bool snowFences = false)
         {
             Building = building;
-            Slope = slope;
+            Slope = slope > 0 ? slope : throw new ArgumentOutOfRangeException(nameof(slope));
             SnowFences = snowFences;
             SetReferences();
         }

@@ -46,7 +46,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B4]</remarks>
         [Abbreviation("h_1")]
         [Unit("m")]
-        public double HeightDifference { get; set; }
+        public double HeightDifference { get;  }
 
         /// <summary>
         /// Width of roof.
@@ -54,7 +54,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("b_1")]
         [Unit("m")]
-        public double Width { get; set; }
+        public double Width { get; }
 
         /// <summary>
         /// Snow load shape coefficient 1.
@@ -101,8 +101,10 @@ namespace Build_IT_SnowLoads.Exceptional
         public ExceptionalSnowBehindParapet(IBuilding building, double width, double heightDifference)
         {
             Building = building;
-            Width = width;
-            HeightDifference = heightDifference;
+            Width = width > 0 ? width
+                : throw new ArgumentOutOfRangeException(nameof(width));
+            HeightDifference = heightDifference > 0 ? heightDifference
+                : throw new ArgumentOutOfRangeException(nameof(heightDifference));
 
             SetReferences();
         }

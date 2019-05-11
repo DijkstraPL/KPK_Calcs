@@ -66,7 +66,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B1]</remarks>
         [Abbreviation("l_s1")]
         [Unit("m")]
-        public double LeftDriftLength { get; set; }
+        public double LeftDriftLength { get; }
 
         /// <summary>
         /// Length of the right drift.
@@ -74,7 +74,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B1]</remarks>
         [Abbreviation("l_s2")]
         [Unit("m")]
-        public double RightDriftLength { get; set; }
+        public double RightDriftLength { get; }
 
         /// <summary>
         /// Heiight in the lowest part.
@@ -82,7 +82,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B1]</remarks>
         [Abbreviation("h")]
         [Unit("m")]
-        public double HeightInTheLowestPart { get; set; }
+        public double HeightInTheLowestPart { get; }
 
         /// <summary>
         /// Horizontal simension of three slopes. It can be set as 1.5*(<see cref="LeftDriftLength"/>+<see cref="RightDriftLength"/>).
@@ -112,9 +112,12 @@ namespace Build_IT_SnowLoads.Exceptional
         public ExceptionalMultiSpanRoof(IBuilding building, double leftDriftLength, double rightDriftLength, double heightInTheLowestPart)
         {
             Building = building;
-            LeftDriftLength = leftDriftLength;
-            RightDriftLength = rightDriftLength;
-            HeightInTheLowestPart = heightInTheLowestPart;
+            LeftDriftLength = leftDriftLength > 0 ? leftDriftLength 
+                : throw new ArgumentOutOfRangeException(nameof(leftDriftLength));
+            RightDriftLength = rightDriftLength > 0 ? rightDriftLength
+                : throw new ArgumentOutOfRangeException(nameof(rightDriftLength));
+            HeightInTheLowestPart = heightInTheLowestPart > 0 ? heightInTheLowestPart
+                : throw new ArgumentOutOfRangeException(nameof(heightInTheLowestPart));
             SetReferences();
         }
 

@@ -31,7 +31,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
 
         public SpanCalculationEngine(ISpan span, IStiffnessMatrix stiffnessMatrix = null)
         {
-            _span = span ?? throw new ArgumentNullException();
+            _span = span ?? throw new ArgumentNullException(nameof(span));
             StiffnessMatrix = stiffnessMatrix ?? new StiffnessMatrix(_span);
         }
 

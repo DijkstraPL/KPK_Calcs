@@ -33,8 +33,8 @@ namespace Build_IT_SnowLoadsTests.Exceptional
         public void ExceptionalSnowBehindParapetAtEavesTest_CalculateSnowLoad_Success()
         {
             var building = BuildingImplementation.CreateBuilding();
-            building.SnowLoad.ExcepctionalSituation = true;
-            building.SnowLoad.CurrentDesignSituation = DesignSituation.B2;
+            building.SnowLoadImplementation.ExcepctionalSituation = true;
+            building.SnowLoadImplementation.CurrentDesignSituation = DesignSituation.B2;
 
             var exceptionalSnowBehindParapetAtEaves =
                 new ExceptionalSnowBehindParapetAtEaves(building, 5, 20, 1);

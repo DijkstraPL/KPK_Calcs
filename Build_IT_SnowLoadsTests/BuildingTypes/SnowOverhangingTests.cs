@@ -1,6 +1,8 @@
 ﻿using Build_IT_SnowLoads;
 using Build_IT_SnowLoads.BuildingTypes;
 using Build_IT_SnowLoads.Enums;
+using Build_IT_SnowLoads.Interfaces;
+using Moq;
 using NUnit.Framework;
 using System;
 
@@ -9,6 +11,14 @@ namespace Build_IT_SnowLoadsTests.BuildingTypes
     [TestFixture()]
     public class SnowOverhangingTests
     {
+        [Test()]
+        public void SnowOverhangingTest_Constructor_MinusValues_Success()
+        {
+            var building = new Mock<IBuilding>();
+            Assert.Throws<ArgumentOutOfRangeException>(()
+                   => new SnowOverhanging(building.Object, -0.2, 0.72));
+        }
+
         [Test()]
         [Description("Check constructor for the snowOverhanging.")]
         public void SnowOverhangingTest_Constructor_Success()
@@ -42,8 +52,7 @@ namespace Build_IT_SnowLoadsTests.BuildingTypes
         {
             var buildingSite = new BuildingSite(Zones.ThirdZone, Topographies.Normal, 360);
             buildingSite.CalculateExposureCoefficient();
-            var snowLoad = new SnowLoad(buildingSite);
-            snowLoad.SnowDensity = 3;
+            var snowLoad = new SnowLoad(buildingSite, snowDensity: 3);
             snowLoad.CalculateSnowLoad();
             var building = new Building(snowLoad);
             building.CalculateThermalCoefficient();

@@ -49,7 +49,7 @@ namespace Build_IT_SnowLoads.Exceptional
         public double LeftHeightDifference
         {
             get { return leftHeightDifference; }
-            set
+            private set
             {
                 if (value > 2)
                     throw new ArgumentOutOfRangeException(nameof(LeftHeightDifference), "Height difference can't be greater than 2m.");
@@ -68,7 +68,7 @@ namespace Build_IT_SnowLoads.Exceptional
         public double RightHeightDifference
         {
             get { return rightHeightDifference; }
-            set
+            private set
             {
                 if (value > 2)
                     throw new ArgumentOutOfRangeException(nameof(RightHeightDifference), "Height difference can't be greater than 2m.");
@@ -83,14 +83,14 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("b_1")]
         [Unit("m")]
-        public double LeftWidth { get; set; }
+        public double LeftWidth { get;  }
         /// <summary>
         /// Right width of roof.
         /// </summary>
         /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("b_2")]
         [Unit("m")]
-        public double RightWidth { get; set; }
+        public double RightWidth { get; }
 
         /// <summary>
         /// Snow load shape coefficient for the left side.
@@ -157,13 +157,18 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <param name="rightWidth">Set <see cref="RightWidth"/>.</param>
         /// <param name="leftHeightDifference">Set <see cref="LeftHeightDifference"/>.</param>
         /// <param name="rightHeightDifference">Set <see cref="RightHeightDifference"/>.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public ExceptionalObstructionOnFlatRoof(IBuilding building, double leftWidth, double rightWidth, double leftHeightDifference, double rightHeightDifference)
         {
             Building = building;
-            LeftWidth = leftWidth;
-            RightWidth = rightWidth;
-            LeftHeightDifference = leftHeightDifference;
-            RightHeightDifference = rightHeightDifference;
+            LeftWidth = leftWidth > 0 ? leftWidth 
+                : throw new ArgumentOutOfRangeException(nameof(leftWidth));
+            RightWidth = rightWidth > 0 ? rightWidth
+                : throw new ArgumentOutOfRangeException(nameof(rightWidth));
+            LeftHeightDifference = leftHeightDifference > 0 ? leftHeightDifference
+                : throw new ArgumentOutOfRangeException(nameof(leftHeightDifference));
+            RightHeightDifference = rightHeightDifference > 0 ? rightHeightDifference
+                : throw new ArgumentOutOfRangeException(nameof(rightHeightDifference));
             SetReferences();
         }
 

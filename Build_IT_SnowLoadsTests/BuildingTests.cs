@@ -13,8 +13,8 @@ namespace Build_IT_SnowLoadsTests
         [Description("Test for setting the internal temperatue")]
         public void BuildingTest_InternalTemperatureLessThan5_Success()
         {
-            var building = new Building(new SnowLoadImplementation());
-            building.InternalTemperature = 3;
+            var building = new Building(new SnowLoadImplementation(),
+                internalTemperature: 3, overallHeatTransferCoefficient: 0);
 
             Assert.AreEqual(0, building.InternalTemperature, "Tempreature shouldn't be less or equal 5. If it is it should be equal to 0.");
         }
@@ -23,8 +23,8 @@ namespace Build_IT_SnowLoadsTests
         [Description("Test for setting the internal temperatue")]
         public void BuildingTest_InternalTemperatureMoreThan5LessThan18_Success()
         {
-            var building = new Building(new SnowLoadImplementation());
-            building.InternalTemperature = 8;
+            var building = new Building(new SnowLoadImplementation(), 
+                internalTemperature: 8,overallHeatTransferCoefficient: 0);
 
             Assert.AreEqual(8, building.InternalTemperature, "Tempreature should be equal to the selected value.");
         }
@@ -33,8 +33,8 @@ namespace Build_IT_SnowLoadsTests
         [Description("Test for setting the internal temperatue")]
         public void BuildingTest_InternalTemperatureMoreThan18_Success()
         {
-            var building = new Building(new SnowLoadImplementation());
-            building.InternalTemperature = 28;
+            var building = new Building(new SnowLoadImplementation(), 
+                internalTemperature: 28, overallHeatTransferCoefficient:0);
 
             Assert.AreEqual(18, building.InternalTemperature, "Tempreature shouldn't be more than 18.");
         }

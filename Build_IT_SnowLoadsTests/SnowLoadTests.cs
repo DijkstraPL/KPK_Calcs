@@ -62,8 +62,7 @@ namespace Build_IT_SnowLoadsTests
         [Description("Ensure that user can only use proper values of the snwow load.")]
         public void SnowDensityTest_Value1_Success()
         {
-            var snowLoad = new SnowLoad(new BuildingSite());
-            snowLoad.SnowDensity = 1;
+            var snowLoad = new SnowLoad(new BuildingSite() , snowDensity:1 );
 
             Assert.AreEqual(1, snowLoad.SnowDensity, "Value is not equal to the entered one.");
         }
@@ -72,8 +71,7 @@ namespace Build_IT_SnowLoadsTests
         [Description("Ensure that user can only use proper values of the snwow load.")]
         public void SnowDensityTest_Value2_Success()
         {
-            var snowLoad = new SnowLoad(new BuildingSite());
-            snowLoad.SnowDensity = 2;
+            var snowLoad = new SnowLoad(new BuildingSite(), snowDensity: 2);
 
             Assert.AreEqual(2, snowLoad.SnowDensity, "Value is not equal to the entered one.");
         }
@@ -82,8 +80,7 @@ namespace Build_IT_SnowLoadsTests
         [Description("Ensure that user can only use proper values of the snwow load.")]
         public void SnowDensityTest_Value3_Success()
         {
-            var snowLoad = new SnowLoad(new BuildingSite());
-            snowLoad.SnowDensity = 3;
+            var snowLoad = new SnowLoad(new BuildingSite(), snowDensity: 3);
 
             Assert.AreEqual(3, snowLoad.SnowDensity, "Value is not equal to the entered one.");
         }
@@ -92,9 +89,9 @@ namespace Build_IT_SnowLoadsTests
         [Description("Ensure that user can only use proper values of the snwow load.")]
         public void SnowDensityTest_Value5_Exception()
         {
-            var snowLoad = new SnowLoad(new BuildingSite());
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => snowLoad.SnowDensity = 5, "Snow load shouldn't be that much.");
+            Assert.Throws<ArgumentOutOfRangeException>(() 
+                => new SnowLoad(new BuildingSite(), snowDensity: 5), 
+                "Snow load shouldn't be that much.");
         }
         #endregion // SnowDensity
 
@@ -126,17 +123,16 @@ namespace Build_IT_SnowLoadsTests
         [Description("Check the ReturnPeriod property.")]
         public void SnowLoadTest_ReturnPeriodLessThan5_Exception()
         {
-            var snowLoad = new SnowLoad(new BuildingSite());
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => snowLoad.ReturnPeriod = 3, "Return period which is less than 5 throws ArgumentOutOfRangeException.");
+            Assert.Throws<ArgumentOutOfRangeException>(() 
+                => new SnowLoad(new BuildingSite(), returnPeriod: 3), 
+                "Return period which is less than 5 throws ArgumentOutOfRangeException.");
         }
 
         [Test()]
         [Description("Check the ReturnPeriod property.")]
         public void SnowLoadTest_ReturnPeriodMoreThan5_Success()
         {
-            var snowLoad = new SnowLoad(new BuildingSite());
-            snowLoad.ReturnPeriod = 55;
+            var snowLoad = new SnowLoad(new BuildingSite(), returnPeriod: 55);
 
             Assert.AreEqual(55, snowLoad.ReturnPeriod, "Return period should be proper.");
         }
@@ -176,8 +172,7 @@ namespace Build_IT_SnowLoadsTests
             buildingSite.CurrentTopography = Topographies.Windswept;
             buildingSite.CalculateExposureCoefficient();
 
-            var snowLoad = new SnowLoad(buildingSite);
-            snowLoad.ReturnPeriod = 80;
+            var snowLoad = new SnowLoad(buildingSite, returnPeriod: 80);
             snowLoad.CalculateSnowLoad();
 
             Assert.AreEqual(0.9, Math.Round(snowLoad.DefaultCharacteristicSnowLoad, 3), "DefaultCharacteristicSnowLoad has wrong calculations.");

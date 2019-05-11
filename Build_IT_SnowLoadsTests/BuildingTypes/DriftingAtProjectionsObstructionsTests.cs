@@ -1,4 +1,6 @@
 ﻿using Build_IT_SnowLoads.BuildingTypes;
+using Build_IT_SnowLoads.Interfaces;
+using Moq;
 using NUnit.Framework;
 using System;
 
@@ -7,6 +9,14 @@ namespace Build_IT_SnowLoadsTests.BuildingTypes
     [TestFixture()]
     public class DriftingAtProjectionsObstructionsTests
     {
+        [Test()]
+        public void DriftingAtProjectionsObstructionsTest_Constructor_MinusValues_Success()
+        {
+            var building = new Mock<IBuilding>();
+            Assert.Throws<ArgumentOutOfRangeException>(()
+                => new DriftingAtProjectionsObstructions(building.Object, -20));
+        }
+
         [Test()]
         [Description("Check constructor for the DriftingAtProjectionsObstructions.")]
         public void DriftingAtProjectionsObstructionsTest_Constructor_Success()

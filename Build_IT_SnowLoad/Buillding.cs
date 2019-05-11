@@ -45,7 +45,7 @@ namespace Build_IT_SnowLoads
         public double InternalTemperature
         {
             get { return internalTemperature; }
-            set
+            private set
             {
                 if (value > 5 && value <= 18)
                     internalTemperature = value;
@@ -70,7 +70,7 @@ namespace Build_IT_SnowLoads
         /// <remarks>[PN-EN 1991-1-3 NB1.8]</remarks>
         [Abbreviation("U")]
         [Unit("W/(m2*K)")]
-        public double OverallHeatTransferCoefficient { get; set; }
+        public double OverallHeatTransferCoefficient { get; }
 
         /// <summary>
         /// Instance of class implementing <see cref="ISnowLoad"/>.

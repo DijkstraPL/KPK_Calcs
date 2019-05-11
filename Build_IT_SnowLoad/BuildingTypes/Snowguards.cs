@@ -33,21 +33,21 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// </summary>
         [Abbreviation("s")]
         [Unit("kN/m2")]
-        public double SnowLoadOnRoofValue { get; set; }
+        public double SnowLoadOnRoofValue { get;  }
 
         /// <summary>
         /// Width on plan (horizontal) from the guard or obstacle to the next guard or to the ridge [m].
         /// </summary>
         [Abbreviation("b")]
         [Unit("m")]
-        public double Width { get; set; }
+        public double Width { get; }
 
         /// <summary>
         /// Pitch of the roof, measured from the horizontal [degree].
         /// </summary>
         [Abbreviation("alpha")]
         [Unit("degree")]
-        public double Slope { get; set; }
+        public double Slope { get;  }
 
         /// <summary>
         /// Force on snow guard [kN/m].
@@ -66,8 +66,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <param name="snowLoadOnRoof">Set <see cref="SnowLoadOnRoofValue"/>.</param>
         public Snowguards(double width, double slope, double snowLoadOnRoof)
         {
-            Width = width;
-            Slope = slope;
+            Width = width > 0 ? width : throw new ArgumentOutOfRangeException(nameof(width));
+            Slope = slope > 0 ? slope : throw new ArgumentOutOfRangeException(nameof(slope));
             SnowLoadOnRoofValue = snowLoadOnRoof;
         }
 

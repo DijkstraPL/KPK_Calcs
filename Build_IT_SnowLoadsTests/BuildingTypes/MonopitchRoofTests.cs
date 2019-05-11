@@ -1,6 +1,8 @@
 ﻿using Build_IT_SnowLoads;
 using Build_IT_SnowLoads.BuildingTypes;
 using Build_IT_SnowLoads.Enums;
+using Build_IT_SnowLoads.Interfaces;
+using Moq;
 using NUnit.Framework;
 using System;
 
@@ -9,6 +11,14 @@ namespace Build_IT_SnowLoadsTests.BuildingTypes
     [TestFixture()]
     public class MonopitchRoofTests
     {
+        [Test()]
+        public void MonopitchRoofTest_Constructor_MinusValues_Success()
+        {
+            var building = new Mock<IBuilding>();
+            Assert.Throws<ArgumentOutOfRangeException>(()
+                => new MonopitchRoof(building.Object, -20));
+        }
+
         [Test()]
         [Description("Check constructor for the monopitchRoof.")]
         public void MonopitchRoofTest_Constructor_Success()

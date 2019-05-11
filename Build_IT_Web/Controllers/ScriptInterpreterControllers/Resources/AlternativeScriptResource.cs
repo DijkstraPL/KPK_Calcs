@@ -1,4 +1,4 @@
-﻿namespace Build_IT_Web.Controllers.Resources
+﻿namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources
 {
     public class AlternativeScriptResource
     {

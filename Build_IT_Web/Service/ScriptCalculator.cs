@@ -1,7 +1,7 @@
 ﻿using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_ScriptInterpreter.Parameters.Interfaces;
 using Build_IT_ScriptInterpreter.Scripts.Interfaces;
-using Build_IT_Web.Controllers.Resources;
+using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;

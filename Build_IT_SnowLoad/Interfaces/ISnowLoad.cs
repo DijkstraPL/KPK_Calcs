@@ -7,12 +7,12 @@ namespace Build_IT_SnowLoads.Interfaces
         /// <summary>
         /// Current design situation enumerator - <see cref="DesignSituation"/>.
         /// </summary>
-        DesignSituation CurrentDesignSituation { get; set; }
+        DesignSituation CurrentDesignSituation { get; }
         
         /// <summary>
         /// Is situation for calculations exceptional.
         /// </summary>
-        bool ExcepctionalSituation { get; set; }
+        bool ExcepctionalSituation { get; }
 
         /// <summary>
         /// Coefficient for exceptional snow loads.
@@ -40,7 +40,7 @@ namespace Build_IT_SnowLoads.Interfaces
         /// </summary>
         [Abbreviation("n")]
         [Unit("year")]
-        int ReturnPeriod { get; set; }
+        int ReturnPeriod { get; }
 
         /// <summary>
         /// The design value of exceptional snow load on the ground for the given location. 
@@ -54,7 +54,7 @@ namespace Build_IT_SnowLoads.Interfaces
         /// </summary>
         [Abbreviation("gamma")]
         [Unit("kN/m3")]
-        double SnowDensity { get; set; }
+        double SnowDensity { get; }
 
         /// <summary>
         /// Characteristic value of snow on the ground at the relevant site.

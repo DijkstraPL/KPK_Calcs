@@ -37,13 +37,13 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// Instance of class implementing <see cref="IMonopitchRoof"/>.
         /// </summary>
         /// <remarks>[PN-EN 1991-1-3 5.3.2]</remarks>
-        public IMonopitchRoof LeftRoof { get; set; }
+        public IMonopitchRoof LeftRoof { get; }
 
         /// <summary>
         /// Instance of class implementing <see cref="IMonopitchRoof"/>.
         /// </summary>
         /// <remarks>[PN-EN 1991-1-3 5.3.2]</remarks>
-        public IMonopitchRoof RightRoof { get; set; }
+        public IMonopitchRoof RightRoof { get;  }
 
         /// <summary>
         /// Snow load on left roof for all cases.

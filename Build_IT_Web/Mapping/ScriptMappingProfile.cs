@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Build_IT_DataAccess.ScriptInterpreter.Models;
-using Build_IT_Web.Controllers.Resources;
+using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Build_IT_Web.Mapping
 {
-    public class MappingProfile : Profile
+    public class ScriptMappingProfile : Profile
     {
-        public MappingProfile()
+        public ScriptMappingProfile()
         {
             // Domain Resource to API
             CreateMap<Script, ScriptResource>()

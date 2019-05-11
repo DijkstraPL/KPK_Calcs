@@ -72,7 +72,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <summary>
         /// Instance of class implementing <see cref="IMonopitchRoof"/>.
         /// </summary>
-        public IMonopitchRoof UpperRoof { get; set; }
+        public IMonopitchRoof UpperRoof { get; }
 
         /// <summary>
         /// Width of the taller building.
@@ -80,7 +80,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <remarks>[PN-EN 1991-1-3 Fig.5.7]</remarks>
         [Abbreviation("b_1")]
         [Unit("m")]
-        public double WidthOfUpperBuilding { get; set; }
+        public double WidthOfUpperBuilding { get; }
 
         /// <summary>
         /// Width of the lower building.
@@ -88,7 +88,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <remarks>[PN-EN 1991-1-3 Fig.5.7]</remarks>
         [Abbreviation("b_2")]
         [Unit("m")]
-        public double WidthOfLowerBuilding { get; set; }
+        public double WidthOfLowerBuilding { get; }
 
         /// <summary>
         /// Height difference between buildings.
@@ -96,7 +96,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <remarks>[PN-EN 1991-1-3 Fig.5.7]</remarks>
         [Abbreviation("h")]
         [Unit("m")]
-        public double HeightDifference { get; set; }
+        public double HeightDifference { get; }
 
         /// <summary>
         /// Snow load on the roof (near the taller building).
@@ -154,9 +154,12 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
             UpperRoof = new MonopitchRoof(Building, slopeOfHigherRoof, snowFencesOnHigherRoof);
 
-            WidthOfUpperBuilding = widthOfUpperBuilding;
-            WidthOfLowerBuilding = widthOfLowerBuilding;
-            HeightDifference = heightDifference;
+            WidthOfUpperBuilding = widthOfUpperBuilding > 0 ? widthOfUpperBuilding 
+                : throw new ArgumentOutOfRangeException(nameof(widthOfUpperBuilding));
+            WidthOfLowerBuilding = widthOfLowerBuilding > 0 ? widthOfLowerBuilding
+                : throw new ArgumentOutOfRangeException(nameof(widthOfLowerBuilding));
+            HeightDifference = heightDifference > 0 ? heightDifference
+                : throw new ArgumentOutOfRangeException(nameof(heightDifference));
 
             SetReferences();
         }
@@ -176,9 +179,12 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
             UpperRoof = upperRoof;
 
-            WidthOfUpperBuilding = widthOfUpperBuilding;
-            WidthOfLowerBuilding = widthOfLowerBuilding;
-            HeightDifference = heightDifference;
+            WidthOfUpperBuilding = widthOfUpperBuilding > 0 ? widthOfUpperBuilding
+                : throw new ArgumentOutOfRangeException(nameof(widthOfUpperBuilding));
+            WidthOfLowerBuilding = widthOfLowerBuilding > 0 ? widthOfLowerBuilding
+                : throw new ArgumentOutOfRangeException(nameof(widthOfLowerBuilding));
+            HeightDifference = heightDifference > 0 ? heightDifference
+                : throw new ArgumentOutOfRangeException(nameof(heightDifference));
 
             SetReferences();
         }

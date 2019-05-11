@@ -18,7 +18,12 @@ namespace Build_IT_Data.Materials
 
         #region Constructors
 
-        public Concrete(double youngModulus, bool withReinforcement) 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="youngModulus">E in MPa</param>
+        /// <param name="withReinforcement"></param>
+        public Concrete(double youngModulus, bool withReinforcement)
             : base(youngModulus, thermalExpansionCoefficient: 0.000010)
         {
             if (withReinforcement)
@@ -26,7 +31,7 @@ namespace Build_IT_Data.Materials
             else
                 Density = 2400;
         }
-        
+
 
         #endregion // Constructors
     }

@@ -1,4 +1,6 @@
 ﻿using Build_IT_SnowLoads.BuildingTypes;
+using Build_IT_SnowLoads.Interfaces;
+using Moq;
 using NUnit.Framework;
 using System;
 
@@ -7,6 +9,22 @@ namespace Build_IT_SnowLoadsTests.BuildingTypes
     [TestFixture()]
     public class RoofAbuttingToTallerConstructionTests
     {
+        [Test()]
+        public void RoofAbuttingToTallerConstructionTest_Constructor_MinusValues_Success()
+        {
+            var building = new Mock<IBuilding>();
+            var monopitchRoof = new Mock<IMonopitchRoof>();
+            Assert.Throws<ArgumentOutOfRangeException>(()
+                => new RoofAbuttingToTallerConstruction(
+                    building.Object, -20, 10, 5, monopitchRoof.Object));
+            Assert.Throws<ArgumentOutOfRangeException>(()
+                => new RoofAbuttingToTallerConstruction(
+                    building.Object, 20, 0, 5, monopitchRoof.Object));
+            Assert.Throws<ArgumentOutOfRangeException>(()
+                => new RoofAbuttingToTallerConstruction(
+                    building.Object, 20, 10, -5, monopitchRoof.Object));
+        }
+
         [Test()]
         [Description("Check constructor for the RoofAbuttingToTallerConstruction.")]
         public void RoofAbuttingToTallerConstructionTest_Constructor_Success()

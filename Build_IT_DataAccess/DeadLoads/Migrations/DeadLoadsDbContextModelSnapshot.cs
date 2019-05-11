@@ -39,7 +39,7 @@ namespace Build_IT_DataAccess.DeadLoads.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AdditionalComments");
+                    b.Property<string>("Comments");
 
                     b.Property<string>("DocumentName");
 
@@ -53,8 +53,7 @@ namespace Build_IT_DataAccess.DeadLoads.Migrations
 
                     b.Property<long>("SubcategoryId");
 
-                    b.Property<string>("Unit")
-                        .IsRequired();
+                    b.Property<int>("Unit");
 
                     b.HasKey("Id");
 

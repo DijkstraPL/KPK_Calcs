@@ -10,17 +10,17 @@ namespace Build_IT_SnowLoads.Interfaces
         /// </summary>
         [Abbreviation("A")]
         [Unit("m")]
-        double AltitudeAboveSea { get; set; }
+        double AltitudeAboveSea { get;  }
 
         /// <summary>
         /// Zone read from the proper map - <see cref="ZoneEnum"/>.
         /// </summary>
-        Zones CurrentZone { get; set; }
+        Zones CurrentZone { get; }
 
         /// <summary>
         /// Topography base on terrain conditions - <see cref="TopographyEnum"/>.
         /// </summary>
-        Topographies CurrentTopography { get; set; }
+        Topographies CurrentTopography { get;  }
 
         /// <summary>
         /// Exposure coefficient.

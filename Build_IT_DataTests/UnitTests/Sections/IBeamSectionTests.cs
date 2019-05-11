@@ -1,5 +1,6 @@
 ﻿using Build_IT_Data.Sections;
 using NUnit.Framework;
+using System;
 
 namespace Build_IT_DataTests.UnitTests.Sections
 {
@@ -8,36 +9,63 @@ namespace Build_IT_DataTests.UnitTests.Sections
     {
         private Section _iBeamSection;
 
-        [SetUp()]
-        public void SetUpIBeamSection()
+        private void SetUpIBeamSection()
         {
             _iBeamSection = new IBeamSection(
                 width: 91, height: 180, 
                 flangeWidth: 8, webWidth: 5.3, radius: 9);
         }
-        
+
         [Test()]
-        public void PolygonSection_CalculatedCircumferenceTest_Success()
+        [TestCase(-91, 180, 8, 5.3, 9)]
+        [TestCase(91, -180, 8, 5.3, 9)]
+        [TestCase(91, 0, 8, 5.3, 9)]
+        [TestCase(91, 180, -8, 5.3, 9)]
+        [TestCase(91, 180, 8, -5.3, 9)]
+        [TestCase(91, 180, 8, -5.3, -9)]
+        public void IBeamSection_WrongArguments_ThrowsArgumentOutOfRangeException(
+            double width, double height, double flangeWidth, double webWidth, double radius)
         {
+            Assert.Throws<ArgumentOutOfRangeException>(()
+                => new IBeamSection(
+                width, height, flangeWidth, webWidth, radius));
+        }
+
+        [Test()]
+        public void IBeamSection_ZeroRadiusTest_Success()
+        {
+           var beamSection = new IBeamSection(
+                width: 10, height: 10,
+                flangeWidth: 1, webWidth: 1, radius: 0);
+            Assert.That(beamSection.Circumference, Is.EqualTo(5.8).Within(0.001));
+        }
+
+        [Test()]
+        public void IBeamSection_CalculatedCircumferenceTest_Success()
+        {
+            SetUpIBeamSection();
             Assert.That(_iBeamSection.Circumference, Is.EqualTo(69.795).Within(0.001));
         }
 
         [Test()]
-        public void PolygonSection_CalculatedAreaTest_Success()
+        public void IBeamSection_CalculatedAreaTest_Success()
         {
+            SetUpIBeamSection();
             Assert.That(_iBeamSection.Area, Is.EqualTo(23.947).Within(0.001));
         }
 
         [Test()]
-        public void PolygonSection_CalculatedCentroidTest_Success()
+        public void IBeamSection_CalculatedCentroidTest_Success()
         {
+            SetUpIBeamSection();
             Assert.That(_iBeamSection.Centroid.X, Is.EqualTo(45.5));
             Assert.That(_iBeamSection.Centroid.Y, Is.EqualTo(90));
         }
 
         [Test()]
-        public void PolygonSection_AdjustedPointsTest_Success()
+        public void IBeamSection_AdjustedPointsTest_Success()
         {
+            SetUpIBeamSection();
             Assert.That(_iBeamSection.AdjustedPoints[0].X, Is.EqualTo(-45.5), message: "0X");
             Assert.That(_iBeamSection.AdjustedPoints[0].Y, Is.EqualTo(-90), message: "0Y");
             Assert.That(_iBeamSection.AdjustedPoints[1].X, Is.EqualTo(45.5), message: "1X");
@@ -115,14 +143,16 @@ namespace Build_IT_DataTests.UnitTests.Sections
         }
 
         [Test()]
-        public void PolygonSection_CalculatedMomentOfInteriaTest_Success()
+        public void IBeamSection_CalculatedMomentOfInteriaTest_Success()
         {
+            SetUpIBeamSection();
             Assert.That(_iBeamSection.MomentOfInteria, Is.EqualTo(1316.959).Within(0.001));
         }
 
         [Test()]
-        public void PolygonSection_CalculatedSolidHeightTest_Success()
+        public void IBeamSection_CalculatedSolidHeightTest_Success()
         {
+            SetUpIBeamSection();
             Assert.That(_iBeamSection.SolidHeight, Is.EqualTo(180));
         }
     }

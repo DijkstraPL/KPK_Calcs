@@ -35,8 +35,8 @@ namespace Build_IT_SnowLoadsTests.Exceptional
         public void ExceptionalRoofAbuttingToTallerConstructionTest_CalculateSnowLoad_Success()
         {
             var building = BuildingImplementation.CreateBuilding();
-            building.SnowLoad.ExcepctionalSituation = true;
-            building.SnowLoad.CurrentDesignSituation = DesignSituation.B2;
+            building.SnowLoadImplementation.ExcepctionalSituation = true;
+            building.SnowLoadImplementation.CurrentDesignSituation = DesignSituation.B2;
 
             var exceptionalRoofAbuttingToTallerConstruction =
                 new ExceptionalRoofAbuttingToTallerConstruction(building, 20, 10, 3, 15);

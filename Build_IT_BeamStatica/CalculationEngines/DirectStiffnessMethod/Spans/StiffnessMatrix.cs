@@ -29,7 +29,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
         
         public StiffnessMatrix(ISpan span)
         {
-            _span = span;
+            _span = span ?? throw new ArgumentNullException(nameof(span));
         }
 
         #endregion // Constructors

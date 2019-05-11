@@ -9,12 +9,12 @@ namespace Build_IT_SnowLoads.Interfaces
         /// </summary>
         [Abbreviation("alpha")]
         [Unit("degree")]
-        double Slope { get; set; }
+        double Slope { get; }
 
         /// <summary>
         /// Is there any obstacles, like snow fences.
         /// </summary>
-        bool SnowFences { get; set; }
+        bool SnowFences { get;  }
 
         /// <summary>
         /// Snow load shape coefficient 1.

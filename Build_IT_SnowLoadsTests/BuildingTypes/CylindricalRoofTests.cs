@@ -1,4 +1,6 @@
 ﻿using Build_IT_SnowLoads.BuildingTypes;
+using Build_IT_SnowLoads.Interfaces;
+using Moq;
 using NUnit.Framework;
 using System;
 
@@ -7,6 +9,16 @@ namespace Build_IT_SnowLoadsTests.BuildingTypes
     [TestFixture()]
     public class CylindricalRoofTests
     {
+        [Test()]
+        public void CylindricalRoofTest_Constructor_MinusValues_Success()
+        {
+            var building = new Mock<IBuilding>();
+            Assert.Throws<ArgumentOutOfRangeException>(() 
+                => new CylindricalRoof(building.Object, -20, 10));
+            Assert.Throws<ArgumentOutOfRangeException>(()
+                => new CylindricalRoof(building.Object, 20, -10));
+        }
+        
         [Test()]
         [Description("Check constructor for the CylindricalRoof.")]
         public void CylindricalRoofTest_Constructor_Success()

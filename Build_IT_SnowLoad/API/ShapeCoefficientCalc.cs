@@ -24,7 +24,7 @@ namespace Build_IT_SnowLoads.API
         public static double CalculateSnowLoadShapeCoefficient1(double slope, bool snowFences = false)
         {
             if (slope < 0)
-                throw new ArgumentOutOfRangeException("Value couldn't be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(slope), "Value couldn't be less than 0.");
             else if (snowFences)
                 return 0.8;
             else if (slope <= 30)
@@ -50,7 +50,7 @@ namespace Build_IT_SnowLoads.API
         public static double CalculateSnowLoadShapeCoefficient2(double slope)
         {
             if (slope < 0)
-                throw new ArgumentOutOfRangeException("Value couldn't be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(slope), "Value couldn't be less than 0.");
             else if (slope <= 30)
                 return 0.8 + 0.8 * slope / 30;
             else if (slope < 60)

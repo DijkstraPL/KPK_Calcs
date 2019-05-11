@@ -43,6 +43,8 @@ namespace Build_IT_Data.Sections
 
         public Section(IList<IPoint> points)
         {
+            if (points.Count < 3)
+                throw new ArithmeticException("Less than 3 points");
             Points = points ?? throw new ArgumentNullException(nameof(points));
             AdjustedPoints = new List<IPoint>();
 

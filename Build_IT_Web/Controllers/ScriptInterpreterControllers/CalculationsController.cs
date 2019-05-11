@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
-using Build_IT_Web.Controllers.Resources;
+using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Build_IT_Web.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Build_IT_Web.Controllers
+namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 {
     [Route("api/scripts")]
     [ApiController]

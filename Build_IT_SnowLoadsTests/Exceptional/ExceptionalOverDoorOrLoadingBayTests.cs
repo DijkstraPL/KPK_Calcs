@@ -32,8 +32,8 @@ namespace Build_IT_SnowLoadsTests.Exceptional
         public void ExceptionalOverDoorOrLoadingBayTest_CalculateSnowLoad_Success()
         {
             var building = BuildingImplementation.CreateBuilding();
-            building.SnowLoad.ExcepctionalSituation = true;
-            building.SnowLoad.CurrentDesignSituation = DesignSituation.B2;
+            building.SnowLoadImplementation.ExcepctionalSituation = true;
+            building.SnowLoadImplementation.CurrentDesignSituation = DesignSituation.B2;
 
             var exceptionalOverDoorOrLoadingBay =
                 new ExceptionalOverDoorOrLoadingBay(building, 3, 20, 1);

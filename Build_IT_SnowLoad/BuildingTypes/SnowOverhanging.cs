@@ -38,7 +38,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <remarks>[PN-EN 1991-1-3 Fig.6.2]</remarks>
         [Abbreviation("d")]
         [Unit("m")]
-        public double SnowLayerDepth { get; set; }
+        public double SnowLayerDepth { get; }
 
         /// <summary>
         /// Shape coefficient.
@@ -55,7 +55,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <remarks>[PN-EN 1991-1-3 6.3.(2)]</remarks>
         [Abbreviation("s")]
         [Unit("kN/m2")]
-        public double SnowLoadOnRoofValue { get; set; }
+        public double SnowLoadOnRoofValue { get; }
 
         /// <summary>
         /// Snow load per metre length due to the overhang [kN/m].
@@ -96,7 +96,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
         public SnowOverhanging(IBuilding building, double snowLayerDepth, double snowLoadOnRoof)
         {
             Building = building;
-            SnowLayerDepth = snowLayerDepth;
+            SnowLayerDepth = snowLayerDepth > 0 ? snowLayerDepth 
+                : throw new ArgumentOutOfRangeException(nameof(snowLayerDepth));
             SnowLoadOnRoofValue = snowLoadOnRoof;
         }
 

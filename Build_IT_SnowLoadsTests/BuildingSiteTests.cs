@@ -13,8 +13,7 @@ namespace Build_IT_SnowLoadsTests
         [Description("Ensure that method for calculation of exposure coefficient work correctly.")]
         public void CalculateExposureCoefficientTest_WindsweptTopography_Success()
         {
-            var buildingSite = new BuildingSite();
-            buildingSite.CurrentTopography = Topographies.Windswept;
+            var buildingSite = new BuildingSite( currentTopography: Topographies.Windswept);
 
             buildingSite.CalculateExposureCoefficient();
 
@@ -25,8 +24,7 @@ namespace Build_IT_SnowLoadsTests
         [Description("Ensure that method for calculation of exposure coefficient work correctly.")]
         public void CalculateExposureCoefficientTest_NormalTopography_Success()
         {
-            var buildingSite = new BuildingSite();
-            buildingSite.CurrentTopography = Topographies.Normal;
+            var buildingSite = new BuildingSite(currentTopography: Topographies.Normal);
 
             buildingSite.CalculateExposureCoefficient();
 
@@ -37,8 +35,7 @@ namespace Build_IT_SnowLoadsTests
         [Description("Ensure that method for calculation of exposure coefficient work correctly.")]
         public void CalculateExposureCoefficientTest_ShelteredTopography_Success()
         {
-            var buildingSite = new BuildingSite();
-            buildingSite.CurrentTopography = Topographies.Sheltered;
+            var buildingSite = new BuildingSite(currentTopography: Topographies.Sheltered);
 
             buildingSite.CalculateExposureCoefficient();
 
@@ -49,8 +46,7 @@ namespace Build_IT_SnowLoadsTests
         [Description("Ensure that method for calculation of exposure coefficient work correctly.")]
         public void CalculateExposureCoefficientTest_NoneTopography_Success()
         {
-            var buildingSite = new BuildingSite();
-            buildingSite.CurrentTopography = Topographies.None;
+            var buildingSite = new BuildingSite(currentTopography: Topographies.None);
 
             buildingSite.CalculateExposureCoefficient();
 

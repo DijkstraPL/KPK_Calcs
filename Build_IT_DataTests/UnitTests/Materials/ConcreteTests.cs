@@ -1,11 +1,19 @@
 ﻿using Build_IT_Data.Materials;
 using NUnit.Framework;
+using System;
 
 namespace Build_IT_DataTests.UnitTests.Materials
 {
     [TestFixture]
     public class ConcreteTests
     {
+        [Test]
+        public void ConcreteCreationTest_MinusYoungModulus_ThrowsArgumentOutOfRangeException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() 
+                => new Concrete(youngModulus: -30, withReinforcement: true));
+        }
+
         [Test]
         public void ConcreteCreationTest_WithReinforcement_Success()
         {

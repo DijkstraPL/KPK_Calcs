@@ -33,19 +33,19 @@ namespace Build_IT_SnowLoads
         /// </remarks>
         [Abbreviation("A")]
         [Unit("m")]
-        public double AltitudeAboveSea { get; set; }
+        public double AltitudeAboveSea { get; }
 
         /// <summary>
         /// Zone read from the proper map - <see cref="ZoneEnum"/>.
         /// </summary>
         /// <remarks>[PN-EN 1991-1-3 Figure NB.1]</remarks>
-        public Zones CurrentZone { get; set; }
+        public Zones CurrentZone { get; }
 
         /// <summary>
         /// Topography base on terrain conditions - <see cref="TopographyEnum"/>.
         /// </summary>
         /// <remarks>[PN-EN 1991-1-3 Table 5.1]</remarks>
-        public Topographies CurrentTopography { get; set; }
+        public Topographies CurrentTopography { get; }
 
         /// <summary>
         /// Exposure coefficient.
@@ -69,6 +69,11 @@ namespace Build_IT_SnowLoads
         /// <seealso cref="BuildingSite.BuildingSite(ZoneEnum, TopographyEnum, double)"/>
         /// <seealso cref="BuildingSite.BuildingSite(ZoneEnum, TopographyEnum, double, double)"/>
         public BuildingSite() { }
+
+        public BuildingSite(Topographies currentTopography)
+        {
+            CurrentTopography = currentTopography;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BuildingSite"/> class.

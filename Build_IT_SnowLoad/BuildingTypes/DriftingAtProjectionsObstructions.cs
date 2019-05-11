@@ -1,6 +1,7 @@
 ﻿using Build_IT_CommonTools;
 using Build_IT_SnowLoads.API;
 using Build_IT_SnowLoads.Interfaces;
+using System;
 
 namespace Build_IT_SnowLoads.BuildingTypes
 {
@@ -46,7 +47,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// </summary>
         [Abbreviation("h")]
         [Unit("m")]
-        public double ObstructionHeight { get; set; }
+        public double ObstructionHeight { get; }
 
         /// <summary>
         /// Snow load shape coefficient.
@@ -98,7 +99,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
         public DriftingAtProjectionsObstructions(IBuilding building, double obstructionHeight)
         {
             Building = building;
-            ObstructionHeight = obstructionHeight;
+            ObstructionHeight = obstructionHeight > 0 ? obstructionHeight 
+                : throw new ArgumentOutOfRangeException(nameof(obstructionHeight));
             SetReferences();
         }
 

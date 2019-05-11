@@ -32,6 +32,8 @@ namespace Build_IT_Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            const string dataAccessAssemblyName = "Build_IT_DataAccess";
+
             services.AddScoped<IScriptRepository, ScriptRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IParameterRepository, ParameterRepository>();
@@ -39,14 +41,16 @@ namespace Build_IT_Web
             services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();
             services.AddDbContext<ScriptInterpreterDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("Scripts"), 
-                b => b.MigrationsAssembly("Build_IT_DataAccess")));
+                b => b.MigrationsAssembly(dataAccessAssemblyName)));
             
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ISubcategoryRepository, SubcategoryRepository>();
             services.AddScoped<IMaterialRepository, MaterialRepository>();
 
             services.AddScoped<IDeadLoadsUnitOfWork, DeadLoadsUnitOfWork>();
             services.AddDbContext<DeadLoadsDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DeadLoads"),
-                b => b.MigrationsAssembly("Build_IT_DataAccess")));
+                b => b.MigrationsAssembly(dataAccessAssemblyName)));
 
             services.AddAutoMapper();
             

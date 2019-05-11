@@ -18,7 +18,7 @@ namespace Build_IT_SnowLoads.Interfaces
         /// </summary>
         [Abbreviation("U")]
         [Unit("W/(m2*K)")]
-        double OverallHeatTransferCoefficient { get; set; }
+        double OverallHeatTransferCoefficient { get;  }
 
         /// <summary>
         /// Internal temperature in degrees of Celsius
@@ -26,7 +26,7 @@ namespace Build_IT_SnowLoads.Interfaces
         /// <remarks>[PN-EN 1991-1-3 NB1.8]</remarks>
         [Abbreviation("t_i")]
         [Unit("C")]
-        double InternalTemperature { get; set; }
+        double InternalTemperature { get;  }
 
         /// <summary>
         /// Difference between temperatures

@@ -3,7 +3,7 @@ using Build_IT_ScriptInterpreter.Parameters.ValueOptions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Build_IT_Web.Controllers.Resources
+namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources
 {
     public class ParameterResource
     {

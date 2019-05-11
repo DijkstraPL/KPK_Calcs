@@ -34,8 +34,8 @@ namespace Build_IT_SnowLoadsTests.Exceptional
         public void ExceptionalObstructionOnPitchedOrCurvedRoofTest_CalculateSnowLoad_Success()
         {
             var building = BuildingImplementation.CreateBuilding();
-            building.SnowLoad.ExcepctionalSituation = true;
-            building.SnowLoad.CurrentDesignSituation = DesignSituation.B2;
+            building.SnowLoadImplementation.ExcepctionalSituation = true;
+            building.SnowLoadImplementation.CurrentDesignSituation = DesignSituation.B2;
 
             var exceptionalObstructionOnPitchedOrCurvedRoof =
                 new ExceptionalObstructionOnPitchedOrCurvedRoof(building, 15, 20, 1, 0.5);

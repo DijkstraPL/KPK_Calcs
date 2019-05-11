@@ -1,4 +1,6 @@
 ﻿using Build_IT_SnowLoads.BuildingTypes;
+using Build_IT_SnowLoads.Interfaces;
+using Moq;
 using NUnit.Framework;
 using System;
 
@@ -7,6 +9,15 @@ namespace Build_IT_SnowLoadsTests.BuildingTypes
     [TestFixture()]
     public class SnowguardsTests
     {
+        [Test()]
+        public void SnowguardsTest_Constructor_MinusValues_Success()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(()
+                   => new Snowguards(10,-1,0));
+            Assert.Throws<ArgumentOutOfRangeException>(()
+                   => new Snowguards(-10, 1, 0));
+        }
+
         [Test()]
         [Description("Check constructor for the Snowguards.")]
         public void SnowguardsTest_Constructor_Success()

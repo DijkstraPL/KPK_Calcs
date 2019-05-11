@@ -34,11 +34,11 @@ namespace Build_IT_Data.Sections
         public IBeamSection(double width, double height,
             double flangeWidth, double webWidth, double radius)
         {
-            Width = width;
-            Height = height;
-            FlangeWidth = flangeWidth;
-            WebWidth = webWidth;
-            Radius = radius;
+            Width = width > 0 ? width : throw new ArgumentOutOfRangeException(nameof(width));
+            Height = height > 0 ? height : throw new ArgumentOutOfRangeException(nameof(height));
+            FlangeWidth = flangeWidth > 0 ? flangeWidth : throw new ArgumentOutOfRangeException(nameof(flangeWidth));
+            WebWidth = webWidth > 0 ? webWidth : throw new ArgumentOutOfRangeException(nameof(webWidth));
+            Radius = radius >= 0 ? radius : throw new ArgumentOutOfRangeException(nameof(radius));
 
             SetPoints();
 

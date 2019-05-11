@@ -46,7 +46,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("h")]
         [Unit("m")]
-        public double HeightDifference { get; set; }
+        public double HeightDifference { get; }
         
         private double widthAboveDoor;
         /// <summary>
@@ -71,7 +71,7 @@ namespace Build_IT_SnowLoads.Exceptional
         /// <remarks>[PN-EN 1991-1-3 Fig.B3]</remarks>
         [Abbreviation("b_2")]
         [Unit("m")]
-        public double BuildingWidth { get; set; }
+        public double BuildingWidth { get; }
 
         /// <summary>
         /// Snow load shape coefficient.
@@ -119,9 +119,12 @@ namespace Build_IT_SnowLoads.Exceptional
         public ExceptionalOverDoorOrLoadingBay(IBuilding building, double widthAboveDoor, double buildingWidth, double heightDifference)
         {
             Building = building;
-            WidthAboveDoor = widthAboveDoor;
-            BuildingWidth = buildingWidth;
-            HeightDifference = heightDifference;
+            WidthAboveDoor = widthAboveDoor > 0 ? widthAboveDoor 
+                : throw new ArgumentOutOfRangeException(nameof(widthAboveDoor));
+            BuildingWidth = buildingWidth > 0 ? buildingWidth
+                : throw new ArgumentOutOfRangeException(nameof(buildingWidth));
+            HeightDifference = heightDifference > 0 ? heightDifference
+                : throw new ArgumentOutOfRangeException(nameof(heightDifference));
             SetReferences();
         }
 

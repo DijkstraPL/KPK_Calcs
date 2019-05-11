@@ -38,7 +38,7 @@ namespace Build_IT_SnowLoads
         public bool ExcepctionalSituation
         {
             get { return excepctionalSituation; }
-            set
+            private set
             {
                 if (CurrentDesignSituation != DesignSituation.A)
                     excepctionalSituation = value;
@@ -58,7 +58,7 @@ namespace Build_IT_SnowLoads
         public double SnowDensity
         {
             get { return snowDensity; }
-            set
+            private set
             {
                 switch (value)
                 {
@@ -112,7 +112,7 @@ namespace Build_IT_SnowLoads
         public int ReturnPeriod
         {
             get { return returnPeriod; }
-            set
+            private set
             {
                 if (value < 5)
                     throw new ArgumentOutOfRangeException("Return period shouldn't be less than 5 years.");
@@ -171,7 +171,7 @@ namespace Build_IT_SnowLoads
             DesignSituation currentDesignSituation = DesignSituation.A,
             bool excepctionalSituation = false) : this(buildingSite, currentDesignSituation, excepctionalSituation)
         {
-            ReturnPeriod = returnPeriod;
+            ReturnPeriod = returnPeriod ;
         }
 
         /// <summary>

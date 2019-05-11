@@ -1,5 +1,6 @@
 ﻿using Build_IT_Data.Materials.Intefaces;
 using Build_IT_CommonTools;
+using System;
 
 namespace Build_IT_Data.Materials
 {
@@ -23,16 +24,31 @@ namespace Build_IT_Data.Materials
 
         #region Public_Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="youngModulus">E in GPa</param>
+        /// <param name="thermalExpansionCoefficient">alpha in 1/K</param>
         protected Material(double youngModulus, double thermalExpansionCoefficient)
         {
-            YoungModulus = youngModulus;
-            ThermalExpansionCoefficient = thermalExpansionCoefficient;
+            YoungModulus = youngModulus > 0 ? youngModulus : 
+                throw new ArgumentOutOfRangeException(nameof(youngModulus));
+            ThermalExpansionCoefficient = 
+                thermalExpansionCoefficient >= 0 ? thermalExpansionCoefficient : 
+                throw new ArgumentOutOfRangeException(nameof(thermalExpansionCoefficient));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="youngModulus">E in GPa</param>
+        /// <param name="density">gamma in kg/m3</param>
+        /// <param name="thermalExpansionCoefficient">alpha in 1/K</param>
         public Material(double youngModulus, double density, double thermalExpansionCoefficient)
             : this(youngModulus, thermalExpansionCoefficient)
         {
-            Density = density;
+            Density = density >= 0 ? density :
+                throw new ArgumentOutOfRangeException(nameof(density));
         }
 
         #endregion // Public_Methods

@@ -17,12 +17,11 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
         
         public StiffnessMatrixPosition(double value, short rowNumber, short columnNumber)
         {
-            if (rowNumber < 0 || columnNumber < 0)
-                throw new ArgumentOutOfRangeException();
-
             Value = value;
-            RowNumber = rowNumber;
-            ColumnNumber = columnNumber;
+            RowNumber = rowNumber >= 0 ? rowNumber :
+                throw new ArgumentOutOfRangeException(nameof(rowNumber));
+            ColumnNumber = columnNumber >= 0 ? columnNumber :
+                throw new ArgumentOutOfRangeException(nameof(columnNumber));
         }
 
         #endregion // Constructors

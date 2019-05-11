@@ -13,13 +13,15 @@ namespace Build_IT_SnowLoadsTests
         public double OverallHeatTransferCoefficient { get; set; }
 
         public ISnowLoad SnowLoad { get; set; }
+        public SnowLoadImplementation SnowLoadImplementation 
+            => SnowLoad as SnowLoadImplementation;
 
         public void CalculateThermalCoefficient()
         {
             ThermalCoefficient = 0.9;
         }
         
-        public static IBuilding CreateBuilding()
+        public static BuildingImplementation CreateBuilding()
         {
             var buildingSite = new BuildingSiteImplementation(1);
             var snowLoad = new SnowLoadImplementation()

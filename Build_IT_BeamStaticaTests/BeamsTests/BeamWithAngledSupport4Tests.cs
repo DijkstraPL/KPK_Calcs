@@ -17,7 +17,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
         [SetUp]
         public void SetUpBeam()
         {
-            var material = new Material(youngModulus: 200, density: 0, thermalExpansionCoefficient: 0);
+            var material = new Material(youngModulus: 200, density: 1, thermalExpansionCoefficient: 0);
             var section = new SectionProperties(area: 60, momentOfInteria: 20000);
 
             var node1 = new PinNode(angle:90);
