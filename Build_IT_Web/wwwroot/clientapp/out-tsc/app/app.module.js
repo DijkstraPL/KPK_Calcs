@@ -29,6 +29,8 @@ import { CalculationService } from './services/calculation.service';
 import { ParameterService } from './services/parameter.service';
 import { TagFormComponent } from './components/script-form/tag-form/tag-form.component';
 import { AppErrorHandler } from './common/errors/app-error-handler';
+import { LoadsRoutingModule } from '../loads/loads-routing.module';
+import { LoadsModule } from '../loads/loads.module';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -52,12 +54,14 @@ var AppModule = /** @class */ (function () {
                 HttpClientModule,
                 FormsModule,
                 HtmlPipe,
+                LoadsRoutingModule,
                 AppRoutingModule,
                 BrowserAnimationsModule,
                 MatTableModule,
                 MatCardModule,
                 ReactiveFormsModule,
-                MatAutocompleteModule
+                MatAutocompleteModule,
+                LoadsModule
             ],
             providers: [
                 ScriptService,

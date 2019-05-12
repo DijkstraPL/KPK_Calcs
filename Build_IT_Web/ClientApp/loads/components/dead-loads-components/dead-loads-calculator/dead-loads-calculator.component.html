@@ -1,0 +1,98 @@
+﻿
+    <div class="text-center">
+
+        <h1>Dead loads calculator</h1>
+
+        <table mat-table
+               class="mat-elevation-z8 mt-4 mb-4 center"
+               *ngIf="selectedMaterials.length > 0">
+            <thead>
+                <tr>
+                    <td>Category</td>
+                    <td>Name</td>
+                    <td>Width [cm]</td>
+                    <td>Height [cm]</td>
+                    <td>Thickness [cm]</td>
+                    <td>Minimum Density</td>
+                    <td>Maximum Density</td>
+                    <td>Unit</td>
+                    <td>Add</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let materialForCalculation of selectedMaterials; let i = index">
+                    <td>{{materialForCalculation.categoryName}}</td>
+                    <td>{{materialForCalculation.material.name}}</td>
+                    <td>
+                        <input type="number"
+                               (change)="calculate(materialForCalculation)"
+                               [(ngModel)]="materialForCalculation.width" />
+                    </td>
+                    <td>
+                        <input type="number"
+                               (change)="calculate(materialForCalculation)"
+                               [(ngModel)]="materialForCalculation.height" />
+                    </td>
+                    <td>
+                        <input type="number"
+                               (change)="calculate(materialForCalculation)"
+                               [(ngModel)]="materialForCalculation.thickness" />
+                    </td>
+                    <td>{{materialForCalculation.calculatedMinimumLoad}}</td>
+                    <td>{{materialForCalculation.calculatedMaximumLoad}}</td>
+                    <td [innerHTML]="units[materialForCalculation.material.unit].value"></td>
+                    <td><button (click)="removeMaterial(index)">-</button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5"></td>
+                    <td>{{sumMinimumDeadLoads}}</td>
+                    <td>{{sumMaximumDeadLoads}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <select [(ngModel)]="selectedCategory"
+                (change)="onCategoryChange()">
+            <option *ngFor="let category of categories"
+                    [ngValue]="category">
+                {{category.name}}
+            </option>
+        </select>
+
+        <select *ngIf="subcategories"
+                [(ngModel)]="selectedSubcategory"
+                (change)="onSubcategoryChange()">
+            <option *ngFor="let subcategory of subcategories"
+                    [ngValue]="subcategory">
+                {{subcategory.name}} - {{subcategory.documentName}}
+            </option>
+        </select>
+
+        <table mat-table
+               class="mat-elevation-z8 center mt-4"
+               *ngIf="materials">
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Minimum Density</td>
+                    <td>Maximum Density</td>
+                    <td>Unit</td>
+                    <td>Add</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let material of materials">
+                    <td>{{material.name}}</td>
+                    <td>{{material.minimumDensity}}</td>
+                    <td>{{material.maximumDensity}}</td>
+                    <td [innerHTML]="units[material.unit].value"></td>
+                    <td><button (click)="addMaterial(material)">+</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>

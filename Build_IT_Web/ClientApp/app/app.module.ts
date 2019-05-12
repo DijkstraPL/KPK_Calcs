@@ -27,6 +27,8 @@ import { CalculationService } from './services/calculation.service';
 import { ParameterService } from './services/parameter.service';
 import { TagFormComponent } from './components/script-form/tag-form/tag-form.component';
 import { AppErrorHandler } from './common/errors/app-error-handler';
+import { LoadsRoutingModule } from '../loads/loads-routing.module';
+import { LoadsModule } from '../loads/loads.module';
 
 @NgModule({
   declarations: [
@@ -40,19 +42,21 @@ import { AppErrorHandler } from './common/errors/app-error-handler';
       ScriptCardComponent,
       ScriptCardsComponent,
       TagFormComponent,
-      HtmlPipe
+        HtmlPipe
   ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
         FormsModule,
         HtmlPipe,
+        LoadsRoutingModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         MatTableModule,
         MatCardModule,
         ReactiveFormsModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        LoadsModule
     ],
     providers: [
         ScriptService,

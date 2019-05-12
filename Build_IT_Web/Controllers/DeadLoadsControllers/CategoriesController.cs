@@ -12,10 +12,17 @@ namespace Build_IT_Web.Controllers.DeadLoadsControllers
 {
     [Route("api/deadloads")]
     [ApiController]
-    public class CategoriesController : Controller
+    public class CategoriesController : ControllerBase
     {
+        #region Fields
+
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
+
+        #endregion // Fields
+        
+        #region Constructors
+        
         public CategoriesController(
             ICategoryRepository categoryRepository,
             IMapper mapper)
@@ -24,6 +31,10 @@ namespace Build_IT_Web.Controllers.DeadLoadsControllers
             _mapper = mapper;
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         [HttpGet()]
         public async Task<IEnumerable<CategoryResource>> GetAllCategories()
         {
@@ -32,5 +43,6 @@ namespace Build_IT_Web.Controllers.DeadLoadsControllers
             return _mapper.Map<List<Category>, List<CategoryResource>>(categories.ToList());
         }
 
+        #endregion // Public_Methods
     }
 }

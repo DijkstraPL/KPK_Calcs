@@ -16,8 +16,6 @@ namespace Build_IT_Web.Controllers.DeadLoadsControllers
     {
         #region Fields
         
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly ISubcategoryRepository _subcategoryRepository;
         private readonly IMaterialRepository _materialRepository;
         private readonly IMapper _mapper;
 
@@ -26,13 +24,9 @@ namespace Build_IT_Web.Controllers.DeadLoadsControllers
         #region Constructors
         
         public MaterialsController(
-            ICategoryRepository categoryRepository,
-            ISubcategoryRepository subcategoryRepository,
             IMaterialRepository materialRepository,
             IMapper mapper)
         {
-            _categoryRepository = categoryRepository;
-            _subcategoryRepository = subcategoryRepository;
             _materialRepository = materialRepository;
             _mapper = mapper;
         }
@@ -40,7 +34,15 @@ namespace Build_IT_Web.Controllers.DeadLoadsControllers
         #endregion // Constructors
 
         #region Public_Methods
-        
+
+        [HttpGet("{subcategoryId}/materials")]
+        public async Task<IEnumerable<MaterialResource>> GetAllSubcategories(long subcategoryId)
+        {
+            var materials = await _materialRepository.GetAllMaterialsForSubcategoryAsync(subcategoryId);
+
+            return _mapper.Map<List<Material>, List<MaterialResource>>(materials.ToList());
+        }
+
         #endregion // Public_Methods
     }
 }
