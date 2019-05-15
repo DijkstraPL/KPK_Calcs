@@ -13,7 +13,8 @@ namespace Build_IT_Web.Mapping
         {
             // Domain Resource to API
             CreateMap<Script, ScriptResource>()
-                .ForMember(svm => svm.Tags, operation => operation.MapFrom(s => s.Tags.Select(st => st.Tag)));
+                .ForMember(svm => svm.Tags, operation
+                => operation.MapFrom(s => s.Tags.Select(st => st.Tag)));
             CreateMap<Tag, TagResource>();
             CreateMap<Parameter, ParameterResource>()
                 .ForMember(p => p.Equation, operation => operation.Ignore());

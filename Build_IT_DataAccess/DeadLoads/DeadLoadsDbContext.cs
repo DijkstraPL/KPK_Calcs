@@ -14,6 +14,8 @@ namespace Build_IT_DataAccess.DeadLoads
         public DbSet<Category> Categories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<Material> Materials { get; set; }
+        public DbSet<Addition> Additions { get; set; }
+        public DbSet<MaterialAddition> MaterialAdditions { get; set; }
 
         #endregion // Properties
 
@@ -35,6 +37,8 @@ namespace Build_IT_DataAccess.DeadLoads
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new SubcategoryConfiguration());
             modelBuilder.ApplyConfiguration(new MaterialConfiguration());
+            modelBuilder.ApplyConfiguration(new MaterialAdditionConfiguration());
+            modelBuilder.ApplyConfiguration(new AdditionConfiguration());
         }
 
         #endregion // Public_Methods

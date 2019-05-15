@@ -31,7 +31,9 @@ namespace Build_IT_DataAccess.DeadLoads.Repositories
         {
             return await DeadLoadsContext.Materials
                 .Where(m => m.Subcategory.Id == subcategoryId)
-                .OrderBy(p => p.Name)
+                .OrderBy(m => m.Name)
+                .Include(m => m.MaterialAdditions)
+                .ThenInclude(ma => ma.Addition)
                 .ToListAsync();
         }
 

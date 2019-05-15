@@ -10,10 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DeadLoadsService } from '../../../services/dead-loads.service';
+import { LoadUnit } from '../../../models/dead-loads/enums/loadUnit';
+import { MaterialForCalculations } from '../../../models/dead-loads/material-for-calculations';
 var DeadLoadsCalculatorComponent = /** @class */ (function () {
     function DeadLoadsCalculatorComponent(deadLoadsService) {
         this.deadLoadsService = deadLoadsService;
         this.myControl = new FormControl();
+        this.selectedMaterials = [];
+        this.units = [
+            { key: LoadUnit.kilonewton, value: 'kg' },
+            { key: LoadUnit.kilonewton_per_meter, value: 'kg/m' },
+            { key: LoadUnit.kilonewton_per_square_meter, value: 'kg/m<sup>2</sup>' },
+            { key: LoadUnit.kilonewton_per_cubic_meter, value: 'kg/m<sup>3</sup>' },
+        ];
     }
     DeadLoadsCalculatorComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -26,7 +35,9 @@ var DeadLoadsCalculatorComponent = /** @class */ (function () {
         var _this = this;
         this.deadLoadsService.getSubcategories(this.selectedCategory.id)
             .subscribe(function (subcategories) {
-            _this.subcategories = subcategories;
+            _this.subcategories = subcategories.sort(function (subcategory, nextSubcategory) {
+                return nextSubcategory.documentName.localeCompare(subcategory.documentName);
+            });
             console.log("Subcategories", _this.subcategories);
         }, function (error) { return console.error(error); });
     };
@@ -36,7 +47,34 @@ var DeadLoadsCalculatorComponent = /** @class */ (function () {
             .subscribe(function (materials) {
             _this.materials = materials;
             console.log("Materials", _this.materials);
+            alert(materials[0].additions);
         }, function (error) { return console.error(error); });
+    };
+    DeadLoadsCalculatorComponent.prototype.addMaterial = function (material) {
+        var _this = this;
+        var categoryName = this.selectedCategory.name + ' ' + this.selectedSubcategory.name;
+        this.selectedMaterials.push(new MaterialForCalculations(categoryName, material));
+        this.selectedMaterials.forEach(function (m) { return _this.calculate(m); });
+    };
+    DeadLoadsCalculatorComponent.prototype.removeMaterial = function (index) {
+        this.selectedMaterials.splice(index, 1);
+    };
+    DeadLoadsCalculatorComponent.prototype.calculate = function (materialForCalculation) {
+        materialForCalculation.calculate();
+        this.setSums();
+    };
+    DeadLoadsCalculatorComponent.prototype.setSums = function () {
+        var _this = this;
+        this.sumMinimumDeadLoads = 0;
+        this.sumMaximumDeadLoads = 0;
+        if (this.selectedMaterials.every(function (m) { return m.unit == _this.selectedMaterials[0].unit; })) {
+            this.selectedMaterials.forEach(function (m) { return _this.sumMinimumDeadLoads += m.calculatedMinimumLoad; });
+            this.selectedMaterials.forEach(function (m) { return _this.sumMaximumDeadLoads += m.calculatedMaximumLoad; });
+        }
+        else {
+            this.sumMinimumDeadLoads = undefined;
+            this.sumMaximumDeadLoads = undefined;
+        }
     };
     DeadLoadsCalculatorComponent = __decorate([
         Component({

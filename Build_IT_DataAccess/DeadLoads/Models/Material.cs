@@ -1,4 +1,7 @@
 ﻿using Build_IT_Data.Units.Enums;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Build_IT_DataAccess.DeadLoads.Models
 {
@@ -15,7 +18,17 @@ namespace Build_IT_DataAccess.DeadLoads.Models
         public string Comments { get; set; }
         public Subcategory Subcategory { get; set; }
         public long SubcategoryId { get; set; }
+        public ICollection<MaterialAddition> MaterialAdditions { get; set; }
 
         #endregion // Properties
+
+        #region Constructors
+
+        public Material()
+        {
+            MaterialAdditions = new Collection<MaterialAddition>();
+        }
+
+        #endregion // Constructors
     }
 }

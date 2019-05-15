@@ -16,7 +16,17 @@ namespace Build_IT_Web.Controllers.DeadLoadsControllers.Resources
         public LoadUnit Unit { get; set; }
         public string DocumentName { get; set; }
         public string Comments { get; set; }
-        
+        public ICollection<AdditionResource> Additions { get; set; }
+
         #endregion // Properties
+
+        #region Constructors
+
+        public MaterialResource()
+        {
+            Additions = new Collection<AdditionResource>();
+        }
+
+        #endregion // Constructors
     }
 }
