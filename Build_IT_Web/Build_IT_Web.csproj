@@ -12,6 +12,37 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ClientApp\app\components\parameters-form\**" />
+    <Compile Remove="ClientApp\app\components\script-calculator\**" />
+    <Compile Remove="ClientApp\app\components\script-cards\**" />
+    <Compile Remove="ClientApp\app\components\script-card\**" />
+    <Compile Remove="ClientApp\app\components\script-form\**" />
+    <Compile Remove="ClientApp\app\models\**" />
+    <Compile Remove="ClientApp\app\services\**" />
+    <Content Remove="ClientApp\app\components\parameters-form\**" />
+    <Content Remove="ClientApp\app\components\script-calculator\**" />
+    <Content Remove="ClientApp\app\components\script-cards\**" />
+    <Content Remove="ClientApp\app\components\script-card\**" />
+    <Content Remove="ClientApp\app\components\script-form\**" />
+    <Content Remove="ClientApp\app\models\**" />
+    <Content Remove="ClientApp\app\services\**" />
+    <EmbeddedResource Remove="ClientApp\app\components\parameters-form\**" />
+    <EmbeddedResource Remove="ClientApp\app\components\script-calculator\**" />
+    <EmbeddedResource Remove="ClientApp\app\components\script-cards\**" />
+    <EmbeddedResource Remove="ClientApp\app\components\script-card\**" />
+    <EmbeddedResource Remove="ClientApp\app\components\script-form\**" />
+    <EmbeddedResource Remove="ClientApp\app\models\**" />
+    <EmbeddedResource Remove="ClientApp\app\services\**" />
+    <None Remove="ClientApp\app\components\parameters-form\**" />
+    <None Remove="ClientApp\app\components\script-calculator\**" />
+    <None Remove="ClientApp\app\components\script-cards\**" />
+    <None Remove="ClientApp\app\components\script-card\**" />
+    <None Remove="ClientApp\app\components\script-form\**" />
+    <None Remove="ClientApp\app\models\**" />
+    <None Remove="ClientApp\app\services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ClientApp\app\common\app-error.ts" />
     <None Remove="ClientApp\app\common\errors\app-error-handler.ts" />
     <None Remove="ClientApp\app\common\errors\bad-input-error.ts" />

@@ -1,6 +1,4 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { ScriptService } from '../../services/script.service';
-import { Script } from '../../models/interfaces/script';
 
 @Component({
     selector: 'app-home',

@@ -16,21 +16,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
-import { ScriptFormComponent } from './components/script-form/script-form.component';
-import { ParametersFormComponent } from './components/parameters-form/parameters-form.component';
-import { ScriptCalculatorComponent } from './components/script-calculator/script-calculator.component';
-import { DataParametersFormComponent } from './components/parameters-form/data-parameters-form/data-parameters-form.component';
-import { ScriptCardComponent } from './components/script-card/script-card.component';
-import { ScriptCardsComponent } from './components/script-cards/script-cards.component';
-import { HtmlPipe } from './pipes/html-pipe';
-import { ScriptService } from './services/script.service';
-import { TagService } from './services/tag.service';
-import { CalculationService } from './services/calculation.service';
-import { ParameterService } from './services/parameter.service';
-import { TagFormComponent } from './components/script-form/tag-form/tag-form.component';
 import { AppErrorHandler } from './common/errors/app-error-handler';
-import { LoadsRoutingModule } from '../loads/loads-routing.module';
-import { LoadsModule } from '../loads/loads.module';
+import { LoadsRoutingModule } from './modules/loads/loads-routing.module';
+import { LoadsModule } from './modules/loads/loads.module';
+import { ScriptInterpreterModule } from './modules/script-interpreter/script-interpreter.module';
+import { ScriptInterpreterRoutingModule } from './modules/script-interpreter/script-interpreter-routing.module';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -39,21 +29,13 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                HomeComponent,
-                ScriptFormComponent,
-                ParametersFormComponent,
-                DataParametersFormComponent,
-                ScriptCalculatorComponent,
-                ScriptCardComponent,
-                ScriptCardsComponent,
-                TagFormComponent,
-                HtmlPipe
+                HomeComponent
             ],
             imports: [
                 BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
                 HttpClientModule,
                 FormsModule,
-                HtmlPipe,
+                ScriptInterpreterRoutingModule,
                 LoadsRoutingModule,
                 AppRoutingModule,
                 BrowserAnimationsModule,
@@ -61,13 +43,10 @@ var AppModule = /** @class */ (function () {
                 MatCardModule,
                 ReactiveFormsModule,
                 MatAutocompleteModule,
+                ScriptInterpreterModule,
                 LoadsModule
             ],
             providers: [
-                ScriptService,
-                TagService,
-                CalculationService,
-                ParameterService,
                 { provide: ErrorHandler, useClass: AppErrorHandler }
             ],
             bootstrap: [AppComponent]
