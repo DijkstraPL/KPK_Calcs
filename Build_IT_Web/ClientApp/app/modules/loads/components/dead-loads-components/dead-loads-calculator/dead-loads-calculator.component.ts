@@ -46,6 +46,10 @@ export class DeadLoadsCalculatorComponent implements OnInit {
         moveItemInArray(this.selectedMaterials, prevIndex, event.currentIndex);
         this.selectedMaterialTable.renderRows();
     }
+
+    ondrag() {
+        console.log("4");
+    }
     
     removeMaterial(material: MaterialForCalculations): void {
         const index = this.selectedMaterials.indexOf(material, 0);

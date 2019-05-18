@@ -32,6 +32,7 @@ export class ScriptCalculatorComponent implements OnInit {
 
     displayedColumns: string[] = ['name', 'value', 'unit', 'description'];
 
+
     constructor(
         private route: ActivatedRoute,
         private scriptService: ScriptService,
@@ -73,6 +74,10 @@ export class ScriptCalculatorComponent implements OnInit {
                 (a, b) => a[prop] > b[prop] ? 1 :
                     a[prop] === b[prop] ? 0 :
                         -1);
+    }
+
+    onValueChanged(parameter: Parameter) {
+        this.setValueChanged(parameter);
     }
 
     setValueChanged(parameter: Parameter) {

@@ -60,6 +60,9 @@ var ScriptCalculatorComponent = /** @class */ (function () {
                 a[prop] === b[prop] ? 0 :
                     -1; });
     };
+    ScriptCalculatorComponent.prototype.onValueChanged = function (parameter) {
+        this.setValueChanged(parameter);
+    };
     ScriptCalculatorComponent.prototype.setValueChanged = function (parameter) {
         this.valueChanged = true;
         this.filterParameters();

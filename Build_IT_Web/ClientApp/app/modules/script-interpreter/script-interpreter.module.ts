@@ -9,6 +9,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { ScriptFormComponent } from './components/script-form/script-form.component';
 import { ParametersFormComponent } from './components/parameters-form/parameters-form.component';
@@ -17,6 +21,7 @@ import { DataParametersFormComponent } from './components/parameters-form/data-p
 import { ScriptCardComponent } from './components/script-card/script-card.component';
 import { ScriptCardsComponent } from './components/script-cards/script-cards.component';
 import { TagFormComponent } from './components/script-form/tag-form/tag-form.component';
+import { ParameterInputComponent } from './components/script-calculator/parameter-inputs/input/parameter-input.component';
 
 import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
@@ -35,7 +40,8 @@ import { PipesModule } from '../pipes-module/pipes.module';
         ScriptCalculatorComponent,
         ScriptCardComponent,
         ScriptCardsComponent,
-        TagFormComponent
+        TagFormComponent,
+        ParameterInputComponent
     ],
     imports: [
         PipesModule,
@@ -48,7 +54,11 @@ import { PipesModule } from '../pipes-module/pipes.module';
         MatCardModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
-        MatButtonModule
+        MatButtonModule,
+        MatInputModule,
+        MatSelectModule,
+        MatProgressBarModule,
+        MatRadioModule
     ],
     exports: [
         ScriptCardsComponent

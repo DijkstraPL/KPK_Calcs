@@ -45,6 +45,9 @@ var DeadLoadsCalculatorComponent = /** @class */ (function () {
         moveItemInArray(this.selectedMaterials, prevIndex, event.currentIndex);
         this.selectedMaterialTable.renderRows();
     };
+    DeadLoadsCalculatorComponent.prototype.ondrag = function () {
+        console.log("4");
+    };
     DeadLoadsCalculatorComponent.prototype.removeMaterial = function (material) {
         var _this = this;
         var index = this.selectedMaterials.indexOf(material, 0);

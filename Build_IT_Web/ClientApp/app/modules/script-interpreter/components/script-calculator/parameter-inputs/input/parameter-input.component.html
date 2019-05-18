@@ -1,0 +1,12 @@
+﻿
+<mat-form-field>
+    <input matInput
+           autocomplete="off"
+           [(ngModel)]="parameter.value"
+           (change)="changeValue()">
+    <mat-placeholder>
+        <span [innerHtml]="parameter.name | html"></span>
+    </mat-placeholder>
+    <span matSuffix [innerHtml]="parameter.unit | html"></span>
+</mat-form-field>
+<p class="parameter-description">{{parameter.description}}</p>

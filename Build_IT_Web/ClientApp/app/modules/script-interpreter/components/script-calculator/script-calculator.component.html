@@ -10,15 +10,87 @@
             {{tag.name}}
         </li>
     </ul>
-    <p *ngIf="!visibleParameters"><em>Loading...</em></p>
+    <p *ngIf="!visibleParameters">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </p>
 
-    <table mat-table 
+    <ul class="list-inline ml-4">
+        <li *ngFor="let parameter of visibleParameters"
+            class="list-inline-item ml-5 d-inline-flex">
+            <div *ngIf="parameter.valueOptions.length == 0; else valueOptions">
+                <parameter-input [parameter]="parameter"
+                                 (valueChanged)="onValueChanged($event)"></parameter-input>
+            </div>
+
+            <ng-template #valueOptions>
+
+                <mat-form-field *ngIf="parameter.valueOptionSetting == valueOptionSetting.UserInput; else fixedValueOptions">
+                    <input type="text"
+                           aria-label="Number"
+                           matInput
+                           [formControl]="valueOptions"
+                           [matAutocomplete]="auto"
+                           [(ngModel)]="parameter.value"
+                           (change)="setValueChanged(parameter)">
+                    <mat-placeholder>
+                        <span [innerHtml]="parameter.name | html"></span>
+                    </mat-placeholder>
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let valueOption of parameter.valueOptions"
+                                    [value]="valueOption.value">
+                            {{valueOption.value }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <span matSuffix [innerHtml]="parameter.unit | html"></span>
+                    <mat-hint class="hint">{{ parameter.description }}</mat-hint>
+                </mat-form-field>
+
+                <ng-template #fixedValueOptions>
+                    <div class="form-inline"
+                         *ngIf="parameter.valueOptions.length > 0 && parameter.valueOptions.length <= 3">
+
+                        <div class="justify-content-start">
+                            <label [innerHtml]="parameter.name | html"
+                                   class="align-self-start mb-2"></label>
+                            <mat-radio-group [(ngModel)]="parameter.value">
+                                <mat-radio-button *ngFor="let valueOption of parameter.valueOptions; index as i"
+                                                  [value]="valueOption.value"
+                                                  class="mr-3"
+                                                  (change)="setValueChanged(parameter)">
+                                    {{valueOption.value }}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <p class="parameter-description">{{parameter.description}}</p>
+                        </div>
+                    </div>
+
+                    <mat-form-field *ngIf="parameter.valueOptions.length > 3">
+                        <mat-label [innerHtml]="parameter.name | html"></mat-label>
+                        <mat-select [(ngModel)]="parameter.value"
+                                    (change)="setValueChanged(parameter)">
+                            <mat-option *ngFor="let valueOption of parameter.valueOptions"
+                                        [value]="valueOption.value">
+                                {{valueOption.value }}
+                            </mat-option>
+                        </mat-select>
+                        <span matSuffix [innerHtml]="parameter.unit | html"></span>
+                        <mat-hint class="hint">{{ parameter.description }}</mat-hint>
+                    </mat-form-field>
+
+                </ng-template>
+            </ng-template>
+        </li>
+    </ul>
+
+    <table mat-table
            [dataSource]="visibleParameters"
            *ngIf="visibleParameters"
            class="mat-elevation-z8">
         <ng-container matColumnDef="name">
-            <th mat-header-cell 
-                *matHeaderCellDef> Name </th>
+            <th mat-header-cell
+                *matHeaderCellDef>
+                Name
+            </th>
             <td mat-cell
                 *matCellDef="let parameter">
                 <span [innerHtml]="parameter.name | html"></span>
@@ -26,8 +98,10 @@
         </ng-container>
 
         <ng-container matColumnDef="value">
-            <th mat-header-cell 
-                *matHeaderCellDef> Value </th>
+            <th mat-header-cell
+                *matHeaderCellDef>
+                Value
+            </th>
             <td mat-cell *matCellDef="let parameter">
                 <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
                     <input *ngIf="parameter.valueOptions.length == 0 || parameter.valueOptionSetting == valueOptionSetting.UserInput"
@@ -91,17 +165,19 @@
          *ngIf="visibleParameters">
         <button (click)="calculate()"
                 class="btn btn-primary">
-           <span class="fa fa-calculator"></span> Calculate
+            <span class="fa fa-calculator"></span> Calculate
         </button>
     </div>
 
-    <table mat-table 
+    <table mat-table
            [dataSource]="resultParameters"
            *ngIf="resultParameters && !valueChanged"
            class="mat-elevation-z8">
         <ng-container matColumnDef="name">
-            <th mat-header-cell 
-                *matHeaderCellDef> Name </th>
+            <th mat-header-cell
+                *matHeaderCellDef>
+                Name
+            </th>
             <td mat-cell
                 *matCellDef="let parameter">
                 <span [innerHtml]="parameter.name | html"></span>
@@ -109,10 +185,12 @@
         </ng-container>
 
         <ng-container matColumnDef="value">
-            <th mat-header-cell 
-                *matHeaderCellDef> Value </th>
-            <td mat-cell 
-                *matCellDef="let parameter">                
+            <th mat-header-cell
+                *matHeaderCellDef>
+                Value
+            </th>
+            <td mat-cell
+                *matCellDef="let parameter">
                 <span *ngIf="parameter.context % (2 * parameterOptions.Calculation) >= parameterOptions.Calculation">{{parameter.value }}</span>
             </td>
         </ng-container>
