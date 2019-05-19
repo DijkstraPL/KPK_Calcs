@@ -6,17 +6,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { HtmlPipe } from './text-pipes/html-pipe';
+import { ToNumberPipe } from './text-pipes/toNumber-pipe';
 var PipesModule = /** @class */ (function () {
     function PipesModule() {
     }
     PipesModule = __decorate([
         NgModule({
             declarations: [
-                HtmlPipe
+                HtmlPipe,
+                ToNumberPipe
             ],
             imports: [],
             exports: [
-                HtmlPipe
+                HtmlPipe,
+                ToNumberPipe
             ]
         })
     ], PipesModule);

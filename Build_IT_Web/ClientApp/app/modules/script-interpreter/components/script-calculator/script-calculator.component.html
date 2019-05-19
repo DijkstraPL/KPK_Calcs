@@ -4,224 +4,66 @@
         <h1>{{script.name}}</h1>
     </div>
 
-    <p>{{script.description}}</p>
+    <p class="ml-2">{{script.description}}</p>
     <ul>
         <li *ngFor="let tag of script.tags">
             {{tag.name}}
         </li>
     </ul>
-    <p *ngIf="!visibleParameters">
+    <div *ngIf="!visibleParameters">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </p>
+    </div>
 
-    <ul class="list-inline ml-4">
-        <li *ngFor="let parameter of visibleParameters"
-            class="list-inline-item ml-5 d-inline-flex">
-            <div *ngIf="parameter.valueOptions.length == 0; else valueOptions">
-                <parameter-input [parameter]="parameter"
-                                 (valueChanged)="onValueChanged($event)"></parameter-input>
-            </div>
+    <div>
+        <div *ngFor="let parameter of notGroupedParameters"
+             class="list-inline-item ml-5 d-inline-flex">
+            <parameter-form [parameter]="parameter"
+                            (valueChanged)="onValueChanged($event)"></parameter-form>
+        </div>
 
-            <ng-template #valueOptions>
 
-                <mat-form-field *ngIf="parameter.valueOptionSetting == valueOptionSetting.UserInput; else fixedValueOptions">
-                    <input type="text"
-                           aria-label="Number"
-                           matInput
-                           [formControl]="valueOptions"
-                           [matAutocomplete]="auto"
-                           [(ngModel)]="parameter.value"
-                           (change)="setValueChanged(parameter)">
-                    <mat-placeholder>
-                        <span [innerHtml]="parameter.name | html"></span>
-                    </mat-placeholder>
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let valueOption of parameter.valueOptions"
-                                    [value]="valueOption.value">
-                            {{valueOption.value }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <span matSuffix [innerHtml]="parameter.unit | html"></span>
-                    <mat-hint class="hint">{{ parameter.description }}</mat-hint>
-                </mat-form-field>
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let group of groups">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{group.name}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
 
-                <ng-template #fixedValueOptions>
-                    <div class="form-inline"
-                         *ngIf="parameter.valueOptions.length > 0 && parameter.valueOptions.length <= 3">
+                <ul class="list-inline m-0">
+                    <li *ngFor="let parameter of group.parameters"
+                        class="list-inline-item ml-5 d-inline-flex">
+                        <parameter-form [parameter]="parameter"
+                                        (valueChanged)="onValueChanged($event)"></parameter-form>
+                    </li>
+                </ul>
 
-                        <div class="justify-content-start">
-                            <label [innerHtml]="parameter.name | html"
-                                   class="align-self-start mb-2"></label>
-                            <mat-radio-group [(ngModel)]="parameter.value">
-                                <mat-radio-button *ngFor="let valueOption of parameter.valueOptions; index as i"
-                                                  [value]="valueOption.value"
-                                                  class="mr-3"
-                                                  (change)="setValueChanged(parameter)">
-                                    {{valueOption.value }}
-                                </mat-radio-button>
-                            </mat-radio-group>
-                            <p class="parameter-description">{{parameter.description}}</p>
-                        </div>
-                    </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
 
-                    <mat-form-field *ngIf="parameter.valueOptions.length > 3">
-                        <mat-label [innerHtml]="parameter.name | html"></mat-label>
-                        <mat-select [(ngModel)]="parameter.value"
-                                    (change)="setValueChanged(parameter)">
-                            <mat-option *ngFor="let valueOption of parameter.valueOptions"
-                                        [value]="valueOption.value">
-                                {{valueOption.value }}
-                            </mat-option>
-                        </mat-select>
-                        <span matSuffix [innerHtml]="parameter.unit | html"></span>
-                        <mat-hint class="hint">{{ parameter.description }}</mat-hint>
-                    </mat-form-field>
-
-                </ng-template>
-            </ng-template>
-        </li>
-    </ul>
-
-    <table mat-table
-           [dataSource]="visibleParameters"
-           *ngIf="visibleParameters"
-           class="mat-elevation-z8">
-        <ng-container matColumnDef="name">
-            <th mat-header-cell
-                *matHeaderCellDef>
-                Name
-            </th>
-            <td mat-cell
-                *matCellDef="let parameter">
-                <span [innerHtml]="parameter.name | html"></span>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="value">
-            <th mat-header-cell
-                *matHeaderCellDef>
-                Value
-            </th>
-            <td mat-cell *matCellDef="let parameter">
-                <div *ngIf="parameter.context % (2 * parameterOptions.Editable) >= parameterOptions.Editable">
-                    <input *ngIf="parameter.valueOptions.length == 0 || parameter.valueOptionSetting == valueOptionSetting.UserInput"
-                           [(ngModel)]="parameter.value"
-                           placeholder="value"
-                           (change)="setValueChanged(parameter)" />
-                    <div class="form-inline"
-                         *ngIf="parameter.valueOptions.length > 0 && parameter.valueOptions.length <= 3">
-                        <label *ngFor="let valueOption of parameter.valueOptions; index as i">
-                            <input type="radio"
-                                   value="{{valueOption.value}}"
-                                   id="{{parameter.id}}_valueOption{{i}}"
-                                   [(ngModel)]="parameter.value"
-                                   name="{{parameter.id}}_valueOption{{i}}"
-                                   (change)="setValueChanged(parameter)" />
-                            <label class="ml-1 mr-3"
-                                   for="{{parameter.id}}_valueOption{{i}}">{{valueOption.value }}</label>
-                        </label>
-                    </div>
-                    <select *ngIf="parameter.valueOptions.length > 3"
-                            [(ngModel)]="parameter.value"
-                            (change)="setValueChanged(parameter)">
-                        <option *ngFor="let valueOption of parameter.valueOptions">
-                            {{valueOption.value }}
-                        </option>
-                    </select>
-                </div>
-                <span *ngIf="parameter.context % (2 * parameterOptions.Calculation) >= parameterOptions.Calculation">{{parameter.value }}</span>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="unit">
-            <th mat-header-cell
-                *matHeaderCellDef>
-                Unit
-            </th>
-            <td mat-cell
-                *matCellDef="let parameter">
-                <span [innerHtml]="parameter.unit | html"></span>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="description">
-            <th mat-header-cell
-                *matHeaderCellDef>
-                Description
-            </th>
-            <td mat-cell
-                *matCellDef="let parameter">
-                {{ parameter.description }}
-            </td>
-        </ng-container>
-
-        <tr mat-header-row
-            *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row
-            *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
 
     <div class="text-center"
          *ngIf="visibleParameters">
-        <button (click)="calculate()"
-                class="btn btn-primary">
+        <button mat-stroked-button
+                color="accent"
+                (click)="calculate()">
             <span class="fa fa-calculator"></span> Calculate
         </button>
     </div>
 
-    <table mat-table
-           [dataSource]="resultParameters"
-           *ngIf="resultParameters && !valueChanged"
-           class="mat-elevation-z8">
-        <ng-container matColumnDef="name">
-            <th mat-header-cell
-                *matHeaderCellDef>
-                Name
-            </th>
-            <td mat-cell
-                *matCellDef="let parameter">
-                <span [innerHtml]="parameter.name | html"></span>
-            </td>
-        </ng-container>
+    <div *ngIf="isCalculating"
+         class="mt-2">
+        <mat-progress-bar mode="query"></mat-progress-bar>
+    </div>
 
-        <ng-container matColumnDef="value">
-            <th mat-header-cell
-                *matHeaderCellDef>
-                Value
-            </th>
-            <td mat-cell
-                *matCellDef="let parameter">
-                <span *ngIf="parameter.context % (2 * parameterOptions.Calculation) >= parameterOptions.Calculation">{{parameter.value }}</span>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="unit">
-            <th mat-header-cell
-                *matHeaderCellDef>
-                Unit
-            </th>
-            <td mat-cell
-                *matCellDef="let parameter">
-                <span [innerHtml]="parameter.unit | html"></span>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="description">
-            <th mat-header-cell
-                *matHeaderCellDef>
-                Description
-            </th>
-            <td mat-cell
-                *matCellDef="let parameter">
-                {{ parameter.description }}
-            </td>
-        </ng-container>
-
-        <tr mat-header-row
-            *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row
-            [ngClass]="{'bg-info': isImportant(row)}"
-            *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
+    <div *ngIf="resultParameters && !valueChanged">
+        <h3 class="ml-2">Results</h3>
+        <mat-list dense>
+            <div *ngFor="let parameter of resultParameters">
+                <parameter-result [parameter]="parameter"></parameter-result>
+                <mat-divider></mat-divider>
+            </div>
+        </mat-list>
+    </div>
 </div>

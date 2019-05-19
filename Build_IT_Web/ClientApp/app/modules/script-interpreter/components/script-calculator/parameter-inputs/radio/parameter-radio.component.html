@@ -1,0 +1,14 @@
+﻿
+<div class="justify-content-start parameter-radio">
+    <label [innerHtml]="parameter.name | html"
+           class="align-self-start mb-2"></label>
+    <mat-radio-group [(ngModel)]="parameter.value">
+        <mat-radio-button *ngFor="let valueOption of parameter.valueOptions; index as i"
+                          [value]="valueOption.value"
+                          class="mr-3"
+                          (change)="changeValue($event)">
+            {{valueOption.value }}
+        </mat-radio-button>
+    </mat-radio-group>
+    <p class="parameter-description">{{parameter.description}}</p>
+</div>

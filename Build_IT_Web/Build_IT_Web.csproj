@@ -52,10 +52,6 @@
   <ItemGroup>
     <Folder Include="ClientApp\app\common\validators\" />
     <Folder Include="ClientApp\app\directives\" />
-    <Folder Include="ClientApp\app\modules\script-interpreter\components\script-calculator\parameter-inputs\autocomplete\" />
-    <Folder Include="ClientApp\app\modules\script-interpreter\components\script-calculator\parameter-inputs\radio\" />
-    <Folder Include="ClientApp\app\modules\script-interpreter\components\script-calculator\parameter-inputs\select\" />
-    <Folder Include="ClientApp\app\modules\script-interpreter\components\script-calculator\select-input\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

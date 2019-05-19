@@ -1,16 +1,14 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { ScriptService } from '../../services/script.service';
-import { Script } from '../../models/interfaces/script';
-import { Parameter } from '../../models/interfaces/parameter';
-import { ParameterOptions } from '../../models/enums/parameterOptions';
-import { ActivatedRoute } from '@angular/router';
-import { ParameterService } from '../../services/parameter.service';
-import { CalculationService } from '../../services/calculation.service';
-import { ValueType } from '../../models/enums/valueType';
-import { isNullOrUndefined, log } from 'util';
-import { ValueOption } from '../../models/interfaces/valueOption';
-import { ValueOptionSettings } from '../../models/enums/valueOptionSettings';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ParameterOptions } from '../../models/enums/parameterOptions';
+import { ValueType } from '../../models/enums/valueType';
+import { Parameter } from '../../models/interfaces/parameter';
+import { Script } from '../../models/interfaces/script';
+import { ParametersGroup } from '../../models/parametersGroup';
+import { CalculationService } from '../../services/calculation.service';
+import { ParameterService } from '../../services/parameter.service';
+import { ScriptService } from '../../services/script.service';
 
 @Component({
     selector: 'app-script-calculator',
@@ -26,12 +24,15 @@ export class ScriptCalculatorComponent implements OnInit {
     visibleParameters: Parameter[];
     resultParameters: Parameter[];
 
+    groups: ParametersGroup[];
+    notGroupedParameters: Parameter[];
+
     valueChanged: boolean;
     parameterOptions = ParameterOptions;
-    valueOptionSetting = ValueOptionSettings;
 
     displayedColumns: string[] = ['name', 'value', 'unit', 'description'];
 
+    isCalculating: boolean;
 
     constructor(
         private route: ActivatedRoute,
@@ -77,37 +78,65 @@ export class ScriptCalculatorComponent implements OnInit {
     }
 
     onValueChanged(parameter: Parameter) {
-        this.setValueChanged(parameter);
-    }
-
-    setValueChanged(parameter: Parameter) {
         this.valueChanged = true;
 
         this.filterParameters();
     }
 
-    isImportant(parameter: Parameter): boolean {
-        return (parameter.context & ParameterOptions.Important) != 0
-    }
-    
+
     filterParameters() {
         this.visibleParameters = this.parameters.filter(p => (p.context & ParameterOptions.Visible) != 0 && this.validateVisibility(p));
+
+        if (this.groups == undefined)
+            this.createGroups();
+        this.populateGroups();
     }
-    
+
+    private createGroups() {
+        let groupNames = this.visibleParameters.map(vp => vp.groupName)
+            .filter((value, index, self) => self.indexOf(value) === index &&
+                value != "" && value != undefined);
+
+        this.groups = groupNames.map(gn => new ParametersGroup(gn));
+    }
+
+    private populateGroups() {
+        this.groups.forEach(g => g.clear());
+        this.notGroupedParameters = [];
+
+        this.visibleParameters.forEach(vp => {
+            if (vp.groupName == "" || vp.groupName == undefined)
+                this.notGroupedParameters.push(vp);
+            else {
+                let group = this.groups.find(g => g.name === vp.groupName)
+                group.addParameter(vp);
+            }
+        });
+    }
+
     calculate() {
+       // this.resultParameters = [];
+        this.isCalculating = true;
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(params => {
                 this.resultParameters = params.filter(p => (p.context & ParameterOptions.Visible) != 0);
                 console.log("Results", this.resultParameters);
-            }, error => console.error(error));
-               
+            },
+                error => {
+                    console.error(error);
+                    this.isCalculating = false;
+                },
+                () => {
+                    this.isCalculating = false;
+                });
+
         this.valueChanged = false;
     }
 
     private validateVisibility(parameter: Parameter): boolean {
         if (!parameter.visibilityValidator)
             return true;
-               
+
         let visibilityValidatorEquation = parameter.visibilityValidator.slice(
             parameter.visibilityValidator.indexOf('(') + 1,
             parameter.visibilityValidator.lastIndexOf(')'));

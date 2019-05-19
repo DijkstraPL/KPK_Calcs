@@ -2,7 +2,7 @@
 
 export class AppErrorHandler implements ErrorHandler {   
     handleError(error: Response | any) {
-        alert("An unexpected error occurred.")
+       // alert("An unexpected error occurred.");
         console.log(error);
     }
 }

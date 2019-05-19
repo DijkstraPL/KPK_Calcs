@@ -5,12 +5,18 @@
         <mat-card-title>{{ script.name }}</mat-card-title>
         <mat-card-subtitle>{{ script.accordingTo }}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image
+    <div mat-card-image>
+        <ul>
+            <li class="small"
+                *ngFor="let tag of script.tags">{{tag.name}}</li>
+        </ul>
+    </div>
+    <!--<img mat-card-image
          src="https://lorempixel.com/300/300/?random={{script.id}}"
          title="{{script.name}}"
-         alt="{{script.name}}">
+         alt="{{script.name}}">-->
     <mat-card-content>
-        <p>
+        <p class="mb-4">
             {{script.description }}
         </p>
     </mat-card-content>

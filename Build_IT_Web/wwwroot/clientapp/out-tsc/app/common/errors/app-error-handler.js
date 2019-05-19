@@ -2,7 +2,7 @@ var AppErrorHandler = /** @class */ (function () {
     function AppErrorHandler() {
     }
     AppErrorHandler.prototype.handleError = function (error) {
-        alert("An unexpected error occurred.");
+        // alert("An unexpected error occurred.");
         console.log(error);
     };
     return AppErrorHandler;

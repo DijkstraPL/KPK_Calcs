@@ -8,14 +8,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { ScriptService } from '../../services/script.service';
-import { ParameterOptions } from '../../models/enums/parameterOptions';
-import { ActivatedRoute } from '@angular/router';
-import { ParameterService } from '../../services/parameter.service';
-import { CalculationService } from '../../services/calculation.service';
-import { ValueType } from '../../models/enums/valueType';
-import { ValueOptionSettings } from '../../models/enums/valueOptionSettings';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ParameterOptions } from '../../models/enums/parameterOptions';
+import { ValueType } from '../../models/enums/valueType';
+import { ParametersGroup } from '../../models/parametersGroup';
+import { CalculationService } from '../../services/calculation.service';
+import { ParameterService } from '../../services/parameter.service';
+import { ScriptService } from '../../services/script.service';
 var ScriptCalculatorComponent = /** @class */ (function () {
     function ScriptCalculatorComponent(route, scriptService, parameterService, calculationService) {
         this.route = route;
@@ -24,7 +24,6 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         this.calculationService = calculationService;
         this.myControl = new FormControl();
         this.parameterOptions = ParameterOptions;
-        this.valueOptionSetting = ValueOptionSettings;
         this.displayedColumns = ['name', 'value', 'unit', 'description'];
     }
     ScriptCalculatorComponent.prototype.ngOnInit = function () {
@@ -61,26 +60,49 @@ var ScriptCalculatorComponent = /** @class */ (function () {
                     -1; });
     };
     ScriptCalculatorComponent.prototype.onValueChanged = function (parameter) {
-        this.setValueChanged(parameter);
-    };
-    ScriptCalculatorComponent.prototype.setValueChanged = function (parameter) {
         this.valueChanged = true;
         this.filterParameters();
-    };
-    ScriptCalculatorComponent.prototype.isImportant = function (parameter) {
-        return (parameter.context & ParameterOptions.Important) != 0;
     };
     ScriptCalculatorComponent.prototype.filterParameters = function () {
         var _this = this;
         this.visibleParameters = this.parameters.filter(function (p) { return (p.context & ParameterOptions.Visible) != 0 && _this.validateVisibility(p); });
+        if (this.groups == undefined)
+            this.createGroups();
+        this.populateGroups();
+    };
+    ScriptCalculatorComponent.prototype.createGroups = function () {
+        var groupNames = this.visibleParameters.map(function (vp) { return vp.groupName; })
+            .filter(function (value, index, self) { return self.indexOf(value) === index &&
+            value != "" && value != undefined; });
+        this.groups = groupNames.map(function (gn) { return new ParametersGroup(gn); });
+    };
+    ScriptCalculatorComponent.prototype.populateGroups = function () {
+        var _this = this;
+        this.groups.forEach(function (g) { return g.clear(); });
+        this.notGroupedParameters = [];
+        this.visibleParameters.forEach(function (vp) {
+            if (vp.groupName == "" || vp.groupName == undefined)
+                _this.notGroupedParameters.push(vp);
+            else {
+                var group = _this.groups.find(function (g) { return g.name === vp.groupName; });
+                group.addParameter(vp);
+            }
+        });
     };
     ScriptCalculatorComponent.prototype.calculate = function () {
         var _this = this;
+        // this.resultParameters = [];
+        this.isCalculating = true;
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(function (params) {
             _this.resultParameters = params.filter(function (p) { return (p.context & ParameterOptions.Visible) != 0; });
             console.log("Results", _this.resultParameters);
-        }, function (error) { return console.error(error); });
+        }, function (error) {
+            console.error(error);
+            _this.isCalculating = false;
+        }, function () {
+            _this.isCalculating = false;
+        });
         this.valueChanged = false;
     };
     ScriptCalculatorComponent.prototype.validateVisibility = function (parameter) {

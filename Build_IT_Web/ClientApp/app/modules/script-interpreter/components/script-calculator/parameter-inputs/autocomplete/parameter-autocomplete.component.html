@@ -1,0 +1,25 @@
+﻿<mat-form-field>
+    <input type="text"
+           aria-label="Number"
+           matInput
+           [formControl]="valueOptionsForm"
+           name="parameterInput"
+           [matAutocomplete]="auto"
+           [(ngModel)]="parameter.value"
+           (change)="changeValue()">
+    <mat-placeholder>
+        <span [innerHtml]="parameter.name | html"></span>
+    </mat-placeholder>
+    <span matSuffix
+          [innerHtml]="parameter.unit | html"></span>
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete"
+                  autoActiveFirstOption >
+    <mat-option *ngFor="let valueOption of filteredValueOptions | async"
+                [value]="valueOption.value">
+        {{valueOption.value }} {{valueOption.description}}
+    </mat-option>
+</mat-autocomplete>
+
+<p class="parameter-description">{{parameter.description}}</p>

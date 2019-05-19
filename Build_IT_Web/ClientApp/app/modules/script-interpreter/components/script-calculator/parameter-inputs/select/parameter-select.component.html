@@ -1,0 +1,12 @@
+﻿<mat-form-field>
+    <mat-label [innerHtml]="parameter.name | html"></mat-label>
+    <mat-select [(ngModel)]="parameter.value"
+                (change)="valueChanged()">
+        <mat-option *ngFor="let valueOption of parameter.valueOptions"
+                    [value]="valueOption.value">
+            {{valueOption.value }}
+        </mat-option>
+    </mat-select>
+    <span matSuffix [innerHtml]="parameter.unit | html"></span>
+</mat-form-field>
+<p class="parameter-description">{{parameter.description}}</p>

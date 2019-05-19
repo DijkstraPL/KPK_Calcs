@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 
 import { ScriptFormComponent } from './components/script-form/script-form.component';
 import { ParametersFormComponent } from './components/parameters-form/parameters-form.component';
@@ -22,6 +24,11 @@ import { ScriptCardComponent } from './components/script-card/script-card.compon
 import { ScriptCardsComponent } from './components/script-cards/script-cards.component';
 import { TagFormComponent } from './components/script-form/tag-form/tag-form.component';
 import { ParameterInputComponent } from './components/script-calculator/parameter-inputs/input/parameter-input.component';
+import { ParameterSelectComponent } from './components/script-calculator/parameter-inputs/select/parameter-select.component';
+import { ParameterAutocompleteComponent } from './components/script-calculator/parameter-inputs/autocomplete/parameter-autocomplete.component';
+import { ParameterRadioComponent } from './components/script-calculator/parameter-inputs/radio/parameter-radio.component';
+import { ParameterFormComponent } from './components/script-calculator/parameter-inputs/parameters-form/parameter-form.component';
+import { ParameterResultComponent } from './components/script-calculator/parameter-results/parameter-result/parameter-result.component';
 
 import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
@@ -41,7 +48,12 @@ import { PipesModule } from '../pipes-module/pipes.module';
         ScriptCardComponent,
         ScriptCardsComponent,
         TagFormComponent,
-        ParameterInputComponent
+        ParameterInputComponent,
+        ParameterSelectComponent,
+        ParameterAutocompleteComponent,
+        ParameterRadioComponent,
+        ParameterFormComponent,
+        ParameterResultComponent
     ],
     imports: [
         PipesModule,
@@ -58,7 +70,9 @@ import { PipesModule } from '../pipes-module/pipes.module';
         MatInputModule,
         MatSelectModule,
         MatProgressBarModule,
-        MatRadioModule
+        MatRadioModule,
+        MatExpansionModule,
+        MatListModule
     ],
     exports: [
         ScriptCardsComponent
