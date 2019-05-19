@@ -21,7 +21,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
         #endregion // Fields
 
         #region Constructors
-        
+
         public CalculationEngine(ICalculatable script)
         {
             _script = script;
@@ -71,7 +71,10 @@ namespace Build_IT_ScriptInterpreter.Scripts
                     continue;
 
                 CalculateParameter(parameter, parameters);
-                parameters.Add(parameter.Name, parameter.Value);
+                if (parameters.ContainsKey(parameter.Name))
+                    parameters[parameter.Name] = parameter.Value;
+                else
+                    parameters.Add(parameter.Name, parameter.Value);
             }
         }
 
@@ -176,7 +179,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
                 parameter.Value = ex.Message;
             }
         }
-        
+
         private bool IsValid(IParameter parameter, Dictionary<string, object> parameters)
         {
             var value = parameter.VisibilityValidator?.ToString();

@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Composition.Hosting;
+using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
 {
@@ -43,13 +45,13 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
             Name = "Calculate";
             Function = (e) =>
             {
-                ICollection<object> arguments = new List<object>();
+                IList<object> arguments = new List<object>();
                 Compose(e.Parameters[0]?.Evaluate()?.ToString());
                 for (int i = 1; i < e.Parameters.Length; i++)
                     arguments.Add(e.Parameters[i].Evaluate());
 
                 Calculator.Map(arguments);
-                return Calculator.Calculate();
+                return SetParameters(Calculator.Calculate(), e);
             };
         }
 
@@ -62,6 +64,27 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
             {
                 Calculator = container.GetExport<ICalculator>(calculatorName);
             }
+        }
+
+        private object SetParameters(IResult result, FunctionArgs functionArgs)
+        {
+            StringBuilder setFunction = new StringBuilder("SET(");
+
+            foreach(var property in result.Properties)
+                setFunction.Append(property.Key)
+                    .Append(",")
+                    .Append(property.Value)
+                    .Append(",");
+
+            setFunction.Remove(setFunction.Length - 1, 1)
+                .Append(")");
+
+            foreach (var property in result.Properties)
+                functionArgs.Parameters.First().Parameters.Add(property.Key, property.Value);
+            //functionArgs
+            //var expression = new ExpressionWrapper(setFunction.ToString());
+            //return expression.Evaluate();
+            return true;
         }
 
         #endregion // Private_Methods      

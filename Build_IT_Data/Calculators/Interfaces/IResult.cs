@@ -4,19 +4,12 @@ using System.Text;
 
 namespace Build_IT_Data.Calculators.Interfaces
 {
-    public interface ICalculator
+    public interface IResult
     {
         #region Properties
         
         IDictionary<string, object> Properties { get; }
 
         #endregion // Properties
-
-        #region Public_Methods
-
-        void Map(IList<object> args);
-        IResult Calculate();
-
-        #endregion // Public_Methods
     }
 }

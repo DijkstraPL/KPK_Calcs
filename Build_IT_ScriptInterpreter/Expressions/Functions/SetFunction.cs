@@ -20,7 +20,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions
         {
             Set();
         }
-
+        
         #endregion // Constructors
 
         #region Private_Methods
