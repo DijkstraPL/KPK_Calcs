@@ -6,10 +6,13 @@ namespace Build_IT_ScriptService
 {
     public abstract class Property
     {
+        public string Name { get; }
         public Type Type { get; }
+        public bool HasValue { get; protected set; }
 
-        public Property(Type type)
+        public Property( string name, Type type)
         {
+            Name = name;
             Type = type;
         }
 
@@ -18,17 +21,22 @@ namespace Build_IT_ScriptService
 
     public class Property<T> : Property
     {
-        public T Value { get; private set; }
-        public int OrderNumber { get; }
-        public string Name { get; }
-
+        private T _value;
+        public T Value
+        {
+            get => _value;
+            private set
+            {
+                _value = value;
+                HasValue = true;
+            }
+        }
+        
         private readonly Func<string, T> _toType;
 
-        public Property(int orderNumber, string name,
-            Func<string, T> toType) : base(typeof(T))
+        public Property(string name, Func<string, T> toType) 
+            : base(name, typeof(T))
         {
-            OrderNumber = orderNumber;
-            Name = name;
             _toType = toType;
         }
 
