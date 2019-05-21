@@ -45,17 +45,6 @@ namespace Build_IT_ScriptInterpreter.Scripts
             Calculate(parameters);
         }
 
-        //public void Calculate(params object[] values)
-        //{
-        //    var parameters = PrepareDataParameters(values).ToList();
-
-        //    foreach (var parameter in _scriptParameters.Where(p =>
-        //    (p.Context & ParameterOptions.Calculation) != 0))
-        //    {
-        //        CalculateParameter(parameter, parameters.ToDictionary(p => p.Name, p => p.Value));
-        //        parameters.Add(parameter);
-        //    }
-        //}
 
         public void Calculate(Dictionary<string, object> parameters)
         {

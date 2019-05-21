@@ -6,6 +6,7 @@ using Build_IT_SnowLoads.Enums;
 using System;
 using System.Collections.Generic;
 using System.Composition;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -15,25 +16,30 @@ namespace Build_IT_ScriptService.SnowLoadsService
     public class MonopitchRoofService : ICalculator
     {
         #region Properties
-
-        public IDictionary<string, object> Properties { get; private set; }
-
+        
         #endregion // Properties
 
         #region Fields
 
-        private const string Zone = "Zone";
-        private const string Topography = "Topography";
-        private const string AltitudeAboveSea = "AltitudeAboveSea";
-        private const string Slope = "Slope";
-
+        public  Property<Zones> Zone { get; } =
+            new Property<Zones>(orderNumber: 0, "Zone",
+            v => Enum.Parse<Zones>(v));
+        public  Property<Topographies> Topography { get; } = 
+            new Property<Topographies>(orderNumber: 1, "Topography",
+            v => Enum.Parse<Topographies>(v));
+        public  Property<double> AltitudeAboveSea { get; } = 
+            new Property<double>(orderNumber: 2, "AltitudeAboveSea",
+                v => Convert.ToDouble(v));
+        public  Property<double> Slope { get; } = 
+            new Property<double>(orderNumber: 3, "Slope",
+                v => Convert.ToDouble(v));
+        
         #endregion // Fields
 
         #region Constructors
 
         public MonopitchRoofService()
         {
-            Properties = new Dictionary<string, object>();
         }
 
         #endregion // Constructors
@@ -42,10 +48,28 @@ namespace Build_IT_ScriptService.SnowLoadsService
 
         public void Map(IList<object> args)
         {
-            Properties.Add(Zone, args[0]);
-            Properties.Add(Topography, args[1]);
-            Properties.Add(AltitudeAboveSea, args[2]);
-            Properties.Add(Slope, args[3]);
+            for (int i = 0; i < args.Count; i+=2)
+            {
+                var propertyInfo = this.GetType().GetProperty(
+                    args[i].ToString());
+                if (propertyInfo == null)
+                    continue;
+                var property = propertyInfo?.GetValue(this, null) as Property;
+                if (property != null)
+                    property.SetValue(args[i+1]);
+            }
+            //if (args.Any(a => a.ToString().Contains(':')))
+            //    foreach (var arg in args)
+            //    {
+            //        var parameter = arg.ToString().Split(':');
+
+            //        var propertyInfo = this.GetType().GetProperty(parameter[0]);
+            //        if (propertyInfo == null)
+            //            continue;
+            //        var property = propertyInfo?.GetValue(this, null) as Property;
+            //        if (property != null)
+            //            property.SetValue(parameter[1]);
+            //    }
         }
 
         /// <summary>
@@ -55,14 +79,16 @@ namespace Build_IT_ScriptService.SnowLoadsService
         /// <returns></returns>
         public IResult Calculate()
         {
-            var buildingSite = new BuildingSite(
-                (Zones)Convert.ToInt32(Properties[Zone]),
-                (Topographies)Convert.ToInt32(Properties[Topography]),
-                altitudeAboveSea: Convert.ToDouble(Properties[AltitudeAboveSea]));
+            Zones zone = Zone.Value;
+            Topographies topography = Topography.Value;
+            double altitudeAboveSea = AltitudeAboveSea.Value;
+            double slope = Slope.Value;
+
+
+            var buildingSite = new BuildingSite(zone, topography, altitudeAboveSea);
             var snowLoad = new SnowLoad(buildingSite);
             var building = new Building(snowLoad);
-            var monopitchRoof = new MonopitchRoof(building,
-                Convert.ToDouble(Properties[Slope]));
+            var monopitchRoof = new MonopitchRoof(building, slope);
 
             buildingSite.CalculateExposureCoefficient();
             snowLoad.CalculateSnowLoad();

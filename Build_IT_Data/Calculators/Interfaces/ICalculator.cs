@@ -8,8 +8,6 @@ namespace Build_IT_Data.Calculators.Interfaces
     {
         #region Properties
         
-        IDictionary<string, object> Properties { get; }
-
         #endregion // Properties
 
         #region Public_Methods
