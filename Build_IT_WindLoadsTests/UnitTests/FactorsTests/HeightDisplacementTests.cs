@@ -13,7 +13,6 @@ namespace Build_IT_WindLoadsTests.UnitTests.FactorsTests
         [Test]
         public void Constructor_Success()
         {
-            var terrain = new Mock<ITerrain>();
             var building = new Mock<IStructure>();
             var heightDisplacement = new HeightDisplacement(
                 building.Object,

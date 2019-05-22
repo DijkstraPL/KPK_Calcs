@@ -22,6 +22,7 @@ export class ScriptCalculatorComponent implements OnInit {
     script: Script;
     parameters: Parameter[];
     visibleParameters: Parameter[];
+    staticDataParameters: Parameter[];
     resultParameters: Parameter[];
 
     groups: ParametersGroup[];
@@ -59,6 +60,9 @@ export class ScriptCalculatorComponent implements OnInit {
     private setParameters(): void {
         this.parameterService.getParameters(this.script.id).subscribe(parameters => {
             this.parameters = parameters.filter(p => (p.context & ParameterOptions.Editable) != 0),
+                this.staticDataParameters = parameters.filter(p =>
+                    (p.context & ParameterOptions.StaticData) != 0 && 
+                    (p.context & ParameterOptions.Visible) != 0),
                 this.parameters.forEach(p => this.prepareParameter(p)),
                 this.filterParameters(),
                 console.log("Parameters", this.parameters);
@@ -85,7 +89,9 @@ export class ScriptCalculatorComponent implements OnInit {
 
 
     filterParameters() {
-        this.visibleParameters = this.parameters.filter(p => (p.context & ParameterOptions.Visible) != 0 && this.validateVisibility(p));
+        this.visibleParameters = this.parameters.filter(p =>
+            (p.context & ParameterOptions.Visible) != 0 &&
+            this.validateVisibility(p));
 
         if (this.groups == undefined)
             this.createGroups();
@@ -115,7 +121,6 @@ export class ScriptCalculatorComponent implements OnInit {
     }
 
     calculate() {
-       // this.resultParameters = [];
         this.isCalculating = true;
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(params => {
@@ -128,9 +133,8 @@ export class ScriptCalculatorComponent implements OnInit {
                 },
                 () => {
                     this.isCalculating = false;
+                    this.valueChanged = false;
                 });
-
-        this.valueChanged = false;
     }
 
     private validateVisibility(parameter: Parameter): boolean {
@@ -143,7 +147,7 @@ export class ScriptCalculatorComponent implements OnInit {
 
         this.parameters.forEach(p => {
             let value = p.valueType == ValueType.number ? p.value : `'${p.value}'`;
-            visibilityValidatorEquation = visibilityValidatorEquation.replace(`[${p.name}]`, value)
+            visibilityValidatorEquation = visibilityValidatorEquation.split(`[${p.name}]`).join(value);
         });
 
         try {

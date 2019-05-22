@@ -18,7 +18,7 @@
                   autoActiveFirstOption >
     <mat-option *ngFor="let valueOption of filteredValueOptions | async"
                 [value]="valueOption.value">
-        {{valueOption.value }} {{valueOption.description}}
+        {{valueOption.name }}
     </mat-option>
 </mat-autocomplete>
 

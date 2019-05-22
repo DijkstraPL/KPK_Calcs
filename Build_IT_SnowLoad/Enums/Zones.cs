@@ -19,8 +19,8 @@ namespace Build_IT_SnowLoads.Enums
         BetweenThird_Fourth = 12,
         [Display(Name = "IV")]
         FourthZone = 8,
-        [Display(Name = "IV-V")]
-        BetweenFourth_Fifth = 24,
+        [Display(Name = "III-V")]
+        BetweenThird_Fifth = 24,
         [Display(Name = "V")]
         FifthZone = 16
     }

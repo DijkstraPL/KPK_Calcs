@@ -65,7 +65,10 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     };
     ScriptCalculatorComponent.prototype.filterParameters = function () {
         var _this = this;
-        this.visibleParameters = this.parameters.filter(function (p) { return (p.context & ParameterOptions.Visible) != 0 && _this.validateVisibility(p); });
+        this.visibleParameters = this.parameters.filter(function (p) {
+            return (p.context & ParameterOptions.Visible) != 0 &&
+                _this.validateVisibility(p);
+        });
         if (this.groups == undefined)
             this.createGroups();
         this.populateGroups();
@@ -91,7 +94,6 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     };
     ScriptCalculatorComponent.prototype.calculate = function () {
         var _this = this;
-        // this.resultParameters = [];
         this.isCalculating = true;
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(function (params) {
@@ -102,8 +104,8 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             _this.isCalculating = false;
         }, function () {
             _this.isCalculating = false;
+            _this.valueChanged = false;
         });
-        this.valueChanged = false;
     };
     ScriptCalculatorComponent.prototype.validateVisibility = function (parameter) {
         if (!parameter.visibilityValidator)
@@ -111,7 +113,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         var visibilityValidatorEquation = parameter.visibilityValidator.slice(parameter.visibilityValidator.indexOf('(') + 1, parameter.visibilityValidator.lastIndexOf(')'));
         this.parameters.forEach(function (p) {
             var value = p.valueType == ValueType.number ? p.value : "'" + p.value + "'";
-            visibilityValidatorEquation = visibilityValidatorEquation.replace("[" + p.name + "]", value);
+            visibilityValidatorEquation = visibilityValidatorEquation.split("[" + p.name + "]").join(value);
         });
         try {
             var result = eval(visibilityValidatorEquation);

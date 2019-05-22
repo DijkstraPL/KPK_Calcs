@@ -99,9 +99,18 @@ namespace Build_IT_ScriptService.SnowLoadsService
             monopitchRoof.CalculateSnowLoad();
 
             var result = new Result();
-            result.Properties.Add("C_e_", buildingSite.ExposureCoefficient);
-            result.Properties.Add("s_k_", snowLoad.DefaultCharacteristicSnowLoad);
-            result.Properties.Add("s", monopitchRoof.SnowLoadOnRoofValue);
+            result.Properties.Add("#C_e_", buildingSite.ExposureCoefficient);
+            result.Properties.Add("#s_k_", snowLoad.DefaultCharacteristicSnowLoad);
+            result.Properties.Add("#V", snowLoad.VariationCoefficient);
+            result.Properties.Add("#C_esl_", snowLoad.ExceptionalSnowLoadCoefficient);
+            result.Properties.Add("#s_n_", snowLoad.SnowLoadForSpecificReturnPeriod);
+            result.Properties.Add("#s_Ad_", snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
+            result.Properties.Add("#t_i_", building.InternalTemperature);
+            result.Properties.Add("#∆_t_", building.TempreatureDifference);
+            result.Properties.Add("#U", building.OverallHeatTransferCoefficient);
+            result.Properties.Add("#C_t_", building.ThermalCoefficient);
+            result.Properties.Add("#μ_1_", monopitchRoof.ShapeCoefficient);
+            result.Properties.Add("#s", monopitchRoof.SnowLoadOnRoofValue);
 
             return result;
         }

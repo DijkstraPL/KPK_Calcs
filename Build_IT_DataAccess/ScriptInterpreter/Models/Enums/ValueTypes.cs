@@ -3,6 +3,7 @@
     public enum ValueTypes
     {
         Number,
-        Text
+        Text,
+        Table
     }
 }

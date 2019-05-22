@@ -133,8 +133,15 @@
                        class="form-control"
                        id="parameterValueOption"
                        placeholder="Value option"
-                       [(ngModel)]="valueOption.value"
+                       [(ngModel)]="valueOption.name"
                        name="valueOption{{valueOption.id}}"
+                       autocomplete="off" />
+                <input type="text"
+                       class="form-control"
+                       id="parameterValueOptionName"
+                       placeholder="Value option"
+                       [(ngModel)]="valueOption.value"
+                       name="valueOptionName{{valueOption.id}}"
                        autocomplete="off" />
                 <span class="input-group-append">
                     <button type="button"

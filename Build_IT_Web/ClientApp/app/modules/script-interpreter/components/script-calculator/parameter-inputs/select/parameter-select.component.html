@@ -1,10 +1,10 @@
 ﻿<mat-form-field>
     <mat-label [innerHtml]="parameter.name | html"></mat-label>
     <mat-select [(ngModel)]="parameter.value"
-                (change)="valueChanged()">
+                (selectionChange)="changeValue()">
         <mat-option *ngFor="let valueOption of parameter.valueOptions"
                     [value]="valueOption.value">
-            {{valueOption.value }}
+            {{valueOption.name }}
         </mat-option>
     </mat-select>
     <span matSuffix [innerHtml]="parameter.unit | html"></span>

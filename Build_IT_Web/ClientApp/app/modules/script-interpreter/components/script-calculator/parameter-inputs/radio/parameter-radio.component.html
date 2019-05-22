@@ -9,6 +9,7 @@
                           (change)="changeValue($event)">
             {{valueOption.value }}
         </mat-radio-button>
+        {{parameter.unit | html}}
     </mat-radio-group>
     <p class="parameter-description">{{parameter.description}}</p>
 </div>

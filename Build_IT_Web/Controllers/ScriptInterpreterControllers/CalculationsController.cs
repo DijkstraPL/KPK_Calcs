@@ -12,7 +12,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 {
     [Route("api/scripts")]
     [ApiController]
-    public class CalculationsController : ControllerBase
+    public class CalculationsController : ControllerBase 
     {
         private readonly IScriptRepository _scriptRepository;
         private readonly IParameterRepository _parameterRepository;
@@ -38,7 +38,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             
             var scriptCalculator = new ScriptCalculator(script, parameters.ToList());
 
-            await scriptCalculator.CalculateAsync(userParameters);
+            await scriptCalculator.CalculateAsync(userParameters.Where(v => v.Value != null));
 
             var calculatedParameters =  _mapper.Map<List<Parameter>, List<ParameterResource>>(scriptCalculator.GetResult().ToList());
             calculatedParameters.ForEach(cp => cp.Equation = equations.SingleOrDefault(p => p.Key == cp.Id).Value);

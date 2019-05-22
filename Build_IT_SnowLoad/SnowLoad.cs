@@ -259,8 +259,9 @@ namespace Build_IT_SnowLoads
                 case Zones.FourthZone:
                     DefaultCharacteristicSnowLoad = 1.6;
                     break;
-                case Zones.BetweenFourth_Fifth:
-                    DefaultCharacteristicSnowLoad = (Math.Max(0.93 * Math.Pow(Math.E, 0.00134 * BuildingSite.AltitudeAboveSea), 2) + 1.6) / 2;
+                case Zones.BetweenThird_Fifth:
+                    DefaultCharacteristicSnowLoad = (Math.Max(0.93 * Math.Pow(Math.E, 0.00134 * BuildingSite.AltitudeAboveSea), 2) + 
+                        (Math.Max(0.006 * BuildingSite.AltitudeAboveSea - 0.6, 1.2))) / 2;
                     break;
                 case Zones.FifthZone:
                     DefaultCharacteristicSnowLoad = Math.Max(0.93 * Math.Pow(Math.E, 0.00134 * BuildingSite.AltitudeAboveSea), 2);

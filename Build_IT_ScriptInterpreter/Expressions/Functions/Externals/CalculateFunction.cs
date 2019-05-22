@@ -48,7 +48,14 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
                 IList<object> arguments = new List<object>();
                 Compose(e.Parameters[0]?.Evaluate()?.ToString());
                 for (int i = 1; i < e.Parameters.Length; i++)
-                    arguments.Add(e.Parameters[i].Evaluate());
+                    try
+                    {
+                        arguments.Add(e.Parameters[i].Evaluate());
+                    }
+                    catch (ArgumentException)
+                    {
+                        arguments.RemoveAt(arguments.Count - 1);
+                    }
 
                 Calculator.Map(arguments);
                 return SetParameters(Calculator.Calculate(), e);

@@ -56,6 +56,7 @@ namespace Build_IT_Web.Mapping
                 var valueOption = parameter.ValueOptions.FirstOrDefault(vo => vo.Id == valueOptionResource.Id);
                 if (valueOption == null)
                     continue;
+                valueOption.Name = valueOptionResource.Name;
                 valueOption.Value = valueOptionResource.Value;
                 valueOption.Description = valueOptionResource.Description;
             }
@@ -74,7 +75,7 @@ namespace Build_IT_Web.Mapping
             var addedValueOptions = parameterResource.ValueOptions
                 .Where(vor => !parameter.ValueOptions.Any(vo => vo.Id == vor.Id))
                  .Select(vor => 
-                 new ValueOption { Description = vor.Description, Value = vor.Value }
+                 new ValueOption { Name = vor.Name, Description = vor.Description, Value = vor.Value }
                  ).ToList();
             foreach (var valueOption in addedValueOptions)
                 parameter.ValueOptions.Add(valueOption);

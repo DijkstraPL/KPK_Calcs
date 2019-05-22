@@ -25,7 +25,7 @@ namespace Build_IT_Web.Service
             _parameters = parameters;
         }
 
-        internal async Task CalculateAsync(List<ParameterResource> userParameters)
+        internal async Task CalculateAsync(IEnumerable<ParameterResource> userParameters)
         {
             _scriptToInterpret = await MapScript();
             var parameters = await MapParameters();
