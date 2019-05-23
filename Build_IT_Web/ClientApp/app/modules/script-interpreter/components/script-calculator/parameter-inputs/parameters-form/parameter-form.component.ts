@@ -5,7 +5,7 @@ import { ValueOptionSettings } from '../../../../models/enums/valueOptionSetting
 @Component({
     selector: 'parameter-form',
     templateUrl: './parameter-form.component.html',
-    styleUrls: ['./parameter-form.component.less']
+    styleUrls: ['./parameter-form.component.scss']
 })
 
 export class ParameterFormComponent implements OnInit {

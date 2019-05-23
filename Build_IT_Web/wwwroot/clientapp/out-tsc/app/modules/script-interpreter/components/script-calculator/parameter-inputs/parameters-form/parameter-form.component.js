@@ -32,7 +32,7 @@ var ParameterFormComponent = /** @class */ (function () {
         Component({
             selector: 'parameter-form',
             templateUrl: './parameter-form.component.html',
-            styleUrls: ['./parameter-form.component.less']
+            styleUrls: ['./parameter-form.component.scss']
         }),
         __metadata("design:paramtypes", [])
     ], ParameterFormComponent);

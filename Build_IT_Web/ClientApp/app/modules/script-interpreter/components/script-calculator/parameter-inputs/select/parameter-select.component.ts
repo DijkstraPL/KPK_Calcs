@@ -4,7 +4,7 @@ import { Parameter } from '../../../../models/interfaces/parameter';
 @Component({
     selector: 'parameter-select',
     templateUrl: './parameter-select.component.html',
-    styleUrls: ['./parameter-select.component.less']
+    styleUrls: ['./parameter-select.component.scss']
 })
 
 export class ParameterSelectComponent implements OnInit {

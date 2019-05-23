@@ -5,9 +5,9 @@ import { TagService } from '../../../services/tag.service';
 import { Script } from '../../../models/interfaces/script';
 
 @Component({
-    selector: 'app-tag-form',
+    selector: 'tag-form',
     templateUrl: './tag-form.component.html',
-    styleUrls: ['./tag-form.component.less']
+    styleUrls: ['./tag-form.component.scss']
 })
 
 export class TagFormComponent implements OnInit {

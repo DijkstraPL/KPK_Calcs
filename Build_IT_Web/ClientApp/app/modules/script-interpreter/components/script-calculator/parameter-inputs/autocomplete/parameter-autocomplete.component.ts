@@ -8,7 +8,7 @@ import { ValueOption } from '../../../../models/interfaces/valueOption';
 @Component({
     selector: 'parameter-autocomplete',
     templateUrl: './parameter-autocomplete.component.html',
-    styleUrls: ['./parameter-autocomplete.component.less']
+    styleUrls: ['./parameter-autocomplete.component.scss']
 })
 
 export class ParameterAutocompleteComponent implements OnInit {

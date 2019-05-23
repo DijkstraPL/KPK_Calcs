@@ -11,6 +11,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScriptService } from '../../services/script.service';
+import { AppErrorStateMatcher } from '../../../../common/errors/app-error-state-matcher';
 var ScriptFormComponent = /** @class */ (function () {
     function ScriptFormComponent(scriptService, route, router) {
         this.scriptService = scriptService;
@@ -25,6 +26,7 @@ var ScriptFormComponent = /** @class */ (function () {
             description: new FormControl('', [Validators.required, Validators.minLength(25), Validators.maxLength(500)]),
             notes: new FormControl('', Validators.maxLength(1000))
         });
+        this.matcher = new AppErrorStateMatcher();
         this.parametersToShow = 'dataParameters';
         this.editMode = true;
     }
@@ -85,7 +87,7 @@ var ScriptFormComponent = /** @class */ (function () {
         var _this = this;
         this.scriptService.getScript(id).subscribe(function (script) {
             console.log("Script", script);
-            _this.checked = script.notes != null && script.notes != '';
+            _this.includeNote = script.notes != null && script.notes != '';
             _this.scriptForm.patchValue(script);
         }, function (error) { throw error; });
     };
@@ -103,9 +105,9 @@ var ScriptFormComponent = /** @class */ (function () {
     };
     ScriptFormComponent = __decorate([
         Component({
-            selector: 'app-script-form',
+            selector: 'script-form',
             templateUrl: './script-form.component.html',
-            styleUrls: ['./script-form.component.css']
+            styleUrls: ['./script-form.component.scss']
         }),
         __metadata("design:paramtypes", [ScriptService,
             ActivatedRoute,

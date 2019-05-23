@@ -16,8 +16,9 @@ describe('parameter-select component', function () {
         fixture = TestBed.createComponent(ParameterSelectComponent);
         component = fixture.componentInstance;
     }));
-    it('should do something', async(function () {
-        expect(true).toEqual(true);
+    it('changeValue function should emit valueChanged event', async(function () {
+        //component.parameter = {};
+        //component.valueChanged.subscribe(;
     }));
 });
 //# sourceMappingURL=parameter-select.component.spec.js.map

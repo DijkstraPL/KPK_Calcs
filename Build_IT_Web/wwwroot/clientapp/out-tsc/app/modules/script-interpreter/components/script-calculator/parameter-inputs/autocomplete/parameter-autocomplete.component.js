@@ -41,7 +41,7 @@ var ParameterAutocompleteComponent = /** @class */ (function () {
         Component({
             selector: 'parameter-autocomplete',
             templateUrl: './parameter-autocomplete.component.html',
-            styleUrls: ['./parameter-autocomplete.component.less']
+            styleUrls: ['./parameter-autocomplete.component.scss']
         }),
         __metadata("design:paramtypes", [])
     ], ParameterAutocompleteComponent);

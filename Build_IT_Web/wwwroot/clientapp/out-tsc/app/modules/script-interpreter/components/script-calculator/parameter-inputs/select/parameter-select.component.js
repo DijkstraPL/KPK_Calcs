@@ -30,7 +30,7 @@ var ParameterSelectComponent = /** @class */ (function () {
         Component({
             selector: 'parameter-select',
             templateUrl: './parameter-select.component.html',
-            styleUrls: ['./parameter-select.component.less']
+            styleUrls: ['./parameter-select.component.scss']
         }),
         __metadata("design:paramtypes", [])
     ], ParameterSelectComponent);

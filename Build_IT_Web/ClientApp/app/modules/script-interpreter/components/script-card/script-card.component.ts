@@ -5,7 +5,7 @@ import { ScriptService } from '../../services/script.service';
 @Component({
     selector: 'app-script-card',
     templateUrl: './script-card.component.html',
-    styleUrls: ['./script-card.component.less']
+    styleUrls: ['./script-card.component.scss']
 })
 
 export class ScriptCardComponent {

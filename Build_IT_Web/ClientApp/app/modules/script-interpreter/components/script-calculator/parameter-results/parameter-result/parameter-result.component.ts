@@ -6,7 +6,7 @@ import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 @Component({
     selector: 'parameter-result',
     templateUrl: './parameter-result.component.html',
-    styleUrls: ['./parameter-result.component.less']
+    styleUrls: ['./parameter-result.component.scss']
 })
 
 export class ParameterResultComponent implements OnInit {

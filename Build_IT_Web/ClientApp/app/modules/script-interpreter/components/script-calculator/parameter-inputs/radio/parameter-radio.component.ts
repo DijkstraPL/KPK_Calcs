@@ -5,7 +5,7 @@ import { MatRadioChange } from '@angular/material/radio';
 @Component({
     selector: 'parameter-radio',
     templateUrl: './parameter-radio.component.html',
-    styleUrls: ['./parameter-radio.component.less']
+    styleUrls: ['./parameter-radio.component.scss']
 })
 
 export class ParameterRadioComponent implements OnInit {

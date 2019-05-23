@@ -11,9 +11,9 @@ import { ParameterService } from '../../services/parameter.service';
 import { ScriptService } from '../../services/script.service';
 
 @Component({
-    selector: 'app-script-calculator',
+    selector: 'script-calculator',
     templateUrl: './script-calculator.component.html',
-    styleUrls: ['./script-calculator.component.less']
+    styleUrls: ['./script-calculator.component.scss']
 })
 
 export class ScriptCalculatorComponent implements OnInit {

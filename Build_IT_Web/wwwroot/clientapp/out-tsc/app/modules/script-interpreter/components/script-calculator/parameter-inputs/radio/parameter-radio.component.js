@@ -31,7 +31,7 @@ var ParameterRadioComponent = /** @class */ (function () {
         Component({
             selector: 'parameter-radio',
             templateUrl: './parameter-radio.component.html',
-            styleUrls: ['./parameter-radio.component.less']
+            styleUrls: ['./parameter-radio.component.scss']
         }),
         __metadata("design:paramtypes", [])
     ], ParameterRadioComponent);

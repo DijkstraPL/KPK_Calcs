@@ -35,7 +35,7 @@ var ScriptCardComponent = /** @class */ (function () {
         Component({
             selector: 'app-script-card',
             templateUrl: './script-card.component.html',
-            styleUrls: ['./script-card.component.less']
+            styleUrls: ['./script-card.component.scss']
         }),
         __metadata("design:paramtypes", [ScriptService])
     ], ScriptCardComponent);

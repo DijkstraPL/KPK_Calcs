@@ -1,126 +1,165 @@
-﻿<div class="container">
-    <form (ngSubmit)="onSubmit()"
-          [formGroup]="scriptForm">
-        <h2>Script</h2>
-        <div class="row">
-            <div class="form-group col-md-7 col-lg-3">
-                <label for="scriptName">Name</label>
-                <input type="text"
-                       class="form-control"
-                       id="scriptName"
-                       formControlName="name"
-                       autocomplete="off"
-                       placeholder="Name">
-                <div *ngIf="scriptName.touched && scriptName.invalid"
-                     class="alert alert-danger">
-                    <div *ngIf="scriptName.errors.required">Name is required.</div>
-                    <div *ngIf="scriptName.errors.minlength">Name should be minimum {{ scriptName.errors.minlength.requiredLength }} characters.</div>
-                    <div *ngIf="scriptName.errors.maxlength">Name should be maximum {{ scriptName.errors.maxlength.requiredLength }} characters.</div>
-                </div>
-            </div>
-            <div class="form-group col-sm-6 col-md-5 col-lg-3">
-                <label for="scriptAuthor">Author</label>
-                <input type="text"
-                       class="form-control"
-                       id="scriptAuthor"
-                       formControlName="author"
-                       placeholder="Author"
-                       autocomplete="off">
-                <div *ngIf="scriptAuthor.touched && scriptAuthor.invalid"
-                     class="alert alert-danger">
-                    <div *ngIf="scriptAuthor.errors.maxlength">Author should be maximum {{ scriptAuthor.errors.maxlength.requiredLength }} characters.</div>
-                </div>
-            </div>
-            <div class="form-group col-sm-6 col-md-7 col-lg-3">
-                <label for="scriptAccordingTo">Document</label>
-                <input type="text"
-                       class="form-control"
-                       id="scriptAccordingTo"
-                       formControlName="accordingTo"
-                       placeholder="Document"
-                       autocomplete="off">
-                <div *ngIf="scriptDocument.touched && scriptDocument.invalid"
-                     class="alert alert-danger">
-                    <div *ngIf="scriptDocument.errors.maxlength">Document should be maximum {{ scriptDocument.errors.maxlength.requiredLength }} characters.</div>
-                </div>
-            </div>
-            <div class="form-group col-sm-6 col-md-5 col-lg-3">
-                <label for="scriptGroup">Group</label>
-                <select class="form-control"
-                        id="scriptGroup"
-                        formControlName="groupName"
-                        placeholder="Group">
-                    <option class="font-weight-bold">Eurocode 0</option>
-                    <option class="font-weight-bold">Eurocode 1</option>
-                    <option class="font-weight-bold">Eurocode 2</option>
-                    <option class="font-weight-bold">Eurocode 3</option>
-                    <option class="font-weight-bold">Eurocode 4</option>
-                    <option class="font-weight-bold">Eurocode 5</option>
-                    <option class="font-weight-bold">Eurocode 6</option>
-                    <option class="font-weight-bold">Eurocode 7</option>
-                    <option class="font-weight-bold">Eurocode 8</option>
-                    <option class="font-weight-bold">Eurocode 9</option>
-                    <option class="font-weight-bold">Other</option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-12">
-                <label for="scriptDescription">Description</label>
-                <textarea class="form-control"
-                          id="scriptDescription"
-                          rows="3"
-                          formControlName="description"
-                          placeholder="Description"></textarea>
-                <div *ngIf="scriptDescription.touched && scriptDescription.invalid"
-                     class="alert alert-danger">
-                    <div *ngIf="scriptDescription.errors.required">Description is required.</div>
-                    <div *ngIf="scriptDescription.errors.minlength">Description should be minimum {{ scriptDescription.errors.minlength.requiredLength }} characters.</div>
-                    <div *ngIf="scriptDescription.errors.maxlength">Description should be maximum {{ scriptDescription.errors.maxlength.requiredLength }} characters.</div>
-                </div>
-            </div>
-        </div>
+﻿<h2 class="mt-4 text-center"
+    *ngIf="!editMode">
+    Script
+</h2>
+<h2 class="mt-4 text-center"
+    *ngIf="editMode">
+    {{scriptName.value}}
+</h2>
 
-        <div class="row">
-            <div class="col-lg-1">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox"
-                           data-toggle="toggle"
-                           class="custom-control-input"
-                           id="scriptNoteIncluded"
-                           [checked]="checked "
-                           (change)="checked = !checked">
-                    <label class="custom-control-label" for="scriptNoteIncluded">Include note</label>
-                </div>
-            </div>
-            <div *ngIf="checked" class="form-group col-lg-11">
-                <textarea class="form-control"
-                          id="scriptNote"
-                          rows="2"
-                          formControlName="notes"
-                          placeholder="Note"></textarea>
-            </div>
-            <div *ngIf="scriptNotes.touched && scriptNotes.invalid"
-                 class="alert alert-danger">
-                <div *ngIf="scriptNotes.errors.maxlength">Note should be maximum {{ scriptNotes.errors.maxlength.requiredLength }} characters.</div>
-            </div>
-        </div>
+<form (ngSubmit)="onSubmit()"
+      [formGroup]="scriptForm">
 
-        <!--<app-tag-form [script]="script"></app-tag-form>-->
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Script data">
+            <div class="example-small-box mat-elevation-z4">
+                <script-data-form [scriptForm]="scriptForm"
+                                 ></script-data-form>
+            </div>
+        </mat-tab>
+        <mat-tab label="Tags">
+            <div class="example-large-box mat-elevation-z4">
+                <!--<tag-form [script]="script"></tag-form>-->
+            </div>
+        </mat-tab>
+    </mat-tab-group>
 
-        <button *ngIf="!editMode"
-                type="submit"
-                [disabled]="!scriptForm.valid"
-                class="btn btn-primary mt-3">
-            Add Script
-        </button>
-        <button *ngIf="editMode"
-                type="submit"
-                [disabled]="!scriptForm.valid"
-                class="btn btn-primary mt-3">
-            Update Script
-        </button>
-    </form>
+    <button *ngIf="!editMode"
+            type="submit"
+            [disabled]="!scriptForm.valid"
+            class="btn btn-primary mt-3">
+        Add Script
+    </button>
+    <button *ngIf="editMode"
+            type="submit"
+            [disabled]="!scriptForm.valid"
+            class="btn btn-primary mt-3">
+        Update Script
+    </button>
+</form>
 
-    <app-parameters-form *ngIf="editMode"></app-parameters-form>
-</div>
+<app-parameters-form *ngIf="editMode"></app-parameters-form>
+
+
+<!-- <div class="container">
+     <form (ngSubmit)="onSubmit()"
+           [formGroup]="scriptForm">
+         <h2 class="mt-4 text-center">Script</h2>
+
+         <mat-form-field class="m-2 form-medium">
+             <input matInput
+                    required
+                    placeholder="Name"
+                    formControlName="name"
+                    [errorStateMatcher]="matcher"
+                    autocomplete="off" />
+             <mat-hint>Script name</mat-hint>
+             <mat-error *ngIf="scriptName && scriptName.hasError('minlength') && !scriptName.hasError('required')">
+                 Name should be minimum {{scriptName.errors.minlength.requiredLength}} characters long.
+             </mat-error>
+             <mat-error *ngIf="scriptName && scriptName.hasError('maxlength') && !scriptName.hasError('required')">
+                 Name should be maximum {{scriptName.errors.maxlength.requiredLength}} characters long.
+             </mat-error>
+             <mat-error *ngIf="scriptName && scriptName.hasError('required')">
+                 Name is <strong>required</strong>
+             </mat-error>
+         </mat-form-field>
+
+         <mat-form-field class="m-2">
+             <input matInput
+                    placeholder="Author"
+                    formControlName="author"
+                    [errorStateMatcher]="matcher"
+                    autocomplete="off" />
+             <mat-hint>Script author</mat-hint>
+             <mat-error *ngIf="scriptAuthor && scriptAuthor.hasError('maxlength')">
+                 Author name should be maximum {{scriptAuthor.errors.maxlength.requiredLength}} characters long.
+             </mat-error>
+         </mat-form-field>
+
+         <mat-form-field class="m-2 form-medium">
+             <input matInput
+                    placeholder="Document"
+                    formControlName="accordingTo"
+                    [errorStateMatcher]="matcher"
+                    autocomplete="off" />
+             <mat-hint>Accoording to</mat-hint>
+             <mat-error *ngIf="scriptDocument && scriptDocument.hasError('maxlength')">
+                 Document name should be maximum {{scriptDocument.errors.maxlength.requiredLength}} characters long.
+             </mat-error>
+         </mat-form-field>
+
+         <mat-form-field class="m-2">
+             <mat-label>Group</mat-label>
+             <mat-select formControlName="groupName"
+                         [errorStateMatcher]="matcher"
+                         required>
+                 <mat-option value="Statica"><span class="fa fa-minus"></span> Statica</mat-option>
+                 <mat-option value="Loads"><span class="fa fa-arrow-down"></span> Loads</mat-option>
+                 <mat-option value="Concrete">Concrete</mat-option>
+                 <mat-option value="Steel">Steel</mat-option>
+                 <mat-option value="Timber"><span class="fa fa-tree"></span> Timber</mat-option>
+                 <mat-option value="Soils">Soils</mat-option>
+                 <mat-divider></mat-divider>
+                 <mat-option value="Other">Other</mat-option>
+             </mat-select>
+             <mat-hint>Category for a script</mat-hint>
+         </mat-form-field>
+
+         <mat-form-field class="m-2 full-width">
+             <textarea matInput
+                       placeholder="Description"
+                       formControlName="description"
+                       required
+                       [errorStateMatcher]="matcher"
+                       autocomplete="off"></textarea>
+             <mat-hint>Description for script</mat-hint>
+             <mat-error *ngIf="scriptDescription && scriptDescription.hasError('minlength') && !scriptDescription.hasError('required')">
+                 Description should be minimum {{scriptDescription.errors.minlength.requiredLength}} characters long.
+             </mat-error>
+             <mat-error *ngIf="scriptDescription && scriptDescription.hasError('maxlength') && !scriptDescription.hasError('required')">
+                 Description should be maximum {{scriptDescription.errors.maxlength.requiredLength}} characters long.
+             </mat-error>
+             <mat-error *ngIf="scriptDescription && scriptDescription.hasError('required')">
+                 Description is <strong>required</strong>
+             </mat-error>
+         </mat-form-field>
+
+         <div class="m-2">
+             <mat-checkbox [checked]="includeNote"
+                           (change)="includeNote = !includeNote">
+                 Include note
+             </mat-checkbox>
+
+             <mat-form-field class="full-width"
+                             *ngIf="includeNote">
+                 <textarea matInput
+                           placeholder="Notes"
+                           formControlName="notes"
+                           [errorStateMatcher]="matcher"
+                           autocomplete="off"></textarea>
+                 <mat-hint>Additional notes for script</mat-hint>
+                 <mat-error *ngIf="scriptNotes && scriptNotes.hasError('maxlength')">
+                     Note should be maximum {{scriptNotes.errors.maxlength.requiredLength}} characters long.
+                 </mat-error>
+             </mat-form-field>
+         </div>
+
+
+<button *ngIf="!editMode"
+        type="submit"
+        [disabled]="!scriptForm.valid"
+        class="btn btn-primary mt-3">
+    Add Script
+</button>
+<button *ngIf="editMode"
+        type="submit"
+        [disabled]="!scriptForm.valid"
+        class="btn btn-primary mt-3">
+    Update Script
+</button>
+        </form>
+
+<app-parameters-form *ngIf="editMode"></app-parameters-form>
+    </div>
+-->

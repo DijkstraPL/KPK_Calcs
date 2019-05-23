@@ -55,9 +55,9 @@ var TagFormComponent = /** @class */ (function () {
     ], TagFormComponent.prototype, "script", void 0);
     TagFormComponent = __decorate([
         Component({
-            selector: 'app-tag-form',
+            selector: 'tag-form',
             templateUrl: './tag-form.component.html',
-            styleUrls: ['./tag-form.component.less']
+            styleUrls: ['./tag-form.component.scss']
         }),
         __metadata("design:paramtypes", [TagService])
     ], TagFormComponent);

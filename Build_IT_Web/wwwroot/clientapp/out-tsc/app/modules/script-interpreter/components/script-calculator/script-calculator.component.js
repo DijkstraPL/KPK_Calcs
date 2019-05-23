@@ -45,6 +45,10 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         var _this = this;
         this.parameterService.getParameters(this.script.id).subscribe(function (parameters) {
             _this.parameters = parameters.filter(function (p) { return (p.context & ParameterOptions.Editable) != 0; }),
+                _this.staticDataParameters = parameters.filter(function (p) {
+                    return (p.context & ParameterOptions.StaticData) != 0 &&
+                        (p.context & ParameterOptions.Visible) != 0;
+                }),
                 _this.parameters.forEach(function (p) { return _this.prepareParameter(p); }),
                 _this.filterParameters(),
                 console.log("Parameters", _this.parameters);
@@ -130,9 +134,9 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     };
     ScriptCalculatorComponent = __decorate([
         Component({
-            selector: 'app-script-calculator',
+            selector: 'script-calculator',
             templateUrl: './script-calculator.component.html',
-            styleUrls: ['./script-calculator.component.less']
+            styleUrls: ['./script-calculator.component.scss']
         }),
         __metadata("design:paramtypes", [ActivatedRoute,
             ScriptService,

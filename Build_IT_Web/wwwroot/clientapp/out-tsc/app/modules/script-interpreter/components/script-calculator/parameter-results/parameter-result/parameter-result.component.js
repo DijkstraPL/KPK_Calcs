@@ -28,7 +28,7 @@ var ParameterResultComponent = /** @class */ (function () {
         Component({
             selector: 'parameter-result',
             templateUrl: './parameter-result.component.html',
-            styleUrls: ['./parameter-result.component.less']
+            styleUrls: ['./parameter-result.component.scss']
         }),
         __metadata("design:paramtypes", [])
     ], ParameterResultComponent);

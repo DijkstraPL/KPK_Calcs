@@ -5,16 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule } from '@angular/material/table';
-import { MatCardModule } from '@angular/material/card';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatListModule } from '@angular/material/list';
 
 import { ScriptFormComponent } from './components/script-form/script-form.component';
 import { ParametersFormComponent } from './components/parameters-form/parameters-form.component';
@@ -38,6 +28,8 @@ import { ParameterService } from './services/parameter.service';
 import { AppErrorHandler } from './../../common/errors/app-error-handler';
 
 import { PipesModule } from '../pipes-module/pipes.module';
+import { MdComponentsModule } from '../md-components-module/md-components.module';
+import { ScriptDataFormComponent } from './components/script-form/script-data-form/script-data-form.component';
 
 @NgModule({
     declarations: [
@@ -47,13 +39,14 @@ import { PipesModule } from '../pipes-module/pipes.module';
         ScriptCalculatorComponent,
         ScriptCardComponent,
         ScriptCardsComponent,
+        ScriptDataFormComponent,
         TagFormComponent,
         ParameterInputComponent,
         ParameterSelectComponent,
         ParameterAutocompleteComponent,
         ParameterRadioComponent,
         ParameterFormComponent,
-        ParameterResultComponent
+        ParameterResultComponent,
     ],
     imports: [
         PipesModule,
@@ -62,17 +55,8 @@ import { PipesModule } from '../pipes-module/pipes.module';
         HttpClientModule,
         FormsModule,
         BrowserAnimationsModule,
-        MatTableModule,
-        MatCardModule,
         ReactiveFormsModule,
-        MatAutocompleteModule,
-        MatButtonModule,
-        MatInputModule,
-        MatSelectModule,
-        MatProgressBarModule,
-        MatRadioModule,
-        MatExpansionModule,
-        MatListModule
+        MdComponentsModule
     ],
     exports: [
         ScriptCardsComponent

@@ -30,7 +30,7 @@ var ParameterInputComponent = /** @class */ (function () {
         Component({
             selector: 'parameter-input',
             templateUrl: './parameter-input.component.html',
-            styleUrls: ['./parameter-input.component.less']
+            styleUrls: ['./parameter-input.component.scss']
         }),
         __metadata("design:paramtypes", [])
     ], ParameterInputComponent);

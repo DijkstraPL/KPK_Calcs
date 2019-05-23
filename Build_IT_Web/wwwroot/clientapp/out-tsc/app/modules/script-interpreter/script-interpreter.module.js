@@ -10,16 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule } from '@angular/material/table';
-import { MatCardModule } from '@angular/material/card';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatListModule } from '@angular/material/list';
 import { ScriptFormComponent } from './components/script-form/script-form.component';
 import { ParametersFormComponent } from './components/parameters-form/parameters-form.component';
 import { ScriptCalculatorComponent } from './components/script-calculator/script-calculator.component';
@@ -39,6 +29,8 @@ import { CalculationService } from './services/calculation.service';
 import { ParameterService } from './services/parameter.service';
 import { AppErrorHandler } from './../../common/errors/app-error-handler';
 import { PipesModule } from '../pipes-module/pipes.module';
+import { MdComponentsModule } from '../md-components-module/md-components.module';
+import { ScriptDataFormComponent } from './components/script-form/script-data-form/script-data-form.component';
 var ScriptInterpreterModule = /** @class */ (function () {
     function ScriptInterpreterModule() {
     }
@@ -57,7 +49,8 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 ParameterAutocompleteComponent,
                 ParameterRadioComponent,
                 ParameterFormComponent,
-                ParameterResultComponent
+                ParameterResultComponent,
+                ScriptDataFormComponent
             ],
             imports: [
                 PipesModule,
@@ -66,20 +59,12 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 HttpClientModule,
                 FormsModule,
                 BrowserAnimationsModule,
-                MatTableModule,
-                MatCardModule,
                 ReactiveFormsModule,
-                MatAutocompleteModule,
-                MatButtonModule,
-                MatInputModule,
-                MatSelectModule,
-                MatProgressBarModule,
-                MatRadioModule,
-                MatExpansionModule,
-                MatListModule
+                MdComponentsModule
             ],
             exports: [
-                ScriptCardsComponent
+                ScriptCardsComponent,
+                ScriptFormComponent
             ],
             providers: [
                 ScriptService,

@@ -4,7 +4,7 @@ import { Parameter } from '../../../../models/interfaces/parameter';
 @Component({
     selector: 'parameter-input',
     templateUrl: './parameter-input.component.html',
-    styleUrls: ['./parameter-input.component.less']
+    styleUrls: ['./parameter-input.component.scss']
 })
 
 export class ParameterInputComponent implements OnInit {

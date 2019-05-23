@@ -19,7 +19,8 @@ describe('parameter-select component', () => {
         component = fixture.componentInstance;
     }));
 
-    it('should do something', async(() => {
-        expect(true).toEqual(true);
+    it('changeValue function should emit valueChanged event', async(() => {
+        //component.parameter = {};
+        //component.valueChanged.subscribe(;
     }));
 });
