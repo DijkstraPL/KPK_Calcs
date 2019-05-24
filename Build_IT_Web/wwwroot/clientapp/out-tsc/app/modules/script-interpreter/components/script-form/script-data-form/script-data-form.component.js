@@ -4,22 +4,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-state-matcher';
 var ScriptDataFormComponent = /** @class */ (function () {
     function ScriptDataFormComponent() {
-        this.scriptForm = new FormGroup({
-            id: new FormControl('0'),
-            name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
-            author: new FormControl('', Validators.maxLength(40)),
-            accordingTo: new FormControl('', Validators.maxLength(50)),
-            groupName: new FormControl('Other'),
-            description: new FormControl('', [Validators.required, Validators.minLength(25), Validators.maxLength(500)]),
-            notes: new FormControl('', Validators.maxLength(1000))
-        });
         this.matcher = new AppErrorStateMatcher();
-        this.editMode = true;
     }
     Object.defineProperty(ScriptDataFormComponent.prototype, "scriptName", {
         get: function () {
@@ -63,11 +56,19 @@ var ScriptDataFormComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    __decorate([
+        Input('scriptForm'),
+        __metadata("design:type", FormGroup)
+    ], ScriptDataFormComponent.prototype, "scriptForm", void 0);
+    __decorate([
+        Input('includeNote'),
+        __metadata("design:type", Boolean)
+    ], ScriptDataFormComponent.prototype, "includeNote", void 0);
     ScriptDataFormComponent = __decorate([
         Component({
             selector: 'script-data-form',
-            templateUrl: './script-data.component.html',
-            styleUrls: ['./script-data.component.scss']
+            templateUrl: './script-data-form.component.html',
+            styleUrls: ['./script-data-form.component.scss']
         })
     ], ScriptDataFormComponent);
     return ScriptDataFormComponent;

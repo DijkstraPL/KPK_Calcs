@@ -14,12 +14,12 @@
         <mat-tab label="Script data">
             <div class="example-small-box mat-elevation-z4">
                 <script-data-form [scriptForm]="scriptForm"
-                                 ></script-data-form>
+                                  [includeNote]="includeNote"></script-data-form>
             </div>
         </mat-tab>
         <mat-tab label="Tags">
             <div class="example-large-box mat-elevation-z4">
-                <!--<tag-form [script]="script"></tag-form>-->
+                <tag-form [scriptForm]="scriptForm"></tag-form>
             </div>
         </mat-tab>
     </mat-tab-group>

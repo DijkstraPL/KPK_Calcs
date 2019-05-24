@@ -14,6 +14,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { MatTabsModule } from '@angular/material/tabs';
       MatRadioModule,
       MatExpansionModule,
       MatListModule,
-      MatTabsModule
+      MatTabsModule,
+      MatChipsModule
   ]
 })
 export class MdComponentsModule { }

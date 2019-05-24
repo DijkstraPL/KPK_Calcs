@@ -8,51 +8,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input } from '@angular/core';
-import { TagImpl } from '../../../models/tagImpl';
 import { TagService } from '../../../services/tag.service';
+import { FormGroup, FormControl } from '@angular/forms';
 var TagFormComponent = /** @class */ (function () {
     function TagFormComponent(tagService) {
         this.tagService = tagService;
-        this.newTag = new TagImpl();
     }
+    Object.defineProperty(TagFormComponent.prototype, "scriptId", {
+        get: function () {
+            return this.scriptForm.get('id');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TagFormComponent.prototype, "scriptTags", {
+        get: function () {
+            return this.scriptForm.get('tags');
+        },
+        enumerable: true,
+        configurable: true
+    });
     TagFormComponent.prototype.ngOnInit = function () {
         this.getTags();
     };
     TagFormComponent.prototype.getTags = function () {
         var _this = this;
-        this.tagService.getTags().subscribe(function (tags) {
-            _this.tags = tags,
-                console.log("Tags", _this.tags);
+        this.tagService.getTagsForScript(this.scriptId.value).subscribe(function (tags) {
+            tags.forEach(function (t) { return _this.scriptTags.push(new FormControl(t.name)); });
         }, function (error) { return console.error(error); });
     };
-    TagFormComponent.prototype.addTag = function () {
-        if (this.script.tags.length > 10) {
-            alert("Too many tags");
-            return;
-        }
-        this.script.tags.push(new TagImpl());
-    };
-    TagFormComponent.prototype.removeTag = function () {
-        if (this.script.tags.length == 0)
-            return;
-        this.script.tags.pop();
-    };
-    TagFormComponent.prototype.selectedTagChanged = function (tag) {
-        var tagName = this.tags.find(function (t) { return t.id == tag.id; }).name;
-        this.script.tags.find(function (t) { return t.id == tag.id; }).name = tagName;
-    };
-    TagFormComponent.prototype.addNewTag = function () {
-        var _this = this;
-        this.tagService.create(this.newTag)
-            .subscribe(function (t) {
-            console.log(t),
-                _this.getTags();
-        });
-    };
     __decorate([
-        Input('script'),
-        __metadata("design:type", Object)
-    ], TagFormComponent.prototype, "script", void 0);
+        Input('scriptForm'),
+        __metadata("design:type", FormGroup)
+    ], TagFormComponent.prototype, "scriptForm", void 0);
     TagFormComponent = __decorate([
         Component({
             selector: 'tag-form',

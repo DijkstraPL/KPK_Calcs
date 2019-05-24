@@ -43,6 +43,7 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 ScriptCalculatorComponent,
                 ScriptCardComponent,
                 ScriptCardsComponent,
+                ScriptDataFormComponent,
                 TagFormComponent,
                 ParameterInputComponent,
                 ParameterSelectComponent,
@@ -50,7 +51,6 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 ParameterRadioComponent,
                 ParameterFormComponent,
                 ParameterResultComponent,
-                ScriptDataFormComponent
             ],
             imports: [
                 PipesModule,
@@ -63,8 +63,7 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 MdComponentsModule
             ],
             exports: [
-                ScriptCardsComponent,
-                ScriptFormComponent
+                ScriptCardsComponent
             ],
             providers: [
                 ScriptService,

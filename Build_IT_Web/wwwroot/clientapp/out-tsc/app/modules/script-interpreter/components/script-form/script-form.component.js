@@ -8,10 +8,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScriptService } from '../../services/script.service';
-import { AppErrorStateMatcher } from '../../../../common/errors/app-error-state-matcher';
 var ScriptFormComponent = /** @class */ (function () {
     function ScriptFormComponent(scriptService, route, router) {
         this.scriptService = scriptService;
@@ -24,12 +23,19 @@ var ScriptFormComponent = /** @class */ (function () {
             accordingTo: new FormControl('', Validators.maxLength(50)),
             groupName: new FormControl('Other'),
             description: new FormControl('', [Validators.required, Validators.minLength(25), Validators.maxLength(500)]),
-            notes: new FormControl('', Validators.maxLength(1000))
+            notes: new FormControl('', Validators.maxLength(1000)),
+            tags: new FormArray([])
         });
-        this.matcher = new AppErrorStateMatcher();
         this.parametersToShow = 'dataParameters';
         this.editMode = true;
     }
+    Object.defineProperty(ScriptFormComponent.prototype, "scriptId", {
+        get: function () {
+            return this.scriptForm.get('id');
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(ScriptFormComponent.prototype, "scriptName", {
         get: function () {
             return this.scriptForm.get('name');
@@ -37,37 +43,9 @@ var ScriptFormComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(ScriptFormComponent.prototype, "scriptAuthor", {
+    Object.defineProperty(ScriptFormComponent.prototype, "scriptTags", {
         get: function () {
-            return this.scriptForm.get('author');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ScriptFormComponent.prototype, "scriptDocument", {
-        get: function () {
-            return this.scriptForm.get('accordingTo');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ScriptFormComponent.prototype, "scriptGroup", {
-        get: function () {
-            return this.scriptForm.get('groupName');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ScriptFormComponent.prototype, "scriptDescription", {
-        get: function () {
-            return this.scriptForm.get('description');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ScriptFormComponent.prototype, "scriptNotes", {
-        get: function () {
-            return this.scriptForm.get('notes');
+            return this.scriptForm.get('tags');
         },
         enumerable: true,
         configurable: true

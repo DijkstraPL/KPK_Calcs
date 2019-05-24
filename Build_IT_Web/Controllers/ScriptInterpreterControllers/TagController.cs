@@ -41,6 +41,19 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             return Ok(scriptViewModels);
         }
 
+        [HttpGet("{scriptId}")]
+        public async Task<IActionResult> GetTags(long scriptId)
+        {
+            var tags = await _tagRepository.GetTagsForScript(scriptId);
+
+            if (tags.Count() == 0)
+                return NotFound();
+
+            tags = tags.OrderBy(t => t.Name).ToList();
+            var scriptViewModels = _mapper.Map<List<Tag>, List<TagResource>>(tags.ToList());
+            return Ok(scriptViewModels);
+        }
+
         [HttpPost()]
         public async Task<IActionResult> CreateTag([FromBody] TagResource tagResource)
         {

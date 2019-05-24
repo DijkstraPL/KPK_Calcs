@@ -7,5 +7,10 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces
 {
     public interface ITagRepository : IRepository<Tag>
     {
+        #region Public_Methods
+
+        Task<IEnumerable<Tag>> GetTagsForScript(long scriptId);
+
+        #endregion // Public_Methods
     }
 }

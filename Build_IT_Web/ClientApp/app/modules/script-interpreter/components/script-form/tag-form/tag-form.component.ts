@@ -1,8 +1,13 @@
-﻿import { Component, OnInit, Input } from '@angular/core';
-import { TagImpl } from '../../../models/tagImpl';
+﻿import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { Tag } from '../../../models/interfaces/tag';
 import { TagService } from '../../../services/tag.service';
-import { Script } from '../../../models/interfaces/script';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { FormGroup, FormControl, FormArray, AbstractControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { startWith, map } from 'rxjs/operators';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { TagImpl } from '../../../models/tagImpl';
 
 @Component({
     selector: 'tag-form',
@@ -11,51 +16,91 @@ import { Script } from '../../../models/interfaces/script';
 })
 
 export class TagFormComponent implements OnInit {
-    @Input('script') script: Script;
+    @Input('scriptForm') scriptForm: FormGroup;
 
     tags: Tag[];
-    newTag: Tag = new TagImpl();
+
+    visible = true;
+    selectable = true;
+    removable = true;
+    addOnBlur = true;
+    separatorKeysCodes: number[] = [ENTER, COMMA];
+    tagCtrl = new FormControl();
+    filteredTags: Observable<Tag[]>;
+
+    @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
+    @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
+    get scriptId(): AbstractControl {
+        return this.scriptForm.get('id');
+    }
+
+    get scriptTags(): FormArray {
+        return this.scriptForm.get('tags') as FormArray;
+    }
 
     constructor(private tagService: TagService) {
     }
 
     ngOnInit() {
+        this.filteredTags = this.tagCtrl.valueChanges.pipe(
+            startWith(null),
+            map((tagName: string | null) => tagName ? this._filter(tagName) : this.tags));
+
         this.getTags();
     }
 
     private getTags() {
-        this.tagService.getTags().subscribe((tags : Tag[]) => {
-            this.tags = tags,
-                console.log("Tags", this.tags)
+        this.tagService.getTags().subscribe((tags: Tag[]) => {
+            this.tags = tags;
+            this.tagCtrl.setValue(null);
         }, error => console.error(error));
     }
-    
-    private addTag() {
-        if (this.script.tags.length > 10) {
-            alert("Too many tags");
-            return;
+
+    add(event: MatChipInputEvent): void {
+        if (!this.matAutocomplete.isOpen) {
+            const input = event.input;
+            const value = event.value;
+
+            if ((value || '').trim() && !this.scriptTags.controls.some(c => c.value.name == value.trim())) {
+
+                if (!this.tags.some(t => t.name == value.trim()))
+                    this.tagService.create({ id: 0, name: value.trim() });
+
+                this.scriptTags.push(new FormGroup({
+                    id: new FormControl(0),
+                    name: new FormControl(value.trim())
+                }));
+            }
+
+            if (input) {
+                input.value = '';
+            }
+
+            this.tagCtrl.setValue(null);
         }
-
-        this.script.tags.push(new TagImpl());
     }
 
-    private removeTag() {
-        if (this.script.tags.length == 0)
-            return;
+    remove(tagForm: FormGroup): void {
+        const index = this.scriptTags.controls.indexOf(tagForm);
 
-        this.script.tags.pop();
+        if (index >= 0) {
+            this.scriptTags.removeAt(index);
+        }
     }
 
-    private selectedTagChanged(tag: Tag) {
-        let tagName = this.tags.find(t => t.id == tag.id).name;
-        this.script.tags.find(t => t.id == tag.id).name = tagName;
+    selected(event: MatAutocompleteSelectedEvent): void {
+        this.scriptTags.push(new FormGroup({
+            id: new FormControl(event.option.value),
+            name: new FormControl(event.option.viewValue)
+        }));
+        this.tagInput.nativeElement.value = '';
+        this.tagCtrl.setValue(null);
     }
 
-    private addNewTag() {
-        this.tagService.create(this.newTag)
-            .subscribe(t => {
-                console.log(t),
-                    this.getTags()
-            });
+    private _filter(value: string): Tag[] {
+        const filterValue = value.toLowerCase();
+
+        return this.tags.filter(t => t.name.toLowerCase().indexOf(filterValue) === 0 );
     }
 }

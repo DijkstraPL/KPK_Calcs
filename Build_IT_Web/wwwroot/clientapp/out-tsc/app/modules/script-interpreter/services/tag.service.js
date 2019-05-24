@@ -16,6 +16,9 @@ var TagService = /** @class */ (function () {
     TagService.prototype.getTags = function () {
         return this.http.get('/api/tags');
     };
+    TagService.prototype.getTagsForScript = function (scriptId) {
+        return this.http.get('/api/tags/' + scriptId);
+    };
     TagService.prototype.create = function (newTag) {
         return this.http.post('/api/tags', newTag);
     };

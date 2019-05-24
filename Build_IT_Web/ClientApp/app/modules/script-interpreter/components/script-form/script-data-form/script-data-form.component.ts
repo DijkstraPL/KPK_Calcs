@@ -10,8 +10,7 @@ import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-sta
 
 export class ScriptDataFormComponent {
     @Input('scriptForm') scriptForm: FormGroup;
-   // @Input('includeNote') includeNote: boolean;
-    includeNote: boolean;
+    @Input('includeNote') includeNote: boolean;
 
     matcher = new AppErrorStateMatcher();
 
@@ -33,9 +32,4 @@ export class ScriptDataFormComponent {
     get scriptNotes(): AbstractControl {
         return this.scriptForm.get('notes');
     }
-    set scriptNotes(value) {
-        this.scriptForm.controls['notes'].setValue(value);
-        this.includeNote = this.scriptNotes.value != null && this.scriptNotes.value != '';
-    }
-
 }

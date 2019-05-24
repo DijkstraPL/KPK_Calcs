@@ -22,15 +22,21 @@ export class ScriptFormComponent implements OnInit {
         groupName: new FormControl('Other'),
         description: new FormControl('', [Validators.required, Validators.minLength(25), Validators.maxLength(500)]),
         notes: new FormControl('', Validators.maxLength(1000)),
-        tags: new FormGroup({})
+        tags: new FormArray([])
     });
     
     parametersToShow: string = 'dataParameters';
     editMode: boolean = true;
     includeNote: boolean;
-    
+
+    get scriptId(): AbstractControl {
+        return this.scriptForm.get('id');
+    }
     get scriptName(): AbstractControl {
         return this.scriptForm.get('name');
+    }
+    get scriptTags(): FormArray {
+        return this.scriptForm.get('tags') as FormArray;
     }
 
     constructor(
@@ -57,6 +63,11 @@ export class ScriptFormComponent implements OnInit {
             console.log("Script", script);
             this.includeNote = script.notes != null && script.notes != '';
             this.scriptForm.patchValue(script);
+            script.tags.forEach(t => this.scriptTags.push(
+                new FormGroup({
+                    id: new FormControl(t.id),
+                    name: new FormControl(t.name)
+                })));
         }, error => { throw error });
     }
 
