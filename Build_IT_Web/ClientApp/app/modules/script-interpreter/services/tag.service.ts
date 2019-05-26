@@ -17,7 +17,7 @@ export class TagService {
         return this.http.get<Tag[]>('/api/tags/' + scriptId);
     }
 
-    create(newTag: Tag): any {
-        return this.http.post('/api/tags', newTag);
+    create(newTag: Tag): Observable<Tag> {
+        return this.http.post<Tag>('/api/tags', newTag);
     }
 }

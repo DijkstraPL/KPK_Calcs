@@ -1,6 +1,9 @@
 ﻿using Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations;
 using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
+using System.IO;
 
 namespace Build_IT_DataAccess.ScriptInterpreter
 {
@@ -14,8 +17,14 @@ namespace Build_IT_DataAccess.ScriptInterpreter
 
         #endregion // Properties
 
+        #region Fields
+
+        static private IConfigurationRoot _configuration;
+
+        #endregion // Fields
+
         #region Constructors
-        
+
         public ScriptInterpreterDbContext(DbContextOptions<ScriptInterpreterDbContext> options)
             : base(options)
         {
@@ -23,8 +32,26 @@ namespace Build_IT_DataAccess.ScriptInterpreter
 
         #endregion // Constructors
 
-        #region Public_Methods
-        
+        #region Protected_Methods
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                if(_configuration == null)
+                {
+                    var builder = new ConfigurationBuilder()
+                      .SetBasePath(Directory.GetCurrentDirectory())
+                      .AddJsonFile("appsettings.json");
+
+                    _configuration = builder.Build();
+                }
+                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Scripts"));
+            }
+            else
+                base.OnConfiguring(optionsBuilder);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -38,6 +65,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter
 
         }
 
-        #endregion // Public_Methods
+        #endregion // Protected_Methods
     }
 }

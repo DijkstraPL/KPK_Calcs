@@ -20,6 +20,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
 var MdComponentsModule = /** @class */ (function () {
     function MdComponentsModule() {
     }
@@ -41,7 +42,8 @@ var MdComponentsModule = /** @class */ (function () {
                 MatRadioModule,
                 MatExpansionModule,
                 MatListModule,
-                MatTabsModule
+                MatTabsModule,
+                MatChipsModule
             ]
         })
     ], MdComponentsModule);

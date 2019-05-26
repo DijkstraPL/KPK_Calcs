@@ -31,7 +31,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [HttpPut("{id}/calculate")]
         public async Task<IEnumerable<ParameterResource>> Calculate(long id, [FromBody] List<ParameterResource> userParameters)
         {
-            var script = await _scriptRepository.GetScriptWithTagsAsync(id);
+            var script = await _scriptRepository.GetAsync(id);
             var parameters = await _parameterRepository.GetAllParametersForScriptAsync(id);
 
             var equations = new Dictionary<long,string> (parameters.ToDictionary(p => p.Id, p => p.Value));

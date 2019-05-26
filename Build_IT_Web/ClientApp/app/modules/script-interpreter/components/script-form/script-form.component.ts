@@ -5,6 +5,9 @@ import { Script } from '../../models/interfaces/script';
 import { ScriptImpl } from '../../models/scriptImpl';
 import { ScriptService } from '../../services/script.service';
 import { AppErrorStateMatcher } from '../../../../common/errors/app-error-state-matcher';
+import { TagService } from '../../services/tag.service';
+import { Tag } from '../../models/interfaces/tag';
+import { Observable, forkJoin } from 'rxjs';
 
 @Component({
     selector: 'script-form',
@@ -24,7 +27,7 @@ export class ScriptFormComponent implements OnInit {
         notes: new FormControl('', Validators.maxLength(1000)),
         tags: new FormArray([])
     });
-    
+
     parametersToShow: string = 'dataParameters';
     editMode: boolean = true;
     includeNote: boolean;
@@ -41,6 +44,7 @@ export class ScriptFormComponent implements OnInit {
 
     constructor(
         private scriptService: ScriptService,
+        private tagService: TagService,
         private route: ActivatedRoute,
         private router: Router) {
     }
@@ -71,7 +75,9 @@ export class ScriptFormComponent implements OnInit {
         }, error => { throw error });
     }
 
-    onSubmit() {
+    async onSubmit() {
+       await this._setTags();
+
         if (!this.editMode)
             this.scriptService.create(this.scriptForm.value)
                 .subscribe((script: Script) => {
@@ -81,5 +87,19 @@ export class ScriptFormComponent implements OnInit {
         else
             this.scriptService.update(this.scriptForm.value)
                 .subscribe((script: Script) => console.log(script));
+    }
+
+    private async _setTags() {
+        for (let tag of this.scriptTags.value)
+            if (tag.id == 0) {
+                let newTag = await this._setTag(tag);
+                tag.id = newTag.id;
+                console.log(newTag);
+            }
+    }
+
+    private async _setTag(tag: Tag) {
+        var newTag = await this.tagService.create(tag).toPromise();
+        return newTag;
     }
 }

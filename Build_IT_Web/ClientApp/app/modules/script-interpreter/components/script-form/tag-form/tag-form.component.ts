@@ -63,10 +63,7 @@ export class TagFormComponent implements OnInit {
             const value = event.value;
 
             if ((value || '').trim() && !this.scriptTags.controls.some(c => c.value.name == value.trim())) {
-
-                if (!this.tags.some(t => t.name == value.trim()))
-                    this.tagService.create({ id: 0, name: value.trim() });
-
+                
                 this.scriptTags.push(new FormGroup({
                     id: new FormControl(0),
                     name: new FormControl(value.trim())
@@ -90,9 +87,16 @@ export class TagFormComponent implements OnInit {
     }
 
     selected(event: MatAutocompleteSelectedEvent): void {
+        let tag = this.tags.find(t => t.name == event.option.viewValue);
+        if (tag == null) {
+            this.tagInput.nativeElement.value = '';
+            this.tagCtrl.setValue(null);
+            return;
+        }
+
         this.scriptTags.push(new FormGroup({
-            id: new FormControl(event.option.value),
-            name: new FormControl(event.option.viewValue)
+            id: new FormControl(tag.id),
+            name: new FormControl(tag.name)
         }));
         this.tagInput.nativeElement.value = '';
         this.tagCtrl.setValue(null);

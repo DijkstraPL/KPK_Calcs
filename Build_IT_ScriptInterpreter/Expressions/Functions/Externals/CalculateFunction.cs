@@ -1,6 +1,13 @@
 ﻿using Build_IT_Data.Calculators.Interfaces;
+using Build_IT_DataAccess.ScriptInterpreter;
+using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
+using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_ScriptInterpreter.Expressions.Functions.Interfaces;
+using Build_IT_ScriptInterpreter.Parameters.Interfaces;
+using Build_IT_ScriptInterpreter.Scripts;
 using Build_IT_ScriptService;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using NCalc;
 using System;
 using System.Collections.Generic;
@@ -8,7 +15,8 @@ using System.Composition;
 using System.Composition.Hosting;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+using SI = Build_IT_DataAccess.ScriptInterpreter.Models;
+using SIP = Build_IT_ScriptInterpreter.Parameters;
 
 namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
 {
@@ -26,6 +34,10 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
         #endregion // Properties
 
         #region Fields
+
+        private string _scriptName;
+        private string _prefix;
+        private const string _defaultPrefix = "#";
 
         #endregion // Fields
 
@@ -45,21 +57,95 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
             Name = "Calculate";
             Function = (e) =>
             {
-                IList<object> arguments = new List<object>();
-                Compose(e.Parameters[0]?.Evaluate()?.ToString());
-                for (int i = 1; i < e.Parameters.Length; i++)
-                    try
-                    {
-                        arguments.Add(e.Parameters[i].Evaluate());
-                    }
-                    catch (ArgumentException)
-                    {
-                        arguments.RemoveAt(arguments.Count - 1);
-                    }
+                _prefix = _defaultPrefix;
+                _scriptName = e.Parameters[0]?.Evaluate()?.ToString();
+                if (_scriptName.Contains(_defaultPrefix))
+                {
+                    _prefix = _scriptName.Substring(_scriptName.IndexOf(_defaultPrefix));
+                    _scriptName = _scriptName.Substring(0, _scriptName.IndexOf(_defaultPrefix));
+                }
 
-                Calculator.Map(arguments);
-                return SetParameters(Calculator.Calculate(), e);
+                Compose(_scriptName);
+                if (Calculator != null)
+                    return CalculateService(e);
+
+                using (var scriptInterpreterDbContext = new ScriptInterpreterDbContext(new DbContextOptions<ScriptInterpreterDbContext>()))
+                {
+                   var scriptRepository = new ScriptRepository(scriptInterpreterDbContext);
+                    var scriptData = scriptRepository.GetScriptBaseOnNameAsync(_scriptName).Result;
+                    if (scriptData != null)
+                    {
+                        var parameterRepository = new ParameterRepository(scriptInterpreterDbContext);
+                        return CalculateScript(scriptData, e, parameterRepository);
+                    }
+                }
+
+                throw new ArgumentException("No script with name " + _scriptName);
+
             };
+        }
+
+        private object CalculateService(FunctionArgs functionArgs)
+        {
+            IList<object> arguments = new List<object>();
+            for (int i = 1; i < functionArgs.Parameters.Length; i++)
+                try
+                {
+                    arguments.Add(functionArgs.Parameters[i].Evaluate());
+                }
+                catch (ArgumentException)
+                {
+                    arguments.RemoveAt(arguments.Count - 1);
+                }
+
+            Calculator.Map(arguments);
+            return SetParameters(Calculator.Calculate(), functionArgs);
+        }
+
+        private object CalculateScript(SI.Script scriptData, FunctionArgs functionArgs, IParameterRepository parameterRepository)
+        {
+            var parametersData = parameterRepository.GetAllParametersForScriptAsync(scriptData.Id).Result;
+            var script = ScriptBuilder.Create(
+                    scriptData.Name,
+                    scriptData.Description,
+                    new string[0])
+                    .Build();
+
+            var parameters = new List<IParameter>();
+            foreach (var parameter in parametersData)
+            {
+                parameters.Add(new SIP.Parameter()
+                {
+                    Number = parameter.Number,
+                    Name = parameter.Name,
+                    Value = parameter.Value,
+                    VisibilityValidator = parameter.VisibilityValidator,
+                    Context = (SIP.ParameterOptions)parameter.Context
+                });
+            }
+
+            script.Parameters = parameters;
+
+            var calculationEngine = new CalculationEngine(script);
+
+            Dictionary<string, object> parameterValues = new Dictionary<string, object>();
+            for (int i = 1; i < functionArgs.Parameters.Length; i += 2)
+                parameterValues.Add(functionArgs.Parameters[i].Evaluate().ToString(), functionArgs.Parameters[i + 1].Evaluate());
+
+            calculationEngine.Calculate(parameterValues);
+            parameters.RemoveAll(p => !parameterValues.ContainsKey(p.Name));
+
+            foreach (var par in parameterValues)
+            {
+                var pp = parameters.SingleOrDefault(p => p.Name == par.Key);
+                if (pp != null)
+                    pp.Value = par.Value.ToString();
+            }
+
+            foreach (var par in parameters.Where(p=> (p.Context & SIP.ParameterOptions.Calculation) != 0))
+                functionArgs.Parameters.First().Parameters.Add($"{_prefix}{par.Name}", par.Value);
+
+            return true;
         }
 
         private void Compose(string calculatorName)
@@ -69,25 +155,27 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
 
             using (var container = configuration.CreateContainer())
             {
-                Calculator = container.GetExport<ICalculator>(calculatorName);
+                ICalculator calculator;
+                if (container.TryGetExport<ICalculator>(calculatorName, out calculator))
+                    Calculator = calculator;
             }
         }
 
         private object SetParameters(IResult result, FunctionArgs functionArgs)
         {
-            StringBuilder setFunction = new StringBuilder("SET(");
+            //StringBuilder setFunction = new StringBuilder("SET(");
 
-            foreach(var property in result.Properties)
-                setFunction.Append(property.Key)
-                    .Append(",")
-                    .Append(property.Value)
-                    .Append(",");
+            //foreach(var property in result.Properties)
+            //    setFunction.Append(property.Key)
+            //        .Append(",")
+            //        .Append(property.Value)
+            //        .Append(",");
 
-            setFunction.Remove(setFunction.Length - 1, 1)
-                .Append(")");
+            //setFunction.Remove(setFunction.Length - 1, 1)
+            //    .Append(")");
 
             foreach (var property in result.Properties)
-                functionArgs.Parameters.First().Parameters.Add(property.Key, property.Value);
+                functionArgs.Parameters.First().Parameters.Add($"{_prefix}{property.Key}", property.Value);
             //functionArgs
             //var expression = new ExpressionWrapper(setFunction.ToString());
             //return expression.Evaluate();

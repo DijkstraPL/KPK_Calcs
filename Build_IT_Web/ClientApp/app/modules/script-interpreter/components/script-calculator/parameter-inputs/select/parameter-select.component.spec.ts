@@ -20,7 +20,10 @@ describe('parameter-select component', () => {
     }));
 
     it('changeValue function should emit valueChanged event', async(() => {
-        //component.parameter = {};
-        //component.valueChanged.subscribe(;
+        let parameter = spyOnProperty(component, "parameter");
+
+        component.changeValue();
+
+        expect(component.valueChanged.emit).toHaveBeenCalledWith(parameter);
     }));
 });

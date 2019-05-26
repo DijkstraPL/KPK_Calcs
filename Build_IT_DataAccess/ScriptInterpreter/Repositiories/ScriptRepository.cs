@@ -39,6 +39,12 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
+        public async Task<Script> GetScriptBaseOnNameAsync(string name)
+        {
+            return await ScriptInterpreterContext.Scripts
+                .FirstOrDefaultAsync(s => s.Name == name);
+        }
+
         #endregion // Public_Methods
     }
 }

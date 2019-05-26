@@ -9,11 +9,11 @@
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="CoreCLR-NCalc" Version="2.2.51" />
     <PackageReference Include="MathNet.Numerics" Version="4.7.0" />
-    <PackageReference Include="Microsoft.Composition" Version="1.0.31" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Build_IT_CommonTools\Build_IT_CommonTools.csproj" />
+    <ProjectReference Include="..\Build_IT_DataAccess\Build_IT_DataAccess.csproj" />
     <ProjectReference Include="..\Build_IT_Data\Build_IT_Data.csproj" />
     <ProjectReference Include="..\Build_IT_ScriptService\Build_IT_ScriptService.csproj" />
   </ItemGroup>

@@ -17,8 +17,9 @@ describe('parameter-select component', function () {
         component = fixture.componentInstance;
     }));
     it('changeValue function should emit valueChanged event', async(function () {
-        //component.parameter = {};
-        //component.valueChanged.subscribe(;
+        var parameter = spyOnProperty(component, "parameter");
+        component.changeValue();
+        expect(component.valueChanged.emit).toHaveBeenCalledWith(parameter);
     }));
 });
 //# sourceMappingURL=parameter-select.component.spec.js.map

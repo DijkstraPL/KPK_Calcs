@@ -9,8 +9,9 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces
     {
         #region Public_Methods
         
-        Task<Script> GetScriptWithTagsAsync(long id);
         Task<IEnumerable<Script>> GetAllScriptsWithTagsAsync();
+        Task<Script> GetScriptWithTagsAsync(long id);
+        Task<Script> GetScriptBaseOnNameAsync(string name);
 
         #endregion // Public_Methods
     }
