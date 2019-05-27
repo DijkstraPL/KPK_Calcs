@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ScriptService } from '../../services/script.service';
 var ScriptCardsComponent = /** @class */ (function () {
     function ScriptCardsComponent(scriptService) {
@@ -19,13 +19,17 @@ var ScriptCardsComponent = /** @class */ (function () {
     ScriptCardsComponent.prototype.setScript = function () {
         var _this = this;
         this.scriptService.getScripts().subscribe(function (scripts) {
-            _this.scripts = scripts;
+            _this.scripts = scripts.filter(function (s) { return _this.filter(s); });
             console.log("Scripts", _this.scripts);
         }, function (error) { return console.error(error); });
     };
     ScriptCardsComponent.prototype.onDeleted = function (script) {
         this.scripts = this.scripts.filter(function (s) { return s.id != script.id; });
     };
+    __decorate([
+        Input('filter'),
+        __metadata("design:type", Function)
+    ], ScriptCardsComponent.prototype, "filter", void 0);
     ScriptCardsComponent = __decorate([
         Component({
             selector: 'app-script-cards',

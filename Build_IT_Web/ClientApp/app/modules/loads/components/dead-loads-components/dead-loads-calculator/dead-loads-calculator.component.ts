@@ -8,7 +8,7 @@ import { Units } from '../../../models/dead-loads/units';
 @Component({
     selector: 'app-dead-loads-calculator',
     templateUrl: './dead-loads-calculator.component.html',
-    styleUrls: ['./dead-loads-calculator.component.less']
+    styleUrls: ['./dead-loads-calculator.component.scss']
 })
 
 export class DeadLoadsCalculatorComponent implements OnInit {

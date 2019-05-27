@@ -9,7 +9,7 @@ import { DeadLoadsService } from '../../../services/dead-loads.service';
 @Component({
     selector: 'app-dead-loads-data',
     templateUrl: './dead-loads-data.component.html',
-    styleUrls: ['./dead-loads-data.component.less']
+    styleUrls: ['./dead-loads-data.component.scss']
 })
 
 export class DeadLoadsDataComponent implements OnInit {

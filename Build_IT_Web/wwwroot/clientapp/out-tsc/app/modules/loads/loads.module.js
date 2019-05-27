@@ -14,6 +14,8 @@ import { DeadLoadsDataComponent } from './components/dead-loads-components/dead-
 import { DeadLoadsComponent } from './components/dead-loads-components/dead-loads/dead-loads.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdComponentsModule } from '../md-components-module/md-components.module';
+import { ScriptInterpreterModule } from '../script-interpreter/script-interpreter.module';
+import { SnowLoadsComponent } from './components/snow-loads-components/snow-loads/snow-loads.component';
 var LoadsModule = /** @class */ (function () {
     function LoadsModule() {
     }
@@ -23,6 +25,7 @@ var LoadsModule = /** @class */ (function () {
                 DeadLoadsComponent,
                 DeadLoadsCalculatorComponent,
                 DeadLoadsDataComponent,
+                SnowLoadsComponent
             ],
             imports: [
                 CommonModule,
@@ -30,7 +33,8 @@ var LoadsModule = /** @class */ (function () {
                 FormsModule,
                 MdComponentsModule,
                 BrowserAnimationsModule,
-                DragDropModule
+                DragDropModule,
+                ScriptInterpreterModule
             ]
         })
     ], LoadsModule);

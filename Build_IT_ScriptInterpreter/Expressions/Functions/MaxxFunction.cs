@@ -1,10 +1,12 @@
 ﻿using Build_IT_ScriptInterpreter.Expressions.Functions.Interfaces;
 using NCalc;
 using System;
+using System.Composition;
 using System.Linq;
 
 namespace Build_IT_ScriptInterpreter.Expressions.Functions
 {
+    [Export(typeof(IFunction))]
     public class MaxxFunction : IFunction
     {
         #region Properties

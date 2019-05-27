@@ -73,8 +73,11 @@ export class TagFormComponent implements OnInit {
             if (input) {
                 input.value = '';
             }
-
-            this.tagCtrl.setValue(null);
+            
+            if (this.scriptTags.controls.length > 5)
+                this.tagCtrl.setValue('###Not supposed to be on the list###');
+            else
+                this.tagCtrl.setValue(null);
         }
     }
 

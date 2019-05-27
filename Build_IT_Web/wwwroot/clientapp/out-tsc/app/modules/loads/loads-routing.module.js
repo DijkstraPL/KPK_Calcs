@@ -7,8 +7,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DeadLoadsComponent } from './components/dead-loads-components/dead-loads/dead-loads.component';
+import { SnowLoadsComponent } from './components/snow-loads-components/snow-loads/snow-loads.component';
 var routes = [
-    { path: 'deadloads', component: DeadLoadsComponent }
+    { path: 'deadloads', component: DeadLoadsComponent },
+    { path: 'snowloads', component: SnowLoadsComponent }
 ];
 var LoadsRoutingModule = /** @class */ (function () {
     function LoadsRoutingModule() {

@@ -5,8 +5,11 @@ using Build_IT_ScriptInterpreter.Parameters.Interfaces;
 using NCalc;
 using System;
 using System.Collections.Generic;
+using System.Composition;
+using System.Composition.Hosting;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace Build_IT_ScriptInterpreter.Expressions
 {
@@ -41,10 +44,10 @@ namespace Build_IT_ScriptInterpreter.Expressions
         #endregion // Factories
 
         #region Constructors
-        
+
         private ExpressionEvaluator(string expression, IDictionary<string, object> parameters = null)
         {
-            Functions = new List<string>();            
+            Functions = new List<string>();
             _expression = new ExpressionWrapper(expression);
 
             SetAdditionalParameters(parameters);
@@ -75,39 +78,44 @@ namespace Build_IT_ScriptInterpreter.Expressions
         #endregion // Public_Methods
 
         #region Private_Methods
-        
+
         private IDictionary<string, object> SetAdditionalParameters(
             IDictionary<string, object> parameters)
         {
             if (parameters == null)
                 parameters = new Dictionary<string, object>();
 
-            var type = typeof(ICustomParameter);
-            var customParameters = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface);
-            foreach (var customParameter in customParameters)
-            {
-                var instance = (ICustomParameter)Activator.CreateInstance(customParameter);
-                foreach (var name in instance.Names)
-                    if (!parameters.ContainsKey(name))
-                        parameters.Add(name, instance.Value);
-            }
+            var configuration = new ContainerConfiguration().WithAssembly(Assembly.GetExecutingAssembly());
 
+            using (var container = configuration.CreateContainer())
+            {
+                var customParameters = container.GetExports<ICustomParameter>();
+                foreach (var customParameter in customParameters)
+                    PopulateParameters(parameters, customParameter);
+            }
+            
             return parameters;
+        }
+
+        private static void PopulateParameters(IDictionary<string, object> parameters, ICustomParameter customParameter)
+        {
+            foreach (var name in customParameter.Names)
+                if (!parameters.ContainsKey(name))
+                    parameters.Add(name, customParameter.Value);
         }
 
         private void SetAdditionalFunctions()
         {
-            var type = typeof(IFunction);
-            var functions = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface);
-            foreach (var function in functions)
+            var configuration = new ContainerConfiguration().WithAssembly(Assembly.GetExecutingAssembly());
+
+            using (var container = configuration.CreateContainer())
             {
-                var instance = (IFunction)Activator.CreateInstance(function);
-                _expression.SetAdditionalFunction(instance.Name, instance.Function);
-                Functions.Add(instance.Name);
+                var functions = container.GetExports<IFunction>();
+                foreach (var function in functions)
+                {
+                    _expression.SetAdditionalFunction(function.Name, function.Function);
+                    Functions.Add(function.Name);
+                }
             }
         }
 

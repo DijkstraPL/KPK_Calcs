@@ -2,11 +2,13 @@
 using NCalc;
 using System;
 using System.Collections.Generic;
+using System.Composition;
 using System.Linq;
 using System.Text;
 
 namespace Build_IT_ScriptInterpreter.Expressions.Functions
 {
+    [Export(typeof(IFunction))]
     public class MinnFunction : IFunction
     {
         #region Properties

@@ -1,6 +1,7 @@
 ﻿<mat-form-field>
     <mat-label [innerHtml]="parameter.name | html"></mat-label>
     <mat-select [(ngModel)]="parameter.value"
+                required
                 (selectionChange)="changeValue()">
         <mat-option *ngFor="let valueOption of parameter.valueOptions"
                     [value]="valueOption.value">

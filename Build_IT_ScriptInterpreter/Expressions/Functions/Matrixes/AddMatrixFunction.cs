@@ -2,10 +2,12 @@
 using MathNet.Numerics.LinearAlgebra;
 using NCalc;
 using System;
+using System.Composition;
 using System.Linq;
 
 namespace Build_IT_ScriptInterpreter.Expressions.Functions.Matrixes
 {
+    [Export(typeof(IFunction))]
     public class AddMatrixFunction : IFunction
     {
         #region Properties

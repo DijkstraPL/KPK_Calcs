@@ -5,7 +5,7 @@ import { DeadLoadsService } from '../../../services/dead-loads.service';
 @Component({
     selector: 'app-dead-loads',
     templateUrl: './dead-loads.component.html',
-    styleUrls: ['./dead-loads.component.less']
+    styleUrls: ['./dead-loads.component.scss']
 })
 
 export class DeadLoadsComponent implements OnInit {

@@ -15,6 +15,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
     declarations: [
@@ -35,7 +37,9 @@ import { MatChipsModule } from '@angular/material/chips';
       MatExpansionModule,
       MatListModule,
       MatTabsModule,
-      MatChipsModule
+      MatChipsModule,
+      MatToolbarModule,
+      MatPaginatorModule
   ]
 })
 export class MdComponentsModule { }

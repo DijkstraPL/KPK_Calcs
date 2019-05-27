@@ -5,6 +5,7 @@
     <mat-radio-group [(ngModel)]="parameter.value">
         <mat-radio-button *ngFor="let valueOption of parameter.valueOptions; index as i"
                           [value]="valueOption.value"
+                          required
                           class="mr-3"
                           (change)="changeValue($event)">
             {{valueOption.value }}

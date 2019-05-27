@@ -17,28 +17,24 @@
     <Compile Remove="ClientApp\app\components\script-cards\**" />
     <Compile Remove="ClientApp\app\components\script-card\**" />
     <Compile Remove="ClientApp\app\components\script-form\**" />
-    <Compile Remove="ClientApp\app\models\**" />
     <Compile Remove="ClientApp\app\services\**" />
     <Content Remove="ClientApp\app\components\parameters-form\**" />
     <Content Remove="ClientApp\app\components\script-calculator\**" />
     <Content Remove="ClientApp\app\components\script-cards\**" />
     <Content Remove="ClientApp\app\components\script-card\**" />
     <Content Remove="ClientApp\app\components\script-form\**" />
-    <Content Remove="ClientApp\app\models\**" />
     <Content Remove="ClientApp\app\services\**" />
     <EmbeddedResource Remove="ClientApp\app\components\parameters-form\**" />
     <EmbeddedResource Remove="ClientApp\app\components\script-calculator\**" />
     <EmbeddedResource Remove="ClientApp\app\components\script-cards\**" />
     <EmbeddedResource Remove="ClientApp\app\components\script-card\**" />
     <EmbeddedResource Remove="ClientApp\app\components\script-form\**" />
-    <EmbeddedResource Remove="ClientApp\app\models\**" />
     <EmbeddedResource Remove="ClientApp\app\services\**" />
     <None Remove="ClientApp\app\components\parameters-form\**" />
     <None Remove="ClientApp\app\components\script-calculator\**" />
     <None Remove="ClientApp\app\components\script-cards\**" />
     <None Remove="ClientApp\app\components\script-card\**" />
     <None Remove="ClientApp\app\components\script-form\**" />
-    <None Remove="ClientApp\app\models\**" />
     <None Remove="ClientApp\app\services\**" />
   </ItemGroup>
 
@@ -53,6 +49,8 @@
   <ItemGroup>
     <Folder Include="ClientApp\app\common\validators\" />
     <Folder Include="ClientApp\app\directives\" />
+    <Folder Include="ClientApp\app\modules\loads\components\wind-loads-components\" />
+    <Folder Include="ClientApp\app\models\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

@@ -20,6 +20,7 @@ using SIP = Build_IT_ScriptInterpreter.Parameters;
 
 namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
 {
+    [Export(typeof(IFunction))]
     public class CalculateFunction : IFunction
     {
         #region Properties
@@ -28,7 +29,6 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
 
         public Func<FunctionArgs, object> Function { get; private set; }
 
-        [Import]
         public ICalculator Calculator { get; set; }
 
         #endregion // Properties
@@ -155,30 +155,16 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
 
             using (var container = configuration.CreateContainer())
             {
-                ICalculator calculator;
-                if (container.TryGetExport<ICalculator>(calculatorName, out calculator))
+                if (container.TryGetExport(calculatorName, out ICalculator calculator))
                     Calculator = calculator;
             }
         }
 
         private object SetParameters(IResult result, FunctionArgs functionArgs)
         {
-            //StringBuilder setFunction = new StringBuilder("SET(");
-
-            //foreach(var property in result.Properties)
-            //    setFunction.Append(property.Key)
-            //        .Append(",")
-            //        .Append(property.Value)
-            //        .Append(",");
-
-            //setFunction.Remove(setFunction.Length - 1, 1)
-            //    .Append(")");
-
             foreach (var property in result.Properties)
                 functionArgs.Parameters.First().Parameters.Add($"{_prefix}{property.Key}", property.Value);
-            //functionArgs
-            //var expression = new ExpressionWrapper(setFunction.ToString());
-            //return expression.Evaluate();
+
             return true;
         }
 

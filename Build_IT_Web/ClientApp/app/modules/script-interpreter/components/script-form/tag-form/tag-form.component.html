@@ -11,6 +11,7 @@
         </mat-chip>
         <input placeholder="Add new tags"
                #tagInput
+               [attr.disabled]="scriptTags.controls.length > 5 || null"
                [formControl]="tagCtrl"
                [matAutocomplete]="auto"
                [matChipInputFor]="chipList"

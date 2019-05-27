@@ -2,6 +2,7 @@
 using MathNet.Numerics.LinearAlgebra;
 using NCalc;
 using System;
+using System.Composition;
 using System.Linq;
 
 namespace Build_IT_ScriptInterpreter.Expressions.Functions
@@ -22,6 +23,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions
     /// MATRIX(3,3,1,2,3,4,5,6,7,8,9)
     /// </code>
     /// </example>
+    [Export(typeof(IFunction))]
     public class MatrixFunction : IFunction
     {
         #region Properties

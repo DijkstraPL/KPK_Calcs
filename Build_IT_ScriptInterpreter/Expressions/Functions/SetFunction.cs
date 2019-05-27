@@ -1,9 +1,11 @@
 ﻿using Build_IT_ScriptInterpreter.Expressions.Functions.Interfaces;
 using NCalc;
 using System;
+using System.Composition;
 
 namespace Build_IT_ScriptInterpreter.Expressions.Functions
 {
+    [Export(typeof(IFunction))]
     public class SetFunction : IFunction
     {
         #region Properties

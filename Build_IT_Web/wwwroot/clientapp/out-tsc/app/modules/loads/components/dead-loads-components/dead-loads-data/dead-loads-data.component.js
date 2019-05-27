@@ -63,7 +63,7 @@ var DeadLoadsDataComponent = /** @class */ (function () {
         Component({
             selector: 'app-dead-loads-data',
             templateUrl: './dead-loads-data.component.html',
-            styleUrls: ['./dead-loads-data.component.less']
+            styleUrls: ['./dead-loads-data.component.scss']
         }),
         __metadata("design:paramtypes", [DeadLoadsService])
     ], DeadLoadsDataComponent);

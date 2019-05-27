@@ -8,23 +8,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-var DeadLoadsComponent = /** @class */ (function () {
-    function DeadLoadsComponent() {
+var SnowLoadsComponent = /** @class */ (function () {
+    function SnowLoadsComponent() {
     }
-    DeadLoadsComponent.prototype.onMaterialAdded = function (material) {
-        this.newMaterial = material;
+    SnowLoadsComponent.prototype.ngOnInit = function () {
+        this.snowLoadFilter = function (script) {
+            return script.groupName === 'Loads';
+        };
     };
-    DeadLoadsComponent.prototype.ngOnInit = function () {
-    };
-    DeadLoadsComponent = __decorate([
+    SnowLoadsComponent = __decorate([
         Component({
-            selector: 'app-dead-loads',
-            templateUrl: './dead-loads.component.html',
-            styleUrls: ['./dead-loads.component.scss']
+            selector: 'app-snow-loads',
+            templateUrl: './snow-loads.component.html',
+            styleUrls: ['./snow-loads.component.scss']
         }),
         __metadata("design:paramtypes", [])
-    ], DeadLoadsComponent);
-    return DeadLoadsComponent;
+    ], SnowLoadsComponent);
+    return SnowLoadsComponent;
 }());
-export { DeadLoadsComponent };
-//# sourceMappingURL=dead-loads.component.js.map
+export { SnowLoadsComponent };
+//# sourceMappingURL=snow-loads.component.js.map

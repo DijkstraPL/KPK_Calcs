@@ -94,7 +94,7 @@ var DeadLoadsCalculatorComponent = /** @class */ (function () {
         Component({
             selector: 'app-dead-loads-calculator',
             templateUrl: './dead-loads-calculator.component.html',
-            styleUrls: ['./dead-loads-calculator.component.less']
+            styleUrls: ['./dead-loads-calculator.component.scss']
         }),
         __metadata("design:paramtypes", [])
     ], DeadLoadsCalculatorComponent);
