@@ -2,6 +2,7 @@
 using NCalc;
 using System;
 using System.Composition;
+using System.Linq;
 
 namespace Build_IT_ScriptInterpreter.Expressions.Functions
 {
@@ -32,15 +33,14 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions
             Name = "SET";
             Function = (e) =>
             {
-                var parameters = e.Parameters[0].Parameters;
-                for (int i = 0; i < Convert.ToInt32(e.Parameters[0].Evaluate()) * 2; i += 2)
+                for (int i = 0; i < e.Parameters.Length; i += 2)
                 {
-                    var parameterName = e.Parameters[i + 1].ParsedExpression.ToString();
-                    parameterName = parameterName.Substring(1, parameterName.Length - 2);
+                    var parameters = e.Parameters[0].Parameters;
+                    var parameterName = e.Parameters[i].Evaluate().ToString();
                     if (parameters.ContainsKey(parameterName))
-                        parameters[parameterName] = e.Parameters[i + 2].Evaluate();
+                        parameters[parameterName] = e.Parameters[i + 1].Evaluate();
                     else
-                        parameters.Add(parameterName, e.Parameters[i + 2].Evaluate());
+                        parameters.Add(parameterName, e.Parameters[i + 1].Evaluate());
                 }
                 return true;
             };

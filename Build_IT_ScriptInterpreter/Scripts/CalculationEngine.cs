@@ -46,12 +46,12 @@ namespace Build_IT_ScriptInterpreter.Scripts
         }
 
 
-        public void Calculate(Dictionary<string, object> parameters)
+        public void Calculate(IDictionary<string, object> parameters)
         {
             var staticParameters = _scriptParameters
                 .Where(p => (p.Context & ParameterOptions.StaticData) != 0).ToList();
             foreach (var parameter in staticParameters)
-                parameters.Add(parameter.Name, double.Parse(parameter.Value.ToString(), CultureInfo.InvariantCulture));
+                parameters.TryAdd(parameter.Name, double.Parse(parameter.Value.ToString(), CultureInfo.InvariantCulture));
 
             foreach (var parameter in _scriptParameters.Where(p =>
                 (p.Context & ParameterOptions.Calculation) != 0))
@@ -100,54 +100,54 @@ namespace Build_IT_ScriptInterpreter.Scripts
             return parameters;
         }
 
-        private void SetStaticParameters(Dictionary<string, object> parameters)
+        private void SetStaticParameters(IDictionary<string, object> parameters)
         {
             foreach (var parameter in _scriptParameters.Where(p => (p.Context & ParameterOptions.StaticData) != 0))
                 parameters.Add(parameter.Name, parameter.Value);
         }
 
-        private void SetEditableValues(Dictionary<string, object> parameters)
+        private void SetEditableValues(IDictionary<string, object> parameters)
         {
             foreach (var parameter in _scriptParameters.Where(p => (p.Context & ParameterOptions.Editable) != 0))
             {
                 if (!string.IsNullOrWhiteSpace(parameter.Value?.ToString()))
                     parameter.Value = parameters.SingleOrDefault(p => p.Key == parameter.Name).Value;
-                else if (parameter.Scripts.Count > 0)
-                {
-                    var neededParameters = parameter.Scripts[0].Parameters.Where(p
-                        => (p.Context & ParameterOptions.Editable) != 0);
-                    var providedParameters = parameters.Where(p => neededParameters.Select(np => np.Name).Contains(p.Key));
-                    string parameterValues = "";
-                    foreach (var param in providedParameters)
-                    {
-                        parameterValues += "[";
-                        parameterValues += param.Key;
-                        parameterValues += "]=";
-                        parameterValues += param.Value;
-                        parameterValues += ",";
-                    }
-                    parameterValues = parameterValues.Remove(parameterValues.Length - 1, 1);
+                //else if (parameter.Scripts.Count > 0)
+                //{
+                //    var neededParameters = parameter.Scripts[0].Parameters.Where(p
+                //        => (p.Context & ParameterOptions.Editable) != 0);
+                //    var providedParameters = parameters.Where(p => neededParameters.Select(np => np.Name).Contains(p.Key));
+                //    string parameterValues = "";
+                //    foreach (var param in providedParameters)
+                //    {
+                //        parameterValues += "[";
+                //        parameterValues += param.Key;
+                //        parameterValues += "]=";
+                //        parameterValues += param.Value;
+                //        parameterValues += ",";
+                //    }
+                //    parameterValues = parameterValues.Remove(parameterValues.Length - 1, 1);
 
-                    var calculateEngine = new CalculationEngine(parameter.Scripts[0]);
-                    calculateEngine.CalculateFromText(parameterValues);
-                    parameter.Value = parameter.Scripts[0].Parameters.FirstOrDefault(p => p.Name == parameter.Name).Value;
-                }
+                //    var calculateEngine = new CalculationEngine(parameter.Scripts[0]);
+                //    calculateEngine.CalculateFromText(parameterValues);
+                //    parameter.Value = parameter.Scripts[0].Parameters.FirstOrDefault(p => p.Name == parameter.Name).Value;
+                //}
             }
         }
 
-        private IEnumerable<IParameter> PrepareDataParameters(object[] values)
-        {
-            int i = 0;
-            foreach (var parameter in _scriptParameters.Where(p
-                => (p.Context & ParameterOptions.Calculation) == 0))
-            {
-                if ((parameter.Context & ParameterOptions.StaticData) == 0)
-                    parameter.Value = values[i++];
-                yield return parameter;
-            }
-        }
+        //private IEnumerable<IParameter> PrepareDataParameters(object[] values)
+        //{
+        //    int i = 0;
+        //    foreach (var parameter in _scriptParameters.Where(p
+        //        => (p.Context & ParameterOptions.Calculation) == 0))
+        //    {
+        //        if ((parameter.Context & ParameterOptions.StaticData) == 0)
+        //            parameter.Value = values[i++];
+        //        yield return parameter;
+        //    }
+        //}
 
-        private void SetParameter(Dictionary<string, object> parameters, string parameterName, string parameterValue)
+        private void SetParameter(IDictionary<string, object> parameters, string parameterName, string parameterValue)
         {
             if (_scriptParameters.SingleOrDefault(p => p.Name == parameterName).ValueType == ValueTypes.Number)
                 parameters.Add(parameterName, parameterValue.GetDouble());
@@ -155,7 +155,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
                 parameters.Add(parameterName, parameterValue.ToString());
         }
 
-        private static void CalculateParameter(IParameter parameter, Dictionary<string, object> parameters)
+        private void CalculateParameter(IParameter parameter, IDictionary<string, object> parameters)
         {
             var expressionEvaluator = ExpressionEvaluator.Create(
                 Regex.Replace(parameter.Value.ToString(), @"\s+(?=([^']*'[^']*')*[^']*$)", string.Empty), parameters);
@@ -169,7 +169,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
             }
         }
 
-        private bool IsValid(IParameter parameter, Dictionary<string, object> parameters)
+        private bool IsValid(IParameter parameter, IDictionary<string, object> parameters)
         {
             var value = parameter.VisibilityValidator?.ToString();
             if (string.IsNullOrWhiteSpace(value))

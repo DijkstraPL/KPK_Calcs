@@ -21,6 +21,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatPaginatorModule } from '@angular/material/paginator';
 var MdComponentsModule = /** @class */ (function () {
     function MdComponentsModule() {
     }
@@ -43,7 +45,9 @@ var MdComponentsModule = /** @class */ (function () {
                 MatExpansionModule,
                 MatListModule,
                 MatTabsModule,
-                MatChipsModule
+                MatChipsModule,
+                MatToolbarModule,
+                MatPaginatorModule
             ]
         })
     ], MdComponentsModule);

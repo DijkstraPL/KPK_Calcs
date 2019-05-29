@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 
 namespace Build_IT_ScriptInterpreter.DataSaver
 {
+    [Obsolete]
     public class XmlSave : ISave
     {
         #region Public_Methods

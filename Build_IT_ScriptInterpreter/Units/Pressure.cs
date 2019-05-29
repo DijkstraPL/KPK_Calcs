@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Build_IT_ScriptInterpreter.Units
 {
+    [Obsolete]
     public class Pressure : Unit
     {
         public Pressure(PressureUnits currentUnit) : base(currentUnit)

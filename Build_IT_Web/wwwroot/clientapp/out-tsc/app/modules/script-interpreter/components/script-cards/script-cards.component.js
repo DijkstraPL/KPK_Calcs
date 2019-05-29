@@ -19,7 +19,11 @@ var ScriptCardsComponent = /** @class */ (function () {
     ScriptCardsComponent.prototype.setScript = function () {
         var _this = this;
         this.scriptService.getScripts().subscribe(function (scripts) {
-            _this.scripts = scripts.filter(function (s) { return _this.filter(s); });
+            _this.scripts = scripts;
+            if (_this.groupFilters != undefined)
+                _this.scripts = _this.scripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
+            if (_this.tagFilters != undefined)
+                _this.scripts = _this.scripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
             console.log("Scripts", _this.scripts);
         }, function (error) { return console.error(error); });
     };
@@ -27,9 +31,13 @@ var ScriptCardsComponent = /** @class */ (function () {
         this.scripts = this.scripts.filter(function (s) { return s.id != script.id; });
     };
     __decorate([
-        Input('filter'),
-        __metadata("design:type", Function)
-    ], ScriptCardsComponent.prototype, "filter", void 0);
+        Input('groupFilters'),
+        __metadata("design:type", Array)
+    ], ScriptCardsComponent.prototype, "groupFilters", void 0);
+    __decorate([
+        Input('tagFilters'),
+        __metadata("design:type", Array)
+    ], ScriptCardsComponent.prototype, "tagFilters", void 0);
     ScriptCardsComponent = __decorate([
         Component({
             selector: 'app-script-cards',

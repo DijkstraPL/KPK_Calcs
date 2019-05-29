@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Build_IT_ScriptInterpreter.Units
 {
+    [Obsolete]
     public class Volume : Unit
     {
         public Volume(VolumeUnits currentUnit = VolumeUnits.m3) : base(currentUnit)

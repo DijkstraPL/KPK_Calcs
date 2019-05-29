@@ -50,27 +50,29 @@ var TagFormComponent = /** @class */ (function () {
         }, function (error) { return console.error(error); });
     };
     TagFormComponent.prototype.add = function (event) {
-        if (!this.matAutocomplete.isOpen)
-            return;
-        var input = event.input;
-        var value = event.value;
-        if ((value || '').trim() && !this.scriptTags.controls.some(function (c) { return c.value.name == value.trim(); })) {
-            this.scriptTags.push(new FormGroup({
-                id: new FormControl(0),
-                name: new FormControl(value.trim())
-            }));
+        if (!this.matAutocomplete.isOpen) {
+            var input = event.input;
+            var value_1 = event.value;
+            if ((value_1 || '').trim() && !this.scriptTags.controls.some(function (c) { return c.value.name == value_1.trim(); })) {
+                this.scriptTags.push(new FormGroup({
+                    id: new FormControl(0),
+                    name: new FormControl(value_1.trim())
+                }));
+            }
+            if (input) {
+                input.value = '';
+            }
+            if (this.scriptTags.controls.length > 5)
+                this.tagCtrl.setValue('###Not supposed to be on the list###');
+            else
+                this.tagCtrl.setValue(null);
         }
-        if (input)
-            input.value = '';
-        if (this.scriptTags.length > 5)
-            this.tagCtrl.setValue('###Not supposed to be on the list###');
-        else
-            this.tagCtrl.setValue(null);
     };
     TagFormComponent.prototype.remove = function (tagForm) {
         var index = this.scriptTags.controls.indexOf(tagForm);
-        if (index >= 0)
+        if (index >= 0) {
             this.scriptTags.removeAt(index);
+        }
     };
     TagFormComponent.prototype.selected = function (event) {
         var tag = this.tags.find(function (t) { return t.name == event.option.viewValue; });

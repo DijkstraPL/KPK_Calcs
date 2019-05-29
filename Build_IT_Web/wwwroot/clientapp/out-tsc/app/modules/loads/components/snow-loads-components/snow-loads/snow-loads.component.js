@@ -10,11 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 var SnowLoadsComponent = /** @class */ (function () {
     function SnowLoadsComponent() {
+        this.loadsGroupFilter = ['Loads'];
+        this.loadsTagFilter = ['Snow', 'Load'];
     }
     SnowLoadsComponent.prototype.ngOnInit = function () {
-        this.snowLoadFilter = function (script) {
-            return script.groupName === 'Loads';
-        };
     };
     SnowLoadsComponent = __decorate([
         Component({

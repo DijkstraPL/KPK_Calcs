@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Build_IT_ScriptInterpreter.Units
 {
+    [Obsolete]
     public class Area : Unit
     {
         public Area(AreaUnits currentUnit = AreaUnits.m2) : base(currentUnit)

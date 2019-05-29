@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Build_IT_ScriptInterpreter.Units.Interfaces
 {
+    [Obsolete]
     public interface IUnit
     {
         double CurrentUnitMultipler { get; }

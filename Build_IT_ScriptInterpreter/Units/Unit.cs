@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Build_IT_ScriptInterpreter.Units
 {
+    [Obsolete]
     public class Unit : IUnit
     {
         public Enum DefaultUnit { get; protected set; }

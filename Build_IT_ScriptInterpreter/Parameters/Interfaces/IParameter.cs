@@ -23,7 +23,6 @@ namespace Build_IT_ScriptInterpreter.Parameters.Interfaces
         string GroupName { get; set; }
         string AccordingTo { get; set; }
         string Notes { get; set; }
-        List<Script> Scripts { get; set; }
 
         #endregion // Properties
     }

@@ -6,6 +6,7 @@ using static Build_IT_ScriptInterpreter.Units.Volume;
 
 namespace Build_IT_ScriptInterpreter.Units
 {
+    [Obsolete]
     public class Length : Unit
     {
         public Length(LengthUnits currentUnit = LengthUnits.m) : base(currentUnit)

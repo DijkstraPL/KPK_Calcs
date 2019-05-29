@@ -5,6 +5,7 @@ using System;
 
 namespace Build_IT_ScriptInterpreter.Scripts
 {
+    [Obsolete]
     public class ScriptBuilder
     {
         #region Fields

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Build_IT_ScriptInterpreter.DataSaver.Interfaces
 {
+    [Obsolete]
     public interface ILoad<T>
     {
         #region Public_Methods

@@ -25,7 +25,6 @@ namespace Build_IT_ScriptInterpreter.Parameters
         public string GroupName { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
-        public List<Script> Scripts { get; set; }
 
         #endregion // Properties
 
@@ -41,10 +40,7 @@ namespace Build_IT_ScriptInterpreter.Parameters
 
         public int Compare(IParameter x, IParameter y)
         {
-            if (x.Number.CompareTo(y.Number) != 0)
-                return x.Number.CompareTo(y.Number);
-            else
-                return 0;
+            return x.Number.CompareTo(y.Number);
         }
 
         public int CompareTo(IParameter other)
