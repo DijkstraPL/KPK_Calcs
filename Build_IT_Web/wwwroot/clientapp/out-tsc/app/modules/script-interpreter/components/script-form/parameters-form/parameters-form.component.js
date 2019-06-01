@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ParameterFilter } from '../../../models/enums/parameter-filter';
 import { ParameterImpl } from '../../../models/parameterImpl';
 import { ParameterService } from '../../../services/parameter.service';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 var ParametersFormComponent = /** @class */ (function () {
     function ParametersFormComponent(parameterService, route) {
         this.parameterService = parameterService;
@@ -28,6 +29,24 @@ var ParametersFormComponent = /** @class */ (function () {
         if (isNaN(this.scriptId))
             return;
         this.getParameters(this.scriptId);
+    };
+    ParametersFormComponent.prototype.drop = function (event) {
+        moveItemInArray(this.filteredParameters, event.previousIndex, event.currentIndex);
+        this.setNumbers(event);
+    };
+    ParametersFormComponent.prototype.setNumbers = function (event) {
+        var sortedParameters = this.sortParameters(this.filteredParameters, 'number');
+        sortedParameters[event.previousIndex].number = event.currentIndex;
+        if (event.currentIndex < event.previousIndex) {
+            var i = event.previousIndex - 1;
+            for (i; i >= event.currentIndex; i--)
+                sortedParameters[i].number = sortedParameters[i].number + 1;
+        }
+        else if (event.currentIndex > event.previousIndex) {
+            var i = event.currentIndex;
+            for (i; i > event.previousIndex; i--)
+                sortedParameters[i].number = sortedParameters[i].number - 1;
+        }
     };
     ParametersFormComponent.prototype.getParameters = function (id) {
         var _this = this;
@@ -74,8 +93,10 @@ var ParametersFormComponent = /** @class */ (function () {
         });
     };
     ParametersFormComponent.prototype.changeEditMode = function () {
-        if (!this.editMode)
-            this.newParameter = new ParameterImpl();
+        if (this.editMode) {
+            this.editMode = false;
+            this.newParameter = null;
+        }
     };
     ParametersFormComponent.prototype.sortParameters = function (parameters, prop) {
         if (parameters)
@@ -83,25 +104,9 @@ var ParametersFormComponent = /** @class */ (function () {
                 a[prop] === b[prop] ? 0 :
                     -1; });
     };
-    ParametersFormComponent.prototype.moveUp = function (parameter) {
-        var sortedParameters = this.sortParameters(this.parameters, 'number');
-        var currentIndex = sortedParameters.indexOf(parameter);
-        if (currentIndex === sortedParameters.length - 1)
-            return;
-        var tempNumber = parameter.number;
-        parameter.number = sortedParameters[currentIndex + 1].number;
-        sortedParameters[currentIndex + 1].number = tempNumber;
-        this.saveParameters();
-    };
-    ParametersFormComponent.prototype.moveDown = function (parameter) {
-        var sortedParameters = this.sortParameters(this.parameters, 'number');
-        var currentIndex = sortedParameters.indexOf(parameter);
-        if (currentIndex === 0)
-            return;
-        var tempNumber = parameter.number;
-        parameter.number = sortedParameters[currentIndex - 1].number;
-        sortedParameters[currentIndex - 1].number = tempNumber;
-        this.saveParameters();
+    ParametersFormComponent.prototype.addNewParameter = function () {
+        this.editMode = true;
+        this.newParameter = new ParameterImpl();
     };
     ParametersFormComponent.prototype.saveParameters = function () {
         var _this = this;
@@ -117,9 +122,7 @@ var ParametersFormComponent = /** @class */ (function () {
             selector: 'app-parameters-form',
             templateUrl: './parameters-form.component.html',
             styleUrls: ['./parameters-form.component.scss']
-        })
-        /** parameters-form component*/
-        ,
+        }),
         __metadata("design:paramtypes", [ParameterService,
             ActivatedRoute])
     ], ParametersFormComponent);

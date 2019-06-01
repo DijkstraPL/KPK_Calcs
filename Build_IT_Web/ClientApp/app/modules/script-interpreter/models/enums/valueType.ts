@@ -1,4 +1,4 @@
 ﻿export enum ValueType {
-    number,
-    text
+    number = "Number",
+    text = "Text"
 }

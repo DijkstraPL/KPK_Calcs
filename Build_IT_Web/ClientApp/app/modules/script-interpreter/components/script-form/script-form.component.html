@@ -12,36 +12,40 @@
     <mat-tab-group dynamicHeight>
 
         <mat-tab label="Script data">
-            <div class="example-small-box mat-elevation-z4">
+            <div class="mat-elevation-z4">
                 <script-data-form [scriptForm]="scriptForm"
                                   [includeNote]="includeNote"></script-data-form>
             </div>
         </mat-tab>
 
         <mat-tab label="Tags">
-            <div class="example-large-box mat-elevation-z4">
+            <div class="mat-elevation-z4">
                 <tag-form [scriptForm]="scriptForm"></tag-form>
             </div>
         </mat-tab>
 
         <mat-tab label="Parameters">
-            <div class="example-large-box mat-elevation-z4">
+            <div class="mat-elevation-z4">
                 <app-parameters-form *ngIf="editMode"></app-parameters-form>
             </div>
         </mat-tab>
 
     </mat-tab-group>
-
-    <button *ngIf="!editMode"
+    
+    <button mat-stroked-button
+            color="accent"
+            *ngIf="!editMode"
             type="submit"
             [disabled]="!scriptForm.valid"
-            class="btn btn-primary mt-3">
+            class="mt-3 ml-3">
         Add Script
     </button>
-    <button *ngIf="editMode"
+    <button mat-stroked-button
+            color="accent"
+            *ngIf="editMode"
             type="submit"
             [disabled]="!scriptForm.valid"
-            class="btn btn-primary mt-3">
+            class="mt-3 ml-3">
         Update Script
     </button>
 </form>

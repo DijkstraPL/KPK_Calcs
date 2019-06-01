@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Script } from '../../models/interfaces/script';
@@ -8,6 +8,7 @@ import { AppErrorStateMatcher } from '../../../../common/errors/app-error-state-
 import { TagService } from '../../services/tag.service';
 import { Tag } from '../../models/interfaces/tag';
 import { Observable, forkJoin } from 'rxjs';
+import { ParametersFormComponent } from './parameters-form/parameters-form.component';
 
 @Component({
     selector: 'script-form',
@@ -31,6 +32,8 @@ export class ScriptFormComponent implements OnInit {
     parametersToShow: string = 'dataParameters';
     editMode: boolean = true;
     includeNote: boolean;
+
+    @ViewChild(ParametersFormComponent) private parametersForm: ParametersFormComponent;
 
     get scriptId(): AbstractControl {
         return this.scriptForm.get('id');
@@ -87,6 +90,8 @@ export class ScriptFormComponent implements OnInit {
         else
             this.scriptService.update(this.scriptForm.value)
                 .subscribe((script: Script) => console.log(script));
+
+        this.parametersForm.saveParameters();
     }
 
     private async _setTags() {

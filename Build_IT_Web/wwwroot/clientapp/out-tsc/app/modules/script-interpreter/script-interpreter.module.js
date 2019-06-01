@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScriptFormComponent } from './components/script-form/script-form.component';
 import { ParametersFormComponent } from './components/script-form/parameters-form/parameters-form.component';
 import { ScriptCalculatorComponent } from './components/script-calculator/script-calculator.component';
-import { DataParametersFormComponent } from './components/script-form/parameters-form/data-parameters-form/data-parameters-form.component';
+import { DataParameterFormComponent } from './components/script-form/parameters-form/data-parameter-form/data-parameter-form.component';
 import { ScriptCardComponent } from './components/script-card/script-card.component';
 import { ScriptCardsComponent } from './components/script-cards/script-cards.component';
 import { TagFormComponent } from './components/script-form/tag-form/tag-form.component';
@@ -39,7 +39,7 @@ var ScriptInterpreterModule = /** @class */ (function () {
             declarations: [
                 ScriptFormComponent,
                 ParametersFormComponent,
-                DataParametersFormComponent,
+                DataParameterFormComponent,
                 ScriptCalculatorComponent,
                 ScriptCardComponent,
                 ScriptCardsComponent,

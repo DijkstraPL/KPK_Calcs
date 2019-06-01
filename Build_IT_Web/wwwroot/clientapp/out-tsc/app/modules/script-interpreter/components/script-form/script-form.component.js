@@ -42,11 +42,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScriptService } from '../../services/script.service';
 import { TagService } from '../../services/tag.service';
+import { ParametersFormComponent } from './parameters-form/parameters-form.component';
 var ScriptFormComponent = /** @class */ (function () {
     function ScriptFormComponent(scriptService, tagService, route, router) {
         this.scriptService = scriptService;
@@ -127,6 +128,7 @@ var ScriptFormComponent = /** @class */ (function () {
                         else
                             this.scriptService.update(this.scriptForm.value)
                                 .subscribe(function (script) { return console.log(script); });
+                        this.parametersForm.saveParameters();
                         return [2 /*return*/];
                 }
             });
@@ -171,6 +173,10 @@ var ScriptFormComponent = /** @class */ (function () {
             });
         });
     };
+    __decorate([
+        ViewChild(ParametersFormComponent),
+        __metadata("design:type", ParametersFormComponent)
+    ], ScriptFormComponent.prototype, "parametersForm", void 0);
     ScriptFormComponent = __decorate([
         Component({
             selector: 'script-form',

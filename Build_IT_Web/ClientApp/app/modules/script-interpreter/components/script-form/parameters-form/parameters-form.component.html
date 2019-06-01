@@ -1,54 +1,73 @@
-﻿<h2>Parameters</h2>
-
-<div class="m-4">
-    <select [(ngModel)]="parametersToShow"
-            (change)="onParametersToShowChange()">
-        <option value="all">All parameters</option>
-        <option value="data">Data parameters</option>
-        <option value="static">Static parameters</option>
-        <option value="calculation">Calculation parameters</option>
-    </select>
-</div>
-
-<div class="border-dark"
-     [ngClass]="{'alert alert-info' : parameter == newParameter}"
-     *ngFor="let parameter of sortParameters(filteredParameters, 'number')">
-    <div class="list-group-item bg-dark text-light">
-        <span [innerHTML]="parameter.name | html"></span> - {{parameter.description}}
-        <button (click)="remove(parameter.id)"
-                type="button"
-                class="btn btn-danger float-right">
-            Remove
-        </button>
-        <button (click)="editParameter(parameter)"
-                type="button"
-                class="btn btn-info float-right mr-2">
-            Edit
-        </button>
-        <button (click)="moveDown(parameter)"
-                type="button"
-                class="btn btn-info float-right">
-            Up
-        </button>
-        <button (click)="moveUp(parameter)"
-                type="button"
-                class="btn btn-info float-right">
-            Down
-        </button>
+﻿<div *ngIf="!editMode">
+    <div class="m-4">
+        <label id="parameters-type-filter">Select parameters:</label>
+        <mat-radio-group aria-labelledby="parameters-type-filter"
+                         [(ngModel)]="parametersToShow"
+                         (change)="onParametersToShowChange()">
+            <mat-radio-button value="all"
+                              class="ml-2">All parameters</mat-radio-button>
+            <mat-radio-button value="data"
+                              class="ml-2">Data parameters</mat-radio-button>
+            <mat-radio-button value="static"
+                              class="ml-2">Static parameters</mat-radio-button>
+            <mat-radio-button value="calculation"
+                              class="ml-2">Calculation parameters</mat-radio-button>
+        </mat-radio-group>
     </div>
+
+    <div cdkDropList
+         class="parameters-list"
+         (cdkDropListDropped)="drop($event)">
+        <div class="parameter-in-list"
+             *ngFor="let parameter of sortParameters(filteredParameters, 'number')"
+             cdkDrag>
+            <div class="parameter-placeholder"
+                 *cdkDragPlaceholder></div>
+            <div class="parameter-container"
+                 [ngClass]="{'selected-parameter' : parameter == newParameter}">
+                <div class="ml-3 parameter-data">
+                    <b class="parameter-name"
+                       [innerHTML]="parameter.name | html"></b> - {{parameter.description}}
+                </div>
+
+                <div class="parameter-options">
+                    <button mat-stroked-button
+                            class="ml-2"
+                            (click)="editParameter(parameter)">
+                        Edit
+                    </button>
+                    <button mat-stroked-button
+                            class="ml-2"
+                            (click)="remove(parameter.id)"
+                            color="warn">
+                        Remove
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button mat-stroked-button
+            color="accent"
+            class="m-3"
+            (click)="addNewParameter()">
+        New parameter
+    </button>
 </div>
 
-<div class="btn-group btn-group-toggle m-3" *ngIf="editMode">
-    <label>
-        <input type="checkbox"
-               [(ngModel)]="editMode"
-               (change)="changeEditMode()" /> Edit mode
-    </label>
-</div>
+<div class="m-3"
+     *ngIf="editMode">
+    <button mat-fab
+            color="primary"
+            (click)="changeEditMode()">
+        <span class="fa fa-backward"></span>
+    </button>
 
-<div class="container">
-    <app-data-parameters-form [editMode]="editMode"
-                              [scriptId]="scriptId"
-                              [newParameter]="newParameter"
-                              (created)="onCreated($event)"></app-data-parameters-form>
+    <div class="container"
+         *ngIf="editMode">
+        <app-data-parameter-form [newlyAddedParameter]="newlyAddedParameter"
+                                 [scriptId]="scriptId"
+                                 [newParameter]="newParameter"
+                                 (created)="onCreated($event)"></app-data-parameter-form>
+    </div>
 </div>

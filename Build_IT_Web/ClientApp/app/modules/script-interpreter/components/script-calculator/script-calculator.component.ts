@@ -59,10 +59,10 @@ export class ScriptCalculatorComponent implements OnInit {
 
     private setParameters(): void {
         this.parameterService.getParameters(this.script.id).subscribe(parameters => {
-            this.parameters = parameters.filter(p => (p.context & ParameterOptions.Editable) != 0),
+            this.parameters = parameters.filter(p => (p.context & ParameterOptions.editable) != 0),
                 this.staticDataParameters = parameters.filter(p =>
-                    (p.context & ParameterOptions.StaticData) != 0 && 
-                    (p.context & ParameterOptions.Visible) != 0),
+                    (p.context & ParameterOptions.staticData) != 0 && 
+                    (p.context & ParameterOptions.visible) != 0),
                 this.parameters.forEach(p => this.prepareParameter(p)),
                 this.filterParameters(),
                 console.log("Parameters", this.parameters);
@@ -90,7 +90,7 @@ export class ScriptCalculatorComponent implements OnInit {
 
     filterParameters() {
         this.visibleParameters = this.parameters.filter(p =>
-            (p.context & ParameterOptions.Visible) != 0 &&
+            (p.context & ParameterOptions.visible) != 0 &&
             this.validateVisibility(p));
 
         if (this.groups == undefined)
@@ -124,7 +124,7 @@ export class ScriptCalculatorComponent implements OnInit {
         this.isCalculating = true;
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(params => {
-                this.resultParameters = params.filter(p => (p.context & ParameterOptions.Visible) != 0);
+                this.resultParameters = params.filter(p => (p.context & ParameterOptions.visible) != 0);
                 console.log("Results", this.resultParameters);
             },
                 error => {

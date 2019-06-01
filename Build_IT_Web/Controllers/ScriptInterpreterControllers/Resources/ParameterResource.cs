@@ -22,14 +22,12 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources
         public string GroupName { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
-        public ICollection<AlternativeScriptResource> NestedScripts { get; set; }
 
         public string Equation { get; set; }
 
         public ParameterResource()
         {
             ValueOptions = new Collection<ValueOptionResource>();
-            NestedScripts = new Collection<AlternativeScriptResource>();
         }
     }
 }

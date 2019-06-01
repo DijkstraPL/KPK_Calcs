@@ -1,8 +1,8 @@
 ﻿export enum ParameterOptions {
-    None = 0,
-    Visible = 1,
-    Editable = 2,
-    Calculation = 4,
-    StaticData = 8,
-    Important = 16,
+    none = 0,
+    visible = 1,
+    editable = 2,
+    calculation = 4,
+    staticData = 8,
+    important = 16,
 }

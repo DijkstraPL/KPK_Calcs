@@ -15,7 +15,7 @@ export class ScriptCardComponent {
     constructor(private scriptService: ScriptService) {
     }
        
-    private delete(script: Script): void {
+    delete(script: Script): void {
         if (confirm(`Are you sure that you want to remove \"${script.name}\"?`)) {
             this.scriptService.delete(script.id).subscribe((s: Script) => {
                 console.log("Scripts", s);

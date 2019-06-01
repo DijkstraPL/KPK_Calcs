@@ -20,7 +20,6 @@ export class ParameterImpl implements Parameter {
     accordingTo: string;
     notes: string;
     valueOptionSetting: ValueOptionSettings;
-    nestedScripts: AlternativeScript[];
     valueOptions: ValueOption[] = [];
     
     equation: string;

@@ -2,4 +2,5 @@
 
 @import '@angular/material/prebuilt-themes/purple-green.css';
 @import "~bootstrap/dist/css/bootstrap.css";
-@import "~font-awesome/css/font-awesome.css";
+/*@import "~font-awesome/css/font-awesome.css";  ---- I added newer one */
+@import "~fontawesome-web/css/all.css";
