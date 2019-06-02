@@ -1,0 +1,79 @@
+﻿
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Value Options
+            </mat-panel-title>
+            <mat-panel-description>
+                Provide some default data
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="parameterForm">
+
+            <mat-checkbox formControlName="valueOptionSetting"
+                          [value]="1"
+                          class="ml-2">Allow any values</mat-checkbox>
+
+            <div>
+                <ul *ngFor="let valueOption of parameterValueOptions.controls; let i = index">
+                    <li>
+                        <div [formGroup]="valueOption">
+                            <mat-form-field class="m-2">
+                                <input matInput
+                                       placeholder="Name"
+                                       formControlName="name"
+                                       [errorStateMatcher]="matcher"
+                                       autocomplete="off" />
+                                <mat-hint>Name</mat-hint>
+                                <!--<mat-error *ngIf="parameterDocument && parameterDocument.hasError('maxlength')">
+                                Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.
+                            </mat-error>-->
+                            </mat-form-field>
+                            <mat-form-field class="m-2">
+                                <input matInput
+                                       placeholder="Value"
+                                       formControlName="value"
+                                       [errorStateMatcher]="matcher"
+                                       autocomplete="off" />
+                                <mat-hint>Value</mat-hint>
+                                <!--<mat-error *ngIf="parameterDocument && parameterDocument.hasError('maxlength')">
+                                Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.
+                            </mat-error>-->
+                            </mat-form-field>
+
+                            <mat-form-field class="m-2 form-medium">
+                                <textarea matInput
+                                          placeholder="Description"
+                                          formControlName="description"
+                                          [errorStateMatcher]="matcher"
+                                          autocomplete="off"></textarea>
+                                <mat-hint>Description for value option</mat-hint>
+                                <!--<mat-error *ngIf="parameterValue && parameterValue.hasError('maxlength')">
+                                                            Value should be maximum {{parameterValue.errors.maxlength.requiredLength}} characters long.
+                                                                </mat-error>
+                            -->
+                            </mat-form-field>
+
+                            <button mat-stroked-button
+                                    color="warn"
+                                    (click)="remove(valueOption)">
+                                Remove
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+
+                <button mat-stroked-button
+                        color="accent"
+                        (click)="addValueOption()">
+                    Add
+                </button>
+
+            </div>
+
+        </form>
+
+    </mat-expansion-panel>
+</mat-accordion>

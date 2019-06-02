@@ -1,10 +1,10 @@
 export var ParameterOptions;
 (function (ParameterOptions) {
-    ParameterOptions[ParameterOptions["None"] = 0] = "None";
-    ParameterOptions[ParameterOptions["Visible"] = 1] = "Visible";
-    ParameterOptions[ParameterOptions["Editable"] = 2] = "Editable";
-    ParameterOptions[ParameterOptions["Calculation"] = 4] = "Calculation";
-    ParameterOptions[ParameterOptions["StaticData"] = 8] = "StaticData";
-    ParameterOptions[ParameterOptions["Important"] = 16] = "Important";
+    ParameterOptions[ParameterOptions["none"] = 0] = "none";
+    ParameterOptions[ParameterOptions["visible"] = 1] = "visible";
+    ParameterOptions[ParameterOptions["editable"] = 2] = "editable";
+    ParameterOptions[ParameterOptions["calculation"] = 4] = "calculation";
+    ParameterOptions[ParameterOptions["staticData"] = 8] = "staticData";
+    ParameterOptions[ParameterOptions["important"] = 16] = "important";
 })(ParameterOptions || (ParameterOptions = {}));
 //# sourceMappingURL=parameterOptions.js.map

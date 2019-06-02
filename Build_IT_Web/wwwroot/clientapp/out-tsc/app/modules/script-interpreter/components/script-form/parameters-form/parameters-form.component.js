@@ -19,6 +19,7 @@ var ParametersFormComponent = /** @class */ (function () {
         this.route = route;
         this.newParameter = new ParameterImpl();
         this.editMode = false;
+        this.newlyAddedParameter = false;
         this.parametersToShow = "all";
     }
     ParametersFormComponent.prototype.ngOnInit = function () {
@@ -33,10 +34,12 @@ var ParametersFormComponent = /** @class */ (function () {
     ParametersFormComponent.prototype.drop = function (event) {
         moveItemInArray(this.filteredParameters, event.previousIndex, event.currentIndex);
         this.setNumbers(event);
+        this.saveParameters();
     };
     ParametersFormComponent.prototype.setNumbers = function (event) {
         var sortedParameters = this.sortParameters(this.filteredParameters, 'number');
-        sortedParameters[event.previousIndex].number = event.currentIndex;
+        var addition = this.getAddition();
+        sortedParameters[event.previousIndex].number = event.currentIndex + addition;
         if (event.currentIndex < event.previousIndex) {
             var i = event.previousIndex - 1;
             for (i; i >= event.currentIndex; i--)
@@ -47,6 +50,20 @@ var ParametersFormComponent = /** @class */ (function () {
             for (i; i > event.previousIndex; i--)
                 sortedParameters[i].number = sortedParameters[i].number - 1;
         }
+    };
+    ParametersFormComponent.prototype.getAddition = function () {
+        var addition = 0;
+        if (this.parametersToShow == 'data')
+            addition = 0;
+        if (this.parametersToShow == 'static' || this.parametersToShow == 'calculation') {
+            var parametersFilterCriteria_1 = ParameterFilter['data'];
+            addition += this.parameters.filter(function (p) { return (p.context & parametersFilterCriteria_1) != 0; }).length;
+        }
+        if (this.parametersToShow == 'calculation') {
+            var parametersFilterCriteria_2 = ParameterFilter['static'];
+            addition += this.parameters.filter(function (p) { return (p.context & parametersFilterCriteria_2) != 0; }).length;
+        }
+        return addition;
     };
     ParametersFormComponent.prototype.getParameters = function (id) {
         var _this = this;
@@ -69,16 +86,27 @@ var ParametersFormComponent = /** @class */ (function () {
     };
     ParametersFormComponent.prototype.editParameter = function (parameter) {
         this.editMode = true;
+        this.newlyAddedParameter = false;
         this.newParameter = parameter;
     };
     ParametersFormComponent.prototype.remove = function (parameterId) {
         var _this = this;
-        this.parameterService.delete(this.scriptId, parameterId)
-            .subscribe(function (p) {
-            _this.parameters = _this.parameters.filter(function (p) { return p.id != parameterId; });
-            _this.onParametersToShowChange();
-            console.log("Parameters", p);
-        }, function (error) { return console.error(error); });
+        if (confirm("Are you sure?"))
+            this.parameterService.delete(this.scriptId, parameterId)
+                .subscribe(function (p) {
+                _this.parameters = _this.parameters.filter(function (p) { return p.id != parameterId; });
+                _this.onParametersToShowChange();
+                _this.refreshNumbering(p.number);
+                _this.saveParameters();
+                console.log("Parameters", p);
+            }, function (error) { return console.error(error); });
+    };
+    ParametersFormComponent.prototype.refreshNumbering = function (number) {
+        var index = 0;
+        for (var _i = 0, _a = this.sortParameters(this.parameters, 'number'); _i < _a.length; _i++) {
+            var parameter = _a[_i];
+            parameter.number = index++;
+        }
     };
     ParametersFormComponent.prototype.onCreated = function (parameter) {
         var _this = this;
@@ -95,6 +123,7 @@ var ParametersFormComponent = /** @class */ (function () {
     ParametersFormComponent.prototype.changeEditMode = function () {
         if (this.editMode) {
             this.editMode = false;
+            this.newlyAddedParameter = false;
             this.newParameter = null;
         }
     };
@@ -106,7 +135,9 @@ var ParametersFormComponent = /** @class */ (function () {
     };
     ParametersFormComponent.prototype.addNewParameter = function () {
         this.editMode = true;
+        this.newlyAddedParameter = true;
         this.newParameter = new ParameterImpl();
+        this.newParameter.number = Math.max.apply(Math, this.parameters.map(function (p) { return p.number; })) + 1;
     };
     ParametersFormComponent.prototype.saveParameters = function () {
         var _this = this;

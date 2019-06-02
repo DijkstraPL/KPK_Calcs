@@ -31,11 +31,11 @@ export class DataParameterFormComponent {
         visibilityValidator: new FormControl('', Validators.maxLength(1000)),
         dataValidator: new FormControl('', Validators.maxLength(1000)),
         unit: new FormControl('', Validators.maxLength(50)),
-        context: new FormControl('', Validators.required),
+        context: new FormControl('3', Validators.required),
         groupName: new FormControl('', Validators.maxLength(200)),
         accordingTo: new FormControl('', Validators.maxLength(200)),
         notes: new FormControl('', Validators.maxLength(1000)),
-        valueOptionSetting: new FormControl(''),
+        valueOptionSetting: new FormControl('0'),
         valueOptions: new FormArray([])
     });
 
@@ -89,13 +89,25 @@ export class DataParameterFormComponent {
     get parameterContext(): AbstractControl {
         return this.parameterForm.get('context');
     }
+    get parameterValueOptions(): FormArray {
+        return this.parameterForm.get('valueOptions') as FormArray;
+    }
 
     constructor(private parameterService: ParameterService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.newParameter) {
-            this.parameterForm.patchValue(changes.newParameter.currentValue);
+            let parameter = changes.newParameter.currentValue as Parameter;
+            this.parameterForm.patchValue(parameter);
+
+            parameter.valueOptions.forEach(vo => this.parameterValueOptions.push(new FormGroup({
+                id: new FormControl(vo.id),
+                name: new FormControl(vo.name),
+                value: new FormControl(vo.value),
+                description: new FormControl(vo.description)
+            })));
+
             this.setNewParameterChanges(changes.newParameter);
         }
 

@@ -22,6 +22,6 @@ export class ParameterResultComponent implements OnInit {
     }
 
     isImportant(): boolean {
-        return (this.parameter.context & ParameterOptions.Important) != 0
+        return (this.parameter.context & ParameterOptions.important) != 0
     }
 }

@@ -1,147 +1,151 @@
 ﻿
 
-    <form (ngSubmit)="onSubmit($event)"
-          [formGroup]="parameterForm">
+<form (ngSubmit)="onSubmit($event)"
+      [formGroup]="parameterForm">
 
-        <h3>
-            <span innerHTML="{{parameterName.value | html }}"></span> - {{parameterDescription.value}}
-        </h3>
+    <h3>
+        <span innerHTML="{{parameterName.value | html }}"></span> - {{parameterDescription.value}}
+    </h3>
 
-        <div class="full-width">
-            <label id="parameter-type">Pick parameter type</label>
-            <mat-radio-group aria-labelledby="parameter-type"
-                             (change)="parameterTypeChanged()">
-                <mat-radio-button class="ml-2"
-                                  #editable
-                                  [value]="context.editable">Editable</mat-radio-button>
-                <mat-radio-button class="ml-2"
-                                  #static
-                                  [value]="context.staticData">Static</mat-radio-button>
-                <mat-radio-button class="ml-2"
-                                  #calculable
-                                  [value]="context.calculation">Calculable</mat-radio-button>
-            </mat-radio-group>
+    <div class="full-width">
+        <label id="parameter-type">Pick parameter type</label>
+        <mat-radio-group aria-labelledby="parameter-type"
+                         (change)="parameterTypeChanged()">
+            <mat-radio-button class="ml-2"
+                              #editable
+                              [value]="context.editable">Editable</mat-radio-button>
+            <mat-radio-button class="ml-2"
+                              #static
+                              [value]="context.staticData">Static</mat-radio-button>
+            <mat-radio-button class="ml-2"
+                              #calculable
+                              [value]="context.calculation">Calculable</mat-radio-button>
+        </mat-radio-group>
 
-            <mat-checkbox (change)="parameterTypeChanged()"
-                          [value]="context.visible"
-                          class="ml-2"
-                          #visible>Visible</mat-checkbox>
-            <mat-checkbox (change)="parameterTypeChanged()"
-                          [value]="context.important"
-                          class="ml-2"
-                          #important>Important</mat-checkbox>
+        <mat-checkbox (change)="parameterTypeChanged()"
+                      [value]="context.visible"
+                      class="ml-2"
+                      #visible>Visible</mat-checkbox>
+        <mat-checkbox (change)="parameterTypeChanged()"
+                      [value]="context.important"
+                      class="ml-2"
+                      #important>Important</mat-checkbox>
 
-        </div>
+    </div>
 
-        <mat-form-field class="m-2">
-            <input matInput
-                   required
-                   placeholder="Name"
-                   formControlName="name"
-                   [errorStateMatcher]="matcher"
-                   autocomplete="off" />
-            <mat-hint>Parameter name</mat-hint>
-            <mat-error *ngIf="parameterName && parameterName.hasError('maxlength') && !parameterName.hasError('required')">
-                Name should be maximum {{parameterName.errors.maxlength.requiredLength}} characters long.
-            </mat-error>
-            <mat-error *ngIf="parameterName && parameterName.hasError('required')">
-                Name is <strong>required</strong>
-            </mat-error>
-        </mat-form-field>
+    <mat-form-field class="m-2">
+        <input matInput
+               required
+               placeholder="Name"
+               formControlName="name"
+               [errorStateMatcher]="matcher"
+               autocomplete="off" />
+        <mat-hint>Parameter name</mat-hint>
+        <mat-error *ngIf="parameterName && parameterName.hasError('maxlength') && !parameterName.hasError('required')">
+            Name should be maximum {{parameterName.errors.maxlength.requiredLength}} characters long.
+        </mat-error>
+        <mat-error *ngIf="parameterName && parameterName.hasError('required')">
+            Name is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
 
-        <mat-form-field class="m-2">
-            <input matInput
-                   placeholder="Unit"
-                   formControlName="unit"
-                   [errorStateMatcher]="matcher"
-                   autocomplete="off" />
-            <mat-hint>Unit</mat-hint>
-            <mat-error *ngIf="parameterUnit && parameterUnit.hasError('maxlength')">
-                Unit should be maximum {{parameterUnit.errors.maxlength.requiredLength}} characters long.
-            </mat-error>
-        </mat-form-field>
+    <mat-form-field class="m-2">
+        <input matInput
+               placeholder="Unit"
+               formControlName="unit"
+               [errorStateMatcher]="matcher"
+               autocomplete="off" />
+        <mat-hint>Unit</mat-hint>
+        <mat-error *ngIf="parameterUnit && parameterUnit.hasError('maxlength')">
+            Unit should be maximum {{parameterUnit.errors.maxlength.requiredLength}} characters long.
+        </mat-error>
+    </mat-form-field>
 
-        <mat-form-field class="m-2">
-            <input matInput
-                   placeholder="Document"
-                   formControlName="accordingTo"
-                   [errorStateMatcher]="matcher"
-                   autocomplete="off" />
-            <mat-hint>Document</mat-hint>
-            <mat-error *ngIf="parameterDocument && parameterDocument.hasError('maxlength')">
-                Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.
-            </mat-error>
-        </mat-form-field>
+    <mat-form-field class="m-2">
+        <input matInput
+               placeholder="Document"
+               formControlName="accordingTo"
+               [errorStateMatcher]="matcher"
+               autocomplete="off" />
+        <mat-hint>Document</mat-hint>
+        <mat-error *ngIf="parameterDocument && parameterDocument.hasError('maxlength')">
+            Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.
+        </mat-error>
+    </mat-form-field>
 
-        <mat-form-field class="m-2">
-            <mat-label>Value Type</mat-label>
-            <mat-select matNativeControl
-                        formControlName="valueType"
-                        required
-                        (change)="test($event)">
-                <mat-option *ngFor="let valueType of valueTypes; let i = index"
-                            [value]="i">
-                    {{valueType}}
-                </mat-option>
-            </mat-select>
-            <mat-hint>Value Type</mat-hint>
-        </mat-form-field>
+    <mat-form-field class="m-2">
+        <mat-label>Value Type</mat-label>
+        <mat-select matNativeControl
+                    formControlName="valueType"
+                    required
+                    (change)="test($event)">
+            <mat-option *ngFor="let valueType of valueTypes; let i = index"
+                        [value]="i">
+                {{valueType}}
+            </mat-option>
+        </mat-select>
+        <mat-hint>Value Type</mat-hint>
+    </mat-form-field>
 
-        <mat-form-field class="m-2 full-width">
-            <textarea matInput
-                      placeholder="Value"
-                      formControlName="value"
-                      [errorStateMatcher]="matcher"
-                      autocomplete="off"></textarea>
-            <mat-hint>Value for parameter</mat-hint>
-            <mat-error *ngIf="parameterValue && parameterValue.hasError('maxlength')">
-                Value should be maximum {{parameterValue.errors.maxlength.requiredLength}} characters long.
-            </mat-error>
-        </mat-form-field>
+    <mat-form-field class="m-2 full-width">
+        <textarea matInput
+                  placeholder="Value"
+                  formControlName="value"
+                  [errorStateMatcher]="matcher"
+                  autocomplete="off"></textarea>
+        <mat-hint>Value for parameter</mat-hint>
+        <mat-error *ngIf="parameterValue && parameterValue.hasError('maxlength')">
+            Value should be maximum {{parameterValue.errors.maxlength.requiredLength}} characters long.
+        </mat-error>
+    </mat-form-field>
 
-        <mat-form-field class="m-2 full-width">
-            <textarea matInput
-                      placeholder="Description"
-                      formControlName="description"
-                      [errorStateMatcher]="matcher"
-                      autocomplete="off"></textarea>
-            <mat-hint>Description for parameter</mat-hint>
-            <mat-error *ngIf="parameterDescription && parameterDescription.hasError('maxlength')">
-                Description should be maximum {{parameterDescription.errors.maxlength.requiredLength}} characters long.
-            </mat-error>
-        </mat-form-field>
+    <div class="value-options-border p-2">
+        <app-value-options-form [parameterForm]="parameterForm"></app-value-options-form>
+    </div>
 
-        <mat-form-field class="m-2 form-medium">
-            <input matInput
-                   placeholder="Visibility validator"
-                   formControlName="visibilityValidator"
-                   [errorStateMatcher]="matcher"
-                   autocomplete="off" />
-            <mat-hint>Visibility validator</mat-hint>
-            <mat-error *ngIf="parameterVisibilityValidator && parameterVisibilityValidator.hasError('maxlength')">
-                Visibility validator should be maximum {{parameterVisibilityValidator.errors.maxlength.requiredLength}} characters long.
-            </mat-error>
-        </mat-form-field>
+    <mat-form-field class="m-2 full-width">
+        <textarea matInput
+                  placeholder="Description"
+                  formControlName="description"
+                  [errorStateMatcher]="matcher"
+                  autocomplete="off"></textarea>
+        <mat-hint>Description for parameter</mat-hint>
+        <mat-error *ngIf="parameterDescription && parameterDescription.hasError('maxlength')">
+            Description should be maximum {{parameterDescription.errors.maxlength.requiredLength}} characters long.
+        </mat-error>
+    </mat-form-field>
 
-        <mat-form-field class="m-2 form-medium">
-            <input matInput
-                   placeholder="Data validator"
-                   formControlName="dataValidator"
-                   [errorStateMatcher]="matcher"
-                   autocomplete="off" />
-            <mat-hint>Data validator</mat-hint>
-            <mat-error *ngIf="parameterDataValidator && parameterDataValidator.hasError('maxlength')">
-                Data validator should be maximum {{parameterDataValidator.errors.maxlength.requiredLength}} characters long.
-            </mat-error>
-        </mat-form-field>
-        
-        <div class="full-width">
-            <button mat-stroked-button color="accent"
-                    type="submit">
-                {{ newlyAddedParameter ? 'Add' : 'Update'}}
-            </button>
-        </div>
-        <!--<div class="row">
+    <mat-form-field class="m-2 form-medium">
+        <input matInput
+               placeholder="Visibility validator"
+               formControlName="visibilityValidator"
+               [errorStateMatcher]="matcher"
+               autocomplete="off" />
+        <mat-hint>Visibility validator</mat-hint>
+        <mat-error *ngIf="parameterVisibilityValidator && parameterVisibilityValidator.hasError('maxlength')">
+            Visibility validator should be maximum {{parameterVisibilityValidator.errors.maxlength.requiredLength}} characters long.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="m-2 form-medium">
+        <input matInput
+               placeholder="Data validator"
+               formControlName="dataValidator"
+               [errorStateMatcher]="matcher"
+               autocomplete="off" />
+        <mat-hint>Data validator</mat-hint>
+        <mat-error *ngIf="parameterDataValidator && parameterDataValidator.hasError('maxlength')">
+            Data validator should be maximum {{parameterDataValidator.errors.maxlength.requiredLength}} characters long.
+        </mat-error>
+    </mat-form-field>
+
+    <div class="full-width">
+        <button mat-stroked-button color="accent"
+                type="submit">
+            {{ newlyAddedParameter ? 'Add' : 'Update'}}
+        </button>
+    </div>
+    <!--<div class="row">
         <div class="form-group form-inline">
             <input type="radio"
                    value="data"
@@ -302,4 +306,4 @@
             class="btn btn-primary mt-3">
         {{ editMode ? 'Update' : 'Add'}}
     </button>-->
-    </form>
+</form>

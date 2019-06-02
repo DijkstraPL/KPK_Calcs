@@ -44,10 +44,10 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     ScriptCalculatorComponent.prototype.setParameters = function () {
         var _this = this;
         this.parameterService.getParameters(this.script.id).subscribe(function (parameters) {
-            _this.parameters = parameters.filter(function (p) { return (p.context & ParameterOptions.Editable) != 0; }),
+            _this.parameters = parameters.filter(function (p) { return (p.context & ParameterOptions.editable) != 0; }),
                 _this.staticDataParameters = parameters.filter(function (p) {
-                    return (p.context & ParameterOptions.StaticData) != 0 &&
-                        (p.context & ParameterOptions.Visible) != 0;
+                    return (p.context & ParameterOptions.staticData) != 0 &&
+                        (p.context & ParameterOptions.visible) != 0;
                 }),
                 _this.parameters.forEach(function (p) { return _this.prepareParameter(p); }),
                 _this.filterParameters(),
@@ -70,7 +70,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     ScriptCalculatorComponent.prototype.filterParameters = function () {
         var _this = this;
         this.visibleParameters = this.parameters.filter(function (p) {
-            return (p.context & ParameterOptions.Visible) != 0 &&
+            return (p.context & ParameterOptions.visible) != 0 &&
                 _this.validateVisibility(p);
         });
         if (this.groups == undefined)
@@ -101,7 +101,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         this.isCalculating = true;
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(function (params) {
-            _this.resultParameters = params.filter(function (p) { return (p.context & ParameterOptions.Visible) != 0; });
+            _this.resultParameters = params.filter(function (p) { return (p.context & ParameterOptions.visible) != 0; });
             console.log("Results", _this.resultParameters);
         }, function (error) {
             console.error(error);

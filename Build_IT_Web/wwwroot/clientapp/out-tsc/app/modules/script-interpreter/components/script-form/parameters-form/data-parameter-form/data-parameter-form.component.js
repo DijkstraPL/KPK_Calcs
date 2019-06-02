@@ -7,16 +7,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ParameterImpl } from '../../../../models/parameterImpl';
 import { ParameterService } from '../../../../services/parameter.service';
 import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 import { ValueOptionImpl } from '../../../../models/valueOptionImpl';
-import { ParameterFilter } from '../../../../models/enums/parameter-filter';
 import { ValueOptionSettings } from '../../../../models/enums/valueOptionSettings';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { AppErrorStateMatcher } from '../../../../../../common/errors/app-error-state-matcher';
 import { ValueType } from '../../../../models/enums/valueType';
+import { MatRadioButton } from '@angular/material/radio';
+import { MatCheckbox } from '@angular/material/checkbox';
 var DataParameterFormComponent = /** @class */ (function () {
     function DataParameterFormComponent(parameterService) {
         this.parameterService = parameterService;
@@ -30,19 +31,21 @@ var DataParameterFormComponent = /** @class */ (function () {
             visibilityValidator: new FormControl('', Validators.maxLength(1000)),
             dataValidator: new FormControl('', Validators.maxLength(1000)),
             unit: new FormControl('', Validators.maxLength(50)),
-            context: new FormControl('', Validators.required),
+            context: new FormControl('3', Validators.required),
             groupName: new FormControl('', Validators.maxLength(200)),
             accordingTo: new FormControl('', Validators.maxLength(200)),
             notes: new FormControl('', Validators.maxLength(1000)),
-            valueOptionSetting: new FormControl(''),
+            valueOptionSetting: new FormControl('0'),
             valueOptions: new FormArray([])
         });
         this.matcher = new AppErrorStateMatcher();
         this.newParameter = new ParameterImpl();
         this.created = new EventEmitter();
-        this.type = ParameterFilter[ParameterFilter.data];
+        // type: string = ParameterFilter[ParameterFilter.data];
+        // important: boolean;
+        this.valueTypes = this.getEnumValues(ValueType);
+        this.context = ParameterOptions;
         this.allowUserValues = false;
-        this.valueTypes = getEnumValues(ValueType);
     }
     Object.defineProperty(DataParameterFormComponent.prototype, "parameterId", {
         get: function () {
@@ -72,6 +75,20 @@ var DataParameterFormComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataParameterFormComponent.prototype, "parameterValueType", {
+        get: function () {
+            return this.parameterForm.get('valueType');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataParameterFormComponent.prototype, "parameterValue", {
+        get: function () {
+            return this.parameterForm.get('value');
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DataParameterFormComponent.prototype, "parameterDescription", {
         get: function () {
             return this.parameterForm.get('description');
@@ -79,18 +96,83 @@ var DataParameterFormComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataParameterFormComponent.prototype, "parameterVisibilityValidator", {
+        get: function () {
+            return this.parameterForm.get('visibilityValidator');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataParameterFormComponent.prototype, "parameterDataValidator", {
+        get: function () {
+            return this.parameterForm.get('dataValidator');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataParameterFormComponent.prototype, "parameterContext", {
+        get: function () {
+            return this.parameterForm.get('context');
+        },
+        enumerable: true,
+        configurable: true
+    });
     DataParameterFormComponent.prototype.ngOnChanges = function (changes) {
         if (changes.newParameter) {
-            console.log(changes);
             this.parameterForm.patchValue(changes.newParameter.currentValue);
-        }
-        if (changes.newParameter)
             this.setNewParameterChanges(changes.newParameter);
+        }
         if (changes.editMode)
-            this.editMode = changes.editMode.currentValue;
+            this.newlyAddedParameter = changes.editMode.currentValue;
+    };
+    DataParameterFormComponent.prototype.setNewParameterChanges = function (newParameter) {
+        console.log('Previous parameter: ', newParameter.previousValue);
+        console.log('New parameter: ', newParameter.currentValue);
+        this.newParameter = newParameter.currentValue;
+        // this.setDataType();
+        this.setValueOptionsSettings();
+        this.setParameterType();
     };
     DataParameterFormComponent.prototype.getEnumValues = function (e) {
-        return Object.keys(e).map(function (i) { return e[i].toUpperCase(); });
+        return Object.keys(e).map(function (i) { return e[i]; });
+    };
+    DataParameterFormComponent.prototype.parameterTypeChanged = function () {
+        var value = 0;
+        if (this.editable.checked)
+            value += this.editable.value;
+        if (this.static.checked)
+            value += this.static.value;
+        if (this.calculable.checked)
+            value += this.calculable.value;
+        if (this.visible.checked)
+            value += +this.visible.value;
+        if (this.important.checked)
+            value += +this.important.value;
+        this.parameterContext.setValue(value);
+        console.log(this.parameterContext.value);
+    };
+    DataParameterFormComponent.prototype.setParameterType = function () {
+        var value = this.parameterContext.value;
+        if (value >= this.context.important) {
+            value -= this.context.important;
+            this.important.checked = true;
+        }
+        if (value >= this.context.staticData) {
+            value -= this.context.staticData;
+            this.static.checked = true;
+        }
+        if (value >= this.context.calculation) {
+            value -= this.context.calculation;
+            this.calculable.checked = true;
+        }
+        if (value >= this.context.editable) {
+            value -= this.context.editable;
+            this.editable.checked = true;
+        }
+        if (value >= this.context.visible) {
+            value -= this.context.visible;
+            this.visible.checked = true;
+        }
     };
     DataParameterFormComponent.prototype.addValueOption = function () {
         var valueOption = new ValueOptionImpl();
@@ -113,78 +195,38 @@ var DataParameterFormComponent = /** @class */ (function () {
         this.newParameter.valueOptionSetting =
             this.allowUserValues ? ValueOptionSettings.UserInput : ValueOptionSettings.None;
     };
-    DataParameterFormComponent.prototype.setImportant = function () {
-        if ((this.newParameter.context & ParameterOptions.Important) != 0)
-            this.important = true;
-        else
-            this.important = false;
-    };
     DataParameterFormComponent.prototype.onSubmit = function ($event) {
-        this.adjustProperties();
-        this.setContext();
-        if (!this.editMode)
+        // this.adjustProperties();
+        // this.setContext();
+        if (this.newlyAddedParameter)
             this.create();
         else
             this.update();
     };
-    DataParameterFormComponent.prototype.setNewParameterChanges = function (newParameter) {
-        console.log('Previous parameter: ', newParameter.previousValue);
-        console.log('New parameter: ', newParameter.currentValue);
-        this.newParameter = newParameter.currentValue;
-        this.setDataType();
-        this.setValueOptionsSettings();
-        this.setImportant();
-    };
-    DataParameterFormComponent.prototype.setDataType = function () {
-        if ((this.newParameter.context & ParameterFilter.data) != 0)
-            this.type = ParameterFilter[ParameterFilter.data];
-        else if ((this.newParameter.context & ParameterFilter.static) != 0)
-            this.type = ParameterFilter[ParameterFilter.static];
-        else if ((this.newParameter.context & ParameterFilter.calculation) != 0)
-            this.type = ParameterFilter[ParameterFilter.calculation];
-    };
-    DataParameterFormComponent.prototype.setValueOptionsSettings = function () {
-        this.allowUserValues = this.newParameter.valueOptionSetting == ValueOptionSettings.UserInput;
-    };
-    DataParameterFormComponent.prototype.adjustProperties = function () {
-        if (this.type === ParameterFilter[ParameterFilter.static]) {
-            this.newParameter.dataValidator = null;
-            this.newParameter.valueOptions = null;
-        }
-        else if (this.type === ParameterFilter[ParameterFilter.calculation])
-            this.newParameter.valueOptions = null;
-    };
-    DataParameterFormComponent.prototype.setContext = function () {
-        if (this.type === ParameterFilter[ParameterFilter.data])
-            this.setDataContext([ParameterOptions.Editable, ParameterOptions.Visible]);
-        else if (this.type === ParameterFilter[ParameterFilter.static])
-            this.setDataContext([ParameterOptions.StaticData]);
-        else if (this.type === ParameterFilter[ParameterFilter.calculation])
-            this.setDataContext([ParameterOptions.Calculation, ParameterOptions.Visible]);
-    };
-    DataParameterFormComponent.prototype.setDataContext = function (options) {
-        var _this = this;
-        this.newParameter.context = 0;
-        options.forEach(function (o) {
-            if ((_this.newParameter.context & o) == 0)
-                _this.newParameter.context += o;
-        });
-        if (this.important)
-            this.newParameter.context += ParameterOptions.Important;
-    };
     DataParameterFormComponent.prototype.create = function () {
-        this.created.emit(this.newParameter);
+        this.created.emit(this.parameterForm.value);
     };
     DataParameterFormComponent.prototype.update = function () {
-        this.parameterService.update(this.scriptId, this.newParameter)
+        this.parameterService.update(this.scriptId, this.parameterForm.value)
             .subscribe(function (p) {
             console.log(p);
         }, function (error) { return console.error(error); });
     };
+    //private setDataType() {
+    //    if ((this.newParameter.context & ParameterFilter.data) != 0)
+    //        this.type = ParameterFilter[ParameterFilter.data];
+    //    else if ((this.newParameter.context & ParameterFilter.static) != 0)
+    //        this.type = ParameterFilter[ParameterFilter.static];
+    //    else if ((this.newParameter.context & ParameterFilter.calculation) != 0)
+    //        this.type = ParameterFilter[ParameterFilter.calculation];
+    //}
+    DataParameterFormComponent.prototype.setValueOptionsSettings = function () {
+        this.allowUserValues = this.newParameter.valueOptionSetting == ValueOptionSettings.UserInput;
+    };
     __decorate([
-        Input('editMode'),
+        Input('newlyAddedParameter'),
         __metadata("design:type", Boolean)
-    ], DataParameterFormComponent.prototype, "editMode", void 0);
+    ], DataParameterFormComponent.prototype, "newlyAddedParameter", void 0);
     __decorate([
         Input('scriptId'),
         __metadata("design:type", Number)
@@ -197,6 +239,26 @@ var DataParameterFormComponent = /** @class */ (function () {
         Output('created'),
         __metadata("design:type", Object)
     ], DataParameterFormComponent.prototype, "created", void 0);
+    __decorate([
+        ViewChild('editable'),
+        __metadata("design:type", MatRadioButton)
+    ], DataParameterFormComponent.prototype, "editable", void 0);
+    __decorate([
+        ViewChild('static'),
+        __metadata("design:type", MatRadioButton)
+    ], DataParameterFormComponent.prototype, "static", void 0);
+    __decorate([
+        ViewChild('calculable'),
+        __metadata("design:type", MatRadioButton)
+    ], DataParameterFormComponent.prototype, "calculable", void 0);
+    __decorate([
+        ViewChild('visible'),
+        __metadata("design:type", MatCheckbox)
+    ], DataParameterFormComponent.prototype, "visible", void 0);
+    __decorate([
+        ViewChild('important'),
+        __metadata("design:type", MatCheckbox)
+    ], DataParameterFormComponent.prototype, "important", void 0);
     DataParameterFormComponent = __decorate([
         Component({
             selector: 'app-data-parameter-form',

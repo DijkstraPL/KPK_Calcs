@@ -18,7 +18,7 @@ var ParameterResultComponent = /** @class */ (function () {
     ParameterResultComponent.prototype.ngOnInit = function () {
     };
     ParameterResultComponent.prototype.isImportant = function () {
-        return (this.parameter.context & ParameterOptions.Important) != 0;
+        return (this.parameter.context & ParameterOptions.important) != 0;
     };
     __decorate([
         Input(),

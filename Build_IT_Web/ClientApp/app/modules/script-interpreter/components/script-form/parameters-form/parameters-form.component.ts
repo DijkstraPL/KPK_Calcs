@@ -41,6 +41,7 @@ export class ParametersFormComponent implements OnInit {
         moveItemInArray(this.filteredParameters, event.previousIndex, event.currentIndex);
 
         this.setNumbers(event);
+        this.saveParameters();
     }
 
     private setNumbers(event: CdkDragDrop<Parameter[]>): void {
@@ -110,15 +111,16 @@ export class ParametersFormComponent implements OnInit {
                 .subscribe((p: Parameter) => {
                     this.parameters = this.parameters.filter(p => p.id != parameterId)
                     this.onParametersToShowChange();
-                    this.changeNumbering(p.number);
+                    this.refreshNumbering(p.number);
+                    this.saveParameters();
                     console.log("Parameters", p)
                 }, error => console.error(error));
     }
 
-    private changeNumbering(number: number) {
-        this.parameters
-            .filter(p => p.number > number)
-            .forEach(p => p.number -= 1);
+    private refreshNumbering(number: number) {
+        let index = 0;
+        for (let parameter of this.sortParameters(this.parameters, 'number'))
+            parameter.number = index++;
     }
 
     onCreated(parameter: Parameter) {
