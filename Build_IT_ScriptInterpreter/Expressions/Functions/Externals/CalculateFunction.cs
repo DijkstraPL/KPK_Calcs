@@ -108,7 +108,10 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
             for (int i = 1; i < functionArgs.Parameters.Length; i++)
                 try
                 {
-                    arguments.Add(functionArgs.Parameters[i].Evaluate());
+                    if (functionArgs.Parameters[i].Evaluate() == null)
+                        arguments.RemoveAt(arguments.Count - 1);
+                    else
+                        arguments.Add(functionArgs.Parameters[i].Evaluate());
                 }
                 catch (ArgumentException)
                 {
@@ -118,7 +121,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
             Calculator.Map(arguments);
             return SetParameters(Calculator.Calculate(), functionArgs);
         }
-        
+
         private object SetParameters(IResult result, FunctionArgs functionArgs)
         {
             foreach (var property in result.Properties)
@@ -152,7 +155,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
             throw new ArgumentException("No script with name " + _scriptName);
         }
 
-        
+
         private object CalculateScript(SI.Script scriptData, FunctionArgs functionArgs, IParameterRepository parameterRepository)
         {
             var script = ScriptBuilder.Create(

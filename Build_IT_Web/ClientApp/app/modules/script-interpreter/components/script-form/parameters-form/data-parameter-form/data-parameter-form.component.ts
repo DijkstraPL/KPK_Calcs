@@ -58,6 +58,7 @@ export class DataParameterFormComponent {
     @ViewChild('calculable') calculable: MatRadioButton;
     @ViewChild('visible') visible: MatCheckbox;
     @ViewChild('important') important: MatCheckbox;
+    @ViewChild('optional') optional: MatCheckbox;
 
     get parameterId(): AbstractControl {
         return this.parameterForm.get('id');
@@ -91,6 +92,9 @@ export class DataParameterFormComponent {
     }
     get parameterValueOptions(): FormArray {
         return this.parameterForm.get('valueOptions') as FormArray;
+    }
+    get parameterGroupName(): AbstractControl {
+        return this.parameterForm.get('groupName');
     }
 
     constructor(private parameterService: ParameterService) {
@@ -142,6 +146,8 @@ export class DataParameterFormComponent {
             value += +this.visible.value;
         if (this.important.checked)
             value += +this.important.value;
+        if (this.optional.checked)
+            value += +this.optional.value;
 
         this.parameterContext.setValue(value);
         console.log(this.parameterContext.value);
@@ -150,6 +156,10 @@ export class DataParameterFormComponent {
     private setParameterType() {
         let value: number = this.parameterContext.value;
 
+        if (value >= this.context.optional) {
+            value -= this.context.optional;
+            this.optional.checked = true;
+        }
         if (value >= this.context.important) {
             value -= this.context.important;
             this.important.checked = true;

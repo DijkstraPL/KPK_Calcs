@@ -1,7 +1,7 @@
 ﻿
 <mat-form-field>
     <input matInput
-           required
+           [required]="isRequired()"
            autocomplete="off"
            [(ngModel)]="parameter.value"
            (change)="changeValue()">

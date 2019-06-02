@@ -8,16 +8,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 var ParameterRadioComponent = /** @class */ (function () {
     function ParameterRadioComponent() {
         this.parameter = null;
         this.valueChanged = new EventEmitter();
+        this.parameterOptions = ParameterOptions;
     }
     ParameterRadioComponent.prototype.ngOnInit = function () {
     };
     ParameterRadioComponent.prototype.changeValue = function (event) {
         this.parameter.value = event.value;
         this.valueChanged.emit(this.parameter);
+    };
+    ParameterRadioComponent.prototype.isRequired = function () {
+        return (this.parameter.context & this.parameterOptions.optional) == 0;
     };
     __decorate([
         Input(),

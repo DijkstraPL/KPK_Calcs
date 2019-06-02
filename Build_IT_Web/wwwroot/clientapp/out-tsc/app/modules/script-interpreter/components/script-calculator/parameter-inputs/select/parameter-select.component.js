@@ -8,15 +8,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 var ParameterSelectComponent = /** @class */ (function () {
     function ParameterSelectComponent() {
         this.parameter = null;
         this.valueChanged = new EventEmitter();
+        this.parameterOptions = ParameterOptions;
     }
     ParameterSelectComponent.prototype.ngOnInit = function () {
     };
     ParameterSelectComponent.prototype.changeValue = function () {
         this.valueChanged.emit(this.parameter);
+    };
+    ParameterSelectComponent.prototype.isRequired = function () {
+        return (this.parameter.context & this.parameterOptions.optional) == 0;
     };
     __decorate([
         Input(),

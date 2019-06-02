@@ -1,8 +1,9 @@
 ﻿<mat-form-field>
     <mat-label [innerHtml]="parameter.name | html"></mat-label>
     <mat-select [(ngModel)]="parameter.value"
-                required
+                [required]="isRequired()"
                 (selectionChange)="changeValue()">
+        <mat-option *ngIf="!isRequired()"> </mat-option>
         <mat-option *ngFor="let valueOption of parameter.valueOptions"
                     [value]="valueOption.value">
             {{valueOption.name }}

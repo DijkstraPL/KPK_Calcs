@@ -11,5 +11,6 @@ namespace Build_IT_ScriptInterpreter.Parameters
         Calculation = 4,
         StaticData = 8,
         Important = 16,
+        Optional = 32,
     }
 }

@@ -8,7 +8,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources
     public class ParameterResource
     {
         public long Id { get; set; }
-        public string Name { get; set; }
+        public string Name {  get; set; }
         public int Number { get; set; }
         public string Description { get; set; }
         public ValueTypes ValueType { get; set; }

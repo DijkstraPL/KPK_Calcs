@@ -10,11 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
+import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 var ParameterAutocompleteComponent = /** @class */ (function () {
     function ParameterAutocompleteComponent() {
         this.valueOptionsForm = new FormControl();
         this.parameter = null;
         this.valueChanged = new EventEmitter();
+        this.parameterOptions = ParameterOptions;
     }
     ParameterAutocompleteComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -28,6 +30,9 @@ var ParameterAutocompleteComponent = /** @class */ (function () {
     };
     ParameterAutocompleteComponent.prototype.changeValue = function () {
         this.valueChanged.emit(this.parameter);
+    };
+    ParameterAutocompleteComponent.prototype.isRequired = function () {
+        return (this.parameter.context & this.parameterOptions.optional) == 0;
     };
     __decorate([
         Input(),

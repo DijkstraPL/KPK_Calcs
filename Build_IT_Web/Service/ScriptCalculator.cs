@@ -34,23 +34,25 @@ namespace Build_IT_Web.Service
             _calculationEngine = new SI.CalculationEngine(_scriptToInterpret);
 
             var parameterValues = userParameters
+                .Where(p => (p.Context & SIP.ParameterOptions.Optional) == 0 || 
+                !string.IsNullOrWhiteSpace(p.Value) && (p.Context & SIP.ParameterOptions.Optional) != 0)
                 .ToDictionary(
                 p => p.Name,
                 p => p.ValueType == SIP.ValueTypes.Number ?
-                double.Parse(p.Value?.Replace(',','.') ?? "0", NumberStyles.Any, CultureInfo.InvariantCulture) : 
+                double.Parse(p.Value?.Replace(',', '.') ?? "0", NumberStyles.Any, CultureInfo.InvariantCulture) :
                 (object)p.Value);
             _calculationEngine.Calculate(parameterValues);
             _parameters.RemoveAll(p => !parameterValues.ContainsKey(p.Name));
 
             foreach (var par in parameterValues)
             {
-               var pp = _parameters.SingleOrDefault(p => p.Name == par.Key);
+                var pp = _parameters.SingleOrDefault(p => p.Name == par.Key);
                 if (pp != null)
                     pp.Value = par.Value.ToString();
             }
         }
 
-        internal IEnumerable<Parameter> GetResult() 
+        internal IEnumerable<Parameter> GetResult()
             => _parameters.Where(p => ((SIP.ParameterOptions)p.Context & SIP.ParameterOptions.Calculation) != 0);
 
         private async Task<IScript> MapScript()

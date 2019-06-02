@@ -29,12 +29,19 @@ var ValueOptionsFormComponent = /** @class */ (function () {
         configurable: true
     });
     ValueOptionsFormComponent.prototype.addValueOption = function () {
-        this.parameterValueOptions.value.push(new FormGroup({
-            id: new FormControl('0'),
+        this.parameterValueOptions.push(new FormGroup({
+            id: new FormControl(0),
             name: new FormControl(''),
             value: new FormControl(''),
             description: new FormControl('')
         }));
+        console.log('value otpions', this.parameterValueOptions);
+    };
+    ValueOptionsFormComponent.prototype.remove = function (valueOption) {
+        var index = this.parameterValueOptions.controls.indexOf(valueOption);
+        if (index >= 0) {
+            this.parameterValueOptions.removeAt(index);
+        }
     };
     __decorate([
         Input('parameterForm'),
@@ -43,8 +50,8 @@ var ValueOptionsFormComponent = /** @class */ (function () {
     ValueOptionsFormComponent = __decorate([
         Component({
             selector: 'app-value-options-form',
-            templateUrl: './data-value-options-form.component.html',
-            styleUrls: ['./data-value-options-form.component.scss']
+            templateUrl: './value-options-form.component.html',
+            styleUrls: ['./value-options-form.component.scss']
         }),
         __metadata("design:paramtypes", [])
     ], ValueOptionsFormComponent);

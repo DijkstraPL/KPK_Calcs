@@ -117,9 +117,31 @@ var DataParameterFormComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataParameterFormComponent.prototype, "parameterValueOptions", {
+        get: function () {
+            return this.parameterForm.get('valueOptions');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataParameterFormComponent.prototype, "parameterGroupName", {
+        get: function () {
+            return this.parameterForm.get('groupName');
+        },
+        enumerable: true,
+        configurable: true
+    });
     DataParameterFormComponent.prototype.ngOnChanges = function (changes) {
+        var _this = this;
         if (changes.newParameter) {
-            this.parameterForm.patchValue(changes.newParameter.currentValue);
+            var parameter = changes.newParameter.currentValue;
+            this.parameterForm.patchValue(parameter);
+            parameter.valueOptions.forEach(function (vo) { return _this.parameterValueOptions.push(new FormGroup({
+                id: new FormControl(vo.id),
+                name: new FormControl(vo.name),
+                value: new FormControl(vo.value),
+                description: new FormControl(vo.description)
+            })); });
             this.setNewParameterChanges(changes.newParameter);
         }
         if (changes.editMode)
@@ -148,11 +170,17 @@ var DataParameterFormComponent = /** @class */ (function () {
             value += +this.visible.value;
         if (this.important.checked)
             value += +this.important.value;
+        if (this.optional.checked)
+            value += +this.optional.value;
         this.parameterContext.setValue(value);
         console.log(this.parameterContext.value);
     };
     DataParameterFormComponent.prototype.setParameterType = function () {
         var value = this.parameterContext.value;
+        if (value >= this.context.optional) {
+            value -= this.context.optional;
+            this.optional.checked = true;
+        }
         if (value >= this.context.important) {
             value -= this.context.important;
             this.important.checked = true;
@@ -259,6 +287,10 @@ var DataParameterFormComponent = /** @class */ (function () {
         ViewChild('important'),
         __metadata("design:type", MatCheckbox)
     ], DataParameterFormComponent.prototype, "important", void 0);
+    __decorate([
+        ViewChild('optional'),
+        __metadata("design:type", MatCheckbox)
+    ], DataParameterFormComponent.prototype, "optional", void 0);
     DataParameterFormComponent = __decorate([
         Component({
             selector: 'app-data-parameter-form',

@@ -5,4 +5,5 @@
     calculation = 4,
     staticData = 8,
     important = 16,
+    optional = 32,
 }

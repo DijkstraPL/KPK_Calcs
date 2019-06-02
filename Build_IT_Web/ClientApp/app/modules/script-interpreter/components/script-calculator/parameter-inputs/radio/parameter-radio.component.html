@@ -1,11 +1,12 @@
 ﻿
 <div class="justify-content-start parameter-radio">
-    <label [innerHtml]="parameter.name | html"
-           class="align-self-start mb-2"></label>
+    <label class="align-self-start mb-2">
+        <span [innerHtml]="parameter.name | html"></span>{{isRequired() ? '*' : ''}}
+    </label>
     <mat-radio-group [(ngModel)]="parameter.value">
         <mat-radio-button *ngFor="let valueOption of parameter.valueOptions; index as i"
                           [value]="valueOption.value"
-                          required
+                          [required]="isRequired()"
                           class="mr-3"
                           (change)="changeValue($event)">
             {{valueOption.value }}

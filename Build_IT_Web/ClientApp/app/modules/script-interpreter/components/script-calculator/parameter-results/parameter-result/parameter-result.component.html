@@ -5,7 +5,7 @@
                 [innerHtml]="parameter.name | html"></h3>
             <div class="d-inline-block">
                 <p class="font-weight-bold mb-0 parameter-result-value">
-                    <span *ngIf="parameter.valueType == valueTypes.number; else textValue">
+                    <span *ngIf="parameter.valueType == valueTypesMapping['number']; else textValue">
                         {{parameter.value | toNumber | number:'1.0-3'}}
                     </span>
                     <ng-template #textValue>

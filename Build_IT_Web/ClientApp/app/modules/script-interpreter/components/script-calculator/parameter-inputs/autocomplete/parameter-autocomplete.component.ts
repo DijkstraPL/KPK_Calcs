@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ValueOption } from '../../../../models/interfaces/valueOption';
+import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 
 @Component({
     selector: 'parameter-autocomplete',
@@ -18,6 +19,8 @@ export class ParameterAutocompleteComponent implements OnInit {
 
     @Input() parameter: Parameter = null;
     @Output() valueChanged = new EventEmitter<Parameter>();
+
+    parameterOptions = ParameterOptions;
 
     constructor() {
     }
@@ -38,5 +41,9 @@ export class ParameterAutocompleteComponent implements OnInit {
 
     changeValue(): void {
         this.valueChanged.emit(this.parameter);
+    }
+
+    isRequired(): boolean {
+        return (this.parameter.context & this.parameterOptions.optional) == 0;
     }
 }

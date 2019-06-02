@@ -23,6 +23,8 @@ import { ParameterAutocompleteComponent } from './components/script-calculator/p
 import { ParameterRadioComponent } from './components/script-calculator/parameter-inputs/radio/parameter-radio.component';
 import { ParameterFormComponent } from './components/script-calculator/parameter-inputs/parameters-form/parameter-form.component';
 import { ParameterResultComponent } from './components/script-calculator/parameter-results/parameter-result/parameter-result.component';
+import { ValueOptionsFormComponent } from './components/script-form/parameters-form/data-parameter-form/value-options-form/value-options-form.component';
+import { ScriptDataFormComponent } from './components/script-form/script-data-form/script-data-form.component';
 import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
@@ -30,7 +32,6 @@ import { ParameterService } from './services/parameter.service';
 import { AppErrorHandler } from './../../common/errors/app-error-handler';
 import { PipesModule } from '../pipes-module/pipes.module';
 import { MdComponentsModule } from '../md-components-module/md-components.module';
-import { ScriptDataFormComponent } from './components/script-form/script-data-form/script-data-form.component';
 var ScriptInterpreterModule = /** @class */ (function () {
     function ScriptInterpreterModule() {
     }
@@ -40,6 +41,7 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 ScriptFormComponent,
                 ParametersFormComponent,
                 DataParameterFormComponent,
+                ValueOptionsFormComponent,
                 ScriptCalculatorComponent,
                 ScriptCardComponent,
                 ScriptCardsComponent,

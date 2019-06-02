@@ -10,15 +10,17 @@ import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 })
 
 export class ParameterResultComponent implements OnInit {
-    valueTypes = ValueType;
-    
     @Input() parameter: Parameter = null;
+    
+    valueTypes = ValueType;
+
+    valueTypesMapping: { [key: string]: number } =
+        { 'number': 0, 'text': 1 };
 
     constructor() {
     }
 
     ngOnInit(): void {
-      
     }
 
     isImportant(): boolean {
