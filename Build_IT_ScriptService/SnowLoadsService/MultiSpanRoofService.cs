@@ -9,25 +9,31 @@ using System.Linq;
 
 namespace Build_IT_ScriptService.SnowLoadsService
 {
-    [Export("SnowLoad-MonopitchRoof", typeof(ICalculator))]
+    [Export("SnowLoad-MultiSpanRoof", typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
-    public class MonopitchRoofService : SnowLoadBaseService, ICalculator
+    public class MultiSpanRoofService : SnowLoadBaseService, ICalculator
     {
         #region Properties
         
-        public Property<double> Slope { get; } =
-            new Property<double>("Slope", 
+        public Property<double> LeftSlope { get; } =
+            new Property<double>("LeftSlope", 
                 v => Convert.ToDouble(v));
-        public Property<bool> SnowFences { get; } =
-            new Property<bool>("SnowFences", 
+        public Property<bool> LeftSnowFences { get; } =
+            new Property<bool>("LeftSnowFences", 
+                v => v == "true");
+        public Property<double> RightSlope { get; } =
+            new Property<double>("RightSlope",
+                v => Convert.ToDouble(v));
+        public Property<bool> RightSnowFences { get; } =
+            new Property<bool>("RightSnowFences",
                 v => v == "true");
 
         #endregion // Properties
 
         #region Constructors
 
-        public MonopitchRoofService()
+        public MultiSpanRoofService()
         {
         }
 
@@ -53,13 +59,13 @@ namespace Build_IT_ScriptService.SnowLoadsService
             BuildingSite buildingSite = GetBuildingSite();
             SnowLoad snowLoad = GetSnowLoad(buildingSite);
             Building building = GetBuilding(snowLoad);
-            MonopitchRoof monopitchRoof = GetMonopitchRoof(building);
+            MultiSpanRoof multiSpanRoof = GetMultiSpanRoof(building);
 
             if (!ExposureCoefficient.HasValue)
                 buildingSite.CalculateExposureCoefficient();
             snowLoad.CalculateSnowLoad();
             building.CalculateThermalCoefficient();
-            monopitchRoof.CalculateSnowLoad();
+            multiSpanRoof.CalculateSnowLoad();
 
             var result = new Result();
             result.Properties.Add("C_e_", buildingSite.ExposureCoefficient);
@@ -72,8 +78,12 @@ namespace Build_IT_ScriptService.SnowLoadsService
             result.Properties.Add("∆_t_", building.TempreatureDifference);
             result.Properties.Add("U", building.OverallHeatTransferCoefficient);
             result.Properties.Add("C_t_", building.ThermalCoefficient);
-            result.Properties.Add("μ_1_", monopitchRoof.ShapeCoefficient);
-            result.Properties.Add("s", monopitchRoof.SnowLoadOnRoofValue);
+            result.Properties.Add("μ_1_(α_1_)", multiSpanRoof.LeftRoof.ShapeCoefficient);
+            result.Properties.Add("μ_1_(α_2_)", multiSpanRoof.RightRoof.ShapeCoefficient);
+            result.Properties.Add("μ_2_(α)", multiSpanRoof.ShapeCoefficient);
+            result.Properties.Add("s(α_1_)", multiSpanRoof.LeftRoof.SnowLoadOnRoofValue);
+            result.Properties.Add("s(α_2_)", multiSpanRoof.RightRoof.SnowLoadOnRoofValue);
+            result.Properties.Add("s(middle)", multiSpanRoof.SnowLoadOnMiddleRoof);
 
             return result;
         }
@@ -82,10 +92,11 @@ namespace Build_IT_ScriptService.SnowLoadsService
 
         #region Private_Methods
            
-        private MonopitchRoof GetMonopitchRoof(Building building)
+        private MultiSpanRoof GetMultiSpanRoof(Building building)
         {
-            return new MonopitchRoof(building, Slope.Value,
-                SnowFences.HasValue ? SnowFences.Value : default);
+            return new MultiSpanRoof(building, LeftSlope.Value, RightSlope.Value,
+                LeftSnowFences.HasValue ? LeftSnowFences.Value : default,
+                RightSnowFences.HasValue ? RightSnowFences.Value : default);
         }
 
         #endregion // Private_Methods

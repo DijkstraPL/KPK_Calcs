@@ -9,25 +9,31 @@ using System.Linq;
 
 namespace Build_IT_ScriptService.SnowLoadsService
 {
-    [Export("SnowLoad-MonopitchRoof", typeof(ICalculator))]
+    [Export("SnowLoad-PitchedRoof", typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
-    public class MonopitchRoofService : SnowLoadBaseService, ICalculator
+    public class PitchedRoofService : SnowLoadBaseService, ICalculator
     {
         #region Properties
         
-        public Property<double> Slope { get; } =
-            new Property<double>("Slope", 
+        public Property<double> LeftSlope { get; } =
+            new Property<double>("LeftSlope", 
                 v => Convert.ToDouble(v));
-        public Property<bool> SnowFences { get; } =
-            new Property<bool>("SnowFences", 
+        public Property<bool> LeftSnowFences { get; } =
+            new Property<bool>("LeftSnowFences", 
+                v => v == "true");
+        public Property<double> RightSlope { get; } =
+            new Property<double>("RightSlope",
+                v => Convert.ToDouble(v));
+        public Property<bool> RightSnowFences { get; } =
+            new Property<bool>("RightSnowFences",
                 v => v == "true");
 
         #endregion // Properties
 
         #region Constructors
 
-        public MonopitchRoofService()
+        public PitchedRoofService()
         {
         }
 
@@ -53,13 +59,13 @@ namespace Build_IT_ScriptService.SnowLoadsService
             BuildingSite buildingSite = GetBuildingSite();
             SnowLoad snowLoad = GetSnowLoad(buildingSite);
             Building building = GetBuilding(snowLoad);
-            MonopitchRoof monopitchRoof = GetMonopitchRoof(building);
+            PitchedRoof pitchedRoof = GetPitchedRoof(building);
 
             if (!ExposureCoefficient.HasValue)
                 buildingSite.CalculateExposureCoefficient();
             snowLoad.CalculateSnowLoad();
             building.CalculateThermalCoefficient();
-            monopitchRoof.CalculateSnowLoad();
+            pitchedRoof.CalculateSnowLoad();
 
             var result = new Result();
             result.Properties.Add("C_e_", buildingSite.ExposureCoefficient);
@@ -72,8 +78,14 @@ namespace Build_IT_ScriptService.SnowLoadsService
             result.Properties.Add("∆_t_", building.TempreatureDifference);
             result.Properties.Add("U", building.OverallHeatTransferCoefficient);
             result.Properties.Add("C_t_", building.ThermalCoefficient);
-            result.Properties.Add("μ_1_", monopitchRoof.ShapeCoefficient);
-            result.Properties.Add("s", monopitchRoof.SnowLoadOnRoofValue);
+            result.Properties.Add("μ_l,1_", pitchedRoof.LeftRoof.ShapeCoefficient);
+            result.Properties.Add("μ_r,1_", pitchedRoof.RightRoof.ShapeCoefficient);
+            result.Properties.Add("s_l,I_", pitchedRoof.LeftRoofCasesSnowLoad[1]);
+            result.Properties.Add("s_r,I_", pitchedRoof.RightRoofCasesSnowLoad[1]);
+            result.Properties.Add("s_l,II_", pitchedRoof.LeftRoofCasesSnowLoad[2]);
+            result.Properties.Add("s_r,II_", pitchedRoof.RightRoofCasesSnowLoad[2]);
+            result.Properties.Add("s_l,III_", pitchedRoof.LeftRoofCasesSnowLoad[3]);
+            result.Properties.Add("s_r,III_", pitchedRoof.RightRoofCasesSnowLoad[3]);
 
             return result;
         }
@@ -82,10 +94,11 @@ namespace Build_IT_ScriptService.SnowLoadsService
 
         #region Private_Methods
            
-        private MonopitchRoof GetMonopitchRoof(Building building)
+        private PitchedRoof GetPitchedRoof(Building building)
         {
-            return new MonopitchRoof(building, Slope.Value,
-                SnowFences.HasValue ? SnowFences.Value : default);
+            return new PitchedRoof(building, LeftSlope.Value, RightSlope.Value,
+                LeftSnowFences.HasValue ? LeftSnowFences.Value : default,
+                RightSnowFences.HasValue ? RightSnowFences.Value : default);
         }
 
         #endregion // Private_Methods

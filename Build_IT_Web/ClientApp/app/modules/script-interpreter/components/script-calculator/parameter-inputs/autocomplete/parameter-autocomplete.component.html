@@ -16,7 +16,8 @@
 </mat-form-field>
 
 <mat-autocomplete #auto="matAutocomplete"
-                  autoActiveFirstOption >
+                  autoActiveFirstOption>
+    <mat-option *ngIf="!isRequired()"> </mat-option>
     <mat-option *ngFor="let valueOption of filteredValueOptions | async"
                 [value]="valueOption.value">
         {{valueOption.name }}

@@ -17,6 +17,7 @@ namespace Build_IT_Web.Service
         private readonly List<Parameter> _parameters;
 
         private SI.CalculationEngine _calculationEngine;
+        private IDictionary<string, object> _parameterValues;
         private IScript _scriptToInterpret;
 
         public ScriptCalculator(Script script, List<Parameter> parameters)
@@ -33,7 +34,7 @@ namespace Build_IT_Web.Service
 
             _calculationEngine = new SI.CalculationEngine(_scriptToInterpret);
 
-            var parameterValues = userParameters
+            _parameterValues = userParameters
                 .Where(p => (p.Context & SIP.ParameterOptions.Optional) == 0 || 
                 !string.IsNullOrWhiteSpace(p.Value) && (p.Context & SIP.ParameterOptions.Optional) != 0)
                 .ToDictionary(
@@ -41,10 +42,10 @@ namespace Build_IT_Web.Service
                 p => p.ValueType == SIP.ValueTypes.Number ?
                 double.Parse(p.Value?.Replace(',', '.') ?? "0", NumberStyles.Any, CultureInfo.InvariantCulture) :
                 (object)p.Value);
-            _calculationEngine.Calculate(parameterValues);
-            _parameters.RemoveAll(p => !parameterValues.ContainsKey(p.Name));
+            _calculationEngine.Calculate(_parameterValues);
+            _parameters.RemoveAll(p => !_parameterValues.ContainsKey(p.Name));
 
-            foreach (var par in parameterValues)
+            foreach (var par in _parameterValues)
             {
                 var pp = _parameters.SingleOrDefault(p => p.Name == par.Key);
                 if (pp != null)
@@ -53,7 +54,9 @@ namespace Build_IT_Web.Service
         }
 
         internal IEnumerable<Parameter> GetResult()
-            => _parameters.Where(p => ((SIP.ParameterOptions)p.Context & SIP.ParameterOptions.Calculation) != 0);
+            => _parameters.Where(p => 
+            ((SIP.ParameterOptions)p.Context & SIP.ParameterOptions.Calculation) != 0 && 
+            _calculationEngine.CheckVisibility(p.Name, _parameterValues));
 
         private async Task<IScript> MapScript()
         {

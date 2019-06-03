@@ -9,25 +9,34 @@ using System.Linq;
 
 namespace Build_IT_ScriptService.SnowLoadsService
 {
-    [Export("SnowLoad-MonopitchRoof", typeof(ICalculator))]
+    [Export("SnowLoad-RoofAbuttingToTallerConstruction", typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
-    public class MonopitchRoofService : SnowLoadBaseService, ICalculator
+    public class RoofAbuttingToTallerConstructionService : SnowLoadBaseService, ICalculator
     {
         #region Properties
         
-        public Property<double> Slope { get; } =
-            new Property<double>("Slope", 
+        public Property<double> UpperBuildingWidth { get; } =
+            new Property<double>("UpperBuildingWidth", 
                 v => Convert.ToDouble(v));
-        public Property<bool> SnowFences { get; } =
-            new Property<bool>("SnowFences", 
+        public Property<double> LowerBuildingWidth { get; } =
+            new Property<double>("LowerBuildingWidth",
+                v => Convert.ToDouble(v));
+        public Property<double> HeightDifference { get; } =
+            new Property<double>("HeightDifference",
+                v => Convert.ToDouble(v));
+        public Property<double> HigherRoofSlope { get; } =
+            new Property<double>("HigherRoofSlope",
+                v => Convert.ToDouble(v));
+        public Property<bool> HigherRoofSnowFences { get; } =
+            new Property<bool>("HigherRoofSnowFences",
                 v => v == "true");
 
         #endregion // Properties
 
         #region Constructors
 
-        public MonopitchRoofService()
+        public RoofAbuttingToTallerConstructionService()
         {
         }
 
@@ -53,13 +62,13 @@ namespace Build_IT_ScriptService.SnowLoadsService
             BuildingSite buildingSite = GetBuildingSite();
             SnowLoad snowLoad = GetSnowLoad(buildingSite);
             Building building = GetBuilding(snowLoad);
-            MonopitchRoof monopitchRoof = GetMonopitchRoof(building);
+            RoofAbuttingToTallerConstruction roofAbuttingToTallerConstruction = GetRoofAbuttingToTallerConstruction(building);
 
             if (!ExposureCoefficient.HasValue)
                 buildingSite.CalculateExposureCoefficient();
             snowLoad.CalculateSnowLoad();
             building.CalculateThermalCoefficient();
-            monopitchRoof.CalculateSnowLoad();
+            roofAbuttingToTallerConstruction.CalculateSnowLoad();
 
             var result = new Result();
             result.Properties.Add("C_e_", buildingSite.ExposureCoefficient);
@@ -72,8 +81,14 @@ namespace Build_IT_ScriptService.SnowLoadsService
             result.Properties.Add("∆_t_", building.TempreatureDifference);
             result.Properties.Add("U", building.OverallHeatTransferCoefficient);
             result.Properties.Add("C_t_", building.ThermalCoefficient);
-            result.Properties.Add("μ_1_", monopitchRoof.ShapeCoefficient);
-            result.Properties.Add("s", monopitchRoof.SnowLoadOnRoofValue);
+            result.Properties.Add("μ_s_", roofAbuttingToTallerConstruction.ShapeCoefficientSlidingSnow);
+            result.Properties.Add("μ_w_", roofAbuttingToTallerConstruction.ShapeCoefficientWind);
+            result.Properties.Add("μ_2_", roofAbuttingToTallerConstruction.ShapeCoefficient);
+            result.Properties.Add("μ_1_", roofAbuttingToTallerConstruction.ShapeCoefficientAtTheEnd);
+            result.Properties.Add("l_s_", roofAbuttingToTallerConstruction.DriftLength);
+            result.Properties.Add("s_l,I_", roofAbuttingToTallerConstruction.SnowLoadsNearTallerBuilding[1]);
+            result.Properties.Add("s_l,II_", roofAbuttingToTallerConstruction.SnowLoadsNearTallerBuilding[2]);
+            result.Properties.Add("s_r,II_", roofAbuttingToTallerConstruction.SnowLoadOnRoofValueAtTheEnd);
 
             return result;
         }
@@ -82,10 +97,12 @@ namespace Build_IT_ScriptService.SnowLoadsService
 
         #region Private_Methods
            
-        private MonopitchRoof GetMonopitchRoof(Building building)
+        private RoofAbuttingToTallerConstruction GetRoofAbuttingToTallerConstruction(Building building)
         {
-            return new MonopitchRoof(building, Slope.Value,
-                SnowFences.HasValue ? SnowFences.Value : default);
+            return new RoofAbuttingToTallerConstruction(building, 
+                UpperBuildingWidth.Value, LowerBuildingWidth.Value,
+                HeightDifference.Value, HigherRoofSlope.Value, 
+                HigherRoofSnowFences.HasValue ? HigherRoofSnowFences.Value : default );
         }
 
         #endregion // Private_Methods

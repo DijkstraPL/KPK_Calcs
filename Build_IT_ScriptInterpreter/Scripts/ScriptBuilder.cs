@@ -5,7 +5,6 @@ using System;
 
 namespace Build_IT_ScriptInterpreter.Scripts
 {
-    [Obsolete]
     public class ScriptBuilder
     {
         #region Fields
@@ -38,8 +37,10 @@ namespace Build_IT_ScriptInterpreter.Scripts
         
         private ScriptBuilder()
         {
-            _script = new Script();
-            _script.Added = DateTime.Now;
+            _script = new Script
+            {
+                Added = DateTime.Now
+            };
             Modification += OnModification;
         }
 

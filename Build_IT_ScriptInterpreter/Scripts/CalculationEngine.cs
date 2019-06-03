@@ -56,7 +56,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
             foreach (var parameter in _scriptParameters.Where(p =>
                 (p.Context & ParameterOptions.Calculation) != 0))
             {
-                if (!IsValid(parameter, parameters))
+                if (!IsVisible(parameter, parameters))
                     continue;
 
                 CalculateParameter(parameter, parameters);
@@ -66,6 +66,9 @@ namespace Build_IT_ScriptInterpreter.Scripts
                     parameters.Add(parameter.Name, parameter.Value);
             }
         }
+
+        public bool CheckVisibility(string parameterName, IDictionary<string, object> parameters) 
+            => IsVisible(_scriptParameters.SingleOrDefault(p => p.Name == parameterName), parameters);
 
         #endregion // Public_Methods
 
@@ -169,7 +172,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
             }
         }
 
-        private bool IsValid(IParameter parameter, IDictionary<string, object> parameters)
+        private bool IsVisible(IParameter parameter, IDictionary<string, object> parameters)
         {
             var value = parameter.VisibilityValidator?.ToString();
             if (string.IsNullOrWhiteSpace(value))

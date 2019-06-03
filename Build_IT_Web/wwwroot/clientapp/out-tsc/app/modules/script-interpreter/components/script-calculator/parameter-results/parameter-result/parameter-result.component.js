@@ -12,8 +12,9 @@ import { ValueType } from '../../../../models/enums/valueType';
 import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 var ParameterResultComponent = /** @class */ (function () {
     function ParameterResultComponent() {
-        this.valueTypes = ValueType;
         this.parameter = null;
+        this.valueTypes = ValueType;
+        this.valueTypesMapping = { 'number': 0, 'text': 1 };
     }
     ParameterResultComponent.prototype.ngOnInit = function () {
     };

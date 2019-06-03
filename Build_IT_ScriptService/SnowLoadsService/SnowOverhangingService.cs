@@ -9,25 +9,25 @@ using System.Linq;
 
 namespace Build_IT_ScriptService.SnowLoadsService
 {
-    [Export("SnowLoad-MonopitchRoof", typeof(ICalculator))]
+    [Export("SnowLoad-SnowOverhanging", typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
-    public class MonopitchRoofService : SnowLoadBaseService, ICalculator
+    public class SnowOverhangingService : SnowLoadBaseService, ICalculator
     {
         #region Properties
         
-        public Property<double> Slope { get; } =
-            new Property<double>("Slope", 
+        public Property<double> SnowLayerDepth { get; } =
+            new Property<double>("SnowLayerDepth", 
                 v => Convert.ToDouble(v));
-        public Property<bool> SnowFences { get; } =
-            new Property<bool>("SnowFences", 
-                v => v == "true");
+        public Property<double> SnowLoadOnRoofValue { get; } =
+            new Property<double>("SnowLoadOnRoofValue",
+                v => Convert.ToDouble(v));
 
         #endregion // Properties
 
         #region Constructors
 
-        public MonopitchRoofService()
+        public SnowOverhangingService()
         {
         }
 
@@ -53,13 +53,13 @@ namespace Build_IT_ScriptService.SnowLoadsService
             BuildingSite buildingSite = GetBuildingSite();
             SnowLoad snowLoad = GetSnowLoad(buildingSite);
             Building building = GetBuilding(snowLoad);
-            MonopitchRoof monopitchRoof = GetMonopitchRoof(building);
+            SnowOverhanging snowOverhanging = GetSnowOverhanging(building);
 
             if (!ExposureCoefficient.HasValue)
                 buildingSite.CalculateExposureCoefficient();
             snowLoad.CalculateSnowLoad();
             building.CalculateThermalCoefficient();
-            monopitchRoof.CalculateSnowLoad();
+            snowOverhanging.CalculateSnowLoad();
 
             var result = new Result();
             result.Properties.Add("C_e_", buildingSite.ExposureCoefficient);
@@ -72,8 +72,8 @@ namespace Build_IT_ScriptService.SnowLoadsService
             result.Properties.Add("∆_t_", building.TempreatureDifference);
             result.Properties.Add("U", building.OverallHeatTransferCoefficient);
             result.Properties.Add("C_t_", building.ThermalCoefficient);
-            result.Properties.Add("μ_1_", monopitchRoof.ShapeCoefficient);
-            result.Properties.Add("s", monopitchRoof.SnowLoadOnRoofValue);
+            result.Properties.Add("k", snowOverhanging.IrregularShapeCoefficient);
+            result.Properties.Add("s_e_", snowOverhanging.SnowLoad);
 
             return result;
         }
@@ -82,10 +82,14 @@ namespace Build_IT_ScriptService.SnowLoadsService
 
         #region Private_Methods
            
-        private MonopitchRoof GetMonopitchRoof(Building building)
+        private SnowOverhanging GetSnowOverhanging(Building building)
         {
-            return new MonopitchRoof(building, Slope.Value,
-                SnowFences.HasValue ? SnowFences.Value : default);
+            if (SnowLoadOnRoofValue.HasValue && !SnowLayerDepth.HasValue)
+                return new SnowOverhanging(building, SnowLoadOnRoofValue.Value);
+            else if(SnowLoadOnRoofValue.HasValue && SnowLayerDepth.HasValue)
+                return new SnowOverhanging(building, SnowLayerDepth.Value, SnowLoadOnRoofValue.Value);
+
+            throw new ArgumentException();
         }
 
         #endregion // Private_Methods

@@ -4,6 +4,13 @@
         <span [innerHtml]="parameter.name | html"></span>{{isRequired() ? '*' : ''}}
     </label>
     <mat-radio-group [(ngModel)]="parameter.value">
+        <mat-radio-button value=""
+                          *ngIf="!isRequired()"
+                          selected
+                          class="mr-3"
+                          (change)="changeValue($event)">
+            none
+        </mat-radio-button>
         <mat-radio-button *ngFor="let valueOption of parameter.valueOptions; index as i"
                           [value]="valueOption.value"
                           [required]="isRequired()"

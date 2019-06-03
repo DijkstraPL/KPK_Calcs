@@ -2,6 +2,7 @@
 using Build_IT_SnowLoads.API;
 using Build_IT_SnowLoads.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace Build_IT_SnowLoads.BuildingTypes
 {
@@ -127,6 +128,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// </summary>
         public IBuilding Building { get; private set; }
 
+        public Dictionary<int, double> SnowLoadsNearTallerBuilding { get; private set; }
+
         #endregion
 
         #region Fields
@@ -154,7 +157,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
             UpperRoof = new MonopitchRoof(Building, slopeOfHigherRoof, snowFencesOnHigherRoof);
 
-            WidthOfUpperBuilding = widthOfUpperBuilding > 0 ? widthOfUpperBuilding 
+            WidthOfUpperBuilding = widthOfUpperBuilding > 0 ? widthOfUpperBuilding
                 : throw new ArgumentOutOfRangeException(nameof(widthOfUpperBuilding));
             WidthOfLowerBuilding = widthOfLowerBuilding > 0 ? widthOfLowerBuilding
                 : throw new ArgumentOutOfRangeException(nameof(widthOfLowerBuilding));
@@ -216,6 +219,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
             UpperRoof.CalculateSnowLoad();
             CaluclateShapeCoefficients();
             CalculateSnowLoadOnRoof();
+            SetSnowLoadsNearTallerBuilding();
         }
 
         private void SetReferences()
@@ -330,6 +334,34 @@ namespace Build_IT_SnowLoads.BuildingTypes
                         Building.ThermalCoefficient,
                         snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
             }
+        }
+
+        private void SetSnowLoadsNearTallerBuilding()
+        {
+            SnowLoadsNearTallerBuilding = new Dictionary<int, double>();
+            double snowLoadInFirstCase;
+
+            if (!snowLoad.ExcepctionalSituation)
+            {
+                snowLoadInFirstCase =
+                    SnowLoadCalc.CalculateSnowLoad(
+                        0.8,
+                        buildingSite.ExposureCoefficient,
+                        Building.ThermalCoefficient,
+                        snowLoad.SnowLoadForSpecificReturnPeriod);
+            }
+            else
+            {
+                snowLoadInFirstCase =
+                    SnowLoadCalc.CalculateSnowLoad(
+                        0.8,
+                        buildingSite.ExposureCoefficient,
+                        Building.ThermalCoefficient,
+                        snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
+            }
+
+            SnowLoadsNearTallerBuilding.Add(1, snowLoadInFirstCase);
+            SnowLoadsNearTallerBuilding.Add(2, SnowLoadOnRoofValue);
         }
 
 

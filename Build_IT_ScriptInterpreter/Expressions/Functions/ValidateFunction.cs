@@ -35,7 +35,18 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions
             Name = "VALIDATE";
             Function = (e) =>
             {
-                return e.Parameters[0].Evaluate();
+                try
+                {
+                    return e.Parameters[0].Evaluate();
+                }
+                catch (ArgumentException)
+                {
+                    return false;
+                }
+                catch
+                {
+                    return true;
+                }
             };
         }
 

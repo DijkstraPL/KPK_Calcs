@@ -64,7 +64,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         public double SecondShapeCoefficient { get; private set; }
 
         /// <summary>
-        /// Snow load on the roof [kN/m2]
+        /// Snow load on the roof, near obstruction [kN/m2]
         /// </summary>
         [Abbreviation("s")]
         public double SnowLoadOnRoofValue { get; private set; }
