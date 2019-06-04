@@ -49,9 +49,9 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             if (script == null)
                 return NotFound();
 
-            var scriptViewModel = _mapper.Map<Script, ScriptResource>(script);
+            var scriptResource = _mapper.Map<Script, ScriptResource>(script);
 
-            return Ok(scriptViewModel);
+            return Ok(scriptResource);
         }
 
         [HttpPost()]
@@ -107,6 +107,6 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             await _unitOfWork.CompleteAsync();
 
             return Ok(id);
-        }
+        }        
     }
 }

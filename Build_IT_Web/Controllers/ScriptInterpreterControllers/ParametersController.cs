@@ -99,5 +99,29 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
             return Ok(parId);
         }
+
+        [HttpGet("{oldScriptId}/copyto/{newScriptId}")]
+        public async Task<IActionResult> CopyParametersTo(long oldScriptId, long newScriptId)
+        {
+            var parameters = await _parameterRepository.GetAllParametersForScriptAsync(oldScriptId);
+
+           var parametersResource = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters.ToList());
+            var copiedParameters = _mapper.Map<List<ParameterResource>, List<Parameter>>(parametersResource);
+
+            var script = await _scriptRepository.GetAsync(newScriptId);
+            if (script == null)
+                return NotFound();
+
+            script.Modified = DateTime.Now;
+            copiedParameters.ForEach(p => {
+                p.Id = 0;
+                p.Script = script;
+                _parameterRepository.AddAsync(p);
+                });
+
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(newScriptId);
+        }
     }
 }

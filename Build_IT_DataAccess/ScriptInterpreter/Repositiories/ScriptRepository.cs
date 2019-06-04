@@ -44,7 +44,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
             return await ScriptInterpreterContext.Scripts
                 .FirstOrDefaultAsync(s => s.Name == name);
         }
-
+        
         #endregion // Public_Methods
     }
 }

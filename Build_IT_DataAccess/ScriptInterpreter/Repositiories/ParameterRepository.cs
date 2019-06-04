@@ -32,7 +32,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
             return await ScriptInterpreterContext.Parameters
                 .Where(p => p.ScriptId == scriptId)
                 .Include(p => p.ValueOptions)
-                .Include(p => p.NestedScripts)
                 .OrderBy(p => p.Number)
                 .ToListAsync();
         }
@@ -41,7 +40,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
         {
             return await ScriptInterpreterContext.Parameters
                 .Include(p => p.ValueOptions)
-                .Include(p => p.NestedScripts)
                 .SingleOrDefaultAsync(p => p.Id == parameterId);
         }
 

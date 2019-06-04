@@ -19,7 +19,6 @@ namespace Build_IT_Web.Mapping
             CreateMap<Parameter, ParameterResource>()
                 .ForMember(p => p.Equation, operation => operation.Ignore());
             CreateMap<ValueOption, ValueOptionResource>();
-            CreateMap<AlternativeScript, AlternativeScriptResource>();
 
             // API Resource to Domain
             CreateMap<ScriptResource, Script>()

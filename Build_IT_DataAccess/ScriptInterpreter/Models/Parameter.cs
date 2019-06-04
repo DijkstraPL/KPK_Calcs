@@ -23,7 +23,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models
         public string GroupName { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
-        public ICollection<AlternativeScript> NestedScripts { get; set; }
         public Script Script { get; set; }
         public long ScriptId { get; set; }
 
