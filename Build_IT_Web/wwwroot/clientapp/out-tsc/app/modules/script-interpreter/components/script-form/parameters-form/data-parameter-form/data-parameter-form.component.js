@@ -35,12 +35,13 @@ var DataParameterFormComponent = /** @class */ (function () {
             groupName: new FormControl('', Validators.maxLength(200)),
             accordingTo: new FormControl('', Validators.maxLength(200)),
             notes: new FormControl('', Validators.maxLength(1000)),
-            valueOptionSetting: new FormControl('0'),
+            valueOptionSetting: new FormControl(0),
             valueOptions: new FormArray([])
         });
         this.matcher = new AppErrorStateMatcher();
         this.newParameter = new ParameterImpl();
         this.created = new EventEmitter();
+        this.updated = new EventEmitter();
         // type: string = ParameterFilter[ParameterFilter.data];
         // important: boolean;
         this.valueTypes = this.getEnumValues(ValueType);
@@ -235,9 +236,10 @@ var DataParameterFormComponent = /** @class */ (function () {
         this.created.emit(this.parameterForm.value);
     };
     DataParameterFormComponent.prototype.update = function () {
+        var _this = this;
         this.parameterService.update(this.scriptId, this.parameterForm.value)
             .subscribe(function (p) {
-            console.log(p);
+            _this.updated.emit(p);
         }, function (error) { return console.error(error); });
     };
     //private setDataType() {
@@ -267,6 +269,10 @@ var DataParameterFormComponent = /** @class */ (function () {
         Output('created'),
         __metadata("design:type", Object)
     ], DataParameterFormComponent.prototype, "created", void 0);
+    __decorate([
+        Output('updated'),
+        __metadata("design:type", Object)
+    ], DataParameterFormComponent.prototype, "updated", void 0);
     __decorate([
         ViewChild('editable'),
         __metadata("design:type", MatRadioButton)

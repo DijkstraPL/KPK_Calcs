@@ -60,6 +60,7 @@ namespace Build_IT_ScriptService.SnowLoadsService
             snowLoad.CalculateSnowLoad();
             building.CalculateThermalCoefficient();
             cylindricalRoof.CalculateSnowLoad();
+            cylindricalRoof.CalculateDriftLength();
 
             var result = new Result();
             result.Properties.Add("C_e_", buildingSite.ExposureCoefficient);

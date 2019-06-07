@@ -35,7 +35,7 @@ export class DataParameterFormComponent {
         groupName: new FormControl('', Validators.maxLength(200)),
         accordingTo: new FormControl('', Validators.maxLength(200)),
         notes: new FormControl('', Validators.maxLength(1000)),
-        valueOptionSetting: new FormControl('0'),
+        valueOptionSetting: new FormControl(0),
         valueOptions: new FormArray([])
     });
 
@@ -46,6 +46,7 @@ export class DataParameterFormComponent {
     @Input('newParameter') newParameter: Parameter = new ParameterImpl();
 
     @Output('created') created = new EventEmitter<Parameter>();
+    @Output('updated') updated = new EventEmitter<Parameter>();
 
    // type: string = ParameterFilter[ParameterFilter.data];
     // important: boolean;
@@ -227,7 +228,7 @@ export class DataParameterFormComponent {
     private update() {
         this.parameterService.update(this.scriptId, this.parameterForm.value)
             .subscribe((p: Parameter) => {
-                console.log(p);
+                this.updated.emit(p);
             },
                 error => console.error(error));
     }

@@ -1,0 +1,23 @@
+﻿
+<div class="align-self-start parameter-radio">
+    <label class="align-self-start mb-2">
+        <span [innerHtml]="parameter.name | html"></span>{{isRequired() ? '*' : ''}}
+    </label>
+
+    <div class="d-inline-flex">
+        <mat-checkbox *ngIf="!isRequired()"
+                      class="mr-3"
+                      #defaultField
+                      (change)="defaultChecked($event)">
+            default
+        </mat-checkbox>
+
+        <mat-checkbox *ngIf="!isDefault"
+                      [required]="isRequired()"
+                      #checkboxField
+                      (change)="changeValue($event)">
+            true
+        </mat-checkbox>
+    </div>
+    <p class="parameter-description">{{parameter.description}}</p>
+</div>

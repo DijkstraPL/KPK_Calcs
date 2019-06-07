@@ -1,0 +1,74 @@
+﻿
+    <div class="d-flex justify-content-center">
+        <div id="carouselExampleIndicators"
+             class="carousel slide w-50"
+             data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators"
+                    data-slide-to="0"
+                    class="active"></li>
+                <li data-target="#carouselExampleIndicators"
+                    data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators"
+                    data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+
+                <div class="carousel-item active"
+                     [routerLinkActive]='["link-active"]'
+                     [routerLinkActiveOptions]='{ exact: true }'>
+                    <div class="d-flex justify-content-center nav-item link"
+                         [routerLink]="['/snowloads']">
+                        <img src="https://lorempixel.com/600/300/?random=888"
+                             alt="Snow load">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Snow loads</h5>
+                            <p>Check out calculators for snow loads.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item"
+                     [routerLinkActive]='["link-active"]'
+                     [routerLinkActiveOptions]='{ exact: true }'>
+                    <div class="d-flex justify-content-center link"
+                         [routerLink]="['/deadloads']">
+                        <img src="https://lorempixel.com/600/300/?random=70"
+                             alt="Lorem ipsum">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Dead loads</h5>
+                            <p>Check out calculators for dead loads.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item"
+                     [routerLinkActive]='["link-active"]'
+                     [routerLinkActiveOptions]='{ exact: true }'>
+                    <div class="d-flex justify-content-center link"
+                         [routerLink]="['/about']">
+                        <img src="https://lorempixel.com/600/300/?random=70"
+                             alt="Lorem ipsum">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>About me</h5>
+                            <p>Read more about the author of this site.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev"
+               href="#carouselExampleIndicators"
+               role="button"
+               data-slide="prev">
+                <span class="carousel-control-prev-icon"
+                      aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next"
+               href="#carouselExampleIndicators"
+               role="button"
+               data-slide="next">
+                <span class="carousel-control-next-icon"
+                      aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>

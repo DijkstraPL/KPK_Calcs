@@ -1,16 +1,24 @@
-﻿    <div *ngIf="parameter.valueOptions.length == 0; else valueOptions">
-        <parameter-input [parameter]="parameter"
-                         (valueChanged)="onValueChanged($event)"></parameter-input>
+﻿<div *ngIf="parameter.valueOptionSetting != valueOptionSetting.Boolean && parameter.valueOptions.length == 0; else valueOptions">
+    <parameter-input [parameter]="parameter"
+                     (valueChanged)="onValueChanged($event)"></parameter-input>
+</div>
+
+<ng-template #valueOptions>
+
+    <div *ngIf="parameter.valueOptionSetting == valueOptionSetting.UserInput; else fixedValueOptions">
+        <parameter-autocomplete [parameter]="parameter"
+                                (valueChanged)="onValueChanged($event)"></parameter-autocomplete>
     </div>
 
-    <ng-template #valueOptions>
+    <ng-template #fixedValueOptions>
 
-        <div *ngIf="parameter.valueOptionSetting == valueOptionSetting.UserInput; else fixedValueOptions">
-            <parameter-autocomplete [parameter]="parameter"
-                                    (valueChanged)="onValueChanged($event)"></parameter-autocomplete>
+        <div class="form-inline"
+             *ngIf="parameter.valueOptionSetting == valueOptionSetting.Boolean; else severalValueOptions">
+            <parameter-checkbox [parameter]="parameter"
+                                (valueChanged)="onValueChanged($event)"></parameter-checkbox>
         </div>
 
-        <ng-template #fixedValueOptions>
+        <ng-template #severalValueOptions>
             <div class="form-inline"
                  *ngIf="parameter.valueOptions.length > 0 && parameter.valueOptions.length <= 3">
                 <parameter-radio [parameter]="parameter"
@@ -22,5 +30,6 @@
                                   (valueChanged)="onValueChanged($event)"></parameter-select>
             </div>
         </ng-template>
-
     </ng-template>
+
+</ng-template>

@@ -1,6 +1,8 @@
 ﻿import { Component, Input } from '@angular/core';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { AppErrorStateMatcher } from '../../../../../../../common/errors/app-error-state-matcher';
+import { ValueOptionSettings } from '../../../../../models/enums/valueOptionSettings';
+import { MatRadioChange } from '@angular/material/radio';
 
 @Component({
     selector: 'app-value-options-form',
@@ -9,8 +11,10 @@ import { AppErrorStateMatcher } from '../../../../../../../common/errors/app-err
 })
 
 export class ValueOptionsFormComponent {
-  
+
     @Input('parameterForm') parameterForm: FormGroup;
+
+    valueOptionSettings = ValueOptionSettings;
 
     get parameterValueOptionSetting() {
         return this.parameterForm.get('valueOptionSetting');
@@ -20,7 +24,7 @@ export class ValueOptionsFormComponent {
     }
 
     matcher = new AppErrorStateMatcher();
-    
+
     constructor() {
     }
 
@@ -32,8 +36,6 @@ export class ValueOptionsFormComponent {
                 value: new FormControl(''),
                 description: new FormControl('')
             }));
-
-        console.log('value otpions',this.parameterValueOptions);
     }
 
     remove(valueOption: FormGroup) {
@@ -41,6 +43,13 @@ export class ValueOptionsFormComponent {
 
         if (index >= 0) {
             this.parameterValueOptions.removeAt(index);
+        }
+    }
+
+    booleanSettingChecked(checkbox: MatRadioChange) {
+        if (checkbox.value == this.valueOptionSettings.Boolean)
+            while (this.parameterValueOptions.length !== 0) {
+                this.parameterValueOptions.removeAt(0)
         }
     }
 }

@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 import { AppErrorHandler } from './common/errors/app-error-handler';
 import { LoadsRoutingModule } from './modules/loads/loads-routing.module';
 import { LoadsModule } from './modules/loads/loads.module';
@@ -27,7 +28,8 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                HomeComponent
+                HomeComponent,
+                CarouselComponent
             ],
             imports: [
                 BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

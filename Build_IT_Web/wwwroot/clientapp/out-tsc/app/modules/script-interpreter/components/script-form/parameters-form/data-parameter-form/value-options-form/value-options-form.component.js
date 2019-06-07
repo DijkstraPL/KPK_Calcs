@@ -10,8 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppErrorStateMatcher } from '../../../../../../../common/errors/app-error-state-matcher';
+import { ValueOptionSettings } from '../../../../../models/enums/valueOptionSettings';
 var ValueOptionsFormComponent = /** @class */ (function () {
     function ValueOptionsFormComponent() {
+        this.valueOptionSettings = ValueOptionSettings;
         this.matcher = new AppErrorStateMatcher();
     }
     Object.defineProperty(ValueOptionsFormComponent.prototype, "parameterValueOptionSetting", {
@@ -35,13 +37,18 @@ var ValueOptionsFormComponent = /** @class */ (function () {
             value: new FormControl(''),
             description: new FormControl('')
         }));
-        console.log('value otpions', this.parameterValueOptions);
     };
     ValueOptionsFormComponent.prototype.remove = function (valueOption) {
         var index = this.parameterValueOptions.controls.indexOf(valueOption);
         if (index >= 0) {
             this.parameterValueOptions.removeAt(index);
         }
+    };
+    ValueOptionsFormComponent.prototype.booleanSettingChecked = function (checkbox) {
+        if (checkbox.value == this.valueOptionSettings.Boolean)
+            while (this.parameterValueOptions.length !== 0) {
+                this.parameterValueOptions.removeAt(0);
+            }
     };
     __decorate([
         Input('parameterForm'),

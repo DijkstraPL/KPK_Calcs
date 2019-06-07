@@ -9,7 +9,7 @@
                           selected
                           class="mr-3"
                           (change)="changeValue($event)">
-            none
+            default
         </mat-radio-button>
         <mat-radio-button *ngFor="let valueOption of parameter.valueOptions; index as i"
                           [value]="valueOption.value"

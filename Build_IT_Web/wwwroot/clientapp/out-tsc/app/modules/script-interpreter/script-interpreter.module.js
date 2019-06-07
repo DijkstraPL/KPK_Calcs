@@ -25,6 +25,7 @@ import { ParameterFormComponent } from './components/script-calculator/parameter
 import { ParameterResultComponent } from './components/script-calculator/parameter-results/parameter-result/parameter-result.component';
 import { ValueOptionsFormComponent } from './components/script-form/parameters-form/data-parameter-form/value-options-form/value-options-form.component';
 import { ScriptDataFormComponent } from './components/script-form/script-data-form/script-data-form.component';
+import { ParameterCheckboxComponent } from './components/script-calculator/parameter-inputs/checkbox/parameter-checkbox.component';
 import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
@@ -53,6 +54,7 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 ParameterRadioComponent,
                 ParameterFormComponent,
                 ParameterResultComponent,
+                ParameterCheckboxComponent
             ],
             imports: [
                 PipesModule,

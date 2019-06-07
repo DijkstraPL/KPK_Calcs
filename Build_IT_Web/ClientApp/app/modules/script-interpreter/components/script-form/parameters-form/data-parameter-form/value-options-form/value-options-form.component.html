@@ -12,11 +12,25 @@
 
         <form [formGroup]="parameterForm">
 
-            <mat-checkbox formControlName="valueOptionSetting"
-                          [value]="1"
-                          class="ml-2">Allow any values</mat-checkbox>
-
             <div>
+                <mat-radio-group formControlName="valueOptionSetting">
+                    <mat-radio-button [value]="valueOptionSettings.None"
+                                      class="ml-2">None</mat-radio-button>
+                    <mat-radio-button [value]="valueOptionSettings.UserInput"
+                                      class="ml-2">Allow any values</mat-radio-button>
+                    <mat-radio-button [value]="valueOptionSettings.Boolean"
+                                      (change)="booleanSettingChecked($event)"
+                                      class="ml-2">Is boolean</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <!--<mat-checkbox (change)="allValuesChecked($event)"
+                  class="ml-2">Allow any values</mat-checkbox>
+
+    <mat-checkbox (change)="booleanChecked($event)"
+                  [value]="2"
+                  class="ml-2">Is boolean</mat-checkbox>-->
+
+            <div *ngIf="parameterValueOptionSetting.value != valueOptionSettings.Boolean">
                 <ul *ngFor="let valueOption of parameterValueOptions.controls; let i = index">
                     <li>
                         <div [formGroup]="valueOption">
@@ -28,8 +42,8 @@
                                        autocomplete="off" />
                                 <mat-hint>Name</mat-hint>
                                 <!--<mat-error *ngIf="parameterDocument && parameterDocument.hasError('maxlength')">
-                                Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.
-                            </mat-error>-->
+                        Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.
+                    </mat-error>-->
                             </mat-form-field>
                             <mat-form-field class="m-2">
                                 <input matInput
@@ -39,8 +53,8 @@
                                        autocomplete="off" />
                                 <mat-hint>Value</mat-hint>
                                 <!--<mat-error *ngIf="parameterDocument && parameterDocument.hasError('maxlength')">
-                                Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.
-                            </mat-error>-->
+                        Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.
+                    </mat-error>-->
                             </mat-form-field>
 
                             <mat-form-field class="m-2 form-medium">
@@ -51,9 +65,9 @@
                                           autocomplete="off"></textarea>
                                 <mat-hint>Description for value option</mat-hint>
                                 <!--<mat-error *ngIf="parameterValue && parameterValue.hasError('maxlength')">
-                                                            Value should be maximum {{parameterValue.errors.maxlength.requiredLength}} characters long.
-                                                                </mat-error>
-                            -->
+                                                    Value should be maximum {{parameterValue.errors.maxlength.requiredLength}} characters long.
+                                                        </mat-error>
+                    -->
                             </mat-form-field>
 
                             <button mat-stroked-button
@@ -64,15 +78,12 @@
                         </div>
                     </li>
                 </ul>
-
                 <button mat-stroked-button
                         color="accent"
                         (click)="addValueOption()">
                     Add
                 </button>
-
             </div>
-
         </form>
 
     </mat-expansion-panel>

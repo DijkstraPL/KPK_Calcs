@@ -106,15 +106,15 @@ export class ParametersFormComponent implements OnInit {
     }
 
     remove(parameterId: number) {
-        if (confirm("Are you sure?"))
+        if (confirm("Are you sure?")) {
             this.parameterService.delete(this.scriptId, parameterId)
                 .subscribe((p: Parameter) => {
-                    this.parameters = this.parameters.filter(p => p.id != parameterId)
                     this.onParametersToShowChange();
                     this.refreshNumbering(p.number);
                     this.saveParameters();
-                    console.log("Parameters", p)
                 }, error => console.error(error));
+            this.parameters = this.parameters.filter(p => p.id != parameterId)
+        }
     }
 
     private refreshNumbering(number: number) {
@@ -130,9 +130,15 @@ export class ParametersFormComponent implements OnInit {
             parameter.number = 0;
         this.parameterService.create(this.scriptId, parameter)
             .subscribe((p: Parameter) => {
-                console.log(p);
                 this.parameters.push(p);
             });
+        this.editMode = false;
+    }
+
+    onUpdated(parameter: Parameter) {
+        let index = this.parameters.findIndex(p => p.id == parameter.id);
+        this.parameters[index] = parameter;
+        this.editMode = false;
     }
 
     changeEditMode() {

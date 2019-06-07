@@ -83,7 +83,7 @@ namespace Build_IT_ScriptService.SnowLoadsService
             result.Properties.Add("μ_2_(α)", multiSpanRoof.ShapeCoefficient);
             result.Properties.Add("s(α_1_)", multiSpanRoof.LeftRoof.SnowLoadOnRoofValue);
             result.Properties.Add("s(α_2_)", multiSpanRoof.RightRoof.SnowLoadOnRoofValue);
-            result.Properties.Add("s(middle)", multiSpanRoof.SnowLoadOnMiddleRoof);
+            result.Properties.Add("s_middle_", multiSpanRoof.SnowLoadOnMiddleRoof);
 
             return result;
         }

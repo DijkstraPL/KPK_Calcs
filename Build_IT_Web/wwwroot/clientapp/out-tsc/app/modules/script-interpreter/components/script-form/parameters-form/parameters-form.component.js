@@ -91,15 +91,15 @@ var ParametersFormComponent = /** @class */ (function () {
     };
     ParametersFormComponent.prototype.remove = function (parameterId) {
         var _this = this;
-        if (confirm("Are you sure?"))
+        if (confirm("Are you sure?")) {
             this.parameterService.delete(this.scriptId, parameterId)
                 .subscribe(function (p) {
-                _this.parameters = _this.parameters.filter(function (p) { return p.id != parameterId; });
                 _this.onParametersToShowChange();
                 _this.refreshNumbering(p.number);
                 _this.saveParameters();
-                console.log("Parameters", p);
             }, function (error) { return console.error(error); });
+            this.parameters = this.parameters.filter(function (p) { return p.id != parameterId; });
+        }
     };
     ParametersFormComponent.prototype.refreshNumbering = function (number) {
         var index = 0;
@@ -116,9 +116,14 @@ var ParametersFormComponent = /** @class */ (function () {
             parameter.number = 0;
         this.parameterService.create(this.scriptId, parameter)
             .subscribe(function (p) {
-            console.log(p);
             _this.parameters.push(p);
         });
+        this.editMode = false;
+    };
+    ParametersFormComponent.prototype.onUpdated = function (parameter) {
+        var index = this.parameters.findIndex(function (p) { return p.id == parameter.id; });
+        this.parameters[index] = parameter;
+        this.editMode = false;
     };
     ParametersFormComponent.prototype.changeEditMode = function () {
         if (this.editMode) {

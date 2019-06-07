@@ -31,8 +31,6 @@ export class ScriptCalculatorComponent implements OnInit {
     valueChanged: boolean;
     parameterOptions = ParameterOptions;
 
-    displayedColumns: string[] = ['name', 'value', 'unit', 'description'];
-
     isCalculating: boolean;
 
     constructor(
