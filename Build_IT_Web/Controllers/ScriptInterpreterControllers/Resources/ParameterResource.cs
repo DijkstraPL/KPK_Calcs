@@ -22,14 +22,14 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources
         public string GroupName { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
-        public ICollection<PhotoResource> Photos { get; set; }
+        public ICollection<FigureResource> Figures { get; set; }
 
         public string Equation { get; set; }
 
         public ParameterResource()
         {
             ValueOptions = new Collection<ValueOptionResource>();
-            Photos = new Collection<PhotoResource>();
+            Figures = new Collection<FigureResource>();
         }
     }
 }

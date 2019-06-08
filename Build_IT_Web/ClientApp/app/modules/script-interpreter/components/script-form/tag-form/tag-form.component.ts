@@ -28,8 +28,8 @@ export class TagFormComponent implements OnInit {
     tagCtrl = new FormControl();
     filteredTags: Observable<Tag[]>;
 
-    @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
-    @ViewChild('auto') matAutocomplete: MatAutocomplete;
+    @ViewChild('tagInput', { static: false }) tagInput: ElementRef<HTMLInputElement>;
+    @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
     get scriptId(): AbstractControl {
         return this.scriptForm.get('id');

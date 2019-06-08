@@ -97,11 +97,11 @@ var TagFormComponent = /** @class */ (function () {
         __metadata("design:type", FormGroup)
     ], TagFormComponent.prototype, "scriptForm", void 0);
     __decorate([
-        ViewChild('tagInput'),
+        ViewChild('tagInput', { static: false }),
         __metadata("design:type", ElementRef)
     ], TagFormComponent.prototype, "tagInput", void 0);
     __decorate([
-        ViewChild('auto'),
+        ViewChild('auto', { static: false }),
         __metadata("design:type", MatAutocomplete)
     ], TagFormComponent.prototype, "matAutocomplete", void 0);
     TagFormComponent = __decorate([

@@ -1,4 +1,4 @@
-﻿import { Component, Input, SimpleChanges, Output, EventEmitter, SimpleChange, ViewChild } from '@angular/core';
+﻿import { Component, Input, SimpleChanges, Output, EventEmitter, SimpleChange, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Parameter } from '../../../../models/interfaces/parameter';
 import { ParameterImpl } from '../../../../models/parameterImpl';
 import { ParameterService } from '../../../../services/parameter.service';
@@ -20,7 +20,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
     styleUrls: ['./data-parameter-form.component.scss']
 })
 
-export class DataParameterFormComponent {
+export class DataParameterFormComponent implements OnInit {
     parameterForm = new FormGroup({
         id: new FormControl('0'),
         name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
@@ -36,7 +36,8 @@ export class DataParameterFormComponent {
         accordingTo: new FormControl('', Validators.maxLength(200)),
         notes: new FormControl('', Validators.maxLength(1000)),
         valueOptionSetting: new FormControl(0),
-        valueOptions: new FormArray([])
+        valueOptions: new FormArray([]),
+        figures: new FormArray([]),
     });
 
     matcher = new AppErrorStateMatcher();
@@ -48,19 +49,16 @@ export class DataParameterFormComponent {
     @Output('created') created = new EventEmitter<Parameter>();
     @Output('updated') updated = new EventEmitter<Parameter>();
 
-   // type: string = ParameterFilter[ParameterFilter.data];
-    // important: boolean;
-
     valueTypes = this.getEnumValues(ValueType);
     context = ParameterOptions;
 
-    @ViewChild('editable') editable: MatRadioButton;
-    @ViewChild('static') static: MatRadioButton;
-    @ViewChild('calculable') calculable: MatRadioButton;
-    @ViewChild('visible') visible: MatCheckbox;
-    @ViewChild('important') important: MatCheckbox;
-    @ViewChild('optional') optional: MatCheckbox;
-
+    @ViewChild('editable', { static: true }) editable: MatRadioButton;
+    @ViewChild('static', { static: true }) static: MatRadioButton;
+    @ViewChild('calculable', { static: true }) calculable: MatRadioButton;
+    @ViewChild('visible', { static: true }) visible: MatCheckbox;
+    @ViewChild('important', { static: true }) important: MatCheckbox;
+    @ViewChild('optional', { static: true }) optional: MatCheckbox;
+    
     get parameterId(): AbstractControl {
         return this.parameterForm.get('id');
     }
@@ -97,8 +95,14 @@ export class DataParameterFormComponent {
     get parameterGroupName(): AbstractControl {
         return this.parameterForm.get('groupName');
     }
+    get parameterFigures(): FormArray {
+        return this.parameterForm.get('figures') as FormArray;
+    }
 
     constructor(private parameterService: ParameterService) {
+    }
+
+    ngOnInit(): void {
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -111,6 +115,11 @@ export class DataParameterFormComponent {
                 name: new FormControl(vo.name),
                 value: new FormControl(vo.value),
                 description: new FormControl(vo.description)
+            })));
+
+            parameter.figures.forEach(f => this.parameterFigures.push(new FormGroup({
+                id: new FormControl(f.id),
+                fileName: new FormControl(f.fileName),
             })));
 
             this.setNewParameterChanges(changes.newParameter);
@@ -212,9 +221,6 @@ export class DataParameterFormComponent {
     }
 
     onSubmit($event) {
-       // this.adjustProperties();
-       // this.setContext();
-
         if (this.newlyAddedParameter)
             this.create();
         else
@@ -233,44 +239,7 @@ export class DataParameterFormComponent {
                 error => console.error(error));
     }
 
-    //private setDataType() {
-    //    if ((this.newParameter.context & ParameterFilter.data) != 0)
-    //        this.type = ParameterFilter[ParameterFilter.data];
-    //    else if ((this.newParameter.context & ParameterFilter.static) != 0)
-    //        this.type = ParameterFilter[ParameterFilter.static];
-    //    else if ((this.newParameter.context & ParameterFilter.calculation) != 0)
-    //        this.type = ParameterFilter[ParameterFilter.calculation];
-    //}
-
     private setValueOptionsSettings() {
         this.allowUserValues = this.newParameter.valueOptionSetting == ValueOptionSettings.UserInput;
     }
-
-    //private adjustProperties() {
-    //    if (this.type === ParameterFilter[ParameterFilter.static]) {
-    //        this.newParameter.dataValidator = null;
-    //        this.newParameter.valueOptions = null;
-    //    }
-    //    else if (this.type === ParameterFilter[ParameterFilter.calculation])
-    //        this.newParameter.valueOptions = null;
-    //}
-
-    //private setContext() {
-    //    if (this.type === ParameterFilter[ParameterFilter.data])
-    //        this.setDataContext([ParameterOptions.editable, ParameterOptions.visible]);
-    //    else if (this.type === ParameterFilter[ParameterFilter.static])
-    //        this.setDataContext([ParameterOptions.staticData]);
-    //    else if (this.type === ParameterFilter[ParameterFilter.calculation])
-    //        this.setDataContext([ParameterOptions.calculation, ParameterOptions.visible]);
-    //}
-
-    //private setDataContext(options: ParameterOptions[]) {
-    //    this.newParameter.context = 0;
-    //    options.forEach(o => {
-    //        if ((this.newParameter.context & o) == 0)
-    //            this.newParameter.context += o;
-    //    });
-    //    if (this.important)
-    //        this.newParameter.context += ParameterOptions.important;
-    //}
 }

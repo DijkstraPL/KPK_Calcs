@@ -3,6 +3,7 @@ var ParameterImpl = /** @class */ (function () {
     function ParameterImpl() {
         this.valueType = ValueType.number;
         this.valueOptions = [];
+        this.figures = [];
     }
     return ParameterImpl;
 }());

@@ -26,6 +26,8 @@ import { ParameterResultComponent } from './components/script-calculator/paramet
 import { ValueOptionsFormComponent } from './components/script-form/parameters-form/data-parameter-form/value-options-form/value-options-form.component';
 import { ScriptDataFormComponent } from './components/script-form/script-data-form/script-data-form.component';
 import { ParameterCheckboxComponent } from './components/script-calculator/parameter-inputs/checkbox/parameter-checkbox.component';
+import { FigureParameterFormComponent } from './components/script-form/parameters-form/data-parameter-form/figure-parameter-form/figure-parameter-form.component';
+import { ParameterFiguresComponent } from './components/script-calculator/parameter-inputs/figures/parameter-figures.component';
 import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
@@ -33,6 +35,7 @@ import { ParameterService } from './services/parameter.service';
 import { AppErrorHandler } from './../../common/errors/app-error-handler';
 import { PipesModule } from '../pipes-module/pipes.module';
 import { MdComponentsModule } from '../md-components-module/md-components.module';
+import { FigureService } from './services/figure.service';
 var ScriptInterpreterModule = /** @class */ (function () {
     function ScriptInterpreterModule() {
     }
@@ -54,7 +57,9 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 ParameterRadioComponent,
                 ParameterFormComponent,
                 ParameterResultComponent,
-                ParameterCheckboxComponent
+                ParameterCheckboxComponent,
+                FigureParameterFormComponent,
+                ParameterFiguresComponent
             ],
             imports: [
                 PipesModule,
@@ -74,6 +79,7 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 TagService,
                 CalculationService,
                 ParameterService,
+                FigureService,
                 { provide: ErrorHandler, useClass: AppErrorHandler }
             ]
         })

@@ -3,6 +3,7 @@ import { ValueOption } from "./valueOption";
 import { ValueType } from "../enums/valueType";
 import { ParameterOptions } from "../enums/parameterOptions";
 import { ValueOptionSettings } from "../enums/valueOptionSettings";
+import { Figure } from "./figure";
 
 export interface Parameter {
     id: number;
@@ -20,6 +21,7 @@ export interface Parameter {
     notes: string;
     valueOptionSetting: ValueOptionSettings;
     valueOptions: ValueOption[];
+    figures: Figure[]
 
     equation: string;
 }

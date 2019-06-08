@@ -32,6 +32,8 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
             return await ScriptInterpreterContext.Parameters
                 .Where(p => p.ScriptId == scriptId)
                 .Include(p => p.ValueOptions)
+                .Include(p => p.ParameterFigures)
+                .ThenInclude(p => p.Figure)
                 .OrderBy(p => p.Number)
                 .ToListAsync();
         }
@@ -40,7 +42,19 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
         {
             return await ScriptInterpreterContext.Parameters
                 .Include(p => p.ValueOptions)
+                .Include(p => p.ParameterFigures)
+                .ThenInclude(p => p.Figure)
                 .SingleOrDefaultAsync(p => p.Id == parameterId);
+        }
+
+        public async Task<IEnumerable<Figure>> GetFiguresAsync(long parameterId)
+        {
+            var parameter = await ScriptInterpreterContext.Parameters
+                .Include(p => p.ParameterFigures)
+                .SingleOrDefaultAsync(p => p.Id == parameterId);
+            return await ScriptInterpreterContext.Figures
+                  .Where(f => parameter.ParameterFigures.Any(pf => pf.FigureId == f.Id))
+                  .ToListAsync();
         }
 
         #endregion // Public_Methods

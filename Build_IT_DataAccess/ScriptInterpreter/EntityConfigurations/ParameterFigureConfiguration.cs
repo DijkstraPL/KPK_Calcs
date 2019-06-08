@@ -7,16 +7,16 @@ using System.Text;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 {
-    public class ParameterPhotoConfiguration : IEntityTypeConfiguration<ParameterPhoto>
+    public class ParameterFigureConfiguration : IEntityTypeConfiguration<ParameterFigure>
     {
         #region Public_Methods
-        
-        public void Configure(EntityTypeBuilder<ParameterPhoto> builder)
-        {
-            builder.ToTable("ParameterPhotos");
 
-            builder.HasKey(st
-                => new { st.ParameterId, st.PhotoId });
+        public void Configure(EntityTypeBuilder<ParameterFigure> builder)
+        {
+            builder.ToTable("ParameterFigures");
+
+            builder.HasKey(pf
+                => new { pf.ParameterId, pf.FigureId });
         }
 
         #endregion // Public_Methods

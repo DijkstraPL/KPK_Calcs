@@ -18,7 +18,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatFileUploadModule } from 'angular-material-fileupload';
 
 @NgModule({
     declarations: [
@@ -42,8 +41,7 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
       MatTabsModule,
       MatChipsModule,
       MatToolbarModule,
-      MatPaginatorModule,
-      MatFileUploadModule
+      MatPaginatorModule
   ]
 })
 export class MdComponentsModule { }

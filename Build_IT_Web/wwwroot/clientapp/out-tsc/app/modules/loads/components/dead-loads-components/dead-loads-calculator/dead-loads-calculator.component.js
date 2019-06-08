@@ -82,7 +82,7 @@ var DeadLoadsCalculatorComponent = /** @class */ (function () {
         this.calculate(materialForCalculation);
     };
     __decorate([
-        ViewChild(MatTable),
+        ViewChild(MatTable, { static: false }),
         __metadata("design:type", MatTable)
     ], DeadLoadsCalculatorComponent.prototype, "selectedMaterialTable", void 0);
     __decorate([

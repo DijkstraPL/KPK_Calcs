@@ -1,0 +1,23 @@
+﻿
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Pictures
+            </mat-panel-title>
+            <mat-panel-description>
+                Provide additional pictures for parameter
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <input type="file"
+               (change)="uploadFigure()"
+               #fileInput />
+
+        <div class="mt-1">
+            <img *ngFor="let figure of figures"
+                 src="clientapp/uploads/{{parameterId.value}}/{{figure.fileName}}"
+                 alt="Parameter picture" />
+        </div>
+
+    </mat-expansion-panel>
+</mat-accordion>

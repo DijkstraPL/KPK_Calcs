@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.Models
 {
-    public class ParameterPhoto
+    public class ParameterFigure
     {
         public long ParameterId { get; set; }
-        public long PhotoId { get; set; }
+        public long FigureId { get; set; }
         public Parameter Parameter { get; set; }
-        public Photo Photo { get; set; }
+        public Figure Figure { get; set; }
     }
 }

@@ -3,61 +3,60 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
 {
-    public partial class PhotosTable : Migration
+    public partial class PhotosTablesAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Photos",
+                name: "Figures",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FileName = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Photos", x => x.Id);
+                    table.PrimaryKey("PK_Figures", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ParameterPhotos",
+                name: "ParameterFigures",
                 columns: table => new
                 {
                     ParameterId = table.Column<long>(nullable: false),
-                    PhotoId = table.Column<long>(nullable: false),
-                    PhotoId1 = table.Column<int>(nullable: true)
+                    FigureId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ParameterPhotos", x => new { x.ParameterId, x.PhotoId });
+                    table.PrimaryKey("PK_ParameterFigures", x => new { x.ParameterId, x.FigureId });
                     table.ForeignKey(
-                        name: "FK_ParameterPhotos_Parameters_ParameterId",
+                        name: "FK_ParameterFigures_Figures_FigureId",
+                        column: x => x.FigureId,
+                        principalTable: "Figures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ParameterFigures_Parameters_ParameterId",
                         column: x => x.ParameterId,
                         principalTable: "Parameters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ParameterPhotos_Photos_PhotoId1",
-                        column: x => x.PhotoId1,
-                        principalTable: "Photos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ParameterPhotos_PhotoId1",
-                table: "ParameterPhotos",
-                column: "PhotoId1");
+                name: "IX_ParameterFigures_FigureId",
+                table: "ParameterFigures",
+                column: "FigureId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ParameterPhotos");
+                name: "ParameterFigures");
 
             migrationBuilder.DropTable(
-                name: "Photos");
+                name: "Figures");
         }
     }
 }

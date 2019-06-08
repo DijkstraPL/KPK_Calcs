@@ -22,6 +22,8 @@ import { ParameterResultComponent } from './components/script-calculator/paramet
 import { ValueOptionsFormComponent } from './components/script-form/parameters-form/data-parameter-form/value-options-form/value-options-form.component';
 import { ScriptDataFormComponent } from './components/script-form/script-data-form/script-data-form.component';
 import { ParameterCheckboxComponent } from './components/script-calculator/parameter-inputs/checkbox/parameter-checkbox.component';
+import { FigureParameterFormComponent } from './components/script-form/parameters-form/data-parameter-form/figure-parameter-form/figure-parameter-form.component';
+import { ParameterFiguresComponent } from './components/script-calculator/parameter-inputs/figures/parameter-figures.component';
 
 import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
@@ -32,6 +34,7 @@ import { AppErrorHandler } from './../../common/errors/app-error-handler';
 
 import { PipesModule } from '../pipes-module/pipes.module';
 import { MdComponentsModule } from '../md-components-module/md-components.module';
+import { FigureService } from './services/figure.service';
 
 @NgModule({
     declarations: [
@@ -50,7 +53,9 @@ import { MdComponentsModule } from '../md-components-module/md-components.module
         ParameterRadioComponent,
         ParameterFormComponent,
         ParameterResultComponent,
-        ParameterCheckboxComponent
+        ParameterCheckboxComponent,
+        FigureParameterFormComponent,
+        ParameterFiguresComponent
     ],
     imports: [
         PipesModule,
@@ -70,6 +75,7 @@ import { MdComponentsModule } from '../md-components-module/md-components.module
         TagService,
         CalculationService,
         ParameterService,
+        FigureService,
         { provide: ErrorHandler, useClass: AppErrorHandler }
     ]
 })

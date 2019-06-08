@@ -28,6 +28,10 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
             builder.HasMany<ValueOption>(p => p.ValueOptions)
                 .WithOne(vo => vo.Parameter)
                 .HasForeignKey(vo => vo.ParameterId);
+
+            builder.HasMany<ParameterFigure>(p => p.ParameterFigures)
+                .WithOne(pp => pp.Parameter)
+                .HasForeignKey(pp => pp.ParameterId);
         }
 
         #endregion // Public_Methods

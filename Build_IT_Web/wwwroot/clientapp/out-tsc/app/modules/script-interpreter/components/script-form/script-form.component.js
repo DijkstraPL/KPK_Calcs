@@ -174,7 +174,7 @@ var ScriptFormComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        ViewChild(ParametersFormComponent),
+        ViewChild(ParametersFormComponent, { static: false }),
         __metadata("design:type", ParametersFormComponent)
     ], ScriptFormComponent.prototype, "parametersForm", void 0);
     ScriptFormComponent = __decorate([

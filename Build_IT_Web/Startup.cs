@@ -33,7 +33,7 @@ namespace Build_IT_Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));            
+            services.Configure<FigureSettings>(Configuration.GetSection("PhotoSettings"));            
             string dataAccessAssemblyName = Configuration.GetSection("DataAccess").GetValue<string>("Project");
 
             services.AddScoped<IScriptRepository, ScriptRepository>();

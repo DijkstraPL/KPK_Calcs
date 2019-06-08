@@ -7,15 +7,17 @@ using System.Text;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 {
-    public class PhotoConfiguration : IEntityTypeConfiguration<Photo>
+    public class FigureConfiguration : IEntityTypeConfiguration<Figure>
     {
         #region Public_Methods
 
-        public void Configure(EntityTypeBuilder<Photo> builder)
+        public void Configure(EntityTypeBuilder<Figure> builder)
         {
-            builder.ToTable("Photos");
+            builder.ToTable("Figures");
 
-            builder.Property(p => p.FileName)
+            builder.HasKey(f => f.Id);
+
+            builder.Property(f => f.FileName)
                 .IsRequired()
                 .HasMaxLength(255);
         }

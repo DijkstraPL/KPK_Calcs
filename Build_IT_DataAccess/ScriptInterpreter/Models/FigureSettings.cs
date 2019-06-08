@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.Models
 {
-    public class PhotoSettings
+    public class FigureSettings
     {
         public int MaxBytes { get; set; }
         public string[] AcceptedFileTypes { get; set; }

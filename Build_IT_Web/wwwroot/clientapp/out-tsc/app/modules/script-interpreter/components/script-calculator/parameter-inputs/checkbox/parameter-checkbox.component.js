@@ -53,11 +53,11 @@ var ParameterCheckboxComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], ParameterCheckboxComponent.prototype, "valueChanged", void 0);
     __decorate([
-        ViewChild('defaultField'),
+        ViewChild('defaultField', { static: false }),
         __metadata("design:type", MatCheckbox)
     ], ParameterCheckboxComponent.prototype, "defaultField", void 0);
     __decorate([
-        ViewChild('checkboxField'),
+        ViewChild('checkboxField', { static: false }),
         __metadata("design:type", MatCheckbox)
     ], ParameterCheckboxComponent.prototype, "checkboxField", void 0);
     ParameterCheckboxComponent = __decorate([

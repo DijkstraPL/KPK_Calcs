@@ -33,7 +33,7 @@ export class ScriptFormComponent implements OnInit {
     editMode: boolean = true;
     includeNote: boolean;
 
-    @ViewChild(ParametersFormComponent) private parametersForm: ParametersFormComponent;
+    @ViewChild(ParametersFormComponent, { static: false }) private parametersForm: ParametersFormComponent;
 
     get scriptId(): AbstractControl {
         return this.scriptForm.get('id');

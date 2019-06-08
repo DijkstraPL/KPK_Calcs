@@ -21,7 +21,7 @@ export class DeadLoadsCalculatorComponent implements OnInit {
         = ['position', 'category', 'name', 'length', 'width', 'thickness', 'minDensity', 'maxDensity', 'unit', 'remove'];
     selectedMaterialDataSource: MatTableDataSource<MaterialForCalculations>
         = new MatTableDataSource(this.selectedMaterials);;
-    @ViewChild(MatTable) selectedMaterialTable: MatTable<any>;
+    @ViewChild(MatTable, { static: false }) selectedMaterialTable: MatTable<any>;
 
     get units() {
         return Units.loadUnit;

@@ -11,6 +11,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces
         
         Task<IEnumerable<Parameter>> GetAllParametersForScriptAsync(long scriptId);
         Task<Parameter> GetParameterWithAllDependanciesAsync(long parameterId);
+        Task<IEnumerable<Figure>> GetFiguresAsync(long parameterId);
 
         #endregion // Public_Methods
     }

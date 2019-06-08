@@ -5,7 +5,7 @@
     <Authors>Luis Tepepa</Authors>
     <Version>1.0.1</Version>
     <Company></Company>
-    <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.4.5</TypeScriptToolsVersion>
     <Product />
     <AssemblyName>Build_IT_Web</AssemblyName>
     <RootNamespace>Build_IT_Web</RootNamespace>
@@ -51,7 +51,8 @@
     <Folder Include="ClientApp\app\directives\" />
     <Folder Include="ClientApp\app\modules\loads\components\wind-loads-components\" />
     <Folder Include="ClientApp\app\models\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="ClientApp\assets\images\" />
+    <Folder Include="wwwroot\clientapp\uploads\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,7 +15,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
         {
             builder.ToTable("Tags");
 
-            builder.Property(s => s.Name)
+            builder.Property(t => t.Name)
                 .IsRequired()
                 .HasMaxLength(50);
         }

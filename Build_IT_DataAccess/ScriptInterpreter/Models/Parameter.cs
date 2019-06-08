@@ -27,7 +27,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models
         public string Notes { get; set; }
         public Script Script { get; set; }
         public long ScriptId { get; set; }
-        public ICollection<ParameterPhoto> ParameterPhotos { get; set; }
+        public ICollection<ParameterFigure> ParameterFigures { get; set; }
 
         #endregion // Properties
 
@@ -36,7 +36,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models
         public Parameter()
         {
             ValueOptions = new Collection<ValueOption>();
-            ParameterPhotos = new Collection<ParameterPhoto>();
+            ParameterFigures = new Collection<ParameterFigure>();
         }
 
         #endregion // Constructors

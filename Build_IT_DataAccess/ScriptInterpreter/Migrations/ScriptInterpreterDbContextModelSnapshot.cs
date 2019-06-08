@@ -19,6 +19,21 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.Figure", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Figures");
+                });
+
             modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.Parameter", b =>
                 {
                     b.Property<long>("Id")
@@ -62,34 +77,17 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                     b.ToTable("Parameters");
                 });
 
-            modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.ParameterPhoto", b =>
+            modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.ParameterFigure", b =>
                 {
                     b.Property<long>("ParameterId");
 
-                    b.Property<long>("PhotoId");
+                    b.Property<long>("FigureId");
 
-                    b.Property<int?>("PhotoId1");
+                    b.HasKey("ParameterId", "FigureId");
 
-                    b.HasKey("ParameterId", "PhotoId");
+                    b.HasIndex("FigureId");
 
-                    b.HasIndex("PhotoId1");
-
-                    b.ToTable("ParameterPhotos");
-                });
-
-            modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.Photo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Photos");
+                    b.ToTable("ParameterFigures");
                 });
 
             modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.Script", b =>
@@ -186,16 +184,17 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.ParameterPhoto", b =>
+            modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.ParameterFigure", b =>
                 {
-                    b.HasOne("Build_IT_DataAccess.ScriptInterpreter.Models.Parameter", "Parameter")
-                        .WithMany("ParameterPhotos")
-                        .HasForeignKey("ParameterId")
+                    b.HasOne("Build_IT_DataAccess.ScriptInterpreter.Models.Figure", "Figure")
+                        .WithMany()
+                        .HasForeignKey("FigureId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Build_IT_DataAccess.ScriptInterpreter.Models.Photo", "Photo")
-                        .WithMany()
-                        .HasForeignKey("PhotoId1");
+                    b.HasOne("Build_IT_DataAccess.ScriptInterpreter.Models.Parameter", "Parameter")
+                        .WithMany("ParameterFigures")
+                        .HasForeignKey("ParameterId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.ScriptTag", b =>

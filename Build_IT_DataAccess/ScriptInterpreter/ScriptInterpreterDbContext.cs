@@ -14,6 +14,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter
         public DbSet<Script> Scripts { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Parameter> Parameters { get; set; }
+        public DbSet<Figure> Figures { get; set; }
 
         #endregion // Properties
 
@@ -61,9 +62,8 @@ namespace Build_IT_DataAccess.ScriptInterpreter
             modelBuilder.ApplyConfiguration(new ParameterConfiguration());
             modelBuilder.ApplyConfiguration(new ValueOptionConfiguration());
             modelBuilder.ApplyConfiguration(new ScriptTagConfiguration());
-            modelBuilder.ApplyConfiguration(new PhotoConfiguration());
-            modelBuilder.ApplyConfiguration(new ParameterPhotoConfiguration());
-
+            modelBuilder.ApplyConfiguration(new ParameterFigureConfiguration());
+            modelBuilder.ApplyConfiguration(new FigureConfiguration());
         }
 
         #endregion // Protected_Methods

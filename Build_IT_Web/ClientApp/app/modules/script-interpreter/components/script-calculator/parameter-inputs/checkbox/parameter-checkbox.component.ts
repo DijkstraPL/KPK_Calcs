@@ -17,8 +17,8 @@ export class ParameterCheckboxComponent implements OnInit {
     parameterOptions = ParameterOptions;
     isDefault: boolean;
 
-    @ViewChild('defaultField') defaultField: MatCheckbox;
-    @ViewChild('checkboxField') checkboxField: MatCheckbox;
+    @ViewChild('defaultField', { static: false }) defaultField: MatCheckbox;
+    @ViewChild('checkboxField', { static: false }) checkboxField: MatCheckbox;
 
     constructor() {
     }

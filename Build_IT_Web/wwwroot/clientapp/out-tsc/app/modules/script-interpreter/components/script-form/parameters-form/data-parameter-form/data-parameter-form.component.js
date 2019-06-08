@@ -36,14 +36,13 @@ var DataParameterFormComponent = /** @class */ (function () {
             accordingTo: new FormControl('', Validators.maxLength(200)),
             notes: new FormControl('', Validators.maxLength(1000)),
             valueOptionSetting: new FormControl(0),
-            valueOptions: new FormArray([])
+            valueOptions: new FormArray([]),
+            figures: new FormArray([]),
         });
         this.matcher = new AppErrorStateMatcher();
         this.newParameter = new ParameterImpl();
         this.created = new EventEmitter();
         this.updated = new EventEmitter();
-        // type: string = ParameterFilter[ParameterFilter.data];
-        // important: boolean;
         this.valueTypes = this.getEnumValues(ValueType);
         this.context = ParameterOptions;
         this.allowUserValues = false;
@@ -132,6 +131,15 @@ var DataParameterFormComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataParameterFormComponent.prototype, "parameterFigures", {
+        get: function () {
+            return this.parameterForm.get('figures');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DataParameterFormComponent.prototype.ngOnInit = function () {
+    };
     DataParameterFormComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
         if (changes.newParameter) {
@@ -142,6 +150,10 @@ var DataParameterFormComponent = /** @class */ (function () {
                 name: new FormControl(vo.name),
                 value: new FormControl(vo.value),
                 description: new FormControl(vo.description)
+            })); });
+            parameter.figures.forEach(function (f) { return _this.parameterFigures.push(new FormGroup({
+                id: new FormControl(f.id),
+                fileName: new FormControl(f.fileName),
             })); });
             this.setNewParameterChanges(changes.newParameter);
         }
@@ -225,8 +237,6 @@ var DataParameterFormComponent = /** @class */ (function () {
             this.allowUserValues ? ValueOptionSettings.UserInput : ValueOptionSettings.None;
     };
     DataParameterFormComponent.prototype.onSubmit = function ($event) {
-        // this.adjustProperties();
-        // this.setContext();
         if (this.newlyAddedParameter)
             this.create();
         else
@@ -242,14 +252,6 @@ var DataParameterFormComponent = /** @class */ (function () {
             _this.updated.emit(p);
         }, function (error) { return console.error(error); });
     };
-    //private setDataType() {
-    //    if ((this.newParameter.context & ParameterFilter.data) != 0)
-    //        this.type = ParameterFilter[ParameterFilter.data];
-    //    else if ((this.newParameter.context & ParameterFilter.static) != 0)
-    //        this.type = ParameterFilter[ParameterFilter.static];
-    //    else if ((this.newParameter.context & ParameterFilter.calculation) != 0)
-    //        this.type = ParameterFilter[ParameterFilter.calculation];
-    //}
     DataParameterFormComponent.prototype.setValueOptionsSettings = function () {
         this.allowUserValues = this.newParameter.valueOptionSetting == ValueOptionSettings.UserInput;
     };
@@ -274,27 +276,27 @@ var DataParameterFormComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], DataParameterFormComponent.prototype, "updated", void 0);
     __decorate([
-        ViewChild('editable'),
+        ViewChild('editable', { static: true }),
         __metadata("design:type", MatRadioButton)
     ], DataParameterFormComponent.prototype, "editable", void 0);
     __decorate([
-        ViewChild('static'),
+        ViewChild('static', { static: true }),
         __metadata("design:type", MatRadioButton)
     ], DataParameterFormComponent.prototype, "static", void 0);
     __decorate([
-        ViewChild('calculable'),
+        ViewChild('calculable', { static: true }),
         __metadata("design:type", MatRadioButton)
     ], DataParameterFormComponent.prototype, "calculable", void 0);
     __decorate([
-        ViewChild('visible'),
+        ViewChild('visible', { static: true }),
         __metadata("design:type", MatCheckbox)
     ], DataParameterFormComponent.prototype, "visible", void 0);
     __decorate([
-        ViewChild('important'),
+        ViewChild('important', { static: true }),
         __metadata("design:type", MatCheckbox)
     ], DataParameterFormComponent.prototype, "important", void 0);
     __decorate([
-        ViewChild('optional'),
+        ViewChild('optional', { static: true }),
         __metadata("design:type", MatCheckbox)
     ], DataParameterFormComponent.prototype, "optional", void 0);
     DataParameterFormComponent = __decorate([

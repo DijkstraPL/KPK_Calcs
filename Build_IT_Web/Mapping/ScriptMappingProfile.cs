@@ -20,10 +20,10 @@ namespace Build_IT_Web.Mapping
             CreateMap<Tag, TagResource>();
             CreateMap<Parameter, ParameterResource>()
                 .ForMember(p => p.Equation, operation => operation.Ignore())
-                .ForMember(pr => pr.Photos, operation
-                => operation.MapFrom(p => p.ParameterPhotos.Select(pp => pp.Photo)));
+                .ForMember(pr => pr.Figures, operation
+                => operation.MapFrom(p => p.ParameterFigures.Select(pp => pp.Figure)));
             CreateMap<ValueOption, ValueOptionResource>();
-            CreateMap<Photo, PhotoResource>();
+            CreateMap<Figure, FigureResource>();
 
             // API Resource to Domain
             CreateMap<ScriptResource, Script>()
@@ -47,7 +47,7 @@ namespace Build_IT_Web.Mapping
                     RemoveNotAddedValueOptions(pr, p);
                     AddNewValueOptions(pr, p);
                 })
-                .ForMember(p => p.ParameterPhotos, operation => operation.Ignore())
+                .ForMember(p => p.ParameterFigures, operation => operation.Ignore())
                 .AfterMap((pr, p) =>
                 {
                     RemoveNotAddedPhotos(pr, p);
@@ -113,18 +113,19 @@ namespace Build_IT_Web.Mapping
 
         private void RemoveNotAddedPhotos(ParameterResource parameterResource, Parameter parameter)
         {
-            var removedPhotos = parameter.ParameterPhotos.Where(pp =>
-            !parameterResource.Photos.Select(pr => pr.Id).Contains(pp.PhotoId)).ToList();
-            foreach (var photo in removedPhotos)
-                parameter.ParameterPhotos.Remove(photo);
+            var removedFigures = parameter.ParameterFigures
+                .Where(pp => !parameterResource.Figures.Select(pr => pr.Id).Contains(pp.FigureId)).ToList();
+            foreach (var figure in removedFigures)
+                parameter.ParameterFigures.Remove(figure);
         }
 
         private void AddNewPhotos(ParameterResource parameterResource, Parameter parameter)
         {
-            var addedPhotos = parameterResource.Photos.Where(pr => !parameter.ParameterPhotos.Any(pp => pp.PhotoId == pr.Id))
-                 .Select(pr => new ParameterPhoto { PhotoId = pr.Id }).ToList();
-            foreach (var photo in addedPhotos)
-                parameter.ParameterPhotos.Add(photo);
+            var addedFigures = parameterResource.Figures
+                .Where(pr => !parameter.ParameterFigures.Any(pp => pp.FigureId == pr.Id))
+                 .Select(pr => new ParameterFigure { FigureId = pr.Id }).ToList();
+            foreach (var figure in addedFigures)
+                parameter.ParameterFigures.Add(figure);
         }
 
         #endregion // Private_Methods

@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +27,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         private readonly IParameterRepository _parameterRepository;
         private readonly IScriptInterpreterUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly PhotoSettings _photoSettings;
+        private readonly FigureSettings _photoSettings;
 
         #endregion // Fields
 
@@ -35,7 +37,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             IParameterRepository parameterRepository,
             IScriptInterpreterUnitOfWork unitOfWork,
             IMapper mapper,
-            IOptionsSnapshot<PhotoSettings> options)
+            IOptionsSnapshot<FigureSettings> options)
         {
             _host = host;
             _parameterRepository = parameterRepository;
@@ -48,6 +50,14 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
         #region Public_Methods
         
+        [HttpGet]
+        public async Task<IEnumerable<FigureResource>> GetFigures(long parameterId)
+        {
+            var figures = await _parameterRepository.GetFiguresAsync(parameterId);
+
+            return _mapper.Map<IEnumerable<Figure>, IEnumerable<FigureResource>>(figures);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Upload(long parameterId, IFormFile file)
         {
@@ -63,7 +73,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             if (!_photoSettings.IsSupported(file.FileName))
                 return BadRequest("Invalid file type");
 
-            string uploadsFolderPath = Path.Combine(_host.WebRootPath, "clientapp", "upload", parameterId.ToString());
+            string uploadsFolderPath = Path.Combine(_host.WebRootPath, "clientapp", "uploads", parameterId.ToString());
             if (!Directory.Exists(uploadsFolderPath))
                 Directory.CreateDirectory(uploadsFolderPath);
 
@@ -75,13 +85,13 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
                 await file.CopyToAsync(stream);
             }
 
-            var photo = new Photo { FileName = fileName };
-            var parameterPhoto = new ParameterPhoto { Parameter = parameter, Photo = photo };
-            parameter.ParameterPhotos.Add(parameterPhoto);
+            var figure = new Figure { FileName = fileName };
+            var parameterPhoto = new ParameterFigure { Parameter = parameter, Figure = figure };
+            parameter.ParameterFigures.Add(parameterPhoto);
 
             await _unitOfWork.CompleteAsync();
 
-            return Ok(_mapper.Map<Photo, PhotoResource>(photo));
+            return Ok(_mapper.Map<Figure, FigureResource>(figure));
         }
 
         #endregion // Public_Methods
