@@ -8,6 +8,8 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models
 {
     public class Parameter
     {
+        #region Properties
+        
         public long Id { get; set; }
         public string Name { get; set; }
         public int Number { get; set; }
@@ -25,10 +27,18 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models
         public string Notes { get; set; }
         public Script Script { get; set; }
         public long ScriptId { get; set; }
+        public ICollection<ParameterPhoto> ParameterPhotos { get; set; }
 
+        #endregion // Properties
+
+        #region Constructors
+        
         public Parameter()
         {
             ValueOptions = new Collection<ValueOption>();
+            ParameterPhotos = new Collection<ParameterPhoto>();
         }
+
+        #endregion // Constructors
     }
 }

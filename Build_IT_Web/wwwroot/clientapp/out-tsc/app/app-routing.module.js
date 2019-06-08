@@ -7,8 +7,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { AboutMeComponent } from './components/about-me/about-me.component';
 var routes = [
     { path: 'home', component: HomeComponent },
+    { path: 'about', component: AboutMeComponent },
     { path: '**', component: HomeComponent }
 ];
 var AppRoutingModule = /** @class */ (function () {

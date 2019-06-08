@@ -17,6 +17,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserModule } from '@angular/platform-browser';
+import { MatFileUploadModule } from 'angular-material-fileupload';
 
 @NgModule({
     declarations: [
@@ -28,6 +30,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
       MatButtonModule,
       MatInputModule,
       MatCheckboxModule,
+      BrowserModule,
       BrowserAnimationsModule,
       DragDropModule,
       MatCardModule,
@@ -39,7 +42,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
       MatTabsModule,
       MatChipsModule,
       MatToolbarModule,
-      MatPaginatorModule
+      MatPaginatorModule,
+      MatFileUploadModule
   ]
 })
 export class MdComponentsModule { }

@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { AboutMeComponent } from './components/about-me/about-me.component';
 import { AppErrorHandler } from './common/errors/app-error-handler';
 import { LoadsRoutingModule } from './modules/loads/loads-routing.module';
 import { LoadsModule } from './modules/loads/loads.module';
@@ -29,7 +30,8 @@ var AppModule = /** @class */ (function () {
                 AppComponent,
                 NavMenuComponent,
                 HomeComponent,
-                CarouselComponent
+                CarouselComponent,
+                AboutMeComponent
             ],
             imports: [
                 BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

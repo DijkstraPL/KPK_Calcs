@@ -7,6 +7,7 @@ using Build_IT_DataAccess.DeadLoads.Repositories.Interfaces;
 using Build_IT_DataAccess.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
+using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -32,7 +33,8 @@ namespace Build_IT_Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            const string dataAccessAssemblyName = "Build_IT_DataAccess";
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));            
+            string dataAccessAssemblyName = Configuration.GetSection("DataAccess").GetValue<string>("Project");
 
             services.AddScoped<IScriptRepository, ScriptRepository>();
             services.AddScoped<ITagRepository, TagRepository>();

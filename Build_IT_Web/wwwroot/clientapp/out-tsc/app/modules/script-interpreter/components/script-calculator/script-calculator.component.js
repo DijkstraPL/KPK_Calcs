@@ -24,7 +24,6 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         this.calculationService = calculationService;
         this.myControl = new FormControl();
         this.parameterOptions = ParameterOptions;
-        this.displayedColumns = ['name', 'value', 'unit', 'description'];
     }
     ScriptCalculatorComponent.prototype.ngOnInit = function () {
         var _this = this;

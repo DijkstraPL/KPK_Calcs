@@ -6,6 +6,7 @@ namespace Build_IT_ScriptInterpreter.Parameters.ValueOptions
     public enum ValueOptionSettings
     {
         None = 0,
-        UserInput = 1
+        UserInput = 1,
+        Boolean = 2
     }
 }

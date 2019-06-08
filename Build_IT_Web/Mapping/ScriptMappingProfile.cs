@@ -9,6 +9,8 @@ namespace Build_IT_Web.Mapping
 {
     public class ScriptMappingProfile : Profile
     {
+        #region Public_Methods
+        
         public ScriptMappingProfile()
         {
             // Domain Resource to API
@@ -17,8 +19,11 @@ namespace Build_IT_Web.Mapping
                 => operation.MapFrom(s => s.Tags.Select(st => st.Tag)));
             CreateMap<Tag, TagResource>();
             CreateMap<Parameter, ParameterResource>()
-                .ForMember(p => p.Equation, operation => operation.Ignore());
+                .ForMember(p => p.Equation, operation => operation.Ignore())
+                .ForMember(pr => pr.Photos, operation
+                => operation.MapFrom(p => p.ParameterPhotos.Select(pp => pp.Photo)));
             CreateMap<ValueOption, ValueOptionResource>();
+            CreateMap<Photo, PhotoResource>();
 
             // API Resource to Domain
             CreateMap<ScriptResource, Script>()
@@ -41,12 +46,22 @@ namespace Build_IT_Web.Mapping
                     UpdateValueOptions(pr, p);
                     RemoveNotAddedValueOptions(pr, p);
                     AddNewValueOptions(pr, p);
+                })
+                .ForMember(p => p.ParameterPhotos, operation => operation.Ignore())
+                .AfterMap((pr, p) =>
+                {
+                    RemoveNotAddedPhotos(pr, p);
+                    AddNewPhotos(pr, p);
                 });
             CreateMap<ValueOptionResource, ValueOption>()
                 .ForMember(vo => vo.Id, operation => operation.Ignore())
                 .ForMember(vo => vo.Parameter, operation => operation.Ignore())
                 .ForMember(vo => vo.ParameterId, operation => operation.Ignore());
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
 
         private void UpdateValueOptions(ParameterResource parameterResource, Parameter parameter)
         {
@@ -73,7 +88,7 @@ namespace Build_IT_Web.Mapping
         {
             var addedValueOptions = parameterResource.ValueOptions
                 .Where(vor => !parameter.ValueOptions.Any(vo => vo.Id == vor.Id))
-                 .Select(vor => 
+                 .Select(vor =>
                  new ValueOption { Name = vor.Name, Description = vor.Description, Value = vor.Value }
                  ).ToList();
             foreach (var valueOption in addedValueOptions)
@@ -95,5 +110,23 @@ namespace Build_IT_Web.Mapping
             foreach (var tag in addedTags)
                 script.Tags.Add(tag);
         }
+
+        private void RemoveNotAddedPhotos(ParameterResource parameterResource, Parameter parameter)
+        {
+            var removedPhotos = parameter.ParameterPhotos.Where(pp =>
+            !parameterResource.Photos.Select(pr => pr.Id).Contains(pp.PhotoId)).ToList();
+            foreach (var photo in removedPhotos)
+                parameter.ParameterPhotos.Remove(photo);
+        }
+
+        private void AddNewPhotos(ParameterResource parameterResource, Parameter parameter)
+        {
+            var addedPhotos = parameterResource.Photos.Where(pr => !parameter.ParameterPhotos.Any(pp => pp.PhotoId == pr.Id))
+                 .Select(pr => new ParameterPhoto { PhotoId = pr.Id }).ToList();
+            foreach (var photo in addedPhotos)
+                parameter.ParameterPhotos.Add(photo);
+        }
+
+        #endregion // Private_Methods
     }
 }
