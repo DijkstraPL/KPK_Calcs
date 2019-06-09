@@ -8,11 +8,9 @@ namespace Build_IT_CommonTools
 
         public static double GetDouble(this string value)
         {
-            double result;
-
             // Try parsing in the current culture
             if (!double.TryParse(value, NumberStyles.Any,
-                CultureInfo.CurrentCulture, out result) &&
+                CultureInfo.CurrentCulture, out double result) &&
                 // Then try in US english
                 !double.TryParse(value, NumberStyles.Any,
                 CultureInfo.GetCultureInfo("en-US"), out result) &&
@@ -20,7 +18,7 @@ namespace Build_IT_CommonTools
                 !double.TryParse(value, NumberStyles.Any,
                 CultureInfo.InvariantCulture, out result))
             {
-                result = default(double);
+                result = default;
             }
             return result;
         }

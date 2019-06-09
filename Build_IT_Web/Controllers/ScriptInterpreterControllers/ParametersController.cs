@@ -32,21 +32,21 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}/parameters")]
-        public async Task<IEnumerable<ParameterResource>> GetAllParameters(long id)
+        [HttpGet("{scriptId}/parameters")]
+        public async Task<IEnumerable<ParameterResource>> GetAllParameters(long scriptId)
         {
-            var parameters = await _parameterRepository.GetAllParametersForScriptAsync(id);
+            var parameters = await _parameterRepository.GetAllParametersForScriptAsync(scriptId);
 
             return _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters.ToList());
         }
 
-        [HttpPost("{id}/parameters")]
-        public async Task<IActionResult> CreateParameter(long id, [FromBody] ParameterResource parameterResource)
+        [HttpPost("{scriptId}/parameters")]
+        public async Task<IActionResult> CreateParameter(long scriptId, [FromBody] ParameterResource parameterResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var script = await _scriptRepository.GetAsync(id);
+            var script = await _scriptRepository.GetAsync(scriptId);
             if (script == null)
                 return NotFound();
 
@@ -62,13 +62,13 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             return Ok(result);
         }
 
-        [HttpPut("{id}/parameters/{parId}")]
-        public async Task<IActionResult> UpdateParameter(long id, long parId, [FromBody] ParameterResource parameterResource)
+        [HttpPut("{scriptId}/parameters/{parId}")]
+        public async Task<IActionResult> UpdateParameter(long scriptId, long parId, [FromBody] ParameterResource parameterResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var script = await _scriptRepository.GetAsync(id);
+            var script = await _scriptRepository.GetAsync(scriptId);
             var parameter = await _parameterRepository.GetParameterWithAllDependanciesAsync(parId);
 
             if (script == null || parameter == null)
@@ -86,7 +86,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             return Ok(result);
         }
 
-        [HttpDelete("{id}/parameters/{parId}")]
+        [HttpDelete("{scriptId}/parameters/{parId}")]
         public async Task<IActionResult> DeleteParameter(long parId)
         {
             var parameter = await _parameterRepository.GetParameterWithAllDependanciesAsync(parId);

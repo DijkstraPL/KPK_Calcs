@@ -7,14 +7,14 @@ export class FigureService {
     constructor(private http: HttpClient) {
 
     }
+    
+    getFigures(parameterId: number): Observable<any> {
+        return this.http.get(`/api/parameters/${parameterId}/photos`);
+    }
 
     upload(parameterId: number, photo) {
         var formData = new FormData();
         formData.append('file', photo);
         return this.http.post(`/api/parameters/${parameterId}/photos`, formData);
-    }
-
-    getFigures(parameterId: number): Observable<any> {
-        return this.http.get(`/api/parameters/${parameterId}/photos`);
     }
 }

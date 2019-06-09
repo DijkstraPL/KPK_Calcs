@@ -13,6 +13,7 @@ export class ParameterFiguresComponent implements OnInit {
 
     @Input() parameter: Parameter;
     figures: Figure[];
+    isExpanded: boolean;
     
     constructor(private figureService: FigureService) {
     }
@@ -20,4 +21,12 @@ export class ParameterFiguresComponent implements OnInit {
     ngOnInit(): void {
         this.figures = this.parameter.figures;
     }    
+
+    expanded() {
+        this.isExpanded = true;
+    }
+
+    collapsed() {
+        this.isExpanded = false;
+    }
 }

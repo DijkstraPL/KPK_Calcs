@@ -109,14 +109,14 @@ namespace Build_IT_ScriptInterpreter.Scripts
             return this;
         }
 
-        public ScriptBuilder AppendParameter(Parameter parameter)
+        public ScriptBuilder AppendParameter(IParameter parameter)
         {
             _script.Parameters.Add(parameter);
             Modification(this, EventArgs.Empty);
             return this;
         }
 
-        public ScriptBuilder AppendParameters(params Parameter[] parameters)
+        public ScriptBuilder AppendParameters(params IParameter[] parameters)
         {
             foreach (var parameter in parameters)
                 _script.Parameters.Add(parameter);

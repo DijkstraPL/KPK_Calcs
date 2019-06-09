@@ -46,9 +46,14 @@ namespace Build_IT_ScriptInterpreter.Expressions
         #region Constructors
 
         private ExpressionEvaluator(string expression, IDictionary<string, object> parameters = null)
+            :this(new ExpressionWrapper(expression), parameters)
+        {
+        }
+
+        internal ExpressionEvaluator(IExpression expression, IDictionary<string, object> parameters = null)
         {
             Functions = new List<string>();
-            _expression = new ExpressionWrapper(expression);
+            _expression = expression;
 
             SetAdditionalParameters(parameters);
             if (parameters != null)
@@ -66,7 +71,6 @@ namespace Build_IT_ScriptInterpreter.Expressions
             try
             {
                 return _expression.Evaluate();
-                //return _expression.ToLambda<string>().Invoke();
             }
             catch (EvaluationException ex)
             {
@@ -97,7 +101,7 @@ namespace Build_IT_ScriptInterpreter.Expressions
             return parameters;
         }
 
-        private static void PopulateParameters(IDictionary<string, object> parameters, ICustomParameter customParameter)
+        private void PopulateParameters(IDictionary<string, object> parameters, ICustomParameter customParameter)
         {
             foreach (var name in customParameter.Names)
                 if (!parameters.ContainsKey(name))

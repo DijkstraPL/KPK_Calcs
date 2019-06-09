@@ -9,11 +9,10 @@ using System.Text;
 namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
 {
     [TestFixture]
-    [Ignore("Not finished")]
     public class ScriptMeanCompressiveStrengthAt28Days
     {
         [Test]
-        public void CreationTest_Success()
+        public void NewlyCreatedScriptTest_Success()
         {
             var scriptBuilder = ScriptBuilder.Create(name: "Mean compresive strength of concrete at 28 days",
                 description: "Calculate mean compressive strength of concrete at 28 days. Base on [PN-EN-1992-1-1:2002 Table 3.1].",
@@ -45,8 +44,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 });
 
             var script = scriptBuilder.Build();
-            new XmlSave().SaveData(script,
-                @"C:\Users\Disseminate\Desktop\Script Interpreter\Scripts\" + script.Name + ".xml");
 
             var calculationEngine = new CalculationEngine(script);
 

@@ -11,7 +11,6 @@ using System.Text;
 namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
 {
     [TestFixture]
-    [Ignore("Not finished")]
     public class SteelTension
     {
         [Test]
@@ -97,8 +96,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
             });
 
             var script = scriptBuilder.Build();
-            new XmlSave().SaveData(script,
-                @"C:\Users\Disseminate\Desktop\Script Interpreter\Scripts\" + script.Name + ".xml");
 
             var calculationEngine = new CalculationEngine(script);
             calculationEngine.CalculateFromText("[A]=60|[f_y_]=235|[N_Ed_]=1400");

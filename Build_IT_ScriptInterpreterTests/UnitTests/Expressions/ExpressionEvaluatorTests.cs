@@ -1,4 +1,6 @@
 ﻿using Build_IT_ScriptInterpreter.Expressions;
+using Build_IT_ScriptInterpreter.Expressions.Interfaces;
+using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -7,6 +9,17 @@ namespace Build_IT_ScriptInterpreterTests.UnitTests.Expressions
     [TestFixture]
     public class ExpressionEvaluatorTests
     {
+        [Test]
+        public void EvaluateTest_Success()
+        {
+            var expression = new Mock<IExpression>();
+
+            var expressionEvaluator = new ExpressionEvaluator(expression.Object);
+            expressionEvaluator.Evaluate();
+
+            expression.Verify(e => e.Evaluate());
+        }
+
         [Test]
         public void AdditionalFunctionsTest_Success()
         {

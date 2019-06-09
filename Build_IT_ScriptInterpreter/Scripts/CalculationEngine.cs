@@ -114,41 +114,9 @@ namespace Build_IT_ScriptInterpreter.Scripts
             foreach (var parameter in _scriptParameters.Where(p => (p.Context & ParameterOptions.Editable) != 0))
             {
                 if (!string.IsNullOrWhiteSpace(parameter.Value?.ToString()))
-                    parameter.Value = parameters.SingleOrDefault(p => p.Key == parameter.Name).Value;
-                //else if (parameter.Scripts.Count > 0)
-                //{
-                //    var neededParameters = parameter.Scripts[0].Parameters.Where(p
-                //        => (p.Context & ParameterOptions.Editable) != 0);
-                //    var providedParameters = parameters.Where(p => neededParameters.Select(np => np.Name).Contains(p.Key));
-                //    string parameterValues = "";
-                //    foreach (var param in providedParameters)
-                //    {
-                //        parameterValues += "[";
-                //        parameterValues += param.Key;
-                //        parameterValues += "]=";
-                //        parameterValues += param.Value;
-                //        parameterValues += ",";
-                //    }
-                //    parameterValues = parameterValues.Remove(parameterValues.Length - 1, 1);
-
-                //    var calculateEngine = new CalculationEngine(parameter.Scripts[0]);
-                //    calculateEngine.CalculateFromText(parameterValues);
-                //    parameter.Value = parameter.Scripts[0].Parameters.FirstOrDefault(p => p.Name == parameter.Name).Value;
-                //}
+                    parameter.Value = parameters.SingleOrDefault(p => p.Key == parameter.Name).Value;             
             }
         }
-
-        //private IEnumerable<IParameter> PrepareDataParameters(object[] values)
-        //{
-        //    int i = 0;
-        //    foreach (var parameter in _scriptParameters.Where(p
-        //        => (p.Context & ParameterOptions.Calculation) == 0))
-        //    {
-        //        if ((parameter.Context & ParameterOptions.StaticData) == 0)
-        //            parameter.Value = values[i++];
-        //        yield return parameter;
-        //    }
-        //}
 
         private void SetParameter(IDictionary<string, object> parameters, string parameterName, string parameterValue)
         {

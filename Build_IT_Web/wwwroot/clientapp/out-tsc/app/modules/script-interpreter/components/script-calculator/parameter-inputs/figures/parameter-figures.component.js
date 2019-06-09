@@ -16,6 +16,12 @@ var ParameterFiguresComponent = /** @class */ (function () {
     ParameterFiguresComponent.prototype.ngOnInit = function () {
         this.figures = this.parameter.figures;
     };
+    ParameterFiguresComponent.prototype.expanded = function () {
+        this.isExpanded = true;
+    };
+    ParameterFiguresComponent.prototype.collapsed = function () {
+        this.isExpanded = false;
+    };
     __decorate([
         Input(),
         __metadata("design:type", Object)

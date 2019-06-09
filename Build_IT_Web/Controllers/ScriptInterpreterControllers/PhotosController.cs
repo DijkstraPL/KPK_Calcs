@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 {
-    [Route("api/parameters/{parameterId}/photos")]
+    [Route("api/parameters")]
     [ApiController]
     public class PhotosController : ControllerBase
     {
@@ -50,7 +50,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
         #region Public_Methods
         
-        [HttpGet]
+        [HttpGet("{parameterId}/photos")]
         public async Task<IEnumerable<FigureResource>> GetFigures(long parameterId)
         {
             var figures = await _parameterRepository.GetFiguresAsync(parameterId);
@@ -58,7 +58,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             return _mapper.Map<IEnumerable<Figure>, IEnumerable<FigureResource>>(figures);
         }
 
-        [HttpPost]
+        [HttpPost("{parameterId}/photos")]
         public async Task<IActionResult> Upload(long parameterId, IFormFile file)
         {
             var parameter = await _parameterRepository.GetAsync(parameterId);

@@ -41,10 +41,10 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             return Ok(scriptViewModels);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetScript(long id)
+        [HttpGet("{scriptId}")]
+        public async Task<IActionResult> GetScript(long scriptId)
         {
-            var script = await _scriptRepository.GetScriptWithTagsAsync(id);
+            var script = await _scriptRepository.GetScriptWithTagsAsync(scriptId);
 
             if (script == null)
                 return NotFound();
@@ -72,13 +72,13 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateScript(long id, [FromBody] ScriptResource scriptResource)
+        [HttpPut("{scriptId}")]
+        public async Task<IActionResult> UpdateScript(long scriptId, [FromBody] ScriptResource scriptResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var script = await _scriptRepository.GetScriptWithTagsAsync(id);
+            var script = await _scriptRepository.GetScriptWithTagsAsync(scriptId);
 
             if (script == null)
                 return NotFound();
@@ -89,16 +89,16 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
             await _unitOfWork.CompleteAsync();
 
-            script = await _scriptRepository.GetScriptWithTagsAsync(id);
+            script = await _scriptRepository.GetScriptWithTagsAsync(scriptId);
 
             var result = _mapper.Map<Script, ScriptResource>(script);
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteScript(long id)
+        [HttpDelete("{scriptId}")]
+        public async Task<IActionResult> DeleteScript(long scriptId)
         {
-            var script = await _scriptRepository.GetAsync(id);
+            var script = await _scriptRepository.GetAsync(scriptId);
 
             if (script == null)
                 return NotFound();
@@ -106,7 +106,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             _scriptRepository.Remove(script);
             await _unitOfWork.CompleteAsync();
 
-            return Ok(id);
+            return Ok(scriptId);
         }        
     }
 }

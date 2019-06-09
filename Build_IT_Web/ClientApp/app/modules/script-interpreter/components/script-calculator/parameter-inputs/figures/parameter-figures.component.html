@@ -1,11 +1,12 @@
 ﻿<mat-accordion *ngIf="figures.length > 0">
-    <mat-expansion-panel>
+    <mat-expansion-panel (closed)="collapsed()"
+                         (opened)="expanded()">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Pictures
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <div>
+        <div *ngIf="isExpanded">
             <img *ngFor="let figure of figures"
                  src="clientapp/uploads/{{parameter.id}}/{{figure.fileName}}"
                  alt="Parameter picture" />

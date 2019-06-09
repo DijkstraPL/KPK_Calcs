@@ -28,6 +28,7 @@ import { ScriptDataFormComponent } from './components/script-form/script-data-fo
 import { ParameterCheckboxComponent } from './components/script-calculator/parameter-inputs/checkbox/parameter-checkbox.component';
 import { FigureParameterFormComponent } from './components/script-form/parameters-form/data-parameter-form/figure-parameter-form/figure-parameter-form.component';
 import { ParameterFiguresComponent } from './components/script-calculator/parameter-inputs/figures/parameter-figures.component';
+import { ExistingFiguresDialogComponent } from './components/script-form/parameters-form/data-parameter-form/existing-figures-dialog/existing-figures-dialog.component';
 import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
@@ -59,7 +60,8 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 ParameterResultComponent,
                 ParameterCheckboxComponent,
                 FigureParameterFormComponent,
-                ParameterFiguresComponent
+                ParameterFiguresComponent,
+                ExistingFiguresDialogComponent
             ],
             imports: [
                 PipesModule,
@@ -70,6 +72,9 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 BrowserAnimationsModule,
                 ReactiveFormsModule,
                 MdComponentsModule
+            ],
+            entryComponents: [
+                ExistingFiguresDialogComponent
             ],
             exports: [
                 ScriptCardsComponent

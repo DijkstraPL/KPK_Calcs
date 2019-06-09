@@ -96,8 +96,7 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Expressions.Functions
             var calculator = new Mock<ICalculator>();
             calculator.Setup(c => c.Map(It.IsAny<IList<object>>()));
             calculator.Setup(c => c.Calculate()).Returns(result.Object);
-
-
+            
             var calculateFunction = new CalculateFunction(calculator: calculator.Object);
 
             var functionArgs = new NCalc.FunctionArgs() { Parameters = parameters };

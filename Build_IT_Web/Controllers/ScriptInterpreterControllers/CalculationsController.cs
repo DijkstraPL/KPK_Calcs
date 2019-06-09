@@ -28,11 +28,11 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             _mapper = mapper;
         }
 
-        [HttpPut("{id}/calculate")]
-        public async Task<IEnumerable<ParameterResource>> Calculate(long id, [FromBody] List<ParameterResource> userParameters)
+        [HttpPut("{scriptId}/calculate")]
+        public async Task<IEnumerable<ParameterResource>> Calculate(long scriptId, [FromBody] List<ParameterResource> userParameters)
         {
-            var script = await _scriptRepository.GetAsync(id);
-            var parameters = await _parameterRepository.GetAllParametersForScriptAsync(id);
+            var script = await _scriptRepository.GetAsync(scriptId);
+            var parameters = await _parameterRepository.GetAllParametersForScriptAsync(scriptId);
 
             var equations = new Dictionary<long,string> (parameters.ToDictionary(p => p.Id, p => p.Value));
             

@@ -3,6 +3,8 @@ import { FigureService } from '../../../../../services/figure.service';
 import { Parameter } from '../../../../../models/interfaces/parameter';
 import { Figure } from '../../../../../models/interfaces/figure';
 import { FormGroup, AbstractControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ExistingFiguresDialogComponent } from '../existing-figures-dialog/existing-figures-dialog.component';
 
 @Component({
     selector: 'app-figure-parameter-form',
@@ -24,7 +26,8 @@ export class FigureParameterFormComponent implements OnInit {
         return this.parameterForm.get('figures');
     }
 
-    constructor(private figureService: FigureService) {
+    constructor(private figureService: FigureService,
+        public dialog: MatDialog) {
 
     }
     ngOnInit(): void {
@@ -39,4 +42,15 @@ export class FigureParameterFormComponent implements OnInit {
                 this.figures.push(figure)
             });
     }
+
+    //pickExistingDialog() {
+    //    const dialogRef = this.dialog.open(ExistingFiguresDialogComponent, {
+    //        width: '250px',
+    //        data: { }
+    //    });
+
+    //    dialogRef.afterClosed().subscribe(result => {
+    //        this.figures.push(result);
+    //    });
+    //}
 }

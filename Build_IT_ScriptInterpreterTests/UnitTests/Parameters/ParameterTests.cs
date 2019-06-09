@@ -1,9 +1,5 @@
 ﻿using Build_IT_ScriptInterpreter.Parameters;
-using Build_IT_ScriptInterpreter.Parameters.Interfaces;
-using Build_IT_ScriptInterpreter.Units;
 using NUnit.Framework;
-using System.Collections.Generic;
-using static Build_IT_ScriptInterpreter.Units.Length;
 
 namespace Build_IT_ScriptInterpreterTests.UnitTests.Parameters
 {

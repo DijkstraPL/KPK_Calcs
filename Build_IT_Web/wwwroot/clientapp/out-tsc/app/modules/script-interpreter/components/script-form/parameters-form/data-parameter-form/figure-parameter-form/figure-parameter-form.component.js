@@ -10,9 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { FigureService } from '../../../../../services/figure.service';
 import { FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 var FigureParameterFormComponent = /** @class */ (function () {
-    function FigureParameterFormComponent(figureService) {
+    function FigureParameterFormComponent(figureService, dialog) {
         this.figureService = figureService;
+        this.dialog = dialog;
     }
     Object.defineProperty(FigureParameterFormComponent.prototype, "parameterId", {
         get: function () {
@@ -53,7 +55,8 @@ var FigureParameterFormComponent = /** @class */ (function () {
             templateUrl: './figure-parameter-form.component.html',
             styleUrls: ['./figure-parameter-form.component.scss']
         }),
-        __metadata("design:paramtypes", [FigureService])
+        __metadata("design:paramtypes", [FigureService,
+            MatDialog])
     ], FigureParameterFormComponent);
     return FigureParameterFormComponent;
 }());

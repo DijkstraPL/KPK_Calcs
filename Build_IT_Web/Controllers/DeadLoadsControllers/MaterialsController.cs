@@ -36,7 +36,7 @@ namespace Build_IT_Web.Controllers.DeadLoadsControllers
         #region Public_Methods
 
         [HttpGet("{subcategoryId}/materials")]
-        public async Task<IEnumerable<MaterialResource>> GetAllSubcategories(long subcategoryId)
+        public async Task<IEnumerable<MaterialResource>> GetAllMaterials(long subcategoryId)
         {
             var materials = await _materialRepository.GetAllMaterialsForSubcategoryAsync(subcategoryId);
 

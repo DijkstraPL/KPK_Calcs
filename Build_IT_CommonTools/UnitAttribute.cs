@@ -10,7 +10,7 @@ namespace Build_IT_CommonTools
     {
         #region Fields
 
-        private string _unit;
+        private readonly string _unit;
 
         #endregion // Fields
 

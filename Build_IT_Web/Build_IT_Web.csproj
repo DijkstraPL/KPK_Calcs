@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Authors>Luis Tepepa</Authors>
+    <Authors>Konrad Kania</Authors>
     <Version>1.0.1</Version>
     <Company></Company>
-    <TypeScriptToolsVersion>3.4.5</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <Product />
     <AssemblyName>Build_IT_Web</AssemblyName>
     <RootNamespace>Build_IT_Web</RootNamespace>

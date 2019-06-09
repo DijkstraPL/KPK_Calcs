@@ -10,7 +10,7 @@ namespace Build_IT_CommonTools
     {
         #region Fields
 
-        private string _abbreviation;
+        private readonly string _abbreviation;
 
         #endregion // Fields
 

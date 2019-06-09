@@ -38,12 +38,7 @@ namespace Build_IT_ScriptInterpreter.Expressions
                 if (name == fuctionName.ToLower())
                     args.Result = function.Invoke(args);
             };
-        }
-
-        //public Func<ExpressionContext, T> ToLambda<T>()
-        //{
-        //    return _original.ToLambda<ExpressionContext, T>();
-        //}
+       }
 
         #endregion // Public_Methods
     }

@@ -13,13 +13,13 @@ var FigureService = /** @class */ (function () {
     function FigureService(http) {
         this.http = http;
     }
+    FigureService.prototype.getFigures = function (parameterId) {
+        return this.http.get("/api/parameters/" + parameterId + "/photos");
+    };
     FigureService.prototype.upload = function (parameterId, photo) {
         var formData = new FormData();
         formData.append('file', photo);
         return this.http.post("/api/parameters/" + parameterId + "/photos", formData);
-    };
-    FigureService.prototype.getFigures = function (parameterId) {
-        return this.http.get("/api/parameters/" + parameterId + "/photos");
     };
     FigureService = __decorate([
         Injectable({ providedIn: 'root' }),
