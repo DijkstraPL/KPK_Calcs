@@ -69,6 +69,7 @@ namespace Build_IT_Web
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "wwwroot/clientapp/dist";
+                //configuration.RootPath = "wwwroot/clientapp/out-tsc";
             });
         }
 
