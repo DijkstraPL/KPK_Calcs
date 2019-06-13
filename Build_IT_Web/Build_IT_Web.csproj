@@ -52,6 +52,7 @@
     <Folder Include="ClientApp\app\modules\loads\components\wind-loads-components\" />
     <Folder Include="ClientApp\app\models\" />
     <Folder Include="ClientApp\assets\images\" />
+    <Folder Include="wwwroot\clientapp\dist\" />
     <Folder Include="wwwroot\clientapp\uploads\" />
   </ItemGroup>
 

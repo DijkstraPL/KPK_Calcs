@@ -47,7 +47,12 @@ namespace Build_IT_DataAccess.ScriptInterpreter
 
                     _configuration = builder.Build();
                 }
+#if RELEASE
                 optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Scripts"));
+#endif
+#if DEBUG
+                optionsBuilder.UseSqlServer(_configuration.GetSection("TestConnectionStrings").GetValue<string>("Scripts"));
+#endif
             }
             else
                 base.OnConfiguring(optionsBuilder);
@@ -66,6 +71,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter
             modelBuilder.ApplyConfiguration(new FigureConfiguration());
         }
 
-        #endregion // Protected_Methods
+#endregion // Protected_Methods
     }
 }

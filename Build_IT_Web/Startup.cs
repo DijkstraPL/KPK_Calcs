@@ -41,19 +41,32 @@ namespace Build_IT_Web
             services.AddScoped<IParameterRepository, ParameterRepository>();
 
             services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();
+#if RELEASE
             services.AddDbContext<ScriptInterpreterDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("Scripts"), 
                 b => b.MigrationsAssembly(dataAccessAssemblyName)));
-            
+#endif
+#if DEBUG
+            services.AddDbContext<ScriptInterpreterDbContext>(
+                options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("Scripts"), 
+                b => b.MigrationsAssembly(dataAccessAssemblyName)));
+#endif
+
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ISubcategoryRepository, SubcategoryRepository>();
             services.AddScoped<IMaterialRepository, MaterialRepository>();
 
             services.AddScoped<IDeadLoadsUnitOfWork, DeadLoadsUnitOfWork>();
+#if RELEASE
             services.AddDbContext<DeadLoadsDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DeadLoads"),
                 b => b.MigrationsAssembly(dataAccessAssemblyName)));
-
+#endif
+#if DEBUG
+            services.AddDbContext<ScriptInterpreterDbContext>(
+                options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("DeadLoads"),
+                b => b.MigrationsAssembly(dataAccessAssemblyName)));
+#endif
             services.AddAutoMapper();
             
             services.AddMvc()

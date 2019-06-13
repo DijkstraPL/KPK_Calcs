@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Build_IT_ScriptInterpreter.Expressions.Parameters
 {
-  //  [Export(typeof(ICustomParameter))]
+    [Export(typeof(ICustomParameter))]
     public class EParameter : ICustomParameter<double>
     {
         #region Properties

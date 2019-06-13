@@ -4,6 +4,7 @@
            matInput
            [required]="isRequired()"
            [formControl]="valueOptionsForm"
+           [attr.type]="parameter.valueType == 0 ? 'number' : 'text'"
            name="parameterInput"
            [matAutocomplete]="auto"
            [(ngModel)]="parameter.value"

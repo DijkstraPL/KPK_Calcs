@@ -139,7 +139,7 @@ module.exports = "<mat-accordion *ngIf=\"figures.length > 0\">\r\n    <mat-expan
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<mat-form-field>\r\n    <input matInput\r\n           [required]=\"isRequired()\"\r\n           autocomplete=\"off\"\r\n           [(ngModel)]=\"parameter.value\"\r\n           (change)=\"changeValue()\">\r\n    <mat-placeholder>\r\n        <span [innerHtml]=\"parameter.name | html\"></span>\r\n    </mat-placeholder>\r\n    <span matSuffix [innerHtml]=\"parameter.unit | html\"></span>\r\n</mat-form-field>\r\n<p class=\"parameter-description\">{{parameter.description}}</p>\r\n"
+module.exports = "<mat-form-field>\r\n    <input matInput\r\n           [required]=\"isRequired()\"\r\n           autocomplete=\"off\"\r\n           [(ngModel)]=\"parameter.value\"\r\n           (change)=\"changeValue()\">\r\n    <mat-placeholder>\r\n        <span [innerHtml]=\"parameter.name | html\"></span>\r\n    </mat-placeholder>\r\n    <span matSuffix [innerHtml]=\"parameter.unit | html\"></span>\r\n</mat-form-field>\r\n<p class=\"parameter-description\">{{parameter.description}}</p>"
 
 /***/ }),
 

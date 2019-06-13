@@ -1,8 +1,8 @@
-﻿
-<mat-form-field>
+﻿<mat-form-field>
     <input matInput
            [required]="isRequired()"
            autocomplete="off"
+           [attr.type]="parameter.valueType == 0 ? 'number' : 'text'"
            [(ngModel)]="parameter.value"
            (change)="changeValue()">
     <mat-placeholder>

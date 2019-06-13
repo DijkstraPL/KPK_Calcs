@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Parameter } from '../../../../models/interfaces/parameter';
 import { ParameterOptions } from '../../../../models/enums/parameterOptions';
+import { ValueType } from '../../../../models/enums/valueType';
 
 @Component({
     selector: 'parameter-input',
@@ -14,6 +15,7 @@ export class ParameterInputComponent implements OnInit {
     @Output() valueChanged = new EventEmitter<Parameter>();
 
     parameterOptions = ParameterOptions;
+    valueTypes = ValueType;
 
     constructor() {
     }
