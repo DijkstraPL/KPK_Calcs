@@ -6,6 +6,7 @@
            [formControl]="valueOptionsForm"
            [attr.type]="parameter.valueType == 0 ? 'number' : 'text'"
            name="parameterInput"
+           [ngClass]="parameter.name"
            [matAutocomplete]="auto"
            [(ngModel)]="parameter.value"
            (change)="changeValue()">
@@ -18,9 +19,11 @@
 
 <mat-autocomplete #auto="matAutocomplete"
                   autoActiveFirstOption>
-    <mat-option *ngIf="!isRequired()"> </mat-option>
+    <mat-option *ngIf="!isRequired()"
+                class="default"> </mat-option>
     <mat-option *ngFor="let valueOption of filteredValueOptions | async"
-                [value]="valueOption.value">
+                [value]="valueOption.value"
+                [ngClass]="valueOption.name">
         {{valueOption.name }}
     </mat-option>
 </mat-autocomplete>

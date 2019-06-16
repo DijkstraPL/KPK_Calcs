@@ -22,7 +22,7 @@ var ParameterResultComponent = /** @class */ (function () {
         return (this.parameter.context & ParameterOptions.important) != 0;
     };
     __decorate([
-        Input(),
+        Input('parameter'),
         __metadata("design:type", Object)
     ], ParameterResultComponent.prototype, "parameter", void 0);
     ParameterResultComponent = __decorate([

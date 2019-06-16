@@ -11,7 +11,8 @@ import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 
 export class ParameterResultComponent implements OnInit {
     @Input('parameter') parameter: Parameter = null;
-
+    //valueClass: string;
+    //forbiddenSigns = ['(', ')', ',', '.', '^'];
 
     valueTypes = ValueType;
 
@@ -24,6 +25,7 @@ export class ParameterResultComponent implements OnInit {
     }
 
     ngOnInit(): void {
+       // this.forbiddenSigns.forEach(fs => this.valueClass = this.parameter.name.replace(fs, ''));
     }
 
     isImportant(): boolean {

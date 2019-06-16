@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -12,10 +12,14 @@
     <PackageReference Include="Moq" Version="4.11.0" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
+    <PackageReference Include="Selenium.Support" Version="3.141.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="74.0.3729.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Build_IT_Web\Build_IT_Web.csproj" />
+    <ProjectReference Include="..\Build_IT_Web_TestHelper\Build_IT_Web_TestHelper.csproj" />
   </ItemGroup>
 
 </Project>

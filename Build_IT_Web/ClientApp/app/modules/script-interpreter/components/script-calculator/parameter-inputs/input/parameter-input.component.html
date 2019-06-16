@@ -2,6 +2,7 @@
     <input matInput
            [required]="isRequired()"
            autocomplete="off"
+           [ngClass]="parameter.name"
            [attr.type]="parameter.valueType == 0 ? 'number' : 'text'"
            [(ngModel)]="parameter.value"
            (change)="changeValue()">

@@ -95,13 +95,21 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             }
         });
     };
+    ScriptCalculatorComponent.prototype.isValid = function () {
+        var _this = this;
+        return this.parameters
+            .filter(function (p) { return (p.context & ParameterOptions.editable) != 0 &&
+            (p.context & ParameterOptions.optional) == 0 &&
+            _this.validateVisibility(p); })
+            .every(function (p) { return p.value != undefined && p.value != ""; });
+    };
     ScriptCalculatorComponent.prototype.calculate = function () {
         var _this = this;
         this.isCalculating = true;
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(function (params) {
             _this.resultParameters = params.filter(function (p) { return (p.context & ParameterOptions.visible) != 0; });
-            console.log("Results", _this.resultParameters);
+            _this.resultParameters.forEach(function (p) { return p.equation = _this.setEquation(p); });
         }, function (error) {
             console.error(error);
             _this.isCalculating = false;
@@ -109,6 +117,14 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             _this.isCalculating = false;
             _this.valueChanged = false;
         });
+    };
+    ScriptCalculatorComponent.prototype.setEquation = function (parameter) {
+        var firstPartOfEquation = parameter.equation.replace(/\[/g, '').replace(/\]/g, '');
+        var secondPartOfEquation = parameter.equation;
+        this.parameters.concat(this.staticDataParameters).concat(this.resultParameters).forEach(function (p) {
+            secondPartOfEquation = secondPartOfEquation.replace("[" + p.name + "]", " " + p.value + p.unit + " ");
+        });
+        return firstPartOfEquation + ' = ' + secondPartOfEquation;
     };
     ScriptCalculatorComponent.prototype.validateVisibility = function (parameter) {
         if (!parameter.visibilityValidator)

@@ -9,7 +9,7 @@
                         {{parameter.value | toNumber | number:'1.0-3'}}
                     </span>
                     <ng-template #textValue>
-                        <span>{{parameter.value}}</span>
+                        <span [ngClass]="parameter.name">{{parameter.value}}</span>
                     </ng-template>
                     <span [innerHtml]="parameter.unit | html"></span>
                 </p>

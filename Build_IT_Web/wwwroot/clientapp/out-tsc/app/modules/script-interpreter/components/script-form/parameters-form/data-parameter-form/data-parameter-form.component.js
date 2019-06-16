@@ -7,17 +7,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { ParameterImpl } from '../../../../models/parameterImpl';
-import { ParameterService } from '../../../../services/parameter.service';
-import { ParameterOptions } from '../../../../models/enums/parameterOptions';
-import { ValueOptionImpl } from '../../../../models/valueOptionImpl';
-import { ValueOptionSettings } from '../../../../models/enums/valueOptionSettings';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { AppErrorStateMatcher } from '../../../../../../common/errors/app-error-state-matcher';
-import { ValueType } from '../../../../models/enums/valueType';
-import { MatRadioButton } from '@angular/material/radio';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatRadioButton } from '@angular/material/radio';
+import { AppErrorStateMatcher } from '../../../../../../common/errors/app-error-state-matcher';
+import { ParameterOptions } from '../../../../models/enums/parameterOptions';
+import { ValueOptionSettings } from '../../../../models/enums/valueOptionSettings';
+import { ValueType } from '../../../../models/enums/valueType';
+import { ParameterImpl } from '../../../../models/parameterImpl';
+import { ValueOptionImpl } from '../../../../models/valueOptionImpl';
+import { ParameterService } from '../../../../services/parameter.service';
 var DataParameterFormComponent = /** @class */ (function () {
     function DataParameterFormComponent(parameterService) {
         this.parameterService = parameterService;
@@ -57,6 +57,13 @@ var DataParameterFormComponent = /** @class */ (function () {
     Object.defineProperty(DataParameterFormComponent.prototype, "parameterName", {
         get: function () {
             return this.parameterForm.get('name');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataParameterFormComponent.prototype, "parameterNumber", {
+        get: function () {
+            return this.parameterForm.get('number');
         },
         enumerable: true,
         configurable: true
@@ -139,6 +146,8 @@ var DataParameterFormComponent = /** @class */ (function () {
         configurable: true
     });
     DataParameterFormComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.previousParameters = this.parameters.filter(function (p) { return p.number < _this.parameterNumber.value; });
     };
     DataParameterFormComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
@@ -232,6 +241,11 @@ var DataParameterFormComponent = /** @class */ (function () {
             this.onAllowUserValues();
         }
     };
+    DataParameterFormComponent.prototype.select = function (parameter) {
+        this.parameterValue.setValue(this.parameterValue.value + "[" + parameter.name + "]");
+        this.value.nativeElement.focus();
+        this.value.nativeElement.selectionEnd = this.parameterValue.value.length;
+    };
     DataParameterFormComponent.prototype.onAllowUserValues = function () {
         this.newParameter.valueOptionSetting =
             this.allowUserValues ? ValueOptionSettings.UserInput : ValueOptionSettings.None;
@@ -268,6 +282,10 @@ var DataParameterFormComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], DataParameterFormComponent.prototype, "newParameter", void 0);
     __decorate([
+        Input('parameters'),
+        __metadata("design:type", Array)
+    ], DataParameterFormComponent.prototype, "parameters", void 0);
+    __decorate([
         Output('created'),
         __metadata("design:type", Object)
     ], DataParameterFormComponent.prototype, "created", void 0);
@@ -299,6 +317,10 @@ var DataParameterFormComponent = /** @class */ (function () {
         ViewChild('optional', { static: true }),
         __metadata("design:type", MatCheckbox)
     ], DataParameterFormComponent.prototype, "optional", void 0);
+    __decorate([
+        ViewChild('value', { static: false }),
+        __metadata("design:type", ElementRef)
+    ], DataParameterFormComponent.prototype, "value", void 0);
     DataParameterFormComponent = __decorate([
         Component({
             selector: 'app-data-parameter-form',
