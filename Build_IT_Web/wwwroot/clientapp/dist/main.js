@@ -106,7 +106,7 @@ module.exports = "\r\n    <h1 class=\"text-center\">Snow loads calculators</h1>\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-form-field>\r\n    <input type=\"text\"\r\n           aria-label=\"Number\"\r\n           matInput\r\n           [required]=\"isRequired()\"\r\n           [formControl]=\"valueOptionsForm\"\r\n           name=\"parameterInput\"\r\n           [matAutocomplete]=\"auto\"\r\n           [(ngModel)]=\"parameter.value\"\r\n           (change)=\"changeValue()\">\r\n    <mat-placeholder>\r\n        <span [innerHtml]=\"parameter.name | html\"></span>\r\n    </mat-placeholder>\r\n    <span matSuffix\r\n          [innerHtml]=\"parameter.unit | html\"></span>\r\n</mat-form-field>\r\n\r\n<mat-autocomplete #auto=\"matAutocomplete\"\r\n                  autoActiveFirstOption>\r\n    <mat-option *ngIf=\"!isRequired()\"> </mat-option>\r\n    <mat-option *ngFor=\"let valueOption of filteredValueOptions | async\"\r\n                [value]=\"valueOption.value\">\r\n        {{valueOption.name }}\r\n    </mat-option>\r\n</mat-autocomplete>\r\n\r\n<p class=\"parameter-description\">{{parameter.description}}</p>"
+module.exports = "<mat-form-field>\r\n    <input type=\"text\"\r\n           aria-label=\"Number\"\r\n           matInput\r\n           [required]=\"isRequired()\"\r\n           [formControl]=\"valueOptionsForm\"\r\n           [attr.type]=\"parameter.valueType == 0 ? 'number' : 'text'\"\r\n           name=\"parameterInput\"\r\n           [matAutocomplete]=\"auto\"\r\n           [(ngModel)]=\"parameter.value\"\r\n           (change)=\"changeValue()\">\r\n    <mat-placeholder>\r\n        <span [innerHtml]=\"parameter.name | html\"></span>\r\n    </mat-placeholder>\r\n    <span matSuffix\r\n          [innerHtml]=\"parameter.unit | html\"></span>\r\n</mat-form-field>\r\n\r\n<mat-autocomplete #auto=\"matAutocomplete\"\r\n                  autoActiveFirstOption>\r\n    <mat-option *ngIf=\"!isRequired()\"> </mat-option>\r\n    <mat-option *ngFor=\"let valueOption of filteredValueOptions | async\"\r\n                [value]=\"valueOption.value\">\r\n        {{valueOption.name }}\r\n    </mat-option>\r\n</mat-autocomplete>\r\n\r\n<p class=\"parameter-description\">{{parameter.description}}</p>"
 
 /***/ }),
 
@@ -128,7 +128,7 @@ module.exports = "\r\n<div class=\"align-self-start parameter-radio\">\r\n    <l
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-accordion *ngIf=\"figures.length > 0\">\r\n    <mat-expansion-panel (closed)=\"collapsed()\"\r\n                         (opened)=\"expanded()\">\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                Pictures\r\n            </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <div *ngIf=\"isExpanded\">\r\n            <img *ngFor=\"let figure of figures\"\r\n                 src=\"clientapp/uploads/{{parameter.id}}/{{figure.fileName}}\"\r\n                 alt=\"Parameter picture\" />\r\n        </div>\r\n    </mat-expansion-panel>\r\n</mat-accordion>\r\n"
+module.exports = "<mat-accordion *ngIf=\"figures.length > 0\">\r\n    <mat-expansion-panel (closed)=\"collapsed()\"\r\n                         (opened)=\"expanded()\">\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                Pictures\r\n            </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <div *ngIf=\"isExpanded\">\r\n            <img *ngFor=\"let figure of figures\"\r\n                 src=\"clientapp/uploads/parameters/{{figure.fileName}}\"\r\n                 alt=\"Parameter picture\" />\r\n        </div>\r\n    </mat-expansion-panel>\r\n</mat-accordion>\r\n"
 
 /***/ }),
 
@@ -139,7 +139,7 @@ module.exports = "<mat-accordion *ngIf=\"figures.length > 0\">\r\n    <mat-expan
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-form-field>\r\n    <input matInput\r\n           [required]=\"isRequired()\"\r\n           autocomplete=\"off\"\r\n           [(ngModel)]=\"parameter.value\"\r\n           (change)=\"changeValue()\">\r\n    <mat-placeholder>\r\n        <span [innerHtml]=\"parameter.name | html\"></span>\r\n    </mat-placeholder>\r\n    <span matSuffix [innerHtml]=\"parameter.unit | html\"></span>\r\n</mat-form-field>\r\n<p class=\"parameter-description\">{{parameter.description}}</p>"
+module.exports = "<mat-form-field>\r\n    <input matInput\r\n           [required]=\"isRequired()\"\r\n           autocomplete=\"off\"\r\n           [attr.type]=\"parameter.valueType == 0 ? 'number' : 'text'\"\r\n           [(ngModel)]=\"parameter.value\"\r\n           (change)=\"changeValue()\">\r\n    <mat-placeholder>\r\n        <span [innerHtml]=\"parameter.name | html\"></span>\r\n    </mat-placeholder>\r\n    <span matSuffix [innerHtml]=\"parameter.unit | html\"></span>\r\n</mat-form-field>\r\n<p class=\"parameter-description\">{{parameter.description}}</p>"
 
 /***/ }),
 
@@ -183,7 +183,7 @@ module.exports = "<mat-form-field>\r\n    <mat-label [innerHtml]=\"parameter.nam
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [ngClass]=\"{'parameter-result-important': isImportant()}\">\r\n    <mat-list-item class=\"mt-3\">\r\n        <div class=\"d-inline-flex m-2\">\r\n            <h3 class=\"blockquote d-inline-block mr-2 parameter-result-header\"\r\n                [innerHtml]=\"parameter.name | html\"></h3>\r\n            <div class=\"d-inline-block\">\r\n                <p class=\"font-weight-bold mb-0 parameter-result-value\">\r\n                    <span *ngIf=\"parameter.valueType == valueTypesMapping['number']; else textValue\">\r\n                        {{parameter.value | toNumber | number:'1.0-3'}}\r\n                    </span>\r\n                    <ng-template #textValue>\r\n                        <span>{{parameter.value}}</span>\r\n                    </ng-template>\r\n                    <span [innerHtml]=\"parameter.unit | html\"></span>\r\n                </p>\r\n                <p class=\"d-inline-block\"> {{ parameter.description }} </p>\r\n            </div>\r\n        </div>\r\n    </mat-list-item>\r\n</div>"
+module.exports = "<div [ngClass]=\"{'parameter-result-important': isImportant()}\">\r\n    <mat-list-item class=\"mt-3\">\r\n        <div class=\"d-inline-flex m-2\">\r\n            <h3 class=\"blockquote d-inline-block mr-2 parameter-result-header\"\r\n                [innerHtml]=\"parameter.name | html\"></h3>\r\n            <div class=\"d-inline-block\">\r\n                <p class=\"font-weight-bold mb-0 parameter-result-value\">\r\n                    <span *ngIf=\"parameter.valueType == valueTypesMapping['number']; else textValue\">\r\n                        {{parameter.value | toNumber | number:'1.0-3'}}\r\n                    </span>\r\n                    <ng-template #textValue>\r\n                        <span>{{parameter.value}}</span>\r\n                    </ng-template>\r\n                    <span [innerHtml]=\"parameter.unit | html\"></span>\r\n                </p>\r\n                <p class=\"d-inline-block\"> {{ parameter.description }} </p>\r\n            </div>\r\n            <p innerHtml=\"{{parameter.equation | html}}\"></p>\r\n        </div>\r\n    </mat-list-item>\r\n</div>"
 
 /***/ }),
 
@@ -194,7 +194,7 @@ module.exports = "<div [ngClass]=\"{'parameter-result-important': isImportant()}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n    <div *ngIf=\"script\">\r\n        <div class=\"text-center\">\r\n            <h1>{{script.name}}</h1>\r\n        </div>\r\n\r\n        <p class=\"ml-2\">{{script.description}}</p>\r\n        <ul>\r\n            <li *ngFor=\"let tag of script.tags\">\r\n                {{tag.name}}\r\n            </li>\r\n        </ul>\r\n        <div *ngIf=\"!visibleParameters\">\r\n            <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\r\n        </div>\r\n\r\n\r\n        <div *ngIf=\"staticDataParameters && staticDataParameters.length > 0\">\r\n            <h5 class=\"ml-2\">Static data</h5>\r\n            <mat-list dense>\r\n                <div *ngFor=\"let parameter of staticDataParameters\">\r\n                    <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                    <mat-divider></mat-divider>\r\n                </div>\r\n            </mat-list>\r\n        </div>\r\n\r\n        <div class=\"mt-2\">\r\n            <div *ngFor=\"let parameter of notGroupedParameters\"\r\n                 class=\"list-inline-item ml-5 d-inline-flex\">\r\n                <parameter-form [parameter]=\"parameter\"\r\n                                (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n            </div>\r\n\r\n\r\n            <mat-accordion>\r\n                <mat-expansion-panel *ngFor=\"let group of groups\">\r\n                    <mat-expansion-panel-header>\r\n                        <mat-panel-title>\r\n                            {{group.name}}\r\n                        </mat-panel-title>\r\n                    </mat-expansion-panel-header>\r\n\r\n                    <ul class=\"list-inline m-0\">\r\n                        <li *ngFor=\"let parameter of group.parameters\"\r\n                            class=\"list-inline-item ml-5 d-inline-flex\">\r\n                            <parameter-form [parameter]=\"parameter\"\r\n                                            (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n                        </li>\r\n                    </ul>\r\n\r\n                </mat-expansion-panel>\r\n            </mat-accordion>\r\n        </div>\r\n\r\n\r\n        <div class=\"text-center\"\r\n             *ngIf=\"visibleParameters\">\r\n            <button mat-stroked-button\r\n                    color=\"accent\"\r\n                    (click)=\"calculate()\">\r\n                <span class=\"fa fa-calculator\"></span> Calculate\r\n            </button>\r\n        </div>\r\n\r\n        <div *ngIf=\"isCalculating\"\r\n             class=\"mt-2\">\r\n            <mat-progress-bar mode=\"query\"></mat-progress-bar>\r\n        </div>\r\n\r\n        <div *ngIf=\"resultParameters && !valueChanged\">\r\n            <h3 class=\"ml-2\">Results</h3>\r\n            <mat-list dense>\r\n                <div *ngFor=\"let parameter of resultParameters\">\r\n                    <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                    <mat-divider></mat-divider>\r\n                </div>\r\n            </mat-list>\r\n        </div>\r\n    </div>\r\n"
+module.exports = "\r\n<div *ngIf=\"script\">\r\n    <div class=\"text-center\">\r\n        <h1>{{script.name}}</h1>\r\n    </div>\r\n\r\n    <p class=\"ml-2\">{{script.description}}</p>\r\n    <ul>\r\n        <li *ngFor=\"let tag of script.tags\">\r\n            {{tag.name}}\r\n        </li>\r\n    </ul>\r\n    <div *ngIf=\"!visibleParameters\">\r\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\r\n    </div>\r\n\r\n    <div *ngIf=\"staticDataParameters && staticDataParameters.length > 0\">\r\n        <h5 class=\"ml-2\">Static data</h5>\r\n        <mat-list dense>\r\n            <div *ngFor=\"let parameter of staticDataParameters\">\r\n                <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                <mat-divider></mat-divider>\r\n            </div>\r\n        </mat-list>\r\n    </div>\r\n\r\n    <div class=\"mt-2\">\r\n        <div *ngFor=\"let parameter of notGroupedParameters\"\r\n             class=\"list-inline-item ml-5 d-inline-flex\">\r\n            <parameter-form [parameter]=\"parameter\"\r\n                            (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n        </div>\r\n\r\n\r\n        <mat-accordion>\r\n            <mat-expansion-panel *ngFor=\"let group of groups\">\r\n                <mat-expansion-panel-header>\r\n                    <mat-panel-title>\r\n                        {{group.name}}\r\n                    </mat-panel-title>\r\n                </mat-expansion-panel-header>\r\n\r\n                <ul class=\"list-inline m-0\">\r\n                    <li *ngFor=\"let parameter of group.parameters\"\r\n                        class=\"list-inline-item ml-5 d-inline-flex\">\r\n                        <parameter-form [parameter]=\"parameter\"\r\n                                        (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n                    </li>\r\n                </ul>\r\n\r\n            </mat-expansion-panel>\r\n        </mat-accordion>\r\n    </div>\r\n\r\n\r\n    <div class=\"text-center\"\r\n         *ngIf=\"visibleParameters\">\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                type=\"button\"\r\n                [disabled]=\"!isValid()\"\r\n                (click)=\"calculate()\">\r\n            <span class=\"fa fa-calculator\"></span> Calculate\r\n        </button>\r\n    </div>\r\n\r\n    <div *ngIf=\"isCalculating\"\r\n         class=\"mt-2\">\r\n        <mat-progress-bar mode=\"query\"></mat-progress-bar>\r\n    </div>\r\n\r\n    <div *ngIf=\"resultParameters && !valueChanged\">\r\n        <h3 class=\"ml-2\">Results</h3>\r\n        <mat-list dense>\r\n            <div *ngFor=\"let parameter of resultParameters\">\r\n                <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                <mat-divider></mat-divider>\r\n            </div>\r\n        </mat-list>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -227,7 +227,7 @@ module.exports = "<div class=\"row mt-5 m-2\">\r\n        <app-script-card *ngFo
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n\r\n<form (ngSubmit)=\"onSubmit($event)\"\r\n      [formGroup]=\"parameterForm\">\r\n\r\n    <h3>\r\n        <span innerHTML=\"{{parameterName.value | html }}\"></span> - {{parameterDescription.value}}\r\n    </h3>\r\n\r\n    <div class=\"full-width\">\r\n        <label id=\"parameter-type\">Pick parameter type</label>\r\n        <mat-radio-group aria-labelledby=\"parameter-type\"\r\n                         (change)=\"parameterTypeChanged()\">\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #editable\r\n                              [value]=\"context.editable\">Editable</mat-radio-button>\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #static\r\n                              [value]=\"context.staticData\">Static</mat-radio-button>\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #calculable\r\n                              [value]=\"context.calculation\">Calculable</mat-radio-button>\r\n        </mat-radio-group>\r\n\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.visible\"\r\n                      class=\"ml-2\"\r\n                      #visible>Visible</mat-checkbox>\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.important\"\r\n                      class=\"ml-2\"\r\n                      #important>Important</mat-checkbox>\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.optional\"\r\n                      class=\"ml-2\"\r\n                      #optional>Optional</mat-checkbox>\r\n\r\n    </div>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               required\r\n               placeholder=\"Name\"\r\n               formControlName=\"name\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Parameter name</mat-hint>\r\n        <mat-error *ngIf=\"parameterName && parameterName.hasError('maxlength') && !parameterName.hasError('required')\">\r\n            Name should be maximum {{parameterName.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n        <mat-error *ngIf=\"parameterName && parameterName.hasError('required')\">\r\n            Name is <strong>required</strong>\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               placeholder=\"Unit\"\r\n               formControlName=\"unit\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Unit</mat-hint>\r\n        <mat-error *ngIf=\"parameterUnit && parameterUnit.hasError('maxlength')\">\r\n            Unit should be maximum {{parameterUnit.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               placeholder=\"Document\"\r\n               formControlName=\"accordingTo\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Document</mat-hint>\r\n        <mat-error *ngIf=\"parameterDocument && parameterDocument.hasError('maxlength')\">\r\n            Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <mat-label>Value Type</mat-label>\r\n        <mat-select matNativeControl\r\n                    formControlName=\"valueType\"\r\n                    required>\r\n            <mat-option *ngFor=\"let valueType of valueTypes; let i = index\"\r\n                        [value]=\"i\">\r\n                {{valueType}}\r\n            </mat-option>\r\n        </mat-select>\r\n        <mat-hint>Value Type</mat-hint>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <mat-label>Group name</mat-label>\r\n        <input matInput\r\n               placeholder=\"Group name\"\r\n               formControlName=\"groupName\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Group name</mat-hint>\r\n        <mat-error *ngIf=\"parameterGroupName && parameterGroupName.hasError('maxlength')\">\r\n            Group namme should be maximum {{parameterGroupName.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  placeholder=\"Value\"\r\n                  formControlName=\"value\"\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>Value for parameter</mat-hint>\r\n        <mat-error *ngIf=\"parameterValue && parameterValue.hasError('maxlength')\">\r\n            Value should be maximum {{parameterValue.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div class=\"value-options-border p-2\">\r\n        <app-value-options-form [parameterForm]=\"parameterForm\"></app-value-options-form>\r\n    </div>\r\n\r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  placeholder=\"Description\"\r\n                  formControlName=\"description\"\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>Description for parameter</mat-hint>\r\n        <mat-error *ngIf=\"parameterDescription && parameterDescription.hasError('maxlength')\">\r\n            Description should be maximum {{parameterDescription.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               placeholder=\"Visibility validator\"\r\n               formControlName=\"visibilityValidator\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Visibility validator</mat-hint>\r\n        <mat-error *ngIf=\"parameterVisibilityValidator && parameterVisibilityValidator.hasError('maxlength')\">\r\n            Visibility validator should be maximum {{parameterVisibilityValidator.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               placeholder=\"Data validator\"\r\n               formControlName=\"dataValidator\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Data validator</mat-hint>\r\n        <mat-error *ngIf=\"parameterDataValidator && parameterDataValidator.hasError('maxlength')\">\r\n            Data validator should be maximum {{parameterDataValidator.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div class=\"value-options-border p-2 mb-3\"\r\n         *ngIf=\"parameterId.value > 0\">\r\n        <app-figure-parameter-form [parameterForm]=\"parameterForm\"></app-figure-parameter-form>\r\n    </div>\r\n\r\n    <div class=\"full-width\">\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                type=\"submit\">\r\n            {{ newlyAddedParameter ? 'Add' : 'Update'}}\r\n        </button>\r\n    </div>\r\n</form>\r\n"
+module.exports = "\r\n\r\n<form (ngSubmit)=\"onSubmit($event)\"\r\n      [formGroup]=\"parameterForm\">\r\n\r\n    <h3>\r\n        <span innerHTML=\"{{parameterName.value | html }}\"></span> - {{parameterDescription.value}}\r\n    </h3>\r\n\r\n    <div class=\"full-width\">\r\n        <label id=\"parameter-type\">Pick parameter type</label>\r\n        <mat-radio-group aria-labelledby=\"parameter-type\"\r\n                         (change)=\"parameterTypeChanged()\">\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #editable\r\n                              [value]=\"context.editable\">Editable</mat-radio-button>\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #static\r\n                              [value]=\"context.staticData\">Static</mat-radio-button>\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #calculable\r\n                              [value]=\"context.calculation\">Calculable</mat-radio-button>\r\n        </mat-radio-group>\r\n\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.visible\"\r\n                      class=\"ml-2\"\r\n                      #visible>Visible</mat-checkbox>\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.important\"\r\n                      class=\"ml-2\"\r\n                      #important>Important</mat-checkbox>\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.optional\"\r\n                      class=\"ml-2\"\r\n                      #optional>Optional</mat-checkbox>\r\n\r\n    </div>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               required\r\n               placeholder=\"Name\"\r\n               formControlName=\"name\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Parameter name</mat-hint>\r\n        <mat-error *ngIf=\"parameterName && parameterName.hasError('maxlength') && !parameterName.hasError('required')\">\r\n            Name should be maximum {{parameterName.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n        <mat-error *ngIf=\"parameterName && parameterName.hasError('required')\">\r\n            Name is <strong>required</strong>\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               placeholder=\"Unit\"\r\n               formControlName=\"unit\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Unit</mat-hint>\r\n        <mat-error *ngIf=\"parameterUnit && parameterUnit.hasError('maxlength')\">\r\n            Unit should be maximum {{parameterUnit.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               placeholder=\"Document\"\r\n               formControlName=\"accordingTo\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Document</mat-hint>\r\n        <mat-error *ngIf=\"parameterDocument && parameterDocument.hasError('maxlength')\">\r\n            Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <mat-label>Value Type</mat-label>\r\n        <mat-select matNativeControl\r\n                    formControlName=\"valueType\"\r\n                    required>\r\n            <mat-option *ngFor=\"let valueType of valueTypes; let i = index\"\r\n                        [value]=\"i\">\r\n                {{valueType}}\r\n            </mat-option>\r\n        </mat-select>\r\n        <mat-hint>Value Type</mat-hint>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <mat-label>Group name</mat-label>\r\n        <input matInput\r\n               placeholder=\"Group name\"\r\n               formControlName=\"groupName\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Group name</mat-hint>\r\n        <mat-error *ngIf=\"parameterGroupName && parameterGroupName.hasError('maxlength')\">\r\n            Group namme should be maximum {{parameterGroupName.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  #value\r\n                  placeholder=\"Value\"\r\n                  formControlName=\"value\"\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>Value for parameter</mat-hint>\r\n        <mat-error *ngIf=\"parameterValue && parameterValue.hasError('maxlength')\">\r\n            Value should be maximum {{parameterValue.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div>\r\n        <button mat-stroked-button \r\n                *ngFor=\"let parameter of previousParameters\"\r\n                matTooltip=\"{{parameter.description}}\"\r\n                matTooltipPosition=\"below\" \r\n                innerHtml=\"{{parameter.name | html}} [{{parameter.unit | html}}]\"\r\n                 type=\"button\"\r\n                (click)=\"select(parameter)\"></button>\r\n    </div>\r\n\r\n    <div class=\"value-options-border p-2\">\r\n        <app-value-options-form [parameterForm]=\"parameterForm\"></app-value-options-form>\r\n    </div>\r\n\r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  placeholder=\"Description\"\r\n                  formControlName=\"description\"\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>Description for parameter</mat-hint>\r\n        <mat-error *ngIf=\"parameterDescription && parameterDescription.hasError('maxlength')\">\r\n            Description should be maximum {{parameterDescription.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               placeholder=\"Visibility validator\"\r\n               formControlName=\"visibilityValidator\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Visibility validator</mat-hint>\r\n        <mat-error *ngIf=\"parameterVisibilityValidator && parameterVisibilityValidator.hasError('maxlength')\">\r\n            Visibility validator should be maximum {{parameterVisibilityValidator.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               placeholder=\"Data validator\"\r\n               formControlName=\"dataValidator\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Data validator</mat-hint>\r\n        <mat-error *ngIf=\"parameterDataValidator && parameterDataValidator.hasError('maxlength')\">\r\n            Data validator should be maximum {{parameterDataValidator.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div class=\"value-options-border p-2 mb-3\"\r\n         *ngIf=\"parameterId.value > 0\">\r\n        <app-figure-parameter-form [parameterForm]=\"parameterForm\"></app-figure-parameter-form>\r\n    </div>\r\n\r\n    <div class=\"full-width\">\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                type=\"submit\">\r\n            {{ newlyAddedParameter ? 'Add' : 'Update'}}\r\n        </button>\r\n    </div>\r\n</form>\r\n"
 
 /***/ }),
 
@@ -238,7 +238,7 @@ module.exports = "\r\n\r\n<form (ngSubmit)=\"onSubmit($event)\"\r\n      [formGr
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 mat-dialog-title>Pictures</h1>\r\n<div mat-dialog-content>\r\n    <p>Select proper picture:</p>\r\n    <mat-form-field>\r\n        <img *ngFor=\"let figure of figures\"\r\n             src=\"clientapp/uploads/{{parameterId.value}}/{{figure.fileName}}\"\r\n             alt=\"Parameter picture\" />\r\n    </mat-form-field>\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button \r\n            (click)=\"onNoClick()\">No Thanks</button>\r\n    <button mat-button \r\n            [mat-dialog-close]=\"data\" \r\n            cdkFocusInitial>Ok</button>\r\n</div>"
+module.exports = "<h1 mat-dialog-title>Pictures</h1>\r\n<div mat-dialog-content>\r\n    <p>Select proper picture:</p>\r\n    <mat-form-field>\r\n        <img *ngFor=\"let figure of figures\"\r\n             src=\"clientapp/uploads/{{parameterId.value}}/{{figure.fileName}}\"\r\n             alt=\"Parameter picture\" />\r\n    </mat-form-field>\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button \r\n            type=\"button\"\r\n            (click)=\"onNoClick()\">No Thanks</button>\r\n    <button mat-button \r\n            type=\"button\"\r\n            [mat-dialog-close]=\"data\" \r\n            cdkFocusInitial>Ok</button>\r\n</div>"
 
 /***/ }),
 
@@ -249,7 +249,7 @@ module.exports = "<h1 mat-dialog-title>Pictures</h1>\r\n<div mat-dialog-content>
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                Pictures\r\n            </mat-panel-title>\r\n            <mat-panel-description>\r\n                Provide additional pictures for parameter\r\n            </mat-panel-description>\r\n        </mat-expansion-panel-header>\r\n        <input type=\"file\"\r\n               (change)=\"uploadFigure()\"\r\n               #fileInput />\r\n\r\n        <div class=\"mt-1\">\r\n            <!--<button mat-raised-button (click)=\"pickExistingDialog()\">Pick existing</button>-->\r\n            <img *ngFor=\"let figure of figures\"\r\n                 src=\"clientapp/uploads/{{parameterId.value}}/{{figure.fileName}}\"\r\n                 alt=\"Parameter picture\" />\r\n        </div>\r\n\r\n    </mat-expansion-panel>\r\n</mat-accordion>"
+module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                Pictures\r\n            </mat-panel-title>\r\n            <mat-panel-description>\r\n                Provide additional pictures for parameter\r\n            </mat-panel-description>\r\n        </mat-expansion-panel-header>\r\n        <input type=\"file\"\r\n               (change)=\"uploadFigure()\"\r\n               #fileInput />\r\n\r\n        <div class=\"mt-1\">\r\n            <!--<button mat-raised-button (click)=\"pickExistingDialog()\">Pick existing</button>-->\r\n            <div *ngFor=\"let figure of figures\">\r\n                <img src=\"clientapp/uploads/parameters/{{figure.fileName}}\"\r\n                     alt=\"Parameter picture\" />\r\n                <button mat-stroked-button\r\n                        color=\"warn\"\r\n                        type=\"button\"\r\n                        (click)=\"remove(figure)\">\r\n                    Remove\r\n                </button>\r\n                <p>Test</p>\r\n            </div>\r\n        </div>\r\n\r\n    </mat-expansion-panel>\r\n</mat-accordion>"
 
 /***/ }),
 
@@ -260,7 +260,7 @@ module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <m
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                Value Options\r\n            </mat-panel-title>\r\n            <mat-panel-description>\r\n                Provide some selectable data\r\n            </mat-panel-description>\r\n        </mat-expansion-panel-header>\r\n\r\n        <form [formGroup]=\"parameterForm\">\r\n\r\n            <div>\r\n                <mat-radio-group formControlName=\"valueOptionSetting\">\r\n                    <mat-radio-button [value]=\"valueOptionSettings.None\"\r\n                                      class=\"ml-2\">None</mat-radio-button>\r\n                    <mat-radio-button [value]=\"valueOptionSettings.UserInput\"\r\n                                      class=\"ml-2\">Allow any values</mat-radio-button>\r\n                    <mat-radio-button [value]=\"valueOptionSettings.Boolean\"\r\n                                      (change)=\"booleanSettingChecked($event)\"\r\n                                      class=\"ml-2\">Is boolean</mat-radio-button>\r\n                </mat-radio-group>\r\n            </div>\r\n\r\n            <div *ngIf=\"parameterValueOptionSetting.value != valueOptionSettings.Boolean\">\r\n                <ul *ngFor=\"let valueOption of parameterValueOptions.controls; let i = index\">\r\n                    <li>\r\n                        <div [formGroup]=\"valueOption\">\r\n                            <mat-form-field class=\"m-2\">\r\n                                <input matInput\r\n                                       placeholder=\"Name\"\r\n                                       formControlName=\"name\"\r\n                                       [errorStateMatcher]=\"matcher\"\r\n                                       autocomplete=\"off\" />\r\n                                <mat-hint>Name</mat-hint>\r\n                                <!--<mat-error *ngIf=\"parameterDocument && parameterDocument.hasError('maxlength')\">\r\n                        Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.\r\n                    </mat-error>-->\r\n                            </mat-form-field>\r\n                            <mat-form-field class=\"m-2\">\r\n                                <input matInput\r\n                                       placeholder=\"Value\"\r\n                                       formControlName=\"value\"\r\n                                       [errorStateMatcher]=\"matcher\"\r\n                                       autocomplete=\"off\" />\r\n                                <mat-hint>Value</mat-hint>\r\n                            </mat-form-field>\r\n\r\n                            <mat-form-field class=\"m-2 form-medium\">\r\n                                <textarea matInput\r\n                                          placeholder=\"Description\"\r\n                                          formControlName=\"description\"\r\n                                          [errorStateMatcher]=\"matcher\"\r\n                                          autocomplete=\"off\"></textarea>\r\n                                <mat-hint>Description for value option</mat-hint>\r\n                            </mat-form-field>\r\n\r\n                            <button mat-stroked-button\r\n                                    color=\"warn\"\r\n                                    (click)=\"remove(valueOption)\">\r\n                                Remove\r\n                            </button>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n                <button mat-stroked-button\r\n                        color=\"accent\"\r\n                        (click)=\"addValueOption()\">\r\n                    Add\r\n                </button>\r\n            </div>\r\n        </form>\r\n\r\n    </mat-expansion-panel>\r\n</mat-accordion>\r\n"
+module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                Value Options\r\n            </mat-panel-title>\r\n            <mat-panel-description>\r\n                Provide some selectable data\r\n            </mat-panel-description>\r\n        </mat-expansion-panel-header>\r\n\r\n        <form [formGroup]=\"parameterForm\">\r\n\r\n            <div>\r\n                <mat-radio-group formControlName=\"valueOptionSetting\">\r\n                    <mat-radio-button [value]=\"valueOptionSettings.None\"\r\n                                      class=\"ml-2\">None</mat-radio-button>\r\n                    <mat-radio-button [value]=\"valueOptionSettings.UserInput\"\r\n                                      class=\"ml-2\">Allow any values</mat-radio-button>\r\n                    <mat-radio-button [value]=\"valueOptionSettings.Boolean\"\r\n                                      (change)=\"booleanSettingChecked($event)\"\r\n                                      class=\"ml-2\">Is boolean</mat-radio-button>\r\n                </mat-radio-group>\r\n            </div>\r\n\r\n            <div *ngIf=\"parameterValueOptionSetting.value != valueOptionSettings.Boolean\">\r\n                <ul *ngFor=\"let valueOption of parameterValueOptions.controls; let i = index\">\r\n                    <li>\r\n                        <div [formGroup]=\"valueOption\">\r\n                            <mat-form-field class=\"m-2\">\r\n                                <input matInput\r\n                                       placeholder=\"Name\"\r\n                                       formControlName=\"name\"\r\n                                       [errorStateMatcher]=\"matcher\"\r\n                                       autocomplete=\"off\" />\r\n                                <mat-hint>Name</mat-hint>\r\n                                <!--<mat-error *ngIf=\"parameterDocument && parameterDocument.hasError('maxlength')\">\r\n                        Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.\r\n                    </mat-error>-->\r\n                            </mat-form-field>\r\n                            <mat-form-field class=\"m-2\">\r\n                                <input matInput\r\n                                       placeholder=\"Value\"\r\n                                       formControlName=\"value\"\r\n                                       [errorStateMatcher]=\"matcher\"\r\n                                       autocomplete=\"off\" />\r\n                                <mat-hint>Value</mat-hint>\r\n                            </mat-form-field>\r\n\r\n                            <mat-form-field class=\"m-2 form-medium\">\r\n                                <textarea matInput\r\n                                          placeholder=\"Description\"\r\n                                          formControlName=\"description\"\r\n                                          [errorStateMatcher]=\"matcher\"\r\n                                          autocomplete=\"off\"></textarea>\r\n                                <mat-hint>Description for value option</mat-hint>\r\n                            </mat-form-field>\r\n\r\n                            <button mat-stroked-button\r\n                                    color=\"warn\"\r\n                                    type=\"button\"\r\n                                    (click)=\"remove(valueOption)\">\r\n                                Remove\r\n                            </button>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n                <button mat-stroked-button\r\n                        color=\"accent\"\r\n                        type=\"button\"\r\n                        (click)=\"addValueOption()\">\r\n                    Add\r\n                </button>\r\n            </div>\r\n        </form>\r\n\r\n    </mat-expansion-panel>\r\n</mat-accordion>\r\n"
 
 /***/ }),
 
@@ -271,7 +271,7 @@ module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <m
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"!editMode\">\r\n    <div class=\"m-4\">\r\n        <label id=\"parameters-type-filter\">Select parameters:</label>\r\n        <mat-radio-group aria-labelledby=\"parameters-type-filter\"\r\n                         [(ngModel)]=\"parametersToShow\"\r\n                         (change)=\"onParametersToShowChange()\">\r\n            <mat-radio-button value=\"all\"\r\n                              class=\"ml-2\">All parameters</mat-radio-button>\r\n            <mat-radio-button value=\"data\"\r\n                              class=\"ml-2\">Data parameters</mat-radio-button>\r\n            <mat-radio-button value=\"static\"\r\n                              class=\"ml-2\">Static parameters</mat-radio-button>\r\n            <mat-radio-button value=\"calculation\"\r\n                              class=\"ml-2\">Calculation parameters</mat-radio-button>\r\n        </mat-radio-group>\r\n    </div>\r\n\r\n    <div cdkDropList\r\n         class=\"parameters-list\"\r\n         (cdkDropListDropped)=\"drop($event)\">\r\n        <div class=\"parameter-in-list\"\r\n             *ngFor=\"let parameter of sortParameters(filteredParameters, 'number')\"\r\n             cdkDrag>\r\n            <div class=\"parameter-placeholder\"\r\n                 *cdkDragPlaceholder></div>\r\n            <div class=\"parameter-container\"\r\n                 [ngClass]=\"{'selected-parameter' : parameter == newParameter}\">\r\n                <div class=\"ml-3 parameter-data\">\r\n                    <b class=\"parameter-name\"\r\n                       [innerHTML]=\"parameter.name | html\"></b> - {{parameter.description}}\r\n                </div>\r\n\r\n                <div class=\"parameter-options\">\r\n                    <button mat-stroked-button\r\n                            class=\"ml-2\"\r\n                            (click)=\"editParameter(parameter)\">\r\n                        Edit\r\n                    </button>\r\n                    <button mat-stroked-button\r\n                            class=\"ml-2\"\r\n                            (click)=\"remove(parameter.id)\"\r\n                            color=\"warn\">\r\n                        Remove\r\n                    </button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <button mat-stroked-button\r\n            color=\"accent\"\r\n            class=\"m-3\"\r\n            (click)=\"addNewParameter()\">\r\n        New parameter\r\n    </button>\r\n</div>\r\n\r\n<div class=\"m-3\"\r\n     *ngIf=\"editMode\">\r\n    <button mat-fab\r\n            color=\"primary\"\r\n            (click)=\"changeEditMode()\">\r\n        <span class=\"fa fa-backward\"></span>\r\n    </button>\r\n\r\n    <div class=\"container\"\r\n         *ngIf=\"editMode\">\r\n        <app-data-parameter-form [newlyAddedParameter]=\"newlyAddedParameter\"\r\n                                 [scriptId]=\"scriptId\"\r\n                                 [newParameter]=\"newParameter\"\r\n                                 (created)=\"onCreated($event)\"\r\n                                 (updated)=\"onUpdated($event)\"></app-data-parameter-form>\r\n    </div>\r\n</div>"
+module.exports = "<div *ngIf=\"!editMode\">\r\n    <div class=\"m-4\">\r\n        <label id=\"parameters-type-filter\">Select parameters:</label>\r\n        <mat-radio-group aria-labelledby=\"parameters-type-filter\"\r\n                         [(ngModel)]=\"parametersToShow\"\r\n                         (change)=\"onParametersToShowChange()\">\r\n            <mat-radio-button value=\"all\"\r\n                              class=\"ml-2\">All parameters</mat-radio-button>\r\n            <mat-radio-button value=\"data\"\r\n                              class=\"ml-2\">Data parameters</mat-radio-button>\r\n            <mat-radio-button value=\"static\"\r\n                              class=\"ml-2\">Static parameters</mat-radio-button>\r\n            <mat-radio-button value=\"calculation\"\r\n                              class=\"ml-2\">Calculation parameters</mat-radio-button>\r\n        </mat-radio-group>\r\n    </div>\r\n\r\n    <div cdkDropList\r\n         class=\"parameters-list\"\r\n         (cdkDropListDropped)=\"drop($event)\">\r\n        <div class=\"parameter-in-list\"\r\n             *ngFor=\"let parameter of sortParameters(filteredParameters, 'number')\"\r\n             cdkDrag>\r\n            <div class=\"parameter-placeholder\"\r\n                 *cdkDragPlaceholder></div>\r\n            <div class=\"parameter-container\"\r\n                 [ngClass]=\"{'selected-parameter' : parameter == newParameter}\">\r\n                <div class=\"ml-3 parameter-data\">\r\n                    <b class=\"parameter-name\"\r\n                       [innerHTML]=\"parameter.name | html\"></b> - {{parameter.description}}\r\n                </div>\r\n\r\n                <div class=\"parameter-options\">\r\n                    <button mat-stroked-button\r\n                            class=\"ml-2\"\r\n                            (click)=\"editParameter(parameter)\">\r\n                        Edit\r\n                    </button>\r\n                    <button mat-stroked-button\r\n                            class=\"ml-2\"\r\n                            (click)=\"remove(parameter.id)\"\r\n                            color=\"warn\">\r\n                        Remove\r\n                    </button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <button mat-stroked-button\r\n            color=\"accent\"\r\n            class=\"m-3\"\r\n            (click)=\"addNewParameter()\">\r\n        New parameter\r\n    </button>\r\n</div>\r\n\r\n<div class=\"m-3\"\r\n     *ngIf=\"editMode\">\r\n    <button mat-fab\r\n            color=\"primary\"\r\n            (click)=\"changeEditMode()\">\r\n        <span class=\"fa fa-backward\"></span>\r\n    </button>\r\n\r\n    <div class=\"container\"\r\n         *ngIf=\"editMode\">\r\n        <app-data-parameter-form [newlyAddedParameter]=\"newlyAddedParameter\"\r\n                                 [scriptId]=\"scriptId\"\r\n                                 [newParameter]=\"newParameter\"\r\n                                 [parameters]=\"parameters\"\r\n                                 (created)=\"onCreated($event)\"\r\n                                 (updated)=\"onUpdated($event)\"></app-data-parameter-form>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -1514,12 +1514,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material_paginator__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/paginator */ "../node_modules/@angular/material/esm5/paginator.es5.js");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/platform-browser */ "../node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/material/dialog */ "../node_modules/@angular/material/esm5/dialog.es5.js");
+/* harmony import */ var _angular_material_tooltip__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/material/tooltip */ "../node_modules/@angular/material/esm5/tooltip.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1567,7 +1569,8 @@ var MdComponentsModule = /** @class */ (function () {
                 _angular_material_chips__WEBPACK_IMPORTED_MODULE_16__["MatChipsModule"],
                 _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_17__["MatToolbarModule"],
                 _angular_material_paginator__WEBPACK_IMPORTED_MODULE_18__["MatPaginatorModule"],
-                _angular_material_dialog__WEBPACK_IMPORTED_MODULE_20__["MatDialogModule"]
+                _angular_material_dialog__WEBPACK_IMPORTED_MODULE_20__["MatDialogModule"],
+                _angular_material_tooltip__WEBPACK_IMPORTED_MODULE_21__["MatTooltipModule"]
             ]
         })
     ], MdComponentsModule);
@@ -1991,6 +1994,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ParameterInputComponent", function() { return ParameterInputComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../models/enums/parameterOptions */ "./app/modules/script-interpreter/models/enums/parameterOptions.ts");
+/* harmony import */ var _models_enums_valueType__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../models/enums/valueType */ "./app/modules/script-interpreter/models/enums/valueType.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2002,11 +2006,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var ParameterInputComponent = /** @class */ (function () {
     function ParameterInputComponent() {
         this.parameter = null;
         this.valueChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.parameterOptions = _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_1__["ParameterOptions"];
+        this.valueTypes = _models_enums_valueType__WEBPACK_IMPORTED_MODULE_2__["ValueType"];
     }
     ParameterInputComponent.prototype.ngOnInit = function () {
     };
@@ -2298,7 +2304,7 @@ var ParameterResultComponent = /** @class */ (function () {
         return (this.parameter.context & _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_2__["ParameterOptions"].important) != 0;
     };
     __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('parameter'),
         __metadata("design:type", Object)
     ], ParameterResultComponent.prototype, "parameter", void 0);
     ParameterResultComponent = __decorate([
@@ -2443,13 +2449,21 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             }
         });
     };
+    ScriptCalculatorComponent.prototype.isValid = function () {
+        var _this = this;
+        return this.parameters
+            .filter(function (p) { return (p.context & _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_3__["ParameterOptions"].editable) != 0 &&
+            (p.context & _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_3__["ParameterOptions"].optional) == 0 &&
+            _this.validateVisibility(p); })
+            .every(function (p) { return p.value != undefined && p.value != ""; });
+    };
     ScriptCalculatorComponent.prototype.calculate = function () {
         var _this = this;
         this.isCalculating = true;
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(function (params) {
             _this.resultParameters = params.filter(function (p) { return (p.context & _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_3__["ParameterOptions"].visible) != 0; });
-            console.log("Results", _this.resultParameters);
+            _this.resultParameters.forEach(function (p) { return p.equation = _this.setEquation(p); });
         }, function (error) {
             console.error(error);
             _this.isCalculating = false;
@@ -2457,6 +2471,14 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             _this.isCalculating = false;
             _this.valueChanged = false;
         });
+    };
+    ScriptCalculatorComponent.prototype.setEquation = function (parameter) {
+        var firstPartOfEquation = parameter.equation.replace(/\[/g, '').replace(/\]/g, '');
+        var secondPartOfEquation = parameter.equation;
+        this.parameters.concat(this.staticDataParameters).concat(this.resultParameters).forEach(function (p) {
+            secondPartOfEquation = secondPartOfEquation.replace("[" + p.name + "]", " " + p.value + p.unit + " ");
+        });
+        return firstPartOfEquation + ' = ' + secondPartOfEquation;
     };
     ScriptCalculatorComponent.prototype.validateVisibility = function (parameter) {
         if (!parameter.visibilityValidator)
@@ -2668,16 +2690,16 @@ module.exports = ".full-width {\n  width: 98%;\n}\n\n.form-medium {\n  min-width
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataParameterFormComponent", function() { return DataParameterFormComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _models_parameterImpl__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../models/parameterImpl */ "./app/modules/script-interpreter/models/parameterImpl.ts");
-/* harmony import */ var _services_parameter_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../services/parameter.service */ "./app/modules/script-interpreter/services/parameter.service.ts");
-/* harmony import */ var _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../models/enums/parameterOptions */ "./app/modules/script-interpreter/models/enums/parameterOptions.ts");
-/* harmony import */ var _models_valueOptionImpl__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../models/valueOptionImpl */ "./app/modules/script-interpreter/models/valueOptionImpl.ts");
-/* harmony import */ var _models_enums_valueOptionSettings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../models/enums/valueOptionSettings */ "./app/modules/script-interpreter/models/enums/valueOptionSettings.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "../node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../../common/errors/app-error-state-matcher */ "./app/common/errors/app-error-state-matcher.ts");
-/* harmony import */ var _models_enums_valueType__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../models/enums/valueType */ "./app/modules/script-interpreter/models/enums/valueType.ts");
-/* harmony import */ var _angular_material_radio__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/material/radio */ "../node_modules/@angular/material/esm5/radio.es5.js");
-/* harmony import */ var _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/material/checkbox */ "../node_modules/@angular/material/esm5/checkbox.es5.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "../node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/checkbox */ "../node_modules/@angular/material/esm5/checkbox.es5.js");
+/* harmony import */ var _angular_material_radio__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material/radio */ "../node_modules/@angular/material/esm5/radio.es5.js");
+/* harmony import */ var _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../../common/errors/app-error-state-matcher */ "./app/common/errors/app-error-state-matcher.ts");
+/* harmony import */ var _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../models/enums/parameterOptions */ "./app/modules/script-interpreter/models/enums/parameterOptions.ts");
+/* harmony import */ var _models_enums_valueOptionSettings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../models/enums/valueOptionSettings */ "./app/modules/script-interpreter/models/enums/valueOptionSettings.ts");
+/* harmony import */ var _models_enums_valueType__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../models/enums/valueType */ "./app/modules/script-interpreter/models/enums/valueType.ts");
+/* harmony import */ var _models_parameterImpl__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../models/parameterImpl */ "./app/modules/script-interpreter/models/parameterImpl.ts");
+/* harmony import */ var _models_valueOptionImpl__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../models/valueOptionImpl */ "./app/modules/script-interpreter/models/valueOptionImpl.ts");
+/* harmony import */ var _services_parameter_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../services/parameter.service */ "./app/modules/script-interpreter/services/parameter.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2701,30 +2723,30 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var DataParameterFormComponent = /** @class */ (function () {
     function DataParameterFormComponent(parameterService) {
         this.parameterService = parameterService;
-        this.parameterForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
-            id: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('0'),
-            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(20)]),
-            number: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required),
-            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(1000)),
-            valueType: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required),
-            value: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(1000)),
-            visibilityValidator: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(1000)),
-            dataValidator: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(1000)),
-            unit: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(50)),
-            context: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('3', _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required),
-            groupName: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(200)),
-            accordingTo: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(200)),
-            notes: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(1000)),
-            valueOptionSetting: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](0),
-            valueOptions: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([]),
-            figures: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([]),
+        this.parameterForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('0'),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(20)]),
+            number: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(1000)),
+            valueType: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            value: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(1000)),
+            visibilityValidator: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(1000)),
+            dataValidator: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(1000)),
+            unit: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(50)),
+            context: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('3', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            groupName: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(200)),
+            accordingTo: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(200)),
+            notes: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(1000)),
+            valueOptionSetting: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](0),
+            valueOptions: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormArray"]([]),
+            figures: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormArray"]([]),
         });
-        this.matcher = new _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_7__["AppErrorStateMatcher"]();
-        this.newParameter = new _models_parameterImpl__WEBPACK_IMPORTED_MODULE_1__["ParameterImpl"]();
+        this.matcher = new _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_4__["AppErrorStateMatcher"]();
+        this.newParameter = new _models_parameterImpl__WEBPACK_IMPORTED_MODULE_8__["ParameterImpl"]();
         this.created = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.updated = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
-        this.valueTypes = this.getEnumValues(_models_enums_valueType__WEBPACK_IMPORTED_MODULE_8__["ValueType"]);
-        this.context = _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_3__["ParameterOptions"];
+        this.valueTypes = this.getEnumValues(_models_enums_valueType__WEBPACK_IMPORTED_MODULE_7__["ValueType"]);
+        this.context = _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_5__["ParameterOptions"];
         this.allowUserValues = false;
     }
     Object.defineProperty(DataParameterFormComponent.prototype, "parameterId", {
@@ -2737,6 +2759,13 @@ var DataParameterFormComponent = /** @class */ (function () {
     Object.defineProperty(DataParameterFormComponent.prototype, "parameterName", {
         get: function () {
             return this.parameterForm.get('name');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataParameterFormComponent.prototype, "parameterNumber", {
+        get: function () {
+            return this.parameterForm.get('number');
         },
         enumerable: true,
         configurable: true
@@ -2819,21 +2848,23 @@ var DataParameterFormComponent = /** @class */ (function () {
         configurable: true
     });
     DataParameterFormComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.previousParameters = this.parameters.filter(function (p) { return p.number < _this.parameterNumber.value; });
     };
     DataParameterFormComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
         if (changes.newParameter) {
             var parameter = changes.newParameter.currentValue;
             this.parameterForm.patchValue(parameter);
-            parameter.valueOptions.forEach(function (vo) { return _this.parameterValueOptions.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
-                id: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](vo.id),
-                name: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](vo.name),
-                value: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](vo.value),
-                description: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](vo.description)
+            parameter.valueOptions.forEach(function (vo) { return _this.parameterValueOptions.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+                id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](vo.id),
+                name: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](vo.name),
+                value: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](vo.value),
+                description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](vo.description)
             })); });
-            parameter.figures.forEach(function (f) { return _this.parameterFigures.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
-                id: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](f.id),
-                fileName: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](f.fileName),
+            parameter.figures.forEach(function (f) { return _this.parameterFigures.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+                id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](f.id),
+                fileName: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](f.fileName),
             })); });
             this.setNewParameterChanges(changes.newParameter);
         }
@@ -2896,7 +2927,7 @@ var DataParameterFormComponent = /** @class */ (function () {
         }
     };
     DataParameterFormComponent.prototype.addValueOption = function () {
-        var valueOption = new _models_valueOptionImpl__WEBPACK_IMPORTED_MODULE_4__["ValueOptionImpl"]();
+        var valueOption = new _models_valueOptionImpl__WEBPACK_IMPORTED_MODULE_9__["ValueOptionImpl"]();
         if (this.newParameter.valueOptions.length > 0)
             valueOption.id = Math.max.apply(Math, this.newParameter.valueOptions.map(function (vo) { return vo.id; })) + 1;
         else
@@ -2912,9 +2943,14 @@ var DataParameterFormComponent = /** @class */ (function () {
             this.onAllowUserValues();
         }
     };
+    DataParameterFormComponent.prototype.select = function (parameter) {
+        this.parameterValue.setValue(this.parameterValue.value + "[" + parameter.name + "]");
+        this.value.nativeElement.focus();
+        this.value.nativeElement.selectionEnd = this.parameterValue.value.length;
+    };
     DataParameterFormComponent.prototype.onAllowUserValues = function () {
         this.newParameter.valueOptionSetting =
-            this.allowUserValues ? _models_enums_valueOptionSettings__WEBPACK_IMPORTED_MODULE_5__["ValueOptionSettings"].UserInput : _models_enums_valueOptionSettings__WEBPACK_IMPORTED_MODULE_5__["ValueOptionSettings"].None;
+            this.allowUserValues ? _models_enums_valueOptionSettings__WEBPACK_IMPORTED_MODULE_6__["ValueOptionSettings"].UserInput : _models_enums_valueOptionSettings__WEBPACK_IMPORTED_MODULE_6__["ValueOptionSettings"].None;
     };
     DataParameterFormComponent.prototype.onSubmit = function ($event) {
         if (this.newlyAddedParameter)
@@ -2933,7 +2969,7 @@ var DataParameterFormComponent = /** @class */ (function () {
         }, function (error) { return console.error(error); });
     };
     DataParameterFormComponent.prototype.setValueOptionsSettings = function () {
-        this.allowUserValues = this.newParameter.valueOptionSetting == _models_enums_valueOptionSettings__WEBPACK_IMPORTED_MODULE_5__["ValueOptionSettings"].UserInput;
+        this.allowUserValues = this.newParameter.valueOptionSetting == _models_enums_valueOptionSettings__WEBPACK_IMPORTED_MODULE_6__["ValueOptionSettings"].UserInput;
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('newlyAddedParameter'),
@@ -2948,6 +2984,10 @@ var DataParameterFormComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], DataParameterFormComponent.prototype, "newParameter", void 0);
     __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('parameters'),
+        __metadata("design:type", Array)
+    ], DataParameterFormComponent.prototype, "parameters", void 0);
+    __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])('created'),
         __metadata("design:type", Object)
     ], DataParameterFormComponent.prototype, "created", void 0);
@@ -2957,35 +2997,39 @@ var DataParameterFormComponent = /** @class */ (function () {
     ], DataParameterFormComponent.prototype, "updated", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('editable', { static: true }),
-        __metadata("design:type", _angular_material_radio__WEBPACK_IMPORTED_MODULE_9__["MatRadioButton"])
+        __metadata("design:type", _angular_material_radio__WEBPACK_IMPORTED_MODULE_3__["MatRadioButton"])
     ], DataParameterFormComponent.prototype, "editable", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('static', { static: true }),
-        __metadata("design:type", _angular_material_radio__WEBPACK_IMPORTED_MODULE_9__["MatRadioButton"])
+        __metadata("design:type", _angular_material_radio__WEBPACK_IMPORTED_MODULE_3__["MatRadioButton"])
     ], DataParameterFormComponent.prototype, "static", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('calculable', { static: true }),
-        __metadata("design:type", _angular_material_radio__WEBPACK_IMPORTED_MODULE_9__["MatRadioButton"])
+        __metadata("design:type", _angular_material_radio__WEBPACK_IMPORTED_MODULE_3__["MatRadioButton"])
     ], DataParameterFormComponent.prototype, "calculable", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('visible', { static: true }),
-        __metadata("design:type", _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_10__["MatCheckbox"])
+        __metadata("design:type", _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_2__["MatCheckbox"])
     ], DataParameterFormComponent.prototype, "visible", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('important', { static: true }),
-        __metadata("design:type", _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_10__["MatCheckbox"])
+        __metadata("design:type", _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_2__["MatCheckbox"])
     ], DataParameterFormComponent.prototype, "important", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('optional', { static: true }),
-        __metadata("design:type", _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_10__["MatCheckbox"])
+        __metadata("design:type", _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_2__["MatCheckbox"])
     ], DataParameterFormComponent.prototype, "optional", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('value', { static: false }),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], DataParameterFormComponent.prototype, "value", void 0);
     DataParameterFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-data-parameter-form',
             template: __webpack_require__(/*! raw-loader!./data-parameter-form.component.html */ "../node_modules/raw-loader/index.js!./app/modules/script-interpreter/components/script-form/parameters-form/data-parameter-form/data-parameter-form.component.html"),
             styles: [__webpack_require__(/*! ./data-parameter-form.component.scss */ "./app/modules/script-interpreter/components/script-form/parameters-form/data-parameter-form/data-parameter-form.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_parameter_service__WEBPACK_IMPORTED_MODULE_2__["ParameterService"]])
+        __metadata("design:paramtypes", [_services_parameter_service__WEBPACK_IMPORTED_MODULE_10__["ParameterService"]])
     ], DataParameterFormComponent);
     return DataParameterFormComponent;
 }());
@@ -3129,6 +3173,11 @@ var FigureParameterFormComponent = /** @class */ (function () {
             .subscribe(function (figure) {
             _this.figures.push(figure);
         });
+    };
+    FigureParameterFormComponent.prototype.remove = function (figure) {
+        var _this = this;
+        this.figureService.detach(this.parameterId.value, figure.id)
+            .subscribe(function (figure) { return _this.figures = _this.figures.filter(function (f) { return f != figure; }); });
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('parameterForm'),
@@ -4337,12 +4386,15 @@ var FigureService = /** @class */ (function () {
         this.http = http;
     }
     FigureService.prototype.getFigures = function (parameterId) {
-        return this.http.get("/api/parameters/" + parameterId + "/photos");
+        return this.http.get("/api/parameters/" + parameterId + "/figures");
     };
     FigureService.prototype.upload = function (parameterId, photo) {
         var formData = new FormData();
         formData.append('file', photo);
-        return this.http.post("/api/parameters/" + parameterId + "/photos", formData);
+        return this.http.post("/api/parameters/" + parameterId + "/figures", formData);
+    };
+    FigureService.prototype.detach = function (parameterId, figureId) {
+        return this.http.delete('/api/parameters/' + parameterId + '/figures/' + figureId);
     };
     FigureService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' }),

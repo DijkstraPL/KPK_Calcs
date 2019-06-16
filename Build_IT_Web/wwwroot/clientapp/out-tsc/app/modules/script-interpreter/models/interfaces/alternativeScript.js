@@ -1,0 +1,1 @@
+//# sourceMappingURL=alternativeScript.js.map

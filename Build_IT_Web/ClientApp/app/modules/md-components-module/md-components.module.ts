@@ -19,6 +19,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 @NgModule({
     declarations: [
@@ -43,7 +45,8 @@ import { MatDialogModule } from '@angular/material/dialog';
       MatChipsModule,
       MatToolbarModule,
       MatPaginatorModule,
-      MatDialogModule
+      MatDialogModule,
+      MatTooltipModule
   ]
 })
 export class MdComponentsModule { }

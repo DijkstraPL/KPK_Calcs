@@ -86,7 +86,7 @@ namespace Build_IT_ScriptService.SnowLoadsService
             result.Properties.Add("μ_2_", roofAbuttingToTallerConstruction.ShapeCoefficient);
             result.Properties.Add("μ_1_", roofAbuttingToTallerConstruction.ShapeCoefficientAtTheEnd);
             result.Properties.Add("l_s_", roofAbuttingToTallerConstruction.DriftLength);
-            result.Properties.Add("s_l,I_", roofAbuttingToTallerConstruction.SnowLoadsNearTallerBuilding[1]);
+            result.Properties.Add("s_I_", roofAbuttingToTallerConstruction.SnowLoadsNearTallerBuilding[1]);
             result.Properties.Add("s_l,II_", roofAbuttingToTallerConstruction.SnowLoadsNearTallerBuilding[2]);
             result.Properties.Add("s_r,II_", roofAbuttingToTallerConstruction.SnowLoadOnRoofValueAtTheEnd);
 

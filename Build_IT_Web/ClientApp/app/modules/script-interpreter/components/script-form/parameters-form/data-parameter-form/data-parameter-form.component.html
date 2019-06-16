@@ -105,6 +105,7 @@
 
     <mat-form-field class="m-2 full-width">
         <textarea matInput
+                  #value
                   placeholder="Value"
                   formControlName="value"
                   [errorStateMatcher]="matcher"
@@ -114,6 +115,16 @@
             Value should be maximum {{parameterValue.errors.maxlength.requiredLength}} characters long.
         </mat-error>
     </mat-form-field>
+
+    <div>
+        <button mat-stroked-button 
+                *ngFor="let parameter of previousParameters"
+                matTooltip="{{parameter.description}}"
+                matTooltipPosition="below" 
+                innerHtml="{{parameter.name | html}} [{{parameter.unit | html}}]"
+                 type="button"
+                (click)="select(parameter)"></button>
+    </div>
 
     <div class="value-options-border p-2">
         <app-value-options-form [parameterForm]="parameterForm"></app-value-options-form>

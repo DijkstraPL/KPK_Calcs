@@ -1,18 +1,17 @@
-﻿import { Component, Input, SimpleChanges, Output, EventEmitter, SimpleChange, ViewChild, OnInit, ElementRef } from '@angular/core';
-import { Parameter } from '../../../../models/interfaces/parameter';
-import { ParameterImpl } from '../../../../models/parameterImpl';
-import { ParameterService } from '../../../../services/parameter.service';
-import { ParameterOptions } from '../../../../models/enums/parameterOptions';
-import { ValueOption } from '../../../../models/interfaces/valueOption';
-import { ValueOptionImpl } from '../../../../models/valueOptionImpl';
-import { ParameterFilter } from '../../../../models/enums/parameter-filter';
-import { ValueOptionSettings } from '../../../../models/enums/valueOptionSettings';
-import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
+﻿import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatRadioButton } from '@angular/material/radio';
 import { AppErrorStateMatcher } from '../../../../../../common/errors/app-error-state-matcher';
+import { ParameterOptions } from '../../../../models/enums/parameterOptions';
+import { ValueOptionSettings } from '../../../../models/enums/valueOptionSettings';
 import { ValueType } from '../../../../models/enums/valueType';
 import { EnumObject } from '../../../../models/interfaces/enumObject';
-import { MatRadioButton } from '@angular/material/radio';
-import { MatCheckbox } from '@angular/material/checkbox';
+import { Parameter } from '../../../../models/interfaces/parameter';
+import { ValueOption } from '../../../../models/interfaces/valueOption';
+import { ParameterImpl } from '../../../../models/parameterImpl';
+import { ValueOptionImpl } from '../../../../models/valueOptionImpl';
+import { ParameterService } from '../../../../services/parameter.service';
 
 @Component({
     selector: 'app-data-parameter-form',
@@ -45,6 +44,8 @@ export class DataParameterFormComponent implements OnInit {
     @Input('newlyAddedParameter') newlyAddedParameter: boolean;
     @Input('scriptId') scriptId: number;
     @Input('newParameter') newParameter: Parameter = new ParameterImpl();
+    @Input('parameters') parameters: Parameter[];
+     previousParameters: Parameter[];
 
     @Output('created') created = new EventEmitter<Parameter>();
     @Output('updated') updated = new EventEmitter<Parameter>();
@@ -58,12 +59,17 @@ export class DataParameterFormComponent implements OnInit {
     @ViewChild('visible', { static: true }) visible: MatCheckbox;
     @ViewChild('important', { static: true }) important: MatCheckbox;
     @ViewChild('optional', { static: true }) optional: MatCheckbox;
+
+    @ViewChild('value', { static: false }) value: ElementRef;
     
     get parameterId(): AbstractControl {
         return this.parameterForm.get('id');
     }
     get parameterName(): AbstractControl {
         return this.parameterForm.get('name');
+    }
+    get parameterNumber(): AbstractControl {
+        return this.parameterForm.get('number');
     }
     get parameterUnit(): AbstractControl {
         return this.parameterForm.get('unit');
@@ -103,6 +109,7 @@ export class DataParameterFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.previousParameters = this.parameters.filter(p => p.number < this.parameterNumber.value);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -211,6 +218,12 @@ export class DataParameterFormComponent implements OnInit {
             this.allowUserValues = false;
             this.onAllowUserValues();
         }
+    }
+
+    select(parameter: Parameter) {
+        this.parameterValue.setValue(`${this.parameterValue.value}[${parameter.name}]`);
+        this.value.nativeElement.focus();
+        this.value.nativeElement.selectionEnd = this.parameterValue.value.length;
     }
 
     allowUserValues = false;

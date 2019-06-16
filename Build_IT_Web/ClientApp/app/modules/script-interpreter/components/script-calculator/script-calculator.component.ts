@@ -118,12 +118,20 @@ export class ScriptCalculatorComponent implements OnInit {
         });
     }
 
+    isValid() : boolean {
+        return this.parameters
+            .filter(p => (p.context & ParameterOptions.editable) != 0 &&
+                (p.context & ParameterOptions.optional) == 0 && 
+                this.validateVisibility(p))
+            .every(p => p.value != undefined && p.value != "");
+    }
+
     calculate() {
         this.isCalculating = true;
         this.calculationService.calculate(this.script.id, this.parameters)
             .subscribe(params => {
                 this.resultParameters = params.filter(p => (p.context & ParameterOptions.visible) != 0);
-                console.log("Results", this.resultParameters);
+                this.resultParameters.forEach(p => p.equation = this.setEquation(p));
             },
                 error => {
                     console.error(error);
@@ -133,6 +141,17 @@ export class ScriptCalculatorComponent implements OnInit {
                     this.isCalculating = false;
                     this.valueChanged = false;
                 });
+    }
+
+    private setEquation(parameter: Parameter): string {
+        let firstPartOfEquation = parameter.equation.replace(/\[/g, '').replace(/\]/g, '');
+        let secondPartOfEquation = parameter.equation;
+
+        this.parameters.concat(this.staticDataParameters).concat(this.resultParameters).forEach(p => {
+            secondPartOfEquation = secondPartOfEquation.replace(`[${p.name}]`, ` ${p.value}${p.unit} `); 
+        });
+
+        return firstPartOfEquation + ' = ' + secondPartOfEquation;
     }
 
     private validateVisibility(parameter: Parameter): boolean {

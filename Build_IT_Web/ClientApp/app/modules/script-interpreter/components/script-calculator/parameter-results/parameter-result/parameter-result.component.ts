@@ -10,9 +10,12 @@ import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 })
 
 export class ParameterResultComponent implements OnInit {
-    @Input() parameter: Parameter = null;
-    
+    @Input('parameter') parameter: Parameter = null;
+
+
     valueTypes = ValueType;
+
+    parameterEquation: string;
 
     valueTypesMapping: { [key: string]: number } =
         { 'number': 0, 'text': 1 };

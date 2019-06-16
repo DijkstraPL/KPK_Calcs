@@ -105,7 +105,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         {
             var parameters = await _parameterRepository.GetAllParametersForScriptAsync(oldScriptId);
 
-           var parametersResource = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters.ToList());
+            var parametersResource = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters.ToList());
             var copiedParameters = _mapper.Map<List<ParameterResource>, List<Parameter>>(parametersResource);
 
             var script = await _scriptRepository.GetAsync(newScriptId);

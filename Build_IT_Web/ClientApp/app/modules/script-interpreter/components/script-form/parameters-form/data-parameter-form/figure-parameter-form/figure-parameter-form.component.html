@@ -15,9 +15,17 @@
 
         <div class="mt-1">
             <!--<button mat-raised-button (click)="pickExistingDialog()">Pick existing</button>-->
-            <img *ngFor="let figure of figures"
-                 src="clientapp/uploads/{{parameterId.value}}/{{figure.fileName}}"
-                 alt="Parameter picture" />
+            <div *ngFor="let figure of figures">
+                <img src="clientapp/uploads/parameters/{{figure.fileName}}"
+                     alt="Parameter picture" />
+                <button mat-stroked-button
+                        color="warn"
+                        type="button"
+                        (click)="remove(figure)">
+                    Remove
+                </button>
+                <p>Test</p>
+            </div>
         </div>
 
     </mat-expansion-panel>

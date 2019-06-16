@@ -6,6 +6,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models.Enums
     public enum ValueOptionSettings
     {
         None = 0,
-        UserInput = 1
+        UserInput = 1,
+        Boolean = 2
     }
 }

@@ -43,6 +43,11 @@ export class FigureParameterFormComponent implements OnInit {
             });
     }
 
+    remove(figure: Figure) {
+        this.figureService.detach(this.parameterId.value, figure.id)
+            .subscribe(figure => this.figures = this.figures.filter(f => f != figure));
+    }
+
     //pickExistingDialog() {
     //    const dialogRef = this.dialog.open(ExistingFiguresDialogComponent, {
     //        width: '250px',
