@@ -2,13 +2,17 @@
     <mat-label [innerHtml]="parameter.name | html"></mat-label>
     <mat-select [(ngModel)]="parameter.value"
                 [required]="isRequired()"
+                [ngClass]="parameter.name"
                 (selectionChange)="changeValue()">
-        <mat-option *ngIf="!isRequired()"> </mat-option>
+        <mat-option *ngIf="!isRequired()"
+                    class="default"> </mat-option>
         <mat-option *ngFor="let valueOption of parameter.valueOptions"
-                    [value]="valueOption.value">
+                    [value]="valueOption.value"
+                    [ngClass]="valueOption.name">
             {{valueOption.name }}
         </mat-option>
     </mat-select>
-    <span matSuffix [innerHtml]="parameter.unit | html"></span>
+    <span matSuffix 
+          [innerHtml]="parameter.unit | html"></span>
 </mat-form-field>
 <p class="parameter-description">{{parameter.description}}</p>

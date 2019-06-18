@@ -9,6 +9,7 @@ namespace Build_IT_WebTest.EndToEndTests
 {
     [TestFixture]
     [EndToEndCategory]
+    [Ignore("End to end")]
     public class SteelTensionTests
     {
         private const string _chromeDriver = @"C:\KPK_Calcs\Build_IT_WebTest\bin\Debug\netcoreapp2.2";
@@ -55,7 +56,7 @@ namespace Build_IT_WebTest.EndToEndTests
 
             _calculateButton.Click();
 
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
             wait.Until(d => d.FindElement(By.ClassName(NplRd_Selector)));
             wait.Until(d => d.FindElement(By.ClassName(resistance_Selector)));
 

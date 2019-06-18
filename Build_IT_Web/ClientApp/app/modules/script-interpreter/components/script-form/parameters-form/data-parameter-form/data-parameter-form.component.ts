@@ -221,9 +221,20 @@ export class DataParameterFormComponent implements OnInit {
     }
 
     select(parameter: Parameter) {
-        this.parameterValue.setValue(`${this.parameterValue.value}[${parameter.name}]`);
-        this.value.nativeElement.focus();
-        this.value.nativeElement.selectionEnd = this.parameterValue.value.length;
+        let position = this.value.nativeElement.selectionEnd;
+
+        if (position >= 0) {
+            let value = this.parameterValue.value as string;
+            this.parameterValue.setValue(
+                value.slice(0, position) + `[${parameter.name}]` + value.slice(position));
+            this.value.nativeElement.focus();
+            this.value.nativeElement.selectionEnd = position + `[${parameter.name}]`.length;
+        }
+        else {
+            this.parameterValue.setValue(`${this.parameterValue.value}[${parameter.name}]`);
+            this.value.nativeElement.focus();
+            this.value.nativeElement.selectionEnd = this.parameterValue.value.length;
+        }
     }
 
     allowUserValues = false;

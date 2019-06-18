@@ -29,7 +29,7 @@ module.exports = "<div class=\"mt-2 ml-5 mr-5\">\r\n    <h3>Overall informations
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n    <div class=\"d-flex justify-content-center\">\r\n        <div id=\"carouselExampleIndicators\"\r\n             class=\"carousel slide w-50\"\r\n             data-ride=\"carousel\">\r\n            <ol class=\"carousel-indicators\">\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"0\"\r\n                    class=\"active\"></li>\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"1\"></li>\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"2\"></li>\r\n            </ol>\r\n            <div class=\"carousel-inner\">\r\n\r\n                <div class=\"carousel-item active\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center nav-item link\"\r\n                         [routerLink]=\"['/snowloads']\">\r\n                        <img src=\"https://lorempixel.com/600/300/?random=888\"\r\n                             alt=\"Snow load\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>Snow loads</h5>\r\n                            <p>Check out calculators for snow loads.</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"carousel-item\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center link\"\r\n                         [routerLink]=\"['/deadloads']\">\r\n                        <img src=\"https://lorempixel.com/600/300/?random=70\"\r\n                             alt=\"Lorem ipsum\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>Dead loads</h5>\r\n                            <p>Check out calculators for dead loads.</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"carousel-item\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center link\"\r\n                         [routerLink]=\"['/about']\">\r\n                        <img src=\"https://lorempixel.com/600/300/?random=70\"\r\n                             alt=\"Lorem ipsum\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>About me</h5>\r\n                            <p>Read more about the author of this site.</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <a class=\"carousel-control-prev\"\r\n               href=\"#carouselExampleIndicators\"\r\n               role=\"button\"\r\n               data-slide=\"prev\">\r\n                <span class=\"carousel-control-prev-icon\"\r\n                      aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Previous</span>\r\n            </a>\r\n            <a class=\"carousel-control-next\"\r\n               href=\"#carouselExampleIndicators\"\r\n               role=\"button\"\r\n               data-slide=\"next\">\r\n                <span class=\"carousel-control-next-icon\"\r\n                      aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Next</span>\r\n            </a>\r\n        </div>\r\n    </div>\r\n"
+module.exports = "\r\n    <div class=\"d-flex justify-content-center\">\r\n        <div id=\"carouselExampleIndicators\"\r\n             class=\"carousel slide w-100\"\r\n             data-ride=\"carousel\">\r\n            <ol class=\"carousel-indicators\">\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"0\"\r\n                    class=\"active\"></li>\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"1\"></li>\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"2\"></li>\r\n            </ol>\r\n            <div class=\"carousel-inner\">\r\n\r\n                <div class=\"carousel-item active\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center nav-item link\"\r\n                         [routerLink]=\"['/snowloads']\">\r\n                        <img src=\"../../../assets/images/snow_load_carousel.jpg\"\r\n                             alt=\"Snow load\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>Snow loads</h5>\r\n                            <p>Check out calculators for snow loads.</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"carousel-item\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center link\"\r\n                         [routerLink]=\"['/deadloads']\">\r\n                        <img src=\"../../../assets/images/dead_load_carousel.jpg\"\r\n                             alt=\"Lorem ipsum\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>Dead loads</h5>\r\n                            <p>Check out calculators for dead loads.</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"carousel-item\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center link\"\r\n                         [routerLink]=\"['/about']\">\r\n                        <img src=\"../../../assets/images/about_me_carousel.jpg\"\r\n                             alt=\"Lorem ipsum\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>About me</h5>\r\n                            <p>Read more about the author of this site.</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <a class=\"carousel-control-prev\"\r\n               href=\"#carouselExampleIndicators\"\r\n               role=\"button\"\r\n               data-slide=\"prev\">\r\n                <span class=\"carousel-control-prev-icon\"\r\n                      aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Previous</span>\r\n            </a>\r\n            <a class=\"carousel-control-next\"\r\n               href=\"#carouselExampleIndicators\"\r\n               role=\"button\"\r\n               data-slide=\"next\">\r\n                <span class=\"carousel-control-next-icon\"\r\n                      aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Next</span>\r\n            </a>\r\n        </div>\r\n    </div>\r\n"
 
 /***/ }),
 
@@ -40,7 +40,7 @@ module.exports = "\r\n    <div class=\"d-flex justify-content-center\">\r\n     
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<app-carousel class=\"mt-2\"></app-carousel>\r\n\r\n<app-script-cards></app-script-cards>"
+module.exports = "<app-carousel class=\"mt-2\"></app-carousel>\r\n\r\n<app-script-cards></app-script-cards>"
 
 /***/ }),
 
@@ -117,7 +117,7 @@ module.exports = "<mat-form-field>\r\n    <input type=\"text\"\r\n           ari
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div class=\"align-self-start parameter-radio\">\r\n    <label class=\"align-self-start mb-2\">\r\n        <span [innerHtml]=\"parameter.name | html\"></span>{{isRequired() ? '*' : ''}}\r\n    </label>\r\n\r\n    <div class=\"d-inline-flex\">\r\n        <mat-checkbox *ngIf=\"!isRequired()\"\r\n                      class=\"mr-3\"\r\n                      #defaultField\r\n                      (change)=\"defaultChecked($event)\">\r\n            default\r\n        </mat-checkbox>\r\n\r\n        <mat-checkbox *ngIf=\"!isDefault\"\r\n                      [required]=\"isRequired()\"\r\n                      #checkboxField\r\n                      (change)=\"changeValue($event)\">\r\n            true\r\n        </mat-checkbox>\r\n    </div>\r\n    <p class=\"parameter-description\">{{parameter.description}}</p>\r\n</div>"
+module.exports = "\r\n<div class=\"align-self-start parameter-radio\">\r\n    <label class=\"align-self-start mb-2\">\r\n        <span [innerHtml]=\"parameter.name | html\"></span>{{isRequired() ? '*' : ''}}\r\n    </label>\r\n\r\n    <div class=\"d-inline-flex\"\r\n         [ngClass]=\"parameter.name\">\r\n        <mat-checkbox *ngIf=\"!isRequired()\"\r\n                      class=\"mr-3 default\"\r\n                      #defaultField\r\n                      (change)=\"defaultChecked($event)\">\r\n            default\r\n        </mat-checkbox>\r\n\r\n        <mat-checkbox *ngIf=\"!isDefault\"\r\n                      [required]=\"isRequired()\"\r\n                      #checkboxField\r\n                      class=\"true\"\r\n                      (change)=\"changeValue($event)\">\r\n            true\r\n        </mat-checkbox>\r\n    </div>\r\n    <p class=\"parameter-description\">{{parameter.description}}</p>\r\n</div>"
 
 /***/ }),
 
@@ -161,7 +161,7 @@ module.exports = "<div *ngIf=\"parameter.valueOptionSetting != valueOptionSettin
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div class=\"justify-content-start parameter-radio\">\r\n    <label class=\"align-self-start mb-2\">\r\n        <span [innerHtml]=\"parameter.name | html\"></span>{{isRequired() ? '*' : ''}}\r\n    </label>\r\n    <mat-radio-group [(ngModel)]=\"parameter.value\">\r\n        <mat-radio-button value=\"\"\r\n                          *ngIf=\"!isRequired()\"\r\n                          selected\r\n                          class=\"mr-3\"\r\n                          (change)=\"changeValue($event)\">\r\n            default\r\n        </mat-radio-button>\r\n        <mat-radio-button *ngFor=\"let valueOption of parameter.valueOptions; index as i\"\r\n                          [value]=\"valueOption.value\"\r\n                          [required]=\"isRequired()\"\r\n                          class=\"mr-3\"\r\n                          (change)=\"changeValue($event)\">\r\n            {{valueOption.value }}\r\n        </mat-radio-button>\r\n        {{parameter.unit | html}}\r\n    </mat-radio-group>\r\n    <p class=\"parameter-description\">{{parameter.description}}</p>\r\n</div>"
+module.exports = "\r\n<div class=\"justify-content-start parameter-radio\">\r\n    <label class=\"align-self-start mb-2\">\r\n        <span [innerHtml]=\"parameter.name | html\"></span>{{isRequired() ? '*' : ''}}\r\n    </label>\r\n    <mat-radio-group [(ngModel)]=\"parameter.value\"\r\n                     [ngClass]=\"parameter.name\">\r\n        <mat-radio-button value=\"\"\r\n                          *ngIf=\"!isRequired()\"\r\n                          selected\r\n                          class=\"mr-3 default\" \r\n                          (change)=\"changeValue($event)\">\r\n            default\r\n        </mat-radio-button>\r\n        <mat-radio-button *ngFor=\"let valueOption of parameter.valueOptions; index as i\"\r\n                          [value]=\"valueOption.value\"\r\n                          [required]=\"isRequired()\"\r\n                          class=\"mr-3\"\r\n                          [ngClass]=\"valueOption.name\"\r\n                          (change)=\"changeValue($event)\">\r\n            {{valueOption.value }}\r\n        </mat-radio-button>\r\n        {{parameter.unit | html}}\r\n    </mat-radio-group>\r\n    <p class=\"parameter-description\">{{parameter.description}}</p>\r\n</div>"
 
 /***/ }),
 
@@ -172,7 +172,7 @@ module.exports = "\r\n<div class=\"justify-content-start parameter-radio\">\r\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-form-field>\r\n    <mat-label [innerHtml]=\"parameter.name | html\"></mat-label>\r\n    <mat-select [(ngModel)]=\"parameter.value\"\r\n                [required]=\"isRequired()\"\r\n                (selectionChange)=\"changeValue()\">\r\n        <mat-option *ngIf=\"!isRequired()\"> </mat-option>\r\n        <mat-option *ngFor=\"let valueOption of parameter.valueOptions\"\r\n                    [value]=\"valueOption.value\">\r\n            {{valueOption.name }}\r\n        </mat-option>\r\n    </mat-select>\r\n    <span matSuffix [innerHtml]=\"parameter.unit | html\"></span>\r\n</mat-form-field>\r\n<p class=\"parameter-description\">{{parameter.description}}</p>"
+module.exports = "<mat-form-field>\r\n    <mat-label [innerHtml]=\"parameter.name | html\"></mat-label>\r\n    <mat-select [(ngModel)]=\"parameter.value\"\r\n                [required]=\"isRequired()\"\r\n                [ngClass]=\"parameter.name\"\r\n                (selectionChange)=\"changeValue()\">\r\n        <mat-option *ngIf=\"!isRequired()\"\r\n                    class=\"default\"> </mat-option>\r\n        <mat-option *ngFor=\"let valueOption of parameter.valueOptions\"\r\n                    [value]=\"valueOption.value\"\r\n                    [ngClass]=\"valueOption.name\">\r\n            {{valueOption.name }}\r\n        </mat-option>\r\n    </mat-select>\r\n    <span matSuffix \r\n          [innerHtml]=\"parameter.unit | html\"></span>\r\n</mat-form-field>\r\n<p class=\"parameter-description\">{{parameter.description}}</p>"
 
 /***/ }),
 
@@ -183,7 +183,7 @@ module.exports = "<mat-form-field>\r\n    <mat-label [innerHtml]=\"parameter.nam
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [ngClass]=\"{'parameter-result-important': isImportant()}\">\r\n    <mat-list-item class=\"mt-3\">\r\n        <div class=\"d-inline-flex m-2\">\r\n            <h3 class=\"blockquote d-inline-block mr-2 parameter-result-header\"\r\n                [innerHtml]=\"parameter.name | html\"></h3>\r\n            <div class=\"d-inline-block\">\r\n                <p class=\"font-weight-bold mb-0 parameter-result-value\">\r\n                    <span *ngIf=\"parameter.valueType == valueTypesMapping['number']; else textValue\">\r\n                        {{parameter.value | toNumber | number:'1.0-3'}}\r\n                    </span>\r\n                    <ng-template #textValue>\r\n                        <span [ngClass]=\"parameter.name\">{{parameter.value}}</span>\r\n                    </ng-template>\r\n                    <span [innerHtml]=\"parameter.unit | html\"></span>\r\n                </p>\r\n                <p class=\"d-inline-block\"> {{ parameter.description }} </p>\r\n            </div>\r\n            <p innerHtml=\"{{parameter.equation | html}}\"></p>\r\n        </div>\r\n    </mat-list-item>\r\n</div>"
+module.exports = "<div [ngClass]=\"{'parameter-result-important': isImportant()}\">\r\n    <mat-list-item class=\"mt-3\">\r\n        <div class=\"d-inline-flex m-2\">\r\n            <h3 class=\"blockquote d-inline-block mr-2 parameter-result-header\"\r\n                [innerHtml]=\"parameter.name | html\"></h3>\r\n            <div class=\"d-inline-block\">\r\n                <p class=\"font-weight-bold mb-0 parameter-result-value\">\r\n                    <span *ngIf=\"parameter.valueType == valueTypesMapping['number']; else textValue\"\r\n                          [ngClass]=\"parameter.name\">\r\n                        {{parameter.value | toNumber | number:'1.0-3'}}\r\n                    </span>\r\n                    <ng-template #textValue>\r\n                        <span [ngClass]=\"parameter.name\">{{parameter.value}}</span>\r\n                    </ng-template>\r\n                    <span [innerHtml]=\"parameter.unit | html\"></span>\r\n                </p>\r\n                <p class=\"d-inline-block\"> {{ parameter.description }} </p>\r\n            </div>\r\n            <!--<p innerHtml=\"{{parameter.equation | html}}\"></p>-->\r\n        </div>\r\n    </mat-list-item>\r\n</div>"
 
 /***/ }),
 
@@ -709,14 +709,14 @@ var AboutMeComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./app/components/carousel/carousel.component.css":
-/*!********************************************************!*\
-  !*** ./app/components/carousel/carousel.component.css ***!
-  \********************************************************/
+/***/ "./app/components/carousel/carousel.component.scss":
+/*!*********************************************************!*\
+  !*** ./app/components/carousel/carousel.component.scss ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n.carousel-caption {\r\n    background-color: #45454590;\r\n    padding: 1em;\r\n    padding-bottom: 1.5em;\r\n    border-radius: 30px;\r\n}\r\n\r\nimg {\r\n    box-shadow: 10px 5px 5px black;\r\n    border: 1px solid black;\r\n    margin-bottom: 5px;\r\n}\r\n\r\n.link {\r\n    cursor: pointer;\r\n}\r\n\r\n.link:hover > img {\r\n        box-shadow: 10px 5px 5px gray;\r\n        border: 1px solid gray;\r\n    }\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9jb21wb25lbnRzL2Nhcm91c2VsL2Nhcm91c2VsLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0lBQ0ksMkJBQTJCO0lBQzNCLFlBQVk7SUFDWixxQkFBcUI7SUFDckIsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksOEJBQThCO0lBQzlCLHVCQUF1QjtJQUN2QixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxlQUFlO0FBQ25COztBQUVJO1FBQ0ksNkJBQTZCO1FBQzdCLHNCQUFzQjtJQUMxQiIsImZpbGUiOiJhcHAvY29tcG9uZW50cy9jYXJvdXNlbC9jYXJvdXNlbC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcbi5jYXJvdXNlbC1jYXB0aW9uIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICM0NTQ1NDU5MDtcclxuICAgIHBhZGRpbmc6IDFlbTtcclxuICAgIHBhZGRpbmctYm90dG9tOiAxLjVlbTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDMwcHg7XHJcbn1cclxuXHJcbmltZyB7XHJcbiAgICBib3gtc2hhZG93OiAxMHB4IDVweCA1cHggYmxhY2s7XHJcbiAgICBib3JkZXI6IDFweCBzb2xpZCBibGFjaztcclxuICAgIG1hcmdpbi1ib3R0b206IDVweDtcclxufVxyXG5cclxuLmxpbmsge1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcblxyXG4gICAgLmxpbms6aG92ZXIgPiBpbWcge1xyXG4gICAgICAgIGJveC1zaGFkb3c6IDEwcHggNXB4IDVweCBncmF5O1xyXG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIGdyYXk7XHJcbiAgICB9XHJcbiJdfQ== */"
+module.exports = ".carousel-caption {\n  background-color: #45454590;\n  padding: 1em;\n  padding-bottom: 1.5em;\n  border-radius: 30px;\n}\n\nimg {\n  box-shadow: 10px 5px 5px black;\n  border: 1px solid black;\n  margin-bottom: 5px;\n}\n\n.link {\n  cursor: pointer;\n}\n\n.link:hover > img {\n  box-shadow: 10px 5px 5px gray;\n  border: 1px solid gray;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9jb21wb25lbnRzL2Nhcm91c2VsL0M6XFxLUEtfQ2FsY3NcXEJ1aWxkX0lUX1dlYlxcQ2xpZW50QXBwL2FwcFxcY29tcG9uZW50c1xcY2Fyb3VzZWxcXGNhcm91c2VsLmNvbXBvbmVudC5zY3NzIiwiYXBwL2NvbXBvbmVudHMvY2Fyb3VzZWwvY2Fyb3VzZWwuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0E7RUFDSSwyQkFBQTtFQUNBLFlBQUE7RUFDQSxxQkFBQTtFQUNBLG1CQUFBO0FDQUo7O0FER0E7RUFDSSw4QkFBQTtFQUNBLHVCQUFBO0VBQ0Esa0JBQUE7QUNBSjs7QURHQTtFQUNJLGVBQUE7QUNBSjs7QURHSTtFQUNJLDZCQUFBO0VBQ0Esc0JBQUE7QUNBUiIsImZpbGUiOiJhcHAvY29tcG9uZW50cy9jYXJvdXNlbC9jYXJvdXNlbC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG4uY2Fyb3VzZWwtY2FwdGlvbiB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjNDU0NTQ1OTA7XHJcbiAgICBwYWRkaW5nOiAxZW07XHJcbiAgICBwYWRkaW5nLWJvdHRvbTogMS41ZW07XHJcbiAgICBib3JkZXItcmFkaXVzOiAzMHB4O1xyXG59XHJcblxyXG5pbWcge1xyXG4gICAgYm94LXNoYWRvdzogMTBweCA1cHggNXB4IGJsYWNrO1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgYmxhY2s7XHJcbiAgICBtYXJnaW4tYm90dG9tOiA1cHg7XHJcbn1cclxuXHJcbi5saW5rIHtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxuICAgIC5saW5rOmhvdmVyID4gaW1nIHtcclxuICAgICAgICBib3gtc2hhZG93OiAxMHB4IDVweCA1cHggZ3JheTtcclxuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCBncmF5O1xyXG4gICAgfVxyXG4iLCIuY2Fyb3VzZWwtY2FwdGlvbiB7XG4gIGJhY2tncm91bmQtY29sb3I6ICM0NTQ1NDU5MDtcbiAgcGFkZGluZzogMWVtO1xuICBwYWRkaW5nLWJvdHRvbTogMS41ZW07XG4gIGJvcmRlci1yYWRpdXM6IDMwcHg7XG59XG5cbmltZyB7XG4gIGJveC1zaGFkb3c6IDEwcHggNXB4IDVweCBibGFjaztcbiAgYm9yZGVyOiAxcHggc29saWQgYmxhY2s7XG4gIG1hcmdpbi1ib3R0b206IDVweDtcbn1cblxuLmxpbmsge1xuICBjdXJzb3I6IHBvaW50ZXI7XG59XG5cbi5saW5rOmhvdmVyID4gaW1nIHtcbiAgYm94LXNoYWRvdzogMTBweCA1cHggNXB4IGdyYXk7XG4gIGJvcmRlcjogMXB4IHNvbGlkIGdyYXk7XG59Il19 */"
 
 /***/ }),
 
@@ -748,7 +748,7 @@ var CarouselComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-carousel',
             template: __webpack_require__(/*! raw-loader!./carousel.component.html */ "../node_modules/raw-loader/index.js!./app/components/carousel/carousel.component.html"),
-            styles: [__webpack_require__(/*! ./carousel.component.css */ "./app/components/carousel/carousel.component.css")]
+            styles: [__webpack_require__(/*! ./carousel.component.scss */ "./app/components/carousel/carousel.component.scss")]
         }),
         __metadata("design:paramtypes", [])
     ], CarouselComponent);
@@ -759,14 +759,14 @@ var CarouselComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./app/components/home/home.component.css":
-/*!************************************************!*\
-  !*** ./app/components/home/home.component.css ***!
-  \************************************************/
+/***/ "./app/components/home/home.component.scss":
+/*!*************************************************!*\
+  !*** ./app/components/home/home.component.scss ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAvY29tcG9uZW50cy9ob21lL2hvbWUuY29tcG9uZW50LmNzcyJ9 */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAvY29tcG9uZW50cy9ob21lL2hvbWUuY29tcG9uZW50LnNjc3MifQ== */"
 
 /***/ }),
 
@@ -798,7 +798,7 @@ var HomeComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-home',
             template: __webpack_require__(/*! raw-loader!./home.component.html */ "../node_modules/raw-loader/index.js!./app/components/home/home.component.html"),
-            styles: [__webpack_require__(/*! ./home.component.css */ "./app/components/home/home.component.css")]
+            styles: [__webpack_require__(/*! ./home.component.scss */ "./app/components/home/home.component.scss")]
         }),
         __metadata("design:paramtypes", [])
     ], HomeComponent);
@@ -2295,13 +2295,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var ParameterResultComponent = /** @class */ (function () {
     function ParameterResultComponent() {
         this.parameter = null;
-        this.forbiddenSigns = ['(', ')', ',', '.', '^'];
+        //valueClass: string;
+        //forbiddenSigns = ['(', ')', ',', '.', '^'];
         this.valueTypes = _models_enums_valueType__WEBPACK_IMPORTED_MODULE_1__["ValueType"];
         this.valueTypesMapping = { 'number': 0, 'text': 1 };
     }
     ParameterResultComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.forbiddenSigns.forEach(function (fs) { return _this.valueClass = _this.parameter.name.replace(fs, ''); });
+        // this.forbiddenSigns.forEach(fs => this.valueClass = this.parameter.name.replace(fs, ''));
     };
     ParameterResultComponent.prototype.isImportant = function () {
         return (this.parameter.context & _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_2__["ParameterOptions"].important) != 0;
@@ -2947,9 +2947,18 @@ var DataParameterFormComponent = /** @class */ (function () {
         }
     };
     DataParameterFormComponent.prototype.select = function (parameter) {
-        this.parameterValue.setValue(this.parameterValue.value + "[" + parameter.name + "]");
-        this.value.nativeElement.focus();
-        this.value.nativeElement.selectionEnd = this.parameterValue.value.length;
+        var position = this.value.nativeElement.selectionEnd;
+        if (position >= 0) {
+            var value = this.parameterValue.value;
+            this.parameterValue.setValue(value.slice(0, position) + ("[" + parameter.name + "]") + value.slice(position));
+            this.value.nativeElement.focus();
+            this.value.nativeElement.selectionEnd = position + ("[" + parameter.name + "]").length;
+        }
+        else {
+            this.parameterValue.setValue(this.parameterValue.value + "[" + parameter.name + "]");
+            this.value.nativeElement.focus();
+            this.value.nativeElement.selectionEnd = this.parameterValue.value.length;
+        }
     };
     DataParameterFormComponent.prototype.onAllowUserValues = function () {
         this.newParameter.valueOptionSetting =

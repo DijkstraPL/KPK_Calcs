@@ -3,11 +3,12 @@
     <label class="align-self-start mb-2">
         <span [innerHtml]="parameter.name | html"></span>{{isRequired() ? '*' : ''}}
     </label>
-    <mat-radio-group [(ngModel)]="parameter.value">
+    <mat-radio-group [(ngModel)]="parameter.value"
+                     [ngClass]="parameter.name">
         <mat-radio-button value=""
                           *ngIf="!isRequired()"
                           selected
-                          class="mr-3"
+                          class="mr-3 default" 
                           (change)="changeValue($event)">
             default
         </mat-radio-button>
@@ -15,6 +16,7 @@
                           [value]="valueOption.value"
                           [required]="isRequired()"
                           class="mr-3"
+                          [ngClass]="valueOption.name"
                           (change)="changeValue($event)">
             {{valueOption.value }}
         </mat-radio-button>

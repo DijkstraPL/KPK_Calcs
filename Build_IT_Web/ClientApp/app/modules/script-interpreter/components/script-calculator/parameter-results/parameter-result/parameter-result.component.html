@@ -5,7 +5,8 @@
                 [innerHtml]="parameter.name | html"></h3>
             <div class="d-inline-block">
                 <p class="font-weight-bold mb-0 parameter-result-value">
-                    <span *ngIf="parameter.valueType == valueTypesMapping['number']; else textValue">
+                    <span *ngIf="parameter.valueType == valueTypesMapping['number']; else textValue"
+                          [ngClass]="parameter.name">
                         {{parameter.value | toNumber | number:'1.0-3'}}
                     </span>
                     <ng-template #textValue>
@@ -15,7 +16,7 @@
                 </p>
                 <p class="d-inline-block"> {{ parameter.description }} </p>
             </div>
-            <p innerHtml="{{parameter.equation | html}}"></p>
+            <!--<p innerHtml="{{parameter.equation | html}}"></p>-->
         </div>
     </mat-list-item>
 </div>

@@ -39,7 +39,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
         private string _prefix;
         private const string _defaultPrefix = "#";
         private readonly IScriptRepository _scriptRepository;
-        private readonly IParameterRepository _parameterRepositort;
+        private readonly IParameterRepository _parameterRepository;
         private readonly bool _useContainer = true;
 
         #endregion // Fields
@@ -53,12 +53,12 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
 
         internal CalculateFunction(
             IScriptRepository scriptRepository = null,
-            IParameterRepository parameterRepositort = null,
+            IParameterRepository parameterRepository = null,
             bool useContainer = false,
             ICalculator calculator = null) : this()
         {
             _scriptRepository = scriptRepository;
-            _parameterRepositort = parameterRepositort;
+            _parameterRepository = parameterRepository;
             _useContainer = useContainer;
             Calculator = calculator;
         }
@@ -132,23 +132,23 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
 
         private object CalculateScriptFromDatabase(FunctionArgs e)
         {
-            if (_scriptRepository != null && _scriptRepository != null)
+            if (_scriptRepository != null && _parameterRepository != null)
             {
                 var scriptData = _scriptRepository.GetScriptBaseOnNameAsync(_scriptName).Result;
                 if (scriptData != null)
-                    return CalculateScript(scriptData, e, _parameterRepositort);
-
-                throw new ArgumentException("No script with name " + _scriptName);
+                    return CalculateScript(scriptData, e, _parameterRepository);
             }
-
-            using (var scriptInterpreterDbContext = new ScriptInterpreterDbContext(new DbContextOptions<ScriptInterpreterDbContext>()))
+            else
             {
-                var scriptRepository = _scriptRepository ?? new ScriptRepository(scriptInterpreterDbContext);
-                var scriptData = scriptRepository.GetScriptBaseOnNameAsync(_scriptName).Result;
-                if (scriptData != null)
+                using (var scriptInterpreterDbContext = new ScriptInterpreterDbContext(new DbContextOptions<ScriptInterpreterDbContext>()))
                 {
-                    var parameterRepository = _parameterRepositort ?? new ParameterRepository(scriptInterpreterDbContext);
-                    return CalculateScript(scriptData, e, parameterRepository);
+                    var scriptRepository = _scriptRepository ?? new ScriptRepository(scriptInterpreterDbContext);
+                    var scriptData = scriptRepository.GetScriptBaseOnNameAsync(_scriptName).Result;
+                    if (scriptData != null)
+                    {
+                        var parameterRepository = _parameterRepository ?? new ParameterRepository(scriptInterpreterDbContext);
+                        return CalculateScript(scriptData, e, parameterRepository);
+                    }
                 }
             }
 

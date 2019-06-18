@@ -4,6 +4,7 @@ using NUnit.Framework;
 namespace Build_IT_FrameStaticaTests.UnitTests.Coords
 {
     [TestFixture]
+    [Ignore("Not ready")]
     public class PointTests
     {
         [Test]

@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Build_IT_SnowLoad\Build_IT_SnowLoads.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SnowLoadsService\ExceptionalSituations\" />
+  </ItemGroup>
+
 </Project>

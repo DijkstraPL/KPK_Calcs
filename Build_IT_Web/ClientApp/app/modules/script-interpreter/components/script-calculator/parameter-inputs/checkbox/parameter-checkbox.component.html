@@ -4,9 +4,10 @@
         <span [innerHtml]="parameter.name | html"></span>{{isRequired() ? '*' : ''}}
     </label>
 
-    <div class="d-inline-flex">
+    <div class="d-inline-flex"
+         [ngClass]="parameter.name">
         <mat-checkbox *ngIf="!isRequired()"
-                      class="mr-3"
+                      class="mr-3 default"
                       #defaultField
                       (change)="defaultChecked($event)">
             default
@@ -15,6 +16,7 @@
         <mat-checkbox *ngIf="!isDefault"
                       [required]="isRequired()"
                       #checkboxField
+                      class="true"
                       (change)="changeValue($event)">
             true
         </mat-checkbox>

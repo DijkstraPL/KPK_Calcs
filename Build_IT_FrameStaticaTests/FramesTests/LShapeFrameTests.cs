@@ -14,6 +14,7 @@ using Build_IT_FrameStatica.Coords;
 namespace Build_IT_FrameStaticaTests.FramesTests
 {
     [TestFixture]
+    [Ignore("Not ready")]
     public class LShapeFrameTests
     {
         private Frame _frame;
