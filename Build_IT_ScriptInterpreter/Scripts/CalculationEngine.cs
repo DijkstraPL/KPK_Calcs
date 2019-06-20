@@ -70,6 +70,22 @@ namespace Build_IT_ScriptInterpreter.Scripts
         public bool CheckVisibility(string parameterName, IDictionary<string, object> parameters) 
             => IsVisible(_scriptParameters.SingleOrDefault(p => p.Name == parameterName), parameters);
 
+        public bool CalculatePrediction(string equation, IDictionary<string, object> parameters)
+        {
+            if (string.IsNullOrWhiteSpace(equation))
+                return true;
+
+            var expressionEvaluator = ExpressionEvaluator.Create(equation, parameters);
+            try
+            {
+                return (bool)expressionEvaluator.Evaluate();
+            }
+            catch (ArgumentException)
+            {
+                return true;
+            }
+        }
+
         #endregion // Public_Methods
 
         #region Private_Methods

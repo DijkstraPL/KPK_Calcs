@@ -35,19 +35,21 @@ namespace Build_IT_Web.Service
             _calculationEngine = new SI.CalculationEngine(_scriptToInterpret);
 
             _parameterValues = userParameters
-                .Where(p => (p.Context & SIP.ParameterOptions.Optional) == 0 || 
+                .Where(p => (p.Context & SIP.ParameterOptions.Optional) == 0 ||
                 !string.IsNullOrWhiteSpace(p.Value) && (p.Context & SIP.ParameterOptions.Optional) != 0)
                 .ToDictionary(
                 p => p.Name,
                 p => p.ValueType == SIP.ValueTypes.Number ?
-                double.Parse(p.Value?.Replace(',', '.') ?? "0", NumberStyles.Any, CultureInfo.InvariantCulture) :
+                 string.IsNullOrWhiteSpace(p.Value) ? 0 :
+                 double.Parse(p.Value?.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture) :
                 (object)p.Value);
             _calculationEngine.Calculate(_parameterValues);
             _parameters.RemoveAll(p => !_parameterValues.ContainsKey(p.Name));
 
             foreach (var par in _parameterValues)
             {
-                var pp = _parameters.SingleOrDefault(p => p.Name == par.Key);
+                var pp = _parameters.SingleOrDefault(p => p.Name == par.Key &&
+                _calculationEngine.CalculatePrediction(p.VisibilityValidator, _parameterValues));
                 if (pp != null)
                     pp.Value = par.Value.ToString();
             }
@@ -56,7 +58,7 @@ namespace Build_IT_Web.Service
         internal IEnumerable<Parameter> GetResult()
             => _parameters.Where(p => 
             ((SIP.ParameterOptions)p.Context & SIP.ParameterOptions.Calculation) != 0 && 
-            _calculationEngine.CheckVisibility(p.Name, _parameterValues));
+            _calculationEngine.CalculatePrediction(p.VisibilityValidator, _parameterValues));
 
         private async Task<IScript> MapScript()
         {

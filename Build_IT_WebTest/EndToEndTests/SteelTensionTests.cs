@@ -9,7 +9,6 @@ namespace Build_IT_WebTest.EndToEndTests
 {
     [TestFixture]
     [EndToEndCategory]
-    [Ignore("End to end")]
     public class SteelTensionTests
     {
         private const string _chromeDriver = @"C:\KPK_Calcs\Build_IT_WebTest\bin\Debug\netcoreapp2.2";
@@ -37,7 +36,7 @@ namespace Build_IT_WebTest.EndToEndTests
 
             _calculateButton = _driver.FindElement(By.ClassName("calculate"));
             
-            NplRd_Selector = "N_pl,Rd_";
+            NplRd_Selector = @"N_pl\,Rd_";
             resistance_Selector = "Resistance";
         }
 

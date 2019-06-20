@@ -35,7 +35,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             var parameters = await _parameterRepository.GetAllParametersForScriptAsync(scriptId);
 
             var equations = new Dictionary<long,string> (parameters.ToDictionary(p => p.Id, p => p.Value));
-            
+             
             var scriptCalculator = new ScriptCalculator(script, parameters.ToList());
 
             await scriptCalculator.CalculateAsync(userParameters.Where(v => v.Value != null));

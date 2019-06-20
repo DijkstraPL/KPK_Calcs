@@ -150,6 +150,15 @@ namespace Build_IT_DataTests.UnitTests.Sections
         }
 
         [Test()]
+        public void IBeamSection_CalculatedMomentOfInteriaTest_IPE300_Success()
+        {
+            var iBeamSection = new IBeamSection(
+                width: 150, height: 300,
+                flangeWidth: 10.7, webWidth: 7.1, radius: 15);
+            Assert.That(iBeamSection.MomentOfInteria, Is.EqualTo(8356.109).Within(0.001));
+        }
+
+        [Test()]
         public void IBeamSection_CalculatedSolidHeightTest_Success()
         {
             SetUpIBeamSection();

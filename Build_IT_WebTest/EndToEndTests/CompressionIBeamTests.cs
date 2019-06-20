@@ -11,7 +11,6 @@ namespace Build_IT_WebTest.EndToEndTests
 {
     [TestFixture]
     [EndToEndCategory]
-    [Ignore("End to end")]
     public class CompressionIBeamTests
     {
         private const string _chromeDriver = @"C:\KPK_Calcs\Build_IT_WebTest\bin\Debug\netcoreapp2.2";
@@ -46,26 +45,26 @@ namespace Build_IT_WebTest.EndToEndTests
             _driver = new ChromeDriver(_chromeDriver);
             _driver.Navigate().GoToUrl(_url);
 
-            fy = _driver.FindElement(By.Id("mat-input-0"));
+            fy = _driver.FindElement(By.ClassName("f_y_"));
             expansionPanel = _driver.FindElement(By.Id("mat-expansion-panel-header-0"));
-            h = _driver.FindElement(By.Id("mat-input-1"));
-            b = _driver.FindElement(By.Id("mat-input-2"));
-            tf = _driver.FindElement(By.Id("mat-input-3"));
-            tw = _driver.FindElement(By.Id("mat-input-4"));
-            rolled = _driver.FindElement(By.Id("mat-radio-2"));
-            welded = _driver.FindElement(By.Id("mat-radio-3"));
-            r = _driver.FindElement(By.Id("mat-input-5"));
+            h = _driver.FindElement(By.ClassName("h"));
+            b = _driver.FindElement(By.ClassName("b"));
+            tf = _driver.FindElement(By.ClassName("t_f_"));
+            tw = _driver.FindElement(By.ClassName("t_w_"));
+            rolled = _driver.FindElement(By.ClassName("Rolled"));
+            welded = _driver.FindElement(By.ClassName("Welded"));
+            r = _driver.FindElement(By.ClassName("r"));
 
-            _calculateButton = _driver.FindElement(By.CssSelector("body > app-root > div > script-calculator > div > div.text-center.ng-star-inserted > button"));
+            _calculateButton = _driver.FindElement(By.ClassName("calculate"));
 
-            A_Selector = "body > app-root > div > script-calculator > div > div:nth-child(6) > mat-list > div:nth-child(1) > parameter-result > div > mat-list-item > div > div.d-inline-flex.m-2 > div > p.font-weight-bold.mb-0.parameter-result-value > span.ng-star-inserted";
-            ε_Selector = "body > app-root > div > script-calculator > div > div:nth-child(6) > mat-list > div:nth-child(2) > parameter-result > div > mat-list-item > div > div.d-inline-flex.m-2 > div > p.font-weight-bold.mb-0.parameter-result-value > span.ng-star-inserted";
-            cweb_Selector = "body > app-root > div > script-calculator > div > div:nth-child(6) > mat-list > div:nth-child(3) > parameter-result > div > mat-list-item > div > div.d-inline-flex.m-2 > div > p.font-weight-bold.mb-0.parameter-result-value > span.ng-star-inserted";
-            cflange_Selector = "body > app-root > div > script-calculator > div > div:nth-child(6) > mat-list > div:nth-child(4) > parameter-result > div > mat-list-item > div > div.d-inline-flex.m-2 > div > p.font-weight-bold.mb-0.parameter-result-value > span.ng-star-inserted";
-            webClass_Selector = "body > app-root > div > script-calculator > div > div:nth-child(6) > mat-list > div:nth-child(5) > parameter-result > div > mat-list-item > div > div.d-inline-flex.m-2 > div > p.font-weight-bold.mb-0.parameter-result-value > span.ng-star-inserted";
-            flangeClass_Selector = "body > app-root > div > script-calculator > div > div:nth-child(6) > mat-list > div:nth-child(6) > parameter-result > div > mat-list-item > div > div.d-inline-flex.m-2 > div > p.font-weight-bold.mb-0.parameter-result-value > span.ng-star-inserted";
-            Aeff_Selector = "body > app-root > div > script-calculator > div > div:nth-child(6) > mat-list > div:nth-child(7) > parameter-result > div > mat-list-item > div > div.d-inline-flex.m-2 > div > p.font-weight-bold.mb-0.parameter-result-value > span.ng-star-inserted";
-            NcRd_Selector = "body > app-root > div > script-calculator > div > div:nth-child(6) > mat-list > div:nth-child(8) > parameter-result > div > mat-list-item > div > div.d-inline-flex.m-2 > div > p.font-weight-bold.mb-0.parameter-result-value > span.ng-star-inserted";
+            A_Selector = "A";
+            ε_Selector = "ε";
+            webClass_Selector = "WebClass";
+            cweb_Selector = "c_web_";
+            cflange_Selector = "c_flange_";
+            flangeClass_Selector = "FlangeClass";
+            Aeff_Selector = "A_eff_";
+            NcRd_Selector = @"N_c\,Rd_";
         }
 
         [TearDown]
@@ -75,9 +74,59 @@ namespace Build_IT_WebTest.EndToEndTests
         }
 
         [Test]
-        public void CalculateTest_Success()
+        public void CalculateTest_Sample1_5_Success()
         {
             fy.SendKeys("275");
+            if (expansionPanel.GetAttribute("aria-expanded") != "true")
+                expansionPanel.Click();
+
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            wait.Until(d => h);
+
+            h.SendKeys("300");
+            b.SendKeys("150");
+            tf.SendKeys("10,7");
+            tw.SendKeys("7,1");
+            rolled.Click();
+            r.SendKeys("15");
+
+            _calculateButton.Click();
+
+            wait.Until(d => d.FindElement(By.ClassName(A_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(ε_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(cweb_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(cflange_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(webClass_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(flangeClass_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(Aeff_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(NcRd_Selector)));
+
+            var A = _driver.FindElement(By.ClassName(A_Selector));
+            var ε = _driver.FindElement(By.ClassName(ε_Selector));
+            var cweb = _driver.FindElement(By.ClassName(cweb_Selector));
+            var cflange = _driver.FindElement(By.ClassName(cflange_Selector));
+            var webClass = _driver.FindElement(By.ClassName(webClass_Selector));
+            var flangeClass = _driver.FindElement(By.ClassName(flangeClass_Selector));
+            var Aeff = _driver.FindElement(By.ClassName(Aeff_Selector));
+            var NcRd = _driver.FindElement(By.ClassName(NcRd_Selector));
+
+            Assert.That(A.Text.Contains("53.8", StringComparison.InvariantCulture));
+            Assert.That(ε.Text.Contains("0.92", StringComparison.InvariantCulture));
+            Assert.That(webClass.Text.Contains("Class 2", StringComparison.InvariantCulture));
+            Assert.That(flangeClass.Text.Contains("Class 1", StringComparison.InvariantCulture));
+            Assert.That(Aeff.Text.Contains("53.8", StringComparison.InvariantCulture));
+            Assert.That(NcRd.Text.Replace(",", string.Empty).Contains("1479", StringComparison.InvariantCulture));
+        }
+
+        [Test]
+        public void CalculateTest_Sample1_7_Success()
+        {
+            var kσweb_Selector = @"k_σ\,web_";
+            var λpweb_Selector = @"λ_p\,web_";
+            var ρweb_Selector = @"ρ_web_";
+            var beffweb_Selector = @"b_eff\,web_";
+
+            fy.SendKeys("355");
             if (expansionPanel.GetAttribute("aria-expanded") != "true")
                 expansionPanel.Click();
             h.SendKeys("300");
@@ -90,30 +139,110 @@ namespace Build_IT_WebTest.EndToEndTests
             _calculateButton.Click();
 
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            wait.Until(d => d.FindElement(By.CssSelector(A_Selector)));
-            wait.Until(d => d.FindElement(By.CssSelector(ε_Selector)));
-            wait.Until(d => d.FindElement(By.CssSelector(cweb_Selector)));
-            wait.Until(d => d.FindElement(By.CssSelector(cflange_Selector)));
-            wait.Until(d => d.FindElement(By.CssSelector(webClass_Selector)));
-            wait.Until(d => d.FindElement(By.CssSelector(flangeClass_Selector)));
-            wait.Until(d => d.FindElement(By.CssSelector(Aeff_Selector)));
-            wait.Until(d => d.FindElement(By.CssSelector(NcRd_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(A_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(ε_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(cweb_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(cflange_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(webClass_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(flangeClass_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(kσweb_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(λpweb_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(ρweb_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(beffweb_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(Aeff_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(NcRd_Selector)));
 
-            var A = _driver.FindElement(By.CssSelector(A_Selector));
-            var ε = _driver.FindElement(By.CssSelector(ε_Selector));
-            var cweb = _driver.FindElement(By.CssSelector(cweb_Selector));
-            var cflange = _driver.FindElement(By.CssSelector(cflange_Selector));
-            var webClass = _driver.FindElement(By.CssSelector(webClass_Selector));
-            var flangeClass = _driver.FindElement(By.CssSelector(flangeClass_Selector));
-            var Aeff = _driver.FindElement(By.CssSelector(Aeff_Selector));
-            var NcRd = _driver.FindElement(By.CssSelector(NcRd_Selector));
+            var A = _driver.FindElement(By.ClassName(A_Selector));
+            var ε = _driver.FindElement(By.ClassName(ε_Selector));
+            var cweb = _driver.FindElement(By.ClassName(cweb_Selector));
+            var cflange = _driver.FindElement(By.ClassName(cflange_Selector));
+            var webClass = _driver.FindElement(By.ClassName(webClass_Selector));
+            var flangeClass = _driver.FindElement(By.ClassName(flangeClass_Selector));
+            var kσweb = _driver.FindElement(By.ClassName(kσweb_Selector));
+            var λpweb = _driver.FindElement(By.ClassName(λpweb_Selector));
+            var ρweb = _driver.FindElement(By.ClassName(ρweb_Selector));
+            var beffweb = _driver.FindElement(By.ClassName(beffweb_Selector));
+            var Aeff = _driver.FindElement(By.ClassName(Aeff_Selector));
+            var NcRd = _driver.FindElement(By.ClassName(NcRd_Selector));
 
             Assert.That(A.Text.Contains("53.8", StringComparison.InvariantCulture));
-            Assert.That(ε.Text.Contains("0.92", StringComparison.InvariantCulture));
-            Assert.That(webClass.Text.Contains("Class 2", StringComparison.InvariantCulture));
+            Assert.That(ε.Text.Contains("0.81", StringComparison.InvariantCulture));
+            Assert.That(webClass.Text.Contains("Class 4", StringComparison.InvariantCulture));
             Assert.That(flangeClass.Text.Contains("Class 1", StringComparison.InvariantCulture));
-            Assert.That(Aeff.Text.Contains("53.8", StringComparison.InvariantCulture));
-            Assert.That(NcRd.Text.Replace(",", string.Empty).Contains("1479", StringComparison.InvariantCulture));
+            Assert.That(Aeff.Text.Contains("52.6", StringComparison.InvariantCulture));
+            Assert.That(kσweb.Text.Contains("4", StringComparison.InvariantCulture));
+            Assert.That(λpweb.Text.Contains("0.758", StringComparison.InvariantCulture));
+            Assert.That(ρweb.Text.Contains("0.937", StringComparison.InvariantCulture));
+            Assert.That(beffweb.Text.Contains("232.8", StringComparison.InvariantCulture));
+            Assert.That(NcRd.Text.Replace(",", string.Empty).Contains("1870", StringComparison.InvariantCulture));
+        }
+               
+        [Test]
+        public void CalculateTest_Sample1_8_Success()
+        {
+            var kσweb_Selector = @"k_σ\,web_";
+            var λpweb_Selector = @"λ_p\,web_";
+            var ρweb_Selector = @"ρ_web_";
+            var beffweb_Selector = @"b_eff\,web_";
+
+            fy.SendKeys("355");
+            if (expansionPanel.GetAttribute("aria-expanded") != "true")
+                expansionPanel.Click();
+            h.SendKeys("424");
+            b.SendKeys("300");
+            tf.SendKeys("12");
+            tw.SendKeys("8");
+            welded.Click();
+            var a = _driver.FindElement(By.ClassName("a"));
+            a.SendKeys("5");
+
+            _calculateButton.Click();
+
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            wait.Until(d => d.FindElement(By.ClassName(A_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(ε_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(cweb_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(cflange_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(webClass_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(flangeClass_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(kσweb_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(λpweb_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(ρweb_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(beffweb_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(Aeff_Selector)));
+            wait.Until(d => d.FindElement(By.ClassName(NcRd_Selector)));
+
+            var A = _driver.FindElement(By.ClassName(A_Selector));
+            var ε = _driver.FindElement(By.ClassName(ε_Selector));
+            var cweb = _driver.FindElement(By.ClassName(cweb_Selector));
+            var cflange = _driver.FindElement(By.ClassName(cflange_Selector));
+            var webClass = _driver.FindElement(By.ClassName(webClass_Selector));
+            var flangeClass = _driver.FindElement(By.ClassName(flangeClass_Selector));
+            var kσweb = _driver.FindElement(By.ClassName(kσweb_Selector));
+            var kσflange = _driver.FindElement(By.ClassName(@"k_σ\,flange_"));
+            var λpweb = _driver.FindElement(By.ClassName(λpweb_Selector));
+            var λpflange= _driver.FindElement(By.ClassName(@"λ_p\,flange_"));
+            var ρweb = _driver.FindElement(By.ClassName(ρweb_Selector));
+            var ρflange = _driver.FindElement(By.ClassName("ρ_flange_"));
+            var beffweb = _driver.FindElement(By.ClassName(beffweb_Selector));
+            var beffflange = _driver.FindElement(By.ClassName(@"b_eff\,flange_"));
+            var Aeff = _driver.FindElement(By.ClassName(Aeff_Selector));
+            var NcRd = _driver.FindElement(By.ClassName(NcRd_Selector));
+
+            Assert.That(A.Text.Contains("104", StringComparison.InvariantCulture));
+            Assert.That(ε.Text.Contains("0.81", StringComparison.InvariantCulture));
+            Assert.That(webClass.Text.Contains("Class 4", StringComparison.InvariantCulture));
+            Assert.That(flangeClass.Text.Contains("Class 4", StringComparison.InvariantCulture));
+            Assert.That(kσweb.Text.Contains("4", StringComparison.InvariantCulture));
+            Assert.That(λpweb.Text.Contains("1.04", StringComparison.InvariantCulture));
+            Assert.That(ρweb.Text.Contains("0.756", StringComparison.InvariantCulture));
+            Assert.That(beffweb.Text.Contains("291", StringComparison.InvariantCulture));
+            Assert.That(kσflange.Text.Contains("0.43", StringComparison.InvariantCulture));
+            Assert.That(λpflange.Text.Contains("0.76", StringComparison.InvariantCulture));
+            Assert.That(ρflange.Text.Contains("0.98", StringComparison.InvariantCulture));
+            Assert.That(beffflange.Text.Contains("137", StringComparison.InvariantCulture));
+            Assert.That(Aeff.Text.Contains("96", StringComparison.InvariantCulture));
+            Assert.That(NcRd.Text.Replace(",", string.Empty).Contains("3422", StringComparison.InvariantCulture));
         }
     }
 }
