@@ -14,12 +14,18 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
     [ApiController]
     public class TagController : ControllerBase
     {
+        #region Fields
+        
         private readonly IMapper _mapper;
         private readonly ITagRepository _tagRepository;
         private readonly IScriptInterpreterUnitOfWork _unitOfWork;
 
+        #endregion // Fields
+
+        #region Constructors
+        
         public TagController(
-            IMapper mapper, 
+            IMapper mapper,
             ITagRepository tagRepository,
             IScriptInterpreterUnitOfWork unitOfWork)
         {
@@ -28,6 +34,10 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             _unitOfWork = unitOfWork;
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         [HttpGet()]
         public async Task<IActionResult> GetTags()
         {
@@ -68,5 +78,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             var result = _mapper.Map<Tag, TagResource>(tag);
             return Ok(result);
         }
+
+        #endregion // Public_Methods
     }
 }

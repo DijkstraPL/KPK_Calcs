@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.Models
 {
@@ -19,12 +18,15 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
         public float Version { get; set; }
-        public ICollection<Parameter> Parameters { get; set; } 
+        public ICollection<Parameter> Parameters { get; set; }
+
+        public ICollection<ScriptTranslation> ScriptTranslations { get; set; }
 
         public Script()
         {
             Tags = new Collection<ScriptTag>();
             Parameters = new Collection<Parameter>();
+            ScriptTranslations = new Collection<ScriptTranslation>();
         }
     }
 }

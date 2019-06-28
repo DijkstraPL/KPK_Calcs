@@ -1,5 +1,7 @@
 ﻿using Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations;
+using Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations.Translations;
 using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Configuration;
@@ -10,11 +12,14 @@ namespace Build_IT_DataAccess.ScriptInterpreter
     public class ScriptInterpreterDbContext : DbContext
     {
         #region Properties
-        
+
         public DbSet<Script> Scripts { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Parameter> Parameters { get; set; }
         public DbSet<Figure> Figures { get; set; }
+        public DbSet<ScriptTranslation> ScriptsTranslations { get; set; }
+        public DbSet<ParameterTranslation> ParametersTranslations { get; set; }
+        public DbSet<ValueOptionTranslation> ValueOptionsTranslations { get; set; }
 
         #endregion // Properties
 
@@ -69,6 +74,10 @@ namespace Build_IT_DataAccess.ScriptInterpreter
             modelBuilder.ApplyConfiguration(new ScriptTagConfiguration());
             modelBuilder.ApplyConfiguration(new ParameterFigureConfiguration());
             modelBuilder.ApplyConfiguration(new FigureConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ScriptTranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new ParameterTranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new ValueOptionTranslationConfiguration());
         }
 
 #endregion // Protected_Methods

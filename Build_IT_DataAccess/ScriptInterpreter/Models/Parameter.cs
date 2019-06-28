@@ -1,4 +1,5 @@
 ﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -29,14 +30,17 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models
         public long ScriptId { get; set; }
         public ICollection<ParameterFigure> ParameterFigures { get; set; }
 
+        public ICollection<ParameterTranslation> ParametersTranslations { get; set; }
+
         #endregion // Properties
 
         #region Constructors
-        
+
         public Parameter()
         {
             ValueOptions = new Collection<ValueOption>();
             ParameterFigures = new Collection<ParameterFigure>();
+            ParametersTranslations = new Collection<ParameterTranslation>();
         }
 
         #endregion // Constructors

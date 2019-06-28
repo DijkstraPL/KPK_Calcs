@@ -4,12 +4,13 @@ using Build_IT_DataAccess.DeadLoads;
 using Build_IT_DataAccess.DeadLoads.Interfaces;
 using Build_IT_DataAccess.DeadLoads.Repositories;
 using Build_IT_DataAccess.DeadLoads.Repositories.Interfaces;
-using Build_IT_DataAccess.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
+using Build_IT_Web.Services;
+using Build_IT_Web.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,9 @@ namespace Build_IT_Web
             services.AddScoped<IScriptRepository, ScriptRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IParameterRepository, ParameterRepository>();
+            services.AddScoped<ITranslationRepository, TranslationRepository>();
+
+            services.AddScoped<ITranslationService, TranslationService>();
 
             services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();
 #if RELEASE

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using SI = Build_IT_ScriptInterpreter.Scripts;
 using SIP = Build_IT_ScriptInterpreter.Parameters;
 
-namespace Build_IT_Web.Service
+namespace Build_IT_Web.Services
 {
     public class ScriptCalculator
     {

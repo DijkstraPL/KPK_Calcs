@@ -15,11 +15,17 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
     [ApiController]
     public class ParametersController : ControllerBase
     {
+        #region Fields
+        
         private readonly IScriptRepository _scriptRepository;
         private readonly IParameterRepository _parameterRepository;
         private readonly IScriptInterpreterUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
+        #endregion // Fields
+
+        #region Constructors
+        
         public ParametersController(
             IScriptRepository scriptRepository,
             IParameterRepository parameterRepository,
@@ -32,6 +38,10 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             _mapper = mapper;
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         [HttpGet("{scriptId}/parameters")]
         public async Task<IEnumerable<ParameterResource>> GetAllParameters(long scriptId)
         {
@@ -113,15 +123,18 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
                 return NotFound();
 
             script.Modified = DateTime.Now;
-            copiedParameters.ForEach(p => {
+            copiedParameters.ForEach(p =>
+            {
                 p.Id = 0;
                 p.Script = script;
                 _parameterRepository.AddAsync(p);
-                });
+            });
 
             await _unitOfWork.CompleteAsync();
 
             return Ok(newScriptId);
         }
+
+        #endregion // Public_Methods
     }
 }

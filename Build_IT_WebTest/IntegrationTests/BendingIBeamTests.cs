@@ -23,6 +23,8 @@ namespace Build_IT_WebTest.IntegrationTests
         private IMapper _mapper;
         private CalculationsController _calculationsController;
 
+        private const long ID = 27;
+
         [SetUp]
         public void SetUp()
         {
@@ -50,7 +52,7 @@ namespace Build_IT_WebTest.IntegrationTests
         [Description("27 - Bending - I-Beam")]
         public void BendingResistanceCalculationTest_Example1_9_Success()
         {
-            var parameters = _parameterRepository.GetAllParametersForScriptAsync(27).Result.ToList();
+            var parameters = _parameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
             var parametersResource = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
             var parametersForCalculation = new List<ParameterResource>
@@ -72,7 +74,7 @@ namespace Build_IT_WebTest.IntegrationTests
             parametersForCalculation.First(p => p.Name == "Type").Value = "Rolled";
             parametersForCalculation.First(p => p.Name == "r").Value = "15";
 
-            var results = _calculationsController.Calculate(27, parametersForCalculation).Result.ToList();
+            var results = _calculationsController.Calculate(ID, parametersForCalculation).Result.ToList();
 
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "W_pl,y_").Value),
                 Is.EqualTo(628).Within(1));
@@ -84,7 +86,7 @@ namespace Build_IT_WebTest.IntegrationTests
         [Description("27 - Bending - I-Beam")]
         public void BendingResistanceCalculationTest_Example1_10_Success()
         {
-            var parameters = _parameterRepository.GetAllParametersForScriptAsync(27).Result.ToList();
+            var parameters = _parameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
             var parametersResource = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
             var parametersForCalculation = new List<ParameterResource>
@@ -106,19 +108,19 @@ namespace Build_IT_WebTest.IntegrationTests
             parametersForCalculation.First(p => p.Name == "Type").Value = "Welded";
             parametersForCalculation.First(p => p.Name == "a").Value = "5";
 
-            var results = _calculationsController.Calculate(27, parametersForCalculation).Result.ToList();
+            var results = _calculationsController.Calculate(ID, parametersForCalculation).Result.ToList();
 
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "W_pl,y_").Value),
                 Is.EqualTo(4073).Within(10));
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "M_c,Rd_").Value),
-                    Is.EqualTo(1446).Within(10));
+                    Is.EqualTo(1446).Within(5));
         }
 
         [Test]
         [Description("27 - Bending - I-Beam")]
         public void BendingResistanceCalculationTest_Example1_11_Success()
         {
-            var parameters = _parameterRepository.GetAllParametersForScriptAsync(27).Result.ToList();
+            var parameters = _parameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
             var parametersResource = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
             var parametersForCalculation = new List<ParameterResource>
@@ -140,12 +142,12 @@ namespace Build_IT_WebTest.IntegrationTests
             parametersForCalculation.First(p => p.Name == "Type").Value = "Welded";
             parametersForCalculation.First(p => p.Name == "a").Value = "4";
 
-            var results = _calculationsController.Calculate(27, parametersForCalculation).Result.ToList();
+            var results = _calculationsController.Calculate(ID, parametersForCalculation).Result.ToList();
 
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "W_eff,y_").Value),
                 Is.EqualTo(3820).Within(10));
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "M_c,Rd_").Value),
-                    Is.EqualTo(1356).Within(10));
+                    Is.EqualTo(1356).Within(5));
         }
 
 
@@ -153,7 +155,7 @@ namespace Build_IT_WebTest.IntegrationTests
         [Description("27 - Bending - I-Beam")]
         public void BendingResistanceCalculationTest_Example1_12_Success()
         {
-            var parameters = _parameterRepository.GetAllParametersForScriptAsync(27).Result.ToList();
+            var parameters = _parameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
             var parametersResource = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
             var parametersForCalculation = new List<ParameterResource>
@@ -175,12 +177,46 @@ namespace Build_IT_WebTest.IntegrationTests
             parametersForCalculation.First(p => p.Name == "Type").Value = "Welded";
             parametersForCalculation.First(p => p.Name == "a").Value = "4";
 
-            var results = _calculationsController.Calculate(27, parametersForCalculation).Result.ToList();
+            var results = _calculationsController.Calculate(ID, parametersForCalculation).Result.ToList();
 
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "W_eff,y_").Value),
                 Is.EqualTo(2710).Within(10));
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "M_c,Rd_").Value),
-                    Is.EqualTo(962).Within(10));
+                    Is.EqualTo(962).Within(5));
+        }
+
+        [Test]
+        [Description("27 - Bending - I-Beam")]
+        public void BendingResistanceCalculationTest_ExampleMasterThesis5_4_4_Success()
+        {
+            var parameters = _parameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
+
+            var parametersResource = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
+            var parametersForCalculation = new List<ParameterResource>
+            {
+                 parametersResource.First(p => p.Name == "f_y_"),
+                 parametersResource.First(p => p.Name == "h"),
+                 parametersResource.First(p => p.Name == "b"),
+                 parametersResource.First(p => p.Name == "t_f_"),
+                 parametersResource.First(p => p.Name == "t_w_"),
+                 parametersResource.First(p => p.Name == "Type"),
+                 parametersResource.First(p => p.Name == "a")
+            };
+
+            parametersForCalculation.First(p => p.Name == "f_y_").Value = "355";
+            parametersForCalculation.First(p => p.Name == "h").Value = "550";
+            parametersForCalculation.First(p => p.Name == "b").Value = "550";
+            parametersForCalculation.First(p => p.Name == "t_f_").Value = "24";
+            parametersForCalculation.First(p => p.Name == "t_w_").Value = "14";
+            parametersForCalculation.First(p => p.Name == "Type").Value = "Welded";
+            parametersForCalculation.First(p => p.Name == "a").Value = "4";
+
+            var results = _calculationsController.Calculate(ID, parametersForCalculation).Result.ToList();
+
+            Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "W_pl,y_").Value),
+                Is.EqualTo(7825).Within(10));
+            Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "M_c,Rd_").Value),
+                    Is.EqualTo(2778).Within(5));
         }
     }
 }

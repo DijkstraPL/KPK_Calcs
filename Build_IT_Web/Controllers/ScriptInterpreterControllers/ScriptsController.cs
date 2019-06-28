@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,16 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
     [ApiController]
     public class ScriptsController : ControllerBase
     {
+        #region Fields
+ 
         private readonly IMapper _mapper;
         private readonly IScriptRepository _scriptRepository;
         private readonly IScriptInterpreterUnitOfWork _unitOfWork;
 
+        #endregion // Fields
+
+        #region Constructors
+        
         public ScriptsController(
             IMapper mapper,
             IScriptRepository scriptRepository,
@@ -29,6 +36,10 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             _unitOfWork = unitOfWork;
         }
 
+        #endregion // Constructors
+
+        #region Public_Methods
+        
         [HttpGet()]
         public async Task<IActionResult> GetScripts()
         {
@@ -37,8 +48,8 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             if (scripts?.Count() == 0)
                 return NotFound();
 
-            var scriptViewModels = _mapper.Map<List<Script>, List<ScriptResource>>(scripts.ToList());
-            return Ok(scriptViewModels);
+            var scriptResources = _mapper.Map<List<Script>, List<ScriptResource>>(scripts.ToList());
+            return Ok(scriptResources);
         }
 
         [HttpGet("{scriptId}")]
@@ -50,7 +61,6 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
                 return NotFound();
 
             var scriptResource = _mapper.Map<Script, ScriptResource>(script);
-
             return Ok(scriptResource);
         }
 
@@ -107,6 +117,8 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             await _unitOfWork.CompleteAsync();
 
             return Ok(scriptId);
-        }        
+        }
+        
+        #endregion // Public_Methods
     }
 }

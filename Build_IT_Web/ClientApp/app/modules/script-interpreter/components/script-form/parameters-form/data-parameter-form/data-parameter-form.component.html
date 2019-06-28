@@ -99,10 +99,13 @@
                autocomplete="off" />
         <mat-hint>Group name</mat-hint>
         <mat-error *ngIf="parameterGroupName && parameterGroupName.hasError('maxlength')">
-            Group namme should be maximum {{parameterGroupName.errors.maxlength.requiredLength}} characters long.
+            Group name should be maximum {{parameterGroupName.errors.maxlength.requiredLength}} characters long.
         </mat-error>
     </mat-form-field>
 
+    <div contenteditable="true"
+         [innerHtml]="parameterValue.value | html"></div>
+    
     <mat-form-field class="m-2 full-width">
         <textarea matInput
                   #value

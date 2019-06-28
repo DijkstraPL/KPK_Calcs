@@ -4,14 +4,16 @@ using Build_IT_DataAccess.ScriptInterpreter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
 {
     [DbContext(typeof(ScriptInterpreterDbContext))]
-    partial class ScriptInterpreterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190628214810_ParameterTranslations")]
+    partial class ParameterTranslations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,8 +165,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
 
                     b.Property<string>("GroupName");
 
-                    b.Property<int>("Language");
-
                     b.Property<string>("Notes");
 
                     b.Property<long>("ParameterId");
@@ -207,8 +207,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description");
-
-                    b.Property<int>("Language");
 
                     b.Property<string>("Value");
 

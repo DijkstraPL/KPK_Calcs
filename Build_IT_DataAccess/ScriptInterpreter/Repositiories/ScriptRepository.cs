@@ -1,7 +1,10 @@
 ﻿using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
@@ -28,7 +31,10 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
         
         public async Task<IEnumerable<Script>> GetAllScriptsWithTagsAsync()
         {
-            return await ScriptInterpreterContext.Scripts.Include(s => s.Tags).ThenInclude(t => t.Tag).ToListAsync();
+            return await ScriptInterpreterContext.Scripts
+                .Include(s => s.Tags)
+                .ThenInclude(t => t.Tag)
+                .ToListAsync();
         }
 
         public async Task<Script> GetScriptWithTagsAsync(long id)
@@ -44,7 +50,14 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
             return await ScriptInterpreterContext.Scripts
                 .FirstOrDefaultAsync(s => s.Name == name);
         }
-        
+
+        public async Task<ICollection<ScriptTranslation>> GetScriptTranslations(long scriptId)
+        {
+            return await ScriptInterpreterContext.ScriptsTranslations
+                .Where(st => st.ScriptId == scriptId)
+                .ToListAsync();
+        }
+
         #endregion // Public_Methods
     }
 }

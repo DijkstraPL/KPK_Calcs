@@ -4,14 +4,16 @@ using Build_IT_DataAccess.ScriptInterpreter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
 {
     [DbContext(typeof(ScriptInterpreterDbContext))]
-    partial class ScriptInterpreterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190628161418_ScriptTranslations")]
+    partial class ScriptTranslations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,29 +155,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.Translations.ParameterTranslation", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("GroupName");
-
-                    b.Property<int>("Language");
-
-                    b.Property<string>("Notes");
-
-                    b.Property<long>("ParameterId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParameterId");
-
-                    b.ToTable("ParametersTranslations");
-                });
-
             modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.Translations.ScriptTranslation", b =>
                 {
                     b.Property<long>("Id")
@@ -198,27 +177,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                     b.HasIndex("ScriptId");
 
                     b.ToTable("ScriptsTranslations");
-                });
-
-            modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.Translations.ValueOptionTranslation", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description");
-
-                    b.Property<int>("Language");
-
-                    b.Property<string>("Value");
-
-                    b.Property<long>("ValueOptionId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ValueOptionId");
-
-                    b.ToTable("ValueOptionsTranslations");
                 });
 
             modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.ValueOption", b =>
@@ -278,27 +236,11 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.Translations.ParameterTranslation", b =>
-                {
-                    b.HasOne("Build_IT_DataAccess.ScriptInterpreter.Models.Parameter", "Parameter")
-                        .WithMany("ParametersTranslations")
-                        .HasForeignKey("ParameterId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.Translations.ScriptTranslation", b =>
                 {
                     b.HasOne("Build_IT_DataAccess.ScriptInterpreter.Models.Script", "Script")
                         .WithMany("ScriptTranslations")
                         .HasForeignKey("ScriptId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Build_IT_DataAccess.ScriptInterpreter.Models.Translations.ValueOptionTranslation", b =>
-                {
-                    b.HasOne("Build_IT_DataAccess.ScriptInterpreter.Models.ValueOption", "ValueOption")
-                        .WithMany("ValueOptionsTranslations")
-                        .HasForeignKey("ValueOptionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

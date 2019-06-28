@@ -1,4 +1,6 @@
 ﻿using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
