@@ -11,11 +11,12 @@ namespace Build_IT_Web.Services
     {
         #region Fields
 
+        public const string DefaultLanguageCode = "GB-en";
         private readonly ITranslationRepository _translationRepository;
         private readonly Dictionary<string, Language> _languages
             = new Dictionary<string, Language>
             {
-                { "GB-en", Language.Default },
+                { "GB-en", Language.English },
                 { "PL-pl", Language.Polish },
             };
 
@@ -35,7 +36,7 @@ namespace Build_IT_Web.Services
 
         public async Task SetScriptTranslation(string languageCode, ScriptResource scriptResource)
         {
-            if (_languages.ContainsKey(languageCode) && _languages[languageCode] != Language.Default)
+            if (_languages.ContainsKey(languageCode) && _languages[languageCode] != Language.English)
             {
                 var scriptTranslation = await _translationRepository.GetScriptTranslation(scriptResource.Id, _languages[languageCode]);
                 if (scriptTranslation == null)
@@ -49,10 +50,17 @@ namespace Build_IT_Web.Services
             }
             return;
         }
-        
+
+        public async Task SetScriptsTranslation(string languageCode, IEnumerable<ScriptResource> scriptResources)
+        {
+            foreach (var scriptResource in scriptResources)
+                await SetScriptTranslation(languageCode, scriptResource);
+            return;
+        }
+
         public async Task SetParameterTranslation(string languageCode, ParameterResource parameterResource)
         {
-            if (_languages.ContainsKey(languageCode) && _languages[languageCode] != Language.Default)
+            if (_languages.ContainsKey(languageCode) && _languages[languageCode] != Language.English)
             {
                 var parameterTranslation = await _translationRepository.GetParameterTranslation(parameterResource.Id, _languages[languageCode]);
                 if (parameterTranslation == null)
@@ -69,7 +77,7 @@ namespace Build_IT_Web.Services
 
         public async Task SetValueOptionTranslation(string languageCode, ValueOptionResource valueOptionResource)
         {
-            if (_languages.ContainsKey(languageCode) && _languages[languageCode] != Language.Default)
+            if (_languages.ContainsKey(languageCode) && _languages[languageCode] != Language.English)
             {
                 var parameterTranslation = await _translationRepository.GetValueOptionTranslation(valueOptionResource.Id, _languages[languageCode]);
                 if (parameterTranslation == null)

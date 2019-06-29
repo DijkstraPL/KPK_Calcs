@@ -18,8 +18,8 @@ namespace Build_IT_WebTest.UnitTests.Services
         [Test]
         public void SetScriptTranslationTest_Success()
         {
-            var scriptRepository = new Mock<IScriptRepository>();
-            scriptRepository.Setup(sr => sr.GetScriptTranslation(1, Language.Polish))
+            var translationRepository = new Mock<ITranslationRepository>();
+            translationRepository.Setup(sr => sr.GetScriptTranslation(1, Language.Polish))
                 .Returns(Task.FromResult(new ScriptTranslation()
                 {
                     Name= "new name",
@@ -27,7 +27,7 @@ namespace Build_IT_WebTest.UnitTests.Services
                     Notes = "note"
                 }));
 
-            var translationService = new TranslationService(scriptRepository.Object, null);
+            var translationService = new TranslationService(translationRepository.Object);
 
             var scriptResource = new ScriptResource()
             {

@@ -7,10 +7,12 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models
 {
     public class Script
     {
+        #region Properties
+        
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<ScriptTag> Tags { get; set; } 
+        public ICollection<ScriptTag> Tags { get; set; }
         public string GroupName { get; set; }
         public string Author { get; set; }
         public DateTime Added { get; set; }
@@ -22,11 +24,17 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models
 
         public ICollection<ScriptTranslation> ScriptTranslations { get; set; }
 
+        #endregion // Properties
+
+        #region Constructors
+        
         public Script()
         {
             Tags = new Collection<ScriptTag>();
             Parameters = new Collection<Parameter>();
             ScriptTranslations = new Collection<ScriptTranslation>();
         }
+
+        #endregion // Constructors
     }
 }

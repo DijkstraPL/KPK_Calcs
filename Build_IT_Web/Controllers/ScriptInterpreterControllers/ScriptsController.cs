@@ -4,6 +4,8 @@ using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
+using Build_IT_Web.Services;
+using Build_IT_Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,36 +14,39 @@ using System.Threading.Tasks;
 
 namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 {
-    [Route("api/scripts")]
+    [Route("api/{lang}/scripts")]
     [ApiController]
     public class ScriptsController : ControllerBase
     {
         #region Fields
- 
+
         private readonly IMapper _mapper;
         private readonly IScriptRepository _scriptRepository;
+        private readonly ITranslationService _translationService;
         private readonly IScriptInterpreterUnitOfWork _unitOfWork;
 
         #endregion // Fields
 
         #region Constructors
-        
+
         public ScriptsController(
             IMapper mapper,
             IScriptRepository scriptRepository,
+            ITranslationService translationService,
             IScriptInterpreterUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _scriptRepository = scriptRepository;
+            _translationService = translationService;
             _unitOfWork = unitOfWork;
         }
 
         #endregion // Constructors
 
         #region Public_Methods
-        
+
         [HttpGet()]
-        public async Task<IActionResult> GetScripts()
+        public async Task<IActionResult> GetScripts(string lang = TranslationService.DefaultLanguageCode)
         {
             var scripts = await _scriptRepository.GetAllScriptsWithTagsAsync();
 
@@ -49,11 +54,15 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
                 return NotFound();
 
             var scriptResources = _mapper.Map<List<Script>, List<ScriptResource>>(scripts.ToList());
+
+            if (lang != TranslationService.DefaultLanguageCode)
+                await _translationService.SetScriptsTranslation(lang, scriptResources);
+
             return Ok(scriptResources);
         }
 
         [HttpGet("{scriptId}")]
-        public async Task<IActionResult> GetScript(long scriptId)
+        public async Task<IActionResult> GetScript(long scriptId, string lang = TranslationService.DefaultLanguageCode)
         {
             var script = await _scriptRepository.GetScriptWithTagsAsync(scriptId);
 
@@ -61,6 +70,10 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
                 return NotFound();
 
             var scriptResource = _mapper.Map<Script, ScriptResource>(script);
+
+            if (lang != TranslationService.DefaultLanguageCode)
+                await _translationService.SetScriptTranslation(lang, scriptResource);
+
             return Ok(scriptResource);
         }
 
@@ -118,7 +131,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
             return Ok(scriptId);
         }
-        
+
         #endregion // Public_Methods
     }
 }
