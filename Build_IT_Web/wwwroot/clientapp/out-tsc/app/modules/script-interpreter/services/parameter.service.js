@@ -17,7 +17,7 @@ var ParameterService = /** @class */ (function () {
         return this.http.delete('/api/scripts/' + scriptId + '/parameters/' + parameterId);
     };
     ParameterService.prototype.getParameters = function (scriptId) {
-        return this.http.get('/api/scripts/' + scriptId + '/parameters');
+        return this.http.get('/api/scripts/' + scriptId + '/parameters/PL-pl');
     };
     ParameterService.prototype.create = function (scriptId, parameter) {
         return this.http.post('/api/scripts/' + scriptId + '/parameters', parameter);

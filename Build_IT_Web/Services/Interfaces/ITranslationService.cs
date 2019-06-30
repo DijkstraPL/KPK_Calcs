@@ -6,7 +6,9 @@ namespace Build_IT_Web.Services.Interfaces
 {
     public interface ITranslationService
     {
-        Task SetScriptTranslation(string languageCode, ScriptResource scriptResource);
         Task SetScriptsTranslation(string languageCode, IEnumerable<ScriptResource> scriptResources);
+        Task SetScriptTranslation(string languageCode, ScriptResource scriptResource);
+        Task SetParametersTranslation(string languageCode, IEnumerable<ParameterResource> parametersResource);
+        Task SetParameterTranslation(string languageCode, ParameterResource parameterResource);
     }
 }

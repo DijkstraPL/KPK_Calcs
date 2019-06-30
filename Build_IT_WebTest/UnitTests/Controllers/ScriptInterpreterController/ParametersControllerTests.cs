@@ -4,6 +4,7 @@ using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
+using Build_IT_Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -20,6 +21,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
     {
         private Mock<IScriptRepository> _scriptRepository;
         private Mock<IParameterRepository> _parameterRepository;
+        private Mock<ITranslationService> _translationService;
         private Mock<IScriptInterpreterUnitOfWork> _unitOfWork;
         private Mock<IMapper> _mapper;
 
@@ -28,6 +30,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         {
             _scriptRepository = new Mock<IScriptRepository>();
             _parameterRepository = new Mock<IParameterRepository>();
+            _translationService = new Mock<ITranslationService>();
             _unitOfWork = new Mock<IScriptInterpreterUnitOfWork>();
             _mapper = new Mock<IMapper>();
 
@@ -43,7 +46,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(parameters));
 
             var parametersController = new ParametersController( 
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+                _scriptRepository.Object, _parameterRepository.Object, 
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
 
             var result = parametersController.GetAllParameters(1).Result;
 
@@ -68,7 +72,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(1));
 
             var parametersController = new ParametersController(
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+                _scriptRepository.Object, _parameterRepository.Object,
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
 
             var result = parametersController.CreateParameter(1, parameterResource).Result;
             var resultParameter = (result as OkObjectResult).Value as ParameterResource;
@@ -87,7 +92,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             var parameterResource = new ParameterResource();
 
             var parametersController = new ParametersController(
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+                _scriptRepository.Object, _parameterRepository.Object,
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
             parametersController.ModelState.AddModelError("error", "model not valid");
 
             var result = parametersController.CreateParameter(1, parameterResource).Result;
@@ -104,7 +110,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             _scriptRepository.Setup(sr => sr.GetAsync(1)).Returns(Task.Run(() => default(Script)));
 
             var parametersController = new ParametersController(
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+                _scriptRepository.Object, _parameterRepository.Object,
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
 
             var result = parametersController.CreateParameter(1, parameterResource).Result;
 
@@ -130,8 +137,9 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             _unitOfWork.Setup(uow => uow.CompleteAsync())
                 .Returns(Task.FromResult(1));
 
-            var parametersController = new ParametersController( 
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+            var parametersController = new ParametersController(
+                _scriptRepository.Object, _parameterRepository.Object,
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
 
             var result = parametersController.UpdateParameter(1, 2, parameterResource).Result;
             var resultParameter = (result as OkObjectResult).Value as Parameter;
@@ -151,7 +159,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             var parameterResource = new ParameterResource();
 
             var parametersController = new ParametersController(
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+                _scriptRepository.Object, _parameterRepository.Object,
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
             parametersController.ModelState.AddModelError("error", "model not valid");
 
             var result = parametersController.UpdateParameter(1, 2, parameterResource).Result;
@@ -172,7 +181,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(parameter));
 
             var parametersController = new ParametersController(
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+                _scriptRepository.Object, _parameterRepository.Object,
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
 
             var result = parametersController.UpdateParameter(1, 2, parameterResource).Result;
 
@@ -194,7 +204,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(default(Parameter)));
 
             var parametersController = new ParametersController(
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+                _scriptRepository.Object, _parameterRepository.Object,
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
 
             var result = parametersController.UpdateParameter(1, 2, parameterResource).Result;
 
@@ -216,7 +227,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(1));
 
             var parametersController = new ParametersController(
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+                _scriptRepository.Object, _parameterRepository.Object,
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
 
             var result = parametersController.DeleteParameter(1).Result;
 
@@ -235,7 +247,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(default(Parameter)));
 
             var parametersController = new ParametersController(
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+                _scriptRepository.Object, _parameterRepository.Object,
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
 
             var result = parametersController.DeleteParameter(1).Result;
 
@@ -270,7 +283,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(1));
 
             var parametersController = new ParametersController(
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+                _scriptRepository.Object, _parameterRepository.Object,
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
 
             var result = parametersController.CopyParametersTo(1, 2).Result;
 
@@ -305,7 +319,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(parameterResources);
 
             var parametersController = new ParametersController(
-                _scriptRepository.Object, _parameterRepository.Object, _unitOfWork.Object, _mapper.Object);
+                _scriptRepository.Object, _parameterRepository.Object,
+                _translationService.Object, _unitOfWork.Object, _mapper.Object);
 
             var result = parametersController.CopyParametersTo(1, 2).Result;
 

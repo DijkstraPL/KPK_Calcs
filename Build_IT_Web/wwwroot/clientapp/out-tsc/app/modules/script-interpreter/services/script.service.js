@@ -19,7 +19,7 @@ var ScriptService = /** @class */ (function () {
         this.http = http;
     }
     ScriptService.prototype.getScripts = function () {
-        return this.http.get('/api/scripts')
+        return this.http.get('/api/scripts/PL-pl')
             .pipe(retry(1), catchError(function (error) {
             if (error.status === 404)
                 return throwError(new NotFoundError(error));
@@ -27,7 +27,7 @@ var ScriptService = /** @class */ (function () {
         }));
     };
     ScriptService.prototype.getScript = function (id) {
-        return this.http.get('/api/scripts/' + id)
+        return this.http.get('/api/scripts/' + id + '/PL-pl')
             .pipe(retry(1), catchError(function (error) {
             if (error.status === 404)
                 return throwError(new NotFoundError(error));

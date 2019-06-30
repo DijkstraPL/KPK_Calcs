@@ -75,6 +75,13 @@ namespace Build_IT_Web.Services
             return;
         }
 
+        public async Task SetParametersTranslation(string languageCode, IEnumerable<ParameterResource> parametersResource)
+        {
+            foreach (var parameterResource in parametersResource)
+                await SetParameterTranslation(languageCode, parameterResource);
+            return;
+        }
+
         public async Task SetValueOptionTranslation(string languageCode, ValueOptionResource valueOptionResource)
         {
             if (_languages.ContainsKey(languageCode) && _languages[languageCode] != Language.English)

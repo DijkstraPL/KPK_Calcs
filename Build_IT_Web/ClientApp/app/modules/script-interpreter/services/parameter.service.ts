@@ -14,7 +14,7 @@ export class ParameterService {
     }
     
     getParameters(scriptId: number): Observable<Parameter[]> {
-        return this.http.get<Parameter[]>('/api/scripts/' + scriptId + '/parameters');
+        return this.http.get<Parameter[]>('/api/scripts/' + scriptId + '/parameters/PL-pl');
     }
 
     create(scriptId: number, parameter: Parameter) {

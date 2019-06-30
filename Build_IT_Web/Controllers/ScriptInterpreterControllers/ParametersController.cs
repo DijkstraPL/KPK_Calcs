@@ -3,6 +3,8 @@ using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
+using Build_IT_Web.Services;
+using Build_IT_Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         
         private readonly IScriptRepository _scriptRepository;
         private readonly IParameterRepository _parameterRepository;
+        private readonly ITranslationService _translationService;
         private readonly IScriptInterpreterUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
@@ -29,11 +32,13 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         public ParametersController(
             IScriptRepository scriptRepository,
             IParameterRepository parameterRepository,
+            ITranslationService translationService,
             IScriptInterpreterUnitOfWork unitOfWork,
             IMapper mapper)
         {
             _scriptRepository = scriptRepository;
             _parameterRepository = parameterRepository;
+            _translationService = translationService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -42,12 +47,17 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
         #region Public_Methods
         
-        [HttpGet("{scriptId}/parameters")]
-        public async Task<IEnumerable<ParameterResource>> GetAllParameters(long scriptId)
+        [HttpGet("{scriptId}/parameters/{lang?}")]
+        public async Task<IEnumerable<ParameterResource>> GetAllParameters(long scriptId, string lang = TranslationService.DefaultLanguageCode)
         {
             var parameters = await _parameterRepository.GetAllParametersForScriptAsync(scriptId);
 
-            return _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters.ToList());
+            var parametersResource = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters.ToList());
+
+            if (lang != TranslationService.DefaultLanguageCode)
+                await _translationService.SetParametersTranslation(lang, parametersResource);
+
+            return parametersResource;
         }
 
         [HttpPost("{scriptId}/parameters")]

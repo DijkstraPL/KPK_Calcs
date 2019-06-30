@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 {
-    [Route("api/{lang}/scripts")]
+    [Route("api/scripts")]
     [ApiController]
     public class ScriptsController : ControllerBase
     {
@@ -45,7 +45,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
         #region Public_Methods
 
-        [HttpGet()]
+        [HttpGet("{lang?}")]
         public async Task<IActionResult> GetScripts(string lang = TranslationService.DefaultLanguageCode)
         {
             var scripts = await _scriptRepository.GetAllScriptsWithTagsAsync();
@@ -61,7 +61,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             return Ok(scriptResources);
         }
 
-        [HttpGet("{scriptId}")]
+        [HttpGet("{scriptId}/{lang?}")]
         public async Task<IActionResult> GetScript(long scriptId, string lang = TranslationService.DefaultLanguageCode)
         {
             var script = await _scriptRepository.GetScriptWithTagsAsync(scriptId);
