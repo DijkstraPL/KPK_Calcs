@@ -7,24 +7,17 @@ import { AppError } from '../../../common/errors/app-error';
 import { NotFoundError } from '../../../common/errors/not-found-error';
 import { BadInputError } from '../../../common/errors/bad-input-error';
 import { Router, PRIMARY_OUTLET } from '@angular/router';
+import { TranslationService } from '../../../services/translation.service';
 
 @Injectable({ providedIn: 'root' })
 export class ScriptService {
-    language: string;
-    languages: string[]
-        = [
-            "GB-en",
-            "PL-pl"
-        ]
 
     constructor(private http: HttpClient,
-        private router: Router) {
+        private translationService: TranslationService) {
     }
 
     getScripts(): Observable<Script[]> {
-        this.setLanguage();
-
-        return this.http.get<Script[]>('/api/scripts/' + this.language)
+        return this.http.get<Script[]>('/api/scripts/' + this.translationService.getCurrentLanguage())
             .pipe(
                 retry(1),
                 catchError((error: Response) => {
@@ -34,16 +27,9 @@ export class ScriptService {
                 })
             );
     }
-    setLanguage() {
-        const tree = this.router.parseUrl(this.router.url);
-        const segmentGroup = tree.root.children[PRIMARY_OUTLET];
-        const segments = segmentGroup.segments;
-        if (this.languages.includes(segments[0].path))
-            this.language = segments[0].path;
-    }
-
+    
     getScript(id: number): Observable<Script> {
-        return this.http.get<Script>('/api/scripts/' + id + this.language)
+        return this.http.get<Script>('/api/scripts/' + id + '/' + this.translationService.getCurrentLanguage())
             .pipe(
                 retry(1),
                 catchError((error: Response) => {

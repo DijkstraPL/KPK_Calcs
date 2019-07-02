@@ -36,6 +36,8 @@ import { AppErrorHandler } from './../../common/errors/app-error-handler';
 import { PipesModule } from '../pipes-module/pipes.module';
 import { MdComponentsModule } from '../md-components-module/md-components.module';
 import { FigureService } from './services/figure.service';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateLanguageLoader } from '../../services/translation.service';
 
 @NgModule({
     declarations: [
@@ -67,7 +69,13 @@ import { FigureService } from './services/figure.service';
         FormsModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        MdComponentsModule
+        MdComponentsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useClass: TranslateLanguageLoader
+            }
+        })
     ],
     entryComponents: [
         ExistingFiguresDialogComponent

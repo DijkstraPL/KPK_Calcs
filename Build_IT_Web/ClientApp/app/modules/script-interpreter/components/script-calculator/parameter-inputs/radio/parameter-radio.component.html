@@ -8,9 +8,9 @@
         <mat-radio-button value=""
                           *ngIf="!isRequired()"
                           selected
-                          class="mr-3 default" 
+                          class="mr-3 default"
                           (change)="changeValue($event)">
-            default
+            {{'scriptCalculator.Controls.Default' | translate}}
         </mat-radio-button>
         <mat-radio-button *ngFor="let valueOption of parameter.valueOptions; index as i"
                           [value]="valueOption.value"

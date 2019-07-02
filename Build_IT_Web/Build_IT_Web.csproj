@@ -17,25 +17,21 @@
     <Compile Remove="ClientApp\app\components\script-cards\**" />
     <Compile Remove="ClientApp\app\components\script-card\**" />
     <Compile Remove="ClientApp\app\components\script-form\**" />
-    <Compile Remove="ClientApp\app\services\**" />
     <Content Remove="ClientApp\app\components\parameters-form\**" />
     <Content Remove="ClientApp\app\components\script-calculator\**" />
     <Content Remove="ClientApp\app\components\script-cards\**" />
     <Content Remove="ClientApp\app\components\script-card\**" />
     <Content Remove="ClientApp\app\components\script-form\**" />
-    <Content Remove="ClientApp\app\services\**" />
     <EmbeddedResource Remove="ClientApp\app\components\parameters-form\**" />
     <EmbeddedResource Remove="ClientApp\app\components\script-calculator\**" />
     <EmbeddedResource Remove="ClientApp\app\components\script-cards\**" />
     <EmbeddedResource Remove="ClientApp\app\components\script-card\**" />
     <EmbeddedResource Remove="ClientApp\app\components\script-form\**" />
-    <EmbeddedResource Remove="ClientApp\app\services\**" />
     <None Remove="ClientApp\app\components\parameters-form\**" />
     <None Remove="ClientApp\app\components\script-calculator\**" />
     <None Remove="ClientApp\app\components\script-cards\**" />
     <None Remove="ClientApp\app\components\script-card\**" />
     <None Remove="ClientApp\app\components\script-form\**" />
-    <None Remove="ClientApp\app\services\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,13 +40,19 @@
     <None Remove="ClientApp\app\common\errors\app-error-state-matcher.ts" />
     <None Remove="ClientApp\app\common\errors\bad-input-error.ts" />
     <None Remove="ClientApp\app\common\errors\not-found-error.ts" />
+    <None Remove="ClientApp\app\directives\bootstrap-select.directive.ts" />
+    <None Remove="ClientApp\app\services\configuration.service.ts" />
+    <None Remove="ClientApp\app\services\db-keys.ts" />
+    <None Remove="ClientApp\app\services\local-store-manager.service.ts" />
+    <None Remove="ClientApp\app\services\translation.service.ts" />
+    <None Remove="ClientApp\app\services\utilities.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="ClientApp\app\common\validators\" />
-    <Folder Include="ClientApp\app\directives\" />
     <Folder Include="ClientApp\app\modules\loads\components\wind-loads-components\" />
     <Folder Include="ClientApp\app\models\" />
+    <Folder Include="ClientApp\app\modules\script-interpreter\components\script-form\translation-form\" />
     <Folder Include="wwwroot\clientapp\uploads\" />
   </ItemGroup>
 
@@ -75,6 +77,12 @@
     <TypeScriptCompile Include="ClientApp\app\common\errors\bad-input-error.ts" />
     <TypeScriptCompile Include="ClientApp\app\common\errors\not-found-error.ts" />
     <TypeScriptCompile Include="ClientApp\app\common\errors\app-error.ts" />
+    <TypeScriptCompile Include="ClientApp\app\directives\bootstrap-select.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\configuration.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\db-keys.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\local-store-manager.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\translation.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\utilities.ts" />
   </ItemGroup>
 
 </Project>

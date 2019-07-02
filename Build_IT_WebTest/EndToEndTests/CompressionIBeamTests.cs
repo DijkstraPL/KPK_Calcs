@@ -11,6 +11,7 @@ namespace Build_IT_WebTest.EndToEndTests
 {
     [TestFixture]
     [EndToEndCategory]
+    [Ignore("End To End")]
     public class CompressionIBeamTests
     {
         private const string _chromeDriver = @"C:\KPK_Calcs\Build_IT_WebTest\bin\Debug\netcoreapp2.2";

@@ -1,6 +1,6 @@
 ﻿<h2 class="mt-4 text-center"
     *ngIf="!editMode">
-    Script
+    {{'scriptsForm.Header' | translate}}
 </h2>
 <h2 class="mt-4 text-center"
     *ngIf="editMode">
@@ -11,24 +11,32 @@
       [formGroup]="scriptForm">
     <mat-tab-group dynamicHeight>
 
-        <mat-tab label="Script data">
+        <mat-tab label="{{'scriptsForm.ScriptData.Header' | translate}}">
             <div class="mat-elevation-z4">
                 <script-data-form [scriptForm]="scriptForm"
                                   [includeNote]="includeNote"></script-data-form>
             </div>
         </mat-tab>
 
-        <mat-tab label="Tags">
+        <mat-tab label="{{'scriptsForm.Tags.Header' | translate}}">
             <div class="mat-elevation-z4">
                 <tag-form [scriptForm]="scriptForm"></tag-form>
             </div>
         </mat-tab>
 
-        <mat-tab label="Parameters">
+        <mat-tab label="{{'scriptsForm.Parameters.Header' | translate}}"
+                 *ngIf="editMode">
             <div class="mat-elevation-z4">
                 <app-parameters-form *ngIf="editMode"></app-parameters-form>
             </div>
         </mat-tab>
+
+        <mat-tab label="{{'scriptsForm.Translations.Header' | translate}}">
+            <div class="mat-elevation-z4">
+                <!--<app-translation-form></app-translation-form>-->
+            </div>
+        </mat-tab>
+
 
     </mat-tab-group>
     
@@ -38,7 +46,7 @@
             type="submit"
             [disabled]="!scriptForm.valid"
             class="mt-3 ml-3">
-        Add Script
+        {{'scriptsForm.AddScript' | translate}}
     </button>
     <button mat-stroked-button
             color="accent"
@@ -46,7 +54,7 @@
             type="submit"
             [disabled]="!scriptForm.valid"
             class="mt-3 ml-3">
-        Update Script
+        {{'scriptsForm.UpdateScript' | translate}}
     </button>
 </form>
 

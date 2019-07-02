@@ -11,13 +11,13 @@ namespace Build_IT_Web.Services
     {
         #region Fields
 
-        public const string DefaultLanguageCode = "GB-en";
+        public const string DefaultLanguageCode = "en";
         private readonly ITranslationRepository _translationRepository;
         private readonly Dictionary<string, Language> _languages
             = new Dictionary<string, Language>
             {
-                { "GB-en", Language.English },
-                { "PL-pl", Language.Polish },
+                { "en", Language.English },
+                { "pl", Language.Polish },
             };
 
         #endregion // Fields

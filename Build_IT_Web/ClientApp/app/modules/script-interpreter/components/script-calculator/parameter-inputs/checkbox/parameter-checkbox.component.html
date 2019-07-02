@@ -10,7 +10,7 @@
                       class="mr-3 default"
                       #defaultField
                       (change)="defaultChecked($event)">
-            default
+            {{'scriptCalculator.Controls.Default' | translate}}
         </mat-checkbox>
 
         <mat-checkbox *ngIf="!isDefault"
@@ -18,7 +18,7 @@
                       #checkboxField
                       class="true"
                       (change)="changeValue($event)">
-            true
+            {{'scriptCalculator.Controls.True' | translate}}
         </mat-checkbox>
     </div>
     <p class="parameter-description">{{parameter.description}}</p>

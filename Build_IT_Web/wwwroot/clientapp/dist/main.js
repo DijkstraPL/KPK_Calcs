@@ -18,7 +18,7 @@ module.exports = "<div>\r\n    <app-nav-menu></app-nav-menu>\r\n    <router-outl
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mt-2 ml-5 mr-5\">\r\n    <h3>Overall informations</h3>\r\n    <p>\r\n        The site contains a large number of calculators\r\n        which based mostly on Eurocodes with Polish national annexes.\r\n    </p>\r\n</div>\r\n\r\n<div class=\"m-5\">\r\n    <div>\r\n        <h3>Snow load calculators</h3>\r\n        <p>\r\n            Mostly based on <i>Eurocode 1 - Actions on structures Part 1-3: General actions - Snow loads</i> with Polish national annex.\r\n            This calculator contains all possible design situations and roof types which are described in the document.\r\n            This calculators shouldn't be used for or doesn't have informations how to calculate:\r\n        </p>\r\n        <ul>\r\n            <li>sites at altitudes above 1 500m,</li>\r\n            <li>impact snow loads resulting from sliding off or falling from a higher roof,</li>\r\n            <li>additional wind loads which could result from changes in shape or size of the construction works due to the presence of snow or the accretion of ice,</li>\r\n            <li>loads in areas where snow is present all year round,</li>\r\n            <li>ice loading,</li>\r\n            <li>lateral loading due to snow (e.g. lateral loads exerted by drifts),</li>\r\n            <li>snow loads on bridges.</li>\r\n        </ul>\r\n    </div>\r\n    <div>\r\n        <h3>Dead load calculator</h3>\r\n        <p>\r\n            Mostly based on <i>Eurocode 1 - Actions on structures Part 1-1: General actions - Densities, self-weight, imposed loads for buildings</i> with Polish national annex\r\n            and on Polish standard document <i>PN-82/B-02001 Building loads - permanent loads</i> which contains informations about the density of the building materials.\r\n            This calculator allows us to get the information about the weight of all layers in the structure.\r\n        </p>\r\n    </div>\r\n    <hr />\r\n    <div>\r\n        <h3>Author: Konrad Kania</h3>\r\n        <p>\r\n            I graduated at the Technical University in Łódź at the faculty of Civil Engineering.\r\n            Currently, I also finished postgraduate studies at Polish Academy of Science and work for building company as a programmer since the beginning of March 2017.\r\n            I treat building designing with great passion the same as the programming.\r\n            This way of doing things and possibilities which comes with those two branches bring me an idea to make something for overall usage.\r\n            I started working on this site since September 2018 and I hope that there will be only more and better content available for everyone.\r\n        </p>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"mt-2 ml-5 mr-5\">\r\n    <h3>{{'about.Overall.Header' | translate}}</h3>\r\n    <p>\r\n        {{'about.Overall.Description' | translate}}\r\n    </p>\r\n</div>\r\n<div class=\"m-5\">\r\n    <div>\r\n        <h3>{{'about.SnowLoad.Header' | translate}}</h3>\r\n        <p [innerHtml]=\"'about.SnowLoad.Description' | translate\"></p>\r\n        <ul>\r\n            <li *ngFor=\"let position of 'about.SnowLoad.List'| translate\">{{position}}</li>\r\n        </ul>\r\n    </div>\r\n    <div>\r\n        <h3>{{'about.DeadLoad.Header' | translate}}</h3>\r\n        <p [innerHtml]=\"'about.DeadLoad.Description' | translate\"></p>\r\n    </div>\r\n    <hr />\r\n    <div>\r\n        <h3>{{'about.Author.Header' | translate}}</h3>\r\n        <p [innerHtml]=\"'about.Author.Description' | translate\"></p>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -29,7 +29,7 @@ module.exports = "<div class=\"mt-2 ml-5 mr-5\">\r\n    <h3>Overall informations
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n    <div class=\"d-flex justify-content-center\">\r\n        <div id=\"carouselExampleIndicators\"\r\n             class=\"carousel slide w-100\"\r\n             data-ride=\"carousel\">\r\n            <ol class=\"carousel-indicators\">\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"0\"\r\n                    class=\"active\"></li>\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"1\"></li>\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"2\"></li>\r\n            </ol>\r\n            <div class=\"carousel-inner\">\r\n\r\n                <div class=\"carousel-item active\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center nav-item link\"\r\n                         [routerLink]=\"['/snowloads']\">\r\n                        <img src=\"../../../assets/images/snow_load_carousel.jpg\"\r\n                             alt=\"Snow load\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>Snow loads</h5>\r\n                            <p>Check out calculators for snow loads.</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"carousel-item\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center link\"\r\n                         [routerLink]=\"['/deadloads']\">\r\n                        <img src=\"../../../assets/images/dead_load_carousel.jpg\"\r\n                             alt=\"Lorem ipsum\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>Dead loads</h5>\r\n                            <p>Check out calculators for dead loads.</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"carousel-item\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center link\"\r\n                         [routerLink]=\"['/about']\">\r\n                        <img src=\"../../../assets/images/about_me_carousel.jpg\"\r\n                             alt=\"Lorem ipsum\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>About me</h5>\r\n                            <p>Read more about the author of this site.</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <a class=\"carousel-control-prev\"\r\n               href=\"#carouselExampleIndicators\"\r\n               role=\"button\"\r\n               data-slide=\"prev\">\r\n                <span class=\"carousel-control-prev-icon\"\r\n                      aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Previous</span>\r\n            </a>\r\n            <a class=\"carousel-control-next\"\r\n               href=\"#carouselExampleIndicators\"\r\n               role=\"button\"\r\n               data-slide=\"next\">\r\n                <span class=\"carousel-control-next-icon\"\r\n                      aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">Next</span>\r\n            </a>\r\n        </div>\r\n    </div>\r\n"
+module.exports = "\r\n    <div class=\"d-flex justify-content-center\">\r\n        <div id=\"carouselExampleIndicators\"\r\n             class=\"carousel slide w-100\"\r\n             data-ride=\"carousel\">\r\n            <ol class=\"carousel-indicators\">\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"0\"\r\n                    class=\"active\"></li>\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"1\"></li>\r\n                <li data-target=\"#carouselExampleIndicators\"\r\n                    data-slide-to=\"2\"></li>\r\n            </ol>\r\n            <div class=\"carousel-inner\">\r\n\r\n                <div class=\"carousel-item active\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center nav-item link\"\r\n                         [routerLink]=\"['/snowloads']\">\r\n                        <img src=\"../../../assets/images/snow_load_carousel.jpg\"\r\n                             alt=\"Snow load\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>{{'carousel.SnowLoads.Header' | translate}}</h5>\r\n                            <p>{{'carousel.SnowLoads.Description' | translate}}</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"carousel-item\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center link\"\r\n                         [routerLink]=\"['/deadloads']\">\r\n                        <img src=\"../../../assets/images/dead_load_carousel.jpg\"\r\n                             alt=\"Lorem ipsum\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>{{'carousel.DeadLoads.Header' | translate}}</h5>\r\n                            <p>{{'carousel.DeadLoads.Description' | translate}}</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"carousel-item\"\r\n                     [routerLinkActive]='[\"link-active\"]'\r\n                     [routerLinkActiveOptions]='{ exact: true }'>\r\n                    <div class=\"d-flex justify-content-center link\"\r\n                         [routerLink]=\"['/about']\">\r\n                        <img src=\"../../../assets/images/about_me_carousel.jpg\"\r\n                             alt=\"Lorem ipsum\">\r\n                        <div class=\"carousel-caption d-none d-md-block\">\r\n                            <h5>{{'carousel.About.Header' | translate}}</h5>\r\n                            <p>{{'carousel.About.Description' | translate}}</p>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <a class=\"carousel-control-prev\"\r\n               href=\"#carouselExampleIndicators\"\r\n               role=\"button\"\r\n               data-slide=\"prev\">\r\n                <span class=\"carousel-control-prev-icon\"\r\n                      aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">{{'carousel.Previous' | translate}}</span>\r\n            </a>\r\n            <a class=\"carousel-control-next\"\r\n               href=\"#carouselExampleIndicators\"\r\n               role=\"button\"\r\n               data-slide=\"next\">\r\n                <span class=\"carousel-control-next-icon\"\r\n                      aria-hidden=\"true\"></span>\r\n                <span class=\"sr-only\">{{'carousel.Next' | translate}}</span>\r\n            </a>\r\n        </div>\r\n    </div>\r\n"
 
 /***/ }),
 
@@ -51,7 +51,7 @@ module.exports = "<app-carousel class=\"mt-2\"></app-carousel>\r\n\r\n<app-scrip
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-secondary\">\r\n    <a class=\"navbar-brand font-weight-bold\"\r\n       [routerLink]='[\"/\"]'><span class=\"fa fa-building-o\"></span>BUILD IT</a>\r\n    <button class=\"navbar-toggler\"\r\n            type=\"button\"\r\n            data-toggle=\"collapse\"\r\n            data-target=\"#navbarSupportedContent\"\r\n            aria-controls=\"navbarSupportedContent\"\r\n            aria-expanded=\"false\"\r\n            aria-label=\"Toggle navigation\">\r\n        <span class=\"navbar-toggler-icon\"></span>\r\n    </button>\r\n\r\n    <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\r\n        <ul class=\"navbar-nav mr-auto\">\r\n            <li class=\"nav-item active\"\r\n                [routerLinkActive]='[\"link-active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]='[\"/home\"]'>\r\n                    <span class=\"fa fa-home\"></span> Home <span class=\"sr-only\">(current)</span>\r\n                </a>\r\n            </li>\r\n            <li class=\"nav-item\"\r\n                [routerLinkActive]='[\"link-active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]=\"['/scripts/new']\">\r\n                    <span class=\"fa fa-file-code\"></span> New script\r\n                </a>\r\n            </li>\r\n            <li class=\"nav-item dropdown\">\r\n                <a class=\"nav-link dropdown-toggle\"\r\n                   href=\"#\"\r\n                   id=\"navbarDropdown\"\r\n                   role=\"button\"\r\n                   data-toggle=\"dropdown\"\r\n                   aria-haspopup=\"true\"\r\n                   aria-expanded=\"false\">\r\n                    <span class=\"fa fa-arrow-down\"></span> Loads\r\n                </a>\r\n                <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\r\n                    <a class=\"dropdown-item\"\r\n                       [routerLink]=\"['/deadloads']\">\r\n                        <span class=\"fa fa-building\"></span> Dead Loads\r\n                    </a>\r\n                    <a class=\"dropdown-item\"\r\n                       [routerLink]=\"['/snowloads']\">\r\n                        <span class=\"fa fa-snowman\"></span> Snow Loads\r\n                    </a>\r\n                    <!--<a class=\"dropdown-item\" href=\"#\">Another action</a>\r\n            <div class=\"dropdown-divider\"></div>\r\n            <a class=\"dropdown-item\" href=\"#\">Something else here</a>-->\r\n                </div>\r\n            </li>\r\n\r\n            <li class=\"nav-item\"\r\n                [routerLinkActive]='[\"link-active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]=\"['/about']\">\r\n                    <span class=\"fa fa-user-circle\"></span> About\r\n                </a>\r\n            </li>\r\n            <!--<li class=\"nav-item\">\r\n        <a class=\"nav-link disabled\" href=\"#\">Disabled</a>\r\n    </li>-->\r\n        </ul>\r\n        <!--<form class=\"form-inline my-2 my-lg-0\">\r\n            <input class=\"form-control mr-sm-2\"\r\n                   type=\"search\"\r\n                   placeholder=\"Search\"\r\n                   aria-label=\"Search\">\r\n            <button class=\"btn btn-outline-success my-2 my-sm-0\" type=\"submit\">Search</button>\r\n        </form>-->\r\n    </div>\r\n</nav>\r\n"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-secondary\">\r\n    <a class=\"navbar-brand font-weight-bold\"\r\n       [routerLink]='[\"/\"]'><span class=\"fa fa-building-o\"></span>BUILD IT</a>\r\n    <button class=\"navbar-toggler\"\r\n            type=\"button\"\r\n            data-toggle=\"collapse\"\r\n            data-target=\"#navbarSupportedContent\"\r\n            aria-controls=\"navbarSupportedContent\"\r\n            aria-expanded=\"false\"\r\n            aria-label=\"Toggle navigation\">\r\n        <span class=\"navbar-toggler-icon\"></span>\r\n    </button>\r\n\r\n    <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\r\n        <ul class=\"navbar-nav mr-auto\">\r\n            <li class=\"nav-item active\"\r\n                [routerLinkActive]='[\"link-active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]='[\"/home\"]'>\r\n                    <span class=\"fa fa-home\"></span> {{'app.Home' | translate}} <span class=\"sr-only\">(current)</span>\r\n                </a>\r\n            </li>\r\n            <li class=\"nav-item\"\r\n                [routerLinkActive]='[\"link-active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]=\"['/scripts/new']\">\r\n                    <span class=\"fa fa-file-code\"></span> {{'app.NewScript' | translate}}\r\n                </a>\r\n            </li>\r\n            <li class=\"nav-item dropdown\">\r\n                <a class=\"nav-link dropdown-toggle\"\r\n                   href=\"#\"\r\n                   id=\"navbarDropdown\"\r\n                   role=\"button\"\r\n                   data-toggle=\"dropdown\"\r\n                   aria-haspopup=\"true\"\r\n                   aria-expanded=\"false\">\r\n                    <span class=\"fa fa-arrow-down\"></span> {{'app.Loads.Header' | translate}}\r\n                </a>\r\n                <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\r\n                    <a class=\"dropdown-item\"\r\n                       [routerLink]=\"['/deadloads']\">\r\n                        <span class=\"fa fa-building\"></span> {{'app.Loads.DeadLoads' | translate}}\r\n                    </a>\r\n                    <a class=\"dropdown-item\"\r\n                       [routerLink]=\"['/snowloads']\">\r\n                        <span class=\"fa fa-snowman\"></span> {{'app.Loads.SnowLoads' | translate}}\r\n                    </a>\r\n                    <!--<div class=\"dropdown-divider\"></div>-->\r\n                </div>\r\n            </li>\r\n\r\n            <li class=\"nav-item\"\r\n                [routerLinkActive]='[\"link-active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]=\"['/about']\">\r\n                    <span class=\"fa fa-user-circle\"></span> {{'app.About' | translate}}\r\n                </a>\r\n            </li>\r\n            <!--<li class=\"nav-item\">\r\n                <a class=\"nav-link disabled\" href=\"#\">Disabled</a>\r\n            </li>-->\r\n        </ul>\r\n        <form class=\"form-inline my-2 my-lg-0\">\r\n            <input class=\"form-control mr-sm-2\"\r\n                   type=\"search\"\r\n                   placeholder=\"{{'app.Search' | translate}}\"\r\n                   aria-label=\"Search\">\r\n            <button mat-stroked-button\r\n                    color=\"accent\"\r\n                    type=\"submit\">\r\n                {{'app.Search' | translate}}\r\n            </button>           \r\n        </form>\r\n\r\n\r\n        <select id=\"language\"\r\n                [(ngModel)]=\"configurations.language\"\r\n                #languageSelector=\"bootstrap-select\"\r\n                bootstrapSelect\r\n                class=\"selectpicker form-control smaller ml-3\">\r\n            <option data-subtext=\"(Default)\"\r\n                    value=\"en\">\r\n                {{'app.Languages.English' | translate}}\r\n            </option>\r\n            <option value=\"pl\">{{'app.Languages.Polish' | translate}}</option>\r\n        </select>\r\n    </div>\r\n</nav>\r\n"
 
 /***/ }),
 
@@ -62,7 +62,7 @@ module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-secondary\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"scroll-horizontal mb-4\">\r\n    <table mat-table\r\n           multiTemplateDataRows\r\n           [dataSource]=\"selectedMaterialDataSource\"\r\n           class=\"mat-elevation-z8 mt-4 center\"\r\n           cdkDropList\r\n           [cdkDropListData]=\"selectedMaterialDataSource\"\r\n           (cdkDropListDropped)=\"dropTable($event)\"\r\n           *ngIf=\"selectedMaterials.length > 0\">\r\n\r\n        <ng-container matColumnDef=\"position\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                No.\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\">\r\n                <div cdkDragHandle class=\"fa fa-reorder\"></div>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"category\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-left\">\r\n                    Category\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-left\">\r\n                <div class=\"mr-3\">\r\n                    {{materialForCalculation.categoryName}}\r\n                </div>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"name\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Name\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n                <div class=\"mr-1\">\r\n                    {{materialForCalculation.material.name}}\r\n                </div>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"length\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Length [cm]\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n                <mat-form-field *ngIf=\"materialForCalculation.material.unit > 0; else noLengthBlock\"\r\n                                class=\"ml-3\">\r\n                    <input matInput\r\n                           type=\"number\"\r\n                           class=\"text-center\"\r\n                           min=\"0\"\r\n                           (change)=\"calculate(materialForCalculation)\"\r\n                           [(ngModel)]=\"materialForCalculation.length\">\r\n                </mat-form-field>\r\n                <ng-template #noLengthBlock>-</ng-template>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"width\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Width [cm]\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n\r\n                <mat-form-field *ngIf=\"materialForCalculation.material.unit > 1; else noLengthBlock\"\r\n                                class=\"ml-3\">\r\n                    <input matInput\r\n                           type=\"number\"\r\n                           class=\"text-center\"\r\n                           min=\"0\"\r\n                           (change)=\"calculate(materialForCalculation)\"\r\n                           [(ngModel)]=\"materialForCalculation.width\">\r\n                </mat-form-field>\r\n                <ng-template #noLengthBlock>-</ng-template>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"thickness\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Thickness [cm]\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n\r\n                <mat-form-field *ngIf=\"materialForCalculation.material.unit > 2; else noLengthBlock\"\r\n                                class=\"ml-3\">\r\n                    <input matInput\r\n                           type=\"number\"\r\n                           class=\"text-center\"\r\n                           min=\"0\"\r\n                           (change)=\"calculate(materialForCalculation)\"\r\n                           [(ngModel)]=\"materialForCalculation.thickness\">\r\n                </mat-form-field>\r\n                <ng-template #noLengthBlock>-</ng-template>\r\n            </td>\r\n            <td mat-footer-cell\r\n                *matFooterCellDef\r\n                class=\"text-right\">\r\n                Total:\r\n            </td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"minDensity\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Minimum<br />Density\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n                {{materialForCalculation.calculatedMinimumLoad | number:'1.0-3'}}\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef>{{sumMinimumDeadLoads | number:'1.0-3'}}</td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"maxDensity\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Maximum<br />Density\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n                {{materialForCalculation.calculatedMaximumLoad | number:'1.0-3'}}\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef>{{sumMaximumDeadLoads | number:'1.0-3'}}</td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"unit\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Unit\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\"\r\n                [innerHTML]=\"units[materialForCalculation.unit].value\"></td>\r\n            <td mat-footer-cell *matFooterCellDef>\r\n                <div [innerHTML]=\"units[selectedMaterials[0].unit].value\"></div>\r\n            </td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"remove\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Remove\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n                <button mat-stroked-button color=\"warn\"\r\n                        (click)=\"removeMaterial(materialForCalculation)\">\r\n                    <span class=\"fa fa-minus\"></span>\r\n                </button>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"additions\">\r\n            <td mat-cell\r\n                colspan=\"10\"\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-left\">\r\n                <div *ngFor=\"let addition of materialForCalculation.additions\">\r\n                    <mat-checkbox class=\"ml-1\"\r\n                                  [checked]=\"addition.isChecked\"\r\n                                  (change)=\"additionChecked(materialForCalculation, addition)\">\r\n                        {{addition.origin.name}}\r\n                        <span *ngIf=\"addition.origin.description\">\r\n                            - {{addition.origin.description}}\r\n                        </span>\r\n                    </mat-checkbox>\r\n                </div>\r\n            </td>\r\n        </ng-container>\r\n\r\n        <tr mat-header-row\r\n            *matHeaderRowDef=\"materialsForCalculationsDisplayedColumns\"></tr>\r\n        <tr mat-row\r\n            *matRowDef=\"let row; columns: materialsForCalculationsDisplayedColumns;\"\r\n            cdkDrag\r\n            [cdkDragData]=\"row\"></tr>\r\n        <!--<tr mat-row\r\n            class=\"example-custom-placeholder\"\r\n            *cdkDragPlaceholder>\r\n        </tr>-->\r\n        <tr mat-row\r\n            *matRowDef=\"let row; columns: ['additions'];\"\r\n            [class.additions-hidden]=\"row\"></tr>\r\n        <tr mat-footer-row\r\n            [class.summary-hidden]=\"!isUnitsProper()\"\r\n            *matFooterRowDef=\"materialsForCalculationsDisplayedColumns\"></tr>\r\n    </table>\r\n</div>"
+module.exports = "<div class=\"scroll-horizontal mb-4\">\r\n    <table mat-table\r\n           multiTemplateDataRows\r\n           [dataSource]=\"selectedMaterialDataSource\"\r\n           class=\"mat-elevation-z8 mt-4 center\"\r\n           cdkDropList\r\n           [cdkDropListData]=\"selectedMaterialDataSource\"\r\n           (cdkDropListDropped)=\"dropTable($event)\"\r\n           *ngIf=\"selectedMaterials.length > 0\">\r\n\r\n        <ng-container matColumnDef=\"position\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                \r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\">\r\n                <div cdkDragHandle class=\"fa fa-reorder\"></div>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"category\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-left\">\r\n                    {{'deadLoadsModule.Category' | translate}}\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-left\">\r\n                <div class=\"mr-3\">\r\n                    {{materialForCalculation.categoryName}}\r\n                </div>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"name\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    {{'deadLoadsModule.Name' | translate}}\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n                <div class=\"mr-1\">\r\n                    {{materialForCalculation.material.name}}\r\n                </div>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"length\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    {{'deadLoadsModule.Length' | translate}}\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n                <mat-form-field *ngIf=\"materialForCalculation.material.unit > 0; else noLengthBlock\"\r\n                                class=\"ml-3 smaller-input\">\r\n                    <input matInput\r\n                           type=\"number\"\r\n                           class=\"text-center\"\r\n                           min=\"0\"\r\n                           (change)=\"calculate(materialForCalculation)\"\r\n                           [(ngModel)]=\"materialForCalculation.length\">\r\n                </mat-form-field>\r\n                <ng-template #noLengthBlock>-</ng-template>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"width\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    {{'deadLoadsModule.Width' | translate}}\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n\r\n                <mat-form-field *ngIf=\"materialForCalculation.material.unit > 1; else noLengthBlock\"\r\n                                class=\"ml-3 smaller-input\">\r\n                    <input matInput\r\n                           type=\"number\"\r\n                           class=\"text-center\"\r\n                           min=\"0\"\r\n                           (change)=\"calculate(materialForCalculation)\"\r\n                           [(ngModel)]=\"materialForCalculation.width\">\r\n                </mat-form-field>\r\n                <ng-template #noLengthBlock>-</ng-template>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"thickness\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    {{'deadLoadsModule.Thickness' | translate}}\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n\r\n                <mat-form-field *ngIf=\"materialForCalculation.material.unit > 2; else noLengthBlock\"\r\n                                class=\"ml-3 smaller-input\">\r\n                    <input matInput\r\n                           type=\"number\"\r\n                           class=\"text-center\"\r\n                           min=\"0\"\r\n                           (change)=\"calculate(materialForCalculation)\"\r\n                           [(ngModel)]=\"materialForCalculation.thickness\">\r\n                </mat-form-field>\r\n                <ng-template #noLengthBlock>-</ng-template>\r\n            </td>\r\n            <td mat-footer-cell\r\n                *matFooterCellDef\r\n                class=\"text-right\">\r\n                {{'deadLoadsModule.Total' | translate}}\r\n            </td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"minDensity\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\"\r\n                     [innerHtml]=\"'deadLoadsModule.MinimumDensity' | translate\">\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n                {{materialForCalculation.calculatedMinimumLoad | number:'1.0-3'}}\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef>{{sumMinimumDeadLoads | number:'1.0-3'}}</td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"maxDensity\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\"\r\n                     [innerHtml]=\"'deadLoadsModule.MaximumDensity' | translate\">\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n                {{materialForCalculation.calculatedMaximumLoad | number:'1.0-3'}}\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef>{{sumMaximumDeadLoads | number:'1.0-3'}}</td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"unit\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    {{'deadLoadsModule.Unit' | translate}}\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\"\r\n                [innerHTML]=\"units[materialForCalculation.unit].value\"></td>\r\n            <td mat-footer-cell *matFooterCellDef>\r\n                <div [innerHTML]=\"units[selectedMaterials[0].unit].value\"></div>\r\n            </td>\r\n        </ng-container>\r\n        <ng-container matColumnDef=\"remove\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    {{'deadLoadsModule.Remove' | translate}}\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-center\">\r\n                <button mat-stroked-button color=\"warn\"\r\n                        (click)=\"removeMaterial(materialForCalculation)\">\r\n                    <span class=\"fa fa-minus\"></span>\r\n                </button>\r\n            </td>\r\n            <td mat-footer-cell *matFooterCellDef></td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"additions\">\r\n            <td mat-cell\r\n                colspan=\"10\"\r\n                *matCellDef=\"let materialForCalculation\"\r\n                class=\"text-left\">\r\n                <div *ngFor=\"let addition of materialForCalculation.additions\">\r\n                    <mat-checkbox class=\"ml-1\"\r\n                                  [checked]=\"addition.isChecked\"\r\n                                  (change)=\"additionChecked(materialForCalculation, addition)\">\r\n                        {{addition.origin.name}}\r\n                        <span *ngIf=\"addition.origin.description\">\r\n                            - {{addition.origin.description}}\r\n                        </span>\r\n                    </mat-checkbox>\r\n                </div>\r\n            </td>\r\n        </ng-container>\r\n\r\n        <tr mat-header-row\r\n            *matHeaderRowDef=\"materialsForCalculationsDisplayedColumns\"></tr>\r\n        <tr mat-row\r\n            *matRowDef=\"let row; columns: materialsForCalculationsDisplayedColumns;\"\r\n            cdkDrag\r\n            [cdkDragData]=\"row\"></tr>\r\n        <!--<tr mat-row\r\n            class=\"example-custom-placeholder\"\r\n            *cdkDragPlaceholder>\r\n        </tr>-->\r\n        <tr mat-row\r\n            *matRowDef=\"let row; columns: ['additions'];\"\r\n            [class.additions-hidden]=\"row\"></tr>\r\n        <tr mat-footer-row\r\n            [class.summary-hidden]=\"!isUnitsProper()\"\r\n            *matFooterRowDef=\"materialsForCalculationsDisplayedColumns\"></tr>\r\n    </table>\r\n</div>"
 
 /***/ }),
 
@@ -73,7 +73,7 @@ module.exports = "<div class=\"scroll-horizontal mb-4\">\r\n    <table mat-table
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "    <mat-form-field class=\"m-2\">\r\n        <mat-label>Categories</mat-label>\r\n        <mat-select [(ngModel)]=\"selectedCategory\"\r\n                    name=\"category\"\r\n                    (selectionChange)=\"onCategoryChange()\">\r\n            <mat-option *ngFor=\"let category of categories\"\r\n                        [value]=\"category\">\r\n                {{category.name}}\r\n            </mat-option>\r\n        </mat-select>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\"\r\n                    *ngIf=\"subcategories\">\r\n        <mat-label>Subcategories</mat-label>\r\n        <mat-select [(ngModel)]=\"selectedSubcategory\"\r\n                    name=\"subcategory\"\r\n                    (selectionChange)=\"onSubcategoryChange()\">\r\n            <mat-option *ngFor=\"let subcategory of subcategories\"\r\n                        [value]=\"subcategory\">\r\n                {{subcategory.name}} - {{subcategory.documentName}}\r\n            </mat-option>\r\n        </mat-select>\r\n    </mat-form-field>\r\n\r\n    <table mat-table\r\n           [dataSource]=\"materials\"\r\n           class=\"mat-elevation-z8 center mt-4\"\r\n           *ngIf=\"materials\">\r\n        <ng-container matColumnDef=\"name\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                Name\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let material\"\r\n                class=\"text-left\">\r\n                {{material.name}}\r\n            </td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"minDensity\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Minimum<br />Density\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let material\">\r\n                {{material.minimumDensity}}\r\n            </td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"maxDensity\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Maximum<br />Density\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let material\">\r\n                {{material.maximumDensity}}\r\n            </td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"unit\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Unit\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let material\"\r\n                [innerHTML]=\"units[material.unit].value\"></td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"add\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    Add\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let material\">\r\n                <button mat-stroked-button color=\"accent\"\r\n                        (click)=\"addMaterial(material)\">\r\n                    <span class=\"fa fa-plus\"></span>\r\n                </button>\r\n            </td>\r\n        </ng-container>\r\n\r\n        <tr mat-header-row *matHeaderRowDef=\"materialsDisplayedColumns\"></tr>\r\n        <tr mat-row *matRowDef=\"let row; columns: materialsDisplayedColumns;\"></tr>\r\n    </table>\r\n"
+module.exports = "    <mat-form-field class=\"m-2\">\r\n        <mat-label>{{'deadLoadsModule.Categories' | translate}}</mat-label>\r\n        <mat-select [(ngModel)]=\"selectedCategory\"\r\n                    name=\"category\"\r\n                    (selectionChange)=\"onCategoryChange()\">\r\n            <mat-option *ngFor=\"let category of categories\"\r\n                        [value]=\"category\">\r\n                {{category.name}}\r\n            </mat-option>\r\n        </mat-select>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\"\r\n                    *ngIf=\"subcategories\">\r\n        <mat-label>{{'deadLoadsModule.Subcategories' | translate}}</mat-label>\r\n        <mat-select [(ngModel)]=\"selectedSubcategory\"\r\n                    name=\"subcategory\"\r\n                    (selectionChange)=\"onSubcategoryChange()\">\r\n            <mat-option *ngFor=\"let subcategory of subcategories\"\r\n                        [value]=\"subcategory\">\r\n                {{subcategory.name}} - {{subcategory.documentName}}\r\n            </mat-option>\r\n        </mat-select>\r\n    </mat-form-field>\r\n\r\n    <table mat-table\r\n           [dataSource]=\"materials\"\r\n           class=\"mat-elevation-z8 center mt-4\"\r\n           *ngIf=\"materials\">\r\n        <ng-container matColumnDef=\"name\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                {{'deadLoadsModule.Name' | translate}}\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let material\"\r\n                class=\"text-left\">\r\n                {{material.name}}\r\n            </td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"minDensity\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\"\r\n                     [innerHtml]=\"'deadLoadsModule.MinimumDensity' | translate\">\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let material\">\r\n                {{material.minimumDensity}}\r\n            </td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"maxDensity\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\"\r\n                     [innerHtml]=\"'deadLoadsModule.MaximumDensity' | translate\">\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let material\">\r\n                {{material.maximumDensity}}\r\n            </td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"unit\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    {{'deadLoadsModule.Unit' | translate}}\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let material\"\r\n                [innerHTML]=\"units[material.unit].value\"></td>\r\n        </ng-container>\r\n\r\n        <ng-container matColumnDef=\"add\">\r\n            <th mat-header-cell\r\n                *matHeaderCellDef>\r\n                <div class=\"ml-3 mr-3 text-center\">\r\n                    {{'deadLoadsModule.Add' | translate}}\r\n                </div>\r\n            </th>\r\n            <td mat-cell\r\n                *matCellDef=\"let material\">\r\n                <button mat-stroked-button color=\"accent\"\r\n                        (click)=\"addMaterial(material)\">\r\n                    <span class=\"fa fa-plus\"></span>\r\n                </button>\r\n            </td>\r\n        </ng-container>\r\n\r\n        <tr mat-header-row *matHeaderRowDef=\"materialsDisplayedColumns\"></tr>\r\n        <tr mat-row *matRowDef=\"let row; columns: materialsDisplayedColumns;\"></tr>\r\n    </table>\r\n"
 
 /***/ }),
 
@@ -84,7 +84,7 @@ module.exports = "    <mat-form-field class=\"m-2\">\r\n        <mat-label>Categ
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div class=\"text-center\">\r\n\r\n    <h1>Dead loads calculator</h1>\r\n\r\n    <app-dead-loads-calculator [newMaterial]=\"newMaterial\"></app-dead-loads-calculator>\r\n    <app-dead-loads-data (materialAdded)=\"onMaterialAdded($event)\"></app-dead-loads-data>\r\n   \r\n</div>\r\n"
+module.exports = "\r\n<div class=\"text-center\">\r\n\r\n    <h1>{{'deadLoadsModule.Header' | translate}}</h1>\r\n\r\n    <app-dead-loads-calculator [newMaterial]=\"newMaterial\"></app-dead-loads-calculator>\r\n    <app-dead-loads-data (materialAdded)=\"onMaterialAdded($event)\"></app-dead-loads-data>\r\n   \r\n</div>\r\n"
 
 /***/ }),
 
@@ -95,7 +95,7 @@ module.exports = "\r\n<div class=\"text-center\">\r\n\r\n    <h1>Dead loads calc
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n    <h1 class=\"text-center\">Snow loads calculators</h1>\r\n\r\n<app-script-cards [groupFilters]=\"loadsGroupFilter\"\r\n                  [tagFilters]=\"loadsTagFilter\"></app-script-cards>\r\n\r\n"
+module.exports = "\r\n    <h1 class=\"text-center\">{{'snowLoadsModule.Header' | translate}}</h1>\r\n\r\n<app-script-cards [groupFilters]=\"loadsGroupFilter\"\r\n                  [tagFilters]=\"loadsTagFilter\"></app-script-cards>\r\n\r\n"
 
 /***/ }),
 
@@ -117,7 +117,7 @@ module.exports = "<mat-form-field>\r\n    <input type=\"text\"\r\n           ari
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div class=\"align-self-start parameter-radio\">\r\n    <label class=\"align-self-start mb-2\">\r\n        <span [innerHtml]=\"parameter.name | html\"></span>{{isRequired() ? '*' : ''}}\r\n    </label>\r\n\r\n    <div class=\"d-inline-flex\"\r\n         [ngClass]=\"parameter.name\">\r\n        <mat-checkbox *ngIf=\"!isRequired()\"\r\n                      class=\"mr-3 default\"\r\n                      #defaultField\r\n                      (change)=\"defaultChecked($event)\">\r\n            default\r\n        </mat-checkbox>\r\n\r\n        <mat-checkbox *ngIf=\"!isDefault\"\r\n                      [required]=\"isRequired()\"\r\n                      #checkboxField\r\n                      class=\"true\"\r\n                      (change)=\"changeValue($event)\">\r\n            true\r\n        </mat-checkbox>\r\n    </div>\r\n    <p class=\"parameter-description\">{{parameter.description}}</p>\r\n</div>"
+module.exports = "\r\n<div class=\"align-self-start parameter-radio\">\r\n    <label class=\"align-self-start mb-2\">\r\n        <span [innerHtml]=\"parameter.name | html\"></span>{{isRequired() ? '*' : ''}}\r\n    </label>\r\n\r\n    <div class=\"d-inline-flex\"\r\n         [ngClass]=\"parameter.name\">\r\n        <mat-checkbox *ngIf=\"!isRequired()\"\r\n                      class=\"mr-3 default\"\r\n                      #defaultField\r\n                      (change)=\"defaultChecked($event)\">\r\n            {{'scriptCalculator.Controls.Default' | translate}}\r\n        </mat-checkbox>\r\n\r\n        <mat-checkbox *ngIf=\"!isDefault\"\r\n                      [required]=\"isRequired()\"\r\n                      #checkboxField\r\n                      class=\"true\"\r\n                      (change)=\"changeValue($event)\">\r\n            {{'scriptCalculator.Controls.True' | translate}}\r\n        </mat-checkbox>\r\n    </div>\r\n    <p class=\"parameter-description\">{{parameter.description}}</p>\r\n</div>"
 
 /***/ }),
 
@@ -128,7 +128,7 @@ module.exports = "\r\n<div class=\"align-self-start parameter-radio\">\r\n    <l
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-accordion *ngIf=\"figures.length > 0\">\r\n    <mat-expansion-panel (closed)=\"collapsed()\"\r\n                         (opened)=\"expanded()\">\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                Pictures\r\n            </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <div *ngIf=\"isExpanded\">\r\n            <img *ngFor=\"let figure of figures\"\r\n                 src=\"clientapp/uploads/parameters/{{figure.fileName}}\"\r\n                 alt=\"Parameter picture\" />\r\n        </div>\r\n    </mat-expansion-panel>\r\n</mat-accordion>\r\n"
+module.exports = "<mat-accordion *ngIf=\"figures.length > 0\">\r\n    <mat-expansion-panel (closed)=\"collapsed()\"\r\n                         (opened)=\"expanded()\">\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                {{'scriptCalculator.Controls.Figures' | translate}}\r\n            </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n        <div *ngIf=\"isExpanded\">\r\n            <img *ngFor=\"let figure of figures\"\r\n                 src=\"clientapp/uploads/parameters/{{figure.fileName}}\"\r\n                 alt=\"Parameter picture\" />\r\n        </div>\r\n    </mat-expansion-panel>\r\n</mat-accordion>\r\n"
 
 /***/ }),
 
@@ -161,7 +161,7 @@ module.exports = "<div *ngIf=\"parameter.valueOptionSetting != valueOptionSettin
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div class=\"justify-content-start parameter-radio\">\r\n    <label class=\"align-self-start mb-2\">\r\n        <span [innerHtml]=\"parameter.name | html\"></span>{{isRequired() ? '*' : ''}}\r\n    </label>\r\n    <mat-radio-group [(ngModel)]=\"parameter.value\"\r\n                     [ngClass]=\"parameter.name\">\r\n        <mat-radio-button value=\"\"\r\n                          *ngIf=\"!isRequired()\"\r\n                          selected\r\n                          class=\"mr-3 default\" \r\n                          (change)=\"changeValue($event)\">\r\n            default\r\n        </mat-radio-button>\r\n        <mat-radio-button *ngFor=\"let valueOption of parameter.valueOptions; index as i\"\r\n                          [value]=\"valueOption.value\"\r\n                          [required]=\"isRequired()\"\r\n                          class=\"mr-3\"\r\n                          [ngClass]=\"valueOption.name\"\r\n                          (change)=\"changeValue($event)\">\r\n            {{valueOption.value }}\r\n        </mat-radio-button>\r\n        {{parameter.unit | html}}\r\n    </mat-radio-group>\r\n    <p class=\"parameter-description\">{{parameter.description}}</p>\r\n</div>"
+module.exports = "\r\n<div class=\"justify-content-start parameter-radio\">\r\n    <label class=\"align-self-start mb-2\">\r\n        <span [innerHtml]=\"parameter.name | html\"></span>{{isRequired() ? '*' : ''}}\r\n    </label>\r\n    <mat-radio-group [(ngModel)]=\"parameter.value\"\r\n                     [ngClass]=\"parameter.name\">\r\n        <mat-radio-button value=\"\"\r\n                          *ngIf=\"!isRequired()\"\r\n                          selected\r\n                          class=\"mr-3 default\"\r\n                          (change)=\"changeValue($event)\">\r\n            {{'scriptCalculator.Controls.Default' | translate}}\r\n        </mat-radio-button>\r\n        <mat-radio-button *ngFor=\"let valueOption of parameter.valueOptions; index as i\"\r\n                          [value]=\"valueOption.value\"\r\n                          [required]=\"isRequired()\"\r\n                          class=\"mr-3\"\r\n                          [ngClass]=\"valueOption.name\"\r\n                          (change)=\"changeValue($event)\">\r\n            {{valueOption.value }}\r\n        </mat-radio-button>\r\n        {{parameter.unit | html}}\r\n    </mat-radio-group>\r\n    <p class=\"parameter-description\">{{parameter.description}}</p>\r\n</div>"
 
 /***/ }),
 
@@ -194,7 +194,7 @@ module.exports = "<div [ngClass]=\"{'parameter-result-important': isImportant()}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div *ngIf=\"script\">\r\n    <div class=\"text-center\">\r\n        <h1>{{script.name}}</h1>\r\n    </div>\r\n\r\n    <p class=\"ml-2\">{{script.description}}</p>\r\n    <ul>\r\n        <li *ngFor=\"let tag of script.tags\">\r\n            {{tag.name}}\r\n        </li>\r\n    </ul>\r\n    <div *ngIf=\"!visibleParameters\">\r\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\r\n    </div>\r\n\r\n    <div *ngIf=\"staticDataParameters && staticDataParameters.length > 0\">\r\n        <h5 class=\"ml-2\">Static data</h5>\r\n        <mat-list dense>\r\n            <div *ngFor=\"let parameter of staticDataParameters\">\r\n                <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                <mat-divider></mat-divider>\r\n            </div>\r\n        </mat-list>\r\n    </div>\r\n\r\n    <div class=\"mt-2\">\r\n        <div *ngFor=\"let parameter of notGroupedParameters\"\r\n             class=\"list-inline-item ml-5 d-inline-flex\">\r\n            <parameter-form [parameter]=\"parameter\"\r\n                            (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n        </div>\r\n\r\n\r\n        <mat-accordion>\r\n            <mat-expansion-panel *ngFor=\"let group of groups\">\r\n                <mat-expansion-panel-header>\r\n                    <mat-panel-title>\r\n                        {{group.name}}\r\n                    </mat-panel-title>\r\n                </mat-expansion-panel-header>\r\n\r\n                <ul class=\"list-inline m-0\">\r\n                    <li *ngFor=\"let parameter of group.parameters\"\r\n                        class=\"list-inline-item ml-5 d-inline-flex\">\r\n                        <parameter-form [parameter]=\"parameter\"\r\n                                        (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n                    </li>\r\n                </ul>\r\n\r\n            </mat-expansion-panel>\r\n        </mat-accordion>\r\n    </div>\r\n\r\n\r\n    <div class=\"text-center\"\r\n         *ngIf=\"visibleParameters\">\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                class=\"calculate\"\r\n                type=\"button\"\r\n                [disabled]=\"!isValid()\"\r\n                (click)=\"calculate()\">\r\n            <span class=\"fa fa-calculator\"></span> Calculate\r\n        </button>\r\n    </div>\r\n\r\n    <div *ngIf=\"isCalculating\"\r\n         class=\"mt-2\">\r\n        <mat-progress-bar mode=\"query\"></mat-progress-bar>\r\n    </div>\r\n\r\n    <div *ngIf=\"resultParameters && !valueChanged\">\r\n        <h3 class=\"ml-2\">Results</h3>\r\n        <mat-list dense>\r\n            <div *ngFor=\"let parameter of resultParameters\">\r\n                <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                <mat-divider></mat-divider>\r\n            </div>\r\n        </mat-list>\r\n    </div>\r\n</div>\r\n"
+module.exports = "\r\n<div *ngIf=\"script\">\r\n    <div class=\"text-center\">\r\n        <h1>{{script.name}}</h1>\r\n    </div>\r\n\r\n    <p class=\"ml-2\">{{script.description}}</p>\r\n    <ul>\r\n        <li *ngFor=\"let tag of script.tags\">\r\n            {{tag.name}}\r\n        </li>\r\n    </ul>\r\n    <div *ngIf=\"!visibleParameters\">\r\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\r\n    </div>\r\n\r\n    <div *ngIf=\"staticDataParameters && staticDataParameters.length > 0\">\r\n        <h5 class=\"ml-2\">{{'scriptCalculator.StaticData' | translate}}</h5>\r\n        <mat-list dense>\r\n            <div *ngFor=\"let parameter of staticDataParameters\">\r\n                <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                <mat-divider></mat-divider>\r\n            </div>\r\n        </mat-list>\r\n    </div>\r\n\r\n    <div class=\"mt-2\">\r\n        <div *ngFor=\"let parameter of notGroupedParameters\"\r\n             class=\"list-inline-item ml-5 d-inline-flex\">\r\n            <parameter-form [parameter]=\"parameter\"\r\n                            (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n        </div>\r\n\r\n\r\n        <mat-accordion>\r\n            <mat-expansion-panel *ngFor=\"let group of groups\">\r\n                <mat-expansion-panel-header>\r\n                    <mat-panel-title>\r\n                        {{group.name}}\r\n                    </mat-panel-title>\r\n                </mat-expansion-panel-header>\r\n\r\n                <ul class=\"list-inline m-0\">\r\n                    <li *ngFor=\"let parameter of group.parameters\"\r\n                        class=\"list-inline-item ml-5 d-inline-flex\">\r\n                        <parameter-form [parameter]=\"parameter\"\r\n                                        (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n                    </li>\r\n                </ul>\r\n\r\n            </mat-expansion-panel>\r\n        </mat-accordion>\r\n    </div>\r\n\r\n\r\n    <div class=\"text-center\"\r\n         *ngIf=\"visibleParameters\">\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                class=\"calculate\"\r\n                type=\"button\"\r\n                [disabled]=\"!isValid()\"\r\n                (click)=\"calculate()\">\r\n            <span class=\"fa fa-calculator\"></span> {{'scriptCalculator.Calculate' | translate}}\r\n        </button>\r\n    </div>\r\n\r\n    <div *ngIf=\"isCalculating\"\r\n         class=\"mt-2\">\r\n        <mat-progress-bar mode=\"query\"></mat-progress-bar>\r\n    </div>\r\n\r\n    <div *ngIf=\"resultParameters && !valueChanged\">\r\n        <h3 class=\"ml-2\">{{'scriptCalculator.Results' | translate}}</h3>\r\n        <mat-list dense>\r\n            <div *ngFor=\"let parameter of resultParameters\">\r\n                <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                <mat-divider></mat-divider>\r\n            </div>\r\n        </mat-list>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -205,7 +205,7 @@ module.exports = "\r\n<div *ngIf=\"script\">\r\n    <div class=\"text-center\">\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<mat-card class=\"flex-grow-1\">\r\n    <mat-card-header>\r\n        <div mat-card-avatar class=\"script-header-image\"></div>\r\n        <mat-card-title>{{ script.name }}</mat-card-title>\r\n        <mat-card-subtitle>{{ script.accordingTo }}</mat-card-subtitle>\r\n    </mat-card-header>\r\n    <div mat-card-image>\r\n        <ul>\r\n            <li class=\"small\"\r\n                *ngFor=\"let tag of script.tags\">{{tag.name}}</li>\r\n        </ul>\r\n    </div>\r\n    <!--<img mat-card-image\r\n         src=\"https://lorempixel.com/300/300/?random={{script.id}}\"\r\n         title=\"{{script.name}}\"\r\n         alt=\"{{script.name}}\">-->\r\n    <mat-card-content>\r\n        <p class=\"mb-4\">\r\n            {{script.description }}\r\n        </p>\r\n    </mat-card-content>\r\n    <mat-card-actions class=\"footer\">\r\n        <div class=\"actions\">\r\n            <button mat-stroked-button\r\n                    [routerLink]=\"['/scripts/calculator', script.id]\">\r\n                <span class=\"fa fa-calculator\"></span> Calculate\r\n            </button>\r\n            <button mat-stroked-button\r\n                    [routerLink]=\"['/scripts/edit', script.id]\">\r\n                <span class=\"fa fa-edit\"></span> Edit\r\n            </button>\r\n        </div>\r\n            <button mat-stroked-button \r\n                    color=\"warn\"\r\n                    class=\"float-right\"\r\n                    (click)=\"delete(script)\">\r\n                <span class=\"fa fa-remove\"></span> Delete\r\n            </button>\r\n    </mat-card-actions>\r\n</mat-card>"
+module.exports = "\r\n<mat-card class=\"flex-grow-1\">\r\n    <mat-card-header>\r\n        <div mat-card-avatar class=\"script-header-image\"></div>\r\n        <mat-card-title>{{ script.name }}</mat-card-title>\r\n        <mat-card-subtitle>{{ script.accordingTo }}</mat-card-subtitle>\r\n    </mat-card-header>\r\n    <div mat-card-image>\r\n        <ul>\r\n            <li class=\"small\"\r\n                *ngFor=\"let tag of script.tags\">{{tag.name}}</li>\r\n        </ul>\r\n    </div>\r\n    <!--<img mat-card-image\r\n         src=\"https://lorempixel.com/300/300/?random={{script.id}}\"\r\n         title=\"{{script.name}}\"\r\n         alt=\"{{script.name}}\">-->\r\n    <mat-card-content>\r\n        <p class=\"mb-4\">\r\n            {{script.description }}\r\n        </p>\r\n    </mat-card-content>\r\n    <mat-card-actions class=\"footer\">\r\n        <div class=\"actions\">\r\n            <button mat-stroked-button\r\n                    [routerLink]=\"['/scripts/calculator', script.id]\">\r\n                <span class=\"fa fa-calculator\"></span> {{'scriptCard.Calculate' | translate}}\r\n            </button>\r\n            <button mat-stroked-button\r\n                    [routerLink]=\"['/scripts/edit', script.id]\">\r\n                <span class=\"fa fa-edit\"></span> {{'scriptCard.Edit' | translate}}\r\n            </button>\r\n        </div>\r\n        <button mat-stroked-button\r\n                color=\"warn\"\r\n                class=\"float-right\"\r\n                (click)=\"delete(script)\">\r\n            <span class=\"fa fa-remove\"></span> {{'scriptCard.Delete' | translate}}\r\n        </button>\r\n    </mat-card-actions>\r\n</mat-card>"
 
 /***/ }),
 
@@ -216,7 +216,7 @@ module.exports = "\r\n<mat-card class=\"flex-grow-1\">\r\n    <mat-card-header>\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row mt-5 m-2\">\r\n        <app-script-card *ngFor=\"let script of scripts\"\r\n                         class=\"flex-column d-none d-flex col col-xl-3 col-lg-4 col-md-6 col-sm-12 col-auto mb-4\"\r\n                         [script]=\"script\"\r\n                         (deleted)=\"onDeleted($event)\"></app-script-card>\r\n</div>"
+module.exports = "<div class=\"row mt-5 m-2\">\r\n    <app-script-card *ngFor=\"let script of activeScripts\"\r\n                     class=\"flex-column d-none d-flex col col-xl-3 col-lg-4 col-md-6 col-sm-12 col-auto mb-4\"\r\n                     [script]=\"script\"\r\n                     (deleted)=\"onDeleted($event)\"></app-script-card>\r\n</div>\r\n<mat-paginator [length]=\"scripts.length\"\r\n               [pageSize]=\"pageSize\"\r\n               [pageSizeOptions]=\"pageSizeOptions\"\r\n               (page)=\"onPageChanged($event)\">\r\n</mat-paginator>"
 
 /***/ }),
 
@@ -227,7 +227,7 @@ module.exports = "<div class=\"row mt-5 m-2\">\r\n        <app-script-card *ngFo
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n\r\n<form (ngSubmit)=\"onSubmit($event)\"\r\n      [formGroup]=\"parameterForm\">\r\n\r\n    <h3>\r\n        <span innerHTML=\"{{parameterName.value | html }}\"></span> - {{parameterDescription.value}}\r\n    </h3>\r\n\r\n    <div class=\"full-width\">\r\n        <label id=\"parameter-type\">Pick parameter type</label>\r\n        <mat-radio-group aria-labelledby=\"parameter-type\"\r\n                         (change)=\"parameterTypeChanged()\">\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #editable\r\n                              [value]=\"context.editable\">Editable</mat-radio-button>\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #static\r\n                              [value]=\"context.staticData\">Static</mat-radio-button>\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #calculable\r\n                              [value]=\"context.calculation\">Calculable</mat-radio-button>\r\n        </mat-radio-group>\r\n\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.visible\"\r\n                      class=\"ml-2\"\r\n                      #visible>Visible</mat-checkbox>\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.important\"\r\n                      class=\"ml-2\"\r\n                      #important>Important</mat-checkbox>\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.optional\"\r\n                      class=\"ml-2\"\r\n                      #optional>Optional</mat-checkbox>\r\n\r\n    </div>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               required\r\n               placeholder=\"Name\"\r\n               formControlName=\"name\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Parameter name</mat-hint>\r\n        <mat-error *ngIf=\"parameterName && parameterName.hasError('maxlength') && !parameterName.hasError('required')\">\r\n            Name should be maximum {{parameterName.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n        <mat-error *ngIf=\"parameterName && parameterName.hasError('required')\">\r\n            Name is <strong>required</strong>\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               placeholder=\"Unit\"\r\n               formControlName=\"unit\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Unit</mat-hint>\r\n        <mat-error *ngIf=\"parameterUnit && parameterUnit.hasError('maxlength')\">\r\n            Unit should be maximum {{parameterUnit.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               placeholder=\"Document\"\r\n               formControlName=\"accordingTo\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Document</mat-hint>\r\n        <mat-error *ngIf=\"parameterDocument && parameterDocument.hasError('maxlength')\">\r\n            Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <mat-label>Value Type</mat-label>\r\n        <mat-select matNativeControl\r\n                    formControlName=\"valueType\"\r\n                    required>\r\n            <mat-option *ngFor=\"let valueType of valueTypes; let i = index\"\r\n                        [value]=\"i\">\r\n                {{valueType}}\r\n            </mat-option>\r\n        </mat-select>\r\n        <mat-hint>Value Type</mat-hint>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <mat-label>Group name</mat-label>\r\n        <input matInput\r\n               placeholder=\"Group name\"\r\n               formControlName=\"groupName\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Group name</mat-hint>\r\n        <mat-error *ngIf=\"parameterGroupName && parameterGroupName.hasError('maxlength')\">\r\n            Group name should be maximum {{parameterGroupName.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div contenteditable=\"true\"\r\n         [innerHtml]=\"parameterValue.value | html\"></div>\r\n    \r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  #value\r\n                  placeholder=\"Value\"\r\n                  formControlName=\"value\"\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>Value for parameter</mat-hint>\r\n        <mat-error *ngIf=\"parameterValue && parameterValue.hasError('maxlength')\">\r\n            Value should be maximum {{parameterValue.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div>\r\n        <button mat-stroked-button \r\n                *ngFor=\"let parameter of previousParameters\"\r\n                matTooltip=\"{{parameter.description}}\"\r\n                matTooltipPosition=\"below\" \r\n                innerHtml=\"{{parameter.name | html}} [{{parameter.unit | html}}]\"\r\n                 type=\"button\"\r\n                (click)=\"select(parameter)\"></button>\r\n    </div>\r\n\r\n    <div class=\"value-options-border p-2\">\r\n        <app-value-options-form [parameterForm]=\"parameterForm\"></app-value-options-form>\r\n    </div>\r\n\r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  placeholder=\"Description\"\r\n                  formControlName=\"description\"\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>Description for parameter</mat-hint>\r\n        <mat-error *ngIf=\"parameterDescription && parameterDescription.hasError('maxlength')\">\r\n            Description should be maximum {{parameterDescription.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               placeholder=\"Visibility validator\"\r\n               formControlName=\"visibilityValidator\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Visibility validator</mat-hint>\r\n        <mat-error *ngIf=\"parameterVisibilityValidator && parameterVisibilityValidator.hasError('maxlength')\">\r\n            Visibility validator should be maximum {{parameterVisibilityValidator.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               placeholder=\"Data validator\"\r\n               formControlName=\"dataValidator\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>Data validator</mat-hint>\r\n        <mat-error *ngIf=\"parameterDataValidator && parameterDataValidator.hasError('maxlength')\">\r\n            Data validator should be maximum {{parameterDataValidator.errors.maxlength.requiredLength}} characters long.\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div class=\"value-options-border p-2 mb-3\"\r\n         *ngIf=\"parameterId.value > 0\">\r\n        <app-figure-parameter-form [parameterForm]=\"parameterForm\"></app-figure-parameter-form>\r\n    </div>\r\n\r\n    <div class=\"full-width\">\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                type=\"submit\">\r\n            {{ newlyAddedParameter ? 'Add' : 'Update'}}\r\n        </button>\r\n    </div>\r\n</form>\r\n"
+module.exports = "\r\n\r\n<form (ngSubmit)=\"onSubmit($event)\"\r\n      [formGroup]=\"parameterForm\">\r\n\r\n    <h3>\r\n        <span innerHTML=\"{{parameterName.value | html }}\"></span> - {{parameterDescription.value}}\r\n    </h3>\r\n\r\n    <div class=\"full-width\">\r\n        <label id=\"parameter-type\">{{'scriptsForm.Parameters.EditMode.ParameterTypePicker' | translate}}</label>\r\n        <mat-radio-group aria-labelledby=\"parameter-type\"\r\n                         (change)=\"parameterTypeChanged()\">\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #editable\r\n                              [value]=\"context.editable\">\r\n                {{'scriptsForm.Parameters.EditMode.ParameterTypes.Editable' | translate}}\r\n            </mat-radio-button>\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #static\r\n                              [value]=\"context.staticData\">\r\n                {{'scriptsForm.Parameters.EditMode.ParameterTypes.Static' | translate}}\r\n            </mat-radio-button>\r\n            <mat-radio-button class=\"ml-2\"\r\n                              #calculable\r\n                              [value]=\"context.calculation\">\r\n                {{'scriptsForm.Parameters.EditMode.ParameterTypes.Calculable' | translate}}\r\n            </mat-radio-button>\r\n        </mat-radio-group>\r\n\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.visible\"\r\n                      class=\"ml-2\"\r\n                      #visible>\r\n            {{'scriptsForm.Parameters.EditMode.ParameterTypes.Visible' | translate}}\r\n        </mat-checkbox>\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.important\"\r\n                      class=\"ml-2\"\r\n                      #important>\r\n            {{'scriptsForm.Parameters.EditMode.ParameterTypes.Important' | translate}}\r\n        </mat-checkbox>\r\n        <mat-checkbox (change)=\"parameterTypeChanged()\"\r\n                      [value]=\"context.optional\"\r\n                      class=\"ml-2\"\r\n                      #optional>\r\n            {{'scriptsForm.Parameters.EditMode.ParameterTypes.Optional' | translate}}\r\n        </mat-checkbox>\r\n\r\n    </div>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               required\r\n               placeholder=\"{{'scriptsForm.Parameters.EditMode.Name.Header' | translate}}\"\r\n               formControlName=\"name\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.Parameters.EditMode.Name.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"parameterName && parameterName.hasError('maxlength') && !parameterName.hasError('required')\">\r\n            {{'scriptsForm.Parameters.EditMode.Name.MaxLengthError' | translate:parameterName.errors.maxlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"parameterName && parameterName.hasError('required')\"\r\n                   [innerHtml]=\"'scriptsForm.Parameters.EditMode.Name.RequiredError' | translate\">\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               placeholder=\"{{'scriptsForm.Parameters.EditMode.Unit.Header' | translate}}\"\r\n               formControlName=\"unit\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.Parameters.EditMode.Unit.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"parameterUnit && parameterUnit.hasError('maxlength')\">\r\n            {{'scriptsForm.Parameters.EditMode.Unit.MaxLengthError' | translate:parameterUnit.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               placeholder=\"{{'scriptsForm.Parameters.EditMode.Document.Header' | translate}}\"\r\n               formControlName=\"accordingTo\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.Parameters.EditMode.Document.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"parameterDocument && parameterDocument.hasError('maxlength')\">\r\n            {{'scriptsForm.Parameters.EditMode.Document.MaxLengthError' | translate:parameterDocument.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <mat-label>{{'scriptsForm.Parameters.EditMode.ValueType.Header' | translate}}</mat-label>\r\n        <mat-select matNativeControl\r\n                    formControlName=\"valueType\"\r\n                    required>\r\n            <mat-option [value]=\"0\">\r\n                {{'scriptsForm.Parameters.EditMode.ValueType.Number'| translate}}\r\n            </mat-option>\r\n            <mat-option [value]=\"1\">\r\n                {{'scriptsForm.Parameters.EditMode.ValueType.Text'| translate}}\r\n            </mat-option>\r\n        </mat-select>\r\n        <mat-hint>{{'scriptsForm.Parameters.EditMode.ValueType.Hint' | translate}}</mat-hint>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <mat-label>{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}</mat-label>\r\n        <input matInput\r\n               placeholder=\"{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}\"\r\n               formControlName=\"groupName\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.Parameters.EditMode.GroupName.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"parameterGroupName && parameterGroupName.hasError('maxlength')\">\r\n            {{'scriptsForm.Parameters.EditMode.GroupName.MaxLengthError' | translate:parameterGroupName.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div contenteditable=\"true\"\r\n         [innerHtml]=\"parameterValue.value | html\"></div>\r\n\r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  #value\r\n                  placeholder=\"{{'scriptsForm.Parameters.EditMode.Value.Header' | translate}}\"\r\n                  formControlName=\"value\"\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>{{'scriptsForm.Parameters.EditMode.Value.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"parameterValue && parameterValue.hasError('maxlength')\">\r\n            {{'scriptsForm.Parameters.EditMode.Value.MaxLengthError' | translate:parameterValue.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div>\r\n        <button mat-stroked-button\r\n                *ngFor=\"let parameter of previousParameters\"\r\n                matTooltip=\"{{parameter.description}}\"\r\n                matTooltipPosition=\"below\"\r\n                innerHtml=\"{{parameter.name | html}} [{{parameter.unit | html}}]\"\r\n                type=\"button\"\r\n                (click)=\"select(parameter)\"></button>\r\n    </div>\r\n\r\n    <div class=\"value-options-border p-2\">\r\n        <app-value-options-form [parameterForm]=\"parameterForm\"></app-value-options-form>\r\n    </div>\r\n\r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  placeholder=\"{{'scriptsForm.Parameters.EditMode.Description.Header' | translate}}\"\r\n                  formControlName=\"description\"\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>{{'scriptsForm.Parameters.EditMode.Description.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"parameterDescription && parameterDescription.hasError('maxlength')\">\r\n            {{'scriptsForm.Parameters.EditMode.Description.MaxLengthError' | translate:parameterDescription.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               placeholder=\"{{'scriptsForm.Parameters.EditMode.VisibilityValidator.Header' | translate}}\"\r\n               formControlName=\"visibilityValidator\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.Parameters.EditMode.VisibilityValidator.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"parameterVisibilityValidator && parameterVisibilityValidator.hasError('maxlength')\">\r\n            {{'scriptsForm.Parameters.EditMode.VisibilityValidator.MaxLengthError' | translate:parameterVisibilityValidator.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               placeholder=\"{{'scriptsForm.Parameters.EditMode.DataValidator.Header' | translate}}\"\r\n               formControlName=\"dataValidator\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.Parameters.EditMode.DataValidator.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"parameterDataValidator && parameterDataValidator.hasError('maxlength')\">\r\n            {{'scriptsForm.Parameters.EditMode.DataValidator.MaxLengthError' | translate:parameterDataValidator.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div class=\"value-options-border p-2 mb-3\"\r\n         *ngIf=\"parameterId.value > 0\">\r\n        <app-figure-parameter-form [parameterForm]=\"parameterForm\"></app-figure-parameter-form>\r\n    </div>\r\n\r\n    <div class=\"full-width\">\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                type=\"submit\">\r\n            {{ newlyAddedParameter ? ('scriptsForm.Parameters.Add' | translate) : ('scriptsForm.Parameters.EditMode.Update' | translate)}}\r\n        </button>\r\n    </div>\r\n</form>\r\n"
 
 /***/ }),
 
@@ -249,7 +249,7 @@ module.exports = "<h1 mat-dialog-title>Pictures</h1>\r\n<div mat-dialog-content>
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                Pictures\r\n            </mat-panel-title>\r\n            <mat-panel-description>\r\n                Provide additional pictures for parameter\r\n            </mat-panel-description>\r\n        </mat-expansion-panel-header>\r\n        <input type=\"file\"\r\n               (change)=\"uploadFigure()\"\r\n               #fileInput />\r\n\r\n        <div class=\"mt-1\">\r\n            <!--<button mat-raised-button (click)=\"pickExistingDialog()\">Pick existing</button>-->\r\n            <div *ngFor=\"let figure of figures\">\r\n                <img src=\"clientapp/uploads/parameters/{{figure.fileName}}\"\r\n                     alt=\"Parameter picture\" />\r\n                <button mat-stroked-button\r\n                        color=\"warn\"\r\n                        type=\"button\"\r\n                        (click)=\"remove(figure)\">\r\n                    Remove\r\n                </button>\r\n                <p>Test</p>\r\n            </div>\r\n        </div>\r\n\r\n    </mat-expansion-panel>\r\n</mat-accordion>"
+module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                {{'scriptsForm.Parameters.Figures.Header' | translate}}\r\n            </mat-panel-title>\r\n            <mat-panel-description>\r\n                {{'scriptsForm.Parameters.Figures.Hint' | translate}}\r\n            </mat-panel-description>\r\n        </mat-expansion-panel-header>\r\n        <input type=\"file\"\r\n               (change)=\"uploadFigure()\"\r\n               #fileInput />\r\n\r\n        <div class=\"mt-1\">\r\n            <!--<button mat-raised-button (click)=\"pickExistingDialog()\">Pick existing</button>-->\r\n            <div *ngFor=\"let figure of figures\">\r\n                <img src=\"clientapp/uploads/parameters/{{figure.fileName}}\"\r\n                     alt=\"Parameter picture\" />\r\n                <button mat-stroked-button\r\n                        color=\"warn\"\r\n                        type=\"button\"\r\n                        (click)=\"remove(figure)\">\r\n                    {{'scriptsForm.Parameters.Figures.Remove' | translate}}\r\n                </button>\r\n                <p>Test</p>\r\n            </div>\r\n        </div>\r\n\r\n    </mat-expansion-panel>\r\n</mat-accordion>"
 
 /***/ }),
 
@@ -260,7 +260,7 @@ module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <m
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                Value Options\r\n            </mat-panel-title>\r\n            <mat-panel-description>\r\n                Provide some selectable data\r\n            </mat-panel-description>\r\n        </mat-expansion-panel-header>\r\n\r\n        <form [formGroup]=\"parameterForm\">\r\n\r\n            <div>\r\n                <mat-radio-group formControlName=\"valueOptionSetting\">\r\n                    <mat-radio-button [value]=\"valueOptionSettings.None\"\r\n                                      class=\"ml-2\">None</mat-radio-button>\r\n                    <mat-radio-button [value]=\"valueOptionSettings.UserInput\"\r\n                                      class=\"ml-2\">Allow any values</mat-radio-button>\r\n                    <mat-radio-button [value]=\"valueOptionSettings.Boolean\"\r\n                                      (change)=\"booleanSettingChecked($event)\"\r\n                                      class=\"ml-2\">Is boolean</mat-radio-button>\r\n                </mat-radio-group>\r\n            </div>\r\n\r\n            <div *ngIf=\"parameterValueOptionSetting.value != valueOptionSettings.Boolean\">\r\n                <ul *ngFor=\"let valueOption of parameterValueOptions.controls; let i = index\">\r\n                    <li>\r\n                        <div [formGroup]=\"valueOption\">\r\n                            <mat-form-field class=\"m-2\">\r\n                                <input matInput\r\n                                       placeholder=\"Name\"\r\n                                       formControlName=\"name\"\r\n                                       [errorStateMatcher]=\"matcher\"\r\n                                       autocomplete=\"off\" />\r\n                                <mat-hint>Name</mat-hint>\r\n                                <!--<mat-error *ngIf=\"parameterDocument && parameterDocument.hasError('maxlength')\">\r\n                        Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.\r\n                    </mat-error>-->\r\n                            </mat-form-field>\r\n                            <mat-form-field class=\"m-2\">\r\n                                <input matInput\r\n                                       placeholder=\"Value\"\r\n                                       formControlName=\"value\"\r\n                                       [errorStateMatcher]=\"matcher\"\r\n                                       autocomplete=\"off\" />\r\n                                <mat-hint>Value</mat-hint>\r\n                            </mat-form-field>\r\n\r\n                            <mat-form-field class=\"m-2 form-medium\">\r\n                                <textarea matInput\r\n                                          placeholder=\"Description\"\r\n                                          formControlName=\"description\"\r\n                                          [errorStateMatcher]=\"matcher\"\r\n                                          autocomplete=\"off\"></textarea>\r\n                                <mat-hint>Description for value option</mat-hint>\r\n                            </mat-form-field>\r\n\r\n                            <button mat-stroked-button\r\n                                    color=\"warn\"\r\n                                    type=\"button\"\r\n                                    (click)=\"remove(valueOption)\">\r\n                                Remove\r\n                            </button>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n                <button mat-stroked-button\r\n                        color=\"accent\"\r\n                        type=\"button\"\r\n                        (click)=\"addValueOption()\">\r\n                    Add\r\n                </button>\r\n            </div>\r\n        </form>\r\n\r\n    </mat-expansion-panel>\r\n</mat-accordion>\r\n"
+module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                {{'scriptsForm.Parameters.ValueOptions.Header' | translate}}\r\n            </mat-panel-title>\r\n            <mat-panel-description>\r\n                {{'scriptsForm.Parameters.ValueOptions.Hint' | translate}}\r\n            </mat-panel-description>\r\n        </mat-expansion-panel-header>\r\n\r\n        <form [formGroup]=\"parameterForm\">\r\n\r\n            <div>\r\n                <mat-radio-group formControlName=\"valueOptionSetting\">\r\n                    <mat-radio-button [value]=\"valueOptionSettings.None\"\r\n                                      class=\"ml-2\">\r\n                        {{'scriptsForm.Parameters.ValueOptions.None' | translate}}\r\n                    </mat-radio-button>\r\n                    <mat-radio-button [value]=\"valueOptionSettings.UserInput\"\r\n                                      class=\"ml-2\">\r\n                        {{'scriptsForm.Parameters.ValueOptions.AllowAny' | translate}}\r\n                    </mat-radio-button>\r\n                    <mat-radio-button [value]=\"valueOptionSettings.Boolean\"\r\n                                      (change)=\"booleanSettingChecked($event)\"\r\n                                      class=\"ml-2\">\r\n                        {{'scriptsForm.Parameters.ValueOptions.Boolean' | translate}}\r\n                    </mat-radio-button>\r\n                </mat-radio-group>\r\n            </div>\r\n\r\n            <div *ngIf=\"parameterValueOptionSetting.value != valueOptionSettings.Boolean\">\r\n                <ul *ngFor=\"let valueOption of parameterValueOptions.controls; let i = index\">\r\n                    <li>\r\n                        <div [formGroup]=\"valueOption\">\r\n                            <mat-form-field class=\"m-2\">\r\n                                <input matInput\r\n                                       placeholder=\"{{'scriptsForm.Parameters.ValueOptions.Name.Header' | translate}}\"\r\n                                       formControlName=\"name\"\r\n                                       [errorStateMatcher]=\"matcher\"\r\n                                       autocomplete=\"off\" />\r\n                                <mat-hint>{{'scriptsForm.Parameters.ValueOptions.Name.Hint' | translate}}</mat-hint>\r\n                                <!--<mat-error *ngIf=\"parameterDocument && parameterDocument.hasError('maxlength')\">\r\n                        Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.\r\n                    </mat-error>-->\r\n                            </mat-form-field>\r\n                            <mat-form-field class=\"m-2\">\r\n                                <input matInput\r\n                                       placeholder=\"{{'scriptsForm.Parameters.ValueOptions.Value.Header' | translate}}\"\r\n                                       formControlName=\"value\"\r\n                                       [errorStateMatcher]=\"matcher\"\r\n                                       autocomplete=\"off\" />\r\n                                <mat-hint>{{'scriptsForm.Parameters.ValueOptions.Value.Hint' | translate}}</mat-hint>\r\n                            </mat-form-field>\r\n\r\n                            <mat-form-field class=\"m-2 form-medium\">\r\n                                <textarea matInput\r\n                                          placeholder=\"{{'scriptsForm.Parameters.ValueOptions.Description.Header' | translate}}\"\r\n                                          formControlName=\"description\"\r\n                                          [errorStateMatcher]=\"matcher\"\r\n                                          autocomplete=\"off\"></textarea>\r\n                                <mat-hint>{{'scriptsForm.Parameters.ValueOptions.Description.Hint' | translate}}</mat-hint>\r\n                            </mat-form-field>\r\n\r\n                            <button mat-stroked-button\r\n                                    color=\"warn\"\r\n                                    type=\"button\"\r\n                                    (click)=\"remove(valueOption)\">\r\n                                {{'scriptsForm.Parameters.ValueOptions.Remove' | translate}}\r\n                            </button>\r\n                        </div>\r\n                    </li>\r\n                </ul>\r\n                <button mat-stroked-button\r\n                        color=\"accent\"\r\n                        type=\"button\"\r\n                        (click)=\"addValueOption()\">\r\n                    {{'scriptsForm.Parameters.ValueOptions.Add' | translate}}\r\n                </button>\r\n            </div>\r\n        </form>\r\n\r\n    </mat-expansion-panel>\r\n</mat-accordion>\r\n"
 
 /***/ }),
 
@@ -271,7 +271,7 @@ module.exports = "\r\n<mat-accordion>\r\n    <mat-expansion-panel>\r\n        <m
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"!editMode\">\r\n    <div class=\"m-4\">\r\n        <label id=\"parameters-type-filter\">Select parameters:</label>\r\n        <mat-radio-group aria-labelledby=\"parameters-type-filter\"\r\n                         [(ngModel)]=\"parametersToShow\"\r\n                         (change)=\"onParametersToShowChange()\">\r\n            <mat-radio-button value=\"all\"\r\n                              class=\"ml-2\">All parameters</mat-radio-button>\r\n            <mat-radio-button value=\"data\"\r\n                              class=\"ml-2\">Data parameters</mat-radio-button>\r\n            <mat-radio-button value=\"static\"\r\n                              class=\"ml-2\">Static parameters</mat-radio-button>\r\n            <mat-radio-button value=\"calculation\"\r\n                              class=\"ml-2\">Calculation parameters</mat-radio-button>\r\n        </mat-radio-group>\r\n    </div>\r\n\r\n    <div cdkDropList\r\n         class=\"parameters-list\"\r\n         (cdkDropListDropped)=\"drop($event)\">\r\n        <div class=\"parameter-in-list\"\r\n             *ngFor=\"let parameter of sortParameters(filteredParameters, 'number')\"\r\n             cdkDrag>\r\n            <div class=\"parameter-placeholder\"\r\n                 *cdkDragPlaceholder></div>\r\n            <div class=\"parameter-container\"\r\n                 [ngClass]=\"{'selected-parameter' : parameter == newParameter}\">\r\n                <div class=\"ml-3 parameter-data\">\r\n                    <b class=\"parameter-name\"\r\n                       [innerHTML]=\"parameter.name | html\"></b> - {{parameter.description}}\r\n                </div>\r\n\r\n                <div class=\"parameter-options\">\r\n                    <button mat-stroked-button\r\n                            class=\"ml-2\"\r\n                            (click)=\"editParameter(parameter)\">\r\n                        Edit\r\n                    </button>\r\n                    <button mat-stroked-button\r\n                            class=\"ml-2\"\r\n                            (click)=\"remove(parameter.id)\"\r\n                            color=\"warn\">\r\n                        Remove\r\n                    </button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <button mat-stroked-button\r\n            color=\"accent\"\r\n            class=\"m-3\"\r\n            (click)=\"addNewParameter()\">\r\n        New parameter\r\n    </button>\r\n</div>\r\n\r\n<div class=\"m-3\"\r\n     *ngIf=\"editMode\">\r\n    <button mat-fab\r\n            color=\"primary\"\r\n            (click)=\"changeEditMode()\">\r\n        <span class=\"fa fa-backward\"></span>\r\n    </button>\r\n\r\n    <div class=\"container\"\r\n         *ngIf=\"editMode\">\r\n        <app-data-parameter-form [newlyAddedParameter]=\"newlyAddedParameter\"\r\n                                 [scriptId]=\"scriptId\"\r\n                                 [newParameter]=\"newParameter\"\r\n                                 [parameters]=\"parameters\"\r\n                                 (created)=\"onCreated($event)\"\r\n                                 (updated)=\"onUpdated($event)\"></app-data-parameter-form>\r\n    </div>\r\n</div>"
+module.exports = "<div *ngIf=\"!editMode\">\r\n    <div class=\"m-4\">\r\n        <label id=\"parameters-type-filter\">{{'scriptsForm.Parameters.ParametersFilterLabel' | translate}}:</label>\r\n        <mat-radio-group aria-labelledby=\"parameters-type-filter\"\r\n                         [(ngModel)]=\"parametersToShow\"\r\n                         (change)=\"onParametersToShowChange()\">\r\n            <mat-radio-button value=\"all\"\r\n                              class=\"ml-2\">{{'scriptsForm.Parameters.AllParameters' | translate}}</mat-radio-button>\r\n            <mat-radio-button value=\"data\"\r\n                              class=\"ml-2\">{{'scriptsForm.Parameters.DataParameters' | translate}}</mat-radio-button>\r\n            <mat-radio-button value=\"static\"\r\n                              class=\"ml-2\">{{'scriptsForm.Parameters.StaticParameters' | translate}}</mat-radio-button>\r\n            <mat-radio-button value=\"calculation\"\r\n                              class=\"ml-2\">{{'scriptsForm.Parameters.CalculationParameters' | translate}}</mat-radio-button>\r\n        </mat-radio-group>\r\n    </div>\r\n\r\n    <div cdkDropList\r\n         class=\"parameters-list\"\r\n         (cdkDropListDropped)=\"drop($event)\">\r\n        <div class=\"parameter-in-list\"\r\n             *ngFor=\"let parameter of sortParameters(filteredParameters, 'number')\"\r\n             cdkDrag>\r\n            <div class=\"parameter-placeholder\"\r\n                 *cdkDragPlaceholder></div>\r\n            <div class=\"parameter-container\"\r\n                 [ngClass]=\"{'selected-parameter' : parameter == newParameter}\">\r\n                <div class=\"ml-3 parameter-data\">\r\n                    <b class=\"parameter-name\"\r\n                       [innerHTML]=\"parameter.name | html\"></b> - {{parameter.description}}\r\n                </div>\r\n\r\n                <div class=\"parameter-options\">\r\n                    <button mat-stroked-button\r\n                            class=\"ml-2\"\r\n                            (click)=\"editParameter(parameter)\">\r\n                        {{'scriptsForm.Parameters.Edit' | translate}}\r\n                    </button>\r\n                    <button mat-stroked-button\r\n                            class=\"ml-2\"\r\n                            (click)=\"remove(parameter.id)\"\r\n                            color=\"warn\">\r\n                        {{'scriptsForm.Parameters.Remove' | translate}}\r\n                    </button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <button mat-stroked-button\r\n            color=\"accent\"\r\n            class=\"m-3\"\r\n            (click)=\"addNewParameter()\">\r\n        {{'scriptsForm.Parameters.NewParameter' | translate}}\r\n    </button>\r\n</div>\r\n\r\n<div class=\"m-3\"\r\n     *ngIf=\"editMode\">\r\n    <button mat-fab\r\n            color=\"primary\"\r\n            (click)=\"changeEditMode()\">\r\n        <span class=\"fa fa-backward\"></span>\r\n    </button>\r\n\r\n    <div class=\"container\"\r\n         *ngIf=\"editMode\">\r\n        <app-data-parameter-form [newlyAddedParameter]=\"newlyAddedParameter\"\r\n                                 [scriptId]=\"scriptId\"\r\n                                 [newParameter]=\"newParameter\"\r\n                                 [parameters]=\"parameters\"\r\n                                 (created)=\"onCreated($event)\"\r\n                                 (updated)=\"onUpdated($event)\"></app-data-parameter-form>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -282,7 +282,7 @@ module.exports = "<div *ngIf=\"!editMode\">\r\n    <div class=\"m-4\">\r\n      
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n    <div [formGroup]=\"scriptForm\">\r\n        <mat-form-field class=\"m-2 form-medium\">\r\n            <input matInput\r\n                   required\r\n                   placeholder=\"Name\"\r\n                   formControlName=\"name\"\r\n                   [errorStateMatcher]=\"matcher\"\r\n                   autocomplete=\"off\" />\r\n            <mat-hint>Script name</mat-hint>\r\n            <mat-error *ngIf=\"scriptName && scriptName.hasError('minlength') && !scriptName.hasError('required')\">\r\n                Name should be minimum {{scriptName.errors.minlength.requiredLength}} characters long.\r\n            </mat-error>\r\n            <mat-error *ngIf=\"scriptName && scriptName.hasError('maxlength') && !scriptName.hasError('required')\">\r\n                Name should be maximum {{scriptName.errors.maxlength.requiredLength}} characters long.\r\n            </mat-error>\r\n            <mat-error *ngIf=\"scriptName && scriptName.hasError('required')\">\r\n                Name is <strong>required</strong>\r\n            </mat-error>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2\">\r\n            <input matInput\r\n                   placeholder=\"Author\"\r\n                   formControlName=\"author\"\r\n                   [errorStateMatcher]=\"matcher\"\r\n                   autocomplete=\"off\" />\r\n            <mat-hint>Script author</mat-hint>\r\n            <mat-error *ngIf=\"scriptAuthor && scriptAuthor.hasError('maxlength')\">\r\n                Author name should be maximum {{scriptAuthor.errors.maxlength.requiredLength}} characters long.\r\n            </mat-error>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 form-medium\">\r\n            <input matInput\r\n                   placeholder=\"Document\"\r\n                   formControlName=\"accordingTo\"\r\n                   [errorStateMatcher]=\"matcher\"\r\n                   autocomplete=\"off\" />\r\n            <mat-hint>Accoording to</mat-hint>\r\n            <mat-error *ngIf=\"scriptDocument && scriptDocument.hasError('maxlength')\">\r\n                Document name should be maximum {{scriptDocument.errors.maxlength.requiredLength}} characters long.\r\n            </mat-error>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2\">\r\n            <mat-label>Group</mat-label>\r\n            <mat-select formControlName=\"groupName\"\r\n                        [errorStateMatcher]=\"matcher\"\r\n                        required>\r\n                <mat-option value=\"Statica\"><span class=\"fa fa-minus\"></span> Statica</mat-option>\r\n                <mat-option value=\"Loads\"><span class=\"fa fa-arrow-down\"></span> Loads</mat-option>\r\n                <mat-option value=\"Concrete\">Concrete</mat-option>\r\n                <mat-option value=\"Steel\">Steel</mat-option>\r\n                <mat-option value=\"Timber\"><span class=\"fa fa-tree\"></span> Timber</mat-option>\r\n                <mat-option value=\"Soils\">Soils</mat-option>\r\n                <mat-divider></mat-divider>\r\n                <mat-option value=\"Other\">Other</mat-option>\r\n            </mat-select>\r\n            <mat-hint>Category for a script</mat-hint>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 full-width\">\r\n            <textarea matInput\r\n                      placeholder=\"Description\"\r\n                      formControlName=\"description\"\r\n                      required\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>Description for script</mat-hint>\r\n            <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('minlength') && !scriptDescription.hasError('required')\">\r\n                Description should be minimum {{scriptDescription.errors.minlength.requiredLength}} characters long.\r\n            </mat-error>\r\n            <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('maxlength') && !scriptDescription.hasError('required')\">\r\n                Description should be maximum {{scriptDescription.errors.maxlength.requiredLength}} characters long.\r\n            </mat-error>\r\n            <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('required')\">\r\n                Description is <strong>required</strong>\r\n            </mat-error>\r\n        </mat-form-field>\r\n\r\n        <div class=\"m-2\">\r\n            <mat-checkbox [checked]=\"includeNote\"\r\n                          (change)=\"includeNote = !includeNote\">\r\n                Include note\r\n            </mat-checkbox>\r\n\r\n            <mat-form-field class=\"full-width\"\r\n                            *ngIf=\"includeNote\">\r\n                <textarea matInput\r\n                          placeholder=\"Notes\"\r\n                          formControlName=\"notes\"\r\n                          [errorStateMatcher]=\"matcher\"\r\n                          autocomplete=\"off\"></textarea>\r\n                <mat-hint>Additional notes for script</mat-hint>\r\n                <mat-error *ngIf=\"scriptNotes && scriptNotes.hasError('maxlength')\">\r\n                    Note should be maximum {{scriptNotes.errors.maxlength.requiredLength}} characters long.\r\n                </mat-error>\r\n            </mat-form-field>\r\n        </div>\r\n    </div>"
+module.exports = "\r\n<div [formGroup]=\"scriptForm\">\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               required\r\n               placeholder=\"{{'scriptsForm.ScriptData.Name.Header' | translate}}\"\r\n               formControlName=\"name\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.ScriptData.Name.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"scriptName && scriptName.hasError('minlength') && !scriptName.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Name.MinLengthError' | translate:scriptName.errors.minlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"scriptName && scriptName.hasError('maxlength') && !scriptName.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Name.MaxLengthError' | translate:scriptName.errors.maxlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"scriptName && scriptName.hasError('required')\"\r\n                   [innerHtml]=\"'scriptsForm.ScriptData.Name.RequiredError' | translate\">\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               placeholder=\"{{'scriptsForm.ScriptData.Author.Header' | translate}}\"\r\n               formControlName=\"author\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.ScriptData.Author.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"scriptAuthor && scriptAuthor.hasError('maxlength')\">\r\n            {{'scriptsForm.ScriptData.Author.MaxLengthError' | translate:scriptAuthor.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               placeholder=\"{{'scriptsForm.ScriptData.Document.Header' | translate}}\"\r\n               formControlName=\"accordingTo\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.ScriptData.Document.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"scriptDocument && scriptDocument.hasError('maxlength')\">\r\n            {{'scriptsForm.ScriptData.Document.MaxLengthError' | translate:scriptDocument.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <mat-label>{{'scriptsForm.ScriptData.Group.Header' | translate}}</mat-label>\r\n        <mat-select formControlName=\"groupName\"\r\n                    [errorStateMatcher]=\"matcher\"\r\n                    required>\r\n            <mat-option value=\"Statica\">\r\n                <span class=\"fa fa-minus\"></span> {{'scriptsForm.ScriptData.Group.Statica' | translate}}\r\n            </mat-option>\r\n            <mat-option value=\"Loads\">\r\n                <span class=\"fa fa-arrow-down\"></span> {{'scriptsForm.ScriptData.Group.Loads' | translate}}\r\n            </mat-option>\r\n            <mat-option value=\"Concrete\">{{'scriptsForm.ScriptData.Group.Concrete' | translate}}</mat-option>\r\n            <mat-option value=\"Steel\">{{'scriptsForm.ScriptData.Group.Steel' | translate}}</mat-option>\r\n            <mat-option value=\"Timber\">\r\n                <span class=\"fa fa-tree\"></span> {{'scriptsForm.ScriptData.Group.Timber' | translate}}\r\n            </mat-option>\r\n            <mat-option value=\"Soils\">\r\n                {{'scriptsForm.ScriptData.Group.Soils' | translate}}\r\n            </mat-option>\r\n            <mat-divider></mat-divider>\r\n            <mat-option value=\"Other\">\r\n                {{'scriptsForm.ScriptData.Group.Other' | translate}}\r\n            </mat-option>\r\n        </mat-select>\r\n        <mat-hint>{{'scriptsForm.ScriptData.Group.Hint' | translate}}</mat-hint>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  placeholder=\"{{'scriptsForm.ScriptData.Description.Header' | translate}}\"\r\n                  formControlName=\"description\"\r\n                  required\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>{{'scriptsForm.ScriptData.Description.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('minlength') && !scriptDescription.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Description.MinLengthError' | translate:scriptDescription.errors.minlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('maxlength') && !scriptDescription.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Description.MaxLengthError' | translate:scriptDescription.errors.maxlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('required')\"\r\n                   [innerHtml]=\"'scriptsForm.ScriptData.Description.RequiredError' | translate\">\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div class=\"m-2\">\r\n        <mat-checkbox [checked]=\"includeNote\"\r\n                      (change)=\"includeNote = !includeNote\">\r\n            {{'scriptsForm.ScriptData.IncludeNote' | translate}}\r\n        </mat-checkbox>\r\n\r\n        <mat-form-field class=\"full-width\"\r\n                        *ngIf=\"includeNote\">\r\n            <textarea matInput\r\n                      placeholder=\"{{'scriptsForm.ScriptData.Note.Header' | translate}}\"\r\n                      formControlName=\"notes\"\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>{{'scriptsForm.ScriptData.Note.Hint' | translate}}</mat-hint>\r\n            <mat-error *ngIf=\"scriptNotes && scriptNotes.hasError('maxlength')\">\r\n                {{'scriptsForm.ScriptData.Note.MaxLengthError' | translate:scriptNotes.errors.maxlength}}\r\n            </mat-error>\r\n        </mat-form-field>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -293,7 +293,7 @@ module.exports = "\r\n    <div [formGroup]=\"scriptForm\">\r\n        <mat-form-
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2 class=\"mt-4 text-center\"\r\n    *ngIf=\"!editMode\">\r\n    Script\r\n</h2>\r\n<h2 class=\"mt-4 text-center\"\r\n    *ngIf=\"editMode\">\r\n    {{scriptName.value}}\r\n</h2>\r\n\r\n<form (ngSubmit)=\"onSubmit()\"\r\n      [formGroup]=\"scriptForm\">\r\n    <mat-tab-group dynamicHeight>\r\n\r\n        <mat-tab label=\"Script data\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <script-data-form [scriptForm]=\"scriptForm\"\r\n                                  [includeNote]=\"includeNote\"></script-data-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n        <mat-tab label=\"Tags\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <tag-form [scriptForm]=\"scriptForm\"></tag-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n        <mat-tab label=\"Parameters\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <app-parameters-form *ngIf=\"editMode\"></app-parameters-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n    </mat-tab-group>\r\n    \r\n    <button mat-stroked-button\r\n            color=\"accent\"\r\n            *ngIf=\"!editMode\"\r\n            type=\"submit\"\r\n            [disabled]=\"!scriptForm.valid\"\r\n            class=\"mt-3 ml-3\">\r\n        Add Script\r\n    </button>\r\n    <button mat-stroked-button\r\n            color=\"accent\"\r\n            *ngIf=\"editMode\"\r\n            type=\"submit\"\r\n            [disabled]=\"!scriptForm.valid\"\r\n            class=\"mt-3 ml-3\">\r\n        Update Script\r\n    </button>\r\n</form>\r\n\r\n"
+module.exports = "<h2 class=\"mt-4 text-center\"\r\n    *ngIf=\"!editMode\">\r\n    {{'scriptsForm.Header' | translate}}\r\n</h2>\r\n<h2 class=\"mt-4 text-center\"\r\n    *ngIf=\"editMode\">\r\n    {{scriptName.value}}\r\n</h2>\r\n\r\n<form (ngSubmit)=\"onSubmit()\"\r\n      [formGroup]=\"scriptForm\">\r\n    <mat-tab-group dynamicHeight>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.ScriptData.Header' | translate}}\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <script-data-form [scriptForm]=\"scriptForm\"\r\n                                  [includeNote]=\"includeNote\"></script-data-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.Tags.Header' | translate}}\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <tag-form [scriptForm]=\"scriptForm\"></tag-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.Parameters.Header' | translate}}\"\r\n                 *ngIf=\"editMode\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <app-parameters-form *ngIf=\"editMode\"></app-parameters-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.Translations.Header' | translate}}\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <!--<app-translation-form></app-translation-form>-->\r\n            </div>\r\n        </mat-tab>\r\n\r\n\r\n    </mat-tab-group>\r\n    \r\n    <button mat-stroked-button\r\n            color=\"accent\"\r\n            *ngIf=\"!editMode\"\r\n            type=\"submit\"\r\n            [disabled]=\"!scriptForm.valid\"\r\n            class=\"mt-3 ml-3\">\r\n        {{'scriptsForm.AddScript' | translate}}\r\n    </button>\r\n    <button mat-stroked-button\r\n            color=\"accent\"\r\n            *ngIf=\"editMode\"\r\n            type=\"submit\"\r\n            [disabled]=\"!scriptForm.valid\"\r\n            class=\"mt-3 ml-3\">\r\n        {{'scriptsForm.UpdateScript' | translate}}\r\n    </button>\r\n</form>\r\n\r\n"
 
 /***/ }),
 
@@ -304,7 +304,7 @@ module.exports = "<h2 class=\"mt-4 text-center\"\r\n    *ngIf=\"!editMode\">\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-form-field class=\"w-75 m-2\">\r\n    <mat-chip-list #chipList>\r\n        <mat-chip *ngFor=\"let tagForm of scriptTags.controls\"\r\n                  [selectable]=\"selectable\"\r\n                  [removable]=\"removable\"\r\n                  (removed)=\"remove(tagForm)\">\r\n            {{tagForm.value.name}}\r\n            <span matChipRemove\r\n                  *ngIf=\"removable\"\r\n                  class=\"fa fa-remove\"></span>\r\n        </mat-chip>\r\n        <input placeholder=\"Add new tags\"\r\n               #tagInput\r\n               [attr.disabled]=\"scriptTags.controls.length > 5 || null\"\r\n               [formControl]=\"tagCtrl\"\r\n               [matAutocomplete]=\"auto\"\r\n               [matChipInputFor]=\"chipList\"\r\n               [matChipInputSeparatorKeyCodes]=\"separatorKeysCodes\"\r\n               [matChipInputAddOnBlur]=\"addOnBlur\"\r\n               (matChipInputTokenEnd)=\"add($event)\">\r\n    </mat-chip-list>\r\n    <mat-autocomplete #auto=\"matAutocomplete\" \r\n                      (optionSelected)=\"selected($event)\">\r\n        <mat-option *ngFor=\"let tag of filteredTags | async\"\r\n                    [value]=\"tag.name\">\r\n            {{tag.name}}\r\n        </mat-option>\r\n    </mat-autocomplete>\r\n</mat-form-field>"
+module.exports = "<mat-form-field class=\"w-75 m-2\">\r\n    <mat-chip-list #chipList>\r\n        <mat-chip *ngFor=\"let tagForm of scriptTags.controls\"\r\n                  [selectable]=\"selectable\"\r\n                  [removable]=\"removable\"\r\n                  (removed)=\"remove(tagForm)\">\r\n            {{tagForm.value.name}}\r\n            <span matChipRemove\r\n                  *ngIf=\"removable\"\r\n                  class=\"fa fa-remove\"></span>\r\n        </mat-chip>\r\n        <input placeholder=\"{{'scriptsForm.Tags.AddNewTags' | translate}}\"\r\n               #tagInput\r\n               [attr.disabled]=\"scriptTags.controls.length > 5 || null\"\r\n               [formControl]=\"tagCtrl\"\r\n               [matAutocomplete]=\"auto\"\r\n               [matChipInputFor]=\"chipList\"\r\n               [matChipInputSeparatorKeyCodes]=\"separatorKeysCodes\"\r\n               [matChipInputAddOnBlur]=\"addOnBlur\"\r\n               (matChipInputTokenEnd)=\"add($event)\">\r\n    </mat-chip-list>\r\n    <mat-autocomplete #auto=\"matAutocomplete\" \r\n                      (optionSelected)=\"selected($event)\">\r\n        <mat-option *ngFor=\"let tag of filteredTags | async\"\r\n                    [value]=\"tag.name\">\r\n            {{tag.name}}\r\n        </mat-option>\r\n    </mat-autocomplete>\r\n</mat-form-field>"
 
 /***/ }),
 
@@ -439,18 +439,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "../node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "../node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser/animations */ "../node_modules/@angular/platform-browser/fesm5/animations.js");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app-routing.module */ "./app/app-routing.module.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.component */ "./app/app.component.ts");
-/* harmony import */ var _components_nav_menu_nav_menu_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/nav-menu/nav-menu.component */ "./app/components/nav-menu/nav-menu.component.ts");
-/* harmony import */ var _components_home_home_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/home/home.component */ "./app/components/home/home.component.ts");
-/* harmony import */ var _components_carousel_carousel_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/carousel/carousel.component */ "./app/components/carousel/carousel.component.ts");
-/* harmony import */ var _components_about_me_about_me_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/about-me/about-me.component */ "./app/components/about-me/about-me.component.ts");
-/* harmony import */ var _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./common/errors/app-error-handler */ "./app/common/errors/app-error-handler.ts");
-/* harmony import */ var _modules_loads_loads_routing_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/loads/loads-routing.module */ "./app/modules/loads/loads-routing.module.ts");
-/* harmony import */ var _modules_loads_loads_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/loads/loads.module */ "./app/modules/loads/loads.module.ts");
-/* harmony import */ var _modules_script_interpreter_script_interpreter_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./modules/script-interpreter/script-interpreter.module */ "./app/modules/script-interpreter/script-interpreter.module.ts");
-/* harmony import */ var _modules_script_interpreter_script_interpreter_routing_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/script-interpreter/script-interpreter-routing.module */ "./app/modules/script-interpreter/script-interpreter-routing.module.ts");
-/* harmony import */ var _modules_md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/md-components-module/md-components.module */ "./app/modules/md-components-module/md-components.module.ts");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "../node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app-routing.module */ "./app/app-routing.module.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "./app/app.component.ts");
+/* harmony import */ var _components_nav_menu_nav_menu_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/nav-menu/nav-menu.component */ "./app/components/nav-menu/nav-menu.component.ts");
+/* harmony import */ var _components_home_home_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/home/home.component */ "./app/components/home/home.component.ts");
+/* harmony import */ var _components_carousel_carousel_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/carousel/carousel.component */ "./app/components/carousel/carousel.component.ts");
+/* harmony import */ var _components_about_me_about_me_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/about-me/about-me.component */ "./app/components/about-me/about-me.component.ts");
+/* harmony import */ var _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./common/errors/app-error-handler */ "./app/common/errors/app-error-handler.ts");
+/* harmony import */ var _modules_loads_loads_routing_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/loads/loads-routing.module */ "./app/modules/loads/loads-routing.module.ts");
+/* harmony import */ var _modules_loads_loads_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./modules/loads/loads.module */ "./app/modules/loads/loads.module.ts");
+/* harmony import */ var _modules_script_interpreter_script_interpreter_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/script-interpreter/script-interpreter.module */ "./app/modules/script-interpreter/script-interpreter.module.ts");
+/* harmony import */ var _modules_script_interpreter_script_interpreter_routing_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/script-interpreter/script-interpreter-routing.module */ "./app/modules/script-interpreter/script-interpreter-routing.module.ts");
+/* harmony import */ var _modules_md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modules/md-components-module/md-components.module */ "./app/modules/md-components-module/md-components.module.ts");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./services/translation.service */ "./app/services/translation.service.ts");
+/* harmony import */ var _directives_bootstrap_select_directive__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./directives/bootstrap-select.directive */ "./app/directives/bootstrap-select.directive.ts");
+/* harmony import */ var _services_local_store_manager_service__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./services/local-store-manager.service */ "./app/services/local-store-manager.service.ts");
+/* harmony import */ var _services_configuration_service__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./services/configuration.service */ "./app/services/configuration.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -474,35 +479,50 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
+
+
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"],
-                _components_nav_menu_nav_menu_component__WEBPACK_IMPORTED_MODULE_7__["NavMenuComponent"],
-                _components_home_home_component__WEBPACK_IMPORTED_MODULE_8__["HomeComponent"],
-                _components_carousel_carousel_component__WEBPACK_IMPORTED_MODULE_9__["CarouselComponent"],
-                _components_about_me_about_me_component__WEBPACK_IMPORTED_MODULE_10__["AboutMeComponent"]
+                _app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"],
+                _components_nav_menu_nav_menu_component__WEBPACK_IMPORTED_MODULE_8__["NavMenuComponent"],
+                _components_home_home_component__WEBPACK_IMPORTED_MODULE_9__["HomeComponent"],
+                _components_carousel_carousel_component__WEBPACK_IMPORTED_MODULE_10__["CarouselComponent"],
+                _components_about_me_about_me_component__WEBPACK_IMPORTED_MODULE_11__["AboutMeComponent"],
+                _directives_bootstrap_select_directive__WEBPACK_IMPORTED_MODULE_19__["BootstrapSelectDirective"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"].withServerTransition({ appId: 'ng-cli-universal' }),
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
-                _modules_script_interpreter_script_interpreter_routing_module__WEBPACK_IMPORTED_MODULE_15__["ScriptInterpreterRoutingModule"],
-                _modules_loads_loads_routing_module__WEBPACK_IMPORTED_MODULE_12__["LoadsRoutingModule"],
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"],
+                _modules_script_interpreter_script_interpreter_routing_module__WEBPACK_IMPORTED_MODULE_16__["ScriptInterpreterRoutingModule"],
+                _modules_loads_loads_routing_module__WEBPACK_IMPORTED_MODULE_13__["LoadsRoutingModule"],
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"],
-                _modules_script_interpreter_script_interpreter_module__WEBPACK_IMPORTED_MODULE_14__["ScriptInterpreterModule"],
-                _modules_loads_loads_module__WEBPACK_IMPORTED_MODULE_13__["LoadsModule"],
-                _modules_md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_16__["MdComponentsModule"]
+                _modules_script_interpreter_script_interpreter_module__WEBPACK_IMPORTED_MODULE_15__["ScriptInterpreterModule"],
+                _modules_loads_loads_module__WEBPACK_IMPORTED_MODULE_14__["LoadsModule"],
+                _modules_md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_17__["MdComponentsModule"],
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateModule"].forRoot({
+                    loader: {
+                        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateLoader"],
+                        useClass: _services_translation_service__WEBPACK_IMPORTED_MODULE_18__["TranslateLanguageLoader"]
+                    }
+                })
             ],
             providers: [
-                { provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ErrorHandler"], useClass: _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_11__["AppErrorHandler"] }
+                { provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ErrorHandler"], useClass: _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_12__["AppErrorHandler"] },
+                _services_translation_service__WEBPACK_IMPORTED_MODULE_18__["TranslationService"],
+                _services_local_store_manager_service__WEBPACK_IMPORTED_MODULE_20__["LocalStoreManager"],
+                _services_configuration_service__WEBPACK_IMPORTED_MODULE_21__["ConfigurationService"]
             ],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
@@ -574,6 +594,9 @@ var AppError = /** @class */ (function () {
     function AppError(originalError) {
         this.originalError = originalError;
     }
+    AppError.ctorParameters = function () { return [
+        { type: undefined }
+    ]; };
     return AppError;
 }());
 
@@ -613,6 +636,9 @@ var BadInputError = /** @class */ (function (_super) {
         _this.originalError = originalError;
         return _this;
     }
+    BadInputError.ctorParameters = function () { return [
+        { type: undefined }
+    ]; };
     return BadInputError;
 }(_app_error__WEBPACK_IMPORTED_MODULE_0__["AppError"]));
 
@@ -652,6 +678,9 @@ var NotFoundError = /** @class */ (function (_super) {
         _this.originalError = originalError;
         return _this;
     }
+    NotFoundError.ctorParameters = function () { return [
+        { type: undefined }
+    ]; };
     return NotFoundError;
 }(_app_error__WEBPACK_IMPORTED_MODULE_0__["AppError"]));
 
@@ -816,7 +845,7 @@ var HomeComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAvY29tcG9uZW50cy9uYXYtbWVudS9uYXYtbWVudS5jb21wb25lbnQuY3NzIn0= */"
+module.exports = ".smaller{\r\n    width: 100px;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9jb21wb25lbnRzL25hdi1tZW51L25hdi1tZW51LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxZQUFZO0FBQ2hCIiwiZmlsZSI6ImFwcC9jb21wb25lbnRzL25hdi1tZW51L25hdi1tZW51LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuc21hbGxlcntcclxuICAgIHdpZHRoOiAxMDBweDtcclxufVxyXG4iXX0= */"
 
 /***/ }),
 
@@ -831,24 +860,216 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavMenuComponent", function() { return NavMenuComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/translation.service */ "./app/services/translation.service.ts");
+/* harmony import */ var _directives_bootstrap_select_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../directives/bootstrap-select.directive */ "./app/directives/bootstrap-select.directive.ts");
+/* harmony import */ var _services_configuration_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/configuration.service */ "./app/services/configuration.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
 
 var NavMenuComponent = /** @class */ (function () {
-    function NavMenuComponent() {
+    function NavMenuComponent(translationService, configurations) {
+        this.translationService = translationService;
+        this.configurations = configurations;
     }
+    NavMenuComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.languageChangedSubscription = this.translationService.languageChanged$.subscribe(function (data) {
+            setTimeout(function () {
+                _this.languageSelector.refresh();
+            });
+        });
+    };
+    NavMenuComponent.prototype.ngOnDestroy = function () {
+        this.languageChangedSubscription.unsubscribe();
+    };
+    NavMenuComponent.ctorParameters = function () { return [
+        { type: _services_translation_service__WEBPACK_IMPORTED_MODULE_1__["TranslationService"] },
+        { type: _services_configuration_service__WEBPACK_IMPORTED_MODULE_3__["ConfigurationService"] }
+    ]; };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('languageSelector', null),
+        __metadata("design:type", _directives_bootstrap_select_directive__WEBPACK_IMPORTED_MODULE_2__["BootstrapSelectDirective"])
+    ], NavMenuComponent.prototype, "languageSelector", void 0);
     NavMenuComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-nav-menu',
             template: __webpack_require__(/*! raw-loader!./nav-menu.component.html */ "../node_modules/raw-loader/index.js!./app/components/nav-menu/nav-menu.component.html"),
             styles: [__webpack_require__(/*! ./nav-menu.component.css */ "./app/components/nav-menu/nav-menu.component.css")]
-        })
+        }),
+        __metadata("design:paramtypes", [_services_translation_service__WEBPACK_IMPORTED_MODULE_1__["TranslationService"],
+            _services_configuration_service__WEBPACK_IMPORTED_MODULE_3__["ConfigurationService"]])
     ], NavMenuComponent);
     return NavMenuComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./app/directives/bootstrap-select.directive.ts":
+/*!******************************************************!*\
+  !*** ./app/directives/bootstrap-select.directive.ts ***!
+  \******************************************************/
+/*! exports provided: BootstrapSelectDirective */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BootstrapSelectDirective", function() { return BootstrapSelectDirective; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "../node_modules/rxjs/_esm5/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var BootstrapSelectDirective = /** @class */ (function () {
+    function BootstrapSelectDirective(el) {
+        var _this = this;
+        this.el = el;
+        this.oldValues = '';
+        this.ngModelChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.shown = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.hidden = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.changedSubscription = Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["fromEvent"])($(this.el.nativeElement), 'changed.bs.select').subscribe(function (e) { return setTimeout(function () {
+            if (_this.checkIsValuesChanged(_this.selected)) {
+                _this.ngModelChange.emit(_this.selected);
+            }
+        }); });
+        this.shownSubscription = Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["fromEvent"])($(this.el.nativeElement), 'shown.bs.select').subscribe(function (e) { return setTimeout(function () { return _this.shown.emit(); }); });
+        this.hiddenSubscription = Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["fromEvent"])($(this.el.nativeElement), 'hidden.bs.select').subscribe(function (e) { return setTimeout(function () { return _this.hidden.emit(); }); });
+    }
+    Object.defineProperty(BootstrapSelectDirective.prototype, "ngModel", {
+        set: function (values) {
+            var _this = this;
+            setTimeout(function () { return _this.selected = values; });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    BootstrapSelectDirective.prototype.ngOnInit = function () {
+        var _this = this;
+        $(this.el.nativeElement).selectpicker();
+        if (this.requiredAttribute) {
+            $(this.el.nativeElement).selectpicker('setStyle', 'required', 'add');
+        }
+        setTimeout(function () {
+            _this.refresh();
+            _this.doValidation();
+        });
+    };
+    BootstrapSelectDirective.prototype.ngOnDestroy = function () {
+        if (this.changedSubscription) {
+            this.changedSubscription.unsubscribe();
+        }
+        if (this.shownSubscription) {
+            this.shownSubscription.unsubscribe();
+        }
+        if (this.hiddenSubscription) {
+            this.hiddenSubscription.unsubscribe();
+        }
+        $(this.el.nativeElement).selectpicker('destroy');
+    };
+    BootstrapSelectDirective.prototype.checkIsValuesChanged = function (newValue) {
+        var _this = this;
+        return !(newValue == this.oldValues ||
+            (newValue instanceof Array && newValue.length === this.oldValues.length && newValue.every(function (v, i) { return v === _this.oldValues[i]; })));
+    };
+    BootstrapSelectDirective.prototype.doValidation = function () {
+        if (this.requiredAttribute) {
+            $(this.el.nativeElement).selectpicker('setStyle', !this.valid ? 'ng-valid' : 'ng-invalid', 'remove');
+            $(this.el.nativeElement).selectpicker('setStyle', this.valid ? 'ng-valid' : 'ng-invalid', 'add');
+        }
+    };
+    Object.defineProperty(BootstrapSelectDirective.prototype, "requiredAttribute", {
+        get: function () {
+            return this.required === '' || this.required == 'true';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    BootstrapSelectDirective.prototype.refresh = function () {
+        var _this = this;
+        setTimeout(function () {
+            $(_this.el.nativeElement).selectpicker('refresh');
+        });
+    };
+    BootstrapSelectDirective.prototype.render = function () {
+        var _this = this;
+        setTimeout(function () {
+            $(_this.el.nativeElement).selectpicker('render');
+        });
+    };
+    Object.defineProperty(BootstrapSelectDirective.prototype, "valid", {
+        get: function () {
+            return this.requiredAttribute ? this.selected && this.selected.length > 0 : true;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BootstrapSelectDirective.prototype, "selected", {
+        get: function () {
+            return $(this.el.nativeElement).selectpicker('val');
+        },
+        set: function (values) {
+            if (!this.checkIsValuesChanged(values)) {
+                return;
+            }
+            this.oldValues = this.selected;
+            $(this.el.nativeElement).selectpicker('val', values);
+            this.doValidation();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    BootstrapSelectDirective.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] }
+    ]; };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], BootstrapSelectDirective.prototype, "required", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], BootstrapSelectDirective.prototype, "ngModel", null);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], BootstrapSelectDirective.prototype, "ngModelChange", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], BootstrapSelectDirective.prototype, "shown", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], BootstrapSelectDirective.prototype, "hidden", void 0);
+    BootstrapSelectDirective = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"])({
+            selector: '[bootstrapSelect]',
+            exportAs: 'bootstrap-select'
+        }),
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]])
+    ], BootstrapSelectDirective);
+    return BootstrapSelectDirective;
 }());
 
 
@@ -862,7 +1083,7 @@ var NavMenuComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "table.center {\n  margin-left: auto;\n  margin-right: auto;\n}\n\ntr.additions-hidden {\n  height: 0;\n}\n\ntr.summary-hidden {\n  display: none;\n}\n\ntr.fa-reorder {\n  cursor: -webkit-grab;\n  cursor: grab;\n}\n\n.scroll-horizontal {\n  overflow-x: auto;\n}\n\n/*.cdk-drag-preview {\n    box-sizing: border-box;\n    border-radius: 4px;\n    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n.cdk-drag-animating {\n    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.example-box:last-child {\n    border: none;\n}\n\n.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {\n    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.example-custom-placeholder {\n    background: #ccc;\n    border: dotted 3px #999;\n    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}*/\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9tb2R1bGVzL2xvYWRzL2NvbXBvbmVudHMvZGVhZC1sb2Fkcy1jb21wb25lbnRzL2RlYWQtbG9hZHMtY2FsY3VsYXRvci9DOlxcS1BLX0NhbGNzXFxCdWlsZF9JVF9XZWJcXENsaWVudEFwcC9hcHBcXG1vZHVsZXNcXGxvYWRzXFxjb21wb25lbnRzXFxkZWFkLWxvYWRzLWNvbXBvbmVudHNcXGRlYWQtbG9hZHMtY2FsY3VsYXRvclxcZGVhZC1sb2Fkcy1jYWxjdWxhdG9yLmNvbXBvbmVudC5zY3NzIiwiYXBwL21vZHVsZXMvbG9hZHMvY29tcG9uZW50cy9kZWFkLWxvYWRzLWNvbXBvbmVudHMvZGVhZC1sb2Fkcy1jYWxjdWxhdG9yL2RlYWQtbG9hZHMtY2FsY3VsYXRvci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlCQUFBO0VBQ0Esa0JBQUE7QUNDSjs7QURFQTtFQUNJLFNBQUE7QUNDSjs7QURFQTtFQUNJLGFBQUE7QUNDSjs7QURFQTtFQUNJLG9CQUFBO0VBQUEsWUFBQTtBQ0NKOztBREVBO0VBQ0ksZ0JBQUE7QUNDSjs7QURFQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztFQUFBIiwiZmlsZSI6ImFwcC9tb2R1bGVzL2xvYWRzL2NvbXBvbmVudHMvZGVhZC1sb2Fkcy1jb21wb25lbnRzL2RlYWQtbG9hZHMtY2FsY3VsYXRvci9kZWFkLWxvYWRzLWNhbGN1bGF0b3IuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJ0YWJsZS5jZW50ZXIge1xyXG4gICAgbWFyZ2luLWxlZnQ6IGF1dG87XHJcbiAgICBtYXJnaW4tcmlnaHQ6IGF1dG87XHJcbn1cclxuXHJcbnRyLmFkZGl0aW9ucy1oaWRkZW4ge1xyXG4gICAgaGVpZ2h0OiAwO1xyXG59XHJcblxyXG50ci5zdW1tYXJ5LWhpZGRlbiB7XHJcbiAgICBkaXNwbGF5OiBub25lO1xyXG59XHJcblxyXG50ci5mYS1yZW9yZGVye1xyXG4gICAgY3Vyc29yOiBncmFiO1xyXG59XHJcblxyXG4uc2Nyb2xsLWhvcml6b250YWwge1xyXG4gICAgb3ZlcmZsb3cteDogYXV0bztcclxufVxyXG5cclxuLyouY2RrLWRyYWctcHJldmlldyB7XHJcbiAgICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gICAgYm94LXNoYWRvdzogMCA1cHggNXB4IC0zcHggcmdiYSgwLCAwLCAwLCAwLjIpLCAwIDhweCAxMHB4IDFweCByZ2JhKDAsIDAsIDAsIDAuMTQpLCAwIDNweCAxNHB4IDJweCByZ2JhKDAsIDAsIDAsIDAuMTIpO1xyXG59XHJcblxyXG4uY2RrLWRyYWctYW5pbWF0aW5nIHtcclxuICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAyNTBtcyBjdWJpYy1iZXppZXIoMCwgMCwgMC4yLCAxKTtcclxufVxyXG5cclxuLmV4YW1wbGUtYm94Omxhc3QtY2hpbGQge1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG59XHJcblxyXG4uZXhhbXBsZS1saXN0LmNkay1kcm9wLWxpc3QtZHJhZ2dpbmcgLmV4YW1wbGUtYm94Om5vdCguY2RrLWRyYWctcGxhY2Vob2xkZXIpIHtcclxuICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAyNTBtcyBjdWJpYy1iZXppZXIoMCwgMCwgMC4yLCAxKTtcclxufVxyXG5cclxuLmV4YW1wbGUtY3VzdG9tLXBsYWNlaG9sZGVyIHtcclxuICAgIGJhY2tncm91bmQ6ICNjY2M7XHJcbiAgICBib3JkZXI6IGRvdHRlZCAzcHggIzk5OTtcclxuICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAyNTBtcyBjdWJpYy1iZXppZXIoMCwgMCwgMC4yLCAxKTtcclxufSovXHJcbiIsInRhYmxlLmNlbnRlciB7XG4gIG1hcmdpbi1sZWZ0OiBhdXRvO1xuICBtYXJnaW4tcmlnaHQ6IGF1dG87XG59XG5cbnRyLmFkZGl0aW9ucy1oaWRkZW4ge1xuICBoZWlnaHQ6IDA7XG59XG5cbnRyLnN1bW1hcnktaGlkZGVuIHtcbiAgZGlzcGxheTogbm9uZTtcbn1cblxudHIuZmEtcmVvcmRlciB7XG4gIGN1cnNvcjogZ3JhYjtcbn1cblxuLnNjcm9sbC1ob3Jpem9udGFsIHtcbiAgb3ZlcmZsb3cteDogYXV0bztcbn1cblxuLyouY2RrLWRyYWctcHJldmlldyB7XG4gICAgYm94LXNpemluZzogYm9yZGVyLWJveDtcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgYm94LXNoYWRvdzogMCA1cHggNXB4IC0zcHggcmdiYSgwLCAwLCAwLCAwLjIpLCAwIDhweCAxMHB4IDFweCByZ2JhKDAsIDAsIDAsIDAuMTQpLCAwIDNweCAxNHB4IDJweCByZ2JhKDAsIDAsIDAsIDAuMTIpO1xufVxuXG4uY2RrLWRyYWctYW5pbWF0aW5nIHtcbiAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMjUwbXMgY3ViaWMtYmV6aWVyKDAsIDAsIDAuMiwgMSk7XG59XG5cbi5leGFtcGxlLWJveDpsYXN0LWNoaWxkIHtcbiAgICBib3JkZXI6IG5vbmU7XG59XG5cbi5leGFtcGxlLWxpc3QuY2RrLWRyb3AtbGlzdC1kcmFnZ2luZyAuZXhhbXBsZS1ib3g6bm90KC5jZGstZHJhZy1wbGFjZWhvbGRlcikge1xuICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAyNTBtcyBjdWJpYy1iZXppZXIoMCwgMCwgMC4yLCAxKTtcbn1cblxuLmV4YW1wbGUtY3VzdG9tLXBsYWNlaG9sZGVyIHtcbiAgICBiYWNrZ3JvdW5kOiAjY2NjO1xuICAgIGJvcmRlcjogZG90dGVkIDNweCAjOTk5O1xuICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAyNTBtcyBjdWJpYy1iZXppZXIoMCwgMCwgMC4yLCAxKTtcbn0qLyJdfQ== */"
+module.exports = "table.center {\n  margin-left: auto;\n  margin-right: auto;\n}\n\ntr.additions-hidden {\n  height: 0;\n}\n\ntr.summary-hidden {\n  display: none;\n}\n\ntr.fa-reorder {\n  cursor: -webkit-grab;\n  cursor: grab;\n}\n\n.scroll-horizontal {\n  overflow-x: auto;\n}\n\n.smaller-input {\n  width: 100px;\n}\n\n/*.cdk-drag-preview {\n    box-sizing: border-box;\n    border-radius: 4px;\n    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n.cdk-drag-animating {\n    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.example-box:last-child {\n    border: none;\n}\n\n.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {\n    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.example-custom-placeholder {\n    background: #ccc;\n    border: dotted 3px #999;\n    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}*/\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9tb2R1bGVzL2xvYWRzL2NvbXBvbmVudHMvZGVhZC1sb2Fkcy1jb21wb25lbnRzL2RlYWQtbG9hZHMtY2FsY3VsYXRvci9DOlxcS1BLX0NhbGNzXFxCdWlsZF9JVF9XZWJcXENsaWVudEFwcC9hcHBcXG1vZHVsZXNcXGxvYWRzXFxjb21wb25lbnRzXFxkZWFkLWxvYWRzLWNvbXBvbmVudHNcXGRlYWQtbG9hZHMtY2FsY3VsYXRvclxcZGVhZC1sb2Fkcy1jYWxjdWxhdG9yLmNvbXBvbmVudC5zY3NzIiwiYXBwL21vZHVsZXMvbG9hZHMvY29tcG9uZW50cy9kZWFkLWxvYWRzLWNvbXBvbmVudHMvZGVhZC1sb2Fkcy1jYWxjdWxhdG9yL2RlYWQtbG9hZHMtY2FsY3VsYXRvci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlCQUFBO0VBQ0Esa0JBQUE7QUNDSjs7QURFQTtFQUNJLFNBQUE7QUNDSjs7QURFQTtFQUNJLGFBQUE7QUNDSjs7QURFQTtFQUNJLG9CQUFBO0VBQUEsWUFBQTtBQ0NKOztBREVBO0VBQ0ksZ0JBQUE7QUNDSjs7QURFQTtFQUNJLFlBQUE7QUNDSjs7QURFQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztFQUFBIiwiZmlsZSI6ImFwcC9tb2R1bGVzL2xvYWRzL2NvbXBvbmVudHMvZGVhZC1sb2Fkcy1jb21wb25lbnRzL2RlYWQtbG9hZHMtY2FsY3VsYXRvci9kZWFkLWxvYWRzLWNhbGN1bGF0b3IuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJ0YWJsZS5jZW50ZXIge1xyXG4gICAgbWFyZ2luLWxlZnQ6IGF1dG87XHJcbiAgICBtYXJnaW4tcmlnaHQ6IGF1dG87XHJcbn1cclxuXHJcbnRyLmFkZGl0aW9ucy1oaWRkZW4ge1xyXG4gICAgaGVpZ2h0OiAwO1xyXG59XHJcblxyXG50ci5zdW1tYXJ5LWhpZGRlbiB7XHJcbiAgICBkaXNwbGF5OiBub25lO1xyXG59XHJcblxyXG50ci5mYS1yZW9yZGVye1xyXG4gICAgY3Vyc29yOiBncmFiO1xyXG59XHJcblxyXG4uc2Nyb2xsLWhvcml6b250YWwge1xyXG4gICAgb3ZlcmZsb3cteDogYXV0bztcclxufVxyXG5cclxuLnNtYWxsZXItaW5wdXR7XHJcbiAgICB3aWR0aDogMTAwcHg7XHJcbn1cclxuXHJcbi8qLmNkay1kcmFnLXByZXZpZXcge1xyXG4gICAgYm94LXNpemluZzogYm9yZGVyLWJveDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICAgIGJveC1zaGFkb3c6IDAgNXB4IDVweCAtM3B4IHJnYmEoMCwgMCwgMCwgMC4yKSwgMCA4cHggMTBweCAxcHggcmdiYSgwLCAwLCAwLCAwLjE0KSwgMCAzcHggMTRweCAycHggcmdiYSgwLCAwLCAwLCAwLjEyKTtcclxufVxyXG5cclxuLmNkay1kcmFnLWFuaW1hdGluZyB7XHJcbiAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMjUwbXMgY3ViaWMtYmV6aWVyKDAsIDAsIDAuMiwgMSk7XHJcbn1cclxuXHJcbi5leGFtcGxlLWJveDpsYXN0LWNoaWxkIHtcclxuICAgIGJvcmRlcjogbm9uZTtcclxufVxyXG5cclxuLmV4YW1wbGUtbGlzdC5jZGstZHJvcC1saXN0LWRyYWdnaW5nIC5leGFtcGxlLWJveDpub3QoLmNkay1kcmFnLXBsYWNlaG9sZGVyKSB7XHJcbiAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMjUwbXMgY3ViaWMtYmV6aWVyKDAsIDAsIDAuMiwgMSk7XHJcbn1cclxuXHJcbi5leGFtcGxlLWN1c3RvbS1wbGFjZWhvbGRlciB7XHJcbiAgICBiYWNrZ3JvdW5kOiAjY2NjO1xyXG4gICAgYm9yZGVyOiBkb3R0ZWQgM3B4ICM5OTk7XHJcbiAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMjUwbXMgY3ViaWMtYmV6aWVyKDAsIDAsIDAuMiwgMSk7XHJcbn0qL1xyXG4iLCJ0YWJsZS5jZW50ZXIge1xuICBtYXJnaW4tbGVmdDogYXV0bztcbiAgbWFyZ2luLXJpZ2h0OiBhdXRvO1xufVxuXG50ci5hZGRpdGlvbnMtaGlkZGVuIHtcbiAgaGVpZ2h0OiAwO1xufVxuXG50ci5zdW1tYXJ5LWhpZGRlbiB7XG4gIGRpc3BsYXk6IG5vbmU7XG59XG5cbnRyLmZhLXJlb3JkZXIge1xuICBjdXJzb3I6IGdyYWI7XG59XG5cbi5zY3JvbGwtaG9yaXpvbnRhbCB7XG4gIG92ZXJmbG93LXg6IGF1dG87XG59XG5cbi5zbWFsbGVyLWlucHV0IHtcbiAgd2lkdGg6IDEwMHB4O1xufVxuXG4vKi5jZGstZHJhZy1wcmV2aWV3IHtcbiAgICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgICBib3gtc2hhZG93OiAwIDVweCA1cHggLTNweCByZ2JhKDAsIDAsIDAsIDAuMiksIDAgOHB4IDEwcHggMXB4IHJnYmEoMCwgMCwgMCwgMC4xNCksIDAgM3B4IDE0cHggMnB4IHJnYmEoMCwgMCwgMCwgMC4xMik7XG59XG5cbi5jZGstZHJhZy1hbmltYXRpbmcge1xuICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAyNTBtcyBjdWJpYy1iZXppZXIoMCwgMCwgMC4yLCAxKTtcbn1cblxuLmV4YW1wbGUtYm94Omxhc3QtY2hpbGQge1xuICAgIGJvcmRlcjogbm9uZTtcbn1cblxuLmV4YW1wbGUtbGlzdC5jZGstZHJvcC1saXN0LWRyYWdnaW5nIC5leGFtcGxlLWJveDpub3QoLmNkay1kcmFnLXBsYWNlaG9sZGVyKSB7XG4gICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDI1MG1zIGN1YmljLWJlemllcigwLCAwLCAwLjIsIDEpO1xufVxuXG4uZXhhbXBsZS1jdXN0b20tcGxhY2Vob2xkZXIge1xuICAgIGJhY2tncm91bmQ6ICNjY2M7XG4gICAgYm9yZGVyOiBkb3R0ZWQgM3B4ICM5OTk7XG4gICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDI1MG1zIGN1YmljLWJlemllcigwLCAwLCAwLjIsIDEpO1xufSovIl19 */"
 
 /***/ }),
 
@@ -927,9 +1148,6 @@ var DeadLoadsCalculatorComponent = /** @class */ (function () {
         var prevIndex = this.selectedMaterials.findIndex(function (d) { return d === event.item.data; });
         Object(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_0__["moveItemInArray"])(this.selectedMaterials, prevIndex, event.currentIndex);
         this.selectedMaterialTable.renderRows();
-    };
-    DeadLoadsCalculatorComponent.prototype.ondrag = function () {
-        console.log("4");
     };
     DeadLoadsCalculatorComponent.prototype.removeMaterial = function (material) {
         var _this = this;
@@ -1070,6 +1288,9 @@ var DeadLoadsDataComponent = /** @class */ (function () {
         var categoryName = this.selectedCategory.name + ' ' + this.selectedSubcategory.name;
         this.materialAdded.emit(new _models_dead_loads_material_for_calculations__WEBPACK_IMPORTED_MODULE_1__["MaterialForCalculations"](categoryName, material));
     };
+    DeadLoadsDataComponent.ctorParameters = function () { return [
+        { type: _services_dead_loads_service__WEBPACK_IMPORTED_MODULE_3__["DeadLoadsService"] }
+    ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", Object)
@@ -1264,12 +1485,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../md-components-module/md-components.module */ "./app/modules/md-components-module/md-components.module.ts");
 /* harmony import */ var _script_interpreter_script_interpreter_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../script-interpreter/script-interpreter.module */ "./app/modules/script-interpreter/script-interpreter.module.ts");
 /* harmony import */ var _components_snow_loads_components_snow_loads_snow_loads_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/snow-loads-components/snow-loads/snow-loads.component */ "./app/modules/loads/components/snow-loads-components/snow-loads/snow-loads.component.ts");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ngx-translate/core */ "../node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../services/translation.service */ "./app/services/translation.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -1300,7 +1525,13 @@ var LoadsModule = /** @class */ (function () {
                 _md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_9__["MdComponentsModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_8__["BrowserAnimationsModule"],
                 _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__["DragDropModule"],
-                _script_interpreter_script_interpreter_module__WEBPACK_IMPORTED_MODULE_10__["ScriptInterpreterModule"]
+                _script_interpreter_script_interpreter_module__WEBPACK_IMPORTED_MODULE_10__["ScriptInterpreterModule"],
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_12__["TranslateModule"].forRoot({
+                    loader: {
+                        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_12__["TranslateLoader"],
+                        useClass: _services_translation_service__WEBPACK_IMPORTED_MODULE_13__["TranslateLanguageLoader"]
+                    }
+                })
             ]
         })
     ], LoadsModule);
@@ -1325,6 +1556,9 @@ var AdditionForCalculations = /** @class */ (function () {
     function AdditionForCalculations(addition) {
         this.origin = addition;
     }
+    AdditionForCalculations.ctorParameters = function () { return [
+        { type: undefined }
+    ]; };
     return AdditionForCalculations;
 }());
 
@@ -1401,6 +1635,10 @@ var MaterialForCalculations = /** @class */ (function () {
             (this.material.maximumDensity + addition)
                 * length * width * thickness;
     };
+    MaterialForCalculations.ctorParameters = function () { return [
+        { type: String },
+        { type: undefined }
+    ]; };
     return MaterialForCalculations;
 }());
 
@@ -1472,6 +1710,9 @@ var DeadLoadsService = /** @class */ (function () {
     DeadLoadsService.prototype.getMaterials = function (subcategoryId) {
         return this.http.get('/api/deadloads/' + subcategoryId + '/materials');
     };
+    DeadLoadsService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }
+    ]; };
     DeadLoadsService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
@@ -1952,6 +2193,9 @@ var ParameterFiguresComponent = /** @class */ (function () {
     ParameterFiguresComponent.prototype.collapsed = function () {
         this.isExpanded = false;
     };
+    ParameterFiguresComponent.ctorParameters = function () { return [
+        { type: _services_figure_service__WEBPACK_IMPORTED_MODULE_1__["FigureService"] }
+    ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Object)
@@ -2504,6 +2748,12 @@ var ScriptCalculatorComponent = /** @class */ (function () {
             return true;
         }
     };
+    ScriptCalculatorComponent.ctorParameters = function () { return [
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
+        { type: _services_script_service__WEBPACK_IMPORTED_MODULE_8__["ScriptService"] },
+        { type: _services_parameter_service__WEBPACK_IMPORTED_MODULE_7__["ParameterService"] },
+        { type: _services_calculation_service__WEBPACK_IMPORTED_MODULE_6__["CalculationService"] }
+    ]; };
     ScriptCalculatorComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'script-calculator',
@@ -2570,6 +2820,9 @@ var ScriptCardComponent = /** @class */ (function () {
             });
         }
     };
+    ScriptCardComponent.ctorParameters = function () { return [
+        { type: _services_script_service__WEBPACK_IMPORTED_MODULE_1__["ScriptService"] }
+    ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('script'),
         __metadata("design:type", Object)
@@ -2630,6 +2883,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var ScriptCardsComponent = /** @class */ (function () {
     function ScriptCardsComponent(scriptService) {
         this.scriptService = scriptService;
+        this.pageSizeOptions = [5, 10, 25, 50];
+        this.pageSize = 10;
     }
     ScriptCardsComponent.prototype.ngOnInit = function () {
         this.setScript();
@@ -2642,12 +2897,21 @@ var ScriptCardsComponent = /** @class */ (function () {
                 _this.scripts = _this.scripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
             if (_this.tagFilters != undefined)
                 _this.scripts = _this.scripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
+            _this.activeScripts = _this.scripts.slice(0, _this.pageSize);
             console.log("Scripts", _this.scripts);
         }, function (error) { return console.error(error); });
     };
     ScriptCardsComponent.prototype.onDeleted = function (script) {
         this.scripts = this.scripts.filter(function (s) { return s.id != script.id; });
     };
+    ScriptCardsComponent.prototype.onPageChanged = function (e) {
+        var firstCut = e.pageIndex * e.pageSize;
+        var secondCut = firstCut + e.pageSize;
+        this.activeScripts = this.scripts.slice(firstCut, secondCut);
+    };
+    ScriptCardsComponent.ctorParameters = function () { return [
+        { type: _services_script_service__WEBPACK_IMPORTED_MODULE_1__["ScriptService"] }
+    ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('groupFilters'),
         __metadata("design:type", Array)
@@ -2983,6 +3247,9 @@ var DataParameterFormComponent = /** @class */ (function () {
     DataParameterFormComponent.prototype.setValueOptionsSettings = function () {
         this.allowUserValues = this.newParameter.valueOptionSetting == _models_enums_valueOptionSettings__WEBPACK_IMPORTED_MODULE_6__["ValueOptionSettings"].UserInput;
     };
+    DataParameterFormComponent.ctorParameters = function () { return [
+        { type: _services_parameter_service__WEBPACK_IMPORTED_MODULE_10__["ParameterService"] }
+    ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('newlyAddedParameter'),
         __metadata("design:type", Boolean)
@@ -3102,6 +3369,11 @@ var ExistingFiguresDialogComponent = /** @class */ (function () {
     ExistingFiguresDialogComponent.prototype.onNoClick = function () {
         this.dialogRef.close();
     };
+    ExistingFiguresDialogComponent.ctorParameters = function () { return [
+        { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_angular_material_dialog__WEBPACK_IMPORTED_MODULE_1__["MAT_DIALOG_DATA"],] }] },
+        { type: _services_figure_service__WEBPACK_IMPORTED_MODULE_2__["FigureService"] }
+    ]; };
     ExistingFiguresDialogComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-existing-figures-dialog',
@@ -3191,6 +3463,10 @@ var FigureParameterFormComponent = /** @class */ (function () {
         this.figureService.detach(this.parameterId.value, figure.id)
             .subscribe(function (figure) { return _this.figures = _this.figures.filter(function (f) { return f != figure; }); });
     };
+    FigureParameterFormComponent.ctorParameters = function () { return [
+        { type: _services_figure_service__WEBPACK_IMPORTED_MODULE_1__["FigureService"] },
+        { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_3__["MatDialog"] }
+    ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('parameterForm'),
         __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"])
@@ -3493,6 +3769,10 @@ var ParametersFormComponent = /** @class */ (function () {
             }, function (error) { return console.error(error); });
         });
     };
+    ParametersFormComponent.ctorParameters = function () { return [
+        { type: _services_parameter_service__WEBPACK_IMPORTED_MODULE_4__["ParameterService"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"] }
+    ]; };
     ParametersFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-parameters-form',
@@ -3815,6 +4095,12 @@ var ScriptFormComponent = /** @class */ (function () {
             });
         });
     };
+    ScriptFormComponent.ctorParameters = function () { return [
+        { type: _services_script_service__WEBPACK_IMPORTED_MODULE_3__["ScriptService"] },
+        { type: _services_tag_service__WEBPACK_IMPORTED_MODULE_4__["TagService"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
+    ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(_parameters_form_parameters_form_component__WEBPACK_IMPORTED_MODULE_5__["ParametersFormComponent"], { static: false }),
         __metadata("design:type", _parameters_form_parameters_form_component__WEBPACK_IMPORTED_MODULE_5__["ParametersFormComponent"])
@@ -3958,6 +4244,9 @@ var TagFormComponent = /** @class */ (function () {
         var filterValue = value.toLowerCase();
         return this.tags.filter(function (t) { return t.name.toLowerCase().indexOf(filterValue) === 0; });
     };
+    TagFormComponent.ctorParameters = function () { return [
+        { type: _services_tag_service__WEBPACK_IMPORTED_MODULE_1__["TagService"] }
+    ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('scriptForm'),
         __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"])
@@ -4115,6 +4404,9 @@ var ParametersGroup = /** @class */ (function () {
     ParametersGroup.prototype.clear = function () {
         this.parameters = [];
     };
+    ParametersGroup.ctorParameters = function () { return [
+        { type: String }
+    ]; };
     return ParametersGroup;
 }());
 
@@ -4231,12 +4523,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pipes_module_pipes_module__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../pipes-module/pipes.module */ "./app/modules/pipes-module/pipes.module.ts");
 /* harmony import */ var _md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../md-components-module/md-components.module */ "./app/modules/md-components-module/md-components.module.ts");
 /* harmony import */ var _services_figure_service__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./services/figure.service */ "./app/modules/script-interpreter/services/figure.service.ts");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! @ngx-translate/core */ "../node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../../services/translation.service */ "./app/services/translation.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -4304,7 +4600,13 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"],
-                _md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_31__["MdComponentsModule"]
+                _md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_31__["MdComponentsModule"],
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_33__["TranslateModule"].forRoot({
+                    loader: {
+                        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_33__["TranslateLoader"],
+                        useClass: _services_translation_service__WEBPACK_IMPORTED_MODULE_34__["TranslateLanguageLoader"]
+                    }
+                })
             ],
             entryComponents: [
                 _components_script_form_parameters_form_data_parameter_form_existing_figures_dialog_existing_figures_dialog_component__WEBPACK_IMPORTED_MODULE_24__["ExistingFiguresDialogComponent"]
@@ -4359,6 +4661,9 @@ var CalculationService = /** @class */ (function () {
     CalculationService.prototype.calculate = function (scriptId, parameters) {
         return this.http.put('/api/scripts/' + scriptId + '/calculate', parameters);
     };
+    CalculationService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }
+    ]; };
     CalculationService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
@@ -4408,6 +4713,9 @@ var FigureService = /** @class */ (function () {
     FigureService.prototype.detach = function (parameterId, figureId) {
         return this.http.delete('/api/parameters/' + parameterId + '/figures/' + figureId);
     };
+    FigureService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"] }
+    ]; };
     FigureService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' }),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"]])
@@ -4431,6 +4739,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ParameterService", function() { return ParameterService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "../node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/translation.service */ "./app/services/translation.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4442,15 +4751,17 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var ParameterService = /** @class */ (function () {
-    function ParameterService(http) {
+    function ParameterService(http, translationService) {
         this.http = http;
+        this.translationService = translationService;
     }
     ParameterService.prototype.delete = function (scriptId, parameterId) {
         return this.http.delete('/api/scripts/' + scriptId + '/parameters/' + parameterId);
     };
     ParameterService.prototype.getParameters = function (scriptId) {
-        return this.http.get('/api/scripts/' + scriptId + '/parameters/PL-pl');
+        return this.http.get('/api/scripts/' + scriptId + '/parameters/' + this.translationService.getCurrentLanguage());
     };
     ParameterService.prototype.create = function (scriptId, parameter) {
         return this.http.post('/api/scripts/' + scriptId + '/parameters', parameter);
@@ -4458,9 +4769,14 @@ var ParameterService = /** @class */ (function () {
     ParameterService.prototype.update = function (scriptId, parameter) {
         return this.http.put('/api/scripts/' + scriptId + '/parameters/' + parameter.id, parameter);
     };
+    ParameterService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] },
+        { type: _services_translation_service__WEBPACK_IMPORTED_MODULE_2__["TranslationService"] }
+    ]; };
     ParameterService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _services_translation_service__WEBPACK_IMPORTED_MODULE_2__["TranslationService"]])
     ], ParameterService);
     return ParameterService;
 }());
@@ -4486,7 +4802,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../common/errors/app-error */ "./app/common/errors/app-error.ts");
 /* harmony import */ var _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../common/errors/not-found-error */ "./app/common/errors/not-found-error.ts");
 /* harmony import */ var _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../common/errors/bad-input-error */ "./app/common/errors/bad-input-error.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "../node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/translation.service */ "./app/services/translation.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4505,32 +4821,20 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var ScriptService = /** @class */ (function () {
-    function ScriptService(http, router) {
+    function ScriptService(http, translationService) {
         this.http = http;
-        this.router = router;
-        this.languages = [
-            "GB-en",
-            "PL-pl"
-        ];
+        this.translationService = translationService;
     }
     ScriptService.prototype.getScripts = function () {
-        this.setLanguage();
-        return this.http.get('/api/scripts/' + this.language)
+        return this.http.get('/api/scripts/' + this.translationService.getCurrentLanguage())
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             if (error.status === 404)
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
         }));
     };
-    ScriptService.prototype.setLanguage = function () {
-        var tree = this.router.parseUrl(this.router.url);
-        var segmentGroup = tree.root.children[_angular_router__WEBPACK_IMPORTED_MODULE_7__["PRIMARY_OUTLET"]];
-        var segments = segmentGroup.segments;
-        if (this.languages.includes(segments[0].path))
-            this.language = segments[0].path;
-    };
     ScriptService.prototype.getScript = function (id) {
-        return this.http.get('/api/scripts/' + id + this.language)
+        return this.http.get('/api/scripts/' + id + '/' + this.translationService.getCurrentLanguage())
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             if (error.status === 404)
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
@@ -4565,10 +4869,14 @@ var ScriptService = /** @class */ (function () {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
         }));
     };
+    ScriptService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] },
+        { type: _services_translation_service__WEBPACK_IMPORTED_MODULE_7__["TranslationService"] }
+    ]; };
     ScriptService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]])
+            _services_translation_service__WEBPACK_IMPORTED_MODULE_7__["TranslationService"]])
     ], ScriptService);
     return ScriptService;
 }());
@@ -4613,6 +4921,9 @@ var TagService = /** @class */ (function () {
     TagService.prototype.create = function (newTag) {
         return this.http.post('/api/tags', newTag);
     };
+    TagService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }
+    ]; };
     TagService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
@@ -4621,6 +4932,435 @@ var TagService = /** @class */ (function () {
 }());
 
 
+
+/***/ }),
+
+/***/ "./app/services/configuration.service.ts":
+/*!***********************************************!*\
+  !*** ./app/services/configuration.service.ts ***!
+  \***********************************************/
+/*! exports provided: ConfigurationService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfigurationService", function() { return ConfigurationService; });
+/* harmony import */ var _translation_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./translation.service */ "./app/services/translation.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _db_keys__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./db-keys */ "./app/services/db-keys.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "../node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _local_store_manager_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./local-store-manager.service */ "./app/services/local-store-manager.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var ConfigurationService = /** @class */ (function () {
+    function ConfigurationService(localStorage, translationService) {
+        this.localStorage = localStorage;
+        this.translationService = translationService;
+        this._language = null;
+        this.onConfigurationImported = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
+        this.configurationImported$ = this.onConfigurationImported.asObservable();
+        this.loadLocalChanges();
+    }
+    ConfigurationService_1 = ConfigurationService;
+    Object.defineProperty(ConfigurationService.prototype, "language", {
+        get: function () {
+            return this._language || ConfigurationService_1.defaultLanguage;
+        },
+        set: function (value) {
+            this._language = value;
+            this.saveToLocalStore(value, _db_keys__WEBPACK_IMPORTED_MODULE_2__["DBkeys"].LANGUAGE);
+            this.translationService.changeLanguage(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ConfigurationService.prototype.loadLocalChanges = function () {
+        if (this.localStorage.exists(_db_keys__WEBPACK_IMPORTED_MODULE_2__["DBkeys"].LANGUAGE)) {
+            this._language = this.localStorage.getDataObject(_db_keys__WEBPACK_IMPORTED_MODULE_2__["DBkeys"].LANGUAGE);
+            this.translationService.changeLanguage(this._language);
+        }
+        else {
+            this.resetLanguage();
+        }
+    };
+    ConfigurationService.prototype.saveToLocalStore = function (data, key) {
+        var _this = this;
+        setTimeout(function () { return _this.localStorage.savePermanentData(data, key); });
+    };
+    ConfigurationService.prototype.resetLanguage = function () {
+        var language = this.translationService.useBrowserLanguage();
+        if (language)
+            this._language = language;
+        else
+            this._language = this.translationService.useDefaultLangage();
+    };
+    var ConfigurationService_1;
+    ConfigurationService.defaultLanguage = 'en';
+    ConfigurationService.ctorParameters = function () { return [
+        { type: _local_store_manager_service__WEBPACK_IMPORTED_MODULE_4__["LocalStoreManager"] },
+        { type: _translation_service__WEBPACK_IMPORTED_MODULE_0__["TranslationService"] }
+    ]; };
+    ConfigurationService = ConfigurationService_1 = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+        __metadata("design:paramtypes", [_local_store_manager_service__WEBPACK_IMPORTED_MODULE_4__["LocalStoreManager"],
+            _translation_service__WEBPACK_IMPORTED_MODULE_0__["TranslationService"]])
+    ], ConfigurationService);
+    return ConfigurationService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./app/services/db-keys.ts":
+/*!*********************************!*\
+  !*** ./app/services/db-keys.ts ***!
+  \*********************************/
+/*! exports provided: DBkeys */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DBkeys", function() { return DBkeys; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var DBkeys = /** @class */ (function () {
+    function DBkeys() {
+    }
+    DBkeys.LANGUAGE = 'language';
+    DBkeys = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])()
+    ], DBkeys);
+    return DBkeys;
+}());
+
+
+
+/***/ }),
+
+/***/ "./app/services/local-store-manager.service.ts":
+/*!*****************************************************!*\
+  !*** ./app/services/local-store-manager.service.ts ***!
+  \*****************************************************/
+/*! exports provided: LocalStoreManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocalStoreManager", function() { return LocalStoreManager; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities */ "./app/services/utilities.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+var LocalStoreManager = /** @class */ (function () {
+    function LocalStoreManager() {
+        this.syncKeys = [];
+        this.reservedKeys = [
+            'sync_keys',
+            'addToSyncKeys',
+            'removeFromSyncKeys',
+            'getSessionStorage',
+            'setSessionStorage',
+            'addToSessionStorage',
+            'removeFromSessionStorage',
+            'clearAllSessionsStorage'
+        ];
+    }
+    LocalStoreManager_1 = LocalStoreManager;
+    LocalStoreManager.prototype.savePermanentData = function (data, key) {
+        if (key === void 0) { key = LocalStoreManager_1.DBKEY_USER_DATA; }
+        this.testForInvalidKeys(key);
+        this.removeFromSessionStorage(key);
+        this.localStorageSetItem(key, data);
+    };
+    LocalStoreManager.prototype.exists = function (key) {
+        if (key === void 0) { key = LocalStoreManager_1.DBKEY_USER_DATA; }
+        var data = sessionStorage.getItem(key);
+        if (data == null)
+            data = localStorage.getItem(key);
+        return data != null;
+    };
+    LocalStoreManager.prototype.getDataObject = function (key, isDateType) {
+        if (key === void 0) { key = LocalStoreManager_1.DBKEY_USER_DATA; }
+        if (isDateType === void 0) { isDateType = false; }
+        var data = this.getData(key);
+        if (data != null) {
+            if (isDateType)
+                data = new Date(data);
+            return data;
+        }
+        else
+            return null;
+    };
+    LocalStoreManager.prototype.getData = function (key) {
+        if (key === void 0) { key = LocalStoreManager_1.DBKEY_USER_DATA; }
+        this.testForInvalidKeys(key);
+        var data = this.sessionStorageGetItem(key);
+        if (data == null) {
+            data = this.localStorageGetItem(key);
+        }
+        return data;
+    };
+    LocalStoreManager.prototype.removeFromSessionStorage = function (keyToRemove) {
+        this.removeFromSessionStorageHelper(keyToRemove);
+        this.removeFromSyncKeysBackup(keyToRemove);
+        localStorage.setItem('removeFromSessionStorage', keyToRemove);
+        localStorage.removeItem('removeFromSessionStorage');
+    };
+    LocalStoreManager.prototype.removeFromSessionStorageHelper = function (keyToRemove) {
+        sessionStorage.removeItem(keyToRemove);
+        this.removeFromSyncKeysHelper(keyToRemove);
+    };
+    LocalStoreManager.prototype.removeFromSyncKeysBackup = function (key) {
+        var storedSyncKeys = this.getSyncKeysFromStorage();
+        var index = storedSyncKeys.indexOf(key);
+        if (index > -1) {
+            storedSyncKeys.splice(index, 1);
+            this.localStorageSetItem(LocalStoreManager_1.DBKEY_SYNC_KEYS, storedSyncKeys);
+        }
+    };
+    LocalStoreManager.prototype.getSyncKeysFromStorage = function (defaultValue) {
+        if (defaultValue === void 0) { defaultValue = []; }
+        var data = this.localStorageGetItem(LocalStoreManager_1.DBKEY_SYNC_KEYS);
+        if (data == null)
+            return defaultValue;
+        else
+            return data;
+    };
+    LocalStoreManager.prototype.removeFromSyncKeysHelper = function (key) {
+        var index = this.syncKeys.indexOf(key);
+        if (index > -1) {
+            this.syncKeys.splice(index, 1);
+        }
+    };
+    LocalStoreManager.prototype.testForInvalidKeys = function (key) {
+        if (!key) {
+            throw new Error('key cannot be empty');
+        }
+        if (this.reservedKeys.some(function (x) { return x == key; })) {
+            throw new Error("The storage key \"" + key + "\" is reserved and cannot be used. Please use a different key");
+        }
+    };
+    LocalStoreManager.prototype.localStorageSetItem = function (key, data) {
+        localStorage.setItem(key, JSON.stringify(data));
+    };
+    LocalStoreManager.prototype.localStorageGetItem = function (key) {
+        return _utilities__WEBPACK_IMPORTED_MODULE_1__["Utilities"].JsonTryParse(localStorage.getItem(key));
+    };
+    LocalStoreManager.prototype.sessionStorageGetItem = function (key) {
+        return _utilities__WEBPACK_IMPORTED_MODULE_1__["Utilities"].JsonTryParse(sessionStorage.getItem(key));
+    };
+    var LocalStoreManager_1;
+    LocalStoreManager.DBKEY_USER_DATA = 'user_data';
+    LocalStoreManager.DBKEY_SYNC_KEYS = 'sync_keys';
+    LocalStoreManager = LocalStoreManager_1 = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])()
+        /**
+        * Provides a wrapper for accessing the web storage API and synchronizing session storage across tabs/windows.
+        */
+    ], LocalStoreManager);
+    return LocalStoreManager;
+}());
+
+
+
+/***/ }),
+
+/***/ "./app/services/translation.service.ts":
+/*!*********************************************!*\
+  !*** ./app/services/translation.service.ts ***!
+  \*********************************************/
+/*! exports provided: TranslationService, TranslateLanguageLoader */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TranslationService", function() { return TranslationService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TranslateLanguageLoader", function() { return TranslateLanguageLoader; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngx-translate/core */ "../node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "../node_modules/rxjs/_esm5/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var TranslationService = /** @class */ (function () {
+    function TranslationService(translate) {
+        this.translate = translate;
+        this.onLanguageChanged = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+        this.languageChanged$ = this.onLanguageChanged.asObservable();
+        this.addLanguages(['en', 'pl']);
+        this.setDefaultLanguage('en');
+    }
+    TranslationService.prototype.addLanguages = function (lang) {
+        this.translate.addLangs(lang);
+    };
+    TranslationService.prototype.setDefaultLanguage = function (lang) {
+        this.translate.setDefaultLang(lang);
+    };
+    TranslationService.prototype.getDefaultLanguage = function () {
+        return this.translate.defaultLang;
+    };
+    TranslationService.prototype.getBrowserLanguage = function () {
+        return this.translate.getBrowserLang();
+    };
+    TranslationService.prototype.getCurrentLanguage = function () {
+        return this.translate.currentLang;
+    };
+    TranslationService.prototype.getLoadedLanguages = function () {
+        return this.translate.langs;
+    };
+    TranslationService.prototype.useBrowserLanguage = function () {
+        var browserLang = this.getBrowserLanguage();
+        if (browserLang.match(/en|pl/)) {
+            this.changeLanguage(browserLang);
+            return browserLang;
+        }
+    };
+    TranslationService.prototype.useDefaultLangage = function () {
+        return this.changeLanguage(null);
+    };
+    TranslationService.prototype.changeLanguage = function (language) {
+        var _this = this;
+        if (!language) {
+            language = this.getDefaultLanguage();
+        }
+        if (language != this.translate.currentLang) {
+            setTimeout(function () {
+                _this.translate.use(language);
+                _this.onLanguageChanged.next(language);
+            });
+        }
+        return language;
+    };
+    TranslationService.prototype.getTranslation = function (key, interpolateParams) {
+        return this.translate.instant(key, interpolateParams);
+    };
+    TranslationService.prototype.getTranslationAsync = function (key, interpolateParams) {
+        return this.translate.get(key, interpolateParams);
+    };
+    TranslationService.ctorParameters = function () { return [
+        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__["TranslateService"] }
+    ]; };
+    TranslationService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__["TranslateService"]])
+    ], TranslationService);
+    return TranslationService;
+}());
+
+var TranslateLanguageLoader = /** @class */ (function () {
+    function TranslateLanguageLoader() {
+    }
+    TranslateLanguageLoader.prototype.getTranslation = function (lang) {
+        switch (lang) {
+            case 'en':
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(__webpack_require__(/*! ../../assets/locale/en.json */ "./assets/locale/en.json"));
+            case 'pl':
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(__webpack_require__(/*! ../../assets/locale/pl.json */ "./assets/locale/pl.json"));
+            default:
+        }
+    };
+    return TranslateLanguageLoader;
+}());
+
+
+
+/***/ }),
+
+/***/ "./app/services/utilities.ts":
+/*!***********************************!*\
+  !*** ./app/services/utilities.ts ***!
+  \***********************************/
+/*! exports provided: Utilities */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Utilities", function() { return Utilities; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var Utilities = /** @class */ (function () {
+    function Utilities() {
+    }
+    Utilities.JsonTryParse = function (value) {
+        try {
+            return JSON.parse(value);
+        }
+        catch (e) {
+            if (value === 'undefined') {
+                return void 0;
+            }
+            return value;
+        }
+    };
+    Utilities = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])()
+    ], Utilities);
+    return Utilities;
+}());
+
+
+
+/***/ }),
+
+/***/ "./assets/locale/en.json":
+/*!*******************************!*\
+  !*** ./assets/locale/en.json ***!
+  \*******************************/
+/*! exports provided: app, carousel, about, deadLoadsModule, snowLoadsModule, scriptsForm, scriptCard, scriptCalculator, default */
+/***/ (function(module) {
+
+module.exports = {"app":{"Home":"Home","NewScript":"New script","About":"About project","Loads":{"Header":"Loads","DeadLoads":"Dead Loads","SnowLoads":"Snow Loads"},"Languages":{"English":"English","Polish":"Polish"},"Search":"Search"},"carousel":{"Next":"Next","Previous":"Previous","SnowLoads":{"Header":"Snow Loads","Description":"Check out calculators for snow loads."},"DeadLoads":{"Header":"Dead Loads","Description":"Check out calculators for dead loads."},"About":{"Header":"About project","Description":"Read more about the project and the author of this site."}},"about":{"Overall":{"Header":"Overall informations","Description":"The site contains a large number of calculators which based mostly on Eurocodes with Polish national annexes."},"SnowLoad":{"Header":"Snow load calculators","Description":"Mostly based on <i>Eurocode 1 - Actions on structures Part 1-3: General actions - Snow loads</i> with Polish national annex. <br/>This calculator contains all possible design situations and roof types which are described in the document. <br/>This calculators shouldn't be used for or doesn't have informations how to calculate:","List":["sites at altitudes above 1 500m,","impact snow loads resulting from sliding off or falling from a higher roof,","additional wind loads which could result from changes in shape or size of the construction works due to the presence of snow or the accretion of ice,","loads in areas where snow is present all year round,","ice loading,","lateral loading due to snow (e.g. lateral loads exerted by drifts),","snow loads on bridges."]},"DeadLoad":{"Header":"Dead load calculator","Description":"Mostly based on <i>Eurocode 1 - Actions on structures Part 1-1: General actions - Densities, self-weight, imposed loads for buildings</i> with Polish national annex and on Polish standard document <i>PN-82/B-02001 Building loads - permanent loads</i> which contains informations about the density of the building materials. <br/>This calculator allows us to get the information about the weight of all layers in the structure."},"Author":{"Header":"Author: Konrad Kania","Description":"I graduated at the Technical University in ��d� at the faculty of Civil Engineering. <br/>Currently, I also finished postgraduate studies at Polish Academy of Science and work for building company as a programmer since the beginning of March 2017. </br>I treat building designing with great passion the same as the programming. <br/>This way of doing things and possibilities which comes with those two branches bring me an idea to make something for overall usage. <br/>I started working on this site since September 2018 and I hope that there will be only more and better content available for everyone."}},"deadLoadsModule":{"Header":"Dead loads calculator","Categories":"Categories","Subcategories":"Subcategories","Name":"Name","MinimumDensity":"Minimum<br/>Density","MaximumDensity":"Maximum<br/>Density","Unit":"Unit","Add":"Add","Category":"Category","Length":"Length [cm]","Width":"Width [cm]","Thickness":"Thickness [cm]","Remove":"Remove","Total":"Total"},"snowLoadsModule":{"Header":"Snow loads calculators"},"scriptsForm":{"Header":"Script","AddScript":"Add Script","UpdateScript":"Update Script","ScriptData":{"Header":"Script data","Name":{"Header":"Name","Hint":"Script name","MinLengthError":"Name should be minimum {{requiredLength}} characters long.","MaxLengthError":"Name should be maximum {{requiredLength}} characters long.","RequiredError":" Name is <strong>required</strong>."},"Author":{"Header":"Author","Hint":"Script author","MaxLengthError":"Author name should be maximum {{requiredLength}} characters long."},"Document":{"Header":"Document","Hint":"Accoording to","MaxLengthError":"Document name should be maximum {{requiredLength}} characters long."},"Group":{"Header":"Group","Hint":"Category for a script","Statica":"Statica","Loads":"Loads","Concrete":"Concrete","Steel":"Steel","Timber":"Timber","Soils":"Soils","Other":"Other"},"Description":{"Header":"Description","Hint":"Description for script","MinLengthError":"Description should be minimum {{requiredLength}} characters long.","MaxLengthError":"Description should be maximum {{requiredLength}} characters long.","RequiredError":" Description is <strong>required</strong>."},"IncludeNote":"Include Note","Note":{"Header":"Note","Hint":"Additional notes for script","MaxLengthError":"Note should be maximum {{requiredLength}} characters long."}},"Tags":{"Header":"Tags","AddNewTags":"Add new tags"},"Parameters":{"Header":"Parameters","ParametersFilterLabel":"Select parameters","AllParameters":"All parameters","DataParameters":"Data parameters","StaticParameters":"Static parameters","CalculationParameters":"Calculation parameters","Edit":"Edit","Remove":"Remove","NewParameter":"New parameter","EditMode":{"ParameterTypePicker":"Pick parameter type","ParameterTypes":{"Editable":"Editable","Static":"Static","Calculable":"Calculable","Visible":"Visible","Important":"Important","Optional":"Optional"},"Name":{"Header":"Name","Hint":"Parameter name","MaxLengthError":"Name should be maximum {{requiredLength}} characters long.","RequiredError":"Name is <strong>required</strong>."},"Unit":{"Header":"Unit","Hint":"Parameter unit","MaxLengthError":"Unit should be maximum {{requiredLength}} characters long."},"Document":{"Header":"Document","Hint":"Parameter according to","MaxLengthError":"Document name should be maximum {{requiredLength}} characters long."},"ValueType":{"Header":"Value Type","Hint":"Parameter value type","Number":"Number","Text":"Text"},"GroupName":{"Header":"Group name","Hint":"Group name for parameter","MaxLengthError":"Group name should be maximum {{requiredLength}} characters long."},"Value":{"Header":"Value","Hint":"Value for parameter","MaxLengthError":"Value should be maximum {{requiredLength}} characters long."},"Description":{"Header":"Description","Hint":"Description for parameter","MaxLengthError":"Description should be maximum {{requiredLength}} characters long."},"VisibilityValidator":{"Header":"Visibility validator","Hint":"Visibility validator","MaxLengthError":"Visibility validator should be maximum {{requiredLength}} characters long."},"DataValidator":{"Header":"Data validator","Hint":"Data validator","MaxLengthError":"Data validator should be maximum {{requiredLength}} characters long."},"Update":"Update"},"Add":"Add","ValueOptions":{"Header":"Value Options","Hint":"Provide some selectable data","None":"None","AllowAny":"Allow any values","Boolean":"Is boolean","Name":{"Header":"Name","Hint":"Name"},"Value":{"Header":"Value","Hint":"Value"},"Description":{"Header":"Description","Hint":"Description for value option"},"Remove":"Remove","Add":"Add"},"Figures":{"Header":"Pictures","Hint":"Provide additional pictures for parameter","Remove":"Remove"}},"Translations":{"Header":"Translations"}},"scriptCard":{"Calculate":"Calculate","Edit":"Edit","Delete":"Delete"},"scriptCalculator":{"StaticData":"Static data","Calculate":"Calculate","Results":"Results","Controls":{"Default":"Default","True":"True","Figures":"Pictures"}}};
+
+/***/ }),
+
+/***/ "./assets/locale/pl.json":
+/*!*******************************!*\
+  !*** ./assets/locale/pl.json ***!
+  \*******************************/
+/*! exports provided: app, carousel, about, deadLoadsModule, snowLoadsModule, scriptsForm, scriptCard, scriptCalculator, default */
+/***/ (function(module) {
+
+module.exports = {"app":{"Home":"Strona główna","NewScript":"Nowy skrypt","About":"O projekcie","Loads":{"Header":"Obciążenia","DeadLoads":"Stałe","SnowLoads":"Śnieg"},"Languages":{"English":"Angielski","Polish":"Polski"},"Search":"Szukaj"},"carousel":{"Next":"Następny","Previous":"Poprzedni","SnowLoads":{"Header":"Obciążenia śniegiem","Description":"Zobacz kalkulatory do obciążeń śniegiem."},"DeadLoads":{"Header":"Obciążenia stałe","Description":"Zobacz kalkulatory do obciążeń stałych."},"About":{"Header":"O projekcie","Description":"Przeczytaj więcej o projekcie i o autorze tej strony."}},"about":{"Overall":{"Header":"Ogólne informacje","Description":"Na stronie znajdziesz dużą liczbę kalkulatorów budowlanych z których większość bazuje na Eurokodach wraz z polskim aneksem."},"SnowLoad":{"Header":"Kalkulatory obciążenia śniegiem","Description":"Bazują głównie na <i>Eurokod 1 - Oddziaływania na konstrukcje Część 1-3: Oddziaływania ogólne - Obciążenie śniegiem</i> wraz z polskim załącznikiem krajowym. </br>Kalkulatory zawierają wszystkie przypadki obliczeniowe jakie zawarto w dokumencie. </br>Nie powinno się korzystać z tych kalkulatorów, bądź nie ma informacji jak obliczać, w przypadkach:","List":["konstrukcji znajdujących się ponad 1 500m n.p.m.,","uderzeniowego obciążenia śniegiem wynikającego z ześlizgu lub upadku śniegu z wyższego dachu,","dodatkowego obciążenia wiatrem, które mogłoby wynikać ze zmian kształtu lub rozmiarów budowli z powodu obecności śniegu lub osadzania lodu,","obciążenia na obszarach, gdzie śnieg zalega przez cały rok,","obciążenia oblodzeniem,","obciążenia bocznego wywieranego przez śnieg (np. obciążenia bocznego wywieranego przez zaspy),","obciążenia śniegiem mostów."]},"DeadLoad":{"Header":"Kalkulatory obciążeń stałych","Description":"Bazują głównie na <i>Eurokod 1 - Oddziaływania na konstrukcje Część 1-1: Oddziaływania ogólne - Ciężar objętościowy, ciężar własny, obciążenia użytkowe w budynkach</i> wraz z polskim załącznikiem krajowym oraz na polskim dokumencie <i>PN-82/B-02001 Obciążenia budowli - Obciążenia stałe</i>, który zawiera informacje o ciężarach objętościowych materiałów budowlanych. </br>Ten kalkulator pozawala na uzyskanie informacji o wadze poszczególnych warstw w konstrukcji."},"Author":{"Header":"Autor: Konrad Kania","Description":"Jestem absolwentem Politechniki Łódzkiej, kierunek Budownictwo. </br>Obecnie, skończyłem również studia podyplomowe w Polskiej Akademii Nauk i pracuję dla firmy budowlanej już od początku marca 2017 roku jako programista. </br>Traktuję budownictwo i programowanie z wielką pasją. </br>Takie podejście wraz z możliwościami jakie tkwią w tych dwóch branżach podsunęły mi pomysł na zrobienie czegoś do ogólnego użytku. </br>Zacząłem pracować nad tą stroną od września 2018 i mam nadzieję, że będzie tylko bogatsza w coraz to lepszą zawartość dostępną dla wszystkich."}},"deadLoadsModule":{"Header":"Kalkulator obciążeń stałych","Categories":"Kategorie","Subcategories":"Podkategorie","Name":"Nazwa","MinimumDensity":"Minimalny<br/>ciężar","MaximumDensity":"Maksymalny<br/>ciężar","Unit":"Jednostka","Add":"Dodaj","Category":"Kategoria","Length":"Długość [cm]","Width":"Szerokość [cm]","Thickness":"Grubość [cm]","Remove":"Usuń","Total":"Suma"},"snowLoadsModule":{"Header":"Kalkulatory obciążenia śniegiem"},"scriptsForm":{"Header":"Skrypt","AddScript":"Dodaj Skrypt","UpdateScript":"Aktualizuj Skrypt","ScriptData":{"Header":"Dane skryptu","Name":{"Header":"Nazwa","Hint":"Nazwa skryptu","MinLengthError":"Nazwa powinna mieć minimum {{requiredLength}} znaków.","MaxLengthError":"Nazwa powinna mieć maksimum {{requiredLength}} znaków.","RequiredError":" Nazwa jest <strong>wymagana</strong>."},"Author":{"Header":"Autor","Hint":"Autor skryptu","MaxLengthError":"Imię autora powinien mieć mniej niż {{requiredLength}} znaków."},"Document":{"Header":"Dokument","Hint":"Zgodnie z","MaxLengthError":"Nazwa dokumentu nie powinna przekraczać {{requiredLength}} znaków."},"Group":{"Header":"Grupa","Hint":"Kategoria skryptu","Statica":"Statyka","Loads":"Obciążenia","Concrete":"Beton","Steel":"Stal","Timber":"Drewno","Soils":"Grunty","Other":"Inne"},"Description":{"Header":"Opis","Hint":"Opis skryptu","MinLengthError":"Opis skrytpu powinien mieć więcej niż {{requiredLength}} znaków.","MaxLengthError":"Opis skrytpu powinien mieć mniej niż {{requiredLength}} znaków.","RequiredError":"Opis jest <strong>wymagany</strong>."},"IncludeNote":"Uwzględnij notatkę","Note":{"Header":"Notatka","Hint":"Dodatkowe notatki do skryptu","MaxLengthError":"Notatka nie powinna przekraczać {{requiredLength}} znaków."}},"Tags":{"Header":"Tagi","AddNewTags":"Dodaj nowe tagi"},"Parameters":{"Header":"Parametry","ParametersFilterLabel":"Filtruj parametry","AllParameters":"Wszystkie","DataParameters":"Dane","StaticParameters":"Statyczne","CalculationParameters":"Obliczane","Edit":"Edytuj","Remove":"Usuń","NewParameter":"Nowy parametr","EditMode":{"ParameterTypePicker":"Wybierz typ parametru","ParameterTypes":{"Editable":"Edytowalny","Static":"Statyczny","Calculable":"Obliczany","Visible":"Widoczny","Important":"Ważny","Optional":"Opcjonalny"},"Name":{"Header":"Nazwa","Hint":"Nazwa parametru","MaxLengthError":"Nazwa nie powinna mieć więcej niż {{requiredLength}} znaków.","RequiredError":"Nazwa jest <strong>wymagana</strong>."},"Unit":{"Header":"Jednostka","Hint":"Jednostka parametru","MaxLengthError":"Jednostka może mieć maksymalnie {{requiredLength}} znaków."},"Document":{"Header":"Dokument","Hint":"Dokument powiązany","MaxLengthError":"Nazwa dokumentu może mieć maksymalnie {{requiredLength}} znaków."},"ValueType":{"Header":"Typ wartości","Hint":"Typ wartości parametru","Number":"Wartość","Text":"Tekst"},"GroupName":{"Header":"Nazwa grupy","Hint":"Nazwa grupy parametru","MaxLengthError":"Nazwa grupy może mieć maksymalnie {{requiredLength}} znaków."},"Value":{"Header":"Wartość","Hint":"Wartość parametru","MaxLengthError":"Wartość może mieć maksymalnie {{requiredLength}} znaków."},"Description":{"Header":"Opis","Hint":"Opis parametru","MaxLengthError":"Opis parametru może mieć maksymalnie {{requiredLength}} znaków."},"VisibilityValidator":{"Header":"Walidacja widoczności","Hint":"Walidacja widoczności","MaxLengthError":"Walidacja widoczności może mieć maksymalnie {{requiredLength}} znaków."},"DataValidator":{"Header":"Walidacja danych","Hint":"Walidacja danych","MaxLengthError":"Walidacja danych może mieć maksymalnie {{requiredLength}} znaków."},"Update":"Aktualizuj"},"Add":"Dodaj","ValueOptions":{"Header":"Wartości wybieralne","Hint":"Wartości do wyboru","None":"Brak","AllowAny":"Zezwól na dowolną","Boolean":"Prawda/Fałsz","Name":{"Header":"Nazwa","Hint":"Nazwa"},"Value":{"Header":"Wartość","Hint":"Wartość"},"Description":{"Header":"Opis","Hint":"Opis dla wartości wybieralnej"},"Remove":"Usuń","Add":"Dodaj"},"Figures":{"Header":"Obrazki","Hint":"Dodaj dodatkowe obrazki do parametrów","Remove":"Usuń"}},"Translations":{"Header":"Tłumaczenia"}},"scriptCard":{"Calculate":"Oblicz","Edit":"Edytuj","Delete":"Usuń"},"scriptCalculator":{"StaticData":"Stałe","Calculate":"Oblicz","Results":"Wyniki","Controls":{"Default":"Domyślne","True":"Prawda","Figures":"Obrazki"}}};
 
 /***/ }),
 

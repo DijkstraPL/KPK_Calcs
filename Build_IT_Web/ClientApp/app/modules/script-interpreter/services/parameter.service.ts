@@ -2,10 +2,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Parameter } from '../models/interfaces/parameter';
 import { Observable } from 'rxjs';
+import { TranslationService } from '../../../services/translation.service';
 
 @Injectable({ providedIn: 'root' })
 export class ParameterService {
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,
+        private translationService: TranslationService) {
 
     }
 
@@ -14,7 +16,7 @@ export class ParameterService {
     }
     
     getParameters(scriptId: number): Observable<Parameter[]> {
-        return this.http.get<Parameter[]>('/api/scripts/' + scriptId + '/parameters/PL-pl');
+        return this.http.get<Parameter[]>('/api/scripts/' + scriptId + '/parameters/' + this.translationService.getCurrentLanguage());
     }
 
     create(scriptId: number, parameter: Parameter) {

@@ -67,7 +67,7 @@ namespace Build_IT_Web
                 b => b.MigrationsAssembly(dataAccessAssemblyName)));
 #endif
 #if DEBUG
-            services.AddDbContext<ScriptInterpreterDbContext>(
+            services.AddDbContext<DeadLoadsDbContext>(
                 options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("DeadLoads"),
                 b => b.MigrationsAssembly(dataAccessAssemblyName)));
 #endif

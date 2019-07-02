@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdComponentsModule } from '../md-components-module/md-components.module';
 import { ScriptInterpreterModule } from '../script-interpreter/script-interpreter.module';
 import { SnowLoadsComponent } from './components/snow-loads-components/snow-loads/snow-loads.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateLanguageLoader } from '../../services/translation.service';
 
 @NgModule({
     declarations: [
@@ -25,7 +27,13 @@ import { SnowLoadsComponent } from './components/snow-loads-components/snow-load
       MdComponentsModule,
       BrowserAnimationsModule,
       DragDropModule,
-      ScriptInterpreterModule
+      ScriptInterpreterModule,
+      TranslateModule.forRoot({
+          loader: {
+              provide: TranslateLoader,
+              useClass: TranslateLanguageLoader
+          }
+      })
   ]
 })
 export class LoadsModule { }

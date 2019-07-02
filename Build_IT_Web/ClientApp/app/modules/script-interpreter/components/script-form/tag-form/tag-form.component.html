@@ -9,7 +9,7 @@
                   *ngIf="removable"
                   class="fa fa-remove"></span>
         </mat-chip>
-        <input placeholder="Add new tags"
+        <input placeholder="{{'scriptsForm.Tags.AddNewTags' | translate}}"
                #tagInput
                [attr.disabled]="scriptTags.controls.length > 5 || null"
                [formControl]="tagCtrl"

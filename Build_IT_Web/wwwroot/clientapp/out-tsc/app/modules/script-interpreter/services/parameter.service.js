@@ -9,15 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { TranslationService } from '../../../services/translation.service';
 var ParameterService = /** @class */ (function () {
-    function ParameterService(http) {
+    function ParameterService(http, translationService) {
         this.http = http;
+        this.translationService = translationService;
     }
     ParameterService.prototype.delete = function (scriptId, parameterId) {
         return this.http.delete('/api/scripts/' + scriptId + '/parameters/' + parameterId);
     };
     ParameterService.prototype.getParameters = function (scriptId) {
-        return this.http.get('/api/scripts/' + scriptId + '/parameters/PL-pl');
+        return this.http.get('/api/scripts/' + scriptId + '/parameters/' + this.translationService.getCurrentLanguage());
     };
     ParameterService.prototype.create = function (scriptId, parameter) {
         return this.http.post('/api/scripts/' + scriptId + '/parameters', parameter);
@@ -27,7 +29,8 @@ var ParameterService = /** @class */ (function () {
     };
     ParameterService = __decorate([
         Injectable({ providedIn: 'root' }),
-        __metadata("design:paramtypes", [HttpClient])
+        __metadata("design:paramtypes", [HttpClient,
+            TranslationService])
     ], ParameterService);
     return ParameterService;
 }());

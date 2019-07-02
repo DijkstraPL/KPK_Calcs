@@ -37,7 +37,7 @@ namespace Build_IT_WebTest.UnitTests.Services
                 Notes = "c"
             };
 
-            Task.FromResult(translationService.SetScriptTranslation("PL-pl", scriptResource));
+            Task.FromResult(translationService.SetScriptTranslation("pl", scriptResource));
 
             Assert.That(scriptResource.Name, Is.EqualTo("new name"));
             Assert.That(scriptResource.Description, Is.EqualTo("b"));

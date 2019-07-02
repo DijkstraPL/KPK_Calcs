@@ -1,101 +1,111 @@
 ﻿
-    <div [formGroup]="scriptForm">
-        <mat-form-field class="m-2 form-medium">
-            <input matInput
-                   required
-                   placeholder="Name"
-                   formControlName="name"
-                   [errorStateMatcher]="matcher"
-                   autocomplete="off" />
-            <mat-hint>Script name</mat-hint>
-            <mat-error *ngIf="scriptName && scriptName.hasError('minlength') && !scriptName.hasError('required')">
-                Name should be minimum {{scriptName.errors.minlength.requiredLength}} characters long.
-            </mat-error>
-            <mat-error *ngIf="scriptName && scriptName.hasError('maxlength') && !scriptName.hasError('required')">
-                Name should be maximum {{scriptName.errors.maxlength.requiredLength}} characters long.
-            </mat-error>
-            <mat-error *ngIf="scriptName && scriptName.hasError('required')">
-                Name is <strong>required</strong>
-            </mat-error>
-        </mat-form-field>
+<div [formGroup]="scriptForm">
+    <mat-form-field class="m-2 form-medium">
+        <input matInput
+               required
+               placeholder="{{'scriptsForm.ScriptData.Name.Header' | translate}}"
+               formControlName="name"
+               [errorStateMatcher]="matcher"
+               autocomplete="off" />
+        <mat-hint>{{'scriptsForm.ScriptData.Name.Hint' | translate}}</mat-hint>
+        <mat-error *ngIf="scriptName && scriptName.hasError('minlength') && !scriptName.hasError('required')">
+            {{'scriptsForm.ScriptData.Name.MinLengthError' | translate:scriptName.errors.minlength}}
+        </mat-error>
+        <mat-error *ngIf="scriptName && scriptName.hasError('maxlength') && !scriptName.hasError('required')">
+            {{'scriptsForm.ScriptData.Name.MaxLengthError' | translate:scriptName.errors.maxlength}}
+        </mat-error>
+        <mat-error *ngIf="scriptName && scriptName.hasError('required')"
+                   [innerHtml]="'scriptsForm.ScriptData.Name.RequiredError' | translate">
+        </mat-error>
+    </mat-form-field>
 
-        <mat-form-field class="m-2">
-            <input matInput
-                   placeholder="Author"
-                   formControlName="author"
-                   [errorStateMatcher]="matcher"
-                   autocomplete="off" />
-            <mat-hint>Script author</mat-hint>
-            <mat-error *ngIf="scriptAuthor && scriptAuthor.hasError('maxlength')">
-                Author name should be maximum {{scriptAuthor.errors.maxlength.requiredLength}} characters long.
-            </mat-error>
-        </mat-form-field>
+    <mat-form-field class="m-2">
+        <input matInput
+               placeholder="{{'scriptsForm.ScriptData.Author.Header' | translate}}"
+               formControlName="author"
+               [errorStateMatcher]="matcher"
+               autocomplete="off" />
+        <mat-hint>{{'scriptsForm.ScriptData.Author.Hint' | translate}}</mat-hint>
+        <mat-error *ngIf="scriptAuthor && scriptAuthor.hasError('maxlength')">
+            {{'scriptsForm.ScriptData.Author.MaxLengthError' | translate:scriptAuthor.errors.maxlength}}
+        </mat-error>
+    </mat-form-field>
 
-        <mat-form-field class="m-2 form-medium">
-            <input matInput
-                   placeholder="Document"
-                   formControlName="accordingTo"
-                   [errorStateMatcher]="matcher"
-                   autocomplete="off" />
-            <mat-hint>Accoording to</mat-hint>
-            <mat-error *ngIf="scriptDocument && scriptDocument.hasError('maxlength')">
-                Document name should be maximum {{scriptDocument.errors.maxlength.requiredLength}} characters long.
-            </mat-error>
-        </mat-form-field>
+    <mat-form-field class="m-2 form-medium">
+        <input matInput
+               placeholder="{{'scriptsForm.ScriptData.Document.Header' | translate}}"
+               formControlName="accordingTo"
+               [errorStateMatcher]="matcher"
+               autocomplete="off" />
+        <mat-hint>{{'scriptsForm.ScriptData.Document.Hint' | translate}}</mat-hint>
+        <mat-error *ngIf="scriptDocument && scriptDocument.hasError('maxlength')">
+            {{'scriptsForm.ScriptData.Document.MaxLengthError' | translate:scriptDocument.errors.maxlength}}
+        </mat-error>
+    </mat-form-field>
 
-        <mat-form-field class="m-2">
-            <mat-label>Group</mat-label>
-            <mat-select formControlName="groupName"
-                        [errorStateMatcher]="matcher"
-                        required>
-                <mat-option value="Statica"><span class="fa fa-minus"></span> Statica</mat-option>
-                <mat-option value="Loads"><span class="fa fa-arrow-down"></span> Loads</mat-option>
-                <mat-option value="Concrete">Concrete</mat-option>
-                <mat-option value="Steel">Steel</mat-option>
-                <mat-option value="Timber"><span class="fa fa-tree"></span> Timber</mat-option>
-                <mat-option value="Soils">Soils</mat-option>
-                <mat-divider></mat-divider>
-                <mat-option value="Other">Other</mat-option>
-            </mat-select>
-            <mat-hint>Category for a script</mat-hint>
-        </mat-form-field>
+    <mat-form-field class="m-2">
+        <mat-label>{{'scriptsForm.ScriptData.Group.Header' | translate}}</mat-label>
+        <mat-select formControlName="groupName"
+                    [errorStateMatcher]="matcher"
+                    required>
+            <mat-option value="Statica">
+                <span class="fa fa-minus"></span> {{'scriptsForm.ScriptData.Group.Statica' | translate}}
+            </mat-option>
+            <mat-option value="Loads">
+                <span class="fa fa-arrow-down"></span> {{'scriptsForm.ScriptData.Group.Loads' | translate}}
+            </mat-option>
+            <mat-option value="Concrete">{{'scriptsForm.ScriptData.Group.Concrete' | translate}}</mat-option>
+            <mat-option value="Steel">{{'scriptsForm.ScriptData.Group.Steel' | translate}}</mat-option>
+            <mat-option value="Timber">
+                <span class="fa fa-tree"></span> {{'scriptsForm.ScriptData.Group.Timber' | translate}}
+            </mat-option>
+            <mat-option value="Soils">
+                {{'scriptsForm.ScriptData.Group.Soils' | translate}}
+            </mat-option>
+            <mat-divider></mat-divider>
+            <mat-option value="Other">
+                {{'scriptsForm.ScriptData.Group.Other' | translate}}
+            </mat-option>
+        </mat-select>
+        <mat-hint>{{'scriptsForm.ScriptData.Group.Hint' | translate}}</mat-hint>
+    </mat-form-field>
 
-        <mat-form-field class="m-2 full-width">
+    <mat-form-field class="m-2 full-width">
+        <textarea matInput
+                  placeholder="{{'scriptsForm.ScriptData.Description.Header' | translate}}"
+                  formControlName="description"
+                  required
+                  [errorStateMatcher]="matcher"
+                  autocomplete="off"></textarea>
+        <mat-hint>{{'scriptsForm.ScriptData.Description.Hint' | translate}}</mat-hint>
+        <mat-error *ngIf="scriptDescription && scriptDescription.hasError('minlength') && !scriptDescription.hasError('required')">
+            {{'scriptsForm.ScriptData.Description.MinLengthError' | translate:scriptDescription.errors.minlength}}
+        </mat-error>
+        <mat-error *ngIf="scriptDescription && scriptDescription.hasError('maxlength') && !scriptDescription.hasError('required')">
+            {{'scriptsForm.ScriptData.Description.MaxLengthError' | translate:scriptDescription.errors.maxlength}}
+        </mat-error>
+        <mat-error *ngIf="scriptDescription && scriptDescription.hasError('required')"
+                   [innerHtml]="'scriptsForm.ScriptData.Description.RequiredError' | translate">
+        </mat-error>
+    </mat-form-field>
+
+    <div class="m-2">
+        <mat-checkbox [checked]="includeNote"
+                      (change)="includeNote = !includeNote">
+            {{'scriptsForm.ScriptData.IncludeNote' | translate}}
+        </mat-checkbox>
+
+        <mat-form-field class="full-width"
+                        *ngIf="includeNote">
             <textarea matInput
-                      placeholder="Description"
-                      formControlName="description"
-                      required
+                      placeholder="{{'scriptsForm.ScriptData.Note.Header' | translate}}"
+                      formControlName="notes"
                       [errorStateMatcher]="matcher"
                       autocomplete="off"></textarea>
-            <mat-hint>Description for script</mat-hint>
-            <mat-error *ngIf="scriptDescription && scriptDescription.hasError('minlength') && !scriptDescription.hasError('required')">
-                Description should be minimum {{scriptDescription.errors.minlength.requiredLength}} characters long.
-            </mat-error>
-            <mat-error *ngIf="scriptDescription && scriptDescription.hasError('maxlength') && !scriptDescription.hasError('required')">
-                Description should be maximum {{scriptDescription.errors.maxlength.requiredLength}} characters long.
-            </mat-error>
-            <mat-error *ngIf="scriptDescription && scriptDescription.hasError('required')">
-                Description is <strong>required</strong>
+            <mat-hint>{{'scriptsForm.ScriptData.Note.Hint' | translate}}</mat-hint>
+            <mat-error *ngIf="scriptNotes && scriptNotes.hasError('maxlength')">
+                {{'scriptsForm.ScriptData.Note.MaxLengthError' | translate:scriptNotes.errors.maxlength}}
             </mat-error>
         </mat-form-field>
-
-        <div class="m-2">
-            <mat-checkbox [checked]="includeNote"
-                          (change)="includeNote = !includeNote">
-                Include note
-            </mat-checkbox>
-
-            <mat-form-field class="full-width"
-                            *ngIf="includeNote">
-                <textarea matInput
-                          placeholder="Notes"
-                          formControlName="notes"
-                          [errorStateMatcher]="matcher"
-                          autocomplete="off"></textarea>
-                <mat-hint>Additional notes for script</mat-hint>
-                <mat-error *ngIf="scriptNotes && scriptNotes.hasError('maxlength')">
-                    Note should be maximum {{scriptNotes.errors.maxlength.requiredLength}} characters long.
-                </mat-error>
-            </mat-form-field>
-        </div>
     </div>
+</div>

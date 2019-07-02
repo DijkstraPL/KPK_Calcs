@@ -3,10 +3,10 @@
     <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title>
-                Pictures
+                {{'scriptsForm.Parameters.Figures.Header' | translate}}
             </mat-panel-title>
             <mat-panel-description>
-                Provide additional pictures for parameter
+                {{'scriptsForm.Parameters.Figures.Hint' | translate}}
             </mat-panel-description>
         </mat-expansion-panel-header>
         <input type="file"
@@ -22,7 +22,7 @@
                         color="warn"
                         type="button"
                         (click)="remove(figure)">
-                    Remove
+                    {{'scriptsForm.Parameters.Figures.Remove' | translate}}
                 </button>
                 <p>Test</p>
             </div>

@@ -15,7 +15,7 @@
     </div>
 
     <div *ngIf="staticDataParameters && staticDataParameters.length > 0">
-        <h5 class="ml-2">Static data</h5>
+        <h5 class="ml-2">{{'scriptCalculator.StaticData' | translate}}</h5>
         <mat-list dense>
             <div *ngFor="let parameter of staticDataParameters">
                 <parameter-result [parameter]="parameter"></parameter-result>
@@ -61,7 +61,7 @@
                 type="button"
                 [disabled]="!isValid()"
                 (click)="calculate()">
-            <span class="fa fa-calculator"></span> Calculate
+            <span class="fa fa-calculator"></span> {{'scriptCalculator.Calculate' | translate}}
         </button>
     </div>
 
@@ -71,7 +71,7 @@
     </div>
 
     <div *ngIf="resultParameters && !valueChanged">
-        <h3 class="ml-2">Results</h3>
+        <h3 class="ml-2">{{'scriptCalculator.Results' | translate}}</h3>
         <mat-list dense>
             <div *ngFor="let parameter of resultParameters">
                 <parameter-result [parameter]="parameter"></parameter-result>

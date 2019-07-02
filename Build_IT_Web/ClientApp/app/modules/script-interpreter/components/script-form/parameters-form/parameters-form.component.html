@@ -1,17 +1,17 @@
 ﻿<div *ngIf="!editMode">
     <div class="m-4">
-        <label id="parameters-type-filter">Select parameters:</label>
+        <label id="parameters-type-filter">{{'scriptsForm.Parameters.ParametersFilterLabel' | translate}}:</label>
         <mat-radio-group aria-labelledby="parameters-type-filter"
                          [(ngModel)]="parametersToShow"
                          (change)="onParametersToShowChange()">
             <mat-radio-button value="all"
-                              class="ml-2">All parameters</mat-radio-button>
+                              class="ml-2">{{'scriptsForm.Parameters.AllParameters' | translate}}</mat-radio-button>
             <mat-radio-button value="data"
-                              class="ml-2">Data parameters</mat-radio-button>
+                              class="ml-2">{{'scriptsForm.Parameters.DataParameters' | translate}}</mat-radio-button>
             <mat-radio-button value="static"
-                              class="ml-2">Static parameters</mat-radio-button>
+                              class="ml-2">{{'scriptsForm.Parameters.StaticParameters' | translate}}</mat-radio-button>
             <mat-radio-button value="calculation"
-                              class="ml-2">Calculation parameters</mat-radio-button>
+                              class="ml-2">{{'scriptsForm.Parameters.CalculationParameters' | translate}}</mat-radio-button>
         </mat-radio-group>
     </div>
 
@@ -34,13 +34,13 @@
                     <button mat-stroked-button
                             class="ml-2"
                             (click)="editParameter(parameter)">
-                        Edit
+                        {{'scriptsForm.Parameters.Edit' | translate}}
                     </button>
                     <button mat-stroked-button
                             class="ml-2"
                             (click)="remove(parameter.id)"
                             color="warn">
-                        Remove
+                        {{'scriptsForm.Parameters.Remove' | translate}}
                     </button>
                 </div>
             </div>
@@ -51,7 +51,7 @@
             color="accent"
             class="m-3"
             (click)="addNewParameter()">
-        New parameter
+        {{'scriptsForm.Parameters.NewParameter' | translate}}
     </button>
 </div>
 

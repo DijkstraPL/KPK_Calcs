@@ -14,12 +14,14 @@ import { retry, catchError } from 'rxjs/operators';
 import { AppError } from '../../../common/errors/app-error';
 import { NotFoundError } from '../../../common/errors/not-found-error';
 import { BadInputError } from '../../../common/errors/bad-input-error';
+import { TranslationService } from '../../../services/translation.service';
 var ScriptService = /** @class */ (function () {
-    function ScriptService(http) {
+    function ScriptService(http, translationService) {
         this.http = http;
+        this.translationService = translationService;
     }
     ScriptService.prototype.getScripts = function () {
-        return this.http.get('/api/scripts/PL-pl')
+        return this.http.get('/api/scripts/' + this.translationService.getCurrentLanguage())
             .pipe(retry(1), catchError(function (error) {
             if (error.status === 404)
                 return throwError(new NotFoundError(error));
@@ -27,7 +29,7 @@ var ScriptService = /** @class */ (function () {
         }));
     };
     ScriptService.prototype.getScript = function (id) {
-        return this.http.get('/api/scripts/' + id + '/PL-pl')
+        return this.http.get('/api/scripts/' + id + '/' + +this.translationService.getCurrentLanguage())
             .pipe(retry(1), catchError(function (error) {
             if (error.status === 404)
                 return throwError(new NotFoundError(error));
@@ -64,7 +66,8 @@ var ScriptService = /** @class */ (function () {
     };
     ScriptService = __decorate([
         Injectable({ providedIn: 'root' }),
-        __metadata("design:paramtypes", [HttpClient])
+        __metadata("design:paramtypes", [HttpClient,
+            TranslationService])
     ], ScriptService);
     return ScriptService;
 }());

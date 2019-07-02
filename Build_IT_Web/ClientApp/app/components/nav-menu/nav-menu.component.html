@@ -18,7 +18,7 @@
                 [routerLinkActiveOptions]='{ exact: true }'>
                 <a class="nav-link"
                    [routerLink]='["/home"]'>
-                    <span class="fa fa-home"></span> Home <span class="sr-only">(current)</span>
+                    <span class="fa fa-home"></span> {{'app.Home' | translate}} <span class="sr-only">(current)</span>
                 </a>
             </li>
             <li class="nav-item"
@@ -26,7 +26,7 @@
                 [routerLinkActiveOptions]='{ exact: true }'>
                 <a class="nav-link"
                    [routerLink]="['/scripts/new']">
-                    <span class="fa fa-file-code"></span> New script
+                    <span class="fa fa-file-code"></span> {{'app.NewScript' | translate}}
                 </a>
             </li>
             <li class="nav-item dropdown">
@@ -37,20 +37,18 @@
                    data-toggle="dropdown"
                    aria-haspopup="true"
                    aria-expanded="false">
-                    <span class="fa fa-arrow-down"></span> Loads
+                    <span class="fa fa-arrow-down"></span> {{'app.Loads.Header' | translate}}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item"
                        [routerLink]="['/deadloads']">
-                        <span class="fa fa-building"></span> Dead Loads
+                        <span class="fa fa-building"></span> {{'app.Loads.DeadLoads' | translate}}
                     </a>
                     <a class="dropdown-item"
                        [routerLink]="['/snowloads']">
-                        <span class="fa fa-snowman"></span> Snow Loads
+                        <span class="fa fa-snowman"></span> {{'app.Loads.SnowLoads' | translate}}
                     </a>
-                    <!--<a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>-->
+                    <!--<div class="dropdown-divider"></div>-->
                 </div>
             </li>
 
@@ -59,19 +57,36 @@
                 [routerLinkActiveOptions]='{ exact: true }'>
                 <a class="nav-link"
                    [routerLink]="['/about']">
-                    <span class="fa fa-user-circle"></span> About
+                    <span class="fa fa-user-circle"></span> {{'app.About' | translate}}
                 </a>
             </li>
             <!--<li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-    </li>-->
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>-->
         </ul>
-        <!--<form class="form-inline my-2 my-lg-0">
+        <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2"
                    type="search"
-                   placeholder="Search"
+                   placeholder="{{'app.Search' | translate}}"
                    aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>-->
+            <button mat-stroked-button
+                    color="accent"
+                    type="submit">
+                {{'app.Search' | translate}}
+            </button>           
+        </form>
+
+
+        <select id="language"
+                [(ngModel)]="configurations.language"
+                #languageSelector="bootstrap-select"
+                bootstrapSelect
+                class="selectpicker form-control smaller ml-3">
+            <option data-subtext="(Default)"
+                    value="en">
+                {{'app.Languages.English' | translate}}
+            </option>
+            <option value="pl">{{'app.Languages.Polish' | translate}}</option>
+        </select>
     </div>
 </nav>
