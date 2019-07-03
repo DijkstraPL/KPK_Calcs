@@ -15,17 +15,17 @@ var ParameterService = /** @class */ (function () {
         this.http = http;
         this.translationService = translationService;
     }
-    ParameterService.prototype.delete = function (scriptId, parameterId) {
-        return this.http.delete('/api/scripts/' + scriptId + '/parameters/' + parameterId);
-    };
-    ParameterService.prototype.getParameters = function (scriptId) {
-        return this.http.get('/api/scripts/' + scriptId + '/parameters/' + this.translationService.getCurrentLanguage());
+    ParameterService.prototype.getParameters = function (scriptId, language) {
+        return this.http.get('/api/scripts/' + scriptId + '/parameters/' + (language || this.translationService.getCurrentLanguage()));
     };
     ParameterService.prototype.create = function (scriptId, parameter) {
         return this.http.post('/api/scripts/' + scriptId + '/parameters', parameter);
     };
     ParameterService.prototype.update = function (scriptId, parameter) {
         return this.http.put('/api/scripts/' + scriptId + '/parameters/' + parameter.id, parameter);
+    };
+    ParameterService.prototype.delete = function (scriptId, parameterId) {
+        return this.http.delete('/api/scripts/' + scriptId + '/parameters/' + parameterId);
     };
     ParameterService = __decorate([
         Injectable({ providedIn: 'root' }),

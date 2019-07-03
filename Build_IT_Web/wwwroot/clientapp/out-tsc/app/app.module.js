@@ -56,7 +56,7 @@ var AppModule = /** @class */ (function () {
                         provide: TranslateLoader,
                         useClass: TranslateLanguageLoader
                     }
-                }),
+                })
             ],
             providers: [
                 { provide: ErrorHandler, useClass: AppErrorHandler },

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
@@ -44,6 +45,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             IEnumerable<Parameter> parameters = new List<Parameter> { new Parameter(), new Parameter() };
             _parameterRepository.Setup(pr => pr.GetAllParametersForScriptAsync(1))
                 .Returns(Task.FromResult(parameters));
+            _scriptRepository.Setup(sr => sr.GetAsync(1))
+                .Returns(Task.FromResult(new Script { DefaultLanguage = Language.English }));
 
             var parametersController = new ParametersController( 
                 _scriptRepository.Object, _parameterRepository.Object, 

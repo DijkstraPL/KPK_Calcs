@@ -43,14 +43,14 @@ namespace Build_IT_DataAccess
             return await Task.Run(() => { return Context.Set<TEntity>().Where(predicate); });
         }
 
-        public virtual void AddAsync(TEntity entity)
+        public virtual async Task AddAsync(TEntity entity)
         {
-            Context.Set<TEntity>().AddAsync(entity);
+            await Context.Set<TEntity>().AddAsync(entity);
         }
 
-        public virtual void AddRangeAsync(IEnumerable<TEntity> entities)
+        public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().AddRangeAsync(entities);
+            await Context.Set<TEntity>().AddRangeAsync(entities);
         }
 
         public virtual void Remove(TEntity entity)

@@ -282,7 +282,7 @@ module.exports = "<div *ngIf=\"!editMode\">\r\n    <div class=\"m-4\">\r\n      
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div [formGroup]=\"scriptForm\">\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               required\r\n               placeholder=\"{{'scriptsForm.ScriptData.Name.Header' | translate}}\"\r\n               formControlName=\"name\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.ScriptData.Name.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"scriptName && scriptName.hasError('minlength') && !scriptName.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Name.MinLengthError' | translate:scriptName.errors.minlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"scriptName && scriptName.hasError('maxlength') && !scriptName.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Name.MaxLengthError' | translate:scriptName.errors.maxlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"scriptName && scriptName.hasError('required')\"\r\n                   [innerHtml]=\"'scriptsForm.ScriptData.Name.RequiredError' | translate\">\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <input matInput\r\n               placeholder=\"{{'scriptsForm.ScriptData.Author.Header' | translate}}\"\r\n               formControlName=\"author\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.ScriptData.Author.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"scriptAuthor && scriptAuthor.hasError('maxlength')\">\r\n            {{'scriptsForm.ScriptData.Author.MaxLengthError' | translate:scriptAuthor.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               placeholder=\"{{'scriptsForm.ScriptData.Document.Header' | translate}}\"\r\n               formControlName=\"accordingTo\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{'scriptsForm.ScriptData.Document.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"scriptDocument && scriptDocument.hasError('maxlength')\">\r\n            {{'scriptsForm.ScriptData.Document.MaxLengthError' | translate:scriptDocument.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2\">\r\n        <mat-label>{{'scriptsForm.ScriptData.Group.Header' | translate}}</mat-label>\r\n        <mat-select formControlName=\"groupName\"\r\n                    [errorStateMatcher]=\"matcher\"\r\n                    required>\r\n            <mat-option value=\"Statica\">\r\n                <span class=\"fa fa-minus\"></span> {{'scriptsForm.ScriptData.Group.Statica' | translate}}\r\n            </mat-option>\r\n            <mat-option value=\"Loads\">\r\n                <span class=\"fa fa-arrow-down\"></span> {{'scriptsForm.ScriptData.Group.Loads' | translate}}\r\n            </mat-option>\r\n            <mat-option value=\"Concrete\">{{'scriptsForm.ScriptData.Group.Concrete' | translate}}</mat-option>\r\n            <mat-option value=\"Steel\">{{'scriptsForm.ScriptData.Group.Steel' | translate}}</mat-option>\r\n            <mat-option value=\"Timber\">\r\n                <span class=\"fa fa-tree\"></span> {{'scriptsForm.ScriptData.Group.Timber' | translate}}\r\n            </mat-option>\r\n            <mat-option value=\"Soils\">\r\n                {{'scriptsForm.ScriptData.Group.Soils' | translate}}\r\n            </mat-option>\r\n            <mat-divider></mat-divider>\r\n            <mat-option value=\"Other\">\r\n                {{'scriptsForm.ScriptData.Group.Other' | translate}}\r\n            </mat-option>\r\n        </mat-select>\r\n        <mat-hint>{{'scriptsForm.ScriptData.Group.Hint' | translate}}</mat-hint>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  placeholder=\"{{'scriptsForm.ScriptData.Description.Header' | translate}}\"\r\n                  formControlName=\"description\"\r\n                  required\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>{{'scriptsForm.ScriptData.Description.Hint' | translate}}</mat-hint>\r\n        <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('minlength') && !scriptDescription.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Description.MinLengthError' | translate:scriptDescription.errors.minlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('maxlength') && !scriptDescription.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Description.MaxLengthError' | translate:scriptDescription.errors.maxlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('required')\"\r\n                   [innerHtml]=\"'scriptsForm.ScriptData.Description.RequiredError' | translate\">\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <div class=\"m-2\">\r\n        <mat-checkbox [checked]=\"includeNote\"\r\n                      (change)=\"includeNote = !includeNote\">\r\n            {{'scriptsForm.ScriptData.IncludeNote' | translate}}\r\n        </mat-checkbox>\r\n\r\n        <mat-form-field class=\"full-width\"\r\n                        *ngIf=\"includeNote\">\r\n            <textarea matInput\r\n                      placeholder=\"{{'scriptsForm.ScriptData.Note.Header' | translate}}\"\r\n                      formControlName=\"notes\"\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>{{'scriptsForm.ScriptData.Note.Hint' | translate}}</mat-hint>\r\n            <mat-error *ngIf=\"scriptNotes && scriptNotes.hasError('maxlength')\">\r\n                {{'scriptsForm.ScriptData.Note.MaxLengthError' | translate:scriptNotes.errors.maxlength}}\r\n            </mat-error>\r\n        </mat-form-field>\r\n    </div>\r\n</div>"
+module.exports = "\r\n    <div [formGroup]=\"scriptForm\">\r\n        <mat-form-field class=\"m-2 form-medium\">\r\n            <input matInput\r\n                   required\r\n                   placeholder=\"{{'scriptsForm.ScriptData.Name.Header' | translate}}\"\r\n                   formControlName=\"name\"\r\n                   [errorStateMatcher]=\"matcher\"\r\n                   autocomplete=\"off\" />\r\n            <mat-hint>{{'scriptsForm.ScriptData.Name.Hint' | translate}}</mat-hint>\r\n            <mat-error *ngIf=\"scriptName && scriptName.hasError('minlength') && !scriptName.hasError('required')\">\r\n                {{'scriptsForm.ScriptData.Name.MinLengthError' | translate:scriptName.errors.minlength}}\r\n            </mat-error>\r\n            <mat-error *ngIf=\"scriptName && scriptName.hasError('maxlength') && !scriptName.hasError('required')\">\r\n                {{'scriptsForm.ScriptData.Name.MaxLengthError' | translate:scriptName.errors.maxlength}}\r\n            </mat-error>\r\n            <mat-error *ngIf=\"scriptName && scriptName.hasError('required')\"\r\n                       [innerHtml]=\"'scriptsForm.ScriptData.Name.RequiredError' | translate\">\r\n            </mat-error>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2\">\r\n            <input matInput\r\n                   placeholder=\"{{'scriptsForm.ScriptData.Author.Header' | translate}}\"\r\n                   formControlName=\"author\"\r\n                   [errorStateMatcher]=\"matcher\"\r\n                   autocomplete=\"off\" />\r\n            <mat-hint>{{'scriptsForm.ScriptData.Author.Hint' | translate}}</mat-hint>\r\n            <mat-error *ngIf=\"scriptAuthor && scriptAuthor.hasError('maxlength')\">\r\n                {{'scriptsForm.ScriptData.Author.MaxLengthError' | translate:scriptAuthor.errors.maxlength}}\r\n            </mat-error>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 form-medium\">\r\n            <input matInput\r\n                   placeholder=\"{{'scriptsForm.ScriptData.Document.Header' | translate}}\"\r\n                   formControlName=\"accordingTo\"\r\n                   [errorStateMatcher]=\"matcher\"\r\n                   autocomplete=\"off\" />\r\n            <mat-hint>{{'scriptsForm.ScriptData.Document.Hint' | translate}}</mat-hint>\r\n            <mat-error *ngIf=\"scriptDocument && scriptDocument.hasError('maxlength')\">\r\n                {{'scriptsForm.ScriptData.Document.MaxLengthError' | translate:scriptDocument.errors.maxlength}}\r\n            </mat-error>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2\">\r\n            <mat-label>{{'scriptsForm.ScriptData.Group.Header' | translate}}</mat-label>\r\n            <mat-select formControlName=\"groupName\"\r\n                        [errorStateMatcher]=\"matcher\"\r\n                        required>\r\n                <mat-option value=\"Statica\">\r\n                    <span class=\"fa fa-minus\"></span> {{'scriptsForm.ScriptData.Group.Statica' | translate}}\r\n                </mat-option>\r\n                <mat-option value=\"Loads\">\r\n                    <span class=\"fa fa-arrow-down\"></span> {{'scriptsForm.ScriptData.Group.Loads' | translate}}\r\n                </mat-option>\r\n                <mat-option value=\"Concrete\">{{'scriptsForm.ScriptData.Group.Concrete' | translate}}</mat-option>\r\n                <mat-option value=\"Steel\">{{'scriptsForm.ScriptData.Group.Steel' | translate}}</mat-option>\r\n                <mat-option value=\"Timber\">\r\n                    <span class=\"fa fa-tree\"></span> {{'scriptsForm.ScriptData.Group.Timber' | translate}}\r\n                </mat-option>\r\n                <mat-option value=\"Soils\">\r\n                    {{'scriptsForm.ScriptData.Group.Soils' | translate}}\r\n                </mat-option>\r\n                <mat-divider></mat-divider>\r\n                <mat-option value=\"Other\">\r\n                    {{'scriptsForm.ScriptData.Group.Other' | translate}}\r\n                </mat-option>\r\n            </mat-select>\r\n            <mat-hint>{{'scriptsForm.ScriptData.Group.Hint' | translate}}</mat-hint>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2\">\r\n            <mat-label>{{'app.Languages.Language' | translate}}</mat-label>\r\n            <mat-select formControlName=\"defaultLanguage\"\r\n                        [errorStateMatcher]=\"matcher\"\r\n                        required>\r\n                <mat-option [value]=\"languages.english\">\r\n                    {{'app.Languages.English' | translate}}\r\n                </mat-option>\r\n                <mat-option [value]=\"languages.polish\">\r\n                    {{'app.Languages.Polish' | translate}}\r\n                </mat-option>\r\n            </mat-select>\r\n            <mat-hint>{{'scriptsForm.ScriptData.Group.Hint' | translate}}</mat-hint>\r\n            <mat-error *ngIf=\"scriptDefaultLanguage && scriptDefaultLanguage.hasError('required')\"\r\n                       [innerHtml]=\"'scriptsForm.ScriptData.Description.RequiredError' | translate\">\r\n            </mat-error>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 full-width\">\r\n            <textarea matInput\r\n                      placeholder=\"{{'scriptsForm.ScriptData.Description.Header' | translate}}\"\r\n                      formControlName=\"description\"\r\n                      required\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>{{'scriptsForm.ScriptData.Description.Hint' | translate}}</mat-hint>\r\n            <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('minlength') && !scriptDescription.hasError('required')\">\r\n                {{'scriptsForm.ScriptData.Description.MinLengthError' | translate:scriptDescription.errors.minlength}}\r\n            </mat-error>\r\n            <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('maxlength') && !scriptDescription.hasError('required')\">\r\n                {{'scriptsForm.ScriptData.Description.MaxLengthError' | translate:scriptDescription.errors.maxlength}}\r\n            </mat-error>\r\n            <mat-error *ngIf=\"scriptDescription && scriptDescription.hasError('required')\"\r\n                       [innerHtml]=\"'scriptsForm.ScriptData.Description.RequiredError' | translate\">\r\n            </mat-error>\r\n        </mat-form-field>\r\n\r\n        <div class=\"m-2\">\r\n            <mat-checkbox [checked]=\"includeNote\"\r\n                          (change)=\"includeNote = !includeNote\">\r\n                {{'scriptsForm.ScriptData.IncludeNote' | translate}}\r\n            </mat-checkbox>\r\n\r\n            <mat-form-field class=\"full-width\"\r\n                            *ngIf=\"includeNote\">\r\n                <textarea matInput\r\n                          placeholder=\"{{'scriptsForm.ScriptData.Note.Header' | translate}}\"\r\n                          formControlName=\"notes\"\r\n                          [errorStateMatcher]=\"matcher\"\r\n                          autocomplete=\"off\"></textarea>\r\n                <mat-hint>{{'scriptsForm.ScriptData.Note.Hint' | translate}}</mat-hint>\r\n                <mat-error *ngIf=\"scriptNotes && scriptNotes.hasError('maxlength')\">\r\n                    {{'scriptsForm.ScriptData.Note.MaxLengthError' | translate:scriptNotes.errors.maxlength}}\r\n                </mat-error>\r\n            </mat-form-field>\r\n        </div>\r\n    </div>"
 
 /***/ }),
 
@@ -293,7 +293,7 @@ module.exports = "\r\n<div [formGroup]=\"scriptForm\">\r\n    <mat-form-field cl
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2 class=\"mt-4 text-center\"\r\n    *ngIf=\"!editMode\">\r\n    {{'scriptsForm.Header' | translate}}\r\n</h2>\r\n<h2 class=\"mt-4 text-center\"\r\n    *ngIf=\"editMode\">\r\n    {{scriptName.value}}\r\n</h2>\r\n\r\n<form (ngSubmit)=\"onSubmit()\"\r\n      [formGroup]=\"scriptForm\">\r\n    <mat-tab-group dynamicHeight>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.ScriptData.Header' | translate}}\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <script-data-form [scriptForm]=\"scriptForm\"\r\n                                  [includeNote]=\"includeNote\"></script-data-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.Tags.Header' | translate}}\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <tag-form [scriptForm]=\"scriptForm\"></tag-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.Parameters.Header' | translate}}\"\r\n                 *ngIf=\"editMode\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <app-parameters-form *ngIf=\"editMode\"></app-parameters-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.Translations.Header' | translate}}\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <!--<app-translation-form></app-translation-form>-->\r\n            </div>\r\n        </mat-tab>\r\n\r\n\r\n    </mat-tab-group>\r\n    \r\n    <button mat-stroked-button\r\n            color=\"accent\"\r\n            *ngIf=\"!editMode\"\r\n            type=\"submit\"\r\n            [disabled]=\"!scriptForm.valid\"\r\n            class=\"mt-3 ml-3\">\r\n        {{'scriptsForm.AddScript' | translate}}\r\n    </button>\r\n    <button mat-stroked-button\r\n            color=\"accent\"\r\n            *ngIf=\"editMode\"\r\n            type=\"submit\"\r\n            [disabled]=\"!scriptForm.valid\"\r\n            class=\"mt-3 ml-3\">\r\n        {{'scriptsForm.UpdateScript' | translate}}\r\n    </button>\r\n</form>\r\n\r\n"
+module.exports = "<h2 class=\"mt-4 text-center\"\r\n    *ngIf=\"!editMode\">\r\n    {{'scriptsForm.Header' | translate}}\r\n</h2>\r\n<h2 class=\"mt-4 text-center\"\r\n    *ngIf=\"editMode\">\r\n    {{scriptName.value}}\r\n</h2>\r\n\r\n<form (ngSubmit)=\"onSubmit()\"\r\n      [formGroup]=\"scriptForm\">\r\n    <mat-tab-group dynamicHeight>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.ScriptData.Header' | translate}}\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <script-data-form [scriptForm]=\"scriptForm\"\r\n                                  [includeNote]=\"includeNote\"></script-data-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.Tags.Header' | translate}}\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <tag-form [scriptForm]=\"scriptForm\"></tag-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.Parameters.Header' | translate}}\"\r\n                 *ngIf=\"editMode\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <app-parameters-form *ngIf=\"editMode\"></app-parameters-form>\r\n            </div>\r\n        </mat-tab>\r\n\r\n        <mat-tab label=\"{{'scriptsForm.Translations.Header' | translate}}\">\r\n            <div class=\"mat-elevation-z4\">\r\n                <app-translation-form [defaultLanguage]=\"scriptDefaultLanguage.value\" \r\n                                      [scriptForm]=\"scriptForm\"></app-translation-form>\r\n            </div>\r\n        </mat-tab>\r\n    </mat-tab-group>\r\n    \r\n    <button mat-stroked-button\r\n            color=\"accent\"\r\n            type=\"submit\"\r\n            [disabled]=\"!scriptForm.valid\"\r\n            class=\"mt-3 ml-3\">\r\n        {{editMode ? ('scriptsForm.UpdateScript' | translate) : ('scriptsForm.AddScript' | translate)}}\r\n    </button>\r\n</form>\r\n\r\n"
 
 /***/ }),
 
@@ -305,6 +305,17 @@ module.exports = "<h2 class=\"mt-4 text-center\"\r\n    *ngIf=\"!editMode\">\r\n
 /***/ (function(module, exports) {
 
 module.exports = "<mat-form-field class=\"w-75 m-2\">\r\n    <mat-chip-list #chipList>\r\n        <mat-chip *ngFor=\"let tagForm of scriptTags.controls\"\r\n                  [selectable]=\"selectable\"\r\n                  [removable]=\"removable\"\r\n                  (removed)=\"remove(tagForm)\">\r\n            {{tagForm.value.name}}\r\n            <span matChipRemove\r\n                  *ngIf=\"removable\"\r\n                  class=\"fa fa-remove\"></span>\r\n        </mat-chip>\r\n        <input placeholder=\"{{'scriptsForm.Tags.AddNewTags' | translate}}\"\r\n               #tagInput\r\n               [attr.disabled]=\"scriptTags.controls.length > 5 || null\"\r\n               [formControl]=\"tagCtrl\"\r\n               [matAutocomplete]=\"auto\"\r\n               [matChipInputFor]=\"chipList\"\r\n               [matChipInputSeparatorKeyCodes]=\"separatorKeysCodes\"\r\n               [matChipInputAddOnBlur]=\"addOnBlur\"\r\n               (matChipInputTokenEnd)=\"add($event)\">\r\n    </mat-chip-list>\r\n    <mat-autocomplete #auto=\"matAutocomplete\" \r\n                      (optionSelected)=\"selected($event)\">\r\n        <mat-option *ngFor=\"let tag of filteredTags | async\"\r\n                    [value]=\"tag.name\">\r\n            {{tag.name}}\r\n        </mat-option>\r\n    </mat-autocomplete>\r\n</mat-form-field>"
+
+/***/ }),
+
+/***/ "../node_modules/raw-loader/index.js!./app/modules/script-interpreter/components/script-form/translation-form/translation-form.component.html":
+/*!*******************************************************************************************************************************************!*\
+  !*** ../node_modules/raw-loader!./app/modules/script-interpreter/components/script-form/translation-form/translation-form.component.html ***!
+  \*******************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div [formGroup]=\"translationForm\">\r\n    <mat-form-field class=\"m-2\">\r\n        <mat-label>{{'app.Languages.Language' | translate}}</mat-label>\r\n        <mat-select matNativeControl\r\n                    formControlName=\"language\"\r\n                    required\r\n                    #languagesSelector\r\n                    (selectionChange)=\"onLanguageChange($event)\">\r\n            <mat-option [value]=\"languages.english\"\r\n                        *ngIf=\"defaultLanguage != languages.english\">\r\n                {{'app.Languages.English'| translate}}\r\n            </mat-option>\r\n            <mat-option [value]=\"languages.polish\"\r\n                        *ngIf=\"defaultLanguage != languages.polish\">\r\n                {{'app.Languages.Polish'| translate}}\r\n            </mat-option>\r\n        </mat-select>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 form-medium\">\r\n        <input matInput\r\n               required\r\n               placeholder=\"{{'scriptsForm.ScriptData.Name.Header' | translate}}\"\r\n               formControlName=\"name\"\r\n               [errorStateMatcher]=\"matcher\"\r\n               autocomplete=\"off\" />\r\n        <mat-hint>{{originalName.value}}</mat-hint>\r\n        <mat-error *ngIf=\"translationName && translationName.hasError('minlength') && !translationName.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Name.MinLengthError' | translate:scriptName.errors.minlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"translationName && translationName.hasError('maxlength') && !translationName.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Name.MaxLengthError' | translate:scriptName.errors.maxlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"translationName && translationName.hasError('required')\"\r\n                   [innerHtml]=\"'scriptsForm.ScriptData.Name.RequiredError' | translate\">\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  placeholder=\"{{'scriptsForm.ScriptData.Description.Header' | translate}}\"\r\n                  formControlName=\"description\"\r\n                  required\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>{{originalDescription.value}}</mat-hint>\r\n        <mat-error *ngIf=\"translationDescription && translationDescription.hasError('minlength') && !translationDescription.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Description.MinLengthError' | translate:scriptDescription.errors.minlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"translationDescription && translationDescription.hasError('maxlength') && !translationDescription.hasError('required')\">\r\n            {{'scriptsForm.ScriptData.Description.MaxLengthError' | translate:scriptDescription.errors.maxlength}}\r\n        </mat-error>\r\n        <mat-error *ngIf=\"translationDescription && translationDescription.hasError('required')\"\r\n                   [innerHtml]=\"'scriptsForm.ScriptData.Description.RequiredError' | translate\">\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-form-field class=\"m-2 full-width\">\r\n        <textarea matInput\r\n                  placeholder=\"{{'scriptsForm.ScriptData.Note.Header' | translate}}\"\r\n                  formControlName=\"notes\"\r\n                  [errorStateMatcher]=\"matcher\"\r\n                  autocomplete=\"off\"></textarea>\r\n        <mat-hint>{{originalNotes.value}}</mat-hint>\r\n        <mat-error *ngIf=\"translationNotes && translationNotes.hasError('maxlength')\">\r\n            {{'scriptsForm.ScriptData.Note.MaxLengthError' | translate:scriptNotes.errors.maxlength}}\r\n        </mat-error>\r\n    </mat-form-field>\r\n\r\n    <mat-accordion>\r\n        <mat-expansion-panel *ngFor=\"let parameter of parameters\">\r\n            <mat-expansion-panel-header>\r\n                <mat-panel-title>\r\n                    <span [innerHtml]=\"parameter.name | html\"></span>&nbsp;- {{parameter.description}}\r\n                </mat-panel-title>\r\n            </mat-expansion-panel-header>\r\n\r\n            <mat-form-field class=\"m-2\">\r\n                <mat-label>{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}</mat-label>\r\n                <input matInput\r\n                       placeholder=\"{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}\"\r\n                       formControlName=\"groupName\"\r\n                       [errorStateMatcher]=\"matcher\"\r\n                       autocomplete=\"off\" />\r\n                <mat-hint>{{'scriptsForm.Parameters.EditMode.GroupName.Hint' | translate}}</mat-hint>\r\n                <mat-error *ngIf=\"parameterGroupName && parameterGroupName.hasError('maxlength')\">\r\n                    {{'scriptsForm.Parameters.EditMode.GroupName.MaxLengthError' | translate:parameterGroupName.errors.maxlength}}\r\n                </mat-error>\r\n            </mat-form-field>\r\n\r\n            <mat-form-field class=\"m-2 full-width\">\r\n                <textarea matInput\r\n                          placeholder=\"{{'scriptsForm.Parameters.EditMode.Description.Header' | translate}}\"\r\n                          formControlName=\"description\"\r\n                          [errorStateMatcher]=\"matcher\"\r\n                          autocomplete=\"off\"></textarea>\r\n                <mat-hint>{{'scriptsForm.Parameters.EditMode.Description.Hint' | translate}}</mat-hint>\r\n                <mat-error *ngIf=\"parameterDescription && parameterDescription.hasError('maxlength')\">\r\n                    {{'scriptsForm.Parameters.EditMode.Description.MaxLengthError' | translate:parameterDescription.errors.maxlength}}\r\n                </mat-error>\r\n            </mat-form-field>\r\n\r\n        </mat-expansion-panel>\r\n    </mat-accordion>\r\n\r\n    <div class=\"flex-column\">\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                type=\"button\"\r\n                (click)=\"onScriptTranslationSubmit()\"\r\n                [disabled]=\"!translationForm.valid\"\r\n                class=\"mt-3 ml-3\">\r\n            {{editMode ? ('scriptsForm.Translations.Update' | translate) : ('scriptsForm.Translations.Add' | translate)}}\r\n        </button>\r\n\r\n        <button mat-stroked-button\r\n                color=\"warn\"\r\n                type=\"button\"\r\n                *ngIf=\"editMode\"\r\n                (click)=\"removeScriptTranslation()\"\r\n                class=\"mt-3 ml-3\">\r\n            {{'scriptsForm.Translations.Remove' | translate}}\r\n        </button>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -3683,7 +3694,7 @@ var ParametersFormComponent = /** @class */ (function () {
     };
     ParametersFormComponent.prototype.getParameters = function (id) {
         var _this = this;
-        this.parameterService.getParameters(id).subscribe(function (parameters) {
+        this.parameterService.getParameters(id, "en").subscribe(function (parameters) {
             _this.parameters = parameters;
             _this.onParametersToShowChange();
             console.log("Parameters", _this.parameters);
@@ -3773,6 +3784,10 @@ var ParametersFormComponent = /** @class */ (function () {
         { type: _services_parameter_service__WEBPACK_IMPORTED_MODULE_4__["ParameterService"] },
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"] }
     ]; };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('defaultLanguage'),
+        __metadata("design:type", Object)
+    ], ParametersFormComponent.prototype, "defaultLanguage", void 0);
     ParametersFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-parameters-form',
@@ -3813,6 +3828,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "../node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../common/errors/app-error-state-matcher */ "./app/common/errors/app-error-state-matcher.ts");
+/* harmony import */ var _models_enums_language__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../models/enums/language */ "./app/modules/script-interpreter/models/enums/language.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3825,8 +3841,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ScriptDataFormComponent = /** @class */ (function () {
     function ScriptDataFormComponent() {
+        this.languages = _models_enums_language__WEBPACK_IMPORTED_MODULE_3__["Language"];
         this.matcher = new _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_2__["AppErrorStateMatcher"]();
     }
     Object.defineProperty(ScriptDataFormComponent.prototype, "scriptName", {
@@ -3867,6 +3885,13 @@ var ScriptDataFormComponent = /** @class */ (function () {
     Object.defineProperty(ScriptDataFormComponent.prototype, "scriptNotes", {
         get: function () {
             return this.scriptForm.get('notes');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ScriptDataFormComponent.prototype, "scriptDefaultLanguage", {
+        get: function () {
+            return this.scriptForm.get('defaultLanguage');
         },
         enumerable: true,
         configurable: true
@@ -3984,6 +4009,7 @@ var ScriptFormComponent = /** @class */ (function () {
             groupName: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('Other'),
             description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(25), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(500)]),
             notes: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(1000)),
+            defaultLanguage: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('0', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
             tags: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormArray"]([])
         });
         this.parametersToShow = 'dataParameters';
@@ -4010,6 +4036,13 @@ var ScriptFormComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(ScriptFormComponent.prototype, "scriptDefaultLanguage", {
+        get: function () {
+            return this.scriptForm.get('defaultLanguage');
+        },
+        enumerable: true,
+        configurable: true
+    });
     ScriptFormComponent.prototype.ngOnInit = function () {
         var id;
         var sub = this.route.params.subscribe(function (params) {
@@ -4023,7 +4056,7 @@ var ScriptFormComponent = /** @class */ (function () {
     };
     ScriptFormComponent.prototype.getScript = function (id) {
         var _this = this;
-        this.scriptService.getScript(id).subscribe(function (script) {
+        this.scriptService.getScript(id, "en").subscribe(function (script) {
             console.log("Script", script);
             _this.includeNote = script.notes != null && script.notes != '';
             _this.scriptForm.patchValue(script);
@@ -4274,6 +4307,248 @@ var TagFormComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./app/modules/script-interpreter/components/script-form/translation-form/translation-form.component.scss":
+/*!****************************************************************************************************************!*\
+  !*** ./app/modules/script-interpreter/components/script-form/translation-form/translation-form.component.scss ***!
+  \****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".form-medium {\n  min-width: 150px;\n  max-width: 340px;\n  width: 100%;\n}\n\n.full-width {\n  width: 98%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9tb2R1bGVzL3NjcmlwdC1pbnRlcnByZXRlci9jb21wb25lbnRzL3NjcmlwdC1mb3JtL3RyYW5zbGF0aW9uLWZvcm0vQzpcXEtQS19DYWxjc1xcQnVpbGRfSVRfV2ViXFxDbGllbnRBcHAvYXBwXFxtb2R1bGVzXFxzY3JpcHQtaW50ZXJwcmV0ZXJcXGNvbXBvbmVudHNcXHNjcmlwdC1mb3JtXFx0cmFuc2xhdGlvbi1mb3JtXFx0cmFuc2xhdGlvbi1mb3JtLmNvbXBvbmVudC5zY3NzIiwiYXBwL21vZHVsZXMvc2NyaXB0LWludGVycHJldGVyL2NvbXBvbmVudHMvc2NyaXB0LWZvcm0vdHJhbnNsYXRpb24tZm9ybS90cmFuc2xhdGlvbi1mb3JtLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZ0JBQUE7RUFDQSxnQkFBQTtFQUNBLFdBQUE7QUNDSjs7QURFQTtFQUNJLFVBQUE7QUNDSiIsImZpbGUiOiJhcHAvbW9kdWxlcy9zY3JpcHQtaW50ZXJwcmV0ZXIvY29tcG9uZW50cy9zY3JpcHQtZm9ybS90cmFuc2xhdGlvbi1mb3JtL3RyYW5zbGF0aW9uLWZvcm0uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZm9ybS1tZWRpdW0ge1xyXG4gICAgbWluLXdpZHRoOiAxNTBweDtcclxuICAgIG1heC13aWR0aDogMzQwcHg7XHJcbiAgICB3aWR0aDogMTAwJTtcclxufVxyXG5cclxuLmZ1bGwtd2lkdGgge1xyXG4gICAgd2lkdGg6IDk4JTtcclxufVxyXG4iLCIuZm9ybS1tZWRpdW0ge1xuICBtaW4td2lkdGg6IDE1MHB4O1xuICBtYXgtd2lkdGg6IDM0MHB4O1xuICB3aWR0aDogMTAwJTtcbn1cblxuLmZ1bGwtd2lkdGgge1xuICB3aWR0aDogOTglO1xufSJdfQ== */"
+
+/***/ }),
+
+/***/ "./app/modules/script-interpreter/components/script-form/translation-form/translation-form.component.ts":
+/*!**************************************************************************************************************!*\
+  !*** ./app/modules/script-interpreter/components/script-form/translation-form/translation-form.component.ts ***!
+  \**************************************************************************************************************/
+/*! exports provided: TranslationFormComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TranslationFormComponent", function() { return TranslationFormComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "../node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../common/errors/app-error-state-matcher */ "./app/common/errors/app-error-state-matcher.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "../node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _models_enums_language__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../models/enums/language */ "./app/modules/script-interpreter/models/enums/language.ts");
+/* harmony import */ var _services_translations_script_translation_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/translations/script-translation.service */ "./app/modules/script-interpreter/services/translations/script-translation.service.ts");
+/* harmony import */ var _services_parameter_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/parameter.service */ "./app/modules/script-interpreter/services/parameter.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var TranslationFormComponent = /** @class */ (function () {
+    function TranslationFormComponent(scriptTranslationService, 
+    // private parameterTranslationService: ParameterTranslationService,
+    parameterService, route) {
+        this.scriptTranslationService = scriptTranslationService;
+        this.parameterService = parameterService;
+        this.route = route;
+        this.translationForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('0'),
+            scriptId: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
+            language: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('0', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(100)),
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(500)),
+            notes: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(1000))
+        });
+        this.languages = _models_enums_language__WEBPACK_IMPORTED_MODULE_4__["Language"];
+        this.matcher = new _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_2__["AppErrorStateMatcher"]();
+    }
+    Object.defineProperty(TranslationFormComponent.prototype, "originalName", {
+        get: function () {
+            return this.scriptForm.get('name');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslationFormComponent.prototype, "originalDescription", {
+        get: function () {
+            return this.scriptForm.get('description');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslationFormComponent.prototype, "originalNotes", {
+        get: function () {
+            return this.scriptForm.get('notes');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslationFormComponent.prototype, "originalDefaultLanguage", {
+        get: function () {
+            return this.scriptForm.get('defaultLanguage');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslationFormComponent.prototype, "translationId", {
+        get: function () {
+            return this.translationForm.get('id');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslationFormComponent.prototype, "translationScriptId", {
+        get: function () {
+            return this.translationForm.get('scriptId');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslationFormComponent.prototype, "translationName", {
+        get: function () {
+            return this.translationForm.get('name');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslationFormComponent.prototype, "translationDescription", {
+        get: function () {
+            return this.translationForm.get('description');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslationFormComponent.prototype, "translationNotes", {
+        get: function () {
+            return this.translationForm.get('notes');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TranslationFormComponent.prototype, "translationLanguage", {
+        get: function () {
+            return this.translationForm.get('language');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TranslationFormComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params.subscribe(function (params) {
+            _this.scriptId = +params['id'];
+        });
+        this.translationScriptId.setValue(this.scriptId);
+        if (this.defaultLanguage == this.languages.english)
+            this.translationLanguage.setValue(this.languages.polish);
+        else
+            this.translationLanguage.setValue(this.languages.english);
+        this.getScriptTranslation(this.translationLanguage.value);
+        this.getParameters();
+        this.getParametersTranslations(this.translationLanguage.value);
+    };
+    TranslationFormComponent.prototype.onLanguageChange = function ($event) {
+        this.getScriptTranslation($event.value);
+    };
+    TranslationFormComponent.prototype.getScriptTranslation = function (language) {
+        var _this = this;
+        this.scriptTranslationService.getScriptTranslation(this.scriptId, language)
+            .subscribe(function (translation) {
+            if (translation) {
+                _this.translationForm.patchValue(translation);
+                _this.editMode = true;
+            }
+            else
+                _this.editMode = false;
+        });
+    };
+    TranslationFormComponent.prototype.getParametersTranslations = function (language) {
+        //this.parameterTranslationService
+    };
+    TranslationFormComponent.prototype.onScriptTranslationSubmit = function () {
+        var _this = this;
+        if (!this.editMode)
+            this.scriptTranslationService.create(this.translationForm.value)
+                .subscribe(function (scriptTranslation) {
+                _this.translationForm.patchValue(scriptTranslation);
+                _this.editMode = true;
+            }, function (error) { throw error; });
+        else
+            this.scriptTranslationService.update(this.translationForm.value)
+                .subscribe(function (scriptTranslation) { return _this.translationForm.patchValue(scriptTranslation); });
+    };
+    TranslationFormComponent.prototype.removeScriptTranslation = function () {
+        var _this = this;
+        var selectedLanguage = this.translationLanguage.value;
+        this.scriptTranslationService.remove(this.translationId.value)
+            .subscribe(function (scriptTranslation) {
+            _this.translationForm.reset();
+            _this.editMode = false;
+            _this.translationScriptId.setValue(_this.scriptId);
+            _this.translationLanguage.setValue(selectedLanguage);
+        });
+    };
+    TranslationFormComponent.prototype.getParameters = function () {
+        var _this = this;
+        this.parameterService.getParameters(this.scriptId, this.originalDefaultLanguage.value).subscribe(function (parameters) {
+            _this.parameters = parameters;
+        }, function (error) { return console.error(error); });
+    };
+    TranslationFormComponent.ctorParameters = function () { return [
+        { type: _services_translations_script_translation_service__WEBPACK_IMPORTED_MODULE_5__["ScriptTranslationService"] },
+        { type: _services_parameter_service__WEBPACK_IMPORTED_MODULE_6__["ParameterService"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] }
+    ]; };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('defaultLanguage'),
+        __metadata("design:type", Number)
+    ], TranslationFormComponent.prototype, "defaultLanguage", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('scriptForm'),
+        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"])
+    ], TranslationFormComponent.prototype, "scriptForm", void 0);
+    TranslationFormComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-translation-form',
+            template: __webpack_require__(/*! raw-loader!./translation-form.component.html */ "../node_modules/raw-loader/index.js!./app/modules/script-interpreter/components/script-form/translation-form/translation-form.component.html"),
+            styles: [__webpack_require__(/*! ./translation-form.component.scss */ "./app/modules/script-interpreter/components/script-form/translation-form/translation-form.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_services_translations_script_translation_service__WEBPACK_IMPORTED_MODULE_5__["ScriptTranslationService"],
+            _services_parameter_service__WEBPACK_IMPORTED_MODULE_6__["ParameterService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
+    ], TranslationFormComponent);
+    return TranslationFormComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./app/modules/script-interpreter/models/enums/language.ts":
+/*!*****************************************************************!*\
+  !*** ./app/modules/script-interpreter/models/enums/language.ts ***!
+  \*****************************************************************/
+/*! exports provided: Language */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Language", function() { return Language; });
+var Language;
+(function (Language) {
+    Language[Language["english"] = 0] = "english";
+    Language[Language["polish"] = 1] = "polish";
+})(Language || (Language = {}));
+
+
+/***/ }),
+
 /***/ "./app/modules/script-interpreter/models/enums/parameter-filter.ts":
 /*!*************************************************************************!*\
   !*** ./app/modules/script-interpreter/models/enums/parameter-filter.ts ***!
@@ -4511,26 +4786,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_script_calculator_parameter_results_parameter_result_parameter_result_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/script-calculator/parameter-results/parameter-result/parameter-result.component */ "./app/modules/script-interpreter/components/script-calculator/parameter-results/parameter-result/parameter-result.component.ts");
 /* harmony import */ var _components_script_form_parameters_form_data_parameter_form_value_options_form_value_options_form_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/script-form/parameters-form/data-parameter-form/value-options-form/value-options-form.component */ "./app/modules/script-interpreter/components/script-form/parameters-form/data-parameter-form/value-options-form/value-options-form.component.ts");
 /* harmony import */ var _components_script_form_script_data_form_script_data_form_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/script-form/script-data-form/script-data-form.component */ "./app/modules/script-interpreter/components/script-form/script-data-form/script-data-form.component.ts");
-/* harmony import */ var _components_script_calculator_parameter_inputs_checkbox_parameter_checkbox_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/script-calculator/parameter-inputs/checkbox/parameter-checkbox.component */ "./app/modules/script-interpreter/components/script-calculator/parameter-inputs/checkbox/parameter-checkbox.component.ts");
-/* harmony import */ var _components_script_form_parameters_form_data_parameter_form_figure_parameter_form_figure_parameter_form_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/script-form/parameters-form/data-parameter-form/figure-parameter-form/figure-parameter-form.component */ "./app/modules/script-interpreter/components/script-form/parameters-form/data-parameter-form/figure-parameter-form/figure-parameter-form.component.ts");
-/* harmony import */ var _components_script_calculator_parameter_inputs_figures_parameter_figures_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/script-calculator/parameter-inputs/figures/parameter-figures.component */ "./app/modules/script-interpreter/components/script-calculator/parameter-inputs/figures/parameter-figures.component.ts");
-/* harmony import */ var _components_script_form_parameters_form_data_parameter_form_existing_figures_dialog_existing_figures_dialog_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/script-form/parameters-form/data-parameter-form/existing-figures-dialog/existing-figures-dialog.component */ "./app/modules/script-interpreter/components/script-form/parameters-form/data-parameter-form/existing-figures-dialog/existing-figures-dialog.component.ts");
-/* harmony import */ var _services_script_service__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./services/script.service */ "./app/modules/script-interpreter/services/script.service.ts");
-/* harmony import */ var _services_tag_service__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./services/tag.service */ "./app/modules/script-interpreter/services/tag.service.ts");
-/* harmony import */ var _services_calculation_service__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./services/calculation.service */ "./app/modules/script-interpreter/services/calculation.service.ts");
-/* harmony import */ var _services_parameter_service__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./services/parameter.service */ "./app/modules/script-interpreter/services/parameter.service.ts");
-/* harmony import */ var _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./../../common/errors/app-error-handler */ "./app/common/errors/app-error-handler.ts");
-/* harmony import */ var _pipes_module_pipes_module__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../pipes-module/pipes.module */ "./app/modules/pipes-module/pipes.module.ts");
-/* harmony import */ var _md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../md-components-module/md-components.module */ "./app/modules/md-components-module/md-components.module.ts");
-/* harmony import */ var _services_figure_service__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./services/figure.service */ "./app/modules/script-interpreter/services/figure.service.ts");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! @ngx-translate/core */ "../node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../../services/translation.service */ "./app/services/translation.service.ts");
+/* harmony import */ var _components_script_form_translation_form_translation_form_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/script-form/translation-form/translation-form.component */ "./app/modules/script-interpreter/components/script-form/translation-form/translation-form.component.ts");
+/* harmony import */ var _components_script_calculator_parameter_inputs_checkbox_parameter_checkbox_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/script-calculator/parameter-inputs/checkbox/parameter-checkbox.component */ "./app/modules/script-interpreter/components/script-calculator/parameter-inputs/checkbox/parameter-checkbox.component.ts");
+/* harmony import */ var _components_script_form_parameters_form_data_parameter_form_figure_parameter_form_figure_parameter_form_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/script-form/parameters-form/data-parameter-form/figure-parameter-form/figure-parameter-form.component */ "./app/modules/script-interpreter/components/script-form/parameters-form/data-parameter-form/figure-parameter-form/figure-parameter-form.component.ts");
+/* harmony import */ var _components_script_calculator_parameter_inputs_figures_parameter_figures_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/script-calculator/parameter-inputs/figures/parameter-figures.component */ "./app/modules/script-interpreter/components/script-calculator/parameter-inputs/figures/parameter-figures.component.ts");
+/* harmony import */ var _components_script_form_parameters_form_data_parameter_form_existing_figures_dialog_existing_figures_dialog_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/script-form/parameters-form/data-parameter-form/existing-figures-dialog/existing-figures-dialog.component */ "./app/modules/script-interpreter/components/script-form/parameters-form/data-parameter-form/existing-figures-dialog/existing-figures-dialog.component.ts");
+/* harmony import */ var _services_script_service__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./services/script.service */ "./app/modules/script-interpreter/services/script.service.ts");
+/* harmony import */ var _services_tag_service__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./services/tag.service */ "./app/modules/script-interpreter/services/tag.service.ts");
+/* harmony import */ var _services_calculation_service__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./services/calculation.service */ "./app/modules/script-interpreter/services/calculation.service.ts");
+/* harmony import */ var _services_parameter_service__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./services/parameter.service */ "./app/modules/script-interpreter/services/parameter.service.ts");
+/* harmony import */ var _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./../../common/errors/app-error-handler */ "./app/common/errors/app-error-handler.ts");
+/* harmony import */ var _pipes_module_pipes_module__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../pipes-module/pipes.module */ "./app/modules/pipes-module/pipes.module.ts");
+/* harmony import */ var _md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../md-components-module/md-components.module */ "./app/modules/md-components-module/md-components.module.ts");
+/* harmony import */ var _services_figure_service__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./services/figure.service */ "./app/modules/script-interpreter/services/figure.service.ts");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @ngx-translate/core */ "../node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../../services/translation.service */ "./app/services/translation.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -4586,41 +4863,42 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 _components_script_calculator_parameter_inputs_autocomplete_parameter_autocomplete_component__WEBPACK_IMPORTED_MODULE_15__["ParameterAutocompleteComponent"],
                 _components_script_calculator_parameter_inputs_radio_parameter_radio_component__WEBPACK_IMPORTED_MODULE_16__["ParameterRadioComponent"],
                 _components_script_calculator_parameter_inputs_parameters_form_parameter_form_component__WEBPACK_IMPORTED_MODULE_17__["ParameterFormComponent"],
+                _components_script_form_translation_form_translation_form_component__WEBPACK_IMPORTED_MODULE_21__["TranslationFormComponent"],
                 _components_script_calculator_parameter_results_parameter_result_parameter_result_component__WEBPACK_IMPORTED_MODULE_18__["ParameterResultComponent"],
-                _components_script_calculator_parameter_inputs_checkbox_parameter_checkbox_component__WEBPACK_IMPORTED_MODULE_21__["ParameterCheckboxComponent"],
-                _components_script_form_parameters_form_data_parameter_form_figure_parameter_form_figure_parameter_form_component__WEBPACK_IMPORTED_MODULE_22__["FigureParameterFormComponent"],
-                _components_script_calculator_parameter_inputs_figures_parameter_figures_component__WEBPACK_IMPORTED_MODULE_23__["ParameterFiguresComponent"],
-                _components_script_form_parameters_form_data_parameter_form_existing_figures_dialog_existing_figures_dialog_component__WEBPACK_IMPORTED_MODULE_24__["ExistingFiguresDialogComponent"]
+                _components_script_calculator_parameter_inputs_checkbox_parameter_checkbox_component__WEBPACK_IMPORTED_MODULE_22__["ParameterCheckboxComponent"],
+                _components_script_form_parameters_form_data_parameter_form_figure_parameter_form_figure_parameter_form_component__WEBPACK_IMPORTED_MODULE_23__["FigureParameterFormComponent"],
+                _components_script_calculator_parameter_inputs_figures_parameter_figures_component__WEBPACK_IMPORTED_MODULE_24__["ParameterFiguresComponent"],
+                _components_script_form_parameters_form_data_parameter_form_existing_figures_dialog_existing_figures_dialog_component__WEBPACK_IMPORTED_MODULE_25__["ExistingFiguresDialogComponent"]
             ],
             imports: [
-                _pipes_module_pipes_module__WEBPACK_IMPORTED_MODULE_30__["PipesModule"],
+                _pipes_module_pipes_module__WEBPACK_IMPORTED_MODULE_31__["PipesModule"],
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"],
-                _md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_31__["MdComponentsModule"],
-                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_33__["TranslateModule"].forRoot({
+                _md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_32__["MdComponentsModule"],
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_34__["TranslateModule"].forRoot({
                     loader: {
-                        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_33__["TranslateLoader"],
-                        useClass: _services_translation_service__WEBPACK_IMPORTED_MODULE_34__["TranslateLanguageLoader"]
+                        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_34__["TranslateLoader"],
+                        useClass: _services_translation_service__WEBPACK_IMPORTED_MODULE_35__["TranslateLanguageLoader"]
                     }
                 })
             ],
             entryComponents: [
-                _components_script_form_parameters_form_data_parameter_form_existing_figures_dialog_existing_figures_dialog_component__WEBPACK_IMPORTED_MODULE_24__["ExistingFiguresDialogComponent"]
+                _components_script_form_parameters_form_data_parameter_form_existing_figures_dialog_existing_figures_dialog_component__WEBPACK_IMPORTED_MODULE_25__["ExistingFiguresDialogComponent"]
             ],
             exports: [
                 _components_script_cards_script_cards_component__WEBPACK_IMPORTED_MODULE_11__["ScriptCardsComponent"]
             ],
             providers: [
-                _services_script_service__WEBPACK_IMPORTED_MODULE_25__["ScriptService"],
-                _services_tag_service__WEBPACK_IMPORTED_MODULE_26__["TagService"],
-                _services_calculation_service__WEBPACK_IMPORTED_MODULE_27__["CalculationService"],
-                _services_parameter_service__WEBPACK_IMPORTED_MODULE_28__["ParameterService"],
-                _services_figure_service__WEBPACK_IMPORTED_MODULE_32__["FigureService"],
-                { provide: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ErrorHandler"], useClass: _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_29__["AppErrorHandler"] }
+                _services_script_service__WEBPACK_IMPORTED_MODULE_26__["ScriptService"],
+                _services_tag_service__WEBPACK_IMPORTED_MODULE_27__["TagService"],
+                _services_calculation_service__WEBPACK_IMPORTED_MODULE_28__["CalculationService"],
+                _services_parameter_service__WEBPACK_IMPORTED_MODULE_29__["ParameterService"],
+                _services_figure_service__WEBPACK_IMPORTED_MODULE_33__["FigureService"],
+                { provide: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ErrorHandler"], useClass: _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_30__["AppErrorHandler"] }
             ]
         })
     ], ScriptInterpreterModule);
@@ -4757,17 +5035,17 @@ var ParameterService = /** @class */ (function () {
         this.http = http;
         this.translationService = translationService;
     }
-    ParameterService.prototype.delete = function (scriptId, parameterId) {
-        return this.http.delete('/api/scripts/' + scriptId + '/parameters/' + parameterId);
-    };
-    ParameterService.prototype.getParameters = function (scriptId) {
-        return this.http.get('/api/scripts/' + scriptId + '/parameters/' + this.translationService.getCurrentLanguage());
+    ParameterService.prototype.getParameters = function (scriptId, language) {
+        return this.http.get('/api/scripts/' + scriptId + '/parameters/' + (language || this.translationService.getCurrentLanguage()));
     };
     ParameterService.prototype.create = function (scriptId, parameter) {
         return this.http.post('/api/scripts/' + scriptId + '/parameters', parameter);
     };
     ParameterService.prototype.update = function (scriptId, parameter) {
         return this.http.put('/api/scripts/' + scriptId + '/parameters/' + parameter.id, parameter);
+    };
+    ParameterService.prototype.delete = function (scriptId, parameterId) {
+        return this.http.delete('/api/scripts/' + scriptId + '/parameters/' + parameterId);
     };
     ParameterService.ctorParameters = function () { return [
         { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] },
@@ -4825,16 +5103,16 @@ var ScriptService = /** @class */ (function () {
         this.http = http;
         this.translationService = translationService;
     }
-    ScriptService.prototype.getScripts = function () {
-        return this.http.get('/api/scripts/' + this.translationService.getCurrentLanguage())
+    ScriptService.prototype.getScripts = function (language) {
+        return this.http.get('/api/scripts/' + (language || this.translationService.getCurrentLanguage()))
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             if (error.status === 404)
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
         }));
     };
-    ScriptService.prototype.getScript = function (id) {
-        return this.http.get('/api/scripts/' + id + '/' + this.translationService.getCurrentLanguage())
+    ScriptService.prototype.getScript = function (id, language) {
+        return this.http.get('/api/scripts/' + id + '/' + (language || this.translationService.getCurrentLanguage()))
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             if (error.status === 404)
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
@@ -4929,6 +5207,98 @@ var TagService = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], TagService);
     return TagService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./app/modules/script-interpreter/services/translations/script-translation.service.ts":
+/*!********************************************************************************************!*\
+  !*** ./app/modules/script-interpreter/services/translations/script-translation.service.ts ***!
+  \********************************************************************************************/
+/*! exports provided: ScriptTranslationService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScriptTranslationService", function() { return ScriptTranslationService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "../node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../services/translation.service */ "./app/services/translation.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "../node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "../node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../common/errors/not-found-error */ "./app/common/errors/not-found-error.ts");
+/* harmony import */ var _common_errors_app_error__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../common/errors/app-error */ "./app/common/errors/app-error.ts");
+/* harmony import */ var _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../common/errors/bad-input-error */ "./app/common/errors/bad-input-error.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+var ScriptTranslationService = /** @class */ (function () {
+    function ScriptTranslationService(http, translationService) {
+        this.http = http;
+        this.translationService = translationService;
+    }
+    ScriptTranslationService.prototype.getScriptTranslation = function (scriptId, language) {
+        return this.http.get('/api/scriptsTranslations/' + scriptId + '/' + language)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            if (error.status === 404)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_6__["AppError"](error));
+        }));
+    };
+    ScriptTranslationService.prototype.create = function (scriptTranslation) {
+        return this.http.post('/api/scriptsTranslations', scriptTranslation)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            if (error.status === 400)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_7__["BadInputError"](error));
+            if (error.status === 404)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_6__["AppError"](error));
+        }));
+    };
+    ScriptTranslationService.prototype.update = function (scriptTranslation) {
+        return this.http.put('/api/scriptsTranslations/' + scriptTranslation.id, scriptTranslation)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            if (error.status === 400)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_7__["BadInputError"](error));
+            if (error.status === 404)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_6__["AppError"](error));
+        }));
+    };
+    ScriptTranslationService.prototype.remove = function (id) {
+        return this.http.delete('/api/scriptsTranslations/' + id)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            if (error.status === 404)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_6__["AppError"](error));
+        }));
+    };
+    ScriptTranslationService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] },
+        { type: _services_translation_service__WEBPACK_IMPORTED_MODULE_2__["TranslationService"] }
+    ]; };
+    ScriptTranslationService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _services_translation_service__WEBPACK_IMPORTED_MODULE_2__["TranslationService"]])
+    ], ScriptTranslationService);
+    return ScriptTranslationService;
 }());
 
 
@@ -5219,9 +5589,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var TranslationService = /** @class */ (function () {
     function TranslationService(translate) {
         this.translate = translate;
+        this.languages = ['en', 'pl'];
         this.onLanguageChanged = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
         this.languageChanged$ = this.onLanguageChanged.asObservable();
-        this.addLanguages(['en', 'pl']);
+        this.addLanguages(this.languages);
         this.setDefaultLanguage('en');
     }
     TranslationService.prototype.addLanguages = function (lang) {
@@ -5271,6 +5642,7 @@ var TranslationService = /** @class */ (function () {
     TranslationService.prototype.getTranslationAsync = function (key, interpolateParams) {
         return this.translate.get(key, interpolateParams);
     };
+    TranslationService.LanguageCodes = [{ 'en': 0 }, { 'pl': 1 }];
     TranslationService.ctorParameters = function () { return [
         { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__["TranslateService"] }
     ]; };
@@ -5349,7 +5721,7 @@ var Utilities = /** @class */ (function () {
 /*! exports provided: app, carousel, about, deadLoadsModule, snowLoadsModule, scriptsForm, scriptCard, scriptCalculator, default */
 /***/ (function(module) {
 
-module.exports = {"app":{"Home":"Home","NewScript":"New script","About":"About project","Loads":{"Header":"Loads","DeadLoads":"Dead Loads","SnowLoads":"Snow Loads"},"Languages":{"English":"English","Polish":"Polish"},"Search":"Search"},"carousel":{"Next":"Next","Previous":"Previous","SnowLoads":{"Header":"Snow Loads","Description":"Check out calculators for snow loads."},"DeadLoads":{"Header":"Dead Loads","Description":"Check out calculators for dead loads."},"About":{"Header":"About project","Description":"Read more about the project and the author of this site."}},"about":{"Overall":{"Header":"Overall informations","Description":"The site contains a large number of calculators which based mostly on Eurocodes with Polish national annexes."},"SnowLoad":{"Header":"Snow load calculators","Description":"Mostly based on <i>Eurocode 1 - Actions on structures Part 1-3: General actions - Snow loads</i> with Polish national annex. <br/>This calculator contains all possible design situations and roof types which are described in the document. <br/>This calculators shouldn't be used for or doesn't have informations how to calculate:","List":["sites at altitudes above 1 500m,","impact snow loads resulting from sliding off or falling from a higher roof,","additional wind loads which could result from changes in shape or size of the construction works due to the presence of snow or the accretion of ice,","loads in areas where snow is present all year round,","ice loading,","lateral loading due to snow (e.g. lateral loads exerted by drifts),","snow loads on bridges."]},"DeadLoad":{"Header":"Dead load calculator","Description":"Mostly based on <i>Eurocode 1 - Actions on structures Part 1-1: General actions - Densities, self-weight, imposed loads for buildings</i> with Polish national annex and on Polish standard document <i>PN-82/B-02001 Building loads - permanent loads</i> which contains informations about the density of the building materials. <br/>This calculator allows us to get the information about the weight of all layers in the structure."},"Author":{"Header":"Author: Konrad Kania","Description":"I graduated at the Technical University in ��d� at the faculty of Civil Engineering. <br/>Currently, I also finished postgraduate studies at Polish Academy of Science and work for building company as a programmer since the beginning of March 2017. </br>I treat building designing with great passion the same as the programming. <br/>This way of doing things and possibilities which comes with those two branches bring me an idea to make something for overall usage. <br/>I started working on this site since September 2018 and I hope that there will be only more and better content available for everyone."}},"deadLoadsModule":{"Header":"Dead loads calculator","Categories":"Categories","Subcategories":"Subcategories","Name":"Name","MinimumDensity":"Minimum<br/>Density","MaximumDensity":"Maximum<br/>Density","Unit":"Unit","Add":"Add","Category":"Category","Length":"Length [cm]","Width":"Width [cm]","Thickness":"Thickness [cm]","Remove":"Remove","Total":"Total"},"snowLoadsModule":{"Header":"Snow loads calculators"},"scriptsForm":{"Header":"Script","AddScript":"Add Script","UpdateScript":"Update Script","ScriptData":{"Header":"Script data","Name":{"Header":"Name","Hint":"Script name","MinLengthError":"Name should be minimum {{requiredLength}} characters long.","MaxLengthError":"Name should be maximum {{requiredLength}} characters long.","RequiredError":" Name is <strong>required</strong>."},"Author":{"Header":"Author","Hint":"Script author","MaxLengthError":"Author name should be maximum {{requiredLength}} characters long."},"Document":{"Header":"Document","Hint":"Accoording to","MaxLengthError":"Document name should be maximum {{requiredLength}} characters long."},"Group":{"Header":"Group","Hint":"Category for a script","Statica":"Statica","Loads":"Loads","Concrete":"Concrete","Steel":"Steel","Timber":"Timber","Soils":"Soils","Other":"Other"},"Description":{"Header":"Description","Hint":"Description for script","MinLengthError":"Description should be minimum {{requiredLength}} characters long.","MaxLengthError":"Description should be maximum {{requiredLength}} characters long.","RequiredError":" Description is <strong>required</strong>."},"IncludeNote":"Include Note","Note":{"Header":"Note","Hint":"Additional notes for script","MaxLengthError":"Note should be maximum {{requiredLength}} characters long."}},"Tags":{"Header":"Tags","AddNewTags":"Add new tags"},"Parameters":{"Header":"Parameters","ParametersFilterLabel":"Select parameters","AllParameters":"All parameters","DataParameters":"Data parameters","StaticParameters":"Static parameters","CalculationParameters":"Calculation parameters","Edit":"Edit","Remove":"Remove","NewParameter":"New parameter","EditMode":{"ParameterTypePicker":"Pick parameter type","ParameterTypes":{"Editable":"Editable","Static":"Static","Calculable":"Calculable","Visible":"Visible","Important":"Important","Optional":"Optional"},"Name":{"Header":"Name","Hint":"Parameter name","MaxLengthError":"Name should be maximum {{requiredLength}} characters long.","RequiredError":"Name is <strong>required</strong>."},"Unit":{"Header":"Unit","Hint":"Parameter unit","MaxLengthError":"Unit should be maximum {{requiredLength}} characters long."},"Document":{"Header":"Document","Hint":"Parameter according to","MaxLengthError":"Document name should be maximum {{requiredLength}} characters long."},"ValueType":{"Header":"Value Type","Hint":"Parameter value type","Number":"Number","Text":"Text"},"GroupName":{"Header":"Group name","Hint":"Group name for parameter","MaxLengthError":"Group name should be maximum {{requiredLength}} characters long."},"Value":{"Header":"Value","Hint":"Value for parameter","MaxLengthError":"Value should be maximum {{requiredLength}} characters long."},"Description":{"Header":"Description","Hint":"Description for parameter","MaxLengthError":"Description should be maximum {{requiredLength}} characters long."},"VisibilityValidator":{"Header":"Visibility validator","Hint":"Visibility validator","MaxLengthError":"Visibility validator should be maximum {{requiredLength}} characters long."},"DataValidator":{"Header":"Data validator","Hint":"Data validator","MaxLengthError":"Data validator should be maximum {{requiredLength}} characters long."},"Update":"Update"},"Add":"Add","ValueOptions":{"Header":"Value Options","Hint":"Provide some selectable data","None":"None","AllowAny":"Allow any values","Boolean":"Is boolean","Name":{"Header":"Name","Hint":"Name"},"Value":{"Header":"Value","Hint":"Value"},"Description":{"Header":"Description","Hint":"Description for value option"},"Remove":"Remove","Add":"Add"},"Figures":{"Header":"Pictures","Hint":"Provide additional pictures for parameter","Remove":"Remove"}},"Translations":{"Header":"Translations"}},"scriptCard":{"Calculate":"Calculate","Edit":"Edit","Delete":"Delete"},"scriptCalculator":{"StaticData":"Static data","Calculate":"Calculate","Results":"Results","Controls":{"Default":"Default","True":"True","Figures":"Pictures"}}};
+module.exports = {"app":{"Home":"Home","NewScript":"New script","About":"About project","Loads":{"Header":"Loads","DeadLoads":"Dead Loads","SnowLoads":"Snow Loads"},"Languages":{"Language":"Language","English":"English","Polish":"Polish"},"Search":"Search"},"carousel":{"Next":"Next","Previous":"Previous","SnowLoads":{"Header":"Snow Loads","Description":"Check out calculators for snow loads."},"DeadLoads":{"Header":"Dead Loads","Description":"Check out calculators for dead loads."},"About":{"Header":"About project","Description":"Read more about the project and the author of this site."}},"about":{"Overall":{"Header":"Overall informations","Description":"The site contains a large number of calculators which based mostly on Eurocodes with Polish national annexes."},"SnowLoad":{"Header":"Snow load calculators","Description":"Mostly based on <i>Eurocode 1 - Actions on structures Part 1-3: General actions - Snow loads</i> with Polish national annex. <br/>This calculator contains all possible design situations and roof types which are described in the document. <br/>This calculators shouldn't be used for or doesn't have informations how to calculate:","List":["sites at altitudes above 1 500m,","impact snow loads resulting from sliding off or falling from a higher roof,","additional wind loads which could result from changes in shape or size of the construction works due to the presence of snow or the accretion of ice,","loads in areas where snow is present all year round,","ice loading,","lateral loading due to snow (e.g. lateral loads exerted by drifts),","snow loads on bridges."]},"DeadLoad":{"Header":"Dead load calculator","Description":"Mostly based on <i>Eurocode 1 - Actions on structures Part 1-1: General actions - Densities, self-weight, imposed loads for buildings</i> with Polish national annex and on Polish standard document <i>PN-82/B-02001 Building loads - permanent loads</i> which contains informations about the density of the building materials. <br/>This calculator allows us to get the information about the weight of all layers in the structure."},"Author":{"Header":"Author: Konrad Kania","Description":"I graduated at the Technical University in ��d� at the faculty of Civil Engineering. <br/>Currently, I also finished postgraduate studies at Polish Academy of Science and work for building company as a programmer since the beginning of March 2017. </br>I treat building designing with great passion the same as the programming. <br/>This way of doing things and possibilities which comes with those two branches bring me an idea to make something for overall usage. <br/>I started working on this site since September 2018 and I hope that there will be only more and better content available for everyone."}},"deadLoadsModule":{"Header":"Dead loads calculator","Categories":"Categories","Subcategories":"Subcategories","Name":"Name","MinimumDensity":"Minimum<br/>Density","MaximumDensity":"Maximum<br/>Density","Unit":"Unit","Add":"Add","Category":"Category","Length":"Length [cm]","Width":"Width [cm]","Thickness":"Thickness [cm]","Remove":"Remove","Total":"Total"},"snowLoadsModule":{"Header":"Snow loads calculators"},"scriptsForm":{"Header":"Script","AddScript":"Add Script","UpdateScript":"Update Script","ScriptData":{"Header":"Script data","Name":{"Header":"Name","Hint":"Script name","MinLengthError":"Name should be minimum {{requiredLength}} characters long.","MaxLengthError":"Name should be maximum {{requiredLength}} characters long.","RequiredError":" Name is <strong>required</strong>."},"Author":{"Header":"Author","Hint":"Script author","MaxLengthError":"Author name should be maximum {{requiredLength}} characters long."},"Document":{"Header":"Document","Hint":"Accoording to","MaxLengthError":"Document name should be maximum {{requiredLength}} characters long."},"Group":{"Header":"Group","Hint":"Category for a script","Statica":"Statica","Loads":"Loads","Concrete":"Concrete","Steel":"Steel","Timber":"Timber","Soils":"Soils","Other":"Other"},"DefaultLanguage":{"Hint":"Select default language","RequiredError":" Language is <strong>required</strong>."},"Description":{"Header":"Description","Hint":"Description for script","MinLengthError":"Description should be minimum {{requiredLength}} characters long.","MaxLengthError":"Description should be maximum {{requiredLength}} characters long.","RequiredError":" Description is <strong>required</strong>."},"IncludeNote":"Include Note","Note":{"Header":"Note","Hint":"Additional notes for script","MaxLengthError":"Note should be maximum {{requiredLength}} characters long."}},"Tags":{"Header":"Tags","AddNewTags":"Add new tags"},"Parameters":{"Header":"Parameters","ParametersFilterLabel":"Select parameters","AllParameters":"All parameters","DataParameters":"Data parameters","StaticParameters":"Static parameters","CalculationParameters":"Calculation parameters","Edit":"Edit","Remove":"Remove","NewParameter":"New parameter","EditMode":{"ParameterTypePicker":"Pick parameter type","ParameterTypes":{"Editable":"Editable","Static":"Static","Calculable":"Calculable","Visible":"Visible","Important":"Important","Optional":"Optional"},"Name":{"Header":"Name","Hint":"Parameter name","MaxLengthError":"Name should be maximum {{requiredLength}} characters long.","RequiredError":"Name is <strong>required</strong>."},"Unit":{"Header":"Unit","Hint":"Parameter unit","MaxLengthError":"Unit should be maximum {{requiredLength}} characters long."},"Document":{"Header":"Document","Hint":"Parameter according to","MaxLengthError":"Document name should be maximum {{requiredLength}} characters long."},"ValueType":{"Header":"Value Type","Hint":"Parameter value type","Number":"Number","Text":"Text"},"GroupName":{"Header":"Group name","Hint":"Group name for parameter","MaxLengthError":"Group name should be maximum {{requiredLength}} characters long."},"Value":{"Header":"Value","Hint":"Value for parameter","MaxLengthError":"Value should be maximum {{requiredLength}} characters long."},"Description":{"Header":"Description","Hint":"Description for parameter","MaxLengthError":"Description should be maximum {{requiredLength}} characters long."},"VisibilityValidator":{"Header":"Visibility validator","Hint":"Visibility validator","MaxLengthError":"Visibility validator should be maximum {{requiredLength}} characters long."},"DataValidator":{"Header":"Data validator","Hint":"Data validator","MaxLengthError":"Data validator should be maximum {{requiredLength}} characters long."},"Update":"Update"},"Add":"Add","ValueOptions":{"Header":"Value Options","Hint":"Provide some selectable data","None":"None","AllowAny":"Allow any values","Boolean":"Is boolean","Name":{"Header":"Name","Hint":"Name"},"Value":{"Header":"Value","Hint":"Value"},"Description":{"Header":"Description","Hint":"Description for value option"},"Remove":"Remove","Add":"Add"},"Figures":{"Header":"Pictures","Hint":"Provide additional pictures for parameter","Remove":"Remove"}},"Translations":{"Header":"Translations","Add":"Add Translation","Update":"Update Translation","Remove":"Remove"}},"scriptCard":{"Calculate":"Calculate","Edit":"Edit","Delete":"Delete"},"scriptCalculator":{"StaticData":"Static data","Calculate":"Calculate","Results":"Results","Controls":{"Default":"Default","True":"True","Figures":"Pictures"}}};
 
 /***/ }),
 
@@ -5360,7 +5732,7 @@ module.exports = {"app":{"Home":"Home","NewScript":"New script","About":"About p
 /*! exports provided: app, carousel, about, deadLoadsModule, snowLoadsModule, scriptsForm, scriptCard, scriptCalculator, default */
 /***/ (function(module) {
 
-module.exports = {"app":{"Home":"Strona główna","NewScript":"Nowy skrypt","About":"O projekcie","Loads":{"Header":"Obciążenia","DeadLoads":"Stałe","SnowLoads":"Śnieg"},"Languages":{"English":"Angielski","Polish":"Polski"},"Search":"Szukaj"},"carousel":{"Next":"Następny","Previous":"Poprzedni","SnowLoads":{"Header":"Obciążenia śniegiem","Description":"Zobacz kalkulatory do obciążeń śniegiem."},"DeadLoads":{"Header":"Obciążenia stałe","Description":"Zobacz kalkulatory do obciążeń stałych."},"About":{"Header":"O projekcie","Description":"Przeczytaj więcej o projekcie i o autorze tej strony."}},"about":{"Overall":{"Header":"Ogólne informacje","Description":"Na stronie znajdziesz dużą liczbę kalkulatorów budowlanych z których większość bazuje na Eurokodach wraz z polskim aneksem."},"SnowLoad":{"Header":"Kalkulatory obciążenia śniegiem","Description":"Bazują głównie na <i>Eurokod 1 - Oddziaływania na konstrukcje Część 1-3: Oddziaływania ogólne - Obciążenie śniegiem</i> wraz z polskim załącznikiem krajowym. </br>Kalkulatory zawierają wszystkie przypadki obliczeniowe jakie zawarto w dokumencie. </br>Nie powinno się korzystać z tych kalkulatorów, bądź nie ma informacji jak obliczać, w przypadkach:","List":["konstrukcji znajdujących się ponad 1 500m n.p.m.,","uderzeniowego obciążenia śniegiem wynikającego z ześlizgu lub upadku śniegu z wyższego dachu,","dodatkowego obciążenia wiatrem, które mogłoby wynikać ze zmian kształtu lub rozmiarów budowli z powodu obecności śniegu lub osadzania lodu,","obciążenia na obszarach, gdzie śnieg zalega przez cały rok,","obciążenia oblodzeniem,","obciążenia bocznego wywieranego przez śnieg (np. obciążenia bocznego wywieranego przez zaspy),","obciążenia śniegiem mostów."]},"DeadLoad":{"Header":"Kalkulatory obciążeń stałych","Description":"Bazują głównie na <i>Eurokod 1 - Oddziaływania na konstrukcje Część 1-1: Oddziaływania ogólne - Ciężar objętościowy, ciężar własny, obciążenia użytkowe w budynkach</i> wraz z polskim załącznikiem krajowym oraz na polskim dokumencie <i>PN-82/B-02001 Obciążenia budowli - Obciążenia stałe</i>, który zawiera informacje o ciężarach objętościowych materiałów budowlanych. </br>Ten kalkulator pozawala na uzyskanie informacji o wadze poszczególnych warstw w konstrukcji."},"Author":{"Header":"Autor: Konrad Kania","Description":"Jestem absolwentem Politechniki Łódzkiej, kierunek Budownictwo. </br>Obecnie, skończyłem również studia podyplomowe w Polskiej Akademii Nauk i pracuję dla firmy budowlanej już od początku marca 2017 roku jako programista. </br>Traktuję budownictwo i programowanie z wielką pasją. </br>Takie podejście wraz z możliwościami jakie tkwią w tych dwóch branżach podsunęły mi pomysł na zrobienie czegoś do ogólnego użytku. </br>Zacząłem pracować nad tą stroną od września 2018 i mam nadzieję, że będzie tylko bogatsza w coraz to lepszą zawartość dostępną dla wszystkich."}},"deadLoadsModule":{"Header":"Kalkulator obciążeń stałych","Categories":"Kategorie","Subcategories":"Podkategorie","Name":"Nazwa","MinimumDensity":"Minimalny<br/>ciężar","MaximumDensity":"Maksymalny<br/>ciężar","Unit":"Jednostka","Add":"Dodaj","Category":"Kategoria","Length":"Długość [cm]","Width":"Szerokość [cm]","Thickness":"Grubość [cm]","Remove":"Usuń","Total":"Suma"},"snowLoadsModule":{"Header":"Kalkulatory obciążenia śniegiem"},"scriptsForm":{"Header":"Skrypt","AddScript":"Dodaj Skrypt","UpdateScript":"Aktualizuj Skrypt","ScriptData":{"Header":"Dane skryptu","Name":{"Header":"Nazwa","Hint":"Nazwa skryptu","MinLengthError":"Nazwa powinna mieć minimum {{requiredLength}} znaków.","MaxLengthError":"Nazwa powinna mieć maksimum {{requiredLength}} znaków.","RequiredError":" Nazwa jest <strong>wymagana</strong>."},"Author":{"Header":"Autor","Hint":"Autor skryptu","MaxLengthError":"Imię autora powinien mieć mniej niż {{requiredLength}} znaków."},"Document":{"Header":"Dokument","Hint":"Zgodnie z","MaxLengthError":"Nazwa dokumentu nie powinna przekraczać {{requiredLength}} znaków."},"Group":{"Header":"Grupa","Hint":"Kategoria skryptu","Statica":"Statyka","Loads":"Obciążenia","Concrete":"Beton","Steel":"Stal","Timber":"Drewno","Soils":"Grunty","Other":"Inne"},"Description":{"Header":"Opis","Hint":"Opis skryptu","MinLengthError":"Opis skrytpu powinien mieć więcej niż {{requiredLength}} znaków.","MaxLengthError":"Opis skrytpu powinien mieć mniej niż {{requiredLength}} znaków.","RequiredError":"Opis jest <strong>wymagany</strong>."},"IncludeNote":"Uwzględnij notatkę","Note":{"Header":"Notatka","Hint":"Dodatkowe notatki do skryptu","MaxLengthError":"Notatka nie powinna przekraczać {{requiredLength}} znaków."}},"Tags":{"Header":"Tagi","AddNewTags":"Dodaj nowe tagi"},"Parameters":{"Header":"Parametry","ParametersFilterLabel":"Filtruj parametry","AllParameters":"Wszystkie","DataParameters":"Dane","StaticParameters":"Statyczne","CalculationParameters":"Obliczane","Edit":"Edytuj","Remove":"Usuń","NewParameter":"Nowy parametr","EditMode":{"ParameterTypePicker":"Wybierz typ parametru","ParameterTypes":{"Editable":"Edytowalny","Static":"Statyczny","Calculable":"Obliczany","Visible":"Widoczny","Important":"Ważny","Optional":"Opcjonalny"},"Name":{"Header":"Nazwa","Hint":"Nazwa parametru","MaxLengthError":"Nazwa nie powinna mieć więcej niż {{requiredLength}} znaków.","RequiredError":"Nazwa jest <strong>wymagana</strong>."},"Unit":{"Header":"Jednostka","Hint":"Jednostka parametru","MaxLengthError":"Jednostka może mieć maksymalnie {{requiredLength}} znaków."},"Document":{"Header":"Dokument","Hint":"Dokument powiązany","MaxLengthError":"Nazwa dokumentu może mieć maksymalnie {{requiredLength}} znaków."},"ValueType":{"Header":"Typ wartości","Hint":"Typ wartości parametru","Number":"Wartość","Text":"Tekst"},"GroupName":{"Header":"Nazwa grupy","Hint":"Nazwa grupy parametru","MaxLengthError":"Nazwa grupy może mieć maksymalnie {{requiredLength}} znaków."},"Value":{"Header":"Wartość","Hint":"Wartość parametru","MaxLengthError":"Wartość może mieć maksymalnie {{requiredLength}} znaków."},"Description":{"Header":"Opis","Hint":"Opis parametru","MaxLengthError":"Opis parametru może mieć maksymalnie {{requiredLength}} znaków."},"VisibilityValidator":{"Header":"Walidacja widoczności","Hint":"Walidacja widoczności","MaxLengthError":"Walidacja widoczności może mieć maksymalnie {{requiredLength}} znaków."},"DataValidator":{"Header":"Walidacja danych","Hint":"Walidacja danych","MaxLengthError":"Walidacja danych może mieć maksymalnie {{requiredLength}} znaków."},"Update":"Aktualizuj"},"Add":"Dodaj","ValueOptions":{"Header":"Wartości wybieralne","Hint":"Wartości do wyboru","None":"Brak","AllowAny":"Zezwól na dowolną","Boolean":"Prawda/Fałsz","Name":{"Header":"Nazwa","Hint":"Nazwa"},"Value":{"Header":"Wartość","Hint":"Wartość"},"Description":{"Header":"Opis","Hint":"Opis dla wartości wybieralnej"},"Remove":"Usuń","Add":"Dodaj"},"Figures":{"Header":"Obrazki","Hint":"Dodaj dodatkowe obrazki do parametrów","Remove":"Usuń"}},"Translations":{"Header":"Tłumaczenia"}},"scriptCard":{"Calculate":"Oblicz","Edit":"Edytuj","Delete":"Usuń"},"scriptCalculator":{"StaticData":"Stałe","Calculate":"Oblicz","Results":"Wyniki","Controls":{"Default":"Domyślne","True":"Prawda","Figures":"Obrazki"}}};
+module.exports = {"app":{"Home":"Strona główna","NewScript":"Nowy skrypt","About":"O projekcie","Loads":{"Header":"Obciążenia","DeadLoads":"Stałe","SnowLoads":"Śnieg"},"Languages":{"Language":"Language","English":"Angielski","Polish":"Polski"},"Search":"Szukaj"},"carousel":{"Next":"Następny","Previous":"Poprzedni","SnowLoads":{"Header":"Obciążenia śniegiem","Description":"Zobacz kalkulatory do obciążeń śniegiem."},"DeadLoads":{"Header":"Obciążenia stałe","Description":"Zobacz kalkulatory do obciążeń stałych."},"About":{"Header":"O projekcie","Description":"Przeczytaj więcej o projekcie i o autorze tej strony."}},"about":{"Overall":{"Header":"Ogólne informacje","Description":"Na stronie znajdziesz dużą liczbę kalkulatorów budowlanych z których większość bazuje na Eurokodach wraz z polskim aneksem."},"SnowLoad":{"Header":"Kalkulatory obciążenia śniegiem","Description":"Bazują głównie na <i>Eurokod 1 - Oddziaływania na konstrukcje Część 1-3: Oddziaływania ogólne - Obciążenie śniegiem</i> wraz z polskim załącznikiem krajowym. </br>Kalkulatory zawierają wszystkie przypadki obliczeniowe jakie zawarto w dokumencie. </br>Nie powinno się korzystać z tych kalkulatorów, bądź nie ma informacji jak obliczać, w przypadkach:","List":["konstrukcji znajdujących się ponad 1 500m n.p.m.,","uderzeniowego obciążenia śniegiem wynikającego z ześlizgu lub upadku śniegu z wyższego dachu,","dodatkowego obciążenia wiatrem, które mogłoby wynikać ze zmian kształtu lub rozmiarów budowli z powodu obecności śniegu lub osadzania lodu,","obciążenia na obszarach, gdzie śnieg zalega przez cały rok,","obciążenia oblodzeniem,","obciążenia bocznego wywieranego przez śnieg (np. obciążenia bocznego wywieranego przez zaspy),","obciążenia śniegiem mostów."]},"DeadLoad":{"Header":"Kalkulatory obciążeń stałych","Description":"Bazują głównie na <i>Eurokod 1 - Oddziaływania na konstrukcje Część 1-1: Oddziaływania ogólne - Ciężar objętościowy, ciężar własny, obciążenia użytkowe w budynkach</i> wraz z polskim załącznikiem krajowym oraz na polskim dokumencie <i>PN-82/B-02001 Obciążenia budowli - Obciążenia stałe</i>, który zawiera informacje o ciężarach objętościowych materiałów budowlanych. </br>Ten kalkulator pozawala na uzyskanie informacji o wadze poszczególnych warstw w konstrukcji."},"Author":{"Header":"Autor: Konrad Kania","Description":"Jestem absolwentem Politechniki Łódzkiej, kierunek Budownictwo. </br>Obecnie, skończyłem również studia podyplomowe w Polskiej Akademii Nauk i pracuję dla firmy budowlanej już od początku marca 2017 roku jako programista. </br>Traktuję budownictwo i programowanie z wielką pasją. </br>Takie podejście wraz z możliwościami jakie tkwią w tych dwóch branżach podsunęły mi pomysł na zrobienie czegoś do ogólnego użytku. </br>Zacząłem pracować nad tą stroną od września 2018 i mam nadzieję, że będzie tylko bogatsza w coraz to lepszą zawartość dostępną dla wszystkich."}},"deadLoadsModule":{"Header":"Kalkulator obciążeń stałych","Categories":"Kategorie","Subcategories":"Podkategorie","Name":"Nazwa","MinimumDensity":"Minimalny<br/>ciężar","MaximumDensity":"Maksymalny<br/>ciężar","Unit":"Jednostka","Add":"Dodaj","Category":"Kategoria","Length":"Długość [cm]","Width":"Szerokość [cm]","Thickness":"Grubość [cm]","Remove":"Usuń","Total":"Suma"},"snowLoadsModule":{"Header":"Kalkulatory obciążenia śniegiem"},"scriptsForm":{"Header":"Skrypt","AddScript":"Dodaj Skrypt","UpdateScript":"Aktualizuj Skrypt","ScriptData":{"Header":"Dane skryptu","Name":{"Header":"Nazwa","Hint":"Nazwa skryptu","MinLengthError":"Nazwa powinna mieć minimum {{requiredLength}} znaków.","MaxLengthError":"Nazwa powinna mieć maksimum {{requiredLength}} znaków.","RequiredError":" Nazwa jest <strong>wymagana</strong>."},"Author":{"Header":"Autor","Hint":"Autor skryptu","MaxLengthError":"Imię autora powinien mieć mniej niż {{requiredLength}} znaków."},"Document":{"Header":"Dokument","Hint":"Zgodnie z","MaxLengthError":"Nazwa dokumentu nie powinna przekraczać {{requiredLength}} znaków."},"Group":{"Header":"Grupa","Hint":"Kategoria skryptu","Statica":"Statyka","Loads":"Obciążenia","Concrete":"Beton","Steel":"Stal","Timber":"Drewno","Soils":"Grunty","Other":"Inne"},"DefaultLanguage":{"Hint":"Wybierz język domyślny","RequiredError":"Język jest <strong>wymagany</strong>."},"Description":{"Header":"Opis","Hint":"Opis skryptu","MinLengthError":"Opis skrytpu powinien mieć więcej niż {{requiredLength}} znaków.","MaxLengthError":"Opis skrytpu powinien mieć mniej niż {{requiredLength}} znaków.","RequiredError":"Opis jest <strong>wymagany</strong>."},"IncludeNote":"Uwzględnij notatkę","Note":{"Header":"Notatka","Hint":"Dodatkowe notatki do skryptu","MaxLengthError":"Notatka nie powinna przekraczać {{requiredLength}} znaków."}},"Tags":{"Header":"Tagi","AddNewTags":"Dodaj nowe tagi"},"Parameters":{"Header":"Parametry","ParametersFilterLabel":"Filtruj parametry","AllParameters":"Wszystkie","DataParameters":"Dane","StaticParameters":"Statyczne","CalculationParameters":"Obliczane","Edit":"Edytuj","Remove":"Usuń","NewParameter":"Nowy parametr","EditMode":{"ParameterTypePicker":"Wybierz typ parametru","ParameterTypes":{"Editable":"Edytowalny","Static":"Statyczny","Calculable":"Obliczany","Visible":"Widoczny","Important":"Ważny","Optional":"Opcjonalny"},"Name":{"Header":"Nazwa","Hint":"Nazwa parametru","MaxLengthError":"Nazwa nie powinna mieć więcej niż {{requiredLength}} znaków.","RequiredError":"Nazwa jest <strong>wymagana</strong>."},"Unit":{"Header":"Jednostka","Hint":"Jednostka parametru","MaxLengthError":"Jednostka może mieć maksymalnie {{requiredLength}} znaków."},"Document":{"Header":"Dokument","Hint":"Dokument powiązany","MaxLengthError":"Nazwa dokumentu może mieć maksymalnie {{requiredLength}} znaków."},"ValueType":{"Header":"Typ wartości","Hint":"Typ wartości parametru","Number":"Wartość","Text":"Tekst"},"GroupName":{"Header":"Nazwa grupy","Hint":"Nazwa grupy parametru","MaxLengthError":"Nazwa grupy może mieć maksymalnie {{requiredLength}} znaków."},"Value":{"Header":"Wartość","Hint":"Wartość parametru","MaxLengthError":"Wartość może mieć maksymalnie {{requiredLength}} znaków."},"Description":{"Header":"Opis","Hint":"Opis parametru","MaxLengthError":"Opis parametru może mieć maksymalnie {{requiredLength}} znaków."},"VisibilityValidator":{"Header":"Walidacja widoczności","Hint":"Walidacja widoczności","MaxLengthError":"Walidacja widoczności może mieć maksymalnie {{requiredLength}} znaków."},"DataValidator":{"Header":"Walidacja danych","Hint":"Walidacja danych","MaxLengthError":"Walidacja danych może mieć maksymalnie {{requiredLength}} znaków."},"Update":"Aktualizuj"},"Add":"Dodaj","ValueOptions":{"Header":"Wartości wybieralne","Hint":"Wartości do wyboru","None":"Brak","AllowAny":"Zezwól na dowolną","Boolean":"Prawda/Fałsz","Name":{"Header":"Nazwa","Hint":"Nazwa"},"Value":{"Header":"Wartość","Hint":"Wartość"},"Description":{"Header":"Opis","Hint":"Opis dla wartości wybieralnej"},"Remove":"Usuń","Add":"Dodaj"},"Figures":{"Header":"Obrazki","Hint":"Dodaj dodatkowe obrazki do parametrów","Remove":"Usuń"}},"Translations":{"Header":"Tłumaczenia","Add":"Dodaj Tłumaczenie","Update":"Aktualizuj Tłumaczenie","Remove":"Usuń"}},"scriptCard":{"Calculate":"Oblicz","Edit":"Edytuj","Delete":"Usuń"},"scriptCalculator":{"StaticData":"Stałe","Calculate":"Oblicz","Results":"Wyniki","Controls":{"Default":"Domyślne","True":"Prawda","Figures":"Obrazki"}}};
 
 /***/ }),
 

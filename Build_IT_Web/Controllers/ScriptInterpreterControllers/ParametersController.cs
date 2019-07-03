@@ -18,7 +18,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
     public class ParametersController : ControllerBase
     {
         #region Fields
-        
+
         private readonly IScriptRepository _scriptRepository;
         private readonly IParameterRepository _parameterRepository;
         private readonly ITranslationService _translationService;
@@ -28,7 +28,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         #endregion // Fields
 
         #region Constructors
-        
+
         public ParametersController(
             IScriptRepository scriptRepository,
             IParameterRepository parameterRepository,
@@ -46,16 +46,16 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         #endregion // Constructors
 
         #region Public_Methods
-        
+
         [HttpGet("{scriptId}/parameters/{lang?}")]
         public async Task<IEnumerable<ParameterResource>> GetAllParameters(long scriptId, string lang = TranslationService.DefaultLanguageCode)
         {
+            var script = await _scriptRepository.GetAsync(scriptId);
             var parameters = await _parameterRepository.GetAllParametersForScriptAsync(scriptId);
 
             var parametersResource = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters.ToList());
 
-            if (lang != TranslationService.DefaultLanguageCode)
-                await _translationService.SetParametersTranslation(lang, parametersResource);
+            await _translationService.SetParametersTranslation(lang, parametersResource, script.DefaultLanguage);
 
             return parametersResource;
         }

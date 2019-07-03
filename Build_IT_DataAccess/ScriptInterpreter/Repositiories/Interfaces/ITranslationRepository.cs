@@ -11,9 +11,13 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces
     {
         #region Public_Methods
         
-        Task<ScriptTranslation> GetScriptTranslation(long id, Language language);
+        Task<IEnumerable<ScriptTranslation>> GetScriptTranslations(long scriptId);
+        Task<ScriptTranslation> GetScriptTranslation(long scriptId, Language language);
+        Task<ScriptTranslation> GetScriptTranslation(long id);
         Task<ParameterTranslation> GetParameterTranslation(long parameterId, Language language);
         Task<ValueOptionTranslation> GetValueOptionTranslation(long valueOptionId, Language language);
+        Task AddScriptTranslationAsync(ScriptTranslation scriptTranslation);
+        void Remove(ScriptTranslation scriptTranslation);
 
         #endregion // Public_Methods
     }

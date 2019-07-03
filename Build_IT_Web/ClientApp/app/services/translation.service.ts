@@ -5,11 +5,14 @@ import { Observable, Subject, of } from 'rxjs';
 @Injectable()
 export class TranslationService {
 
+    private languages = ['en', 'pl'];
+    public static LanguageCodes = [{ 'en': 0 }, { 'pl': 1 }]
+
     private onLanguageChanged = new Subject<string>();
     languageChanged$ = this.onLanguageChanged.asObservable();
 
     constructor(private translate: TranslateService) {
-        this.addLanguages(['en', 'pl']);
+        this.addLanguages(this.languages);
         this.setDefaultLanguage('en');
     }
 

@@ -9,6 +9,7 @@
       "SnowLoads": "Snow Loads"
     },
     "Languages": {
+      "Language": "Language",
       "English": "English",
       "Polish": "Polish"
     },
@@ -114,6 +115,10 @@
         "Timber": "Timber",
         "Soils": "Soils",
         "Other": "Other"
+      },
+      "DefaultLanguage": {
+        "Hint": "Select default language",
+        "RequiredError": " Language is <strong>required</strong>."
       },
       "Description": {
         "Header": "Description",
@@ -234,7 +239,10 @@
     },
 
     "Translations": {
-      "Header": "Translations"
+      "Header": "Translations",
+      "Add": "Add Translation",
+      "Update": "Update Translation",
+      "Remove": "Remove"
     }
   },
 

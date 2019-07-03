@@ -21,6 +21,7 @@ import { ParameterFormComponent } from './components/script-calculator/parameter
 import { ParameterResultComponent } from './components/script-calculator/parameter-results/parameter-result/parameter-result.component';
 import { ValueOptionsFormComponent } from './components/script-form/parameters-form/data-parameter-form/value-options-form/value-options-form.component';
 import { ScriptDataFormComponent } from './components/script-form/script-data-form/script-data-form.component';
+import { TranslationFormComponent } from './components/script-form/translation-form/translation-form.component';
 import { ParameterCheckboxComponent } from './components/script-calculator/parameter-inputs/checkbox/parameter-checkbox.component';
 import { FigureParameterFormComponent } from './components/script-form/parameters-form/data-parameter-form/figure-parameter-form/figure-parameter-form.component';
 import { ParameterFiguresComponent } from './components/script-calculator/parameter-inputs/figures/parameter-figures.component';
@@ -55,6 +56,7 @@ import { TranslateLanguageLoader } from '../../services/translation.service';
         ParameterAutocompleteComponent,
         ParameterRadioComponent,
         ParameterFormComponent,
+        TranslationFormComponent,
         ParameterResultComponent,
         ParameterCheckboxComponent,
         FigureParameterFormComponent,

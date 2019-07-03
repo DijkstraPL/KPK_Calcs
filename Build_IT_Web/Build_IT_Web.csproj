@@ -41,6 +41,9 @@
     <None Remove="ClientApp\app\common\errors\bad-input-error.ts" />
     <None Remove="ClientApp\app\common\errors\not-found-error.ts" />
     <None Remove="ClientApp\app\directives\bootstrap-select.directive.ts" />
+    <None Remove="ClientApp\app\modules\script-interpreter\models\enums\language.ts" />
+    <None Remove="ClientApp\app\modules\script-interpreter\services\parameter-translation.service.ts" />
+    <None Remove="ClientApp\app\modules\script-interpreter\services\script-translation.service.ts" />
     <None Remove="ClientApp\app\services\configuration.service.ts" />
     <None Remove="ClientApp\app\services\db-keys.ts" />
     <None Remove="ClientApp\app\services\local-store-manager.service.ts" />
@@ -52,7 +55,6 @@
     <Folder Include="ClientApp\app\common\validators\" />
     <Folder Include="ClientApp\app\modules\loads\components\wind-loads-components\" />
     <Folder Include="ClientApp\app\models\" />
-    <Folder Include="ClientApp\app\modules\script-interpreter\components\script-form\translation-form\" />
     <Folder Include="wwwroot\clientapp\uploads\" />
   </ItemGroup>
 
@@ -78,6 +80,9 @@
     <TypeScriptCompile Include="ClientApp\app\common\errors\not-found-error.ts" />
     <TypeScriptCompile Include="ClientApp\app\common\errors\app-error.ts" />
     <TypeScriptCompile Include="ClientApp\app\directives\bootstrap-select.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\models\enums\language.ts" />
+    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\script-translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\configuration.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\db-keys.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\local-store-manager.service.ts" />

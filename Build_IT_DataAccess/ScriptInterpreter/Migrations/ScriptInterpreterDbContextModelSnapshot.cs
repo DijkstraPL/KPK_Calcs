@@ -104,6 +104,10 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                     b.Property<string>("Author")
                         .HasMaxLength(255);
 
+                    b.Property<int>("DefaultLanguage")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(0);
+
                     b.Property<string>("Description")
                         .IsRequired();
 
@@ -118,7 +122,8 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
 
                     b.Property<string>("Notes");
 
-                    b.Property<float>("Version");
+                    b.Property<string>("Version")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 

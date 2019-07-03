@@ -1,4 +1,5 @@
 ﻿import { Tag } from "./tag";
+import { Language } from "../enums/language";
 
 export interface Script {
     id: number;
@@ -7,9 +8,10 @@ export interface Script {
     groupName: string;
     author: string;
     added: Date;
-    version: number;
+    version: string;
     modified: Date;
     accordingTo: string;
     notes: string;
     tags: Tag[];
+    defaultLanguage: Language;
 }

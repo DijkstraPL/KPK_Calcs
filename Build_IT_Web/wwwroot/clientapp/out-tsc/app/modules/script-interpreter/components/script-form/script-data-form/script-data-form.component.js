@@ -10,8 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-state-matcher';
+import { Language } from '../../../models/enums/language';
 var ScriptDataFormComponent = /** @class */ (function () {
     function ScriptDataFormComponent() {
+        this.languages = Language;
         this.matcher = new AppErrorStateMatcher();
     }
     Object.defineProperty(ScriptDataFormComponent.prototype, "scriptName", {
@@ -52,6 +54,13 @@ var ScriptDataFormComponent = /** @class */ (function () {
     Object.defineProperty(ScriptDataFormComponent.prototype, "scriptNotes", {
         get: function () {
             return this.scriptForm.get('notes');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ScriptDataFormComponent.prototype, "scriptDefaultLanguage", {
+        get: function () {
+            return this.scriptForm.get('defaultLanguage');
         },
         enumerable: true,
         configurable: true

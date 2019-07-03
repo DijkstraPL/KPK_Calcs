@@ -26,6 +26,7 @@ export class ScriptFormComponent implements OnInit {
         groupName: new FormControl('Other'),
         description: new FormControl('', [Validators.required, Validators.minLength(25), Validators.maxLength(500)]),
         notes: new FormControl('', Validators.maxLength(1000)),
+        defaultLanguage: new FormControl('0', Validators.required),
         tags: new FormArray([])
     });
 
@@ -43,6 +44,9 @@ export class ScriptFormComponent implements OnInit {
     }
     get scriptTags(): FormArray {
         return this.scriptForm.get('tags') as FormArray;
+    }
+    get scriptDefaultLanguage(): AbstractControl {
+        return this.scriptForm.get('defaultLanguage');
     }
 
     constructor(
@@ -66,7 +70,7 @@ export class ScriptFormComponent implements OnInit {
     }
 
     private getScript(id: number) {
-        this.scriptService.getScript(id).subscribe(script => {
+        this.scriptService.getScript(id, "en").subscribe(script => {
             console.log("Script", script);
             this.includeNote = script.notes != null && script.notes != '';
             this.scriptForm.patchValue(script);

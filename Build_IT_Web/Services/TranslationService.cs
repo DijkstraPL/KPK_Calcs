@@ -13,7 +13,7 @@ namespace Build_IT_Web.Services
 
         public const string DefaultLanguageCode = "en";
         private readonly ITranslationRepository _translationRepository;
-        private readonly Dictionary<string, Language> _languages
+        public static readonly Dictionary<string, Language> Languages
             = new Dictionary<string, Language>
             {
                 { "en", Language.English },
@@ -36,9 +36,9 @@ namespace Build_IT_Web.Services
 
         public async Task SetScriptTranslation(string languageCode, ScriptResource scriptResource)
         {
-            if (_languages.ContainsKey(languageCode) && _languages[languageCode] != Language.English)
+            if (Languages.ContainsKey(languageCode) && Languages[languageCode] != scriptResource.DefaultLanguage)
             {
-                var scriptTranslation = await _translationRepository.GetScriptTranslation(scriptResource.Id, _languages[languageCode]);
+                var scriptTranslation = await _translationRepository.GetScriptTranslation(scriptResource.Id, Languages[languageCode]);
                 if (scriptTranslation == null)
                     return;
                 if (scriptTranslation.Name != null)
@@ -58,11 +58,11 @@ namespace Build_IT_Web.Services
             return;
         }
 
-        public async Task SetParameterTranslation(string languageCode, ParameterResource parameterResource)
+        public async Task SetParameterTranslation(string languageCode, ParameterResource parameterResource, Language defaultLanguage)
         {
-            if (_languages.ContainsKey(languageCode) && _languages[languageCode] != Language.English)
+            if (Languages.ContainsKey(languageCode) && Languages[languageCode] != defaultLanguage)
             {
-                var parameterTranslation = await _translationRepository.GetParameterTranslation(parameterResource.Id, _languages[languageCode]);
+                var parameterTranslation = await _translationRepository.GetParameterTranslation(parameterResource.Id, Languages[languageCode]);
                 if (parameterTranslation == null)
                     return;
                 if (parameterTranslation.Description != null)
@@ -75,18 +75,18 @@ namespace Build_IT_Web.Services
             return;
         }
 
-        public async Task SetParametersTranslation(string languageCode, IEnumerable<ParameterResource> parametersResource)
+        public async Task SetParametersTranslation(string languageCode, IEnumerable<ParameterResource> parametersResource, Language defaultLanguage)
         {
             foreach (var parameterResource in parametersResource)
-                await SetParameterTranslation(languageCode, parameterResource);
+                await SetParameterTranslation(languageCode, parameterResource, defaultLanguage);
             return;
         }
 
-        public async Task SetValueOptionTranslation(string languageCode, ValueOptionResource valueOptionResource)
+        public async Task SetValueOptionTranslation(string languageCode, ValueOptionResource valueOptionResource, Language defaultLanguage)
         {
-            if (_languages.ContainsKey(languageCode) && _languages[languageCode] != Language.English)
+            if (Languages.ContainsKey(languageCode) && Languages[languageCode] != defaultLanguage)
             {
-                var parameterTranslation = await _translationRepository.GetValueOptionTranslation(valueOptionResource.Id, _languages[languageCode]);
+                var parameterTranslation = await _translationRepository.GetValueOptionTranslation(valueOptionResource.Id, Languages[languageCode]);
                 if (parameterTranslation == null)
                     return;
                 if (parameterTranslation.Value != null)

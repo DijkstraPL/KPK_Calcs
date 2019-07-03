@@ -7,8 +7,10 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources
 {
     public class ParameterResource
     {
+        #region Properties
+        
         public long Id { get; set; }
-        public string Name {  get; set; }
+        public string Name { get; set; }
         public int Number { get; set; }
         public string Description { get; set; }
         public ValueTypes ValueType { get; set; }
@@ -26,10 +28,16 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources
 
         public string Equation { get; set; }
 
+        #endregion // Properties
+
+        #region Constructors
+
         public ParameterResource()
         {
             ValueOptions = new Collection<ValueOptionResource>();
             Figures = new Collection<FigureResource>();
         }
+
+        #endregion // Constructors
     }
 }

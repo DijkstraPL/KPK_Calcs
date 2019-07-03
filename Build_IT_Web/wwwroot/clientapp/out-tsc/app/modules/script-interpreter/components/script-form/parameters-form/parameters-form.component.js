@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ParameterFilter } from '../../../models/enums/parameter-filter';
 import { ParameterImpl } from '../../../models/parameterImpl';
@@ -67,7 +67,7 @@ var ParametersFormComponent = /** @class */ (function () {
     };
     ParametersFormComponent.prototype.getParameters = function (id) {
         var _this = this;
-        this.parameterService.getParameters(id).subscribe(function (parameters) {
+        this.parameterService.getParameters(id, "en").subscribe(function (parameters) {
             _this.parameters = parameters;
             _this.onParametersToShowChange();
             console.log("Parameters", _this.parameters);
@@ -153,6 +153,10 @@ var ParametersFormComponent = /** @class */ (function () {
             }, function (error) { return console.error(error); });
         });
     };
+    __decorate([
+        Input('defaultLanguage'),
+        __metadata("design:type", Object)
+    ], ParametersFormComponent.prototype, "defaultLanguage", void 0);
     ParametersFormComponent = __decorate([
         Component({
             selector: 'app-parameters-form',

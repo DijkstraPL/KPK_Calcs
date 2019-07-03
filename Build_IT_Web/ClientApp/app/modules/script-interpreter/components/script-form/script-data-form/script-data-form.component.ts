@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-state-matcher';
+import { Language } from '../../../models/enums/language';
 
 @Component({
     selector: 'script-data-form',
@@ -11,6 +12,8 @@ import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-sta
 export class ScriptDataFormComponent {
     @Input('scriptForm') scriptForm: FormGroup;
     @Input('includeNote') includeNote: boolean;
+
+    languages = Language;
 
     matcher = new AppErrorStateMatcher();
 
@@ -31,5 +34,8 @@ export class ScriptDataFormComponent {
     }
     get scriptNotes(): AbstractControl {
         return this.scriptForm.get('notes');
+    }
+    get scriptDefaultLanguage(): AbstractControl {
+        return this.scriptForm.get('defaultLanguage');
     }
 }

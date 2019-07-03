@@ -1,4 +1,5 @@
-﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
+﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,9 +20,9 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models
         public DateTime Modified { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
-        public float Version { get; set; }
+        public string Version { get; set; }
+        public Language DefaultLanguage { get; set; }
         public ICollection<Parameter> Parameters { get; set; }
-
         public ICollection<ScriptTranslation> ScriptTranslations { get; set; }
 
         #endregion // Properties

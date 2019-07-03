@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using System;
 using System.Collections.ObjectModel;
@@ -24,6 +25,7 @@ namespace Build_IT_Web.Mapping
                 => operation.MapFrom(p => p.ParameterFigures.Select(pp => pp.Figure)));
             CreateMap<ValueOption, ValueOptionResource>();
             CreateMap<Figure, FigureResource>();
+            CreateMap<ScriptTranslation, ScriptTranslationResource>();
 
             // API Resource to Domain
             CreateMap<ScriptResource, Script>()
@@ -57,6 +59,7 @@ namespace Build_IT_Web.Mapping
                 .ForMember(vo => vo.Id, operation => operation.Ignore())
                 .ForMember(vo => vo.Parameter, operation => operation.Ignore())
                 .ForMember(vo => vo.ParameterId, operation => operation.Ignore());
+            CreateMap<ScriptTranslationResource, ScriptTranslation>();
         }
 
         #endregion // Public_Methods

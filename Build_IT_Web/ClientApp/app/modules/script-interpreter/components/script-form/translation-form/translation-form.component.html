@@ -1,0 +1,125 @@
+﻿<div [formGroup]="translationForm">
+    <mat-form-field class="m-2">
+        <mat-label>{{'app.Languages.Language' | translate}}</mat-label>
+        <mat-select matNativeControl
+                    formControlName="language"
+                    required
+                    #languagesSelector
+                    (selectionChange)="onLanguageChange($event)">
+            <mat-option [value]="languages.english"
+                        *ngIf="defaultLanguage != languages.english">
+                {{'app.Languages.English'| translate}}
+            </mat-option>
+            <mat-option [value]="languages.polish"
+                        *ngIf="defaultLanguage != languages.polish">
+                {{'app.Languages.Polish'| translate}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="m-2 form-medium">
+        <input matInput
+               required
+               placeholder="{{'scriptsForm.ScriptData.Name.Header' | translate}}"
+               formControlName="name"
+               [errorStateMatcher]="matcher"
+               autocomplete="off" />
+        <mat-hint>{{originalName.value}}</mat-hint>
+        <mat-error *ngIf="translationName && translationName.hasError('minlength') && !translationName.hasError('required')">
+            {{'scriptsForm.ScriptData.Name.MinLengthError' | translate:scriptName.errors.minlength}}
+        </mat-error>
+        <mat-error *ngIf="translationName && translationName.hasError('maxlength') && !translationName.hasError('required')">
+            {{'scriptsForm.ScriptData.Name.MaxLengthError' | translate:scriptName.errors.maxlength}}
+        </mat-error>
+        <mat-error *ngIf="translationName && translationName.hasError('required')"
+                   [innerHtml]="'scriptsForm.ScriptData.Name.RequiredError' | translate">
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="m-2 full-width">
+        <textarea matInput
+                  placeholder="{{'scriptsForm.ScriptData.Description.Header' | translate}}"
+                  formControlName="description"
+                  required
+                  [errorStateMatcher]="matcher"
+                  autocomplete="off"></textarea>
+        <mat-hint>{{originalDescription.value}}</mat-hint>
+        <mat-error *ngIf="translationDescription && translationDescription.hasError('minlength') && !translationDescription.hasError('required')">
+            {{'scriptsForm.ScriptData.Description.MinLengthError' | translate:scriptDescription.errors.minlength}}
+        </mat-error>
+        <mat-error *ngIf="translationDescription && translationDescription.hasError('maxlength') && !translationDescription.hasError('required')">
+            {{'scriptsForm.ScriptData.Description.MaxLengthError' | translate:scriptDescription.errors.maxlength}}
+        </mat-error>
+        <mat-error *ngIf="translationDescription && translationDescription.hasError('required')"
+                   [innerHtml]="'scriptsForm.ScriptData.Description.RequiredError' | translate">
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="m-2 full-width">
+        <textarea matInput
+                  placeholder="{{'scriptsForm.ScriptData.Note.Header' | translate}}"
+                  formControlName="notes"
+                  [errorStateMatcher]="matcher"
+                  autocomplete="off"></textarea>
+        <mat-hint>{{originalNotes.value}}</mat-hint>
+        <mat-error *ngIf="translationNotes && translationNotes.hasError('maxlength')">
+            {{'scriptsForm.ScriptData.Note.MaxLengthError' | translate:scriptNotes.errors.maxlength}}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let parameter of parameters">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <span [innerHtml]="parameter.name | html"></span>&nbsp;- {{parameter.description}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-form-field class="m-2">
+                <mat-label>{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}</mat-label>
+                <input matInput
+                       placeholder="{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}"
+                       formControlName="groupName"
+                       [errorStateMatcher]="matcher"
+                       autocomplete="off" />
+                <mat-hint>{{'scriptsForm.Parameters.EditMode.GroupName.Hint' | translate}}</mat-hint>
+                <mat-error *ngIf="parameterGroupName && parameterGroupName.hasError('maxlength')">
+                    {{'scriptsForm.Parameters.EditMode.GroupName.MaxLengthError' | translate:parameterGroupName.errors.maxlength}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="m-2 full-width">
+                <textarea matInput
+                          placeholder="{{'scriptsForm.Parameters.EditMode.Description.Header' | translate}}"
+                          formControlName="description"
+                          [errorStateMatcher]="matcher"
+                          autocomplete="off"></textarea>
+                <mat-hint>{{'scriptsForm.Parameters.EditMode.Description.Hint' | translate}}</mat-hint>
+                <mat-error *ngIf="parameterDescription && parameterDescription.hasError('maxlength')">
+                    {{'scriptsForm.Parameters.EditMode.Description.MaxLengthError' | translate:parameterDescription.errors.maxlength}}
+                </mat-error>
+            </mat-form-field>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="flex-column">
+        <button mat-stroked-button
+                color="accent"
+                type="button"
+                (click)="onScriptTranslationSubmit()"
+                [disabled]="!translationForm.valid"
+                class="mt-3 ml-3">
+            {{editMode ? ('scriptsForm.Translations.Update' | translate) : ('scriptsForm.Translations.Add' | translate)}}
+        </button>
+
+        <button mat-stroked-button
+                color="warn"
+                type="button"
+                *ngIf="editMode"
+                (click)="removeScriptTranslation()"
+                class="mt-3 ml-3">
+            {{'scriptsForm.Translations.Remove' | translate}}
+        </button>
+    </div>
+</div>

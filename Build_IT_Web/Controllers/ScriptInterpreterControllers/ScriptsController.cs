@@ -46,7 +46,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         #region Public_Methods
 
         [HttpGet("{lang?}")]
-        public async Task<IActionResult> GetScripts(string lang = TranslationService.DefaultLanguageCode)
+        public async Task<IActionResult> GetScripts(string lang = null)
         {
             var scripts = await _scriptRepository.GetAllScriptsWithTagsAsync();
 
@@ -55,14 +55,13 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
             var scriptResources = _mapper.Map<List<Script>, List<ScriptResource>>(scripts.ToList());
 
-            if (lang != TranslationService.DefaultLanguageCode)
-                await _translationService.SetScriptsTranslation(lang, scriptResources);
+            await _translationService.SetScriptsTranslation(lang, scriptResources);
 
             return Ok(scriptResources);
         }
 
         [HttpGet("{scriptId}/{lang?}")]
-        public async Task<IActionResult> GetScript(long scriptId, string lang = TranslationService.DefaultLanguageCode)
+        public async Task<IActionResult> GetScript(long scriptId, string lang = null)
         {
             var script = await _scriptRepository.GetScriptWithTagsAsync(scriptId);
 
@@ -71,8 +70,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
             var scriptResource = _mapper.Map<Script, ScriptResource>(script);
 
-            if (lang != TranslationService.DefaultLanguageCode)
-                await _translationService.SetScriptTranslation(lang, scriptResource);
+            await _translationService.SetScriptTranslation(lang, scriptResource);
 
             return Ok(scriptResource);
         }
@@ -87,7 +85,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
             script.Added = DateTime.Now;
             script.Modified = DateTime.Now;
-            script.Version = 1.0f;
+            script.Version = "1";
             _scriptRepository.AddAsync(script);
             await _unitOfWork.CompleteAsync();
 
@@ -108,7 +106,6 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
             _mapper.Map<ScriptResource, Script>(scriptResource, script);
             script.Modified = DateTime.Now;
-            script.Version += 0.1f;
 
             await _unitOfWork.CompleteAsync();
 

@@ -10,13 +10,9 @@ export class ParameterService {
         private translationService: TranslationService) {
 
     }
-
-    delete(scriptId: number, parameterId: number): Observable<Parameter> {
-        return this.http.delete<Parameter>('/api/scripts/' + scriptId + '/parameters/' + parameterId);
-    }
-    
-    getParameters(scriptId: number): Observable<Parameter[]> {
-        return this.http.get<Parameter[]>('/api/scripts/' + scriptId + '/parameters/' + this.translationService.getCurrentLanguage());
+        
+    getParameters(scriptId: number, language?: string): Observable<Parameter[]> {
+        return this.http.get<Parameter[]>('/api/scripts/' + scriptId + '/parameters/' + (language || this.translationService.getCurrentLanguage()));
     }
 
     create(scriptId: number, parameter: Parameter) {
@@ -25,5 +21,9 @@ export class ParameterService {
 
     update(scriptId: number, parameter: Parameter) {
         return this.http.put('/api/scripts/' + scriptId + '/parameters/' + parameter.id, parameter);
+    }
+
+    delete(scriptId: number, parameterId: number): Observable<Parameter> {
+        return this.http.delete<Parameter>('/api/scripts/' + scriptId + '/parameters/' + parameterId);
     }
 }

@@ -20,16 +20,16 @@ var ScriptService = /** @class */ (function () {
         this.http = http;
         this.translationService = translationService;
     }
-    ScriptService.prototype.getScripts = function () {
-        return this.http.get('/api/scripts/' + this.translationService.getCurrentLanguage())
+    ScriptService.prototype.getScripts = function (language) {
+        return this.http.get('/api/scripts/' + (language || this.translationService.getCurrentLanguage()))
             .pipe(retry(1), catchError(function (error) {
             if (error.status === 404)
                 return throwError(new NotFoundError(error));
             return throwError(new AppError(error));
         }));
     };
-    ScriptService.prototype.getScript = function (id) {
-        return this.http.get('/api/scripts/' + id + '/' + +this.translationService.getCurrentLanguage())
+    ScriptService.prototype.getScript = function (id, language) {
+        return this.http.get('/api/scripts/' + id + '/' + (language || this.translationService.getCurrentLanguage()))
             .pipe(retry(1), catchError(function (error) {
             if (error.status === 404)
                 return throwError(new NotFoundError(error));

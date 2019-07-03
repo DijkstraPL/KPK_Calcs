@@ -33,28 +33,18 @@
 
         <mat-tab label="{{'scriptsForm.Translations.Header' | translate}}">
             <div class="mat-elevation-z4">
-                <!--<app-translation-form></app-translation-form>-->
+                <app-translation-form [defaultLanguage]="scriptDefaultLanguage.value" 
+                                      [scriptForm]="scriptForm"></app-translation-form>
             </div>
         </mat-tab>
-
-
     </mat-tab-group>
     
     <button mat-stroked-button
             color="accent"
-            *ngIf="!editMode"
             type="submit"
             [disabled]="!scriptForm.valid"
             class="mt-3 ml-3">
-        {{'scriptsForm.AddScript' | translate}}
-    </button>
-    <button mat-stroked-button
-            color="accent"
-            *ngIf="editMode"
-            type="submit"
-            [disabled]="!scriptForm.valid"
-            class="mt-3 ml-3">
-        {{'scriptsForm.UpdateScript' | translate}}
+        {{editMode ? ('scriptsForm.UpdateScript' | translate) : ('scriptsForm.AddScript' | translate)}}
     </button>
 </form>
 

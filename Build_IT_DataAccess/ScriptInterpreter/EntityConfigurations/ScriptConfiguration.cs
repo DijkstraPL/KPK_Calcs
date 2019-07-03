@@ -1,4 +1,5 @@
 ﻿using Build_IT_DataAccess.ScriptInterpreter.Models;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -31,6 +32,12 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 
             builder.Property(s => s.Author)
                 .HasMaxLength(255);
+
+            builder.Property(s => s.Version)
+                .HasMaxLength(50);
+
+            builder.Property(s => s.DefaultLanguage)
+                .HasDefaultValue(Language.English);
 
             builder.Property(s => s.AccordingTo)
                 .HasMaxLength(255);

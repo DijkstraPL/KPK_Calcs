@@ -62,6 +62,7 @@ var ScriptFormComponent = /** @class */ (function () {
             groupName: new FormControl('Other'),
             description: new FormControl('', [Validators.required, Validators.minLength(25), Validators.maxLength(500)]),
             notes: new FormControl('', Validators.maxLength(1000)),
+            defaultLanguage: new FormControl('0', Validators.required),
             tags: new FormArray([])
         });
         this.parametersToShow = 'dataParameters';
@@ -88,6 +89,13 @@ var ScriptFormComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(ScriptFormComponent.prototype, "scriptDefaultLanguage", {
+        get: function () {
+            return this.scriptForm.get('defaultLanguage');
+        },
+        enumerable: true,
+        configurable: true
+    });
     ScriptFormComponent.prototype.ngOnInit = function () {
         var id;
         var sub = this.route.params.subscribe(function (params) {
@@ -101,7 +109,7 @@ var ScriptFormComponent = /** @class */ (function () {
     };
     ScriptFormComponent.prototype.getScript = function (id) {
         var _this = this;
-        this.scriptService.getScript(id).subscribe(function (script) {
+        this.scriptService.getScript(id, "en").subscribe(function (script) {
             console.log("Script", script);
             _this.includeNote = script.notes != null && script.notes != '';
             _this.scriptForm.patchValue(script);

@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ParameterFilter } from '../../../models/enums/parameter-filter';
 import { Parameter } from '../../../models/interfaces/parameter';
@@ -17,6 +17,7 @@ export class ParametersFormComponent implements OnInit {
     filteredParameters: Parameter[];
     newParameter: Parameter = new ParameterImpl();
 
+    @Input('defaultLanguage') defaultLanguage;
     scriptId: number;
     editMode: boolean = false;
     newlyAddedParameter: boolean = false;
@@ -79,7 +80,7 @@ export class ParametersFormComponent implements OnInit {
     }
 
     getParameters(id: number) {
-        this.parameterService.getParameters(id).subscribe(parameters => {
+        this.parameterService.getParameters(id, "en").subscribe(parameters => {
             this.parameters = parameters;
             this.onParametersToShowChange();
             console.log("Parameters", this.parameters);

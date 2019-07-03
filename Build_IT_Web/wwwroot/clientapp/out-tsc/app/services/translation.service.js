@@ -13,9 +13,10 @@ import { Subject, of } from 'rxjs';
 var TranslationService = /** @class */ (function () {
     function TranslationService(translate) {
         this.translate = translate;
+        this.languages = ['en', 'pl'];
         this.onLanguageChanged = new Subject();
         this.languageChanged$ = this.onLanguageChanged.asObservable();
-        this.addLanguages(['en', 'pl']);
+        this.addLanguages(this.languages);
         this.setDefaultLanguage('en');
     }
     TranslationService.prototype.addLanguages = function (lang) {
@@ -65,6 +66,7 @@ var TranslationService = /** @class */ (function () {
     TranslationService.prototype.getTranslationAsync = function (key, interpolateParams) {
         return this.translate.get(key, interpolateParams);
     };
+    TranslationService.LanguageCodes = [{ 'en': 0 }, { 'pl': 1 }];
     TranslationService = __decorate([
         Injectable(),
         __metadata("design:paramtypes", [TranslateService])

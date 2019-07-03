@@ -28,12 +28,34 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
 
         #region Public_Methods
 
+        public async Task<IEnumerable<ScriptTranslation>> GetScriptTranslations(long scriptId)
+        {
+            return await ScriptInterpreterContext.ScriptsTranslations
+                .Where(st => st.ScriptId == scriptId)
+                .ToListAsync();
+        }
+
         public async Task<ScriptTranslation> GetScriptTranslation(long scriptId, Language language)
         {
             return await ScriptInterpreterContext.ScriptsTranslations
                 .SingleOrDefaultAsync(st => st.ScriptId == scriptId && st.Language == language);
         }
+        public async Task<ScriptTranslation> GetScriptTranslation(long id)
+        {
+            return await ScriptInterpreterContext.ScriptsTranslations
+                .SingleOrDefaultAsync(st => st.Id == id);
+        }
 
+        public async Task AddScriptTranslationAsync(ScriptTranslation scriptTranslation)
+        {
+            await ScriptInterpreterContext.AddAsync(scriptTranslation);
+        }
+
+        public void Remove(ScriptTranslation scriptTranslation)
+        {
+            ScriptInterpreterContext.Remove(scriptTranslation);
+        }
+        
         public async Task<ParameterTranslation> GetParameterTranslation(long parameterId, Language language)
         {
             return await ScriptInterpreterContext.ParametersTranslations
@@ -45,7 +67,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
             return await ScriptInterpreterContext.ValueOptionsTranslations
                 .SingleOrDefaultAsync(pt => pt.ValueOptionId == valueOptionId && pt.Language == language);
         }
-
 
         #endregion // Public_Methods
     }

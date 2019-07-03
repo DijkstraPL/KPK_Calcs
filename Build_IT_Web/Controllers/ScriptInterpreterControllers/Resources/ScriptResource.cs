@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +8,8 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources
 {
     public class ScriptResource
     {
+        #region Properties
+        
         public long Id { get; set; }
 
         [Required]
@@ -24,12 +27,19 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources
         [StringLength(255)]
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
-        public ICollection<ParameterResource> Parameters { get; set; } 
+        public Language DefaultLanguage { get; set; }
+        public ICollection<ParameterResource> Parameters { get; set; }
 
+        #endregion // Properties
+
+        #region Constructors
+        
         public ScriptResource()
         {
             Tags = new Collection<TagResource>();
             Parameters = new Collection<ParameterResource>();
         }
+
+        #endregion // Constructors
     }
 }

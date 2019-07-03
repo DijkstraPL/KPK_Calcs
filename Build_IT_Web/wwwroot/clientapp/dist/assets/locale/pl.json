@@ -9,6 +9,7 @@
       "SnowLoads": "Śnieg"
     },
     "Languages": {
+      "Language": "Language",
       "English": "Angielski",
       "Polish": "Polski"
     },
@@ -114,6 +115,10 @@
         "Timber": "Drewno",
         "Soils": "Grunty",
         "Other": "Inne"
+      },
+      "DefaultLanguage": {
+        "Hint": "Wybierz język domyślny",
+        "RequiredError": "Język jest <strong>wymagany</strong>."
       },
       "Description": {
         "Header": "Opis",
@@ -234,7 +239,10 @@
     },
 
     "Translations": {
-      "Header": "Tłumaczenia"
+      "Header": "Tłumaczenia",
+      "Add": "Dodaj Tłumaczenie",
+      "Update": "Aktualizuj Tłumaczenie",
+      "Remove": "Usuń"
     }
   },
 

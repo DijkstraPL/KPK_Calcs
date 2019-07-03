@@ -16,8 +16,8 @@ export class ScriptService {
         private translationService: TranslationService) {
     }
 
-    getScripts(): Observable<Script[]> {
-        return this.http.get<Script[]>('/api/scripts/' + this.translationService.getCurrentLanguage())
+    getScripts(language?: string): Observable<Script[]> {
+        return this.http.get<Script[]>('/api/scripts/' + (language || this.translationService.getCurrentLanguage()))
             .pipe(
                 retry(1),
                 catchError((error: Response) => {
@@ -28,8 +28,8 @@ export class ScriptService {
             );
     }
     
-    getScript(id: number): Observable<Script> {
-        return this.http.get<Script>('/api/scripts/' + id + '/' + this.translationService.getCurrentLanguage())
+    getScript(id: number, language?: string): Observable<Script> {
+        return this.http.get<Script>('/api/scripts/' + id + '/' + (language || this.translationService.getCurrentLanguage()))
             .pipe(
                 retry(1),
                 catchError((error: Response) => {

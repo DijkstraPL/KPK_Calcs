@@ -12,6 +12,8 @@ import { ScriptService } from '../../services/script.service';
 var ScriptCardsComponent = /** @class */ (function () {
     function ScriptCardsComponent(scriptService) {
         this.scriptService = scriptService;
+        this.pageSizeOptions = [5, 10, 25, 50];
+        this.pageSize = 10;
     }
     ScriptCardsComponent.prototype.ngOnInit = function () {
         this.setScript();
@@ -24,11 +26,17 @@ var ScriptCardsComponent = /** @class */ (function () {
                 _this.scripts = _this.scripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
             if (_this.tagFilters != undefined)
                 _this.scripts = _this.scripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
+            _this.activeScripts = _this.scripts.slice(0, _this.pageSize);
             console.log("Scripts", _this.scripts);
         }, function (error) { return console.error(error); });
     };
     ScriptCardsComponent.prototype.onDeleted = function (script) {
         this.scripts = this.scripts.filter(function (s) { return s.id != script.id; });
+    };
+    ScriptCardsComponent.prototype.onPageChanged = function (e) {
+        var firstCut = e.pageIndex * e.pageSize;
+        var secondCut = firstCut + e.pageSize;
+        this.activeScripts = this.scripts.slice(firstCut, secondCut);
     };
     __decorate([
         Input('groupFilters'),

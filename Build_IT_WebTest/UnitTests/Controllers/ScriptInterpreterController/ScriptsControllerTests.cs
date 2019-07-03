@@ -134,7 +134,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             _mapper.Verify(m => m.Map<Script, ScriptResource>(script));
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.TypeOf(typeof(OkObjectResult)));
-            Assert.That(script.Version, Is.EqualTo(1));
+            Assert.That(script.Version, Is.EqualTo("1"));
         }
 
 
@@ -158,7 +158,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         public void UpdateScriptTest_Success()
         {
             var scriptResource = new ScriptResource();
-            var script = new Script { Version = 1 };
+            var script = new Script { Version = "1" };
             _mapper.Setup(m => m.Map<ScriptResource, Script>(scriptResource, script))
                 .Returns(script);
             _mapper.Setup(m => m.Map<Script, ScriptResource>(script))
@@ -182,7 +182,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             _mapper.Verify(m => m.Map<Script, ScriptResource>(script));
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.TypeOf(typeof(OkObjectResult)));
-            Assert.That(script.Version, Is.EqualTo(1.1).Within(0.001));
+            Assert.That(script.Version, Is.EqualTo("1"));
             Assert.That(script.Modified, Is.GreaterThan(script.Added));
         }
 
