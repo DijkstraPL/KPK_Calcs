@@ -7,20 +7,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { TranslationService } from "../../../../services/translation.service";
-var ScriptTranslationService = /** @class */ (function () {
-    function ScriptTranslationService(http, translationService) {
+import { Injectable } from "@angular/core";
+import { throwError } from "rxjs";
+import { catchError, retry } from "rxjs/operators";
+import { AppError } from "../../../../common/errors/app-error";
+import { NotFoundError } from "../../../../common/errors/not-found-error";
+var ParameterTranslationService = /** @class */ (function () {
+    function ParameterTranslationService(http) {
         this.http = http;
-        this.translationService = translationService;
     }
-    ScriptTranslationService = __decorate([
+    ParameterTranslationService.prototype.getParametersTranslation = function (scriptId, language) {
+        return this.http.get('/api/parametersTranslations/' + scriptId + '/' + language)
+            .pipe(retry(1), catchError(function (error) {
+            if (error.status === 404)
+                return throwError(new NotFoundError(error));
+            return throwError(new AppError(error));
+        }));
+    };
+    ParameterTranslationService = __decorate([
         Injectable({ providedIn: 'root' }),
-        __metadata("design:paramtypes", [HttpClient,
-            TranslationService])
-    ], ScriptTranslationService);
-    return ScriptTranslationService;
+        __metadata("design:paramtypes", [HttpClient])
+    ], ParameterTranslationService);
+    return ParameterTranslationService;
 }());
-export { ScriptTranslationService };
+export { ParameterTranslationService };
 //# sourceMappingURL=parameter-translation.service.js.map

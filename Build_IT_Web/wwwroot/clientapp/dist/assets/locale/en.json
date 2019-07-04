@@ -205,6 +205,11 @@
           "Hint": "Data validator",
           "MaxLengthError": "Data validator should be maximum {{requiredLength}} characters long."
         },
+        "Note": {
+          "Header": "Note",
+          "Hint": "Additional notes for parameter",
+          "MaxLengthError": "Note should be maximum {{requiredLength}} characters long."
+        },
         "Update": "Update"
       },
       "Add": "Add",

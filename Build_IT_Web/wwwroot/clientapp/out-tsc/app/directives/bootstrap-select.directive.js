@@ -34,8 +34,8 @@ var BootstrapSelectDirective = /** @class */ (function () {
         configurable: true
     });
     BootstrapSelectDirective.prototype.ngOnInit = function () {
+        //$(this.el.nativeElement).selectpicker();
         var _this = this;
-        $(this.el.nativeElement).selectpicker();
         if (this.requiredAttribute) {
             $(this.el.nativeElement).selectpicker('setStyle', 'required', 'add');
         }
@@ -62,10 +62,10 @@ var BootstrapSelectDirective = /** @class */ (function () {
             (newValue instanceof Array && newValue.length === this.oldValues.length && newValue.every(function (v, i) { return v === _this.oldValues[i]; })));
     };
     BootstrapSelectDirective.prototype.doValidation = function () {
-        if (this.requiredAttribute) {
-            $(this.el.nativeElement).selectpicker('setStyle', !this.valid ? 'ng-valid' : 'ng-invalid', 'remove');
-            $(this.el.nativeElement).selectpicker('setStyle', this.valid ? 'ng-valid' : 'ng-invalid', 'add');
-        }
+        //if (this.requiredAttribute) {
+        //    $(this.el.nativeElement).selectpicker('setStyle', !this.valid ? 'ng-valid' : 'ng-invalid', 'remove');
+        //    $(this.el.nativeElement).selectpicker('setStyle', this.valid ? 'ng-valid' : 'ng-invalid', 'add');
+        //}
     };
     Object.defineProperty(BootstrapSelectDirective.prototype, "requiredAttribute", {
         get: function () {
@@ -75,16 +75,14 @@ var BootstrapSelectDirective = /** @class */ (function () {
         configurable: true
     });
     BootstrapSelectDirective.prototype.refresh = function () {
-        var _this = this;
-        setTimeout(function () {
-            $(_this.el.nativeElement).selectpicker('refresh');
-        });
+        //setTimeout(() => {
+        //    $(this.el.nativeElement).selectpicker('refresh');
+        //});
     };
     BootstrapSelectDirective.prototype.render = function () {
-        var _this = this;
-        setTimeout(function () {
-            $(_this.el.nativeElement).selectpicker('render');
-        });
+        //setTimeout(() => {
+        //    $(this.el.nativeElement).selectpicker('render');
+        //});
     };
     Object.defineProperty(BootstrapSelectDirective.prototype, "valid", {
         get: function () {
@@ -95,14 +93,15 @@ var BootstrapSelectDirective = /** @class */ (function () {
     });
     Object.defineProperty(BootstrapSelectDirective.prototype, "selected", {
         get: function () {
-            return $(this.el.nativeElement).selectpicker('val');
+            //return $(this.el.nativeElement).selectpicker('val');
+            return '';
         },
         set: function (values) {
             if (!this.checkIsValuesChanged(values)) {
                 return;
             }
             this.oldValues = this.selected;
-            $(this.el.nativeElement).selectpicker('val', values);
+            //$(this.el.nativeElement).selectpicker('val', values);
             this.doValidation();
         },
         enumerable: true,

@@ -7,18 +7,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { TranslationService } from "../../../../services/translation.service";
+import { Injectable } from "@angular/core";
 import { throwError } from "rxjs";
-import { retry, catchError } from "rxjs/operators";
-import { NotFoundError } from "../../../../common/errors/not-found-error";
+import { catchError, retry } from "rxjs/operators";
 import { AppError } from "../../../../common/errors/app-error";
 import { BadInputError } from "../../../../common/errors/bad-input-error";
+import { NotFoundError } from "../../../../common/errors/not-found-error";
 var ScriptTranslationService = /** @class */ (function () {
-    function ScriptTranslationService(http, translationService) {
+    function ScriptTranslationService(http) {
         this.http = http;
-        this.translationService = translationService;
     }
     ScriptTranslationService.prototype.getScriptTranslation = function (scriptId, language) {
         return this.http.get('/api/scriptsTranslations/' + scriptId + '/' + language)
@@ -58,8 +56,7 @@ var ScriptTranslationService = /** @class */ (function () {
     };
     ScriptTranslationService = __decorate([
         Injectable({ providedIn: 'root' }),
-        __metadata("design:paramtypes", [HttpClient,
-            TranslationService])
+        __metadata("design:paramtypes", [HttpClient])
     ], ScriptTranslationService);
     return ScriptTranslationService;
 }());

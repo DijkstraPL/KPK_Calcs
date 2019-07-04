@@ -1,20 +1,18 @@
-﻿import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { TranslationService } from "../../../../services/translation.service";
+﻿import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
-import { ScriptTranslation } from "../../models/interfaces/translations/scriptTranslation";
-import { Language } from "../../models/enums/language";
-import { retry, catchError } from "rxjs/operators";
-import { NotFoundError } from "../../../../common/errors/not-found-error";
+import { catchError, retry } from "rxjs/operators";
 import { AppError } from "../../../../common/errors/app-error";
 import { BadInputError } from "../../../../common/errors/bad-input-error";
+import { NotFoundError } from "../../../../common/errors/not-found-error";
+import { Language } from "../../models/enums/language";
+import { ScriptTranslation } from "../../models/interfaces/translations/scriptTranslation";
 
 
 @Injectable({ providedIn: 'root' })
 export class ScriptTranslationService {
 
-    constructor(private http: HttpClient,
-        private translationService: TranslationService) {
+    constructor(private http: HttpClient) {
     }
 
     getScriptTranslation(scriptId: number, language: Language): Observable<ScriptTranslation> {

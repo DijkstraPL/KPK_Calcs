@@ -2,6 +2,7 @@
 using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
+using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources.Translations;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;

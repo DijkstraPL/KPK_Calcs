@@ -1,11 +1,10 @@
-﻿import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-state-matcher';
+﻿import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-state-matcher';
 import { Language } from '../../../models/enums/language';
-import { ScriptTranslationService } from '../../../services/translations/script-translation.service';
 import { ScriptTranslation } from '../../../models/interfaces/translations/scriptTranslation';
-import { ParameterService } from '../../../services/parameter.service';
+import { ScriptTranslationService } from '../../../services/translations/script-translation.service';
 
 @Component({
     selector: 'app-translation-form',
@@ -27,10 +26,8 @@ export class TranslationFormComponent implements OnInit {
     @Input('scriptForm') scriptForm: FormGroup;
     languages = Language;
 
-    scriptId: number;
     matcher = new AppErrorStateMatcher();
-    editMode: boolean;
-    parameters: any;
+    translationData = { editMode: false, scriptId: 0 };
 
     get originalName(): AbstractControl {
         return this.scriptForm.get('name');
@@ -65,53 +62,27 @@ export class TranslationFormComponent implements OnInit {
     }
 
     constructor(private scriptTranslationService: ScriptTranslationService,
-       // private parameterTranslationService: ParameterTranslationService,
-        private parameterService: ParameterService,
         private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
-            this.scriptId = +params['id'];
+            this.translationData.scriptId = +params['id'];
         });
 
-        this.translationScriptId.setValue(this.scriptId);
+        this.translationScriptId.setValue(this.translationData.scriptId);
         if (this.defaultLanguage == this.languages.english)
             this.translationLanguage.setValue(this.languages.polish);
         else
             this.translationLanguage.setValue(this.languages.english);
-
-        this.getScriptTranslation(this.translationLanguage.value);
-        this.getParameters();
-        this.getParametersTranslations(this.translationLanguage.value);
-    }
-
-    onLanguageChange($event) {
-        this.getScriptTranslation($event.value);
-    }
-
-    private getScriptTranslation(language: Language) {
-        this.scriptTranslationService.getScriptTranslation(this.scriptId, language)
-            .subscribe(translation => {
-                if (translation) {
-                    this.translationForm.patchValue(translation);
-                    this.editMode = true;
-                }
-                else
-                    this.editMode = false;
-            });
-    }
-
-    private getParametersTranslations(language: Language) {
-        //this.parameterTranslationService
     }
 
     onScriptTranslationSubmit() {
-        if (!this.editMode)
+        if (!this.translationData.editMode)
             this.scriptTranslationService.create(this.translationForm.value)
                 .subscribe((scriptTranslation: ScriptTranslation) => {
                     this.translationForm.patchValue(scriptTranslation);
-                    this.editMode = true;
+                    this.translationData.editMode = true;
                 }, error => { throw error });
         else
             this.scriptTranslationService.update(this.translationForm.value)
@@ -123,15 +94,9 @@ export class TranslationFormComponent implements OnInit {
         this.scriptTranslationService.remove(this.translationId.value)
             .subscribe((scriptTranslation: ScriptTranslation) => {
                 this.translationForm.reset();
-                this.editMode = false;
-                this.translationScriptId.setValue(this.scriptId);
+                this.translationData.editMode = false;
+                this.translationScriptId.setValue(this.translationData.scriptId);
                 this.translationLanguage.setValue(selectedLanguage);
             });
-    }
-    
-    getParameters() {
-        this.parameterService.getParameters(this.scriptId, this.originalDefaultLanguage.value).subscribe(parameters => {
-            this.parameters = parameters;
-        }, error => console.error(error));
     }
 }

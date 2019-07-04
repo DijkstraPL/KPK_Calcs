@@ -86,7 +86,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             script.Added = DateTime.Now;
             script.Modified = DateTime.Now;
             script.Version = "1";
-            _scriptRepository.AddAsync(script);
+            await _scriptRepository.AddAsync(script);
             await _unitOfWork.CompleteAsync();
 
             var result = _mapper.Map<Script, ScriptResource>(script);

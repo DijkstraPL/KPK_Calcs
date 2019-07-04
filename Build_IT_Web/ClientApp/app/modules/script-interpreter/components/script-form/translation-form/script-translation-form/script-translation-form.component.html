@@ -1,0 +1,69 @@
+﻿<div [formGroup]="translationForm">
+    <mat-form-field class="m-2">
+        <mat-label>{{'app.Languages.Language' | translate}}</mat-label>
+        <mat-select matNativeControl
+                    formControlName="language"
+                    required
+                    #languagesSelector
+                    (selectionChange)="onLanguageChange($event)">
+            <mat-option [value]="languages.english"
+                        *ngIf="defaultLanguage != languages.english">
+                {{'app.Languages.English'| translate}}
+            </mat-option>
+            <mat-option [value]="languages.polish"
+                        *ngIf="defaultLanguage != languages.polish">
+                {{'app.Languages.Polish'| translate}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="m-2 form-medium">
+        <input matInput
+               required
+               placeholder="{{'scriptsForm.ScriptData.Name.Header' | translate}}"
+               formControlName="name"
+               [errorStateMatcher]="matcher"
+               autocomplete="off" />
+        <mat-hint>{{originalName.value}}</mat-hint>
+        <mat-error *ngIf="translationName && translationName.hasError('minlength') && !translationName.hasError('required')">
+            {{'scriptsForm.ScriptData.Name.MinLengthError' | translate:scriptName.errors.minlength}}
+        </mat-error>
+        <mat-error *ngIf="translationName && translationName.hasError('maxlength') && !translationName.hasError('required')">
+            {{'scriptsForm.ScriptData.Name.MaxLengthError' | translate:scriptName.errors.maxlength}}
+        </mat-error>
+        <mat-error *ngIf="translationName && translationName.hasError('required')"
+                   [innerHtml]="'scriptsForm.ScriptData.Name.RequiredError' | translate">
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="m-2 full-width">
+        <textarea matInput
+                  placeholder="{{'scriptsForm.ScriptData.Description.Header' | translate}}"
+                  formControlName="description"
+                  required
+                  [errorStateMatcher]="matcher"
+                  autocomplete="off"></textarea>
+        <mat-hint>{{originalDescription.value}}</mat-hint>
+        <mat-error *ngIf="translationDescription && translationDescription.hasError('minlength') && !translationDescription.hasError('required')">
+            {{'scriptsForm.ScriptData.Description.MinLengthError' | translate:scriptDescription.errors.minlength}}
+        </mat-error>
+        <mat-error *ngIf="translationDescription && translationDescription.hasError('maxlength') && !translationDescription.hasError('required')">
+            {{'scriptsForm.ScriptData.Description.MaxLengthError' | translate:scriptDescription.errors.maxlength}}
+        </mat-error>
+        <mat-error *ngIf="translationDescription && translationDescription.hasError('required')"
+                   [innerHtml]="'scriptsForm.ScriptData.Description.RequiredError' | translate">
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="m-2 full-width">
+        <textarea matInput
+                  placeholder="{{'scriptsForm.ScriptData.Note.Header' | translate}}"
+                  formControlName="notes"
+                  [errorStateMatcher]="matcher"
+                  autocomplete="off"></textarea>
+        <mat-hint>{{originalNotes.value}}</mat-hint>
+        <mat-error *ngIf="translationNotes && translationNotes.hasError('maxlength')">
+            {{'scriptsForm.ScriptData.Note.MaxLengthError' | translate:scriptNotes.errors.maxlength}}
+        </mat-error>
+    </mat-form-field>
+</div>

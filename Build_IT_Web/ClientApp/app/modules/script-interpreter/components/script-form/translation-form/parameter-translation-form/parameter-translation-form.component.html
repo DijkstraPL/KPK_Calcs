@@ -1,0 +1,49 @@
+﻿<mat-accordion>
+    <mat-expansion-panel *ngFor="let parameter of parameters">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <span [innerHtml]="parameter.name | html"></span>&nbsp;- {{parameter.description}}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <!--<mat-form-field class="m-2"
+                        *ngIf="parameter.groupName">
+            <mat-label>{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}</mat-label>
+            <input matInput
+                   placeholder="{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}"
+                   formControlName="groupName"
+                   [errorStateMatcher]="matcher"
+                   autocomplete="off" />
+            <mat-hint>{{parameter.groupName}}</mat-hint>
+            <mat-error *ngIf="parameterGroupName && parameterGroupName.hasError('maxlength')">
+                {{'scriptsForm.Parameters.EditMode.GroupName.MaxLengthError' | translate:parameterGroupName.errors.maxlength}}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="m-2 full-width">
+            <textarea matInput
+                      placeholder="{{'scriptsForm.Parameters.EditMode.Description.Header' | translate}}"
+                      formControlName="description"
+                      [errorStateMatcher]="matcher"
+                      autocomplete="off"></textarea>
+            <mat-hint>{{parameter.description}}</mat-hint>
+            <mat-error *ngIf="parameterDescription && parameterDescription.hasError('maxlength')">
+                {{'scriptsForm.Parameters.EditMode.Description.MaxLengthError' | translate:parameterDescription.errors.maxlength}}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="m-2 full-width"
+                        *ngIf="parameter.notes">
+            <textarea matInput
+                      placeholder="{{'scriptsForm.Parameters.EditMode.Note.Header' | translate}}"
+                      formControlName="notes"
+                      [errorStateMatcher]="matcher"
+                      autocomplete="off"></textarea>
+            <mat-hint>{{parameter.notes}}</mat-hint>
+            <mat-error *ngIf="parameterNotes && parameterNotes.hasError('maxlength')">
+                {{'scriptsForm.Parameters.EditMode.Note.MaxLengthError' | translate:parameterNotes.errors.maxlength}}
+            </mat-error>
+        </mat-form-field>-->
+
+    </mat-expansion-panel>
+</mat-accordion>

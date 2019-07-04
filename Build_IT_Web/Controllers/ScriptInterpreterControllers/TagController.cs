@@ -72,7 +72,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
             var tag = _mapper.Map<TagResource, Tag>(tagResource);
 
-            _tagRepository.AddAsync(tag);
+            await _tagRepository.AddAsync(tag);
             await _unitOfWork.CompleteAsync();
 
             var result = _mapper.Map<Tag, TagResource>(tag);

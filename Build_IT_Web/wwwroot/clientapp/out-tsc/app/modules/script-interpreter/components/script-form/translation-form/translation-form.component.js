@@ -8,18 +8,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-state-matcher';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-state-matcher';
 import { Language } from '../../../models/enums/language';
 import { ScriptTranslationService } from '../../../services/translations/script-translation.service';
-import { ParameterService } from '../../../services/parameter.service';
 var TranslationFormComponent = /** @class */ (function () {
-    function TranslationFormComponent(scriptTranslationService, 
-    // private parameterTranslationService: ParameterTranslationService,
-    parameterService, route) {
+    function TranslationFormComponent(scriptTranslationService, route) {
         this.scriptTranslationService = scriptTranslationService;
-        this.parameterService = parameterService;
         this.route = route;
         this.translationForm = new FormGroup({
             id: new FormControl('0'),
@@ -31,6 +27,7 @@ var TranslationFormComponent = /** @class */ (function () {
         });
         this.languages = Language;
         this.matcher = new AppErrorStateMatcher();
+        this.translationData = { editMode: false, scriptId: 0 };
     }
     Object.defineProperty(TranslationFormComponent.prototype, "originalName", {
         get: function () {
@@ -105,42 +102,21 @@ var TranslationFormComponent = /** @class */ (function () {
     TranslationFormComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params.subscribe(function (params) {
-            _this.scriptId = +params['id'];
+            _this.translationData.scriptId = +params['id'];
         });
-        this.translationScriptId.setValue(this.scriptId);
+        this.translationScriptId.setValue(this.translationData.scriptId);
         if (this.defaultLanguage == this.languages.english)
             this.translationLanguage.setValue(this.languages.polish);
         else
             this.translationLanguage.setValue(this.languages.english);
-        this.getScriptTranslation(this.translationLanguage.value);
-        this.getParameters();
-        this.getParametersTranslations(this.translationLanguage.value);
-    };
-    TranslationFormComponent.prototype.onLanguageChange = function ($event) {
-        this.getScriptTranslation($event.value);
-    };
-    TranslationFormComponent.prototype.getScriptTranslation = function (language) {
-        var _this = this;
-        this.scriptTranslationService.getScriptTranslation(this.scriptId, language)
-            .subscribe(function (translation) {
-            if (translation) {
-                _this.translationForm.patchValue(translation);
-                _this.editMode = true;
-            }
-            else
-                _this.editMode = false;
-        });
-    };
-    TranslationFormComponent.prototype.getParametersTranslations = function (language) {
-        //this.parameterTranslationService
     };
     TranslationFormComponent.prototype.onScriptTranslationSubmit = function () {
         var _this = this;
-        if (!this.editMode)
+        if (!this.translationData.editMode)
             this.scriptTranslationService.create(this.translationForm.value)
                 .subscribe(function (scriptTranslation) {
                 _this.translationForm.patchValue(scriptTranslation);
-                _this.editMode = true;
+                _this.translationData.editMode = true;
             }, function (error) { throw error; });
         else
             this.scriptTranslationService.update(this.translationForm.value)
@@ -152,16 +128,10 @@ var TranslationFormComponent = /** @class */ (function () {
         this.scriptTranslationService.remove(this.translationId.value)
             .subscribe(function (scriptTranslation) {
             _this.translationForm.reset();
-            _this.editMode = false;
-            _this.translationScriptId.setValue(_this.scriptId);
+            _this.translationData.editMode = false;
+            _this.translationScriptId.setValue(_this.translationData.scriptId);
             _this.translationLanguage.setValue(selectedLanguage);
         });
-    };
-    TranslationFormComponent.prototype.getParameters = function () {
-        var _this = this;
-        this.parameterService.getParameters(this.scriptId, this.originalDefaultLanguage.value).subscribe(function (parameters) {
-            _this.parameters = parameters;
-        }, function (error) { return console.error(error); });
     };
     __decorate([
         Input('defaultLanguage'),
@@ -178,7 +148,6 @@ var TranslationFormComponent = /** @class */ (function () {
             styleUrls: ['./translation-form.component.scss']
         }),
         __metadata("design:paramtypes", [ScriptTranslationService,
-            ParameterService,
             ActivatedRoute])
     ], TranslationFormComponent);
     return TranslationFormComponent;

@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
-using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
 using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
-using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
-using Build_IT_Web.Services;
-using Build_IT_Web.Services.Interfaces;
+using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources.Translations;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

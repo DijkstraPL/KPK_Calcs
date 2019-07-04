@@ -75,7 +75,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             script.Modified = DateTime.Now;
             parameter.Script = script;
 
-            _parameterRepository.AddAsync(parameter);
+            await _parameterRepository.AddAsync(parameter);
             await _unitOfWork.CompleteAsync();
 
             var result = _mapper.Map<Parameter, ParameterResource>(parameter);

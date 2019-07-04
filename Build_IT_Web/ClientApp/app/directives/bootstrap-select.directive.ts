@@ -47,7 +47,7 @@ export class BootstrapSelectDirective implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-        $(this.el.nativeElement).selectpicker();
+        //$(this.el.nativeElement).selectpicker();
 
         if (this.requiredAttribute) {
             $(this.el.nativeElement).selectpicker('setStyle', 'required', 'add');
@@ -82,10 +82,10 @@ export class BootstrapSelectDirective implements OnInit, OnDestroy {
     }
 
     private doValidation() {
-        if (this.requiredAttribute) {
-            $(this.el.nativeElement).selectpicker('setStyle', !this.valid ? 'ng-valid' : 'ng-invalid', 'remove');
-            $(this.el.nativeElement).selectpicker('setStyle', this.valid ? 'ng-valid' : 'ng-invalid', 'add');
-        }
+        //if (this.requiredAttribute) {
+        //    $(this.el.nativeElement).selectpicker('setStyle', !this.valid ? 'ng-valid' : 'ng-invalid', 'remove');
+        //    $(this.el.nativeElement).selectpicker('setStyle', this.valid ? 'ng-valid' : 'ng-invalid', 'add');
+        //}
     }
 
     private get requiredAttribute() {
@@ -94,15 +94,15 @@ export class BootstrapSelectDirective implements OnInit, OnDestroy {
 
 
     refresh() {
-        setTimeout(() => {
-            $(this.el.nativeElement).selectpicker('refresh');
-        });
+        //setTimeout(() => {
+        //    $(this.el.nativeElement).selectpicker('refresh');
+        //});
     }
 
     render() {
-        setTimeout(() => {
-            $(this.el.nativeElement).selectpicker('render');
-        });
+        //setTimeout(() => {
+        //    $(this.el.nativeElement).selectpicker('render');
+        //});
     }
 
 
@@ -118,12 +118,13 @@ export class BootstrapSelectDirective implements OnInit, OnDestroy {
         }
 
         this.oldValues = this.selected;
-        $(this.el.nativeElement).selectpicker('val', values);
+        //$(this.el.nativeElement).selectpicker('val', values);
         this.doValidation();
     }
 
 
     get selected(): string | string[] {
-        return $(this.el.nativeElement).selectpicker('val');
+        //return $(this.el.nativeElement).selectpicker('val');
+        return '';
     }
 }

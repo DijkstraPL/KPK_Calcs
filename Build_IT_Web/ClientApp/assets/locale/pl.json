@@ -205,6 +205,11 @@
           "Hint": "Walidacja danych",
           "MaxLengthError": "Walidacja danych może mieć maksymalnie {{requiredLength}} znaków."
         },
+        "Note": {
+          "Header": "Notatka",
+          "Hint": "Dodatkowe komentarze do parametru",
+          "MaxLengthError": "Notatka nie może przekraczać {{requiredLength}} znaków."
+        },
         "Update": "Aktualizuj"
       },
       "Add": "Dodaj",

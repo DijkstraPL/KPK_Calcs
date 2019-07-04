@@ -26,6 +26,8 @@ import { ParameterResultComponent } from './components/script-calculator/paramet
 import { ValueOptionsFormComponent } from './components/script-form/parameters-form/data-parameter-form/value-options-form/value-options-form.component';
 import { ScriptDataFormComponent } from './components/script-form/script-data-form/script-data-form.component';
 import { TranslationFormComponent } from './components/script-form/translation-form/translation-form.component';
+import { ScriptTranslationFormComponent } from './components/script-form/translation-form/script-translation-form/script-translation-form.component';
+import { ParameterTranslationFormComponent } from './components/script-form/translation-form/parameter-translation-form/parameter-translation-form.component';
 import { ParameterCheckboxComponent } from './components/script-calculator/parameter-inputs/checkbox/parameter-checkbox.component';
 import { FigureParameterFormComponent } from './components/script-form/parameters-form/data-parameter-form/figure-parameter-form/figure-parameter-form.component';
 import { ParameterFiguresComponent } from './components/script-calculator/parameter-inputs/figures/parameter-figures.component';
@@ -34,6 +36,8 @@ import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
 import { CalculationService } from './services/calculation.service';
 import { ParameterService } from './services/parameter.service';
+import { ParameterTranslationService } from './services/translations/parameter-translation.service';
+import { ScriptTranslationService } from './services/translations/script-translation.service';
 import { AppErrorHandler } from './../../common/errors/app-error-handler';
 import { PipesModule } from '../pipes-module/pipes.module';
 import { MdComponentsModule } from '../md-components-module/md-components.module';
@@ -65,7 +69,9 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 ParameterCheckboxComponent,
                 FigureParameterFormComponent,
                 ParameterFiguresComponent,
-                ExistingFiguresDialogComponent
+                ExistingFiguresDialogComponent,
+                ScriptTranslationFormComponent,
+                ParameterTranslationFormComponent
             ],
             imports: [
                 PipesModule,
@@ -95,6 +101,8 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 CalculationService,
                 ParameterService,
                 FigureService,
+                ScriptTranslationService,
+                ParameterTranslationService,
                 { provide: ErrorHandler, useClass: AppErrorHandler }
             ]
         })
