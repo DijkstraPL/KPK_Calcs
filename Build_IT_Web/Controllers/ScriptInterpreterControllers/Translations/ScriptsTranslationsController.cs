@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
+namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Translations
 {
     [Route("api/scriptsTranslations")]
     [ApiController]
@@ -109,7 +109,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             if (scriptTranslation == null)
                 return NotFound();
 
-            _translationRepository.Remove(scriptTranslation);
+            _translationRepository.RemoveScriptTranslation(scriptTranslation);
             await _unitOfWork.CompleteAsync();
 
             return Ok(scriptTranslationId);

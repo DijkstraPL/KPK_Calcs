@@ -315,7 +315,7 @@ module.exports = "<mat-form-field class=\"w-75 m-2\">\r\n    <mat-chip-list #chi
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-accordion>\r\n    <mat-expansion-panel *ngFor=\"let parameter of parameters\">\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                <span [innerHtml]=\"parameter.name | html\"></span>&nbsp;- {{parameter.description}}\r\n            </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n\r\n        <!--<mat-form-field class=\"m-2\"\r\n                        *ngIf=\"parameter.groupName\">\r\n            <mat-label>{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}</mat-label>\r\n            <input matInput\r\n                   placeholder=\"{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}\"\r\n                   formControlName=\"groupName\"\r\n                   [errorStateMatcher]=\"matcher\"\r\n                   autocomplete=\"off\" />\r\n            <mat-hint>{{parameter.groupName}}</mat-hint>\r\n            <mat-error *ngIf=\"parameterGroupName && parameterGroupName.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.GroupName.MaxLengthError' | translate:parameterGroupName.errors.maxlength}}\r\n            </mat-error>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 full-width\">\r\n            <textarea matInput\r\n                      placeholder=\"{{'scriptsForm.Parameters.EditMode.Description.Header' | translate}}\"\r\n                      formControlName=\"description\"\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>{{parameter.description}}</mat-hint>\r\n            <mat-error *ngIf=\"parameterDescription && parameterDescription.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.Description.MaxLengthError' | translate:parameterDescription.errors.maxlength}}\r\n            </mat-error>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 full-width\"\r\n                        *ngIf=\"parameter.notes\">\r\n            <textarea matInput\r\n                      placeholder=\"{{'scriptsForm.Parameters.EditMode.Note.Header' | translate}}\"\r\n                      formControlName=\"notes\"\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>{{parameter.notes}}</mat-hint>\r\n            <mat-error *ngIf=\"parameterNotes && parameterNotes.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.Note.MaxLengthError' | translate:parameterNotes.errors.maxlength}}\r\n            </mat-error>\r\n        </mat-form-field>-->\r\n\r\n    </mat-expansion-panel>\r\n</mat-accordion>\r\n"
+module.exports = "<mat-accordion>\r\n    <mat-expansion-panel *ngFor=\"let mappedParameter of mappedParameters\">\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                <span [innerHtml]=\"mappedParameter.parameter.name | html\"></span>&nbsp;- {{mappedParameter.parameter.description}}\r\n            </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n\r\n        <mat-form-field class=\"m-2\"\r\n                        *ngIf=\"mappedParameter.parameter.groupName\">\r\n            <mat-label>{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}</mat-label>\r\n            <input matInput\r\n                   placeholder=\"{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}\"\r\n                   [(ngModel)]=\"mappedParameter.translation.groupName\"\r\n                   [errorStateMatcher]=\"matcher\"\r\n                   autocomplete=\"off\" />\r\n            <mat-hint>{{mappedParameter.parameter.groupName}}</mat-hint>\r\n            <!--<mat-error *ngIf=\"parameterGroupName && parameterGroupName.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.GroupName.MaxLengthError' | translate:parameterGroupName.errors.maxlength}}\r\n            </mat-error>-->\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 full-width\">\r\n            <textarea matInput\r\n                      placeholder=\"{{'scriptsForm.Parameters.EditMode.Description.Header' | translate}}\"\r\n                       [(ngModel)]=\"mappedParameter.translation.description\"\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>{{mappedParameter.parameter.description}}</mat-hint>\r\n            <!--<mat-error *ngIf=\"parameterDescription && parameterDescription.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.Description.MaxLengthError' | translate:parameterDescription.errors.maxlength}}\r\n            </mat-error>-->\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 full-width\"\r\n                        *ngIf=\"mappedParameter.parameter.notes\">\r\n            <textarea matInput\r\n                      placeholder=\"{{'scriptsForm.Parameters.EditMode.Note.Header' | translate}}\"\r\n                       [(ngModel)]=\"mappedParameter.translation.notes\"\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>{{mappedParameter.parameter.notes}}</mat-hint>\r\n            <!--<mat-error *ngIf=\"parameterNotes && parameterNotes.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.Note.MaxLengthError' | translate:parameterNotes.errors.maxlength}}\r\n            </mat-error>-->\r\n        </mat-form-field>\r\n\r\n    </mat-expansion-panel>\r\n</mat-accordion>\r\n"
 
 /***/ }),
 
@@ -4351,10 +4351,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ParameterTranslationFormComponent", function() { return ParameterTranslationFormComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "../node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../common/errors/app-error-state-matcher */ "./app/common/errors/app-error-state-matcher.ts");
-/* harmony import */ var _models_enums_language__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../models/enums/language */ "./app/modules/script-interpreter/models/enums/language.ts");
-/* harmony import */ var _services_parameter_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../services/parameter.service */ "./app/modules/script-interpreter/services/parameter.service.ts");
-/* harmony import */ var _services_translations_parameter_translation_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../services/translations/parameter-translation.service */ "./app/modules/script-interpreter/services/translations/parameter-translation.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "../node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../common/errors/app-error-state-matcher */ "./app/common/errors/app-error-state-matcher.ts");
+/* harmony import */ var _models_enums_language__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../models/enums/language */ "./app/modules/script-interpreter/models/enums/language.ts");
+/* harmony import */ var _services_parameter_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../services/parameter.service */ "./app/modules/script-interpreter/services/parameter.service.ts");
+/* harmony import */ var _services_translations_parameter_translation_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../services/translations/parameter-translation.service */ "./app/modules/script-interpreter/services/translations/parameter-translation.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4364,6 +4365,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -4384,8 +4386,9 @@ var ParameterTranslationFormComponent = /** @class */ (function () {
                 language: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('0')
             })
         ]);
-        this.languages = _models_enums_language__WEBPACK_IMPORTED_MODULE_3__["Language"];
-        this.matcher = new _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_2__["AppErrorStateMatcher"]();
+        this.languages = _models_enums_language__WEBPACK_IMPORTED_MODULE_4__["Language"];
+        this.matcher = new _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_3__["AppErrorStateMatcher"]();
+        this.mappedParameters = [];
     }
     Object.defineProperty(ParameterTranslationFormComponent.prototype, "translationLanguage", {
         get: function () {
@@ -4395,28 +4398,41 @@ var ParameterTranslationFormComponent = /** @class */ (function () {
         configurable: true
     });
     ParameterTranslationFormComponent.prototype.ngOnInit = function () {
-        this.getParameters();
-        this.getParametersTranslations();
+        var _this = this;
+        var parameters$ = this.getParameters();
+        var parametersTranslations$ = this.getParametersTranslations();
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["forkJoin"])([parameters$, parametersTranslations$]).subscribe(function (results) {
+            _this.parameters = results[0];
+            results[1].forEach(function (pt) { return _this.parametersTranslationsForm.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+                id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](pt.id),
+                parameterId: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](pt.parameterId),
+                description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](pt.description),
+                notes: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](pt.notes),
+                groupName: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](pt.groupName),
+                language: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](pt.language)
+            })); });
+            _this.setMappedParameters();
+        });
+    };
+    ParameterTranslationFormComponent.prototype.setMappedParameters = function () {
+        var _this = this;
+        var parametersTranslation = this.parametersTranslationsForm.value;
+        this.parameters.forEach(function (p) {
+            var mappedParameter = { parameter: p, translation: parametersTranslation.find(function (pt) { return pt.parameterId == p.id; }) };
+            console.log(mappedParameter);
+            _this.mappedParameters.push(mappedParameter);
+            console.log(_this.mappedParameters);
+        });
     };
     ParameterTranslationFormComponent.prototype.getParametersTranslations = function () {
-        var _this = this;
-        this.parameterTranslationService.getParametersTranslation(this.translationData.scriptId, this.translationLanguage.value)
-            .subscribe(function (parametersTranslations) {
-            console.log(parametersTranslations);
-            _this.parametersTranslationsForm.patchValue(parametersTranslations);
-            console.log(_this.parametersTranslationsForm);
-        });
+        return this.parameterTranslationService.getParametersTranslation(this.translationData.scriptId, this.translationLanguage.value);
     };
     ParameterTranslationFormComponent.prototype.getParameters = function () {
-        var _this = this;
-        this.parameterService.getParameters(this.translationData.scriptId, this.translationLanguage.value)
-            .subscribe(function (parameters) {
-            _this.parameters = parameters;
-        });
+        return this.parameterService.getParameters(this.translationData.scriptId, this.translationLanguage.value);
     };
     ParameterTranslationFormComponent.ctorParameters = function () { return [
-        { type: _services_translations_parameter_translation_service__WEBPACK_IMPORTED_MODULE_5__["ParameterTranslationService"] },
-        { type: _services_parameter_service__WEBPACK_IMPORTED_MODULE_4__["ParameterService"] }
+        { type: _services_translations_parameter_translation_service__WEBPACK_IMPORTED_MODULE_6__["ParameterTranslationService"] },
+        { type: _services_parameter_service__WEBPACK_IMPORTED_MODULE_5__["ParameterService"] }
     ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('scriptForm'),
@@ -4440,8 +4456,8 @@ var ParameterTranslationFormComponent = /** @class */ (function () {
             template: __webpack_require__(/*! raw-loader!./parameter-translation-form.component.html */ "../node_modules/raw-loader/index.js!./app/modules/script-interpreter/components/script-form/translation-form/parameter-translation-form/parameter-translation-form.component.html"),
             styles: [__webpack_require__(/*! ./parameter-translation-form.component.scss */ "./app/modules/script-interpreter/components/script-form/translation-form/parameter-translation-form/parameter-translation-form.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_translations_parameter_translation_service__WEBPACK_IMPORTED_MODULE_5__["ParameterTranslationService"],
-            _services_parameter_service__WEBPACK_IMPORTED_MODULE_4__["ParameterService"]])
+        __metadata("design:paramtypes", [_services_translations_parameter_translation_service__WEBPACK_IMPORTED_MODULE_6__["ParameterTranslationService"],
+            _services_parameter_service__WEBPACK_IMPORTED_MODULE_5__["ParameterService"]])
     ], ParameterTranslationFormComponent);
     return ParameterTranslationFormComponent;
 }());

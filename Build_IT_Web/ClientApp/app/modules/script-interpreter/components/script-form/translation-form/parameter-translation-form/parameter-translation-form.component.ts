@@ -1,9 +1,10 @@
 ﻿import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { forkJoin, Observable } from 'rxjs';
 import { AppErrorStateMatcher } from '../../../../../../common/errors/app-error-state-matcher';
 import { Language } from '../../../../models/enums/language';
 import { Parameter } from '../../../../models/interfaces/parameter';
+import { ParameterTranslation } from '../../../../models/interfaces/translations/parameterTranslation';
 import { ParameterService } from '../../../../services/parameter.service';
 import { ParameterTranslationService } from '../../../../services/translations/parameter-translation.service';
 
@@ -34,34 +35,49 @@ export class ParameterTranslationFormComponent implements OnInit {
     languages = Language;
     matcher = new AppErrorStateMatcher();
     parameters: Parameter[];
+    mappedParameters: { parameter: Parameter, translation: ParameterTranslation }[] = [];
 
     get translationLanguage(): AbstractControl {
         return this.translationForm.get('language');
     }
-
-
+    
     constructor(private parameterTranslationService: ParameterTranslationService,
         private parameterService: ParameterService) {
     }
 
     ngOnInit(): void {
-        this.getParameters();
-        this.getParametersTranslations();
+        let parameters$ = this.getParameters();
+        let parametersTranslations$ = this.getParametersTranslations();
+
+        forkJoin([parameters$, parametersTranslations$]).subscribe(results => {
+            this.parameters = results[0];
+            results[1].forEach(pt => this.parametersTranslationsForm.push(new FormGroup({
+                id: new FormControl(pt.id),
+                parameterId: new FormControl(pt.parameterId),
+                description: new FormControl(pt.description),
+                notes: new FormControl(pt.notes),
+                groupName: new FormControl(pt.groupName),
+                language: new FormControl(pt.language)
+            })));
+            this.setMappedParameters();
+        });
     }
 
-    getParametersTranslations() {
-        this.parameterTranslationService.getParametersTranslation(this.translationData.scriptId, this.translationLanguage.value)
-            .subscribe(parametersTranslations => {
-                console.log(parametersTranslations);
-                this.parametersTranslationsForm.patchValue(parametersTranslations);
-                console.log(this.parametersTranslationsForm);
-            });
+    setMappedParameters() {
+        let parametersTranslation = this.parametersTranslationsForm.value as ParameterTranslation[];
+        this.parameters.forEach(p => {
+            let mappedParameter = { parameter: p, translation: parametersTranslation.find(pt => pt.parameterId == p.id) };
+            console.log(mappedParameter);
+            this.mappedParameters.push(mappedParameter);
+            console.log(this.mappedParameters);
+        });
     }
 
-    getParameters() {
-        this.parameterService.getParameters(this.translationData.scriptId, this.translationLanguage.value)
-            .subscribe(parameters => {
-                this.parameters = parameters;
-            });
+    getParametersTranslations(): Observable<ParameterTranslation[]> {
+        return this.parameterTranslationService.getParametersTranslation(this.translationData.scriptId, this.translationLanguage.value);
+    }
+
+    getParameters(): Observable<Parameter[]> {
+        return this.parameterService.getParameters(this.translationData.scriptId, this.translationLanguage.value);
     }
 }

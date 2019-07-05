@@ -51,11 +51,18 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
             await ScriptInterpreterContext.AddAsync(scriptTranslation);
         }
 
-        public void Remove(ScriptTranslation scriptTranslation)
+        public void RemoveScriptTranslation(ScriptTranslation scriptTranslation)
         {
             ScriptInterpreterContext.Remove(scriptTranslation);
         }
-        
+
+        public async Task<IEnumerable<ParameterTranslation>> GetParametersTranslations(long scriptId, Language language)
+        {
+            var parametersIds = await ScriptInterpreterContext.Parameters.Where(p => p.ScriptId == scriptId).Select(p => p.Id).ToListAsync();
+            return await ScriptInterpreterContext.ParametersTranslations
+                .Where(pt => parametersIds.Contains( pt.ParameterId) && pt.Language == language).ToListAsync();
+        }
+
         public async Task<ParameterTranslation> GetParameterTranslation(long parameterId, Language language)
         {
             return await ScriptInterpreterContext.ParametersTranslations
