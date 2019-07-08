@@ -13,7 +13,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
         
         public void Configure(EntityTypeBuilder<ValueOption> builder)
         {
-            builder.ToTable("ValueOptions");
+            builder.ToTable("Scripts_ValueOptions");
 
             builder.Property(vo => vo.Name)
                 .IsRequired();

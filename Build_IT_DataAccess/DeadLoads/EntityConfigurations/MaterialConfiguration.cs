@@ -13,7 +13,7 @@ namespace Build_IT_DataAccess.DeadLoads.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<Material> builder)
         {
-            builder.ToTable("Materials");
+            builder.ToTable("DeadLoads_Materials");
 
             builder.Property(m => m.Name)
                 .IsRequired()

@@ -14,7 +14,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations.Translation
 
         public void Configure(EntityTypeBuilder<ParameterTranslation> builder)
         {
-            builder.ToTable("ParametersTranslations");
+            builder.ToTable("Scripts_ParametersTranslations");
         }
 
         #endregion // Public_Methods

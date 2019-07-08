@@ -14,30 +14,20 @@ import { catchError, retry } from "rxjs/operators";
 import { AppError } from "../../../../common/errors/app-error";
 import { NotFoundError } from "../../../../common/errors/not-found-error";
 import { BadInputError } from "../../../../common/errors/bad-input-error";
-var ParameterTranslationService = /** @class */ (function () {
-    function ParameterTranslationService(http) {
+var ValueOptionTranslationService = /** @class */ (function () {
+    function ValueOptionTranslationService(http) {
         this.http = http;
     }
-    ParameterTranslationService.prototype.getParametersTranslation = function (scriptId, language) {
-        return this.http.get('/api/parametersTranslations/' + scriptId + '/' + language)
+    ValueOptionTranslationService.prototype.getValueOptionsTranslations = function (parameterId, language) {
+        return this.http.get('/api/valueOptionsTranslations/' + parameterId + '/' + language)
             .pipe(retry(1), catchError(function (error) {
             if (error.status === 404)
                 return throwError(new NotFoundError(error));
             return throwError(new AppError(error));
         }));
     };
-    ParameterTranslationService.prototype.update = function (parameterTranslation) {
-        return this.http.put('/api/parametersTranslations/' + parameterTranslation.id, parameterTranslation)
-            .pipe(retry(1), catchError(function (error) {
-            if (error.status === 400)
-                return throwError(new BadInputError(error));
-            if (error.status === 404)
-                return throwError(new NotFoundError(error));
-            return throwError(new AppError(error));
-        }));
-    };
-    ParameterTranslationService.prototype.create = function (parameterTranslation) {
-        return this.http.post('/api/parametersTranslations', parameterTranslation)
+    ValueOptionTranslationService.prototype.update = function (valueOptionTranslation) {
+        return this.http.put('/api/valueOptionsTranslations/' + valueOptionTranslation.id, valueOptionTranslation)
             .pipe(retry(1), catchError(function (error) {
             if (error.status === 400)
                 return throwError(new BadInputError(error));
@@ -46,11 +36,21 @@ var ParameterTranslationService = /** @class */ (function () {
             return throwError(new AppError(error));
         }));
     };
-    ParameterTranslationService = __decorate([
+    ValueOptionTranslationService.prototype.create = function (valueOptionTranslation) {
+        return this.http.post('/api/valueOptionsTranslations', valueOptionTranslation)
+            .pipe(retry(1), catchError(function (error) {
+            if (error.status === 400)
+                return throwError(new BadInputError(error));
+            if (error.status === 404)
+                return throwError(new NotFoundError(error));
+            return throwError(new AppError(error));
+        }));
+    };
+    ValueOptionTranslationService = __decorate([
         Injectable({ providedIn: 'root' }),
         __metadata("design:paramtypes", [HttpClient])
-    ], ParameterTranslationService);
-    return ParameterTranslationService;
+    ], ValueOptionTranslationService);
+    return ValueOptionTranslationService;
 }());
-export { ParameterTranslationService };
-//# sourceMappingURL=parameter-translation.service.js.map
+export { ValueOptionTranslationService };
+//# sourceMappingURL=value-option-translation.service.js.map

@@ -6,6 +6,8 @@ using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Build_IT_Web.Mapping;
+using Build_IT_Web.Services;
+using Build_IT_Web.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;
@@ -19,6 +21,7 @@ namespace Build_IT_WebTest.IntegrationTests
     {
         private ScriptInterpreterDbContext _scriptInterpreterDbContext;
         private IScriptRepository _scriptRepository;
+        private ITranslationService _translationService;
         private IParameterRepository _parameterRepository;
         private IMapper _mapper;
         private CalculationsController _calculationsController;
@@ -31,6 +34,7 @@ namespace Build_IT_WebTest.IntegrationTests
             _scriptInterpreterDbContext = new ScriptInterpreterDbContext(
                 new DbContextOptions<ScriptInterpreterDbContext>());
             _scriptRepository = new ScriptRepository(_scriptInterpreterDbContext);
+            _translationService = new TranslationService(new TranslationRepository(_scriptInterpreterDbContext));
             _parameterRepository = new ParameterRepository(_scriptInterpreterDbContext);
             var config = new MapperConfiguration(cfg =>
             {
@@ -39,7 +43,7 @@ namespace Build_IT_WebTest.IntegrationTests
             _mapper = new Mapper(config);
 
             _calculationsController = new CalculationsController(
-                _scriptRepository, _parameterRepository, _mapper);
+                _scriptRepository, _parameterRepository, _translationService,  _mapper);
         }
 
         [TearDown]

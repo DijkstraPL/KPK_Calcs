@@ -13,7 +13,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
         
         public void Configure(EntityTypeBuilder<Tag> builder)
         {
-            builder.ToTable("Tags");
+            builder.ToTable("Scripts_Tags");
 
             builder.Property(t => t.Name)
                 .IsRequired()

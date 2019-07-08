@@ -117,7 +117,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             _mapper.Setup(m => m.Map<Script, ScriptResource>(script))
                 .Returns(scriptResource);
 
-            _scriptRepository.Setup(tr => tr.AddAsync(script));
+            _scriptRepository.Setup(tr => tr.AddAsync(script))
+                .Returns(Task.FromResult(default(object)));
             _unitOfWork.Setup(uow => uow.CompleteAsync())
                 .Returns(Task.FromResult(1));
 

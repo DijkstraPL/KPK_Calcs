@@ -45,5 +45,32 @@
             </mat-error>-->
         </mat-form-field>
 
+        <div *ngFor="let valueOption of mappedParameter.valueOptions">
+
+            <mat-form-field class="m-2"
+                            *ngIf="valueOption.origin.name">
+                <mat-label>{{'scriptsForm.Parameters.ValueOptions.Name.Header' | translate}}</mat-label>
+                <input matInput
+                       placeholder="{{'scriptsForm.Parameters.ValueOptions.Name.Header' | translate}}"
+                       [(ngModel)]="valueOption.translation.name"
+                       [errorStateMatcher]="matcher"
+                       autocomplete="off" />
+                <mat-hint>{{valueOption.origin.name}}</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field class="m-2"
+                            *ngIf="valueOption.origin.description">
+                <mat-label>{{'scriptsForm.Parameters.ValueOptions.Description.Header' | translate}}</mat-label>
+                <input matInput
+                       placeholder="{{'scriptsForm.Parameters.ValueOptions.Description.Header' | translate}}"
+                       [(ngModel)]="valueOption.translation.description"
+                       [errorStateMatcher]="matcher"
+                       autocomplete="off" />
+                <mat-hint>{{valueOption.origin.description}}</mat-hint>
+            </mat-form-field>
+
+        </div>
+
     </mat-expansion-panel>
+
 </mat-accordion>

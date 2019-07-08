@@ -14,7 +14,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations.Translation
 
         public void Configure(EntityTypeBuilder<ValueOptionTranslation> builder)
         {
-            builder.ToTable("ValueOptionsTranslations");
+            builder.ToTable("Scripts_ValueOptionsTranslations");
         }
 
         #endregion // Public_Methods

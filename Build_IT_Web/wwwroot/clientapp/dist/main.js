@@ -161,7 +161,7 @@ module.exports = "<div *ngIf=\"parameter.valueOptionSetting != valueOptionSettin
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div class=\"justify-content-start parameter-radio\">\r\n    <label class=\"align-self-start mb-2\">\r\n        <span [innerHtml]=\"parameter.name | html\"></span>{{isRequired() ? '*' : ''}}\r\n    </label>\r\n    <mat-radio-group [(ngModel)]=\"parameter.value\"\r\n                     [ngClass]=\"parameter.name\">\r\n        <mat-radio-button value=\"\"\r\n                          *ngIf=\"!isRequired()\"\r\n                          selected\r\n                          class=\"mr-3 default\"\r\n                          (change)=\"changeValue($event)\">\r\n            {{'scriptCalculator.Controls.Default' | translate}}\r\n        </mat-radio-button>\r\n        <mat-radio-button *ngFor=\"let valueOption of parameter.valueOptions; index as i\"\r\n                          [value]=\"valueOption.value\"\r\n                          [required]=\"isRequired()\"\r\n                          class=\"mr-3\"\r\n                          [ngClass]=\"valueOption.name\"\r\n                          (change)=\"changeValue($event)\">\r\n            {{valueOption.value }}\r\n        </mat-radio-button>\r\n        {{parameter.unit | html}}\r\n    </mat-radio-group>\r\n    <p class=\"parameter-description\">{{parameter.description}}</p>\r\n</div>"
+module.exports = "\r\n<div class=\"justify-content-start parameter-radio\">\r\n    <label class=\"align-self-start mb-2\">\r\n        <span [innerHtml]=\"parameter.name | html\"></span>{{isRequired() ? '*' : ''}}\r\n    </label>\r\n    <mat-radio-group [(ngModel)]=\"parameter.value\"\r\n                     [ngClass]=\"parameter.name\">\r\n        <mat-radio-button value=\"\"\r\n                          *ngIf=\"!isRequired()\"\r\n                          selected\r\n                          class=\"mr-3 default\"\r\n                          (change)=\"changeValue($event)\">\r\n            {{'scriptCalculator.Controls.Default' | translate}}\r\n        </mat-radio-button>\r\n        <mat-radio-button *ngFor=\"let valueOption of parameter.valueOptions; index as i\"\r\n                          [value]=\"valueOption.value\"\r\n                          [required]=\"isRequired()\"\r\n                          class=\"mr-3\"\r\n                          [ngClass]=\"valueOption.name\"\r\n                          (change)=\"changeValue($event)\">\r\n            {{valueOption.name }}\r\n        </mat-radio-button>\r\n        {{parameter.unit | html}}\r\n    </mat-radio-group>\r\n    <p class=\"parameter-description\">{{parameter.description}}</p>\r\n</div>"
 
 /***/ }),
 
@@ -315,7 +315,7 @@ module.exports = "<mat-form-field class=\"w-75 m-2\">\r\n    <mat-chip-list #chi
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-accordion>\r\n    <mat-expansion-panel *ngFor=\"let mappedParameter of mappedParameters\">\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                <span [innerHtml]=\"mappedParameter.parameter.name | html\"></span>&nbsp;- {{mappedParameter.parameter.description}}\r\n            </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n\r\n        <mat-form-field class=\"m-2\"\r\n                        *ngIf=\"mappedParameter.parameter.groupName\">\r\n            <mat-label>{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}</mat-label>\r\n            <input matInput\r\n                   placeholder=\"{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}\"\r\n                   [(ngModel)]=\"mappedParameter.translation.groupName\"\r\n                   [errorStateMatcher]=\"matcher\"\r\n                   autocomplete=\"off\" />\r\n            <mat-hint>{{mappedParameter.parameter.groupName}}</mat-hint>\r\n            <!--<mat-error *ngIf=\"parameterGroupName && parameterGroupName.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.GroupName.MaxLengthError' | translate:parameterGroupName.errors.maxlength}}\r\n            </mat-error>-->\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 full-width\">\r\n            <textarea matInput\r\n                      placeholder=\"{{'scriptsForm.Parameters.EditMode.Description.Header' | translate}}\"\r\n                       [(ngModel)]=\"mappedParameter.translation.description\"\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>{{mappedParameter.parameter.description}}</mat-hint>\r\n            <!--<mat-error *ngIf=\"parameterDescription && parameterDescription.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.Description.MaxLengthError' | translate:parameterDescription.errors.maxlength}}\r\n            </mat-error>-->\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 full-width\"\r\n                        *ngIf=\"mappedParameter.parameter.notes\">\r\n            <textarea matInput\r\n                      placeholder=\"{{'scriptsForm.Parameters.EditMode.Note.Header' | translate}}\"\r\n                       [(ngModel)]=\"mappedParameter.translation.notes\"\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>{{mappedParameter.parameter.notes}}</mat-hint>\r\n            <!--<mat-error *ngIf=\"parameterNotes && parameterNotes.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.Note.MaxLengthError' | translate:parameterNotes.errors.maxlength}}\r\n            </mat-error>-->\r\n        </mat-form-field>\r\n\r\n    </mat-expansion-panel>\r\n</mat-accordion>\r\n"
+module.exports = "<mat-accordion>\r\n    <mat-expansion-panel *ngFor=\"let mappedParameter of mappedParameters\">\r\n        <mat-expansion-panel-header>\r\n            <mat-panel-title>\r\n                <span [innerHtml]=\"mappedParameter.parameter.name | html\"></span>&nbsp;- {{mappedParameter.parameter.description}}\r\n            </mat-panel-title>\r\n        </mat-expansion-panel-header>\r\n\r\n        <mat-form-field class=\"m-2\"\r\n                        *ngIf=\"mappedParameter.parameter.groupName\">\r\n            <mat-label>{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}</mat-label>\r\n            <input matInput\r\n                   placeholder=\"{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}\"\r\n                   [(ngModel)]=\"mappedParameter.translation.groupName\"\r\n                   [errorStateMatcher]=\"matcher\"\r\n                   autocomplete=\"off\" />\r\n            <mat-hint>{{mappedParameter.parameter.groupName}}</mat-hint>\r\n            <!--<mat-error *ngIf=\"parameterGroupName && parameterGroupName.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.GroupName.MaxLengthError' | translate:parameterGroupName.errors.maxlength}}\r\n            </mat-error>-->\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 full-width\">\r\n            <textarea matInput\r\n                      placeholder=\"{{'scriptsForm.Parameters.EditMode.Description.Header' | translate}}\"\r\n                       [(ngModel)]=\"mappedParameter.translation.description\"\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>{{mappedParameter.parameter.description}}</mat-hint>\r\n            <!--<mat-error *ngIf=\"parameterDescription && parameterDescription.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.Description.MaxLengthError' | translate:parameterDescription.errors.maxlength}}\r\n            </mat-error>-->\r\n        </mat-form-field>\r\n\r\n        <mat-form-field class=\"m-2 full-width\"\r\n                        *ngIf=\"mappedParameter.parameter.notes\">\r\n            <textarea matInput\r\n                      placeholder=\"{{'scriptsForm.Parameters.EditMode.Note.Header' | translate}}\"\r\n                       [(ngModel)]=\"mappedParameter.translation.notes\"\r\n                      [errorStateMatcher]=\"matcher\"\r\n                      autocomplete=\"off\"></textarea>\r\n            <mat-hint>{{mappedParameter.parameter.notes}}</mat-hint>\r\n            <!--<mat-error *ngIf=\"parameterNotes && parameterNotes.hasError('maxlength')\">\r\n                {{'scriptsForm.Parameters.EditMode.Note.MaxLengthError' | translate:parameterNotes.errors.maxlength}}\r\n            </mat-error>-->\r\n        </mat-form-field>\r\n\r\n        <div *ngFor=\"let valueOption of mappedParameter.valueOptions\">\r\n\r\n            <mat-form-field class=\"m-2\"\r\n                            *ngIf=\"valueOption.origin.name\">\r\n                <mat-label>{{'scriptsForm.Parameters.ValueOptions.Name.Header' | translate}}</mat-label>\r\n                <input matInput\r\n                       placeholder=\"{{'scriptsForm.Parameters.ValueOptions.Name.Header' | translate}}\"\r\n                       [(ngModel)]=\"valueOption.translation.name\"\r\n                       [errorStateMatcher]=\"matcher\"\r\n                       autocomplete=\"off\" />\r\n                <mat-hint>{{valueOption.origin.name}}</mat-hint>\r\n            </mat-form-field>\r\n\r\n            <mat-form-field class=\"m-2\"\r\n                            *ngIf=\"valueOption.origin.description\">\r\n                <mat-label>{{'scriptsForm.Parameters.ValueOptions.Description.Header' | translate}}</mat-label>\r\n                <input matInput\r\n                       placeholder=\"{{'scriptsForm.Parameters.ValueOptions.Description.Header' | translate}}\"\r\n                       [(ngModel)]=\"valueOption.translation.description\"\r\n                       [errorStateMatcher]=\"matcher\"\r\n                       autocomplete=\"off\" />\r\n                <mat-hint>{{valueOption.origin.description}}</mat-hint>\r\n            </mat-form-field>\r\n\r\n        </div>\r\n\r\n    </mat-expansion-panel>\r\n\r\n</mat-accordion>\r\n"
 
 /***/ }),
 
@@ -337,7 +337,7 @@ module.exports = "<div [formGroup]=\"translationForm\">\r\n    <mat-form-field c
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [formGroup]=\"translationForm\">\r\n\r\n    <app-script-translation-form [scriptForm]=\"scriptForm\"\r\n                                 [defaultLanguage]=\"defaultLanguage\"\r\n                                 [translationForm]=\"translationForm\"\r\n                                 [translationData]=\"translationData\"></app-script-translation-form>\r\n    <app-parameter-translation-form [scriptForm]=\"scriptForm\"\r\n                                    [defaultLanguage]=\"defaultLanguage\"\r\n                                    [translationForm]=\"translationForm\"\r\n                                    [translationData]=\"translationData\"></app-parameter-translation-form>\r\n\r\n    <div class=\"flex-column\">\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                type=\"button\"\r\n                (click)=\"onScriptTranslationSubmit()\"\r\n                [disabled]=\"!translationForm.valid\"\r\n                class=\"mt-3 ml-3\">\r\n            {{translationData.editMode ? ('scriptsForm.Translations.Update' | translate) : ('scriptsForm.Translations.Add' | translate)}}\r\n        </button>\r\n\r\n        <button mat-stroked-button\r\n                color=\"warn\"\r\n                type=\"button\"\r\n                *ngIf=\"translationData.editMode\"\r\n                (click)=\"removeScriptTranslation()\"\r\n                class=\"mt-3 ml-3\">\r\n            {{'scriptsForm.Translations.Remove' | translate}}\r\n        </button>\r\n    </div>\r\n</div>"
+module.exports = "<div [formGroup]=\"translationForm\">\r\n\r\n    <app-script-translation-form [scriptForm]=\"scriptForm\"\r\n                                 [defaultLanguage]=\"defaultLanguage\"\r\n                                 [translationForm]=\"translationForm\"\r\n                                 [translationData]=\"translationData\"></app-script-translation-form>\r\n    <app-parameter-translation-form [scriptForm]=\"scriptForm\"\r\n                                    [defaultLanguage]=\"defaultLanguage\"\r\n                                    [translationForm]=\"translationForm\"\r\n                                    [translationData]=\"translationData\"\r\n                                    #parameterTranslationForm></app-parameter-translation-form>\r\n\r\n    <div class=\"flex-column\">\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                type=\"button\"\r\n                (click)=\"onScriptTranslationSubmit()\"\r\n                [disabled]=\"!translationForm.valid\"\r\n                class=\"mt-3 ml-3\">\r\n            {{translationData.editMode ? ('scriptsForm.Translations.Update' | translate) : ('scriptsForm.Translations.Add' | translate)}}\r\n        </button>\r\n\r\n        <button mat-stroked-button\r\n                color=\"warn\"\r\n                type=\"button\"\r\n                *ngIf=\"translationData.editMode\"\r\n                (click)=\"removeScriptTranslation()\"\r\n                class=\"mt-3 ml-3\">\r\n            {{'scriptsForm.Translations.Remove' | translate}}\r\n        </button>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -4356,6 +4356,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_enums_language__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../models/enums/language */ "./app/modules/script-interpreter/models/enums/language.ts");
 /* harmony import */ var _services_parameter_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../services/parameter.service */ "./app/modules/script-interpreter/services/parameter.service.ts");
 /* harmony import */ var _services_translations_parameter_translation_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../services/translations/parameter-translation.service */ "./app/modules/script-interpreter/services/translations/parameter-translation.service.ts");
+/* harmony import */ var _services_translations_value_option_translation_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../services/translations/value-option-translation.service */ "./app/modules/script-interpreter/services/translations/value-option-translation.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4372,9 +4373,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ParameterTranslationFormComponent = /** @class */ (function () {
-    function ParameterTranslationFormComponent(parameterTranslationService, parameterService) {
+    function ParameterTranslationFormComponent(parameterTranslationService, valueOptionTranslationService, parameterService) {
         this.parameterTranslationService = parameterTranslationService;
+        this.valueOptionTranslationService = valueOptionTranslationService;
         this.parameterService = parameterService;
         this.parametersTranslationsForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormArray"]([
             new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
@@ -4416,12 +4419,42 @@ var ParameterTranslationFormComponent = /** @class */ (function () {
     };
     ParameterTranslationFormComponent.prototype.setMappedParameters = function () {
         var _this = this;
+        this.mappedParameters = [];
         var parametersTranslation = this.parametersTranslationsForm.value;
         this.parameters.forEach(function (p) {
-            var mappedParameter = { parameter: p, translation: parametersTranslation.find(function (pt) { return pt.parameterId == p.id; }) };
-            console.log(mappedParameter);
+            var mappedParameter = {
+                parameter: p, translation: parametersTranslation.find(function (pt) { return pt.parameterId == p.id; }) ||
+                    new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+                        id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('0'),
+                        parameterId: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](p.id),
+                        description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
+                        notes: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
+                        groupName: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
+                        language: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](_this.translationLanguage.value)
+                    }).value,
+                valueOptions: []
+            };
             _this.mappedParameters.push(mappedParameter);
-            console.log(_this.mappedParameters);
+        });
+        this.setValueOptions();
+    };
+    ParameterTranslationFormComponent.prototype.setValueOptions = function () {
+        var _this = this;
+        this.mappedParameters.forEach(function (mp) {
+            _this.valueOptionTranslationService.getValueOptionsTranslations(mp.parameter.id, _this.translationLanguage.value)
+                .subscribe(function (vot) {
+                mp.parameter.valueOptions.forEach(function (vo) {
+                    mp.valueOptions.push({
+                        origin: vo, translation: vot.find(function (v) { return v.valueOptionId == vo.id; }) || new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+                            id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](0),
+                            valueOptionId: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](vo.id),
+                            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
+                            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
+                            language: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](_this.translationLanguage.value)
+                        }).value
+                    });
+                });
+            });
         });
     };
     ParameterTranslationFormComponent.prototype.getParametersTranslations = function () {
@@ -4430,8 +4463,62 @@ var ParameterTranslationFormComponent = /** @class */ (function () {
     ParameterTranslationFormComponent.prototype.getParameters = function () {
         return this.parameterService.getParameters(this.translationData.scriptId, this.translationLanguage.value);
     };
+    ParameterTranslationFormComponent.prototype.parametersSubmit = function () {
+        var _this = this;
+        this.mappedParameters.forEach(function (mp) {
+            if (mp.translation.id == 0 && mp.translation.description)
+                _this.createParameterTranslation(mp.translation);
+            else if (mp.translation.description)
+                _this.updateParameterTranslation(mp.translation);
+            mp.valueOptions.forEach(function (vo) {
+                if (vo.translation.id == 0 && (vo.translation.name || vo.translation.description))
+                    _this.createValueOptionTranslation(vo.translation);
+                else if (vo.translation.name || vo.translation.description)
+                    _this.updateValueOptionTranslation(vo.translation);
+            });
+        });
+    };
+    ParameterTranslationFormComponent.prototype.updateValueOptionTranslation = function (valueOptionTranslation) {
+        this.valueOptionTranslationService.update(valueOptionTranslation)
+            .subscribe(function (vot) { });
+    };
+    ParameterTranslationFormComponent.prototype.createValueOptionTranslation = function (valueOptionTranslation) {
+        this.valueOptionTranslationService.create(valueOptionTranslation)
+            .subscribe(function (vot) { });
+    };
+    ParameterTranslationFormComponent.prototype.updateParameterTranslation = function (parameterTranslation) {
+        var _this = this;
+        this.parameterTranslationService.update(parameterTranslation)
+            .subscribe(function (updatedTranslation) {
+            _this.parametersTranslationsForm.clear();
+            _this.parametersTranslationsForm.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+                id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](updatedTranslation.id),
+                parameterId: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](updatedTranslation.parameterId),
+                description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](updatedTranslation.description),
+                notes: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](updatedTranslation.notes),
+                groupName: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](updatedTranslation.groupName),
+                language: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](updatedTranslation.language)
+            }));
+        });
+    };
+    ParameterTranslationFormComponent.prototype.createParameterTranslation = function (parameterTranslation) {
+        var _this = this;
+        this.parameterTranslationService.create(parameterTranslation)
+            .subscribe(function (newTranslation) {
+            _this.parametersTranslationsForm.clear();
+            _this.parametersTranslationsForm.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+                id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](newTranslation.id),
+                parameterId: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](newTranslation.parameterId),
+                description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](newTranslation.description),
+                notes: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](newTranslation.notes),
+                groupName: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](newTranslation.groupName),
+                language: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](newTranslation.language)
+            }));
+        });
+    };
     ParameterTranslationFormComponent.ctorParameters = function () { return [
         { type: _services_translations_parameter_translation_service__WEBPACK_IMPORTED_MODULE_6__["ParameterTranslationService"] },
+        { type: _services_translations_value_option_translation_service__WEBPACK_IMPORTED_MODULE_7__["ValueOptionTranslationService"] },
         { type: _services_parameter_service__WEBPACK_IMPORTED_MODULE_5__["ParameterService"] }
     ]; };
     __decorate([
@@ -4457,6 +4544,7 @@ var ParameterTranslationFormComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./parameter-translation-form.component.scss */ "./app/modules/script-interpreter/components/script-form/translation-form/parameter-translation-form/parameter-translation-form.component.scss")]
         }),
         __metadata("design:paramtypes", [_services_translations_parameter_translation_service__WEBPACK_IMPORTED_MODULE_6__["ParameterTranslationService"],
+            _services_translations_value_option_translation_service__WEBPACK_IMPORTED_MODULE_7__["ValueOptionTranslationService"],
             _services_parameter_service__WEBPACK_IMPORTED_MODULE_5__["ParameterService"]])
     ], ParameterTranslationFormComponent);
     return ParameterTranslationFormComponent;
@@ -4671,6 +4759,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_errors_app_error_state_matcher__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../common/errors/app-error-state-matcher */ "./app/common/errors/app-error-state-matcher.ts");
 /* harmony import */ var _models_enums_language__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../models/enums/language */ "./app/modules/script-interpreter/models/enums/language.ts");
 /* harmony import */ var _services_translations_script_translation_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/translations/script-translation.service */ "./app/modules/script-interpreter/services/translations/script-translation.service.ts");
+/* harmony import */ var _parameter_translation_form_parameter_translation_form_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./parameter-translation-form/parameter-translation-form.component */ "./app/modules/script-interpreter/components/script-form/translation-form/parameter-translation-form/parameter-translation-form.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4680,6 +4769,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -4785,15 +4875,19 @@ var TranslationFormComponent = /** @class */ (function () {
     };
     TranslationFormComponent.prototype.onScriptTranslationSubmit = function () {
         var _this = this;
-        if (!this.translationData.editMode)
+        if (!this.translationData.editMode) {
             this.scriptTranslationService.create(this.translationForm.value)
                 .subscribe(function (scriptTranslation) {
                 _this.translationForm.patchValue(scriptTranslation);
                 _this.translationData.editMode = true;
             }, function (error) { throw error; });
-        else
+            this.parameterTranslationForm.parametersSubmit();
+        }
+        else {
             this.scriptTranslationService.update(this.translationForm.value)
                 .subscribe(function (scriptTranslation) { return _this.translationForm.patchValue(scriptTranslation); });
+            this.parameterTranslationForm.parametersSubmit();
+        }
     };
     TranslationFormComponent.prototype.removeScriptTranslation = function () {
         var _this = this;
@@ -4818,6 +4912,10 @@ var TranslationFormComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('scriptForm'),
         __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"])
     ], TranslationFormComponent.prototype, "scriptForm", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('parameterTranslationForm', { static: false }),
+        __metadata("design:type", _parameter_translation_form_parameter_translation_form_component__WEBPACK_IMPORTED_MODULE_6__["ParameterTranslationFormComponent"])
+    ], TranslationFormComponent.prototype, "parameterTranslationForm", void 0);
     TranslationFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-translation-form',
@@ -5237,6 +5335,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CalculationService", function() { return CalculationService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "../node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/translation.service */ "./app/services/translation.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5248,19 +5347,23 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var CalculationService = /** @class */ (function () {
-    function CalculationService(http) {
+    function CalculationService(http, translationService) {
         this.http = http;
+        this.translationService = translationService;
     }
-    CalculationService.prototype.calculate = function (scriptId, parameters) {
-        return this.http.put('/api/scripts/' + scriptId + '/calculate', parameters);
+    CalculationService.prototype.calculate = function (scriptId, parameters, language) {
+        return this.http.put('/api/scripts/' + scriptId + '/calculate/' + (language || this.translationService.getCurrentLanguage()), parameters);
     };
     CalculationService.ctorParameters = function () { return [
-        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] },
+        { type: _services_translation_service__WEBPACK_IMPORTED_MODULE_2__["TranslationService"] }
     ]; };
     CalculationService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _services_translation_service__WEBPACK_IMPORTED_MODULE_2__["TranslationService"]])
     ], CalculationService);
     return CalculationService;
 }());
@@ -5545,6 +5648,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "../node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../common/errors/app-error */ "./app/common/errors/app-error.ts");
 /* harmony import */ var _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../common/errors/not-found-error */ "./app/common/errors/not-found-error.ts");
+/* harmony import */ var _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../common/errors/bad-input-error */ "./app/common/errors/bad-input-error.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5560,6 +5664,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ParameterTranslationService = /** @class */ (function () {
     function ParameterTranslationService(http) {
         this.http = http;
@@ -5567,6 +5672,26 @@ var ParameterTranslationService = /** @class */ (function () {
     ParameterTranslationService.prototype.getParametersTranslation = function (scriptId, language) {
         return this.http.get('/api/parametersTranslations/' + scriptId + '/' + language)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            if (error.status === 404)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
+        }));
+    };
+    ParameterTranslationService.prototype.update = function (parameterTranslation) {
+        return this.http.put('/api/parametersTranslations/' + parameterTranslation.id, parameterTranslation)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            if (error.status === 400)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_6__["BadInputError"](error));
+            if (error.status === 404)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
+        }));
+    };
+    ParameterTranslationService.prototype.create = function (parameterTranslation) {
+        return this.http.post('/api/parametersTranslations', parameterTranslation)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            if (error.status === 400)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_6__["BadInputError"](error));
             if (error.status === 404)
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
@@ -5667,6 +5792,85 @@ var ScriptTranslationService = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"]])
     ], ScriptTranslationService);
     return ScriptTranslationService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./app/modules/script-interpreter/services/translations/value-option-translation.service.ts":
+/*!**************************************************************************************************!*\
+  !*** ./app/modules/script-interpreter/services/translations/value-option-translation.service.ts ***!
+  \**************************************************************************************************/
+/*! exports provided: ValueOptionTranslationService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ValueOptionTranslationService", function() { return ValueOptionTranslationService; });
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "../node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "../node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "../node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../common/errors/app-error */ "./app/common/errors/app-error.ts");
+/* harmony import */ var _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../common/errors/not-found-error */ "./app/common/errors/not-found-error.ts");
+/* harmony import */ var _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../common/errors/bad-input-error */ "./app/common/errors/bad-input-error.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var ValueOptionTranslationService = /** @class */ (function () {
+    function ValueOptionTranslationService(http) {
+        this.http = http;
+    }
+    ValueOptionTranslationService.prototype.getValueOptionsTranslations = function (parameterId, language) {
+        return this.http.get('/api/valueOptionsTranslations/' + parameterId + '/' + language)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            if (error.status === 404)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
+        }));
+    };
+    ValueOptionTranslationService.prototype.update = function (valueOptionTranslation) {
+        return this.http.put('/api/valueOptionsTranslations/' + valueOptionTranslation.id, valueOptionTranslation)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            if (error.status === 400)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_6__["BadInputError"](error));
+            if (error.status === 404)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
+        }));
+    };
+    ValueOptionTranslationService.prototype.create = function (valueOptionTranslation) {
+        return this.http.post('/api/valueOptionsTranslations', valueOptionTranslation)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            if (error.status === 400)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_6__["BadInputError"](error));
+            if (error.status === 404)
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
+        }));
+    };
+    ValueOptionTranslationService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"] }
+    ]; };
+    ValueOptionTranslationService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"]])
+    ], ValueOptionTranslationService);
+    return ValueOptionTranslationService;
 }());
 
 

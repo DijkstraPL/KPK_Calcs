@@ -69,8 +69,10 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             _mapper.Setup(m => m.Map<Parameter, ParameterResource>(parameter))
                 .Returns(parameterResource);
 
-            _scriptRepository.Setup(sr => sr.GetAsync(1)).Returns(Task.Run(() => new Script()));
-            _parameterRepository.Setup(pr => pr.AddAsync(parameter));
+            _scriptRepository.Setup(sr => sr.GetAsync(1))
+                .Returns(Task.Run(() => new Script()));
+            _parameterRepository.Setup(pr => pr.AddAsync(parameter))
+                .Returns(Task.FromResult(default(object)));
             _unitOfWork.Setup(uow => uow.CompleteAsync())
                 .Returns(Task.FromResult(1));
 

@@ -14,7 +14,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
         
         public void Configure(EntityTypeBuilder<Script> builder)
         {
-            builder.ToTable("Scripts");
+            builder.ToTable("Scripts_Scripts");
 
             builder.Property(s => s.Name)
                 .IsRequired()

@@ -13,7 +13,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<Figure> builder)
         {
-            builder.ToTable("Figures");
+            builder.ToTable("Scripts_Figures");
 
             builder.HasKey(f => f.Id);
 

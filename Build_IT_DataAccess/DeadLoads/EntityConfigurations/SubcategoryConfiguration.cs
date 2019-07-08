@@ -13,7 +13,7 @@ namespace Build_IT_DataAccess.DeadLoads.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<Subcategory> builder)
         {
-            builder.ToTable("Subcategories");
+            builder.ToTable("DeadLoads_Subcategories");
 
             builder.Property(sc => sc.Name)
                 .IsRequired()

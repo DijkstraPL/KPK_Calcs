@@ -1,7 +1,4 @@
 ﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources.Translations

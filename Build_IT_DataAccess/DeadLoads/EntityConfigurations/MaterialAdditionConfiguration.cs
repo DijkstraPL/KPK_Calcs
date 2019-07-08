@@ -14,7 +14,7 @@ namespace Build_IT_DataAccess.DeadLoads.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<MaterialAddition> builder)
         {
-            builder.ToTable("MaterialAdditions");
+            builder.ToTable("DeadLoads_MaterialAdditions");
 
             builder.HasKey(ma
                 => new { ma.MaterialId, ma.AdditionId });

@@ -1,16 +1,13 @@
 ﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Build_IT_DataAccess.ScriptInterpreter.Models.Translations
+namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources.Translations
 {
-    public class ValueOptionTranslation
+    public class ValueOptionTranslationResource
     {
         #region Properties
-        
+
         public long Id { get; set; }
-        public ValueOption ValueOption { get; set; }
+        public ValueOptionResource ValueOption { get; set; }
         public long ValueOptionId { get; set; }
 
         public Language Language { get; set; }
@@ -18,5 +15,13 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Models.Translations
         public string Description { get; set; }
 
         #endregion // Properties
+
+        #region Constructors
+
+        public ValueOptionTranslationResource()
+        {
+        }
+
+        #endregion // Constructors
     }
 }

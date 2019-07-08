@@ -1,10 +1,11 @@
-﻿import { Component, Input, OnInit } from '@angular/core';
+﻿import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-state-matcher';
 import { Language } from '../../../models/enums/language';
 import { ScriptTranslation } from '../../../models/interfaces/translations/scriptTranslation';
 import { ScriptTranslationService } from '../../../services/translations/script-translation.service';
+import { ParameterTranslationFormComponent } from './parameter-translation-form/parameter-translation-form.component';
 
 @Component({
     selector: 'app-translation-form',
@@ -25,6 +26,8 @@ export class TranslationFormComponent implements OnInit {
     @Input('defaultLanguage') defaultLanguage: Language;
     @Input('scriptForm') scriptForm: FormGroup;
     languages = Language;
+
+    @ViewChild('parameterTranslationForm', { static: false }) parameterTranslationForm: ParameterTranslationFormComponent;
 
     matcher = new AppErrorStateMatcher();
     translationData = { editMode: false, scriptId: 0 };
@@ -78,15 +81,19 @@ export class TranslationFormComponent implements OnInit {
     }
 
     onScriptTranslationSubmit() {
-        if (!this.translationData.editMode)
+        if (!this.translationData.editMode) {
             this.scriptTranslationService.create(this.translationForm.value)
                 .subscribe((scriptTranslation: ScriptTranslation) => {
                     this.translationForm.patchValue(scriptTranslation);
                     this.translationData.editMode = true;
                 }, error => { throw error });
-        else
+            this.parameterTranslationForm.parametersSubmit();
+        }
+        else {
             this.scriptTranslationService.update(this.translationForm.value)
                 .subscribe((scriptTranslation: ScriptTranslation) => this.translationForm.patchValue(scriptTranslation));
+            this.parameterTranslationForm.parametersSubmit();
+        }
     }
 
     removeScriptTranslation() {

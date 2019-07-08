@@ -14,7 +14,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations.Translation
 
         public void Configure(EntityTypeBuilder<ScriptTranslation> builder)
         {
-            builder.ToTable("ScriptsTranslations");
+            builder.ToTable("Scripts_ScriptsTranslations");
 
             builder.Property(s => s.Name)
                 .HasMaxLength(255);

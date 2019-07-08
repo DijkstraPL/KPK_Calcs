@@ -18,7 +18,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Translations
         #region Fields
 
         private readonly IMapper _mapper;
-        private readonly ITranslationRepository _translationRepository;
+        private readonly IScriptTranslationRepository _translationRepository;
         private readonly IScriptInterpreterUnitOfWork _unitOfWork;
 
         #endregion // Fields
@@ -27,7 +27,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Translations
 
         public ScriptsTranslationsController(
             IMapper mapper,
-            ITranslationRepository translationRepository,
+            IScriptTranslationRepository translationRepository,
             IScriptInterpreterUnitOfWork unitOfWork)
         {
             _mapper = mapper;

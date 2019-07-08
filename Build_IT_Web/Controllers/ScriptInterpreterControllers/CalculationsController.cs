@@ -3,6 +3,7 @@ using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Build_IT_Web.Services;
+using Build_IT_Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         
         private readonly IScriptRepository _scriptRepository;
         private readonly IParameterRepository _parameterRepository;
+        private readonly ITranslationService _translationService;
         private readonly IMapper _mapper;
 
         #endregion // Fields
@@ -27,10 +29,12 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         public CalculationsController(
             IScriptRepository scriptRepository,
             IParameterRepository parameterRepository,
+            ITranslationService translationService,
             IMapper mapper)
         {
             _scriptRepository = scriptRepository;
             _parameterRepository = parameterRepository;
+            _translationService = translationService;
             _mapper = mapper;
         }
 
@@ -38,8 +42,8 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
         #region Public_Methods
         
-        [HttpPut("{scriptId}/calculate")]
-        public async Task<IEnumerable<ParameterResource>> Calculate(long scriptId, [FromBody] List<ParameterResource> userParameters)
+        [HttpPut("{scriptId}/calculate/{lang?}")]
+        public async Task<IEnumerable<ParameterResource>> Calculate(long scriptId, [FromBody] List<ParameterResource> userParameters, string lang = TranslationService.DefaultLanguageCode)
         {
             var script = await _scriptRepository.GetAsync(scriptId);
             var parameters = await _parameterRepository.GetAllParametersForScriptAsync(scriptId);
@@ -52,6 +56,8 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
             var calculatedParameters = _mapper.Map<List<Parameter>, List<ParameterResource>>(scriptCalculator.GetResult().ToList());
             calculatedParameters.ForEach(cp => cp.Equation = equations.SingleOrDefault(p => p.Key == cp.Id).Value);
+
+            await _translationService.SetParametersTranslation(lang, calculatedParameters, script.DefaultLanguage);
             return calculatedParameters;
         }
 

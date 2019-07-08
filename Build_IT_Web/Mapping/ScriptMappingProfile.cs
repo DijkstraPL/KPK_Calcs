@@ -27,6 +27,8 @@ namespace Build_IT_Web.Mapping
             CreateMap<ValueOption, ValueOptionResource>();
             CreateMap<Figure, FigureResource>();
             CreateMap<ScriptTranslation, ScriptTranslationResource>();
+            CreateMap<ParameterTranslation, ParameterTranslationResource>();
+            CreateMap<ValueOptionTranslation, ValueOptionTranslationResource>();
 
             // API Resource to Domain
             CreateMap<ScriptResource, Script>()
@@ -61,6 +63,9 @@ namespace Build_IT_Web.Mapping
                 .ForMember(vo => vo.Parameter, operation => operation.Ignore())
                 .ForMember(vo => vo.ParameterId, operation => operation.Ignore());
             CreateMap<ScriptTranslationResource, ScriptTranslation>();
+            CreateMap<ParameterTranslationResource, ParameterTranslation>();
+            CreateMap<ValueOptionTranslationResource, ValueOptionTranslation>()
+                .ForMember(vot => vot.ValueOption, operation => operation.Ignore());
         }
 
         #endregion // Public_Methods

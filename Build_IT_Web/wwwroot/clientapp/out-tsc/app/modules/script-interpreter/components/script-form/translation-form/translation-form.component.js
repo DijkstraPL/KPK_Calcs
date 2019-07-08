@@ -7,12 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-state-matcher';
 import { Language } from '../../../models/enums/language';
 import { ScriptTranslationService } from '../../../services/translations/script-translation.service';
+import { ParameterTranslationFormComponent } from './parameter-translation-form/parameter-translation-form.component';
 var TranslationFormComponent = /** @class */ (function () {
     function TranslationFormComponent(scriptTranslationService, route) {
         this.scriptTranslationService = scriptTranslationService;
@@ -112,15 +113,19 @@ var TranslationFormComponent = /** @class */ (function () {
     };
     TranslationFormComponent.prototype.onScriptTranslationSubmit = function () {
         var _this = this;
-        if (!this.translationData.editMode)
+        if (!this.translationData.editMode) {
             this.scriptTranslationService.create(this.translationForm.value)
                 .subscribe(function (scriptTranslation) {
                 _this.translationForm.patchValue(scriptTranslation);
                 _this.translationData.editMode = true;
             }, function (error) { throw error; });
-        else
+            this.parameterTranslationForm.parametersSubmit();
+        }
+        else {
             this.scriptTranslationService.update(this.translationForm.value)
                 .subscribe(function (scriptTranslation) { return _this.translationForm.patchValue(scriptTranslation); });
+            this.parameterTranslationForm.parametersSubmit();
+        }
     };
     TranslationFormComponent.prototype.removeScriptTranslation = function () {
         var _this = this;
@@ -141,6 +146,10 @@ var TranslationFormComponent = /** @class */ (function () {
         Input('scriptForm'),
         __metadata("design:type", FormGroup)
     ], TranslationFormComponent.prototype, "scriptForm", void 0);
+    __decorate([
+        ViewChild('parameterTranslationForm', { static: false }),
+        __metadata("design:type", ParameterTranslationFormComponent)
+    ], TranslationFormComponent.prototype, "parameterTranslationForm", void 0);
     TranslationFormComponent = __decorate([
         Component({
             selector: 'app-translation-form',

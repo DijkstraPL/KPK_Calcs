@@ -14,7 +14,7 @@ namespace Build_IT_DataAccess.DeadLoads.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<Addition> builder)
         {
-            builder.ToTable("Additions");
+            builder.ToTable("DeadLoads_Additions");
 
             builder.Property(a => a.Name)
                 .IsRequired()

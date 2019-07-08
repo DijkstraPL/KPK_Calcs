@@ -44,6 +44,7 @@
     <None Remove="ClientApp\app\modules\script-interpreter\models\enums\language.ts" />
     <None Remove="ClientApp\app\modules\script-interpreter\services\parameter-translation.service.ts" />
     <None Remove="ClientApp\app\modules\script-interpreter\services\script-translation.service.ts" />
+    <None Remove="ClientApp\app\modules\script-interpreter\services\translations\value-option-translation.service.ts" />
     <None Remove="ClientApp\app\services\configuration.service.ts" />
     <None Remove="ClientApp\app\services\db-keys.ts" />
     <None Remove="ClientApp\app\services\local-store-manager.service.ts" />
@@ -81,6 +82,7 @@
     <TypeScriptCompile Include="ClientApp\app\common\errors\app-error.ts" />
     <TypeScriptCompile Include="ClientApp\app\directives\bootstrap-select.directive.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\models\enums\language.ts" />
+    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\value-option-translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\script-translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\configuration.service.ts" />

@@ -1,0 +1,20 @@
+﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
+using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces
+{
+    public interface IScriptTranslationRepository
+    {
+        #region Public_Methods
+
+        Task<IEnumerable<ScriptTranslation>> GetScriptTranslations(long scriptId);
+        Task<ScriptTranslation> GetScriptTranslation(long scriptId, Language language);
+        Task<ScriptTranslation> GetScriptTranslation(long id);
+        Task AddScriptTranslationAsync(ScriptTranslation scriptTranslation);
+        void RemoveScriptTranslation(ScriptTranslation scriptTranslation);
+
+        #endregion // Public_Methods
+    }
+}

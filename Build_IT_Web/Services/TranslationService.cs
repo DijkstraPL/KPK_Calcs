@@ -71,6 +71,8 @@ namespace Build_IT_Web.Services
                     parameterResource.Notes = parameterTranslation.Notes;
                 if (parameterTranslation.GroupName != null)
                     parameterResource.GroupName = parameterTranslation.GroupName;
+                foreach (var valueOption in parameterResource.ValueOptions)
+                    await SetValueOptionTranslation(languageCode, valueOption, defaultLanguage);
             }
             return;
         }
@@ -86,13 +88,13 @@ namespace Build_IT_Web.Services
         {
             if (Languages.ContainsKey(languageCode) && Languages[languageCode] != defaultLanguage)
             {
-                var parameterTranslation = await _translationRepository.GetValueOptionTranslation(valueOptionResource.Id, Languages[languageCode]);
-                if (parameterTranslation == null)
+                var valueOptionTranslation = await _translationRepository.GetValueOptionTranslation(valueOptionResource.Id, Languages[languageCode]);
+                if (valueOptionTranslation == null)
                     return;
-                if (parameterTranslation.Value != null)
-                    valueOptionResource.Value = parameterTranslation.Value;
-                if (parameterTranslation.Description != null)
-                    valueOptionResource.Description = parameterTranslation.Description;
+                if (valueOptionTranslation.Name != null)
+                    valueOptionResource.Name = valueOptionTranslation.Name;
+                if (valueOptionTranslation.Description != null)
+                    valueOptionResource.Description = valueOptionTranslation.Description;
             }
             return;
         }

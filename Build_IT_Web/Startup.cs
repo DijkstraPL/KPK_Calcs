@@ -24,25 +24,34 @@ namespace Build_IT_Web
 {
     public class Startup
     {
+        #region Properties
+        
+        public IConfiguration Configuration { get; }
+
+        #endregion // Properties
+
+        #region Constructors
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        #endregion // Constructors
+
+        #region Public_Methods
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<FigureSettings>(Configuration.GetSection("PhotoSettings"));            
+            services.Configure<FigureSettings>(Configuration.GetSection("PhotoSettings"));
             string dataAccessAssemblyName = Configuration.GetSection("DataAccess").GetValue<string>("Project");
 
             services.AddScoped<IScriptRepository, ScriptRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IParameterRepository, ParameterRepository>();
-            services.AddScoped<ITranslationRepository, TranslationRepository>();
 
-            services.AddScoped<ITranslationService, TranslationService>();
+            SetTranslationsServices(services);
 
             services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();
 #if RELEASE
@@ -52,7 +61,7 @@ namespace Build_IT_Web
 #endif
 #if DEBUG
             services.AddDbContext<ScriptInterpreterDbContext>(
-                options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("Scripts"), 
+                options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("Scripts"),
                 b => b.MigrationsAssembly(dataAccessAssemblyName)));
 #endif
 
@@ -72,12 +81,12 @@ namespace Build_IT_Web
                 b => b.MigrationsAssembly(dataAccessAssemblyName)));
 #endif
             services.AddAutoMapper();
-            
+
             services.AddMvc()
-                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = 
+                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1); //validate api rules
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
@@ -125,5 +134,21 @@ namespace Build_IT_Web
             });
 
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
+        
+        private void SetTranslationsServices(IServiceCollection services)
+        {
+            services.AddScoped<ITranslationRepository, TranslationRepository>();
+            services.AddScoped<IScriptTranslationRepository, TranslationRepository>();
+            services.AddScoped<IParameterTranslationRepository, TranslationRepository>();
+            services.AddScoped<IValueOptionTranslationRepository, TranslationRepository>();
+
+            services.AddScoped<ITranslationService, TranslationService>();
+        }
+
+        #endregion // Private_Methods
     }
 }

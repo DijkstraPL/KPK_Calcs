@@ -9,16 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { TranslationService } from '../../../services/translation.service';
 var CalculationService = /** @class */ (function () {
-    function CalculationService(http) {
+    function CalculationService(http, translationService) {
         this.http = http;
+        this.translationService = translationService;
     }
-    CalculationService.prototype.calculate = function (scriptId, parameters) {
-        return this.http.put('/api/scripts/' + scriptId + '/calculate', parameters);
+    CalculationService.prototype.calculate = function (scriptId, parameters, language) {
+        return this.http.put('/api/scripts/' + scriptId + '/calculate/' + (language || this.translationService.getCurrentLanguage()), parameters);
     };
     CalculationService = __decorate([
         Injectable({ providedIn: 'root' }),
-        __metadata("design:paramtypes", [HttpClient])
+        __metadata("design:paramtypes", [HttpClient,
+            TranslationService])
     ], CalculationService);
     return CalculationService;
 }());

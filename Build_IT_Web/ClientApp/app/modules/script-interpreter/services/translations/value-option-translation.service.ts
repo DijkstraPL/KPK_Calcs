@@ -7,16 +7,17 @@ import { NotFoundError } from "../../../../common/errors/not-found-error";
 import { Language } from "../../models/enums/language";
 import { ParameterTranslation } from "../../models/interfaces/translations/parameterTranslation";
 import { BadInputError } from "../../../../common/errors/bad-input-error";
+import { ValueOptionTranslation } from "../../models/interfaces/translations/valueOptionTranslation";
 
 
 @Injectable({ providedIn: 'root' })
-export class ParameterTranslationService {
+export class ValueOptionTranslationService {
 
     constructor(private http: HttpClient) {
     }
 
-    getParametersTranslation(scriptId: number, language: Language): Observable<ParameterTranslation[]> {
-        return this.http.get<ParameterTranslation[]>('/api/parametersTranslations/' + scriptId + '/' + language)
+    getValueOptionsTranslations(parameterId: number, language: Language): Observable<ValueOptionTranslation[]> {
+        return this.http.get<ValueOptionTranslation[]>('/api/valueOptionsTranslations/' + parameterId + '/' + language)
             .pipe(
                 retry(1),
                 catchError((error: Response) => {
@@ -27,8 +28,8 @@ export class ParameterTranslationService {
             );
     }
 
-    update(parameterTranslation: ParameterTranslation) {
-        return this.http.put('/api/parametersTranslations/' + parameterTranslation.id, parameterTranslation)
+    update(valueOptionTranslation: ValueOptionTranslation) {
+        return this.http.put('/api/valueOptionsTranslations/' + valueOptionTranslation.id, valueOptionTranslation)
             .pipe(
                 retry(1),
                 catchError((error: Response) => {
@@ -41,8 +42,8 @@ export class ParameterTranslationService {
             );
     }
 
-    create(parameterTranslation: ParameterTranslation) {
-        return this.http.post('/api/parametersTranslations', parameterTranslation)
+    create(valueOptionTranslation: ValueOptionTranslation) {
+        return this.http.post('/api/valueOptionsTranslations', valueOptionTranslation)
             .pipe(
                 retry(1),
                 catchError((error: Response) => {

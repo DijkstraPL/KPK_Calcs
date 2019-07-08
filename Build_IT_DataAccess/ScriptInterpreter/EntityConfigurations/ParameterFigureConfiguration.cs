@@ -13,7 +13,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<ParameterFigure> builder)
         {
-            builder.ToTable("ParameterFigures");
+            builder.ToTable("Scripts_ParameterFigures");
 
             builder.HasKey(pf
                 => new { pf.ParameterId, pf.FigureId });

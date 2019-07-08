@@ -13,7 +13,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
         
         public void Configure(EntityTypeBuilder<ScriptTag> builder)
         {
-            builder.ToTable("ScriptTags");
+            builder.ToTable("Scripts_ScriptTags");
 
             builder.HasKey(st
                 => new { st.ScriptId, st.TagId });

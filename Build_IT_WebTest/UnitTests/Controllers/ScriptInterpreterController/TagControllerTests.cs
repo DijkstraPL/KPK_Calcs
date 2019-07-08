@@ -102,7 +102,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             _mapper.Setup(m => m.Map<TagResource, Tag>(tagResource))
                 .Returns(tag);
 
-            _tagRepository.Setup(tr => tr.AddAsync(tag));
+            _tagRepository.Setup(tr => tr.AddAsync(tag))
+                .Returns(Task.FromResult(default(object))); 
             _unitOfWork.Setup(uow => uow.CompleteAsync())
                 .Returns(Task.FromResult(1));
 

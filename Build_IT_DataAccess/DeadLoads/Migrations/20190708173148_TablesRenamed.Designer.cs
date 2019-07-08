@@ -3,14 +3,16 @@ using Build_IT_DataAccess.DeadLoads;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Build_IT_DataAccess.DeadLoads.Migrations
 {
     [DbContext(typeof(DeadLoadsDbContext))]
-    partial class DeadLoadsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190708173148_TablesRenamed")]
+    partial class TablesRenamed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
