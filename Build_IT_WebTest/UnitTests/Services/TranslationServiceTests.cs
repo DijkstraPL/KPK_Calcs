@@ -1,13 +1,10 @@
-﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
-using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
+﻿using Build_IT_Data.Entities.Scripts.Enums;
+using Build_IT_Data.Entities.Scripts.Translations;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Build_IT_Web.Services;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Build_IT_WebTest.UnitTests.Services

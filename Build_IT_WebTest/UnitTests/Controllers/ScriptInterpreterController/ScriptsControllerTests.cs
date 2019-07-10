@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Build_IT_CommonTools.Interfaces;
+using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
-using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
@@ -10,7 +11,6 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
@@ -22,6 +22,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         private Mock<ITranslationService> _translationService;
         private Mock<IScriptInterpreterUnitOfWork> _unitOfWork;
         private Mock<IMapper> _mapper;
+        private Mock<IDateTime> _dateTime;
 
         [SetUp]
         public void SetUp()
@@ -30,6 +31,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             _translationService = new Mock<ITranslationService>();
             _unitOfWork = new Mock<IScriptInterpreterUnitOfWork>();
             _mapper = new Mock<IMapper>();
+            _dateTime = new Mock<IDateTime>();
+            _dateTime.Setup(dt => dt.Now).Returns(new DateTime(2000, 1, 1));
 
             _mapper.Setup(m => m.Map<List<Script>, List<ScriptResource>>(It.IsAny<List<Script>>()))
                 .Returns(new List<ScriptResource> { new ScriptResource(), new ScriptResource() });
@@ -43,7 +46,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(scripts));
 
             var scriptsController = new ScriptsController(
-                _mapper.Object, _scriptRepository.Object, 
+                _mapper.Object, _dateTime.Object, _scriptRepository.Object, 
                 _translationService.Object, _unitOfWork.Object);
 
             var result = scriptsController.GetScripts().Result;
@@ -61,7 +64,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(scripts));
 
             var scriptsController = new ScriptsController(
-                _mapper.Object, _scriptRepository.Object,
+                _mapper.Object, _dateTime.Object, _scriptRepository.Object,
                 _translationService.Object, _unitOfWork.Object);
 
             var result = scriptsController.GetScripts().Result;
@@ -81,7 +84,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(scriptResource);
 
             var scriptsController = new ScriptsController(
-                _mapper.Object, _scriptRepository.Object,
+                _mapper.Object, _dateTime.Object, _scriptRepository.Object,
                 _translationService.Object, _unitOfWork.Object);
 
             var result = scriptsController.GetScript(1).Result;
@@ -98,7 +101,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(default(Script)));
 
             var scriptsController = new ScriptsController(
-                _mapper.Object, _scriptRepository.Object,
+                _mapper.Object, _dateTime.Object, _scriptRepository.Object,
                 _translationService.Object, _unitOfWork.Object);
 
             var result = scriptsController.GetScript(1).Result;
@@ -123,7 +126,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(1));
 
             var scriptController = new ScriptsController(
-                _mapper.Object, _scriptRepository.Object,
+                _mapper.Object, _dateTime.Object, _scriptRepository.Object,
                 _translationService.Object, _unitOfWork.Object);
 
             var result = scriptController.CreateScript(scriptResource).Result;
@@ -145,7 +148,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             var scriptResource = new ScriptResource();
 
             var scriptController = new ScriptsController(
-                _mapper.Object, _scriptRepository.Object,
+                _mapper.Object, _dateTime.Object, _scriptRepository.Object,
                 _translationService.Object, _unitOfWork.Object);
             scriptController.ModelState.AddModelError("error", "model not valid");
 
@@ -171,7 +174,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(1));
 
             var scriptController = new ScriptsController(
-                _mapper.Object, _scriptRepository.Object,
+                _mapper.Object, _dateTime.Object, _scriptRepository.Object,
                 _translationService.Object, _unitOfWork.Object);
 
             var result = scriptController.UpdateScript(1, scriptResource).Result;
@@ -193,7 +196,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             var scriptResource = new ScriptResource();
 
             var scriptController = new ScriptsController(
-                _mapper.Object, _scriptRepository.Object,
+                _mapper.Object, _dateTime.Object, _scriptRepository.Object,
                 _translationService.Object, _unitOfWork.Object);
             scriptController.ModelState.AddModelError("error", "model not valid");
 
@@ -212,7 +215,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(default(Script)));
 
             var scriptController = new ScriptsController(
-                _mapper.Object, _scriptRepository.Object,
+                _mapper.Object, _dateTime.Object, _scriptRepository.Object,
                 _translationService.Object, _unitOfWork.Object);
 
             var result = scriptController.UpdateScript(1, scriptResource).Result;
@@ -234,7 +237,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(1));
 
             var scriptController = new ScriptsController(
-                _mapper.Object, _scriptRepository.Object,
+                _mapper.Object, _dateTime.Object, _scriptRepository.Object,
                 _translationService.Object, _unitOfWork.Object);
 
             var result = scriptController.DeleteScript(1).Result;
@@ -254,7 +257,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 .Returns(Task.FromResult(default(Script)));
 
             var scriptController = new ScriptsController(
-                _mapper.Object, _scriptRepository.Object,
+                _mapper.Object, _dateTime.Object, _scriptRepository.Object,
                 _translationService.Object, _unitOfWork.Object);
 
             var result = scriptController.DeleteScript(1).Result;

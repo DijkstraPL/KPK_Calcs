@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Build_IT_Data.Entities.Scripts.Enums;
+using Build_IT_Data.Entities.Scripts.Translations;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
-using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
-using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources.Translations;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-using Build_IT_CommonTools;
+using Build_IT_CommonTools.Extensions;
 using NUnit.Framework;
 
 namespace Build_IT_CommonToolsTests

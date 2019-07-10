@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Build_IT_Data.Entities.Scripts;
+using Build_IT_Data.Entities.Scripts.Enums;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
-using Build_IT_DataAccess.ScriptInterpreter.Models;
-using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
@@ -9,10 +9,8 @@ using Build_IT_Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController

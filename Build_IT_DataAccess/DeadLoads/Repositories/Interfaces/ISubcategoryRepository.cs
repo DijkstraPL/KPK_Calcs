@@ -1,8 +1,7 @@
-﻿using Build_IT_DataAccess.DeadLoads.Models;
+﻿using Build_IT_Data.Entities.DeadLoads;
 using Build_IT_DataAccess.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.DeadLoads.Repositories.Interfaces
@@ -11,7 +10,7 @@ namespace Build_IT_DataAccess.DeadLoads.Repositories.Interfaces
     {
         #region Public_Methods
 
-        Task<List<Subcategory>> GetAllSubcategoriesForCategoryAsync(long categoryId);
+        Task<List<Subcategory>> GetAllSubcategoriesForCategoryAsync(long categoryId, CancellationToken cancellationToken);
 
         #endregion // Public_Methods
     }

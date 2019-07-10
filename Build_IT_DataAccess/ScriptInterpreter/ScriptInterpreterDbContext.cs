@@ -1,15 +1,15 @@
-﻿using Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations;
+﻿using Build_IT_Data.Entities.Scripts;
+using Build_IT_Data.Entities.Scripts.Translations;
+using Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations;
 using Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations.Translations;
-using Build_IT_DataAccess.ScriptInterpreter.Models;
-using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
+using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.Configuration;
 using System.IO;
 
 namespace Build_IT_DataAccess.ScriptInterpreter
 {
-    public class ScriptInterpreterDbContext : DbContext
+    public class ScriptInterpreterDbContext : DbContext, IScriptInterpreterDbContext
     {
         #region Properties
 

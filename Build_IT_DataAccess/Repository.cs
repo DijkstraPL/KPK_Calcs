@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess
@@ -33,9 +34,9 @@ namespace Build_IT_DataAccess
             return Context.Set<TEntity>().FindAsync(id);
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await Task.Run(() => { return Context.Set<TEntity>().ToListAsync(); });
+            return await Task.Run(() => { return Context.Set<TEntity>().ToListAsync(cancellationToken); }, cancellationToken);
         }
 
         public virtual async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)

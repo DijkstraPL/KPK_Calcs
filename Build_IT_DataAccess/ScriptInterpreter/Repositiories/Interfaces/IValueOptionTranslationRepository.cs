@@ -1,8 +1,6 @@
-﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
-using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
-using System;
+﻿using Build_IT_Data.Entities.Scripts.Enums;
+using Build_IT_Data.Entities.Scripts.Translations;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces

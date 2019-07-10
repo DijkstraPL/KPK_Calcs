@@ -1,4 +1,4 @@
-﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
+﻿using Build_IT_Data.Entities.Scripts.Enums;
 
 namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources.Translations
 {

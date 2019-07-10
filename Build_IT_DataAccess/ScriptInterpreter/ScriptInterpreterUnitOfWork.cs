@@ -4,6 +4,7 @@ using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess
@@ -42,6 +43,10 @@ namespace Build_IT_DataAccess
 
         #region Public_Methods
         
+        public async Task<int> CompleteAsync(CancellationToken cancellationToken)
+        {
+            return await _context.SaveChangesAsync(cancellationToken);
+        }
         public async Task<int> CompleteAsync()
         {
             return await _context.SaveChangesAsync();

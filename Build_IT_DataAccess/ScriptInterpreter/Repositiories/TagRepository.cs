@@ -1,4 +1,4 @@
-﻿using Build_IT_DataAccess.ScriptInterpreter.Models;
+﻿using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

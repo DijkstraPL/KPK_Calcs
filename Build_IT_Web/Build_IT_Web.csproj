@@ -60,8 +60,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.0.0" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1" />
+    <PackageReference Include="MediatR" Version="7.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="4.0.1" />
@@ -70,6 +72,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Build_IT_Application\Build_IT_Application.csproj" />
     <ProjectReference Include="..\Build_IT_DataAccess\Build_IT_DataAccess.csproj" />
     <ProjectReference Include="..\Build_IT_ScriptInterpreter\Build_IT_ScriptInterpreter.csproj" />
   </ItemGroup>

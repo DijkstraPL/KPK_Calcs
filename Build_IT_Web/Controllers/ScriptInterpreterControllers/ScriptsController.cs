@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
+using Build_IT_CommonTools.Interfaces;
+using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
-using Build_IT_DataAccess.ScriptInterpreter.Models;
-using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
-using Build_IT_Web.Services;
 using Build_IT_Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +19,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         #region Fields
 
         private readonly IMapper _mapper;
+        private readonly IDateTime _dateTime;
         private readonly IScriptRepository _scriptRepository;
         private readonly ITranslationService _translationService;
         private readonly IScriptInterpreterUnitOfWork _unitOfWork;
@@ -31,11 +30,13 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
         public ScriptsController(
             IMapper mapper,
+            IDateTime dateTime,
             IScriptRepository scriptRepository,
             ITranslationService translationService,
             IScriptInterpreterUnitOfWork unitOfWork)
         {
             _mapper = mapper;
+            _dateTime = dateTime;
             _scriptRepository = scriptRepository;
             _translationService = translationService;
             _unitOfWork = unitOfWork;
@@ -83,8 +84,8 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
             var script = _mapper.Map<ScriptResource, Script>(scriptResource);
 
-            script.Added = DateTime.Now;
-            script.Modified = DateTime.Now;
+            script.Added = _dateTime.Now;
+            script.Modified = _dateTime.Now;
             script.Version = "1";
             await _scriptRepository.AddAsync(script);
             await _unitOfWork.CompleteAsync();
@@ -105,7 +106,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
                 return NotFound();
 
             _mapper.Map<ScriptResource, Script>(scriptResource, script);
-            script.Modified = DateTime.Now;
+            script.Modified = _dateTime.Now;
 
             await _unitOfWork.CompleteAsync();
 

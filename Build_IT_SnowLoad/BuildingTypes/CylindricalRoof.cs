@@ -1,9 +1,8 @@
-﻿using Build_IT_CommonTools;
+﻿using Build_IT_CommonTools.Attributes;
 using Build_IT_SnowLoads.API;
 using Build_IT_SnowLoads.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_SnowLoads.BuildingTypes
 {

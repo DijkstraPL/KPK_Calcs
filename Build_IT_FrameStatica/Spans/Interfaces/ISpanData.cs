@@ -1,7 +1,7 @@
-﻿using Build_IT_FrameStatica.Nodes.Interfaces;
-using Build_IT_CommonTools;
+﻿using Build_IT_CommonTools.Attributes;
 using Build_IT_Data.Materials.Intefaces;
 using Build_IT_Data.Sections.Interfaces;
+using Build_IT_FrameStatica.Nodes.Interfaces;
 
 namespace Build_IT_FrameStatica.Spans.Interfaces
 {

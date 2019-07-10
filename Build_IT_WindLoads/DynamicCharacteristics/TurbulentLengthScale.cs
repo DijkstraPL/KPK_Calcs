@@ -1,9 +1,7 @@
-﻿using Build_IT_CommonTools;
+﻿using Build_IT_CommonTools.Attributes;
 using Build_IT_WindLoads.Factors.Interfaces;
 using Build_IT_WindLoads.Terrains.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_WindLoads.DynamicCharacteristics
 {

@@ -1,4 +1,9 @@
 ﻿using AutoMapper;
+using Build_IT_Application.DeadLoads.Categories.Queries.GetAllCategories;
+using Build_IT_Application.Mapping;
+using Build_IT_CommonTools;
+using Build_IT_CommonTools.Interfaces;
+using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess;
 using Build_IT_DataAccess.DeadLoads;
 using Build_IT_DataAccess.DeadLoads.Interfaces;
@@ -6,11 +11,12 @@ using Build_IT_DataAccess.DeadLoads.Repositories;
 using Build_IT_DataAccess.DeadLoads.Repositories.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
-using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
+using Build_IT_Web.Mapping;
 using Build_IT_Web.Services;
 using Build_IT_Web.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +25,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Reflection;
 
 namespace Build_IT_Web
 {
@@ -80,7 +87,17 @@ namespace Build_IT_Web
                 options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("DeadLoads"),
                 b => b.MigrationsAssembly(dataAccessAssemblyName)));
 #endif
-            services.AddAutoMapper();
+
+            services.AddScoped<IDateTime, MyDateTime>();
+
+            services.AddMediatR(typeof(GetAllCategoriesQuery.Handler).GetTypeInfo().Assembly);
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+
+            services.AddAutoMapper(new Assembly[] {
+                typeof(ScriptMappingProfile).GetTypeInfo().Assembly,
+                typeof(DeadLoadsMappingProfile).GetTypeInfo().Assembly
+            });
 
             services.AddMvc()
                 .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.Interfaces
@@ -11,7 +12,7 @@ namespace Build_IT_DataAccess.Interfaces
         #region Public_Methods
 
         Task<TEntity> GetAsync(long id);
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken);
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
 
         Task AddAsync(TEntity entity);

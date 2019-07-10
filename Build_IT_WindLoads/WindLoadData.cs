@@ -1,7 +1,6 @@
-﻿using Build_IT_CommonTools;
+﻿using Build_IT_CommonTools.Attributes;
 using Build_IT_WindLoads.BuildingData.Interfaces;
 using Build_IT_WindLoads.Factors.Interfaces;
-using Build_IT_WindLoads.Terrains;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,9 +1,8 @@
-﻿using Build_IT_CommonTools;
+﻿using Build_IT_CommonTools.Attributes;
 using Build_IT_WindLoads.BuildingData;
 using Build_IT_WindLoads.BuildingData.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_WindLoads.WindLoadsCases.Roofs
 {

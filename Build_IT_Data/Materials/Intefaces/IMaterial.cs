@@ -1,4 +1,4 @@
-﻿using Build_IT_CommonTools;
+﻿using Build_IT_CommonTools.Attributes;
 
 namespace Build_IT_Data.Materials.Intefaces
 {

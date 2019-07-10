@@ -1,9 +1,6 @@
-﻿using Build_IT_DataAccess.DeadLoads.Models;
+﻿using Build_IT_Data.Entities.DeadLoads;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_DataAccess.DeadLoads.EntityConfigurations
 {

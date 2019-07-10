@@ -1,10 +1,9 @@
-﻿using Build_IT_CommonTools;
+﻿using Build_IT_CommonTools.Extensions;
 using Build_IT_WindLoads.BuildingData;
 using Build_IT_WindLoads.BuildingData.Interfaces;
 using Build_IT_WindLoads.WindLoadsCases.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_WindLoads.WindLoadsCases
 {

@@ -1,8 +1,9 @@
-﻿using Build_IT_DataAccess.DeadLoads.Models;
+﻿using Build_IT_Data.Entities.DeadLoads;
 using Build_IT_DataAccess.DeadLoads.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.DeadLoads.Repositories
@@ -27,12 +28,12 @@ namespace Build_IT_DataAccess.DeadLoads.Repositories
 
         #region Public_Methods
         
-        public async Task<List<Subcategory>> GetAllSubcategoriesForCategoryAsync(long categoryId)
+        public async Task<List<Subcategory>> GetAllSubcategoriesForCategoryAsync(long categoryId, CancellationToken cancellationToken)
         {
             return await DeadLoadsContext.Subcategories
                 .Where(sc => sc.Category.Id == categoryId)
                 .OrderBy(p => p.Name)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
         #endregion // Public_Methods

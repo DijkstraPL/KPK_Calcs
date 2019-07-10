@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
-using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
@@ -41,7 +42,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [HttpGet()]
         public async Task<IActionResult> GetTags()
         {
-            var tags = await _tagRepository.GetAllAsync();
+            var tags = await _tagRepository.GetAllAsync(CancellationToken.None);
 
             if (tags.Count() == 0)
                 return NotFound();

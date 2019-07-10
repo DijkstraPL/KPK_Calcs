@@ -1,12 +1,7 @@
-﻿using Build_IT_DataAccess.ScriptInterpreter.Models;
-using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
-using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
+﻿using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_ScriptInterpreter.Expressions.Functions.Externals;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_ScriptInterpreterTests.UnitTests.Expressions.Functions.Externals
 {

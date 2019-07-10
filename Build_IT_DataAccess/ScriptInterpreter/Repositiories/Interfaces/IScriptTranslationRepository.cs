@@ -1,5 +1,5 @@
-﻿using Build_IT_DataAccess.ScriptInterpreter.Models.Enums;
-using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
+﻿using Build_IT_Data.Entities.Scripts.Enums;
+using Build_IT_Data.Entities.Scripts.Translations;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

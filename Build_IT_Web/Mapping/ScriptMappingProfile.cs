@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Build_IT_DataAccess.ScriptInterpreter.Models;
-using Build_IT_DataAccess.ScriptInterpreter.Models.Translations;
+using Build_IT_Data.Entities.Scripts;
+using Build_IT_Data.Entities.Scripts.Translations;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources.Translations;
 using System;

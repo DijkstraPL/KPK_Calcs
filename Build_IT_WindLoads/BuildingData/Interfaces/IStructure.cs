@@ -1,4 +1,4 @@
-﻿using Build_IT_CommonTools;
+﻿using Build_IT_CommonTools.Attributes;
 using System.Collections.Generic;
 
 namespace Build_IT_WindLoads.BuildingData.Interfaces

@@ -1,13 +1,11 @@
-﻿using Build_IT_DataAccess.DeadLoads.EntityConfigurations;
-using Build_IT_DataAccess.DeadLoads.Models;
+﻿using Build_IT_Data.Entities.DeadLoads;
+using Build_IT_DataAccess.DeadLoads.EntityConfigurations;
+using Build_IT_DataAccess.DeadLoads.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_DataAccess.DeadLoads
 {
-    public class DeadLoadsDbContext : DbContext
+    public class DeadLoadsDbContext : DbContext, IDeadLoadsDbContext
     {
         #region Properties
         

@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
+using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
-using Build_IT_DataAccess.ScriptInterpreter.Models;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
@@ -36,7 +35,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         public void GetTagsTest_Success()
         {
             IEnumerable<Tag> tags = new List<Tag> { new Tag(), new Tag() };
-            _tagRepository.Setup(tr => tr.GetAllAsync())
+            _tagRepository.Setup(tr => tr.GetAllAsync(CancellationToken.None))
                 .Returns(Task.FromResult(tags));
 
             var tagController = new TagController(_mapper.Object, _tagRepository.Object, _unitOfWork.Object);
@@ -52,7 +51,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         public void GetTagsTest_NoneTags_Success()
         {
             IEnumerable<Tag> tags = new List<Tag>();
-            _tagRepository.Setup(tr => tr.GetAllAsync())
+            _tagRepository.Setup(tr => tr.GetAllAsync(CancellationToken.None))
                 .Returns(Task.FromResult(tags));
 
             var tagController = new TagController(_mapper.Object, _tagRepository.Object, _unitOfWork.Object);

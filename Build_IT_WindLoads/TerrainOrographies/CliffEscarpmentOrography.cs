@@ -1,7 +1,5 @@
-﻿using Build_IT_CommonTools;
+﻿using Build_IT_CommonTools.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_WindLoads.TerrainOrographies
 {

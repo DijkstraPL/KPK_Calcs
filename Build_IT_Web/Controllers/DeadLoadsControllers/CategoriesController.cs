@@ -1,46 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Build_IT_DataAccess.DeadLoads.Models;
-using Build_IT_DataAccess.DeadLoads.Repositories.Interfaces;
-using Build_IT_Web.Controllers.DeadLoadsControllers.Resources;
+﻿using Build_IT_Application.DeadLoads.Categories.Queries;
+using Build_IT_Application.DeadLoads.Categories.Queries.GetAllCategories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Build_IT_Web.Controllers.DeadLoadsControllers
 {
     [Route("api/deadloads")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class CategoriesController : BaseController
     {
-        #region Fields
-
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly IMapper _mapper;
-
-        #endregion // Fields
-        
-        #region Constructors
-        
-        public CategoriesController(
-            ICategoryRepository categoryRepository,
-            IMapper mapper)
-        {
-            _categoryRepository = categoryRepository;
-            _mapper = mapper;
-        }
-
-        #endregion // Constructors
-
         #region Public_Methods
         
         [HttpGet()]
-        public async Task<IEnumerable<CategoryResource>> GetAllCategories()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<CategoryResource>>> GetAllCategories()
         {
-            var categories = await _categoryRepository.GetAllAsync();
-
-            return _mapper.Map<List<Category>, List<CategoryResource>>(categories.ToList());
+            return Ok(await Mediator.Send(new GetAllCategoriesQuery()));
         }
 
         #endregion // Public_Methods

@@ -4,6 +4,7 @@ using Build_IT_DataAccess.DeadLoads.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.DeadLoads
@@ -42,16 +43,21 @@ namespace Build_IT_DataAccess.DeadLoads
 
         #region Public_Methods
 
+        public async Task<int> CompleteAsync(CancellationToken cancellationToken)
+        {
+            return await _context.SaveChangesAsync(cancellationToken);
+        }
+
         public async Task<int> CompleteAsync()
         {
-            return await _context.SaveChangesAsync();
+            return await CompleteAsync(CancellationToken.None);
         }
 
         public void Dispose()
         {
             _context.Dispose();
         }
-
+        
         #endregion // Public_Methods
     }
 }
