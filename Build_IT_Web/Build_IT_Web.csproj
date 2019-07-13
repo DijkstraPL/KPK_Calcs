@@ -41,6 +41,7 @@
     <None Remove="ClientApp\app\common\errors\bad-input-error.ts" />
     <None Remove="ClientApp\app\common\errors\not-found-error.ts" />
     <None Remove="ClientApp\app\directives\bootstrap-select.directive.ts" />
+    <None Remove="ClientApp\app\modules\script-interpreter\models\api\create-script-command.ts" />
     <None Remove="ClientApp\app\modules\script-interpreter\models\enums\language.ts" />
     <None Remove="ClientApp\app\modules\script-interpreter\services\parameter-translation.service.ts" />
     <None Remove="ClientApp\app\modules\script-interpreter\services\script-translation.service.ts" />
@@ -62,6 +63,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.4.0" />
     <PackageReference Include="MediatR" Version="7.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -84,6 +86,7 @@
     <TypeScriptCompile Include="ClientApp\app\common\errors\not-found-error.ts" />
     <TypeScriptCompile Include="ClientApp\app\common\errors\app-error.ts" />
     <TypeScriptCompile Include="ClientApp\app\directives\bootstrap-select.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\models\api\create-script-command.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\models\enums\language.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\value-option-translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Build_IT_Application.Exceptions;
 using Build_IT_Data.Entities.Scripts;
-using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using MediatR;
 using System;
@@ -10,49 +9,46 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Build_IT_Application.Scripts.Scripts.Commands.DeleteScript
+namespace Build_IT_Application.Scripts.Scripts.Queries.GetScript
 {
-    public class DeleteScriptCommand : IRequest
+    public class GetScriptQuery : IRequest<ScriptResource>
     {
         #region Properties
 
         public long Id { get; set; }
 
-        #endregion // Properties        
-        public class Handler : IRequestHandler<DeleteScriptCommand>
+        #endregion // Properties
+
+        public class Handler : IRequestHandler<GetScriptQuery, ScriptResource>
         {
             #region Fields
 
             private readonly IScriptRepository _scriptRepository;
-            private readonly IScriptInterpreterUnitOfWork _unitOfWork;
+            private readonly IMapper _mapper;
 
             #endregion // Fields
 
             #region Constructors
 
-            public Handler(
-                IScriptRepository scriptRepository,
-                IScriptInterpreterUnitOfWork unitOfWork)
+            public Handler(IScriptRepository scriptRepository,
+                IMapper mapper)
             {
                 _scriptRepository = scriptRepository;
-                _unitOfWork = unitOfWork;
+                _mapper = mapper;
             }
 
             #endregion // Constructors
 
             #region Public_Methods
 
-            public async Task<Unit> Handle(DeleteScriptCommand request, CancellationToken cancellationToken)
+            public async Task<ScriptResource> Handle(GetScriptQuery request, CancellationToken cancellationToken)
             {
-                var script = await _scriptRepository.GetAsync(request.Id);
+                var script = await _scriptRepository.GetScriptWithTagsAsync(request.Id);
 
                 if (script == null)
                     throw new NotFoundException(nameof(Script), request.Id);
 
-                _scriptRepository.Remove(script);
-                await _unitOfWork.CompleteAsync(cancellationToken);
-
-                return Unit.Value;
+                return _mapper.Map<Script, ScriptResource>(script);
             }
 
             #endregion // Public_Methods

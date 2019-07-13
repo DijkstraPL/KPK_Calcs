@@ -9,7 +9,7 @@ namespace Build_IT_Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class BaseController : Controller
+    public class BaseController : ControllerBase
     {
         #region Fields
 

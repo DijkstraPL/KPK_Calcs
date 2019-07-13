@@ -7,13 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { AppError } from '../../../common/errors/app-error';
-import { NotFoundError } from '../../../common/errors/not-found-error';
 import { BadInputError } from '../../../common/errors/bad-input-error';
+import { NotFoundError } from '../../../common/errors/not-found-error';
 import { TranslationService } from '../../../services/translation.service';
 var ScriptService = /** @class */ (function () {
     function ScriptService(http, translationService) {
@@ -45,6 +45,7 @@ var ScriptService = /** @class */ (function () {
         }));
     };
     ScriptService.prototype.create = function (script) {
+        console.log(script);
         return this.http.post('/api/scripts', script)
             .pipe(retry(1), catchError(function (error) {
             if (error.status === 400)

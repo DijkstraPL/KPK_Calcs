@@ -3966,6 +3966,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_script_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/script.service */ "./app/modules/script-interpreter/services/script.service.ts");
 /* harmony import */ var _services_tag_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/tag.service */ "./app/modules/script-interpreter/services/tag.service.ts");
 /* harmony import */ var _parameters_form_parameters_form_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./parameters-form/parameters-form.component */ "./app/modules/script-interpreter/components/script-form/parameters-form/parameters-form.component.ts");
+/* harmony import */ var _models_api_create_script_command__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../models/api/create-script-command */ "./app/modules/script-interpreter/models/api/create-script-command.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4010,6 +4011,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+
 
 
 
@@ -4089,22 +4091,24 @@ var ScriptFormComponent = /** @class */ (function () {
     };
     ScriptFormComponent.prototype.onSubmit = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var newScript;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this._setTags()];
                     case 1:
                         _a.sent();
-                        if (!this.editMode)
-                            this.scriptService.create(this.scriptForm.value)
-                                .subscribe(function (script) {
-                                console.log(script);
-                                _this.router.navigateByUrl('/scripts/edit/' + script.id);
+                        if (!this.editMode) {
+                            newScript = new _models_api_create_script_command__WEBPACK_IMPORTED_MODULE_6__["CreateScriptCommand"]();
+                            newScript.init(this.scriptForm.value);
+                            this.scriptService.create(newScript)
+                                .subscribe(function () {
+                                _this.router.navigateByUrl('/scripts/edit/' + _this.scriptId.value);
                             }, function (error) { throw error; });
+                        }
                         else
                             this.scriptService.update(this.scriptForm.value)
                                 .subscribe(function (script) { return console.log(script); });
-                        this.parametersForm.saveParameters();
                         return [2 /*return*/];
                 }
             });
@@ -4932,6 +4936,65 @@ var TranslationFormComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./app/modules/script-interpreter/models/api/create-script-command.ts":
+/*!****************************************************************************!*\
+  !*** ./app/modules/script-interpreter/models/api/create-script-command.ts ***!
+  \****************************************************************************/
+/*! exports provided: CreateScriptCommand */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateScriptCommand", function() { return CreateScriptCommand; });
+var CreateScriptCommand = /** @class */ (function () {
+    function CreateScriptCommand(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    CreateScriptCommand.prototype.init = function (data) {
+        if (data) {
+            this.id = 0;
+            this.name = data["name"];
+            this.description = data["description"];
+            this.groupName = data["groupName"];
+            this.author = data["author"];
+            this.accordingTo = data["accordingTo"];
+            this.notes = data["notes"];
+            this.defaultLanguage = data["defaultLanguage"];
+        }
+    };
+    CreateScriptCommand.fromJS = function (data) {
+        data = typeof data === 'object' ? data : {};
+        var result = new CreateScriptCommand();
+        result.init(data);
+        return result;
+    };
+    CreateScriptCommand.prototype.toJSON = function (data) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["groupName"] = this.groupName;
+        data["author"] = this.author;
+        data["accordingTo"] = this.accordingTo;
+        data["notes"] = this.notes;
+        data["defaultLanguage"] = this.defaultLanguage;
+        return data;
+    };
+    CreateScriptCommand.ctorParameters = function () { return [
+        { type: undefined }
+    ]; };
+    return CreateScriptCommand;
+}());
+
+
+
+/***/ }),
+
 /***/ "./app/modules/script-interpreter/models/enums/language.ts":
 /*!*****************************************************************!*\
   !*** ./app/modules/script-interpreter/models/enums/language.ts ***!
@@ -5492,13 +5555,13 @@ var ParameterService = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScriptService", function() { return ScriptService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "../node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "../node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "../node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "../node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../common/errors/app-error */ "./app/common/errors/app-error.ts");
-/* harmony import */ var _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../common/errors/not-found-error */ "./app/common/errors/not-found-error.ts");
-/* harmony import */ var _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../common/errors/bad-input-error */ "./app/common/errors/bad-input-error.ts");
+/* harmony import */ var _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../common/errors/bad-input-error */ "./app/common/errors/bad-input-error.ts");
+/* harmony import */ var _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../common/errors/not-found-error */ "./app/common/errors/not-found-error.ts");
 /* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/translation.service */ "./app/services/translation.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5526,7 +5589,7 @@ var ScriptService = /** @class */ (function () {
         return this.http.get('/api/scripts/' + (language || this.translationService.getCurrentLanguage()))
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             if (error.status === 404)
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_6__["NotFoundError"](error));
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
         }));
     };
@@ -5534,7 +5597,7 @@ var ScriptService = /** @class */ (function () {
         return this.http.get('/api/scripts/' + id + '/' + (language || this.translationService.getCurrentLanguage()))
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             if (error.status === 404)
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_6__["NotFoundError"](error));
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
         }));
     };
@@ -5542,17 +5605,18 @@ var ScriptService = /** @class */ (function () {
         return this.http.delete('/api/scripts/' + id)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             if (error.status === 404)
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_6__["NotFoundError"](error));
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
         }));
     };
     ScriptService.prototype.create = function (script) {
+        console.log(script);
         return this.http.post('/api/scripts', script)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             if (error.status === 400)
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_6__["BadInputError"](error));
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_5__["BadInputError"](error));
             if (error.status === 404)
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_6__["NotFoundError"](error));
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
         }));
     };
@@ -5560,19 +5624,19 @@ var ScriptService = /** @class */ (function () {
         return this.http.put('/api/scripts/' + script.id, script)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             if (error.status === 400)
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_6__["BadInputError"](error));
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_bad_input_error__WEBPACK_IMPORTED_MODULE_5__["BadInputError"](error));
             if (error.status === 404)
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_5__["NotFoundError"](error));
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_not_found_error__WEBPACK_IMPORTED_MODULE_6__["NotFoundError"](error));
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(new _common_errors_app_error__WEBPACK_IMPORTED_MODULE_4__["AppError"](error));
         }));
     };
     ScriptService.ctorParameters = function () { return [
-        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"] },
         { type: _services_translation_service__WEBPACK_IMPORTED_MODULE_7__["TranslationService"] }
     ]; };
     ScriptService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"],
             _services_translation_service__WEBPACK_IMPORTED_MODULE_7__["TranslationService"]])
     ], ScriptService);
     return ScriptService;

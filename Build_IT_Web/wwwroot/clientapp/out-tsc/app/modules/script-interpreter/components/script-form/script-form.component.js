@@ -48,6 +48,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ScriptService } from '../../services/script.service';
 import { TagService } from '../../services/tag.service';
 import { ParametersFormComponent } from './parameters-form/parameters-form.component';
+import { CreateScriptCommand } from '../../models/api/create-script-command';
 var ScriptFormComponent = /** @class */ (function () {
     function ScriptFormComponent(scriptService, tagService, route, router) {
         this.scriptService = scriptService;
@@ -121,18 +122,21 @@ var ScriptFormComponent = /** @class */ (function () {
     };
     ScriptFormComponent.prototype.onSubmit = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var newScript;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this._setTags()];
                     case 1:
                         _a.sent();
-                        if (!this.editMode)
-                            this.scriptService.create(this.scriptForm.value)
-                                .subscribe(function (script) {
-                                console.log(script);
-                                _this.router.navigateByUrl('/scripts/edit/' + script.id);
+                        if (!this.editMode) {
+                            newScript = new CreateScriptCommand();
+                            newScript.init(this.scriptForm.value);
+                            this.scriptService.create(newScript)
+                                .subscribe(function () {
+                                _this.router.navigateByUrl('/scripts/edit/' + _this.scriptId.value);
                             }, function (error) { throw error; });
+                        }
                         else
                             this.scriptService.update(this.scriptForm.value)
                                 .subscribe(function (script) { return console.log(script); });

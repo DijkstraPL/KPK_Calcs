@@ -1,13 +1,13 @@
-﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Script } from '../models/interfaces/script';
+﻿import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { AppError } from '../../../common/errors/app-error';
-import { NotFoundError } from '../../../common/errors/not-found-error';
 import { BadInputError } from '../../../common/errors/bad-input-error';
-import { Router, PRIMARY_OUTLET } from '@angular/router';
+import { NotFoundError } from '../../../common/errors/not-found-error';
 import { TranslationService } from '../../../services/translation.service';
+import { ICreateScriptCommand, CreateScriptCommand } from '../models/api/create-script-command';
+import { Script } from '../models/interfaces/script';
 
 @Injectable({ providedIn: 'root' })
 export class ScriptService {
@@ -52,7 +52,8 @@ export class ScriptService {
             );
     }
 
-    create(script: Script) {
+    create(script: CreateScriptCommand) {
+        console.log(script);
         return this.http.post('/api/scripts', script)
             .pipe(
                 retry(1),

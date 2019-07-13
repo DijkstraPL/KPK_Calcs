@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Build_IT_Application.DeadLoads.Categories.Queries.GetAllCategories;
+using Build_IT_Application.DeadLoads.Materials.Queries.GetAllMaterials;
+using Build_IT_Application.Infrastructures;
 using Build_IT_Application.Mapping;
 using Build_IT_CommonTools;
 using Build_IT_CommonTools.Interfaces;
@@ -16,6 +18,7 @@ using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Mapping;
 using Build_IT_Web.Services;
 using Build_IT_Web.Services.Interfaces;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,13 +29,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Reflection;
+using ScriptMappingProfile = Build_IT_Application.Mapping.ScriptMappingProfile;
 
 namespace Build_IT_Web
 {
     public class Startup
     {
         #region Properties
-        
+
         public IConfiguration Configuration { get; }
 
         #endregion // Properties
@@ -92,7 +96,7 @@ namespace Build_IT_Web
 
             services.AddMediatR(typeof(GetAllCategoriesQuery.Handler).GetTypeInfo().Assembly);
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
             services.AddAutoMapper(new Assembly[] {
                 typeof(ScriptMappingProfile).GetTypeInfo().Assembly,
@@ -102,7 +106,8 @@ namespace Build_IT_Web
             services.AddMvc()
                 .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1); //validate api rules
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1) //validate api rules
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetAllMaterialsQueryValidator>());
 
             services.AddSwaggerGen(c =>
             {
@@ -155,7 +160,7 @@ namespace Build_IT_Web
         #endregion // Public_Methods
 
         #region Private_Methods
-        
+
         private void SetTranslationsServices(IServiceCollection services)
         {
             services.AddScoped<ITranslationRepository, TranslationRepository>();
