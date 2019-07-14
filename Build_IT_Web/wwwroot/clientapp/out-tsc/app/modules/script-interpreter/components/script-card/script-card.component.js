@@ -17,9 +17,8 @@ var ScriptCardComponent = /** @class */ (function () {
     ScriptCardComponent.prototype.delete = function (script) {
         var _this = this;
         if (confirm("Are you sure that you want to remove \"" + script.name + "\"?")) {
-            this.scriptService.delete(script.id).subscribe(function (s) {
-                console.log("Scripts", s);
-                _this.deleted.emit(script);
+            this.scriptService.delete(script.id).subscribe(function () {
+                _this.deleted.emit(script.id);
             });
         }
     };

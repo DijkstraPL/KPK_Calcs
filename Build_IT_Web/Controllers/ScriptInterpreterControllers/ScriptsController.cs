@@ -1,20 +1,14 @@
-﻿using AutoMapper;
-using Build_IT_Application.Scripts.Scripts.Commands.CreateScript;
-using Build_IT_Application.Scripts.Scripts.Commands.DeleteScript;
-using Build_IT_Application.Scripts.Scripts.Commands.UpdateScript;
-using Build_IT_Application.Scripts.Scripts.Queries;
-using Build_IT_Application.Scripts.Scripts.Queries.GetAllScripts;
-using Build_IT_Application.Scripts.Scripts.Queries.GetScript;
-using Build_IT_CommonTools.Interfaces;
-using Build_IT_Data.Entities.Scripts;
-using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
-using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
+﻿using Build_IT_Application.ScriptInterpreter.Scripts.Commands.CreateScript;
+using Build_IT_Application.ScriptInterpreter.Scripts.Commands.DeleteScript;
+using Build_IT_Application.ScriptInterpreter.Scripts.Commands.UpdateScript;
+using Build_IT_Application.ScriptInterpreter.Scripts.Queries;
+using Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetAllScripts;
+using Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript;
+using Build_IT_Web.Services;
 //using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
-using Build_IT_Web.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
@@ -25,7 +19,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
     {
         [HttpGet("{lang?}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<ScriptResource>>> GetScripts(long subcategoryId)
+        public async Task<ActionResult<IEnumerable<ScriptResource>>> GetScripts(string lang = TranslationService.DefaultLanguageCode)
         {
             return Ok(await Mediator.Send(new GetAllScriptsQuery()));
         }
@@ -33,19 +27,19 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [HttpGet("{id}/{lang?}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ScriptResource>> GetScript(long id)
+        public async Task<ActionResult<ScriptResource>> GetScript(long id, string lang = TranslationService.DefaultLanguageCode)
         {
             return Ok(await Mediator.Send(new GetScriptQuery { Id = id }));
         }
 
         [HttpPost()]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Create([FromBody]CreateScriptCommand command)
         {
-            await Mediator.Send(command);
+            var createdScript = await Mediator.Send(command);
 
-            return NoContent();
+            return CreatedAtAction(nameof(Create), createdScript);
         }
         
         [HttpPut("{id}")]

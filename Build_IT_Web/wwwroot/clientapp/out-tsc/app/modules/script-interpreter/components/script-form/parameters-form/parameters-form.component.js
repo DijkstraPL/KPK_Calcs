@@ -70,7 +70,6 @@ var ParametersFormComponent = /** @class */ (function () {
         this.parameterService.getParameters(id, "en").subscribe(function (parameters) {
             _this.parameters = parameters;
             _this.onParametersToShowChange();
-            console.log("Parameters", _this.parameters);
         }, function (error) { return console.error(error); });
     };
     ParametersFormComponent.prototype.onParametersToShowChange = function () {
@@ -93,9 +92,9 @@ var ParametersFormComponent = /** @class */ (function () {
         var _this = this;
         if (confirm("Are you sure?")) {
             this.parameterService.delete(this.scriptId, parameterId)
-                .subscribe(function (p) {
+                .subscribe(function () {
                 _this.onParametersToShowChange();
-                _this.refreshNumbering(p.number);
+                _this.refreshNumbering(_this.parameters.find(function (p) { return p.id == parameterId; }).number);
                 _this.saveParameters();
             }, function (error) { return console.error(error); });
             this.parameters = this.parameters.filter(function (p) { return p.id != parameterId; });
@@ -115,8 +114,8 @@ var ParametersFormComponent = /** @class */ (function () {
         else
             parameter.number = 0;
         this.parameterService.create(this.scriptId, parameter)
-            .subscribe(function (p) {
-            _this.parameters.push(p);
+            .subscribe(function () {
+            _this.getParameters(_this.scriptId);
         });
         this.editMode = false;
     };
@@ -148,9 +147,7 @@ var ParametersFormComponent = /** @class */ (function () {
         var _this = this;
         this.parameters.forEach(function (p) {
             _this.parameterService.update(_this.scriptId, p)
-                .subscribe(function (p) {
-                console.log(p);
-            }, function (error) { return console.error(error); });
+                .subscribe(function () { }, function (error) { return console.error(error); });
         });
     };
     __decorate([

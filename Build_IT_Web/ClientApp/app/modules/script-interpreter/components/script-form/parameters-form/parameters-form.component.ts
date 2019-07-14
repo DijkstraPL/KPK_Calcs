@@ -83,7 +83,6 @@ export class ParametersFormComponent implements OnInit {
         this.parameterService.getParameters(id, "en").subscribe(parameters => {
             this.parameters = parameters;
             this.onParametersToShowChange();
-            console.log("Parameters", this.parameters);
         }, error => console.error(error));
     }
 
@@ -109,9 +108,9 @@ export class ParametersFormComponent implements OnInit {
     remove(parameterId: number) {
         if (confirm("Are you sure?")) {
             this.parameterService.delete(this.scriptId, parameterId)
-                .subscribe((p: Parameter) => {
+                .subscribe(() => {
                     this.onParametersToShowChange();
-                    this.refreshNumbering(p.number);
+                    this.refreshNumbering(this.parameters.find(p => p.id == parameterId).number);
                     this.saveParameters();
                 }, error => console.error(error));
             this.parameters = this.parameters.filter(p => p.id != parameterId)
@@ -130,8 +129,8 @@ export class ParametersFormComponent implements OnInit {
         else
             parameter.number = 0;
         this.parameterService.create(this.scriptId, parameter)
-            .subscribe((p: Parameter) => {
-                this.parameters.push(p);
+            .subscribe(() => {
+                this.getParameters(this.scriptId);
             });
         this.editMode = false;
     }
@@ -168,9 +167,7 @@ export class ParametersFormComponent implements OnInit {
     saveParameters() {
         this.parameters.forEach(p => {
             this.parameterService.update(this.scriptId, p)
-                .subscribe((p: Parameter) => {
-                    console.log(p);
-                },
+                .subscribe(() => { },
                     error => console.error(error))
         });
     }

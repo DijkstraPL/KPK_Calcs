@@ -271,8 +271,8 @@ var DataParameterFormComponent = /** @class */ (function () {
     DataParameterFormComponent.prototype.update = function () {
         var _this = this;
         this.parameterService.update(this.scriptId, this.parameterForm.value)
-            .subscribe(function (p) {
-            _this.updated.emit(p);
+            .subscribe(function () {
+            _this.updated.emit(_this.parameterForm.value);
         }, function (error) { return console.error(error); });
     };
     DataParameterFormComponent.prototype.setValueOptionsSettings = function () {

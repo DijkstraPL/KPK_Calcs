@@ -66,7 +66,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         public void GetTagsForScriptTest_Success()
         {
             IEnumerable<Tag> tags = new List<Tag> { new Tag(), new Tag() };
-            _tagRepository.Setup(tr => tr.GetTagsForScript(1))
+            _tagRepository.Setup(tr => tr.GetTagsForScriptAsync(1))
                 .Returns(Task.FromResult(tags));
 
             var tagController = new TagController(_mapper.Object, _tagRepository.Object, _unitOfWork.Object);
@@ -82,7 +82,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         public void GetTagsForScriptTest_NoneTags_Success()
         {
             IEnumerable<Tag> tags = new List<Tag>();
-            _tagRepository.Setup(tr => tr.GetTagsForScript(1))
+            _tagRepository.Setup(tr => tr.GetTagsForScriptAsync(1))
                 .Returns(Task.FromResult(tags));
 
             var tagController = new TagController(_mapper.Object, _tagRepository.Object, _unitOfWork.Object);

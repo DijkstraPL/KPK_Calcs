@@ -9,7 +9,7 @@ import { TagService } from '../../services/tag.service';
 import { Tag } from '../../models/interfaces/tag';
 import { Observable, forkJoin } from 'rxjs';
 import { ParametersFormComponent } from './parameters-form/parameters-form.component';
-import { CreateScriptCommand } from '../../models/api/create-script-command';
+import { CreateScriptCommand } from '../../models/api/scripts/create-script-command';
 
 @Component({
     selector: 'script-form',
@@ -87,19 +87,16 @@ export class ScriptFormComponent implements OnInit {
        await this._setTags();
 
         if (!this.editMode) {
-            let newScript = new CreateScriptCommand();
-            newScript.init(this.scriptForm.value);
-
-            this.scriptService.create(newScript)
-                .subscribe(() => {
-                    this.router.navigateByUrl('/scripts/edit/' + this.scriptId.value);
+            this.scriptService.create(this.scriptForm.value)
+                .subscribe((createdScript: any) => {
+                    this.router.navigateByUrl('/scripts/edit/' + createdScript.id);
                 }, error => { throw error });
         }
         else
             this.scriptService.update(this.scriptForm.value)
-                .subscribe((script: Script) => console.log(script));
+                .subscribe(() => { });
 
-     //   this.parametersForm.saveParameters();
+       this.parametersForm.saveParameters();
     }
 
     private async _setTags() {
@@ -107,7 +104,6 @@ export class ScriptFormComponent implements OnInit {
             if (tag.id == 0) {
                 let newTag = await this._setTag(tag);
                 tag.id = newTag.id;
-                console.log(newTag);
             }
     }
 

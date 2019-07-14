@@ -22,16 +22,21 @@ var ScriptCardsComponent = /** @class */ (function () {
         var _this = this;
         this.scriptService.getScripts().subscribe(function (scripts) {
             _this.scripts = scripts;
-            if (_this.groupFilters != undefined)
-                _this.scripts = _this.scripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
-            if (_this.tagFilters != undefined)
-                _this.scripts = _this.scripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
-            _this.activeScripts = _this.scripts.slice(0, _this.pageSize);
-            console.log("Scripts", _this.scripts);
+            _this.setFilteredScripts();
         }, function (error) { return console.error(error); });
     };
-    ScriptCardsComponent.prototype.onDeleted = function (script) {
-        this.scripts = this.scripts.filter(function (s) { return s.id != script.id; });
+    ScriptCardsComponent.prototype.setFilteredScripts = function () {
+        var _this = this;
+        if (this.groupFilters != undefined)
+            this.scripts = this.scripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
+        if (this.tagFilters != undefined)
+            this.scripts = this.scripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
+        this.activeScripts = this.scripts.slice(0, this.pageSize);
+        console.log("Scripts", this.scripts);
+    };
+    ScriptCardsComponent.prototype.onDeleted = function (scriptId) {
+        this.scripts = this.scripts.filter(function (s) { return s.id != scriptId; });
+        this.setFilteredScripts();
     };
     ScriptCardsComponent.prototype.onPageChanged = function (e) {
         var firstCut = e.pageIndex * e.pageSize;

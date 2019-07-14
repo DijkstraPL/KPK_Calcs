@@ -38,14 +38,14 @@ export class FigureParameterFormComponent implements OnInit {
         let nativeELement: HTMLInputElement = this.fileInput.nativeElement;
 
         this.figureService.upload(this.parameterId.value, nativeELement.files[0])
-            .subscribe((figure: Figure) => {
-                this.figures.push(figure)
+            .subscribe(() => {
+                //this.figures.push(figure) BROKEN
             });
     }
 
     remove(figure: Figure) {
         this.figureService.detach(this.parameterId.value, figure.id)
-            .subscribe(figure => this.figures = this.figures.filter(f => f != figure));
+            .subscribe(() => this.figures = this.figures.filter(f => f.id != figure.id));
     }
 
     //pickExistingDialog() {

@@ -10,16 +10,15 @@ import { ScriptService } from '../../services/script.service';
 
 export class ScriptCardComponent {
     @Input('script') script: Script;
-    @Output('deleted') deleted = new EventEmitter<Script>();
+    @Output('deleted') deleted = new EventEmitter<number>();
 
     constructor(private scriptService: ScriptService) {
     }
        
     delete(script: Script): void {
         if (confirm(`Are you sure that you want to remove \"${script.name}\"?`)) {
-            this.scriptService.delete(script.id).subscribe((s: Script) => {
-                console.log("Scripts", s);
-                this.deleted.emit(script);
+            this.scriptService.delete(script.id).subscribe(() => {
+                this.deleted.emit(script.id);
             });
         }
     }

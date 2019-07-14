@@ -257,8 +257,8 @@ export class DataParameterFormComponent implements OnInit {
 
     private update() {
         this.parameterService.update(this.scriptId, this.parameterForm.value)
-            .subscribe((p: Parameter) => {
-                this.updated.emit(p);
+            .subscribe(() => {
+                this.updated.emit(this.parameterForm.value);
             },
                 error => console.error(error));
     }

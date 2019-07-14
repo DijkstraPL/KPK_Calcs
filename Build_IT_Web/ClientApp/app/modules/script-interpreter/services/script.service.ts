@@ -6,7 +6,7 @@ import { AppError } from '../../../common/errors/app-error';
 import { BadInputError } from '../../../common/errors/bad-input-error';
 import { NotFoundError } from '../../../common/errors/not-found-error';
 import { TranslationService } from '../../../services/translation.service';
-import { ICreateScriptCommand, CreateScriptCommand } from '../models/api/create-script-command';
+import { ICreateScriptCommand, CreateScriptCommand } from '../models/api/scripts/create-script-command';
 import { Script } from '../models/interfaces/script';
 
 @Injectable({ providedIn: 'root' })
@@ -52,8 +52,7 @@ export class ScriptService {
             );
     }
 
-    create(script: CreateScriptCommand) {
-        console.log(script);
+    create(script: Script) {
         return this.http.post('/api/scripts', script)
             .pipe(
                 retry(1),

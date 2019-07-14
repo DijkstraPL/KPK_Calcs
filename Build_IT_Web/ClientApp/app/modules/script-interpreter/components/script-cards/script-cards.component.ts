@@ -31,17 +31,22 @@ export class ScriptCardsComponent {
         this.scriptService.getScripts().subscribe((scripts: Script[]) => {
 
             this.scripts = scripts;
-            if (this.groupFilters != undefined)
-                this.scripts = this.scripts.filter(s => this.groupFilters.indexOf(s.groupName) != -1);
-            if (this.tagFilters != undefined)
-                this.scripts = this.scripts.filter(s => this.tagFilters.every(tf => s.tags.map(t => t.name).indexOf(tf) != -1));
-            this.activeScripts = this.scripts.slice(0, this.pageSize);
-            console.log("Scripts", this.scripts);
+            this.setFilteredScripts();
         }, error => console.error(error));
     }
 
-    onDeleted(script: Script) {
-        this.scripts = this.scripts.filter(s => s.id != script.id);
+    private setFilteredScripts() {
+        if (this.groupFilters != undefined)
+            this.scripts = this.scripts.filter(s => this.groupFilters.indexOf(s.groupName) != -1);
+        if (this.tagFilters != undefined)
+            this.scripts = this.scripts.filter(s => this.tagFilters.every(tf => s.tags.map(t => t.name).indexOf(tf) != -1));
+        this.activeScripts = this.scripts.slice(0, this.pageSize);
+        console.log("Scripts", this.scripts);
+    }
+
+    onDeleted(scriptId: number) {
+        this.scripts = this.scripts.filter(s => s.id != scriptId);
+        this.setFilteredScripts();
     }
 
     onPageChanged(e) {

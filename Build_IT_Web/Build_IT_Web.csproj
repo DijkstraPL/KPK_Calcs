@@ -86,7 +86,7 @@
     <TypeScriptCompile Include="ClientApp\app\common\errors\not-found-error.ts" />
     <TypeScriptCompile Include="ClientApp\app\common\errors\app-error.ts" />
     <TypeScriptCompile Include="ClientApp\app\directives\bootstrap-select.directive.ts" />
-    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\models\api\create-script-command.ts" />
+    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\models\api\scripts\create-script-command.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\models\enums\language.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\value-option-translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />

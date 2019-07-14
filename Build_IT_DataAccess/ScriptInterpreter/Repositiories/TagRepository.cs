@@ -3,6 +3,7 @@ using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
@@ -27,7 +28,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
 
         #region Public_Methods
 
-        public async Task<IEnumerable<Tag>> GetTagsForScript(long scriptId)
+        public async Task<IEnumerable<Tag>> GetTagsForScriptAsync(long scriptId)
         {
             var script = await ScriptInterpreterContext.Scripts.FindAsync(scriptId);
             var tagsIds = script.Tags.Select(st => st.TagId);

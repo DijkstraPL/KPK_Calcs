@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
-using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Build_IT_Web.Services;
 using Build_IT_Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;

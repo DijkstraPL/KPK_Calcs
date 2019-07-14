@@ -1,7 +1,8 @@
-﻿using Build_IT_Data.Entities.Scripts;
+﻿using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
+using Build_IT_Data.Entities.Scripts;
+using Build_IT_Data.Entities.Scripts.Enums;
 using Build_IT_ScriptInterpreter.Parameters.Interfaces;
 using Build_IT_ScriptInterpreter.Scripts.Interfaces;
-using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -35,11 +36,11 @@ namespace Build_IT_Web.Services
             _calculationEngine = new SI.CalculationEngine(_scriptToInterpret);
 
             _parameterValues = userParameters
-                .Where(p => (p.Context & SIP.ParameterOptions.Optional) == 0 ||
-                !string.IsNullOrWhiteSpace(p.Value) && (p.Context & SIP.ParameterOptions.Optional) != 0)
+                .Where(p => (p.Context & ParameterOptions.Optional) == 0 ||
+                !string.IsNullOrWhiteSpace(p.Value) && (p.Context & ParameterOptions.Optional) != 0)
                 .ToDictionary(
                 p => p.Name,
-                p => p.ValueType == SIP.ValueTypes.Number ?
+                p => p.ValueType == ValueTypes.Number ?
                  string.IsNullOrWhiteSpace(p.Value) ? 0 :
                  double.Parse(p.Value?.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture) :
                 (object)p.Value);

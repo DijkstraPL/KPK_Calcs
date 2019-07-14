@@ -2846,9 +2846,8 @@ var ScriptCardComponent = /** @class */ (function () {
     ScriptCardComponent.prototype.delete = function (script) {
         var _this = this;
         if (confirm("Are you sure that you want to remove \"" + script.name + "\"?")) {
-            this.scriptService.delete(script.id).subscribe(function (s) {
-                console.log("Scripts", s);
-                _this.deleted.emit(script);
+            this.scriptService.delete(script.id).subscribe(function () {
+                _this.deleted.emit(script.id);
             });
         }
     };
@@ -2925,16 +2924,21 @@ var ScriptCardsComponent = /** @class */ (function () {
         var _this = this;
         this.scriptService.getScripts().subscribe(function (scripts) {
             _this.scripts = scripts;
-            if (_this.groupFilters != undefined)
-                _this.scripts = _this.scripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
-            if (_this.tagFilters != undefined)
-                _this.scripts = _this.scripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
-            _this.activeScripts = _this.scripts.slice(0, _this.pageSize);
-            console.log("Scripts", _this.scripts);
+            _this.setFilteredScripts();
         }, function (error) { return console.error(error); });
     };
-    ScriptCardsComponent.prototype.onDeleted = function (script) {
-        this.scripts = this.scripts.filter(function (s) { return s.id != script.id; });
+    ScriptCardsComponent.prototype.setFilteredScripts = function () {
+        var _this = this;
+        if (this.groupFilters != undefined)
+            this.scripts = this.scripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
+        if (this.tagFilters != undefined)
+            this.scripts = this.scripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
+        this.activeScripts = this.scripts.slice(0, this.pageSize);
+        console.log("Scripts", this.scripts);
+    };
+    ScriptCardsComponent.prototype.onDeleted = function (scriptId) {
+        this.scripts = this.scripts.filter(function (s) { return s.id != scriptId; });
+        this.setFilteredScripts();
     };
     ScriptCardsComponent.prototype.onPageChanged = function (e) {
         var firstCut = e.pageIndex * e.pageSize;
@@ -3272,8 +3276,8 @@ var DataParameterFormComponent = /** @class */ (function () {
     DataParameterFormComponent.prototype.update = function () {
         var _this = this;
         this.parameterService.update(this.scriptId, this.parameterForm.value)
-            .subscribe(function (p) {
-            _this.updated.emit(p);
+            .subscribe(function () {
+            _this.updated.emit(_this.parameterForm.value);
         }, function (error) { return console.error(error); });
     };
     DataParameterFormComponent.prototype.setValueOptionsSettings = function () {
@@ -3483,17 +3487,16 @@ var FigureParameterFormComponent = /** @class */ (function () {
         this.figures = this.parameterFigures.value;
     };
     FigureParameterFormComponent.prototype.uploadFigure = function () {
-        var _this = this;
         var nativeELement = this.fileInput.nativeElement;
         this.figureService.upload(this.parameterId.value, nativeELement.files[0])
-            .subscribe(function (figure) {
-            _this.figures.push(figure);
+            .subscribe(function () {
+            //this.figures.push(figure) BROKEN
         });
     };
     FigureParameterFormComponent.prototype.remove = function (figure) {
         var _this = this;
         this.figureService.detach(this.parameterId.value, figure.id)
-            .subscribe(function (figure) { return _this.figures = _this.figures.filter(function (f) { return f != figure; }); });
+            .subscribe(function () { return _this.figures = _this.figures.filter(function (f) { return f.id != figure.id; }); });
     };
     FigureParameterFormComponent.ctorParameters = function () { return [
         { type: _services_figure_service__WEBPACK_IMPORTED_MODULE_1__["FigureService"] },
@@ -3718,7 +3721,6 @@ var ParametersFormComponent = /** @class */ (function () {
         this.parameterService.getParameters(id, "en").subscribe(function (parameters) {
             _this.parameters = parameters;
             _this.onParametersToShowChange();
-            console.log("Parameters", _this.parameters);
         }, function (error) { return console.error(error); });
     };
     ParametersFormComponent.prototype.onParametersToShowChange = function () {
@@ -3741,9 +3743,9 @@ var ParametersFormComponent = /** @class */ (function () {
         var _this = this;
         if (confirm("Are you sure?")) {
             this.parameterService.delete(this.scriptId, parameterId)
-                .subscribe(function (p) {
+                .subscribe(function () {
                 _this.onParametersToShowChange();
-                _this.refreshNumbering(p.number);
+                _this.refreshNumbering(_this.parameters.find(function (p) { return p.id == parameterId; }).number);
                 _this.saveParameters();
             }, function (error) { return console.error(error); });
             this.parameters = this.parameters.filter(function (p) { return p.id != parameterId; });
@@ -3763,8 +3765,8 @@ var ParametersFormComponent = /** @class */ (function () {
         else
             parameter.number = 0;
         this.parameterService.create(this.scriptId, parameter)
-            .subscribe(function (p) {
-            _this.parameters.push(p);
+            .subscribe(function () {
+            _this.getParameters(_this.scriptId);
         });
         this.editMode = false;
     };
@@ -3796,9 +3798,7 @@ var ParametersFormComponent = /** @class */ (function () {
         var _this = this;
         this.parameters.forEach(function (p) {
             _this.parameterService.update(_this.scriptId, p)
-                .subscribe(function (p) {
-                console.log(p);
-            }, function (error) { return console.error(error); });
+                .subscribe(function () { }, function (error) { return console.error(error); });
         });
     };
     ParametersFormComponent.ctorParameters = function () { return [
@@ -3966,7 +3966,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_script_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/script.service */ "./app/modules/script-interpreter/services/script.service.ts");
 /* harmony import */ var _services_tag_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/tag.service */ "./app/modules/script-interpreter/services/tag.service.ts");
 /* harmony import */ var _parameters_form_parameters_form_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./parameters-form/parameters-form.component */ "./app/modules/script-interpreter/components/script-form/parameters-form/parameters-form.component.ts");
-/* harmony import */ var _models_api_create_script_command__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../models/api/create-script-command */ "./app/modules/script-interpreter/models/api/create-script-command.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4011,7 +4010,6 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-
 
 
 
@@ -4091,7 +4089,6 @@ var ScriptFormComponent = /** @class */ (function () {
     };
     ScriptFormComponent.prototype.onSubmit = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var newScript;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -4099,16 +4096,15 @@ var ScriptFormComponent = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         if (!this.editMode) {
-                            newScript = new _models_api_create_script_command__WEBPACK_IMPORTED_MODULE_6__["CreateScriptCommand"]();
-                            newScript.init(this.scriptForm.value);
-                            this.scriptService.create(newScript)
-                                .subscribe(function () {
-                                _this.router.navigateByUrl('/scripts/edit/' + _this.scriptId.value);
+                            this.scriptService.create(this.scriptForm.value)
+                                .subscribe(function (createdScript) {
+                                _this.router.navigateByUrl('/scripts/edit/' + createdScript.id);
                             }, function (error) { throw error; });
                         }
                         else
                             this.scriptService.update(this.scriptForm.value)
-                                .subscribe(function (script) { return console.log(script); });
+                                .subscribe(function () { });
+                        this.parametersForm.saveParameters();
                         return [2 /*return*/];
                 }
             });
@@ -4130,7 +4126,6 @@ var ScriptFormComponent = /** @class */ (function () {
                     case 2:
                         newTag = _b.sent();
                         tag.id = newTag.id;
-                        console.log(newTag);
                         _b.label = 3;
                     case 3:
                         _i++;
@@ -4936,65 +4931,6 @@ var TranslationFormComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./app/modules/script-interpreter/models/api/create-script-command.ts":
-/*!****************************************************************************!*\
-  !*** ./app/modules/script-interpreter/models/api/create-script-command.ts ***!
-  \****************************************************************************/
-/*! exports provided: CreateScriptCommand */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateScriptCommand", function() { return CreateScriptCommand; });
-var CreateScriptCommand = /** @class */ (function () {
-    function CreateScriptCommand(data) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    this[property] = data[property];
-            }
-        }
-    }
-    CreateScriptCommand.prototype.init = function (data) {
-        if (data) {
-            this.id = 0;
-            this.name = data["name"];
-            this.description = data["description"];
-            this.groupName = data["groupName"];
-            this.author = data["author"];
-            this.accordingTo = data["accordingTo"];
-            this.notes = data["notes"];
-            this.defaultLanguage = data["defaultLanguage"];
-        }
-    };
-    CreateScriptCommand.fromJS = function (data) {
-        data = typeof data === 'object' ? data : {};
-        var result = new CreateScriptCommand();
-        result.init(data);
-        return result;
-    };
-    CreateScriptCommand.prototype.toJSON = function (data) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["name"] = this.name;
-        data["description"] = this.description;
-        data["groupName"] = this.groupName;
-        data["author"] = this.author;
-        data["accordingTo"] = this.accordingTo;
-        data["notes"] = this.notes;
-        data["defaultLanguage"] = this.defaultLanguage;
-        return data;
-    };
-    CreateScriptCommand.ctorParameters = function () { return [
-        { type: undefined }
-    ]; };
-    return CreateScriptCommand;
-}());
-
-
-
-/***/ }),
-
 /***/ "./app/modules/script-interpreter/models/enums/language.ts":
 /*!*****************************************************************!*\
   !*** ./app/modules/script-interpreter/models/enums/language.ts ***!
@@ -5610,7 +5546,6 @@ var ScriptService = /** @class */ (function () {
         }));
     };
     ScriptService.prototype.create = function (script) {
-        console.log(script);
         return this.http.post('/api/scripts', script)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             if (error.status === 400)

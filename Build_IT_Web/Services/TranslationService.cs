@@ -1,6 +1,7 @@
-﻿using Build_IT_Data.Entities.Scripts.Enums;
+﻿using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
+using Build_IT_Application.ScriptInterpreter.Scripts.Queries;
+using Build_IT_Data.Entities.Scripts.Enums;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
-using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Build_IT_Web.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;

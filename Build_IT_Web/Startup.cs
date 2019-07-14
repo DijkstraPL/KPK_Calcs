@@ -2,6 +2,7 @@
 using Build_IT_Application.DeadLoads.Categories.Queries.GetAllCategories;
 using Build_IT_Application.DeadLoads.Materials.Queries.GetAllMaterials;
 using Build_IT_Application.Infrastructures;
+using Build_IT_Application.Interfaces;
 using Build_IT_Application.Mapping;
 using Build_IT_CommonTools;
 using Build_IT_CommonTools.Interfaces;
@@ -93,15 +94,13 @@ namespace Build_IT_Web
 #endif
 
             services.AddScoped<IDateTime, MyDateTime>();
+            services.AddTransient<INotificationService, NotificationService>();
 
             services.AddMediatR(typeof(GetAllCategoriesQuery.Handler).GetTypeInfo().Assembly);
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
-            services.AddAutoMapper(new Assembly[] {
-                typeof(ScriptMappingProfile).GetTypeInfo().Assembly,
-                typeof(DeadLoadsMappingProfile).GetTypeInfo().Assembly
-            });
+            SetUpAutoMapper(services);
 
             services.AddMvc()
                 .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =
@@ -120,6 +119,7 @@ namespace Build_IT_Web
                 //configuration.RootPath = "wwwroot/clientapp/out-tsc";
             });
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -171,6 +171,14 @@ namespace Build_IT_Web
             services.AddScoped<ITranslationService, TranslationService>();
         }
 
+        private static void SetUpAutoMapper(IServiceCollection services)
+        {
+            services.AddAutoMapper(new Assembly[] {
+                typeof(AutoMapperProfile).GetTypeInfo().Assembly,
+                typeof(ScriptMappingProfile).GetTypeInfo().Assembly,
+                typeof(DeadLoadsMappingProfile).GetTypeInfo().Assembly
+            });
+        }
         #endregion // Private_Methods
     }
 }

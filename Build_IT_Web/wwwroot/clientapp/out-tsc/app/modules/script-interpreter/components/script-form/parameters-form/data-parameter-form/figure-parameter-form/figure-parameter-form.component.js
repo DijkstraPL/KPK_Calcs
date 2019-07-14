@@ -34,17 +34,16 @@ var FigureParameterFormComponent = /** @class */ (function () {
         this.figures = this.parameterFigures.value;
     };
     FigureParameterFormComponent.prototype.uploadFigure = function () {
-        var _this = this;
         var nativeELement = this.fileInput.nativeElement;
         this.figureService.upload(this.parameterId.value, nativeELement.files[0])
-            .subscribe(function (figure) {
-            _this.figures.push(figure);
+            .subscribe(function () {
+            //this.figures.push(figure) BROKEN
         });
     };
     FigureParameterFormComponent.prototype.remove = function (figure) {
         var _this = this;
         this.figureService.detach(this.parameterId.value, figure.id)
-            .subscribe(function (figure) { return _this.figures = _this.figures.filter(function (f) { return f != figure; }); });
+            .subscribe(function () { return _this.figures = _this.figures.filter(function (f) { return f.id != figure.id; }); });
     };
     __decorate([
         Input('parameterForm'),

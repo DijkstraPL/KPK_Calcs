@@ -45,7 +45,6 @@ var ScriptService = /** @class */ (function () {
         }));
     };
     ScriptService.prototype.create = function (script) {
-        console.log(script);
         return this.http.post('/api/scripts', script)
             .pipe(retry(1), catchError(function (error) {
             if (error.status === 400)
