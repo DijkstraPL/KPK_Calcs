@@ -3,6 +3,7 @@ using Build_IT_Application.ScriptInterpreter.Figures.Queries;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries;
 using Build_IT_Application.ScriptInterpreter.Tags.Queries;
+using Build_IT_Application.ScriptInterpreter.Translations.Queries;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_Data.Entities.Scripts.Translations;
 using System.Collections.ObjectModel;
@@ -27,9 +28,9 @@ namespace Build_IT_Application.Mapping
                 => operation.MapFrom(p => p.ParameterFigures.Select(pp => pp.Figure)));
             CreateMap<ValueOption, ValueOptionResource>();
             CreateMap<Figure, FigureResource>();
-            //CreateMap<ScriptTranslation, ScriptTranslationResource>();
-            //CreateMap<ParameterTranslation, ParameterTranslationResource>();
-            //CreateMap<ValueOptionTranslation, ValueOptionTranslationResource>();
+            CreateMap<ScriptTranslation, ScriptTranslationResource>();
+            CreateMap<ParameterTranslation, ParameterTranslationResource>();
+            CreateMap<ValueOptionTranslation, ValueOptionTranslationResource>();
 
             // API Resource to Domain
             CreateMap<ScriptResource, Script>()
@@ -63,10 +64,10 @@ namespace Build_IT_Application.Mapping
                 .ForMember(vo => vo.Id, operation => operation.Ignore())
                 .ForMember(vo => vo.Parameter, operation => operation.Ignore())
                 .ForMember(vo => vo.ParameterId, operation => operation.Ignore());
-            //CreateMap<ScriptTranslationResource, ScriptTranslation>();
-            //CreateMap<ParameterTranslationResource, ParameterTranslation>();
-            //CreateMap<ValueOptionTranslationResource, ValueOptionTranslation>()
-            //    .ForMember(vot => vot.ValueOption, operation => operation.Ignore());
+            CreateMap<ScriptTranslationResource, ScriptTranslation>();
+            CreateMap<ParameterTranslationResource, ParameterTranslation>();
+            CreateMap<ValueOptionTranslationResource, ValueOptionTranslation>()
+                .ForMember(vot => vot.ValueOption, operation => operation.Ignore());
         }
 
         #endregion // Public_Methods

@@ -9,7 +9,6 @@
     <Folder Include="DeadLoads\Materials\Commands\" />
     <Folder Include="DeadLoads\Subcategories\Commands\" />
     <Folder Include="ScriptInterpreter\Calculations\" />
-    <Folder Include="ScriptInterpreter\Translations\" />
   </ItemGroup>
 
   <ItemGroup>

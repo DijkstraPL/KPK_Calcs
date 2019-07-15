@@ -168,7 +168,8 @@ namespace Build_IT_Web
             services.AddScoped<IParameterTranslationRepository, TranslationRepository>();
             services.AddScoped<IValueOptionTranslationRepository, TranslationRepository>();
 
-            services.AddScoped<ITranslationService, TranslationService>();
+            services.AddScoped<Build_IT_Application.Infrastructures.Interfaces.ITranslationService, Build_IT_Application.Infrastructures.TranslationService>();
+            services.AddScoped<ITranslationService, Services.TranslationService>();
         }
 
         private static void SetUpAutoMapper(IServiceCollection services)

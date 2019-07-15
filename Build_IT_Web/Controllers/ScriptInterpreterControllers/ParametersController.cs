@@ -20,7 +20,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ParameterResource>>> GetAllParameters(long scriptId, string lang = TranslationService.DefaultLanguageCode)
         {
-            return Ok(await Mediator.Send(new GetAllParametersForScriptQuery { ScriptId = scriptId }));
+            return Ok(await Mediator.Send(new GetAllParametersForScriptQuery { ScriptId = scriptId, Language = lang }));
         }
 
         [HttpPost("{scriptId}/parameters")]

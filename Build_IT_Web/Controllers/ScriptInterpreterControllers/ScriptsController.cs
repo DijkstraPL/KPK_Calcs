@@ -21,7 +21,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ScriptResource>>> GetScripts(string lang = TranslationService.DefaultLanguageCode)
         {
-            return Ok(await Mediator.Send(new GetAllScriptsQuery()));
+            return Ok(await Mediator.Send(new GetAllScriptsQuery { Language = lang } ));
         }
 
         [HttpGet("{id}/{lang?}")]
@@ -29,7 +29,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ScriptResource>> GetScript(long id, string lang = TranslationService.DefaultLanguageCode)
         {
-            return Ok(await Mediator.Send(new GetScriptQuery { Id = id }));
+            return Ok(await Mediator.Send(new GetScriptQuery { Id = id, Language = lang }));
         }
 
         [HttpPost()]

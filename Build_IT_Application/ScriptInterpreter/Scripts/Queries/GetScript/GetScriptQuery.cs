@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Build_IT_Application.Exceptions;
+using Build_IT_Application.Infrastructures.Interfaces;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using MediatR;
@@ -16,6 +17,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript
         #region Properties
 
         public long Id { get; set; }
+        public string Language { get; set; }
 
         #endregion // Properties
 
@@ -24,6 +26,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript
             #region Fields
 
             private readonly IScriptRepository _scriptRepository;
+            private readonly ITranslationService _translationService;
             private readonly IMapper _mapper;
 
             #endregion // Fields
@@ -31,9 +34,11 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript
             #region Constructors
 
             public Handler(IScriptRepository scriptRepository,
+                ITranslationService translationService,
                 IMapper mapper)
             {
                 _scriptRepository = scriptRepository;
+                _translationService = translationService;
                 _mapper = mapper;
             }
 
@@ -48,7 +53,10 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript
                 if (script == null)
                     throw new NotFoundException(nameof(Script), request.Id);
 
-                return _mapper.Map<Script, ScriptResource>(script);
+                var scriptResource = _mapper.Map<Script, ScriptResource>(script);
+                await _translationService.SetScriptTranslation(request.Language, scriptResource);
+
+                return scriptResource;
             }
 
             #endregion // Public_Methods

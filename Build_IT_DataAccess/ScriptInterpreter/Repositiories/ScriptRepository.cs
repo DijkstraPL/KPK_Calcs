@@ -1,4 +1,5 @@
 ﻿using Build_IT_Data.Entities.Scripts;
+using Build_IT_Data.Entities.Scripts.Enums;
 using Build_IT_Data.Entities.Scripts.Translations;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -55,6 +56,12 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
             return await ScriptInterpreterContext.ScriptsTranslations
                 .Where(st => st.ScriptId == scriptId)
                 .ToListAsync();
+        }
+
+        public async Task<Language> GetDefaultLanguageForScriptAsync(long id)
+        {
+            var script = await ScriptInterpreterContext.Scripts.FindAsync(id);
+            return script?.DefaultLanguage ?? Language.English;
         }
 
         #endregion // Public_Methods
