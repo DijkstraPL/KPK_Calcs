@@ -36,7 +36,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
         public async Task<ScriptTranslation> GetScriptTranslation(long scriptId, Language language)
         {
             return await ScriptInterpreterContext.ScriptsTranslations
-                .SingleOrDefaultAsync(st => st.ScriptId == scriptId && st.Language == language);
+                 .SingleOrDefaultAsync(st => st.ScriptId == scriptId && st.Language == language);
         }
         public async Task<ScriptTranslation> GetScriptTranslation(long id)
         {
@@ -57,7 +57,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
         {
             var parametersIds = await ScriptInterpreterContext.Parameters.Where(p => p.ScriptId == scriptId).Select(p => p.Id).ToListAsync();
             return await ScriptInterpreterContext.ParametersTranslations
-                .Where(pt => parametersIds.Contains( pt.ParameterId) && pt.Language == language).ToListAsync();
+                .Where(pt => parametersIds.Contains(pt.ParameterId) && pt.Language == language).ToListAsync();
         }
         public async Task<ParameterTranslation> GetParameterTranslation(long parameterId, Language language)
         {

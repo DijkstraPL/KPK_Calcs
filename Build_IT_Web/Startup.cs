@@ -179,6 +179,8 @@ namespace Build_IT_Web
                 typeof(ScriptMappingProfile).GetTypeInfo().Assembly,
                 typeof(DeadLoadsMappingProfile).GetTypeInfo().Assembly
             });
+
+            services.AddScoped<IScriptMappingProfile, ScriptMappingProfile>();
         }
         #endregion // Private_Methods
     }

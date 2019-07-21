@@ -1,4 +1,6 @@
 ﻿using Build_IT_Application.Exceptions;
+using Build_IT_Application.Mapping;
+using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_CommonTools.Interfaces;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_Data.Entities.Scripts.Enums;
@@ -7,6 +9,7 @@ using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,8 +20,9 @@ namespace Build_IT_Application.ScriptInterpreter.Parameters.Commands.UpdateParam
     {
         #region Properties
 
-        public long Id { get; set; }
         public long ScriptId { get; set; }
+
+        public long Id { get; set; }
         public string Name { get; set; }
         public int Number { get; set; }
         public string Description { get; set; }
@@ -27,7 +31,7 @@ namespace Build_IT_Application.ScriptInterpreter.Parameters.Commands.UpdateParam
         public string VisibilityValidator { get; set; }
         public string DataValidator { get; set; }
         public string Unit { get; set; }
-        public ICollection<UpdateValueOptionsCommand> ValueOptions { get; set; }
+        public ICollection<ValueOptionResource> ValueOptions { get; set; }
         public ValueOptionSettings ValueOptionSetting { get; set; }
         public ParameterOptions Context { get; set; }
         public string GroupName { get; set; }
@@ -43,6 +47,7 @@ namespace Build_IT_Application.ScriptInterpreter.Parameters.Commands.UpdateParam
             private readonly IScriptRepository _scriptRepository;
             private readonly IParameterRepository _parameterRepository;
             private readonly IScriptInterpreterUnitOfWork _unitOfWork;
+            private readonly IScriptMappingProfile _scriptMappingProfile;
             private readonly IDateTime _dateTime;
 
             #endregion // Fields
@@ -50,14 +55,16 @@ namespace Build_IT_Application.ScriptInterpreter.Parameters.Commands.UpdateParam
             #region Constructors
 
             public Handler(
-            IScriptRepository scriptRepository,
+                IScriptRepository scriptRepository,
                 IParameterRepository parameterRepository,
                 IScriptInterpreterUnitOfWork unitOfWork,
+                IScriptMappingProfile scriptMappingProfile,
                 IDateTime dateTime)
             {
                 _scriptRepository = scriptRepository;
                 _parameterRepository = parameterRepository;
                 _unitOfWork = unitOfWork;
+                _scriptMappingProfile = scriptMappingProfile;
                 _dateTime = dateTime;
             }
 
@@ -87,7 +94,11 @@ namespace Build_IT_Application.ScriptInterpreter.Parameters.Commands.UpdateParam
                 parameter.AccordingTo = request.AccordingTo;
                 parameter.Notes = request.Notes;
 
-                script.Modified = DateTime.Now;
+                _scriptMappingProfile.UpdateValueOptions(request.ValueOptions, parameter);
+                _scriptMappingProfile.RemoveNotAddedValueOptions(request.ValueOptions, parameter);
+                _scriptMappingProfile.AddNewValueOptions(request.ValueOptions, parameter);
+
+                script.Modified = _dateTime.Now;
 
                 await _unitOfWork.CompleteAsync();
 
@@ -96,17 +107,5 @@ namespace Build_IT_Application.ScriptInterpreter.Parameters.Commands.UpdateParam
 
             #endregion // Public_Methods
         }
-    }
-
-    public class UpdateValueOptionsCommand
-    {
-        #region Properties
-
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
-        public string Description { get; set; }
-
-        #endregion // Properties
     }
 }

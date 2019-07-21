@@ -131,8 +131,8 @@ export class ParametersFormComponent implements OnInit {
         this.parameterService.create(this.scriptId, parameter)
             .subscribe(() => {
                 this.getParameters(this.scriptId);
+                this.editMode = false;
             });
-        this.editMode = false;
     }
 
     onUpdated(parameter: Parameter) {

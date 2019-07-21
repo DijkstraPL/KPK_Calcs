@@ -8,7 +8,6 @@
     <Folder Include="DeadLoads\Categories\Commands\" />
     <Folder Include="DeadLoads\Materials\Commands\" />
     <Folder Include="DeadLoads\Subcategories\Commands\" />
-    <Folder Include="ScriptInterpreter\Calculations\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Build_IT_DataAccess\Build_IT_DataAccess.csproj" />
+    <ProjectReference Include="..\Build_IT_ScriptInterpreter\Build_IT_ScriptInterpreter.csproj" />
   </ItemGroup>
 
   <ItemGroup>

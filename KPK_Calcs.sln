@@ -95,7 +95,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_WebTest", "Build_I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_Web_TestHelper", "Build_IT_Web_TestHelper\Build_IT_Web_TestHelper.csproj", "{ACE35064-27A1-4816-9D38-F15C8ED2CD13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_Application", "Build_IT_Application\Build_IT_Application.csproj", "{0499A268-3D2D-49FF-A1EF-680BCFD4A428}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_Application", "Build_IT_Application\Build_IT_Application.csproj", "{0499A268-3D2D-49FF-A1EF-680BCFD4A428}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_ApplicationTest", "Build_IT_ApplicationTest\Build_IT_ApplicationTest.csproj", "{A8266004-CC33-4BB2-B5D0-CA6FF41C531A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -393,6 +395,14 @@ Global
 		{0499A268-3D2D-49FF-A1EF-680BCFD4A428}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0499A268-3D2D-49FF-A1EF-680BCFD4A428}.Release|x86.ActiveCfg = Release|Any CPU
 		{0499A268-3D2D-49FF-A1EF-680BCFD4A428}.Release|x86.Build.0 = Release|Any CPU
+		{A8266004-CC33-4BB2-B5D0-CA6FF41C531A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8266004-CC33-4BB2-B5D0-CA6FF41C531A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8266004-CC33-4BB2-B5D0-CA6FF41C531A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A8266004-CC33-4BB2-B5D0-CA6FF41C531A}.Debug|x86.Build.0 = Debug|Any CPU
+		{A8266004-CC33-4BB2-B5D0-CA6FF41C531A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8266004-CC33-4BB2-B5D0-CA6FF41C531A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8266004-CC33-4BB2-B5D0-CA6FF41C531A}.Release|x86.ActiveCfg = Release|Any CPU
+		{A8266004-CC33-4BB2-B5D0-CA6FF41C531A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

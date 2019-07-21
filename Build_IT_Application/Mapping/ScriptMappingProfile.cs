@@ -1,17 +1,19 @@
 ﻿using AutoMapper;
 using Build_IT_Application.ScriptInterpreter.Figures.Queries;
+using Build_IT_Application.ScriptInterpreter.Parameters.Commands.CreateParameter;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries;
 using Build_IT_Application.ScriptInterpreter.Tags.Queries;
 using Build_IT_Application.ScriptInterpreter.Translations.Queries;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_Data.Entities.Scripts.Translations;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Build_IT_Application.Mapping
 {
-    public class ScriptMappingProfile : Profile
+    public class ScriptMappingProfile : Profile, IScriptMappingProfile
     {
         #region Public_Methods
 
@@ -50,9 +52,9 @@ namespace Build_IT_Application.Mapping
                 {
                     if (pr.ValueOptions == null)
                         pr.ValueOptions = new Collection<ValueOptionResource>();
-                    UpdateValueOptions(pr, p);
-                    RemoveNotAddedValueOptions(pr, p);
-                    AddNewValueOptions(pr, p);
+                    UpdateValueOptions(pr.ValueOptions, p);
+                    RemoveNotAddedValueOptions(pr.ValueOptions, p);
+                    AddNewValueOptions(pr.ValueOptions, p);
                 })
                 .ForMember(p => p.ParameterFigures, operation => operation.Ignore())
                 .AfterMap((pr, p) =>
@@ -70,13 +72,9 @@ namespace Build_IT_Application.Mapping
                 .ForMember(vot => vot.ValueOption, operation => operation.Ignore());
         }
 
-        #endregion // Public_Methods
-
-        #region Private_Methods
-
-        private void UpdateValueOptions(ParameterResource parameterResource, Parameter parameter)
+        public void UpdateValueOptions(ICollection<ValueOptionResource> valueOptionsResource, Parameter parameter)
         {
-            foreach (var valueOptionResource in parameterResource.ValueOptions)
+            foreach (var valueOptionResource in valueOptionsResource)
             {
                 var valueOption = parameter.ValueOptions.FirstOrDefault(vo => vo.Id == valueOptionResource.Id);
                 if (valueOption == null)
@@ -87,17 +85,17 @@ namespace Build_IT_Application.Mapping
             }
         }
 
-        private void RemoveNotAddedValueOptions(ParameterResource parameterResource, Parameter parameter)
+        public void RemoveNotAddedValueOptions(ICollection<ValueOptionResource> valueOptionsResource, Parameter parameter)
         {
             var removedValueOptions = parameter.ValueOptions.Where(vo =>
-            !parameterResource.ValueOptions.Select(vor => vor.Id).Contains(vo.Id)).ToList();
+            !valueOptionsResource.Select(vor => vor.Id).Contains(vo.Id)).ToList();
             foreach (var valueOption in removedValueOptions)
                 parameter.ValueOptions.Remove(valueOption);
         }
 
-        private void AddNewValueOptions(ParameterResource parameterResource, Parameter parameter)
+        public void AddNewValueOptions(ICollection<ValueOptionResource> valueOptionsResource, Parameter parameter)
         {
-            var addedValueOptions = parameterResource.ValueOptions
+            var addedValueOptions = valueOptionsResource
                 .Where(vor => !parameter.ValueOptions.Any(vo => vo.Id == vor.Id))
                  .Select(vor =>
                  new ValueOption { Name = vor.Name, Description = vor.Description, Value = vor.Value }
@@ -105,6 +103,10 @@ namespace Build_IT_Application.Mapping
             foreach (var valueOption in addedValueOptions)
                 parameter.ValueOptions.Add(valueOption);
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
 
         private void RemoveNotAddedTags(ScriptResource scriptResource, Script script)
         {

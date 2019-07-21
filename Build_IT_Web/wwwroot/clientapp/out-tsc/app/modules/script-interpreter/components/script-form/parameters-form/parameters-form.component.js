@@ -116,8 +116,8 @@ var ParametersFormComponent = /** @class */ (function () {
         this.parameterService.create(this.scriptId, parameter)
             .subscribe(function () {
             _this.getParameters(_this.scriptId);
+            _this.editMode = false;
         });
-        this.editMode = false;
     };
     ParametersFormComponent.prototype.onUpdated = function (parameter) {
         var index = this.parameters.findIndex(function (p) { return p.id == parameter.id; });

@@ -14,8 +14,8 @@ namespace Build_IT_Application.ScriptInterpreter.Parameters.Commands.CreateParam
             RuleFor(v => v.Id).Equal(0);
             RuleFor(v => v.Name).NotEmpty().MaximumLength(20);
             RuleFor(v => v.Number).NotEmpty().GreaterThan(0);
-            RuleFor(v => v.ValueType).NotEmpty();
-            RuleFor(v => v.Description).NotEmpty().MaximumLength(1000);
+            RuleFor(v => v.ValueType).Must(vt => vt >= 0);
+            RuleFor(v => v.Description).MaximumLength(1000);
             RuleFor(v => v.GroupName).MaximumLength(150);
             RuleFor(v => v.Context).NotEmpty();
             RuleFor(v => v.AccordingTo).MaximumLength(150);

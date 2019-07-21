@@ -1,20 +1,21 @@
 ﻿using AutoMapper;
+using Build_IT_Application.Infrastructures;
+using Build_IT_Application.Infrastructures.Interfaces;
+using Build_IT_Application.Mapping;
+using Build_IT_Application.ScriptInterpreter.Calculations.Commands;
+using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
-using Build_IT_Web.Controllers.ScriptInterpreterControllers;
-using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
-using Build_IT_Web.Mapping;
-using Build_IT_Web.Services;
-using Build_IT_Web.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
-namespace Build_IT_WebTest.IntegrationTests
+namespace Build_IT_ApplicationTest.AcceptanceTests
 {
     [TestFixture]
     public class BendingIBeamTests
@@ -24,7 +25,7 @@ namespace Build_IT_WebTest.IntegrationTests
         private ITranslationService _translationService;
         private IParameterRepository _parameterRepository;
         private IMapper _mapper;
-        private CalculationsController _calculationsController;
+        private CalculateCommand.Handler _calculateCommand;
 
         private const long ID = 27;
 
@@ -33,17 +34,17 @@ namespace Build_IT_WebTest.IntegrationTests
         {
             _scriptInterpreterDbContext = new ScriptInterpreterDbContext(
                 new DbContextOptions<ScriptInterpreterDbContext>());
-            _scriptRepository = new ScriptRepository(_scriptInterpreterDbContext);
-            _translationService = new TranslationService(new TranslationRepository(_scriptInterpreterDbContext));
             _parameterRepository = new ParameterRepository(_scriptInterpreterDbContext);
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new ScriptMappingProfile());
             });
+            _scriptRepository = new ScriptRepository(_scriptInterpreterDbContext);
+            _translationService = new TranslationService(new TranslationRepository(_scriptInterpreterDbContext));
             _mapper = new Mapper(config);
 
-            _calculationsController = new CalculationsController(
-                _scriptRepository, _parameterRepository, _translationService,  _mapper);
+            _calculateCommand = new CalculateCommand.Handler(_scriptRepository,
+                _parameterRepository, _translationService, _mapper);
         }
 
         [TearDown]
@@ -78,7 +79,7 @@ namespace Build_IT_WebTest.IntegrationTests
             parametersForCalculation.First(p => p.Name == "Type").Value = "Rolled";
             parametersForCalculation.First(p => p.Name == "r").Value = "15";
 
-            var results = _calculationsController.Calculate(ID, parametersForCalculation).Result.ToList();
+            List<ParameterResource> results = Calculate(parametersForCalculation);
 
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "W_pl,y_").Value),
                 Is.EqualTo(628).Within(1));
@@ -112,7 +113,7 @@ namespace Build_IT_WebTest.IntegrationTests
             parametersForCalculation.First(p => p.Name == "Type").Value = "Welded";
             parametersForCalculation.First(p => p.Name == "a").Value = "5";
 
-            var results = _calculationsController.Calculate(ID, parametersForCalculation).Result.ToList();
+            List<ParameterResource> results = Calculate(parametersForCalculation);
 
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "W_pl,y_").Value),
                 Is.EqualTo(4073).Within(10));
@@ -146,7 +147,7 @@ namespace Build_IT_WebTest.IntegrationTests
             parametersForCalculation.First(p => p.Name == "Type").Value = "Welded";
             parametersForCalculation.First(p => p.Name == "a").Value = "4";
 
-            var results = _calculationsController.Calculate(ID, parametersForCalculation).Result.ToList();
+            List<ParameterResource> results = Calculate(parametersForCalculation);
 
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "W_eff,y_").Value),
                 Is.EqualTo(3820).Within(10));
@@ -181,7 +182,7 @@ namespace Build_IT_WebTest.IntegrationTests
             parametersForCalculation.First(p => p.Name == "Type").Value = "Welded";
             parametersForCalculation.First(p => p.Name == "a").Value = "4";
 
-            var results = _calculationsController.Calculate(ID, parametersForCalculation).Result.ToList();
+            List<ParameterResource> results = Calculate(parametersForCalculation);
 
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "W_eff,y_").Value),
                 Is.EqualTo(2710).Within(10));
@@ -215,12 +216,24 @@ namespace Build_IT_WebTest.IntegrationTests
             parametersForCalculation.First(p => p.Name == "Type").Value = "Welded";
             parametersForCalculation.First(p => p.Name == "a").Value = "4";
 
-            var results = _calculationsController.Calculate(ID, parametersForCalculation).Result.ToList();
+            List<ParameterResource> results = Calculate(parametersForCalculation);
 
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "W_pl,y_").Value),
                 Is.EqualTo(7825).Within(10));
             Assert.That(Convert.ToDouble(results.FirstOrDefault(r => r.Name == "M_c,Rd_").Value),
                     Is.EqualTo(2778).Within(5));
+        }
+
+        private List<ParameterResource> Calculate(List<ParameterResource> parametersForCalculation)
+        {
+            var request = new CalculateCommand
+            {
+                ScriptId = ID,
+                InputData = parametersForCalculation,
+                LanguageCode = "empty"
+            };
+            var results = _calculateCommand.Handle(request, CancellationToken.None).Result.ToList();
+            return results;
         }
     }
 }
