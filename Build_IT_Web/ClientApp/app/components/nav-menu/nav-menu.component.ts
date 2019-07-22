@@ -1,7 +1,9 @@
 ﻿import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { TranslationService } from '../../services/translation.service';
-import { BootstrapSelectDirective } from '../../directives/bootstrap-select.directive';
+import { ElementSelectDirective } from '../../directives/element-select.directive';
 import { ConfigurationService } from '../../services/configuration.service';
+import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
+import { SearchService } from '../../services/search.service';
 
 @Component({
     selector: 'app-nav-menu',
@@ -12,10 +14,19 @@ export class NavMenuComponent implements OnInit, OnDestroy {
     languageChangedSubscription: any;
 
     @ViewChild('languageSelector', null)
-    languageSelector: BootstrapSelectDirective;
+    languageSelector: ElementSelectDirective;
+
+    searchForm = new FormGroup({
+        search: new FormControl('')
+    });
+
+    get searchValue(): AbstractControl{
+        return this.searchForm.get('search');
+    }
 
     constructor(private translationService: TranslationService,
-        public configurations: ConfigurationService) {
+        public configurations: ConfigurationService,
+        private searchService: SearchService) {
 
     }
 
@@ -30,5 +41,9 @@ export class NavMenuComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.languageChangedSubscription.unsubscribe();
+    }
+
+    onSearch() {
+        this.searchService.search(this.searchValue.value);
     }
 }

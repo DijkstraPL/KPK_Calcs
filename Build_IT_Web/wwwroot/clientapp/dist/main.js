@@ -51,7 +51,7 @@ module.exports = "<app-carousel class=\"mt-2\"></app-carousel>\r\n\r\n<app-scrip
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-secondary\">\r\n    <a class=\"navbar-brand font-weight-bold\"\r\n       [routerLink]='[\"/\"]'><span class=\"fa fa-building-o\"></span>BUILD IT</a>\r\n    <button class=\"navbar-toggler\"\r\n            type=\"button\"\r\n            data-toggle=\"collapse\"\r\n            data-target=\"#navbarSupportedContent\"\r\n            aria-controls=\"navbarSupportedContent\"\r\n            aria-expanded=\"false\"\r\n            aria-label=\"Toggle navigation\">\r\n        <span class=\"navbar-toggler-icon\"></span>\r\n    </button>\r\n\r\n    <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\r\n        <ul class=\"navbar-nav mr-auto\">\r\n            <li class=\"nav-item active\"\r\n                [routerLinkActive]='[\"link-active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]='[\"/home\"]'>\r\n                    <span class=\"fa fa-home\"></span> {{'app.Home' | translate}} <span class=\"sr-only\">(current)</span>\r\n                </a>\r\n            </li>\r\n            <li class=\"nav-item\"\r\n                [routerLinkActive]='[\"link-active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]=\"['/scripts/new']\">\r\n                    <span class=\"fa fa-file-code\"></span> {{'app.NewScript' | translate}}\r\n                </a>\r\n            </li>\r\n            <li class=\"nav-item dropdown\">\r\n                <a class=\"nav-link dropdown-toggle\"\r\n                   href=\"#\"\r\n                   id=\"navbarDropdown\"\r\n                   role=\"button\"\r\n                   data-toggle=\"dropdown\"\r\n                   aria-haspopup=\"true\"\r\n                   aria-expanded=\"false\">\r\n                    <span class=\"fa fa-arrow-down\"></span> {{'app.Loads.Header' | translate}}\r\n                </a>\r\n                <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\r\n                    <a class=\"dropdown-item\"\r\n                       [routerLink]=\"['/deadloads']\">\r\n                        <span class=\"fa fa-building\"></span> {{'app.Loads.DeadLoads' | translate}}\r\n                    </a>\r\n                    <a class=\"dropdown-item\"\r\n                       [routerLink]=\"['/snowloads']\">\r\n                        <span class=\"fa fa-snowman\"></span> {{'app.Loads.SnowLoads' | translate}}\r\n                    </a>\r\n                    <!--<div class=\"dropdown-divider\"></div>-->\r\n                </div>\r\n            </li>\r\n\r\n            <li class=\"nav-item\"\r\n                [routerLinkActive]='[\"link-active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]=\"['/about']\">\r\n                    <span class=\"fa fa-user-circle\"></span> {{'app.About' | translate}}\r\n                </a>\r\n            </li>\r\n            <!--<li class=\"nav-item\">\r\n                <a class=\"nav-link disabled\" href=\"#\">Disabled</a>\r\n            </li>-->\r\n        </ul>\r\n        <form class=\"form-inline my-2 my-lg-0\">\r\n            <input class=\"form-control mr-sm-2\"\r\n                   type=\"search\"\r\n                   placeholder=\"{{'app.Search' | translate}}\"\r\n                   aria-label=\"Search\">\r\n            <button mat-stroked-button\r\n                    color=\"accent\"\r\n                    type=\"submit\">\r\n                {{'app.Search' | translate}}\r\n            </button>           \r\n        </form>\r\n\r\n\r\n        <select id=\"language\"\r\n                [(ngModel)]=\"configurations.language\"\r\n                #languageSelector=\"bootstrap-select\"\r\n                bootstrapSelect\r\n                class=\"selectpicker form-control smaller ml-3\">\r\n            <option data-subtext=\"(Default)\"\r\n                    value=\"en\">\r\n                {{'app.Languages.English' | translate}}\r\n            </option>\r\n            <option value=\"pl\">{{'app.Languages.Polish' | translate}}</option>\r\n        </select>\r\n    </div>\r\n</nav>\r\n"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-secondary\">\r\n    <a class=\"navbar-brand font-weight-bold\"\r\n       [routerLink]='[\"/\"]'><span class=\"fa fa-building-o\"></span>BUILD IT</a>\r\n    <button class=\"navbar-toggler\"\r\n            type=\"button\"\r\n            data-toggle=\"collapse\"\r\n            data-target=\"#navbarSupportedContent\"\r\n            aria-controls=\"navbarSupportedContent\"\r\n            aria-expanded=\"false\"\r\n            aria-label=\"Toggle navigation\">\r\n        <span class=\"navbar-toggler-icon\"></span>\r\n    </button>\r\n\r\n    <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\r\n        <ul class=\"navbar-nav mr-auto\">\r\n            <li class=\"nav-item\"\r\n                [routerLinkActive]='[\"active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]='[\"/home\"]'>\r\n                    <span class=\"fa fa-home\"></span> {{'app.Home' | translate}} <span class=\"sr-only\">(current)</span>\r\n                </a>\r\n            </li>\r\n            <li class=\"nav-item\"\r\n                [routerLinkActive]='[\"active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]=\"['/scripts/new']\">\r\n                    <span class=\"fa fa-file-code\"></span> {{'app.NewScript' | translate}}\r\n                </a>\r\n            </li>\r\n            <li class=\"nav-item dropdown\"\r\n                [routerLinkActive]='[\"active\"]'>\r\n                <a class=\"nav-link dropdown-toggle\"\r\n                   href=\"#\"\r\n                   id=\"navbarDropdown\"\r\n                   role=\"button\"\r\n                   data-toggle=\"dropdown\"\r\n                   aria-haspopup=\"true\"\r\n                   aria-expanded=\"false\">\r\n                    <span class=\"fa fa-arrow-down\"></span> {{'app.Loads.Header' | translate}}\r\n                </a>\r\n                <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\r\n                    <a class=\"dropdown-item\"\r\n                       [routerLink]=\"['/deadloads']\">\r\n                        <span class=\"fa fa-building\"></span> {{'app.Loads.DeadLoads' | translate}}\r\n                    </a>\r\n                    <a class=\"dropdown-item\"\r\n                       [routerLink]=\"['/snowloads']\">\r\n                        <span class=\"fa fa-snowman\"></span> {{'app.Loads.SnowLoads' | translate}}\r\n                    </a>\r\n                    <!--<div class=\"dropdown-divider\"></div>-->\r\n                </div>\r\n            </li>\r\n\r\n            <li class=\"nav-item\"\r\n                [routerLinkActive]='[\"active\"]'\r\n                [routerLinkActiveOptions]='{ exact: true }'>\r\n                <a class=\"nav-link\"\r\n                   [routerLink]=\"['/about']\">\r\n                    <span class=\"fa fa-user-circle\"></span> {{'app.About' | translate}}\r\n                </a>\r\n            </li>\r\n            <!--<li class=\"nav-item\">\r\n                <a class=\"nav-link disabled\" href=\"#\">Disabled</a>\r\n            </li>-->\r\n        </ul>\r\n        <form class=\"form-inline my-2 my-lg-0\"\r\n              (ngSubmit)=\"onSearch()\"\r\n              [formGroup]=\"searchForm\">\r\n            <input class=\"form-control mr-sm-2\"\r\n                   type=\"search\"\r\n                   formControlName=\"search\"\r\n                   placeholder=\"{{'app.Search' | translate}}\"\r\n                   aria-label=\"Search\">\r\n            <button mat-stroked-button\r\n                    color=\"accent\"\r\n                    type=\"submit\">\r\n                {{'app.Search' | translate}}\r\n            </button>           \r\n        </form>\r\n\r\n\r\n        <select id=\"language\"\r\n                [(ngModel)]=\"configurations.language\"\r\n                #languageSelector=\"element-select\"\r\n                elementSelect\r\n                class=\"selectpicker form-control smaller ml-3\">\r\n            <option data-subtext=\"(Default)\"\r\n                    value=\"en\">\r\n                {{'app.Languages.English' | translate}}\r\n            </option>\r\n            <option value=\"pl\">{{'app.Languages.Polish' | translate}}</option>\r\n        </select>\r\n    </div>\r\n</nav>\r\n"
 
 /***/ }),
 
@@ -216,7 +216,7 @@ module.exports = "\r\n<mat-card class=\"flex-grow-1\">\r\n    <mat-card-header>\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row mt-5 m-2\">\r\n    <app-script-card *ngFor=\"let script of activeScripts\"\r\n                     class=\"flex-column d-none d-flex col col-xl-3 col-lg-4 col-md-6 col-sm-12 col-auto mb-4\"\r\n                     [script]=\"script\"\r\n                     (deleted)=\"onDeleted($event)\"></app-script-card>\r\n</div>\r\n<mat-paginator [length]=\"scripts.length\"\r\n               [pageSize]=\"pageSize\"\r\n               [pageSizeOptions]=\"pageSizeOptions\"\r\n               (page)=\"onPageChanged($event)\">\r\n</mat-paginator>"
+module.exports = "<div class=\"row mt-5 m-2\">\r\n    <app-script-card *ngFor=\"let script of activeScripts\"\r\n                     class=\"flex-column d-none d-flex col col-xl-3 col-lg-4 col-md-6 col-sm-12 col-auto mb-4\"\r\n                     [script]=\"script\"\r\n                     (deleted)=\"onDeleted($event)\"></app-script-card>\r\n</div>\r\n<mat-paginator [length]=\"filteredScripts.length\"\r\n               [pageSize]=\"pageSize\"\r\n               [pageSizeOptions]=\"pageSizeOptions\"\r\n               [pageIndex]=\"pageIndex\"\r\n               (page)=\"onPageChanged($event)\">\r\n</mat-paginator>"
 
 /***/ }),
 
@@ -486,15 +486,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_script_interpreter_script_interpreter_routing_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/script-interpreter/script-interpreter-routing.module */ "./app/modules/script-interpreter/script-interpreter-routing.module.ts");
 /* harmony import */ var _modules_md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modules/md-components-module/md-components.module */ "./app/modules/md-components-module/md-components.module.ts");
 /* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./services/translation.service */ "./app/services/translation.service.ts");
-/* harmony import */ var _directives_bootstrap_select_directive__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./directives/bootstrap-select.directive */ "./app/directives/bootstrap-select.directive.ts");
+/* harmony import */ var _directives_element_select_directive__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./directives/element-select.directive */ "./app/directives/element-select.directive.ts");
 /* harmony import */ var _services_local_store_manager_service__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./services/local-store-manager.service */ "./app/services/local-store-manager.service.ts");
 /* harmony import */ var _services_configuration_service__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./services/configuration.service */ "./app/services/configuration.service.ts");
+/* harmony import */ var _services_search_service__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./services/search.service */ "./app/services/search.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -528,7 +530,7 @@ var AppModule = /** @class */ (function () {
                 _components_home_home_component__WEBPACK_IMPORTED_MODULE_9__["HomeComponent"],
                 _components_carousel_carousel_component__WEBPACK_IMPORTED_MODULE_10__["CarouselComponent"],
                 _components_about_me_about_me_component__WEBPACK_IMPORTED_MODULE_11__["AboutMeComponent"],
-                _directives_bootstrap_select_directive__WEBPACK_IMPORTED_MODULE_19__["BootstrapSelectDirective"]
+                _directives_element_select_directive__WEBPACK_IMPORTED_MODULE_19__["ElementSelectDirective"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"].withServerTransition({ appId: 'ng-cli-universal' }),
@@ -553,7 +555,8 @@ var AppModule = /** @class */ (function () {
                 { provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ErrorHandler"], useClass: _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_12__["AppErrorHandler"] },
                 _services_translation_service__WEBPACK_IMPORTED_MODULE_18__["TranslationService"],
                 _services_local_store_manager_service__WEBPACK_IMPORTED_MODULE_20__["LocalStoreManager"],
-                _services_configuration_service__WEBPACK_IMPORTED_MODULE_21__["ConfigurationService"]
+                _services_configuration_service__WEBPACK_IMPORTED_MODULE_21__["ConfigurationService"],
+                _services_search_service__WEBPACK_IMPORTED_MODULE_22__["SearchService"]
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
         })
@@ -894,8 +897,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavMenuComponent", function() { return NavMenuComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/translation.service */ "./app/services/translation.service.ts");
-/* harmony import */ var _directives_bootstrap_select_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../directives/bootstrap-select.directive */ "./app/directives/bootstrap-select.directive.ts");
+/* harmony import */ var _directives_element_select_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../directives/element-select.directive */ "./app/directives/element-select.directive.ts");
 /* harmony import */ var _services_configuration_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/configuration.service */ "./app/services/configuration.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "../node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_search_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/search.service */ "./app/services/search.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -909,11 +914,24 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var NavMenuComponent = /** @class */ (function () {
-    function NavMenuComponent(translationService, configurations) {
+    function NavMenuComponent(translationService, configurations, searchService) {
         this.translationService = translationService;
         this.configurations = configurations;
+        this.searchService = searchService;
+        this.searchForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormGroup"]({
+            search: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]('')
+        });
     }
+    Object.defineProperty(NavMenuComponent.prototype, "searchValue", {
+        get: function () {
+            return this.searchForm.get('search');
+        },
+        enumerable: true,
+        configurable: true
+    });
     NavMenuComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.languageChangedSubscription = this.translationService.languageChanged$.subscribe(function (data) {
@@ -925,13 +943,17 @@ var NavMenuComponent = /** @class */ (function () {
     NavMenuComponent.prototype.ngOnDestroy = function () {
         this.languageChangedSubscription.unsubscribe();
     };
+    NavMenuComponent.prototype.onSearch = function () {
+        this.searchService.search(this.searchValue.value);
+    };
     NavMenuComponent.ctorParameters = function () { return [
         { type: _services_translation_service__WEBPACK_IMPORTED_MODULE_1__["TranslationService"] },
-        { type: _services_configuration_service__WEBPACK_IMPORTED_MODULE_3__["ConfigurationService"] }
+        { type: _services_configuration_service__WEBPACK_IMPORTED_MODULE_3__["ConfigurationService"] },
+        { type: _services_search_service__WEBPACK_IMPORTED_MODULE_5__["SearchService"] }
     ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('languageSelector', null),
-        __metadata("design:type", _directives_bootstrap_select_directive__WEBPACK_IMPORTED_MODULE_2__["BootstrapSelectDirective"])
+        __metadata("design:type", _directives_element_select_directive__WEBPACK_IMPORTED_MODULE_2__["ElementSelectDirective"])
     ], NavMenuComponent.prototype, "languageSelector", void 0);
     NavMenuComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -940,7 +962,8 @@ var NavMenuComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./nav-menu.component.css */ "./app/components/nav-menu/nav-menu.component.css")]
         }),
         __metadata("design:paramtypes", [_services_translation_service__WEBPACK_IMPORTED_MODULE_1__["TranslationService"],
-            _services_configuration_service__WEBPACK_IMPORTED_MODULE_3__["ConfigurationService"]])
+            _services_configuration_service__WEBPACK_IMPORTED_MODULE_3__["ConfigurationService"],
+            _services_search_service__WEBPACK_IMPORTED_MODULE_5__["SearchService"]])
     ], NavMenuComponent);
     return NavMenuComponent;
 }());
@@ -949,16 +972,16 @@ var NavMenuComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./app/directives/bootstrap-select.directive.ts":
-/*!******************************************************!*\
-  !*** ./app/directives/bootstrap-select.directive.ts ***!
-  \******************************************************/
-/*! exports provided: BootstrapSelectDirective */
+/***/ "./app/directives/element-select.directive.ts":
+/*!****************************************************!*\
+  !*** ./app/directives/element-select.directive.ts ***!
+  \****************************************************/
+/*! exports provided: ElementSelectDirective */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BootstrapSelectDirective", function() { return BootstrapSelectDirective; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ElementSelectDirective", function() { return ElementSelectDirective; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "../node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -972,8 +995,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-var BootstrapSelectDirective = /** @class */ (function () {
-    function BootstrapSelectDirective(el) {
+var ElementSelectDirective = /** @class */ (function () {
+    function ElementSelectDirective(el) {
         var _this = this;
         this.el = el;
         this.oldValues = '';
@@ -988,7 +1011,7 @@ var BootstrapSelectDirective = /** @class */ (function () {
         this.shownSubscription = Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["fromEvent"])($(this.el.nativeElement), 'shown.bs.select').subscribe(function (e) { return setTimeout(function () { return _this.shown.emit(); }); });
         this.hiddenSubscription = Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["fromEvent"])($(this.el.nativeElement), 'hidden.bs.select').subscribe(function (e) { return setTimeout(function () { return _this.hidden.emit(); }); });
     }
-    Object.defineProperty(BootstrapSelectDirective.prototype, "ngModel", {
+    Object.defineProperty(ElementSelectDirective.prototype, "ngModel", {
         set: function (values) {
             var _this = this;
             setTimeout(function () { return _this.selected = values; });
@@ -996,7 +1019,7 @@ var BootstrapSelectDirective = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    BootstrapSelectDirective.prototype.ngOnInit = function () {
+    ElementSelectDirective.prototype.ngOnInit = function () {
         //$(this.el.nativeElement).selectpicker();
         var _this = this;
         if (this.requiredAttribute) {
@@ -1007,7 +1030,7 @@ var BootstrapSelectDirective = /** @class */ (function () {
             _this.doValidation();
         });
     };
-    BootstrapSelectDirective.prototype.ngOnDestroy = function () {
+    ElementSelectDirective.prototype.ngOnDestroy = function () {
         if (this.changedSubscription) {
             this.changedSubscription.unsubscribe();
         }
@@ -1019,42 +1042,42 @@ var BootstrapSelectDirective = /** @class */ (function () {
         }
         $(this.el.nativeElement).selectpicker('destroy');
     };
-    BootstrapSelectDirective.prototype.checkIsValuesChanged = function (newValue) {
+    ElementSelectDirective.prototype.checkIsValuesChanged = function (newValue) {
         var _this = this;
         return !(newValue == this.oldValues ||
             (newValue instanceof Array && newValue.length === this.oldValues.length && newValue.every(function (v, i) { return v === _this.oldValues[i]; })));
     };
-    BootstrapSelectDirective.prototype.doValidation = function () {
+    ElementSelectDirective.prototype.doValidation = function () {
         //if (this.requiredAttribute) {
         //    $(this.el.nativeElement).selectpicker('setStyle', !this.valid ? 'ng-valid' : 'ng-invalid', 'remove');
         //    $(this.el.nativeElement).selectpicker('setStyle', this.valid ? 'ng-valid' : 'ng-invalid', 'add');
         //}
     };
-    Object.defineProperty(BootstrapSelectDirective.prototype, "requiredAttribute", {
+    Object.defineProperty(ElementSelectDirective.prototype, "requiredAttribute", {
         get: function () {
             return this.required === '' || this.required == 'true';
         },
         enumerable: true,
         configurable: true
     });
-    BootstrapSelectDirective.prototype.refresh = function () {
+    ElementSelectDirective.prototype.refresh = function () {
         //setTimeout(() => {
         //    $(this.el.nativeElement).selectpicker('refresh');
         //});
     };
-    BootstrapSelectDirective.prototype.render = function () {
+    ElementSelectDirective.prototype.render = function () {
         //setTimeout(() => {
         //    $(this.el.nativeElement).selectpicker('render');
         //});
     };
-    Object.defineProperty(BootstrapSelectDirective.prototype, "valid", {
+    Object.defineProperty(ElementSelectDirective.prototype, "valid", {
         get: function () {
             return this.requiredAttribute ? this.selected && this.selected.length > 0 : true;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(BootstrapSelectDirective.prototype, "selected", {
+    Object.defineProperty(ElementSelectDirective.prototype, "selected", {
         get: function () {
             //return $(this.el.nativeElement).selectpicker('val');
             return '';
@@ -1070,38 +1093,38 @@ var BootstrapSelectDirective = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    BootstrapSelectDirective.ctorParameters = function () { return [
+    ElementSelectDirective.ctorParameters = function () { return [
         { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] }
     ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", String)
-    ], BootstrapSelectDirective.prototype, "required", void 0);
+    ], ElementSelectDirective.prototype, "required", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [Object])
-    ], BootstrapSelectDirective.prototype, "ngModel", null);
+    ], ElementSelectDirective.prototype, "ngModel", null);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", Object)
-    ], BootstrapSelectDirective.prototype, "ngModelChange", void 0);
+    ], ElementSelectDirective.prototype, "ngModelChange", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", Object)
-    ], BootstrapSelectDirective.prototype, "shown", void 0);
+    ], ElementSelectDirective.prototype, "shown", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", Object)
-    ], BootstrapSelectDirective.prototype, "hidden", void 0);
-    BootstrapSelectDirective = __decorate([
+    ], ElementSelectDirective.prototype, "hidden", void 0);
+    ElementSelectDirective = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"])({
-            selector: '[bootstrapSelect]',
-            exportAs: 'bootstrap-select'
+            selector: '[elementSelect]',
+            exportAs: 'element-select'
         }),
         __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]])
-    ], BootstrapSelectDirective);
-    return BootstrapSelectDirective;
+    ], ElementSelectDirective);
+    return ElementSelectDirective;
 }());
 
 
@@ -2631,6 +2654,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_calculation_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/calculation.service */ "./app/modules/script-interpreter/services/calculation.service.ts");
 /* harmony import */ var _services_parameter_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/parameter.service */ "./app/modules/script-interpreter/services/parameter.service.ts");
 /* harmony import */ var _services_script_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/script.service */ "./app/modules/script-interpreter/services/script.service.ts");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../services/translation.service */ "./app/services/translation.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2649,12 +2673,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ScriptCalculatorComponent = /** @class */ (function () {
-    function ScriptCalculatorComponent(route, scriptService, parameterService, calculationService) {
+    function ScriptCalculatorComponent(route, scriptService, parameterService, calculationService, translationService) {
         this.route = route;
         this.scriptService = scriptService;
         this.parameterService = parameterService;
         this.calculationService = calculationService;
+        this.translationService = translationService;
         this.myControl = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]();
         this.parameterOptions = _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_3__["ParameterOptions"];
     }
@@ -2664,14 +2690,24 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         var sub = this.route.params.subscribe(function (params) {
             id = +params['id'];
         });
-        if (id != undefined) {
-            this.scriptService.getScript(id).subscribe(function (script) {
-                _this.script = script;
-                console.log("Script", _this.script);
-                _this.setParameters();
-            }, function (error) { return console.error(error); });
-        }
+        if (id != undefined)
+            this.getScript(id);
         sub.unsubscribe();
+        this.translationService.languageChanged$.subscribe(function (language) {
+            if (id != undefined) {
+                _this.getScript(id, language);
+                _this.resultParameters = [];
+                _this.valueChanged = true;
+            }
+        });
+    };
+    ScriptCalculatorComponent.prototype.getScript = function (id, language) {
+        var _this = this;
+        this.scriptService.getScript(id).subscribe(function (script) {
+            _this.script = script;
+            console.log("Script", _this.script);
+            _this.setParameters();
+        }, function (error) { return console.error(error); });
     };
     ScriptCalculatorComponent.prototype.setParameters = function () {
         var _this = this;
@@ -2784,7 +2820,8 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
         { type: _services_script_service__WEBPACK_IMPORTED_MODULE_8__["ScriptService"] },
         { type: _services_parameter_service__WEBPACK_IMPORTED_MODULE_7__["ParameterService"] },
-        { type: _services_calculation_service__WEBPACK_IMPORTED_MODULE_6__["CalculationService"] }
+        { type: _services_calculation_service__WEBPACK_IMPORTED_MODULE_6__["CalculationService"] },
+        { type: _services_translation_service__WEBPACK_IMPORTED_MODULE_9__["TranslationService"] }
     ]; };
     ScriptCalculatorComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -2795,7 +2832,8 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"],
             _services_script_service__WEBPACK_IMPORTED_MODULE_8__["ScriptService"],
             _services_parameter_service__WEBPACK_IMPORTED_MODULE_7__["ParameterService"],
-            _services_calculation_service__WEBPACK_IMPORTED_MODULE_6__["CalculationService"]])
+            _services_calculation_service__WEBPACK_IMPORTED_MODULE_6__["CalculationService"],
+            _services_translation_service__WEBPACK_IMPORTED_MODULE_9__["TranslationService"]])
     ], ScriptCalculatorComponent);
     return ScriptCalculatorComponent;
 }());
@@ -2900,6 +2938,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScriptCardsComponent", function() { return ScriptCardsComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_script_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/script.service */ "./app/modules/script-interpreter/services/script.service.ts");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../services/translation.service */ "./app/services/translation.service.ts");
+/* harmony import */ var _services_local_store_manager_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../services/local-store-manager.service */ "./app/services/local-store-manager.service.ts");
+/* harmony import */ var _services_db_keys__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../services/db-keys */ "./app/services/db-keys.ts");
+/* harmony import */ var _services_search_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../services/search.service */ "./app/services/search.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2911,42 +2953,93 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
+
+
 var ScriptCardsComponent = /** @class */ (function () {
-    function ScriptCardsComponent(scriptService) {
+    function ScriptCardsComponent(scriptService, translationService, localStorage, searchService) {
         this.scriptService = scriptService;
+        this.translationService = translationService;
+        this.localStorage = localStorage;
+        this.searchService = searchService;
         this.pageSizeOptions = [5, 10, 25, 50];
         this.pageSize = 10;
+        this.pageIndex = 0;
     }
     ScriptCardsComponent.prototype.ngOnInit = function () {
-        this.setScript();
-    };
-    ScriptCardsComponent.prototype.setScript = function () {
         var _this = this;
-        this.scriptService.getScripts().subscribe(function (scripts) {
+        this.setScripts();
+        this.translationService.languageChanged$.subscribe(function (language) {
+            _this.setScripts(language);
+        });
+        this.searchService.searched$.subscribe(function (value) {
+            _this.filterValue = value;
+            _this.setFilteredScripts();
+        });
+    };
+    ScriptCardsComponent.prototype.setScripts = function (lang) {
+        var _this = this;
+        this.scriptService.getScripts(lang).subscribe(function (scripts) {
             _this.scripts = scripts;
             _this.setFilteredScripts();
+            _this.setPage();
         }, function (error) { return console.error(error); });
     };
     ScriptCardsComponent.prototype.setFilteredScripts = function () {
         var _this = this;
+        this.filteredScripts = this.scripts;
         if (this.groupFilters != undefined)
-            this.scripts = this.scripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
+            this.filteredScripts = this.filteredScripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
         if (this.tagFilters != undefined)
-            this.scripts = this.scripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
-        this.activeScripts = this.scripts.slice(0, this.pageSize);
-        console.log("Scripts", this.scripts);
+            this.filteredScripts = this.filteredScripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
+        if (this.filterValue)
+            this.filteredScripts = this.filteredScripts.filter(function (s) {
+                return s.name && s.name.toLowerCase().indexOf(_this.filterValue.toLowerCase()) >= 0 ||
+                    s.author && s.author.toLowerCase().indexOf(_this.filterValue.toLowerCase()) >= 0 ||
+                    s.accordingTo && s.accordingTo.toLowerCase().indexOf(_this.filterValue.toLowerCase()) >= 0 ||
+                    s.groupName && s.groupName.toLowerCase().indexOf(_this.filterValue.toLowerCase()) >= 0 ||
+                    s.tags && s.tags.some(function (t) { return t.name && t.name.toLowerCase().indexOf(_this.filterValue.toLowerCase()) >= 0; });
+            });
+        console.log(this.filteredScripts);
+        this.activeScripts = this.filteredScripts.slice(0, this.pageSize);
     };
     ScriptCardsComponent.prototype.onDeleted = function (scriptId) {
         this.scripts = this.scripts.filter(function (s) { return s.id != scriptId; });
         this.setFilteredScripts();
     };
     ScriptCardsComponent.prototype.onPageChanged = function (e) {
-        var firstCut = e.pageIndex * e.pageSize;
-        var secondCut = firstCut + e.pageSize;
-        this.activeScripts = this.scripts.slice(firstCut, secondCut);
+        var _this = this;
+        setTimeout(function () {
+            _this.localStorage.savePermanentData(e.pageSize, _services_db_keys__WEBPACK_IMPORTED_MODULE_4__["DBkeys"].PAGESIZE);
+            _this.localStorage.savePermanentData(e.pageIndex, _services_db_keys__WEBPACK_IMPORTED_MODULE_4__["DBkeys"].PAGEINDEX);
+        });
+        this.setPage(e);
+    };
+    ScriptCardsComponent.prototype.setPage = function (e) {
+        var pageSize = this.pageSize;
+        var pageIndex = 0;
+        if (e != undefined) {
+            pageSize = e.pageSize;
+            pageIndex = e.pageIndex;
+        }
+        else if (this.localStorage.exists(_services_db_keys__WEBPACK_IMPORTED_MODULE_4__["DBkeys"].PAGESIZE) && this.localStorage.exists(_services_db_keys__WEBPACK_IMPORTED_MODULE_4__["DBkeys"].PAGEINDEX)) {
+            pageSize = this.localStorage.getData(_services_db_keys__WEBPACK_IMPORTED_MODULE_4__["DBkeys"].PAGESIZE);
+            pageIndex = this.localStorage.getData(_services_db_keys__WEBPACK_IMPORTED_MODULE_4__["DBkeys"].PAGEINDEX);
+        }
+        while (pageIndex * pageSize > this.filteredScripts.length)
+            pageIndex -= 1;
+        var firstCut = pageIndex * pageSize;
+        var secondCut = firstCut + pageSize;
+        this.pageSize = pageSize;
+        this.pageIndex = pageIndex;
+        this.activeScripts = this.filteredScripts.slice(firstCut, secondCut);
     };
     ScriptCardsComponent.ctorParameters = function () { return [
-        { type: _services_script_service__WEBPACK_IMPORTED_MODULE_1__["ScriptService"] }
+        { type: _services_script_service__WEBPACK_IMPORTED_MODULE_1__["ScriptService"] },
+        { type: _services_translation_service__WEBPACK_IMPORTED_MODULE_2__["TranslationService"] },
+        { type: _services_local_store_manager_service__WEBPACK_IMPORTED_MODULE_3__["LocalStoreManager"] },
+        { type: _services_search_service__WEBPACK_IMPORTED_MODULE_5__["SearchService"] }
     ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('groupFilters'),
@@ -2962,7 +3055,10 @@ var ScriptCardsComponent = /** @class */ (function () {
             template: __webpack_require__(/*! raw-loader!./script-cards.component.html */ "../node_modules/raw-loader/index.js!./app/modules/script-interpreter/components/script-cards/script-cards.component.html"),
             styles: [__webpack_require__(/*! ./script-cards.component.scss */ "./app/modules/script-interpreter/components/script-cards/script-cards.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_script_service__WEBPACK_IMPORTED_MODULE_1__["ScriptService"]])
+        __metadata("design:paramtypes", [_services_script_service__WEBPACK_IMPORTED_MODULE_1__["ScriptService"],
+            _services_translation_service__WEBPACK_IMPORTED_MODULE_2__["TranslationService"],
+            _services_local_store_manager_service__WEBPACK_IMPORTED_MODULE_3__["LocalStoreManager"],
+            _services_search_service__WEBPACK_IMPORTED_MODULE_5__["SearchService"]])
     ], ScriptCardsComponent);
     return ScriptCardsComponent;
 }());
@@ -5954,7 +6050,9 @@ var ConfigurationService = /** @class */ (function () {
         { type: _translation_service__WEBPACK_IMPORTED_MODULE_0__["TranslationService"] }
     ]; };
     ConfigurationService = ConfigurationService_1 = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root',
+        }),
         __metadata("design:paramtypes", [_local_store_manager_service__WEBPACK_IMPORTED_MODULE_4__["LocalStoreManager"],
             _translation_service__WEBPACK_IMPORTED_MODULE_0__["TranslationService"]])
     ], ConfigurationService);
@@ -5987,6 +6085,8 @@ var DBkeys = /** @class */ (function () {
     function DBkeys() {
     }
     DBkeys.LANGUAGE = 'language';
+    DBkeys.PAGEINDEX = 'pageIndex';
+    DBkeys.PAGESIZE = 'pageSize';
     DBkeys = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])()
     ], DBkeys);
@@ -6131,6 +6231,53 @@ var LocalStoreManager = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./app/services/search.service.ts":
+/*!****************************************!*\
+  !*** ./app/services/search.service.ts ***!
+  \****************************************/
+/*! exports provided: SearchService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SearchService", function() { return SearchService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "../node_modules/rxjs/_esm5/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var SearchService = /** @class */ (function () {
+    function SearchService() {
+        this.onSearch = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+        this.searched$ = this.onSearch.asObservable();
+    }
+    SearchService.prototype.search = function (value) {
+        var _this = this;
+        setTimeout(function () {
+            _this.onSearch.next(value);
+        });
+    };
+    SearchService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root',
+        }),
+        __metadata("design:paramtypes", [])
+    ], SearchService);
+    return SearchService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./app/services/translation.service.ts":
 /*!*********************************************!*\
   !*** ./app/services/translation.service.ts ***!
@@ -6218,7 +6365,9 @@ var TranslationService = /** @class */ (function () {
         { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__["TranslateService"] }
     ]; };
     TranslationService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root',
+        }),
         __metadata("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_1__["TranslateService"]])
     ], TranslationService);
     return TranslationService;

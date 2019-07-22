@@ -57,7 +57,9 @@ var ConfigurationService = /** @class */ (function () {
     var ConfigurationService_1;
     ConfigurationService.defaultLanguage = 'en';
     ConfigurationService = ConfigurationService_1 = __decorate([
-        Injectable(),
+        Injectable({
+            providedIn: 'root',
+        }),
         __metadata("design:paramtypes", [LocalStoreManager,
             TranslationService])
     ], ConfigurationService);

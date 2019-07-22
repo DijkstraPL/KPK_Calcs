@@ -23,9 +23,10 @@ import { ScriptInterpreterModule } from './modules/script-interpreter/script-int
 import { ScriptInterpreterRoutingModule } from './modules/script-interpreter/script-interpreter-routing.module';
 import { MdComponentsModule } from './modules/md-components-module/md-components.module';
 import { TranslationService, TranslateLanguageLoader } from './services/translation.service';
-import { BootstrapSelectDirective } from './directives/bootstrap-select.directive';
+import { ElementSelectDirective } from './directives/element-select.directive';
 import { LocalStoreManager } from './services/local-store-manager.service';
 import { ConfigurationService } from './services/configuration.service';
+import { SearchService } from './services/search.service';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -37,7 +38,7 @@ var AppModule = /** @class */ (function () {
                 HomeComponent,
                 CarouselComponent,
                 AboutMeComponent,
-                BootstrapSelectDirective
+                ElementSelectDirective
             ],
             imports: [
                 BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -62,7 +63,8 @@ var AppModule = /** @class */ (function () {
                 { provide: ErrorHandler, useClass: AppErrorHandler },
                 TranslationService,
                 LocalStoreManager,
-                ConfigurationService
+                ConfigurationService,
+                SearchService
             ],
             bootstrap: [AppComponent]
         })

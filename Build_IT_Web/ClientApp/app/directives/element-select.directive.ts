@@ -5,10 +5,10 @@ import { Observable, Subscription, fromEvent } from 'rxjs';
 declare var $: any;
 
 @Directive({
-    selector: '[bootstrapSelect]',
-    exportAs: 'bootstrap-select'
+    selector: '[elementSelect]',
+    exportAs: 'element-select'
 })
-export class BootstrapSelectDirective implements OnInit, OnDestroy {
+export class ElementSelectDirective implements OnInit, OnDestroy {
 
     private oldValues: string | string[] = '';
 

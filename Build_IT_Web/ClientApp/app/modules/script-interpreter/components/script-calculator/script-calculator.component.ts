@@ -9,6 +9,7 @@ import { ParametersGroup } from '../../models/parametersGroup';
 import { CalculationService } from '../../services/calculation.service';
 import { ParameterService } from '../../services/parameter.service';
 import { ScriptService } from '../../services/script.service';
+import { TranslationService } from '../../../../services/translation.service';
 
 @Component({
     selector: 'script-calculator',
@@ -37,7 +38,8 @@ export class ScriptCalculatorComponent implements OnInit {
         private route: ActivatedRoute,
         private scriptService: ScriptService,
         private parameterService: ParameterService,
-        private calculationService: CalculationService) {
+        private calculationService: CalculationService,
+        private translationService: TranslationService) {
     }
 
     ngOnInit(): void {
@@ -45,14 +47,25 @@ export class ScriptCalculatorComponent implements OnInit {
         let sub = this.route.params.subscribe(params => {
             id = +params['id'];
         });
-        if (id != undefined) {
-            this.scriptService.getScript(id).subscribe(script => {
-                this.script = script;
-                console.log("Script", this.script);
-                this.setParameters();
-            }, error => console.error(error));
-        }
+        if (id != undefined) 
+            this.getScript(id);
         sub.unsubscribe();
+
+        this.translationService.languageChanged$.subscribe(language => {
+            if (id != undefined) {
+                this.getScript(id, language);
+                this.resultParameters = [];
+                this.valueChanged = true;
+            }
+        });
+    }
+
+    private getScript(id: number, language?: string) {
+        this.scriptService.getScript(id).subscribe(script => {
+            this.script = script;
+            console.log("Script", this.script);
+            this.setParameters();
+        }, error => console.error(error));
     }
 
     private setParameters(): void {

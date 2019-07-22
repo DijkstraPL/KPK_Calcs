@@ -2,13 +2,18 @@
 using Build_IT_Application.Exceptions;
 using Build_IT_Application.Infrastructures;
 using Build_IT_Application.Infrastructures.Interfaces;
+using Build_IT_Application.ScriptInterpreter.Scripts.Commands.CreateScript;
+using Build_IT_Application.ScriptInterpreter.Scripts.Commands.DeleteScript;
+using Build_IT_Application.ScriptInterpreter.Scripts.Commands.UpdateScript;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetAllScripts;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript;
+using Build_IT_Application.ScriptInterpreter.Tags.Queries;
 using Build_IT_CommonTools.Interfaces;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
+using MediatR;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -123,36 +128,31 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
                 CancellationToken.None));
         }
 
-        //[Test]
-        //public void CreateScriptTest_Success()
-        //{
-        //    var scriptResource = new ScriptResource();
-        //    var script = new Script();
-        //    _mapper.Setup(m => m.Map<ScriptResource, Script>(scriptResource))
-        //        .Returns(script);
-        //    _mapper.Setup(m => m.Map<Script, ScriptResource>(script))
-        //        .Returns(scriptResource);
+        [Test]
+        public void CreateScriptTest_Success()
+        {
+            var script = new Script();
 
-        //    _scriptRepository.Setup(tr => tr.AddAsync(script))
-        //        .Returns(Task.FromResult(default(object)));
-        //    _unitOfWork.Setup(uow => uow.CompleteAsync())
-        //        .Returns(Task.FromResult(1));
+            var mediator = new Mock<IMediator>();
 
-        //    var scriptController = new ScriptsController(
-        //        _mapper.Object, _dateTime.Object, _scriptRepository.Object,
-        //        _translationService.Object, _unitOfWork.Object);
+            _scriptRepository.Setup(tr => tr.AddAsync(script))
+                .Returns(Task.FromResult(default(object)));
+            _unitOfWork.Setup(uow => uow.CompleteAsync())
+                .Returns(Task.FromResult(1));
 
-        //    var result = scriptController.CreateScript(scriptResource).Result;
-        //    var resultScript = (result as OkObjectResult).Value as Script;
+            var cancellationToken = CancellationToken.None;
 
-        //    _scriptRepository.Verify(sr => sr.AddAsync(script));
-        //    _unitOfWork.Verify(sr => sr.CompleteAsync());
-        //    _mapper.Verify(m => m.Map<ScriptResource, Script>(scriptResource));
-        //    _mapper.Verify(m => m.Map<Script, ScriptResource>(script));
-        //    Assert.That(result, Is.Not.Null);
-        //    Assert.That(result, Is.TypeOf(typeof(OkObjectResult)));
-        //    Assert.That(script.Version, Is.EqualTo("1"));
-        //}
+            var createScriptCommand = new CreateScriptCommand.Handler(
+                _dateTime.Object,  _scriptRepository.Object, _unitOfWork.Object, mediator.Object);
+
+            var result = createScriptCommand.Handle(
+                new CreateScriptCommand { Name = "name", Tags =new List<TagResource>() },
+                cancellationToken).Result;
+            
+            _scriptRepository.Verify(sr => sr.AddAsync(It.IsAny<Script>()));
+            _unitOfWork.Verify(sr => sr.CompleteAsync(cancellationToken));
+            Assert.That(result, Is.Not.Null);
+        }
 
 
         //[Test]
@@ -171,37 +171,31 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         //    Assert.That(result, Is.TypeOf(typeof(BadRequestObjectResult)));
         //}
 
-        //[Test]
-        //public void UpdateScriptTest_Success()
-        //{
-        //    var scriptResource = new ScriptResource();
-        //    var script = new Script { Version = "1" };
-        //    _mapper.Setup(m => m.Map<ScriptResource, Script>(scriptResource, script))
-        //        .Returns(script);
-        //    _mapper.Setup(m => m.Map<Script, ScriptResource>(script))
-        //        .Returns(scriptResource);
+        [Test]
+        public void UpdateScriptTest_Success()
+        {
+            var scriptResource = new ScriptResource();
+            var script = new Script { Version = "1" };
+            _mapper.Setup(m => m.Map<ScriptResource, Script>(scriptResource, script))
+                .Returns(script);
+            _mapper.Setup(m => m.Map<Script, ScriptResource>(script))
+                .Returns(scriptResource);
 
-        //    _scriptRepository.Setup(sr => sr.GetScriptWithTagsAsync(1))
-        //        .Returns(Task.FromResult(script));
-        //    _unitOfWork.Setup(uow => uow.CompleteAsync())
-        //        .Returns(Task.FromResult(1));
+            _scriptRepository.Setup(sr => sr.GetScriptWithTagsAsync(1))
+                .Returns(Task.FromResult(script));
+            _unitOfWork.Setup(uow => uow.CompleteAsync())
+                .Returns(Task.FromResult(1));
+            
+            var updateScriptCommand = new UpdateScriptCommand.Handler(
+              _dateTime.Object, _scriptRepository.Object, _unitOfWork.Object);
 
-        //    var scriptController = new ScriptsController(
-        //        _mapper.Object, _dateTime.Object, _scriptRepository.Object,
-        //        _translationService.Object, _unitOfWork.Object);
-
-        //    var result = scriptController.UpdateScript(1, scriptResource).Result;
-        //    var resultScript = (result as OkObjectResult).Value as Script;
-
-        //    _scriptRepository.Verify(sr => sr.GetScriptWithTagsAsync(1), Times.Exactly(2));
-        //    _unitOfWork.Verify(uow => uow.CompleteAsync());
-        //    _mapper.Verify(m => m.Map<ScriptResource, Script>(scriptResource, script));
-        //    _mapper.Verify(m => m.Map<Script, ScriptResource>(script));
-        //    Assert.That(result, Is.Not.Null);
-        //    Assert.That(result, Is.TypeOf(typeof(OkObjectResult)));
-        //    Assert.That(script.Version, Is.EqualTo("1"));
-        //    Assert.That(script.Modified, Is.GreaterThan(script.Added));
-        //}
+            var result = updateScriptCommand.Handle(
+                new UpdateScriptCommand { Id = 1, Name = "name", Tags = new List<TagResource>() },
+                CancellationToken.None).Result;
+            
+            _scriptRepository.Verify(sr => sr.GetScriptWithTagsAsync(1));
+            _unitOfWork.Verify(uow => uow.CompleteAsync());
+        }
 
         //[Test]
         //public void UpdateScriptTest_InvalidModel_Success()
@@ -219,65 +213,57 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         //    Assert.That(result, Is.TypeOf(typeof(BadRequestObjectResult)));
         //}
 
-        //[Test]
-        //public void UpdateScriptTest_NoneScript_Success()
-        //{
-        //    var scriptResource = new ScriptResource();
+        [Test]
+        public void UpdateScriptTest_NoneScript_Success()
+        {
+            var scriptResource = new ScriptResource();
 
-        //    _scriptRepository.Setup(sr => sr.GetScriptWithTagsAsync(1))
-        //        .Returns(Task.FromResult(default(Script)));
+            _scriptRepository.Setup(sr => sr.GetScriptWithTagsAsync(1))
+                .Returns(Task.FromResult(default(Script)));
 
-        //    var scriptController = new ScriptsController(
-        //        _mapper.Object, _dateTime.Object, _scriptRepository.Object,
-        //        _translationService.Object, _unitOfWork.Object);
+            var updateScriptCommand = new UpdateScriptCommand.Handler(
+              _dateTime.Object, _scriptRepository.Object, _unitOfWork.Object);
 
-        //    var result = scriptController.UpdateScript(1, scriptResource).Result;
+            Assert.ThrowsAsync<NotFoundException>(() => updateScriptCommand.Handle(
+                new UpdateScriptCommand { Id = 1, Name = "name", Tags = new List<TagResource>() },
+                CancellationToken.None));            
+        }
 
-        //    _scriptRepository.Verify(sr => sr.GetScriptWithTagsAsync(1));
-        //    Assert.That(result, Is.Not.Null);
-        //    Assert.That(result, Is.TypeOf(typeof(NotFoundResult)));
-        //}
+        [Test]
+        public void DeleteScriptTest_Success()
+        {
+            var script = new Script();
+            _scriptRepository.Setup(sr => sr.GetAsync(1))
+                .Returns(Task.FromResult(script));
 
-        //[Test]
-        //public void DeleteScriptTest_Success()
-        //{
-        //    var script = new Script();
-        //    _scriptRepository.Setup(sr => sr.GetAsync(1))
-        //        .Returns(Task.FromResult(script));
+            _scriptRepository.Setup(sr => sr.Remove(script));
+            _unitOfWork.Setup(uow => uow.CompleteAsync())
+                .Returns(Task.FromResult(1));
 
-        //    _scriptRepository.Setup(sr => sr.Remove(script));
-        //    _unitOfWork.Setup(uow => uow.CompleteAsync())
-        //        .Returns(Task.FromResult(1));
+            var deleteScriptCommand = new DeleteScriptCommand.Handler(
+                _scriptRepository.Object, _unitOfWork.Object);
 
-        //    var scriptController = new ScriptsController(
-        //        _mapper.Object, _dateTime.Object, _scriptRepository.Object,
-        //        _translationService.Object, _unitOfWork.Object);
+            var result = deleteScriptCommand.Handle(
+                new DeleteScriptCommand { Id = 1 },
+                CancellationToken.None).Result;
+            
+            _scriptRepository.Verify(sr => sr.GetAsync(1));
+            _scriptRepository.Verify(sr => sr.Remove(script));
+            _unitOfWork.Verify(uow => uow.CompleteAsync(CancellationToken.None));
+        }
 
-        //    var result = scriptController.DeleteScript(1).Result;
+        [Test]
+        public void DeleteScriptTest_NoneScript_Success()
+        {
+            _scriptRepository.Setup(sr => sr.GetAsync(1))
+                .Returns(Task.FromResult(default(Script)));
+            
+            var deleteScriptCommand = new DeleteScriptCommand.Handler(
+                _scriptRepository.Object, _unitOfWork.Object);
 
-        //    _scriptRepository.Verify(sr => sr.GetAsync(1));
-        //    _scriptRepository.Verify(sr => sr.Remove(script));
-        //    _unitOfWork.Verify(uow => uow.CompleteAsync());           
-        //    Assert.That(result, Is.Not.Null);
-        //    Assert.That(result, Is.TypeOf(typeof(OkObjectResult)));
-        //    Assert.That((result as OkObjectResult).Value, Is.EqualTo(1));
-        //}
-
-        //[Test]
-        //public void DeleteScriptTest_NoneScript_Success()
-        //{
-        //    _scriptRepository.Setup(sr => sr.GetAsync(1))
-        //        .Returns(Task.FromResult(default(Script)));
-
-        //    var scriptController = new ScriptsController(
-        //        _mapper.Object, _dateTime.Object, _scriptRepository.Object,
-        //        _translationService.Object, _unitOfWork.Object);
-
-        //    var result = scriptController.DeleteScript(1).Result;
-
-        //    _scriptRepository.Verify(sr => sr.GetAsync(1));
-        //    Assert.That(result, Is.Not.Null);
-        //    Assert.That(result, Is.TypeOf(typeof(NotFoundResult)));
-        //}
+            Assert.ThrowsAsync<NotFoundException>(() => deleteScriptCommand.Handle(
+                new DeleteScriptCommand { Id = 1 },
+                CancellationToken.None));
+        }
     }
 }

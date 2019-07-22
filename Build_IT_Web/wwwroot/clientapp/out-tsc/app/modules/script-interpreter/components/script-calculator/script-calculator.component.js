@@ -16,12 +16,14 @@ import { ParametersGroup } from '../../models/parametersGroup';
 import { CalculationService } from '../../services/calculation.service';
 import { ParameterService } from '../../services/parameter.service';
 import { ScriptService } from '../../services/script.service';
+import { TranslationService } from '../../../../services/translation.service';
 var ScriptCalculatorComponent = /** @class */ (function () {
-    function ScriptCalculatorComponent(route, scriptService, parameterService, calculationService) {
+    function ScriptCalculatorComponent(route, scriptService, parameterService, calculationService, translationService) {
         this.route = route;
         this.scriptService = scriptService;
         this.parameterService = parameterService;
         this.calculationService = calculationService;
+        this.translationService = translationService;
         this.myControl = new FormControl();
         this.parameterOptions = ParameterOptions;
     }
@@ -31,14 +33,21 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         var sub = this.route.params.subscribe(function (params) {
             id = +params['id'];
         });
-        if (id != undefined) {
-            this.scriptService.getScript(id).subscribe(function (script) {
-                _this.script = script;
-                console.log("Script", _this.script);
-                _this.setParameters();
-            }, function (error) { return console.error(error); });
-        }
+        if (id != undefined)
+            this.getScript(id);
         sub.unsubscribe();
+        this.translationService.languageChanged$.subscribe(function (language) {
+            if (id != undefined)
+                _this.getScript(id, language);
+        });
+    };
+    ScriptCalculatorComponent.prototype.getScript = function (id, language) {
+        var _this = this;
+        this.scriptService.getScript(id).subscribe(function (script) {
+            _this.script = script;
+            console.log("Script", _this.script);
+            _this.setParameters();
+        }, function (error) { return console.error(error); });
     };
     ScriptCalculatorComponent.prototype.setParameters = function () {
         var _this = this;
@@ -156,7 +165,8 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [ActivatedRoute,
             ScriptService,
             ParameterService,
-            CalculationService])
+            CalculationService,
+            TranslationService])
     ], ScriptCalculatorComponent);
     return ScriptCalculatorComponent;
 }());

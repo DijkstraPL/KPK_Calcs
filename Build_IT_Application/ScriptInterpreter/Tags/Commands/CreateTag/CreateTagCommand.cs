@@ -19,7 +19,7 @@ namespace Build_IT_Application.ScriptInterpreter.Tags.Commands.CreateTag
 
         #endregion // Properties
 
-        public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, TagCreated>
+        public class Handler : IRequestHandler<CreateTagCommand, TagCreated>
         {
             #region Fields
 
@@ -30,7 +30,7 @@ namespace Build_IT_Application.ScriptInterpreter.Tags.Commands.CreateTag
 
             #region Constructors
 
-            public CreateTagCommandHandler(
+            public Handler(
                 ITagRepository tagRepository,
                 IScriptInterpreterUnitOfWork unitOfWork)
             {

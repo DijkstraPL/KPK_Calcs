@@ -1,8 +1,10 @@
-﻿import { Injectable } from '@angular/core';
+﻿import { Injectable, Output, EventEmitter } from '@angular/core';
 import { TranslateService, TranslateLoader } from '@ngx-translate/core';
 import { Observable, Subject, of } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class TranslationService {
 
     private languages = ['en', 'pl'];
@@ -10,7 +12,7 @@ export class TranslationService {
 
     private onLanguageChanged = new Subject<string>();
     languageChanged$ = this.onLanguageChanged.asObservable();
-
+    
     constructor(private translate: TranslateService) {
         this.addLanguages(this.languages);
         this.setDefaultLanguage('en');

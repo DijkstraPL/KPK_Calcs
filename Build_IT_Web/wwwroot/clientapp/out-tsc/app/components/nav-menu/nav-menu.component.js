@@ -9,13 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component, ViewChild } from '@angular/core';
 import { TranslationService } from '../../services/translation.service';
-import { BootstrapSelectDirective } from '../../directives/bootstrap-select.directive';
+import { ElementSelectDirective } from '../../directives/element-select.directive';
 import { ConfigurationService } from '../../services/configuration.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { SearchService } from '../../services/search.service';
 var NavMenuComponent = /** @class */ (function () {
-    function NavMenuComponent(translationService, configurations) {
+    function NavMenuComponent(translationService, configurations, searchService) {
         this.translationService = translationService;
         this.configurations = configurations;
+        this.searchService = searchService;
+        this.searchForm = new FormGroup({
+            search: new FormControl('')
+        });
     }
+    Object.defineProperty(NavMenuComponent.prototype, "searchValue", {
+        get: function () {
+            return this.searchForm.get('search');
+        },
+        enumerable: true,
+        configurable: true
+    });
     NavMenuComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.languageChangedSubscription = this.translationService.languageChanged$.subscribe(function (data) {
@@ -27,9 +40,12 @@ var NavMenuComponent = /** @class */ (function () {
     NavMenuComponent.prototype.ngOnDestroy = function () {
         this.languageChangedSubscription.unsubscribe();
     };
+    NavMenuComponent.prototype.onSearch = function () {
+        this.searchService.search(this.searchValue.value);
+    };
     __decorate([
         ViewChild('languageSelector', null),
-        __metadata("design:type", BootstrapSelectDirective)
+        __metadata("design:type", ElementSelectDirective)
     ], NavMenuComponent.prototype, "languageSelector", void 0);
     NavMenuComponent = __decorate([
         Component({
@@ -38,7 +54,8 @@ var NavMenuComponent = /** @class */ (function () {
             styleUrls: ['./nav-menu.component.css']
         }),
         __metadata("design:paramtypes", [TranslationService,
-            ConfigurationService])
+            ConfigurationService,
+            SearchService])
     ], NavMenuComponent);
     return NavMenuComponent;
 }());

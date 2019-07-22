@@ -8,7 +8,9 @@ interface UserConfiguration {
     language: string;
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class ConfigurationService {
     public static readonly defaultLanguage: string = 'en';
     private _language: string = null;

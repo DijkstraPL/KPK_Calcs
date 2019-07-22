@@ -9,6 +9,8 @@ var DBkeys = /** @class */ (function () {
     function DBkeys() {
     }
     DBkeys.LANGUAGE = 'language';
+    DBkeys.PAGEINDEX = 'pageIndex';
+    DBkeys.PAGESIZE = 'pageSize';
     DBkeys = __decorate([
         Injectable()
     ], DBkeys);

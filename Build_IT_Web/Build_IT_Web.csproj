@@ -40,7 +40,7 @@
     <None Remove="ClientApp\app\common\errors\app-error-state-matcher.ts" />
     <None Remove="ClientApp\app\common\errors\bad-input-error.ts" />
     <None Remove="ClientApp\app\common\errors\not-found-error.ts" />
-    <None Remove="ClientApp\app\directives\bootstrap-select.directive.ts" />
+    <None Remove="ClientApp\app\directives\element-select.directive.ts" />
     <None Remove="ClientApp\app\modules\script-interpreter\models\api\create-script-command.ts" />
     <None Remove="ClientApp\app\modules\script-interpreter\models\enums\language.ts" />
     <None Remove="ClientApp\app\modules\script-interpreter\services\parameter-translation.service.ts" />
@@ -49,6 +49,7 @@
     <None Remove="ClientApp\app\services\configuration.service.ts" />
     <None Remove="ClientApp\app\services\db-keys.ts" />
     <None Remove="ClientApp\app\services\local-store-manager.service.ts" />
+    <None Remove="ClientApp\app\services\search.service.ts" />
     <None Remove="ClientApp\app\services\translation.service.ts" />
     <None Remove="ClientApp\app\services\utilities.ts" />
   </ItemGroup>
@@ -85,7 +86,7 @@
     <TypeScriptCompile Include="ClientApp\app\common\errors\bad-input-error.ts" />
     <TypeScriptCompile Include="ClientApp\app\common\errors\not-found-error.ts" />
     <TypeScriptCompile Include="ClientApp\app\common\errors\app-error.ts" />
-    <TypeScriptCompile Include="ClientApp\app\directives\bootstrap-select.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\app\directives\element-select.directive.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\models\api\scripts\create-script-command.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\models\enums\language.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\value-option-translation.service.ts" />
@@ -94,6 +95,7 @@
     <TypeScriptCompile Include="ClientApp\app\services\configuration.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\db-keys.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\local-store-manager.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\search.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\utilities.ts" />
   </ItemGroup>

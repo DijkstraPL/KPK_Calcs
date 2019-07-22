@@ -9,20 +9,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component, Input } from '@angular/core';
 import { ScriptService } from '../../services/script.service';
+import { TranslationService } from '../../../../services/translation.service';
+import { LocalStoreManager } from '../../../../services/local-store-manager.service';
+import { DBkeys } from '../../../../services/db-keys';
+import { SearchService } from '../../../../services/search.service';
 var ScriptCardsComponent = /** @class */ (function () {
-    function ScriptCardsComponent(scriptService) {
+    function ScriptCardsComponent(scriptService, translationService, localStorage, searchService) {
         this.scriptService = scriptService;
+        this.translationService = translationService;
+        this.localStorage = localStorage;
+        this.searchService = searchService;
         this.pageSizeOptions = [5, 10, 25, 50];
         this.pageSize = 10;
+        this.pageIndex = 0;
     }
     ScriptCardsComponent.prototype.ngOnInit = function () {
-        this.setScript();
-    };
-    ScriptCardsComponent.prototype.setScript = function () {
         var _this = this;
-        this.scriptService.getScripts().subscribe(function (scripts) {
+        this.setScripts();
+        this.translationService.languageChanged$.subscribe(function (language) {
+            _this.setScripts(language);
+        });
+        this.searchService.searched$.subscribe(function (value) {
+            _this.filterValue = value;
+            _this.setFilteredScripts();
+        });
+    };
+    ScriptCardsComponent.prototype.setScripts = function (lang) {
+        var _this = this;
+        this.scriptService.getScripts(lang).subscribe(function (scripts) {
             _this.scripts = scripts;
             _this.setFilteredScripts();
+            _this.setPage();
         }, function (error) { return console.error(error); });
     };
     ScriptCardsComponent.prototype.setFilteredScripts = function () {
@@ -31,6 +48,8 @@ var ScriptCardsComponent = /** @class */ (function () {
             this.scripts = this.scripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
         if (this.tagFilters != undefined)
             this.scripts = this.scripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
+        if (this.filterValue)
+            this.scripts = this.scripts.filter(function (s) { return s.name.indexOf(_this.filterValue) >= 0; });
         this.activeScripts = this.scripts.slice(0, this.pageSize);
         console.log("Scripts", this.scripts);
     };
@@ -39,8 +58,30 @@ var ScriptCardsComponent = /** @class */ (function () {
         this.setFilteredScripts();
     };
     ScriptCardsComponent.prototype.onPageChanged = function (e) {
-        var firstCut = e.pageIndex * e.pageSize;
-        var secondCut = firstCut + e.pageSize;
+        var _this = this;
+        setTimeout(function () {
+            _this.localStorage.savePermanentData(e.pageSize, DBkeys.PAGESIZE);
+            _this.localStorage.savePermanentData(e.pageIndex, DBkeys.PAGEINDEX);
+        });
+        this.setPage(e);
+    };
+    ScriptCardsComponent.prototype.setPage = function (e) {
+        var pageSize = this.pageSize;
+        var pageIndex = 0;
+        if (e != undefined) {
+            pageSize = e.pageSize;
+            pageIndex = e.pageIndex;
+        }
+        else if (this.localStorage.exists(DBkeys.PAGESIZE) && this.localStorage.exists(DBkeys.PAGEINDEX)) {
+            pageSize = this.localStorage.getData(DBkeys.PAGESIZE);
+            pageIndex = this.localStorage.getData(DBkeys.PAGEINDEX);
+        }
+        while (pageIndex * pageSize > this.scripts.length)
+            pageIndex -= 1;
+        var firstCut = pageIndex * pageSize;
+        var secondCut = firstCut + pageSize;
+        this.pageSize = pageSize;
+        this.pageIndex = pageIndex;
         this.activeScripts = this.scripts.slice(firstCut, secondCut);
     };
     __decorate([
@@ -57,7 +98,10 @@ var ScriptCardsComponent = /** @class */ (function () {
             templateUrl: './script-cards.component.html',
             styleUrls: ['./script-cards.component.scss']
         }),
-        __metadata("design:paramtypes", [ScriptService])
+        __metadata("design:paramtypes", [ScriptService,
+            TranslationService,
+            LocalStoreManager,
+            SearchService])
     ], ScriptCardsComponent);
     return ScriptCardsComponent;
 }());

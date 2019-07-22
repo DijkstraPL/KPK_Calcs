@@ -68,7 +68,9 @@ var TranslationService = /** @class */ (function () {
     };
     TranslationService.LanguageCodes = [{ 'en': 0 }, { 'pl': 1 }];
     TranslationService = __decorate([
-        Injectable(),
+        Injectable({
+            providedIn: 'root',
+        }),
         __metadata("design:paramtypes", [TranslateService])
     ], TranslationService);
     return TranslationService;

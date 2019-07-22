@@ -4,8 +4,9 @@
                      [script]="script"
                      (deleted)="onDeleted($event)"></app-script-card>
 </div>
-<mat-paginator [length]="scripts.length"
+<mat-paginator [length]="filteredScripts.length"
                [pageSize]="pageSize"
                [pageSizeOptions]="pageSizeOptions"
+               [pageIndex]="pageIndex"
                (page)="onPageChanged($event)">
 </mat-paginator>
