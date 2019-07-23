@@ -42,11 +42,11 @@ namespace Build_IT_Application.Infrastructures
                 var scriptTranslation = await _translationRepository.GetScriptTranslation(scriptResource.Id, Languages[languageCode]);
                 if (scriptTranslation == null)
                     return;
-                if (scriptTranslation.Name != null)
+                if (!string.IsNullOrEmpty(scriptTranslation.Name))
                     scriptResource.Name = scriptTranslation.Name;
-                if (scriptTranslation.Description != null)
+                if (!string.IsNullOrEmpty(scriptTranslation.Description))
                     scriptResource.Description = scriptTranslation.Description;
-                if (scriptTranslation.Notes != null)
+                if (!string.IsNullOrEmpty(scriptTranslation.Notes))
                     scriptResource.Notes = scriptTranslation.Notes;
             }
             return;
@@ -66,11 +66,11 @@ namespace Build_IT_Application.Infrastructures
                 var parameterTranslation = await _translationRepository.GetParameterTranslation(parameterResource.Id, Languages[languageCode]);
                 if (parameterTranslation == null)
                     return;
-                if (parameterTranslation.Description != null)
+                if (!string.IsNullOrEmpty(parameterTranslation.Description ))
                     parameterResource.Description = parameterTranslation.Description;
-                if (parameterTranslation.Notes != null)
+                if (!string.IsNullOrEmpty(parameterTranslation.Notes))
                     parameterResource.Notes = parameterTranslation.Notes;
-                if (parameterTranslation.GroupName != null)
+                if (!string.IsNullOrEmpty(parameterTranslation.GroupName))
                     parameterResource.GroupName = parameterTranslation.GroupName;
                 foreach (var valueOption in parameterResource.ValueOptions)
                     await SetValueOptionTranslation(languageCode, valueOption, defaultLanguage);
@@ -92,9 +92,9 @@ namespace Build_IT_Application.Infrastructures
                 var valueOptionTranslation = await _translationRepository.GetValueOptionTranslation(valueOptionResource.Id, Languages[languageCode]);
                 if (valueOptionTranslation == null)
                     return;
-                if (valueOptionTranslation.Name != null)
+                if (!string.IsNullOrEmpty(valueOptionTranslation.Name))
                     valueOptionResource.Name = valueOptionTranslation.Name;
-                if (valueOptionTranslation.Description != null)
+                if (!string.IsNullOrEmpty(valueOptionTranslation.Description))
                     valueOptionResource.Description = valueOptionTranslation.Description;
             }
             return;

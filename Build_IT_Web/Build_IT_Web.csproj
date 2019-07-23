@@ -100,4 +100,10 @@
     <TypeScriptCompile Include="ClientApp\app\services\utilities.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

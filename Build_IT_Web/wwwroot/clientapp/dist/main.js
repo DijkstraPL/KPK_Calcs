@@ -2775,7 +2775,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     ScriptCalculatorComponent.prototype.calculate = function () {
         var _this = this;
         this.isCalculating = true;
-        this.calculationService.calculate(this.script.id, this.parameters)
+        this.calculationService.calculate(this.script.id, this.parameters.filter(function (p) { return _this.validateVisibility(p); }))
             .subscribe(function (params) {
             _this.resultParameters = params.filter(function (p) { return (p.context & _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_3__["ParameterOptions"].visible) != 0; });
             _this.resultParameters.forEach(function (p) { return p.equation = _this.setEquation(p); });

@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
-using Build_IT_Application.Infrastructures;
 using Build_IT_Application.Infrastructures.Interfaces;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Applications.ScriptInterpreter.Services;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
-using Build_IT_ScriptInterpreter.Parameters.Interfaces;
 using MediatR;
-using System;
+using Microsoft.Extensions.Logging;
+using NLog;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,6 +32,7 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
             private readonly IParameterRepository _parameterRepository;
             private readonly ITranslationService _translationService;
             private readonly IMapper _mapper;
+            private readonly ILogger<Handler> _logger;
 
             #endregion // Fields
 
@@ -43,12 +42,14 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
                 IScriptRepository scriptRepository,
                 IParameterRepository parameterRepository,
                 ITranslationService translationService,
-                IMapper mapper)
+                IMapper mapper,
+                ILogger<Handler> logger)
             {
                 _scriptRepository = scriptRepository;
                 _parameterRepository = parameterRepository;
                 _translationService = translationService;
                 _mapper = mapper;
+                _logger = logger;
             }
 
             #endregion // Constructors
@@ -57,6 +58,9 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
             
             public async Task<IEnumerable<ParameterResource>> Handle(CalculateCommand request, CancellationToken cancellationToken)
             {
+                _logger.LogInformation("Calculation with parameters: {parameters}",
+                    request.InputData.Where(d => !string.IsNullOrEmpty(d.Value)).Select(d => $"{d.Name}={d.Value}"));
+
                 var script = await _scriptRepository.GetAsync(request.ScriptId);
                 var parameters = await _parameterRepository.GetAllParametersForScriptAsync(request.ScriptId);
 

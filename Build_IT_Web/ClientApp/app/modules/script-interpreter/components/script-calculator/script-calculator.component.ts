@@ -141,7 +141,7 @@ export class ScriptCalculatorComponent implements OnInit {
 
     calculate() {
         this.isCalculating = true;
-        this.calculationService.calculate(this.script.id, this.parameters)
+        this.calculationService.calculate(this.script.id, this.parameters.filter(p => this.validateVisibility(p)))
             .subscribe(params => {
                 this.resultParameters = params.filter(p => (p.context & ParameterOptions.visible) != 0);
                 this.resultParameters.forEach(p => p.equation = this.setEquation(p));

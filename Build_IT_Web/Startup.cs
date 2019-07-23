@@ -16,8 +16,6 @@ using Build_IT_DataAccess.ScriptInterpreter;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
-using Build_IT_Web.Mapping;
-using Build_IT_Web.Services;
 using Build_IT_Web.Services.Interfaces;
 using FluentValidation.AspNetCore;
 using MediatR;

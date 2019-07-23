@@ -44,14 +44,21 @@ var ScriptCardsComponent = /** @class */ (function () {
     };
     ScriptCardsComponent.prototype.setFilteredScripts = function () {
         var _this = this;
+        this.filteredScripts = this.scripts;
         if (this.groupFilters != undefined)
-            this.scripts = this.scripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
+            this.filteredScripts = this.filteredScripts.filter(function (s) { return _this.groupFilters.indexOf(s.groupName) != -1; });
         if (this.tagFilters != undefined)
-            this.scripts = this.scripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
+            this.filteredScripts = this.filteredScripts.filter(function (s) { return _this.tagFilters.every(function (tf) { return s.tags.map(function (t) { return t.name; }).indexOf(tf) != -1; }); });
         if (this.filterValue)
-            this.scripts = this.scripts.filter(function (s) { return s.name.indexOf(_this.filterValue) >= 0; });
-        this.activeScripts = this.scripts.slice(0, this.pageSize);
-        console.log("Scripts", this.scripts);
+            this.filteredScripts = this.filteredScripts.filter(function (s) {
+                return s.name && s.name.toLowerCase().indexOf(_this.filterValue.toLowerCase()) >= 0 ||
+                    s.author && s.author.toLowerCase().indexOf(_this.filterValue.toLowerCase()) >= 0 ||
+                    s.accordingTo && s.accordingTo.toLowerCase().indexOf(_this.filterValue.toLowerCase()) >= 0 ||
+                    s.groupName && s.groupName.toLowerCase().indexOf(_this.filterValue.toLowerCase()) >= 0 ||
+                    s.tags && s.tags.some(function (t) { return t.name && t.name.toLowerCase().indexOf(_this.filterValue.toLowerCase()) >= 0; });
+            });
+        console.log(this.filteredScripts);
+        this.activeScripts = this.filteredScripts.slice(0, this.pageSize);
     };
     ScriptCardsComponent.prototype.onDeleted = function (scriptId) {
         this.scripts = this.scripts.filter(function (s) { return s.id != scriptId; });
@@ -76,13 +83,13 @@ var ScriptCardsComponent = /** @class */ (function () {
             pageSize = this.localStorage.getData(DBkeys.PAGESIZE);
             pageIndex = this.localStorage.getData(DBkeys.PAGEINDEX);
         }
-        while (pageIndex * pageSize > this.scripts.length)
+        while (pageIndex * pageSize > this.filteredScripts.length)
             pageIndex -= 1;
         var firstCut = pageIndex * pageSize;
         var secondCut = firstCut + pageSize;
         this.pageSize = pageSize;
         this.pageIndex = pageIndex;
-        this.activeScripts = this.scripts.slice(firstCut, secondCut);
+        this.activeScripts = this.filteredScripts.slice(firstCut, secondCut);
     };
     __decorate([
         Input('groupFilters'),
