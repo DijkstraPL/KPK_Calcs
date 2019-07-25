@@ -21,3 +21,19 @@
 .mat-form-field-paddings {
     padding-bottom: 0px;
 }
+
+.calculate{
+    margin-top:10px;
+}
+
+mat-chip-list {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+mat-chip-list mat-chip {
+    display: list-item;
+    padding: 5px 10px;
+    margin: 10px 3px 0px;
+}

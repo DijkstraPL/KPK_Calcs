@@ -27,6 +27,8 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
         public IMapper Mapper { get; }
         public CalculateCommand.Handler CalculateCommand { get; }
 
+        private readonly Random _random = new Random();
+
         public ScriptCalculatorTestEngine()
         {
             var logger = new Mock<ILogger<CalculateCommand.Handler>>();
@@ -62,5 +64,15 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
             var results = CalculateCommand.Handle(request, CancellationToken.None).Result.ToList();
             return results;
         }
+
+        public string GetBigRandom() 
+            => (_random.NextDouble() * _random.Next(1000)).ToString();
+
+        public string GetSmallRandom()
+            => (_random.NextDouble() * _random.Next(1000)).ToString();
+
+        public string GetValueFromRange(string[] possibleValues)
+            => possibleValues[_random.Next(possibleValues.Length)];
+
     }
 }

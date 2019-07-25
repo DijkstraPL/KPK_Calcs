@@ -55,6 +55,16 @@
 
     <div class="text-center"
          *ngIf="visibleParameters">
+
+            <mat-chip-list aria-label="Error list"
+                           class="list-horizontal"
+                           *ngIf="errorMessages">
+                <mat-chip *ngFor="let errorMessage of errorMessages"
+                          [innerHtml]="errorMessage | html"
+                          color="warn"
+                          selected></mat-chip>
+            </mat-chip-list>
+
         <button mat-stroked-button
                 color="accent"
                 class="calculate"

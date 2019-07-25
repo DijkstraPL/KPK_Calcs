@@ -59,6 +59,9 @@ namespace Build_IT_ScriptInterpreter.Scripts
                 if (!IsVisible(parameter, parameters))
                     continue;
 
+                if (!IsValid(parameter, parameters))
+                    throw new ArgumentException("Wrong data", parameter.Name);
+
                 CalculateParameter(parameter, parameters);
                 if (parameters.ContainsKey(parameter.Name))
                     parameters[parameter.Name] = parameter.Value;
@@ -66,7 +69,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
                     parameters.Add(parameter.Name, parameter.Value);
             }
         }
-
+        
         public bool CheckVisibility(string parameterName, IDictionary<string, object> parameters) 
             => IsVisible(_scriptParameters.SingleOrDefault(p => p.Name == parameterName), parameters);
 
@@ -159,6 +162,23 @@ namespace Build_IT_ScriptInterpreter.Scripts
         private bool IsVisible(IParameter parameter, IDictionary<string, object> parameters)
         {
             var value = parameter.VisibilityValidator?.ToString();
+            if (string.IsNullOrWhiteSpace(value))
+                return true;
+
+            var expressionEvaluator = ExpressionEvaluator.Create(value, parameters);
+            try
+            {
+                return (bool)expressionEvaluator.Evaluate();
+            }
+            catch (ArgumentException)
+            {
+                return true;
+            }
+        }
+
+        private bool IsValid(IParameter parameter, IDictionary<string, object> parameters)
+        {
+            var value = parameter.DataValidator?.ToString();
             if (string.IsNullOrWhiteSpace(value))
                 return true;
 

@@ -194,7 +194,7 @@ module.exports = "<div [ngClass]=\"{'parameter-result-important': isImportant()}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div *ngIf=\"script\">\r\n    <div class=\"text-center\">\r\n        <h1>{{script.name}}</h1>\r\n    </div>\r\n\r\n    <p class=\"ml-2\">{{script.description}}</p>\r\n    <ul>\r\n        <li *ngFor=\"let tag of script.tags\">\r\n            {{tag.name}}\r\n        </li>\r\n    </ul>\r\n    <div *ngIf=\"!visibleParameters\">\r\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\r\n    </div>\r\n\r\n    <div *ngIf=\"staticDataParameters && staticDataParameters.length > 0\">\r\n        <h5 class=\"ml-2\">{{'scriptCalculator.StaticData' | translate}}</h5>\r\n        <mat-list dense>\r\n            <div *ngFor=\"let parameter of staticDataParameters\">\r\n                <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                <mat-divider></mat-divider>\r\n            </div>\r\n        </mat-list>\r\n    </div>\r\n\r\n    <div class=\"mt-2\">\r\n        <div *ngFor=\"let parameter of notGroupedParameters\"\r\n             class=\"list-inline-item ml-5 d-inline-flex\">\r\n            <parameter-form [parameter]=\"parameter\"\r\n                            (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n        </div>\r\n\r\n\r\n        <mat-accordion>\r\n            <mat-expansion-panel *ngFor=\"let group of groups\">\r\n                <mat-expansion-panel-header>\r\n                    <mat-panel-title>\r\n                        {{group.name}}\r\n                    </mat-panel-title>\r\n                </mat-expansion-panel-header>\r\n\r\n                <ul class=\"list-inline m-0\">\r\n                    <li *ngFor=\"let parameter of group.parameters\"\r\n                        class=\"list-inline-item ml-5 d-inline-flex\">\r\n                        <parameter-form [parameter]=\"parameter\"\r\n                                        (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n                    </li>\r\n                </ul>\r\n\r\n            </mat-expansion-panel>\r\n        </mat-accordion>\r\n    </div>\r\n\r\n\r\n    <div class=\"text-center\"\r\n         *ngIf=\"visibleParameters\">\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                class=\"calculate\"\r\n                type=\"button\"\r\n                [disabled]=\"!isValid()\"\r\n                (click)=\"calculate()\">\r\n            <span class=\"fa fa-calculator\"></span> {{'scriptCalculator.Calculate' | translate}}\r\n        </button>\r\n    </div>\r\n\r\n    <div *ngIf=\"isCalculating\"\r\n         class=\"mt-2\">\r\n        <mat-progress-bar mode=\"query\"></mat-progress-bar>\r\n    </div>\r\n\r\n    <div *ngIf=\"resultParameters && !valueChanged\">\r\n        <h3 class=\"ml-2\">{{'scriptCalculator.Results' | translate}}</h3>\r\n        <mat-list dense>\r\n            <div *ngFor=\"let parameter of resultParameters\">\r\n                <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                <mat-divider></mat-divider>\r\n            </div>\r\n        </mat-list>\r\n    </div>\r\n</div>\r\n"
+module.exports = "\r\n<div *ngIf=\"script\">\r\n    <div class=\"text-center\">\r\n        <h1>{{script.name}}</h1>\r\n    </div>\r\n\r\n    <p class=\"ml-2\">{{script.description}}</p>\r\n    <ul>\r\n        <li *ngFor=\"let tag of script.tags\">\r\n            {{tag.name}}\r\n        </li>\r\n    </ul>\r\n    <div *ngIf=\"!visibleParameters\">\r\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\r\n    </div>\r\n\r\n    <div *ngIf=\"staticDataParameters && staticDataParameters.length > 0\">\r\n        <h5 class=\"ml-2\">{{'scriptCalculator.StaticData' | translate}}</h5>\r\n        <mat-list dense>\r\n            <div *ngFor=\"let parameter of staticDataParameters\">\r\n                <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                <mat-divider></mat-divider>\r\n            </div>\r\n        </mat-list>\r\n    </div>\r\n\r\n    <div class=\"mt-2\">\r\n        <div *ngFor=\"let parameter of notGroupedParameters\"\r\n             class=\"list-inline-item ml-5 d-inline-flex\">\r\n            <parameter-form [parameter]=\"parameter\"\r\n                            (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n        </div>\r\n\r\n\r\n        <mat-accordion>\r\n            <mat-expansion-panel *ngFor=\"let group of groups\">\r\n                <mat-expansion-panel-header>\r\n                    <mat-panel-title>\r\n                        {{group.name}}\r\n                    </mat-panel-title>\r\n                </mat-expansion-panel-header>\r\n\r\n                <ul class=\"list-inline m-0\">\r\n                    <li *ngFor=\"let parameter of group.parameters\"\r\n                        class=\"list-inline-item ml-5 d-inline-flex\">\r\n                        <parameter-form [parameter]=\"parameter\"\r\n                                        (valueChanged)=\"onValueChanged($event)\"></parameter-form>\r\n                    </li>\r\n                </ul>\r\n\r\n            </mat-expansion-panel>\r\n        </mat-accordion>\r\n    </div>\r\n\r\n\r\n    <div class=\"text-center\"\r\n         *ngIf=\"visibleParameters\">\r\n\r\n            <mat-chip-list aria-label=\"Error list\"\r\n                           class=\"list-horizontal\"\r\n                           *ngIf=\"errorMessages\">\r\n                <mat-chip *ngFor=\"let errorMessage of errorMessages\"\r\n                          [innerHtml]=\"errorMessage | html\"\r\n                          color=\"warn\"\r\n                          selected></mat-chip>\r\n            </mat-chip-list>\r\n\r\n        <button mat-stroked-button\r\n                color=\"accent\"\r\n                class=\"calculate\"\r\n                type=\"button\"\r\n                [disabled]=\"!isValid()\"\r\n                (click)=\"calculate()\">\r\n            <span class=\"fa fa-calculator\"></span> {{'scriptCalculator.Calculate' | translate}}\r\n        </button>\r\n    </div>\r\n\r\n    <div *ngIf=\"isCalculating\"\r\n         class=\"mt-2\">\r\n        <mat-progress-bar mode=\"query\"></mat-progress-bar>\r\n    </div>\r\n\r\n    <div *ngIf=\"resultParameters && !valueChanged\">\r\n        <h3 class=\"ml-2\">{{'scriptCalculator.Results' | translate}}</h3>\r\n        <mat-list dense>\r\n            <div *ngFor=\"let parameter of resultParameters\">\r\n                <parameter-result [parameter]=\"parameter\"></parameter-result>\r\n                <mat-divider></mat-divider>\r\n            </div>\r\n        </mat-list>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -2631,7 +2631,7 @@ var ParameterResultComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "table {\n  width: 100%;\n}\n\n.mat-hint {\n  margin-bottom: 10px;\n  display: inline-block;\n  align-content: flex-start;\n}\n\n.form-inline {\n  -webkit-transform: scale(0.9);\n          transform: scale(0.9);\n  -webkit-transform-origin: left;\n          transform-origin: left;\n}\n\n.parameter-description {\n  color: rgba(255, 255, 255, 0.7);\n  font-size: 87.5%;\n}\n\n.mat-form-field-paddings {\n  padding-bottom: 0px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9tb2R1bGVzL3NjcmlwdC1pbnRlcnByZXRlci9jb21wb25lbnRzL3NjcmlwdC1jYWxjdWxhdG9yL0M6XFxLUEtfQ2FsY3NcXEJ1aWxkX0lUX1dlYlxcQ2xpZW50QXBwL2FwcFxcbW9kdWxlc1xcc2NyaXB0LWludGVycHJldGVyXFxjb21wb25lbnRzXFxzY3JpcHQtY2FsY3VsYXRvclxcc2NyaXB0LWNhbGN1bGF0b3IuY29tcG9uZW50LnNjc3MiLCJhcHAvbW9kdWxlcy9zY3JpcHQtaW50ZXJwcmV0ZXIvY29tcG9uZW50cy9zY3JpcHQtY2FsY3VsYXRvci9zY3JpcHQtY2FsY3VsYXRvci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFdBQUE7QUNDSjs7QURFQTtFQUNJLG1CQUFBO0VBQ0EscUJBQUE7RUFDQSx5QkFBQTtBQ0NKOztBREVBO0VBQ0ksNkJBQUE7VUFBQSxxQkFBQTtFQUNBLDhCQUFBO1VBQUEsc0JBQUE7QUNDSjs7QURFQTtFQUNJLCtCQUFBO0VBQ0EsZ0JBQUE7QUNDSjs7QURFQTtFQUNJLG1CQUFBO0FDQ0oiLCJmaWxlIjoiYXBwL21vZHVsZXMvc2NyaXB0LWludGVycHJldGVyL2NvbXBvbmVudHMvc2NyaXB0LWNhbGN1bGF0b3Ivc2NyaXB0LWNhbGN1bGF0b3IuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJ0YWJsZXtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG4ubWF0LWhpbnQge1xyXG4gICAgbWFyZ2luLWJvdHRvbToxMHB4O1xyXG4gICAgZGlzcGxheTppbmxpbmUtYmxvY2s7XHJcbiAgICBhbGlnbi1jb250ZW50OmZsZXgtc3RhcnQ7XHJcbn1cclxuXHJcbi5mb3JtLWlubGluZSB7XHJcbiAgICB0cmFuc2Zvcm06IHNjYWxlKDAuOSk7XHJcbiAgICB0cmFuc2Zvcm0tb3JpZ2luOiBsZWZ0O1xyXG59XHJcblxyXG4ucGFyYW1ldGVyLWRlc2NyaXB0aW9uIHtcclxuICAgIGNvbG9yOiByZ2JhKDI1NSwyNTUsMjU1LC43KTtcclxuICAgIGZvbnQtc2l6ZTogODcuNSU7XHJcbn1cclxuXHJcbi5tYXQtZm9ybS1maWVsZC1wYWRkaW5ncyB7XHJcbiAgICBwYWRkaW5nLWJvdHRvbTogMHB4O1xyXG59IiwidGFibGUge1xuICB3aWR0aDogMTAwJTtcbn1cblxuLm1hdC1oaW50IHtcbiAgbWFyZ2luLWJvdHRvbTogMTBweDtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICBhbGlnbi1jb250ZW50OiBmbGV4LXN0YXJ0O1xufVxuXG4uZm9ybS1pbmxpbmUge1xuICB0cmFuc2Zvcm06IHNjYWxlKDAuOSk7XG4gIHRyYW5zZm9ybS1vcmlnaW46IGxlZnQ7XG59XG5cbi5wYXJhbWV0ZXItZGVzY3JpcHRpb24ge1xuICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjcpO1xuICBmb250LXNpemU6IDg3LjUlO1xufVxuXG4ubWF0LWZvcm0tZmllbGQtcGFkZGluZ3Mge1xuICBwYWRkaW5nLWJvdHRvbTogMHB4O1xufSJdfQ== */"
+module.exports = "table {\n  width: 100%;\n}\n\n.mat-hint {\n  margin-bottom: 10px;\n  display: inline-block;\n  align-content: flex-start;\n}\n\n.form-inline {\n  -webkit-transform: scale(0.9);\n          transform: scale(0.9);\n  -webkit-transform-origin: left;\n          transform-origin: left;\n}\n\n.parameter-description {\n  color: rgba(255, 255, 255, 0.7);\n  font-size: 87.5%;\n}\n\n.mat-form-field-paddings {\n  padding-bottom: 0px;\n}\n\n.calculate {\n  margin-top: 10px;\n}\n\nmat-chip-list {\n  list-style-type: none;\n  display: flex;\n  justify-content: center;\n}\n\nmat-chip-list mat-chip {\n  display: list-item;\n  padding: 5px 10px;\n  margin: 10px 3px 0px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9tb2R1bGVzL3NjcmlwdC1pbnRlcnByZXRlci9jb21wb25lbnRzL3NjcmlwdC1jYWxjdWxhdG9yL0M6XFxLUEtfQ2FsY3NcXEJ1aWxkX0lUX1dlYlxcQ2xpZW50QXBwL2FwcFxcbW9kdWxlc1xcc2NyaXB0LWludGVycHJldGVyXFxjb21wb25lbnRzXFxzY3JpcHQtY2FsY3VsYXRvclxcc2NyaXB0LWNhbGN1bGF0b3IuY29tcG9uZW50LnNjc3MiLCJhcHAvbW9kdWxlcy9zY3JpcHQtaW50ZXJwcmV0ZXIvY29tcG9uZW50cy9zY3JpcHQtY2FsY3VsYXRvci9zY3JpcHQtY2FsY3VsYXRvci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFdBQUE7QUNDSjs7QURFQTtFQUNJLG1CQUFBO0VBQ0EscUJBQUE7RUFDQSx5QkFBQTtBQ0NKOztBREVBO0VBQ0ksNkJBQUE7VUFBQSxxQkFBQTtFQUNBLDhCQUFBO1VBQUEsc0JBQUE7QUNDSjs7QURFQTtFQUNJLCtCQUFBO0VBQ0EsZ0JBQUE7QUNDSjs7QURFQTtFQUNJLG1CQUFBO0FDQ0o7O0FERUE7RUFDSSxnQkFBQTtBQ0NKOztBREVBO0VBQ0kscUJBQUE7RUFDQSxhQUFBO0VBQ0EsdUJBQUE7QUNDSjs7QURFQTtFQUNJLGtCQUFBO0VBQ0EsaUJBQUE7RUFDQSxvQkFBQTtBQ0NKIiwiZmlsZSI6ImFwcC9tb2R1bGVzL3NjcmlwdC1pbnRlcnByZXRlci9jb21wb25lbnRzL3NjcmlwdC1jYWxjdWxhdG9yL3NjcmlwdC1jYWxjdWxhdG9yLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsidGFibGV7XHJcbiAgICB3aWR0aDogMTAwJTtcclxufVxyXG5cclxuLm1hdC1oaW50IHtcclxuICAgIG1hcmdpbi1ib3R0b206MTBweDtcclxuICAgIGRpc3BsYXk6aW5saW5lLWJsb2NrO1xyXG4gICAgYWxpZ24tY29udGVudDpmbGV4LXN0YXJ0O1xyXG59XHJcblxyXG4uZm9ybS1pbmxpbmUge1xyXG4gICAgdHJhbnNmb3JtOiBzY2FsZSgwLjkpO1xyXG4gICAgdHJhbnNmb3JtLW9yaWdpbjogbGVmdDtcclxufVxyXG5cclxuLnBhcmFtZXRlci1kZXNjcmlwdGlvbiB7XHJcbiAgICBjb2xvcjogcmdiYSgyNTUsMjU1LDI1NSwuNyk7XHJcbiAgICBmb250LXNpemU6IDg3LjUlO1xyXG59XHJcblxyXG4ubWF0LWZvcm0tZmllbGQtcGFkZGluZ3Mge1xyXG4gICAgcGFkZGluZy1ib3R0b206IDBweDtcclxufVxyXG5cclxuLmNhbGN1bGF0ZXtcclxuICAgIG1hcmdpbi10b3A6MTBweDtcclxufVxyXG5cclxubWF0LWNoaXAtbGlzdCB7XHJcbiAgICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbn1cclxuXHJcbm1hdC1jaGlwLWxpc3QgbWF0LWNoaXAge1xyXG4gICAgZGlzcGxheTogbGlzdC1pdGVtO1xyXG4gICAgcGFkZGluZzogNXB4IDEwcHg7XHJcbiAgICBtYXJnaW46IDEwcHggM3B4IDBweDtcclxufSIsInRhYmxlIHtcbiAgd2lkdGg6IDEwMCU7XG59XG5cbi5tYXQtaGludCB7XG4gIG1hcmdpbi1ib3R0b206IDEwcHg7XG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgYWxpZ24tY29udGVudDogZmxleC1zdGFydDtcbn1cblxuLmZvcm0taW5saW5lIHtcbiAgdHJhbnNmb3JtOiBzY2FsZSgwLjkpO1xuICB0cmFuc2Zvcm0tb3JpZ2luOiBsZWZ0O1xufVxuXG4ucGFyYW1ldGVyLWRlc2NyaXB0aW9uIHtcbiAgY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC43KTtcbiAgZm9udC1zaXplOiA4Ny41JTtcbn1cblxuLm1hdC1mb3JtLWZpZWxkLXBhZGRpbmdzIHtcbiAgcGFkZGluZy1ib3R0b206IDBweDtcbn1cblxuLmNhbGN1bGF0ZSB7XG4gIG1hcmdpbi10b3A6IDEwcHg7XG59XG5cbm1hdC1jaGlwLWxpc3Qge1xuICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xufVxuXG5tYXQtY2hpcC1saXN0IG1hdC1jaGlwIHtcbiAgZGlzcGxheTogbGlzdC1pdGVtO1xuICBwYWRkaW5nOiA1cHggMTBweDtcbiAgbWFyZ2luOiAxMHB4IDNweCAwcHg7XG59Il19 */"
 
 /***/ }),
 
@@ -2766,11 +2766,17 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     };
     ScriptCalculatorComponent.prototype.isValid = function () {
         var _this = this;
-        return this.parameters
+        var visibleParameters = this.parameters
             .filter(function (p) { return (p.context & _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_3__["ParameterOptions"].editable) != 0 &&
             (p.context & _models_enums_parameterOptions__WEBPACK_IMPORTED_MODULE_3__["ParameterOptions"].optional) == 0 &&
-            _this.validateVisibility(p); })
-            .every(function (p) { return p.value != undefined && p.value != ""; });
+            _this.validateVisibility(p); });
+        var validationResult = visibleParameters
+            .every(function (p) { return p.value != undefined && p.value != "" && _this.validateData(p); });
+        if (!validationResult)
+            this.setErrorMessages(visibleParameters);
+        else
+            this.errorMessages = [];
+        return validationResult;
     };
     ScriptCalculatorComponent.prototype.calculate = function () {
         var _this = this;
@@ -2798,7 +2804,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     ScriptCalculatorComponent.prototype.validateVisibility = function (parameter) {
         if (!parameter.visibilityValidator)
             return true;
-        var visibilityValidatorEquation = parameter.visibilityValidator.slice(parameter.visibilityValidator.indexOf('(') + 1, parameter.visibilityValidator.lastIndexOf(')'));
+        var visibilityValidatorEquation = parameter.visibilityValidator;
         this.parameters.forEach(function (p) {
             var value = p.valueType == _models_enums_valueType__WEBPACK_IMPORTED_MODULE_4__["ValueType"].number ? p.value : "'" + p.value + "'";
             visibilityValidatorEquation = visibilityValidatorEquation.split("[" + p.name + "]").join(value);
@@ -2815,6 +2821,40 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         catch (e) {
             return true;
         }
+    };
+    ScriptCalculatorComponent.prototype.validateData = function (parameter) {
+        if (!parameter.dataValidator)
+            return true;
+        var dataValidatorEquation = parameter.dataValidator;
+        this.parameters.forEach(function (p) {
+            var value = p.valueType == _models_enums_valueType__WEBPACK_IMPORTED_MODULE_4__["ValueType"].number ? p.value : "'" + p.value + "'";
+            dataValidatorEquation = dataValidatorEquation.split("[" + p.name + "]").join(value);
+        });
+        try {
+            var result = eval(dataValidatorEquation);
+            if (result != null)
+                return result;
+            else
+                return true;
+        }
+        catch (e) {
+            return true;
+        }
+    };
+    ScriptCalculatorComponent.prototype.setErrorMessages = function (visibleParameters) {
+        var _this = this;
+        this.errorMessages = [];
+        var wrongParameters = visibleParameters.filter(function (p) { return p.value && p.dataValidator && !_this.validateData(p); });
+        wrongParameters.forEach(function (wp) {
+            var pureValidationEquation = wp.dataValidator
+                .replace('[', '')
+                .replace(']', '')
+                .replace('&&', ' AND ')
+                .replace('||', ' OR ')
+                .replace(/\s{2,}/g, ' ')
+                .replace(/\r?\n|\r/g, ' ');
+            _this.errorMessages.push(pureValidationEquation);
+        });
     };
     ScriptCalculatorComponent.ctorParameters = function () { return [
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },

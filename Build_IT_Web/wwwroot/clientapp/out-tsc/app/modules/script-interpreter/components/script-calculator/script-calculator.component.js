@@ -109,11 +109,17 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     };
     ScriptCalculatorComponent.prototype.isValid = function () {
         var _this = this;
-        return this.parameters
+        var visibleParameters = this.parameters
             .filter(function (p) { return (p.context & ParameterOptions.editable) != 0 &&
             (p.context & ParameterOptions.optional) == 0 &&
-            _this.validateVisibility(p); })
-            .every(function (p) { return p.value != undefined && p.value != ""; });
+            _this.validateVisibility(p); });
+        var validationResult = visibleParameters
+            .every(function (p) { return p.value != undefined && p.value != "" && _this.validateData(p); });
+        if (!validationResult)
+            this.setErrorMessages(visibleParameters);
+        else
+            this.errorMessages = [];
+        return validationResult;
     };
     ScriptCalculatorComponent.prototype.calculate = function () {
         var _this = this;
@@ -141,7 +147,7 @@ var ScriptCalculatorComponent = /** @class */ (function () {
     ScriptCalculatorComponent.prototype.validateVisibility = function (parameter) {
         if (!parameter.visibilityValidator)
             return true;
-        var visibilityValidatorEquation = parameter.visibilityValidator.slice(parameter.visibilityValidator.indexOf('(') + 1, parameter.visibilityValidator.lastIndexOf(')'));
+        var visibilityValidatorEquation = parameter.visibilityValidator;
         this.parameters.forEach(function (p) {
             var value = p.valueType == ValueType.number ? p.value : "'" + p.value + "'";
             visibilityValidatorEquation = visibilityValidatorEquation.split("[" + p.name + "]").join(value);
@@ -158,6 +164,40 @@ var ScriptCalculatorComponent = /** @class */ (function () {
         catch (e) {
             return true;
         }
+    };
+    ScriptCalculatorComponent.prototype.validateData = function (parameter) {
+        if (!parameter.dataValidator)
+            return true;
+        var dataValidatorEquation = parameter.dataValidator;
+        this.parameters.forEach(function (p) {
+            var value = p.valueType == ValueType.number ? p.value : "'" + p.value + "'";
+            dataValidatorEquation = dataValidatorEquation.split("[" + p.name + "]").join(value);
+        });
+        try {
+            var result = eval(dataValidatorEquation);
+            if (result != null)
+                return result;
+            else
+                return true;
+        }
+        catch (e) {
+            return true;
+        }
+    };
+    ScriptCalculatorComponent.prototype.setErrorMessages = function (visibleParameters) {
+        var _this = this;
+        this.errorMessages = [];
+        var wrongParameters = visibleParameters.filter(function (p) { return p.value && p.dataValidator && !_this.validateData(p); });
+        wrongParameters.forEach(function (wp) {
+            var pureValidationEquation = wp.dataValidator
+                .replace('[', '')
+                .replace(']', '')
+                .replace('&&', ' AND ')
+                .replace('||', ' OR ')
+                .replace(/\s{2,}/g, ' ')
+                .replace(/\r?\n|\r/g, ' ');
+            _this.errorMessages.push(pureValidationEquation);
+        });
     };
     ScriptCalculatorComponent = __decorate([
         Component({

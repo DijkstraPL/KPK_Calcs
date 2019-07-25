@@ -10,6 +10,7 @@ import { CalculationService } from '../../services/calculation.service';
 import { ParameterService } from '../../services/parameter.service';
 import { ScriptService } from '../../services/script.service';
 import { TranslationService } from '../../../../services/translation.service';
+import { retry } from 'rxjs/operators';
 
 @Component({
     selector: 'script-calculator',
@@ -33,6 +34,7 @@ export class ScriptCalculatorComponent implements OnInit {
     parameterOptions = ParameterOptions;
 
     isCalculating: boolean;
+    errorMessages: string[];
 
     constructor(
         private route: ActivatedRoute,
@@ -131,12 +133,21 @@ export class ScriptCalculatorComponent implements OnInit {
         });
     }
 
-    isValid() : boolean {
-        return this.parameters
+    isValid(): boolean {
+        let visibleParameters = this.parameters
             .filter(p => (p.context & ParameterOptions.editable) != 0 &&
-                (p.context & ParameterOptions.optional) == 0 && 
-                this.validateVisibility(p))
-            .every(p => p.value != undefined && p.value != "");
+                (p.context & ParameterOptions.optional) == 0 &&
+                this.validateVisibility(p));
+
+        let validationResult = visibleParameters
+            .every(p => p.value != undefined && p.value != "" && this.validateData(p));
+
+        if (!validationResult)
+            this.setErrorMessages(visibleParameters);
+        else
+            this.errorMessages = [];
+
+        return validationResult;
     }
 
     calculate() {
@@ -171,9 +182,7 @@ export class ScriptCalculatorComponent implements OnInit {
         if (!parameter.visibilityValidator)
             return true;
 
-        let visibilityValidatorEquation = parameter.visibilityValidator.slice(
-            parameter.visibilityValidator.indexOf('(') + 1,
-            parameter.visibilityValidator.lastIndexOf(')'));
+        let visibilityValidatorEquation = parameter.visibilityValidator;
 
         this.parameters.forEach(p => {
             let value = p.valueType == ValueType.number ? p.value : `'${p.value}'`;
@@ -191,5 +200,43 @@ export class ScriptCalculatorComponent implements OnInit {
         } catch (e) {
             return true;
         }
+    }
+
+    private validateData(parameter: Parameter): boolean {
+        if (!parameter.dataValidator)
+            return true;
+
+        let dataValidatorEquation = parameter.dataValidator;
+
+        this.parameters.forEach(p => {
+            let value = p.valueType == ValueType.number ? p.value : `'${p.value}'`;
+            dataValidatorEquation = dataValidatorEquation.split(`[${p.name}]`).join(value);
+        });
+
+        try {
+            let result = eval(dataValidatorEquation) as boolean;
+            if (result != null) 
+                return result;
+            else
+                return true;
+        } catch (e) {
+            return true;
+        }
+    }
+
+    private setErrorMessages(visibleParameters: Parameter[]) {
+        this.errorMessages = [];
+        let wrongParameters = visibleParameters.filter(p => p.value && p.dataValidator && !this.validateData(p));
+
+        wrongParameters.forEach(wp => {
+            let pureValidationEquation = wp.dataValidator
+                .replace('[', '')
+                .replace(']', '')
+                .replace('&&', ' AND ')
+                .replace('||', ' OR ')
+                .replace(/\s{2,}/g, ' ')
+                .replace(/\r?\n|\r/g, ' ');
+                this.errorMessages.push(pureValidationEquation);
+        });
     }
 }

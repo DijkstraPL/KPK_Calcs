@@ -45,13 +45,9 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
                 (p.Context & ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
-            var random = new Random();
-            Func<string> getBigRandom = () => (random.NextDouble() * random.Next(1000)).ToString();
-            Func<string> getSmallRandom = () => (random.NextDouble() * random.Next(50)).ToString();
-            Func<string[], string> getValueFromRange = possibleValues => possibleValues[random.Next(possibleValues.Length)];
-            parametersForCalculation["A"].Value = getBigRandom();
-            parametersForCalculation["N_Ed_"].Value = getBigRandom();
-            parametersForCalculation["f_y_"].Value = getBigRandom();
+            parametersForCalculation["A"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["N_Ed_"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["f_y_"].Value = _testEngine.GetBigRandom();
 
             Assert.DoesNotThrow(() => _testEngine.Calculate(ID, parametersForCalculation.Select(p => p.Value).ToList()),
                String.Join(", ", parametersForCalculation.Select(p => $"{p.Value.Name}={p.Value.Value}")));

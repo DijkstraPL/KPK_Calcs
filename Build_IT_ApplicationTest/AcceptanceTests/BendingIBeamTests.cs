@@ -186,21 +186,17 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
                 (p.Context & ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
-            var random = new Random();
-            Func<string> getBigRandom = () => (random.NextDouble() * random.Next(1000)).ToString();
-            Func<string> getSmallRandom = () => (random.NextDouble() * random.Next(50)).ToString();
-            Func<string[], string> getValueFromRange = possibleValues => possibleValues[random.Next(possibleValues.Length)];
-            parametersForCalculation["f_y_"].Value = getBigRandom();
-            parametersForCalculation["h"].Value = getBigRandom();
-            parametersForCalculation["b"].Value = getBigRandom();
-            parametersForCalculation["t_f_"].Value = getSmallRandom();
-            parametersForCalculation["t_w_"].Value = getSmallRandom();
+            parametersForCalculation["f_y_"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["h"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["b"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["t_f_"].Value = _testEngine.GetSmallRandom();
+            parametersForCalculation["t_w_"].Value = _testEngine.GetSmallRandom();
             parametersForCalculation["Type"].Value =
-                getValueFromRange(parametersForCalculation["Type"].ValueOptions
+                _testEngine.GetValueFromRange(parametersForCalculation["Type"].ValueOptions
                 .Select(vo => vo.Value)
                 .ToArray());
-            parametersForCalculation["a"].Value = getSmallRandom();
-            parametersForCalculation["r"].Value = getSmallRandom();
+            parametersForCalculation["a"].Value = _testEngine.GetSmallRandom();
+            parametersForCalculation["r"].Value = _testEngine.GetSmallRandom();
 
             Assert.DoesNotThrow(() => _testEngine.Calculate(ID, parametersForCalculation.Select(p => p.Value).ToList()),
                String.Join(", ", parametersForCalculation.Select(p => $"{p.Value.Name}={p.Value.Value}")));
