@@ -45,14 +45,14 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
             Mapper = new Mapper(config);
 
             CalculateCommand = new CalculateCommand.Handler(ScriptRepository,
-                ParameterRepository, TranslationService, Mapper, logger.Object);
+                ParameterRepository, TranslationService, Mapper);
         }
 
         ~ScriptCalculatorTestEngine()
         {
             ScriptInterpreterDbContext.Dispose();
         }
-        
+
         public List<ParameterResource> Calculate(long scriptId, ICollection<ParameterResource> parametersForCalculation)
         {
             var request = new CalculateCommand
@@ -65,11 +65,25 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
             return results;
         }
 
-        public string GetBigRandom() 
-            => (_random.NextDouble() * _random.Next(1000)).ToString();
+        public string GetBigRandom(double? min = null, double? max = null)
+        {
+            var number = _random.NextDouble() * _random.Next(1000);
+            if (min != null)
+                number = Math.Max(number, (double)min);
+            if (max != null)
+                number = Math.Min(number, (double)max);
+            return number.ToString();
+        }
 
-        public string GetSmallRandom()
-            => (_random.NextDouble() * _random.Next(1000)).ToString();
+        public string GetSmallRandom(double? min = null, double? max = null)
+        {
+            var number = _random.NextDouble() * _random.Next(100);
+            if (min != null)
+                number = Math.Max(number, (double)min);
+            if (max != null)
+                number = Math.Min(number, (double)max);
+            return number.ToString();
+        }
 
         public string GetValueFromRange(string[] possibleValues)
             => possibleValues[_random.Next(possibleValues.Length)];

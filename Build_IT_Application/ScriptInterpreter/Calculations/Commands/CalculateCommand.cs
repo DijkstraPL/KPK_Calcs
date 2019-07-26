@@ -42,14 +42,12 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
                 IScriptRepository scriptRepository,
                 IParameterRepository parameterRepository,
                 ITranslationService translationService,
-                IMapper mapper,
-                ILogger<Handler> logger)
+                IMapper mapper)
             {
                 _scriptRepository = scriptRepository;
                 _parameterRepository = parameterRepository;
                 _translationService = translationService;
                 _mapper = mapper;
-                _logger = logger;
             }
 
             #endregion // Constructors
@@ -58,9 +56,6 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
             
             public async Task<IEnumerable<ParameterResource>> Handle(CalculateCommand request, CancellationToken cancellationToken)
             {
-                _logger.LogInformation("Calculation with parameters: {parameters}",
-                    request.InputData.Where(d => !string.IsNullOrEmpty(d.Value)).Select(d => $"{d.Name}={d.Value}"));
-
                 var script = await _scriptRepository.GetAsync(request.ScriptId);
                 var parameters = await _parameterRepository.GetAllParametersForScriptAsync(request.ScriptId);
 

@@ -53,15 +53,17 @@ namespace Build_IT_ScriptInterpreter.Scripts
             foreach (var parameter in staticParameters)
                 parameters.TryAdd(parameter.Name, double.Parse(parameter.Value.ToString(), CultureInfo.InvariantCulture));
 
+            foreach (var parameter in _scriptParameters.Where(p => 
+                (p.Context & ParameterOptions.Editable) != 0))
+                if (!IsValid(parameter, parameters))
+                    throw new ArgumentException("Wrong data", parameter.Name);
+
             foreach (var parameter in _scriptParameters.Where(p =>
                 (p.Context & ParameterOptions.Calculation) != 0))
             {
                 if (!IsVisible(parameter, parameters))
                     continue;
-
-                if (!IsValid(parameter, parameters))
-                    throw new ArgumentException("Wrong data", parameter.Name);
-
+                
                 CalculateParameter(parameter, parameters);
                 if (parameters.ContainsKey(parameter.Name))
                     parameters[parameter.Name] = parameter.Value;

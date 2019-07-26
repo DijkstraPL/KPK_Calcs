@@ -17,6 +17,8 @@ import { LoadsRoutingModule } from './modules/loads/loads-routing.module';
 import { LoadsModule } from './modules/loads/loads.module';
 import { ScriptInterpreterModule } from './modules/script-interpreter/script-interpreter.module';
 import { ScriptInterpreterRoutingModule } from './modules/script-interpreter/script-interpreter-routing.module';
+import { CustomViewsModule } from './modules/custom-views-module/components/custom-views.module';
+import { CustomViewsRoutingModule } from './modules/custom-views-module/components/custom-views-routing.module';
 import { MdComponentsModule } from './modules/md-components-module/md-components.module';
 import { TranslationService, TranslateLanguageLoader } from './services/translation.service';
 import { ElementSelectDirective } from './directives/element-select.directive';
@@ -37,6 +39,8 @@ import { SearchService } from './services/search.service';
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
         FormsModule,
+        CustomViewsModule,
+        CustomViewsRoutingModule,
         ScriptInterpreterRoutingModule,
         LoadsRoutingModule,
         AppRoutingModule,

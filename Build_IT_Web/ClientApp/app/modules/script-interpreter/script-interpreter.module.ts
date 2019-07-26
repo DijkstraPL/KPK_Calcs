@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomViewsModule } from '../custom-views-module/components/custom-views.module';
+import { CustomViewsRoutingModule } from '../custom-views-module/components/custom-views-routing.module';
 
 import { ScriptFormComponent } from './components/script-form/script-form.component';
 import { ParametersFormComponent } from './components/script-form/parameters-form/parameters-form.component';

@@ -55,6 +55,17 @@ module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-secondary\
 
 /***/ }),
 
+/***/ "../node_modules/raw-loader/index.js!./app/modules/custom-views-module/components/snow-load-monopitch-roof/snow-load-monopitch-roof.component.html":
+/*!************************************************************************************************************************************************!*\
+  !*** ../node_modules/raw-loader!./app/modules/custom-views-module/components/snow-load-monopitch-roof/snow-load-monopitch-roof.component.html ***!
+  \************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<h1>{{script.name}}</h1>\r\n\r\n<div>\r\n    <svg width=\"400\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\">\r\n        <g>\r\n            <title>background</title>\r\n            <rect fill=\"none\" id=\"canvas_background\" [attr.height]=\"200+addition\" width=\"400\" y=\"-1\" x=\"-1\" />\r\n            <g display=\"none\" overflow=\"visible\" y=\"0\" x=\"0\" height=\"100%\" width=\"100%\" id=\"canvasGrid\">\r\n                <rect fill=\"url(#gridpattern)\" stroke-width=\"0\" y=\"0\" x=\"0\" height=\"100%\" width=\"100%\" />\r\n            </g>\r\n        </g>\r\n        <g>\r\n            <title>Layer 1</title>\r\n            <line id=\"left\"\r\n                  x1=\"50\" y1=\"200\"\r\n                  x2=\"50\" [attr.y2]=\"addition\"\r\n                  stroke-width=\"3\" stroke=\"#ffffff\" fill=\"none\" />\r\n            <line id=\"top\"\r\n                  x1=\"50\" [attr.y1]=\"addition\"\r\n                  x2=\"350\" y2=\"0\"\r\n                  stroke-width=\"3\" stroke=\"#ffffff\" fill=\"none\" />\r\n            <line id=\"right\"\r\n                  x1=\"350\" y1=\"0\"\r\n                  x2=\"350\" y2=\"200\"\r\n                  stroke-width=\"3\" stroke=\"#ffffff\" fill=\"none\" />\r\n            <line id=\"bottom\"\r\n                  x1=\"0\" y1=\"200\"\r\n                  x2=\"400\" y2=\"200\"\r\n                  stroke-width=\"3\" stroke=\"#ffffff\" fill=\"none\" />\r\n            <line id=\"angle\"\r\n                  x1=\"50\" [attr.y1]=\"addition\"\r\n                  x2=\"225\" [attr.y2]=\"addition\"\r\n                  stroke-width=\"0.5\" stroke=\"#ffffff\" fill=\"none\" />\r\n            <line *ngIf=\"snowFences.value == true\"\r\n                  id=\"snow-fence\"\r\n                  x1=\"55\" [attr.y1]=\"addition\"\r\n                  x2=\"55\" [attr.y2]=\"addition-20\"\r\n                  stroke-width=\"2\" stroke=\"#ffffff\" fill=\"none\" />\r\n            <text xml:space=\"preserve\"\r\n                  text-anchor=\"start\"\r\n                  font-family=\"Helvetica, Arial, sans-serif\"\r\n                  font-size=\"24\"\r\n                  id=\"angle\"\r\n                  [attr.y]=\"addition > 30 ? addition-5 : 30\"\r\n                  x=\"209.5\"\r\n                  stroke-width=\"0\"\r\n                  stroke=\"#0f0f00\"\r\n                  fill=\"#ffffff\">{{slope.name}} = {{slope.value}}{{slope.unit}}</text>\r\n        </g>\r\n    </svg>\r\n</div>\r\n\r\n<span>\r\n    <input type=\"checkbox\" [(ngModel)]=\"snowFences.value\" /> Snow fences\r\n</span>\r\n<input type=\"number\" [(ngModel)]=\"slope.value\" max=\"90\" (change)=\"setAddition()\" />"
+
+/***/ }),
+
 /***/ "../node_modules/raw-loader/index.js!./app/modules/loads/components/dead-loads-components/dead-loads-calculator/dead-loads-calculator.component.html":
 /*!**************************************************************************************************************************************************!*\
   !*** ../node_modules/raw-loader!./app/modules/loads/components/dead-loads-components/dead-loads-calculator/dead-loads-calculator.component.html ***!
@@ -484,18 +495,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_loads_loads_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./modules/loads/loads.module */ "./app/modules/loads/loads.module.ts");
 /* harmony import */ var _modules_script_interpreter_script_interpreter_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/script-interpreter/script-interpreter.module */ "./app/modules/script-interpreter/script-interpreter.module.ts");
 /* harmony import */ var _modules_script_interpreter_script_interpreter_routing_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/script-interpreter/script-interpreter-routing.module */ "./app/modules/script-interpreter/script-interpreter-routing.module.ts");
-/* harmony import */ var _modules_md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modules/md-components-module/md-components.module */ "./app/modules/md-components-module/md-components.module.ts");
-/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./services/translation.service */ "./app/services/translation.service.ts");
-/* harmony import */ var _directives_element_select_directive__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./directives/element-select.directive */ "./app/directives/element-select.directive.ts");
-/* harmony import */ var _services_local_store_manager_service__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./services/local-store-manager.service */ "./app/services/local-store-manager.service.ts");
-/* harmony import */ var _services_configuration_service__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./services/configuration.service */ "./app/services/configuration.service.ts");
-/* harmony import */ var _services_search_service__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./services/search.service */ "./app/services/search.service.ts");
+/* harmony import */ var _modules_custom_views_module_components_custom_views_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modules/custom-views-module/components/custom-views.module */ "./app/modules/custom-views-module/components/custom-views.module.ts");
+/* harmony import */ var _modules_custom_views_module_components_custom_views_routing_module__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./modules/custom-views-module/components/custom-views-routing.module */ "./app/modules/custom-views-module/components/custom-views-routing.module.ts");
+/* harmony import */ var _modules_md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./modules/md-components-module/md-components.module */ "./app/modules/md-components-module/md-components.module.ts");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./services/translation.service */ "./app/services/translation.service.ts");
+/* harmony import */ var _directives_element_select_directive__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./directives/element-select.directive */ "./app/directives/element-select.directive.ts");
+/* harmony import */ var _services_local_store_manager_service__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./services/local-store-manager.service */ "./app/services/local-store-manager.service.ts");
+/* harmony import */ var _services_configuration_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./services/configuration.service */ "./app/services/configuration.service.ts");
+/* harmony import */ var _services_search_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./services/search.service */ "./app/services/search.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -530,12 +545,14 @@ var AppModule = /** @class */ (function () {
                 _components_home_home_component__WEBPACK_IMPORTED_MODULE_9__["HomeComponent"],
                 _components_carousel_carousel_component__WEBPACK_IMPORTED_MODULE_10__["CarouselComponent"],
                 _components_about_me_about_me_component__WEBPACK_IMPORTED_MODULE_11__["AboutMeComponent"],
-                _directives_element_select_directive__WEBPACK_IMPORTED_MODULE_19__["ElementSelectDirective"]
+                _directives_element_select_directive__WEBPACK_IMPORTED_MODULE_21__["ElementSelectDirective"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"].withServerTransition({ appId: 'ng-cli-universal' }),
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
+                _modules_custom_views_module_components_custom_views_module__WEBPACK_IMPORTED_MODULE_17__["CustomViewsModule"],
+                _modules_custom_views_module_components_custom_views_routing_module__WEBPACK_IMPORTED_MODULE_18__["CustomViewsRoutingModule"],
                 _modules_script_interpreter_script_interpreter_routing_module__WEBPACK_IMPORTED_MODULE_16__["ScriptInterpreterRoutingModule"],
                 _modules_loads_loads_routing_module__WEBPACK_IMPORTED_MODULE_13__["LoadsRoutingModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"],
@@ -543,20 +560,20 @@ var AppModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"],
                 _modules_script_interpreter_script_interpreter_module__WEBPACK_IMPORTED_MODULE_15__["ScriptInterpreterModule"],
                 _modules_loads_loads_module__WEBPACK_IMPORTED_MODULE_14__["LoadsModule"],
-                _modules_md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_17__["MdComponentsModule"],
+                _modules_md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_19__["MdComponentsModule"],
                 _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateModule"].forRoot({
                     loader: {
                         provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateLoader"],
-                        useClass: _services_translation_service__WEBPACK_IMPORTED_MODULE_18__["TranslateLanguageLoader"]
+                        useClass: _services_translation_service__WEBPACK_IMPORTED_MODULE_20__["TranslateLanguageLoader"]
                     }
                 })
             ],
             providers: [
                 { provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ErrorHandler"], useClass: _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_12__["AppErrorHandler"] },
-                _services_translation_service__WEBPACK_IMPORTED_MODULE_18__["TranslationService"],
-                _services_local_store_manager_service__WEBPACK_IMPORTED_MODULE_20__["LocalStoreManager"],
-                _services_configuration_service__WEBPACK_IMPORTED_MODULE_21__["ConfigurationService"],
-                _services_search_service__WEBPACK_IMPORTED_MODULE_22__["SearchService"]
+                _services_translation_service__WEBPACK_IMPORTED_MODULE_20__["TranslationService"],
+                _services_local_store_manager_service__WEBPACK_IMPORTED_MODULE_22__["LocalStoreManager"],
+                _services_configuration_service__WEBPACK_IMPORTED_MODULE_23__["ConfigurationService"],
+                _services_search_service__WEBPACK_IMPORTED_MODULE_24__["SearchService"]
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
         })
@@ -1125,6 +1142,244 @@ var ElementSelectDirective = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]])
     ], ElementSelectDirective);
     return ElementSelectDirective;
+}());
+
+
+
+/***/ }),
+
+/***/ "./app/modules/custom-views-module/components/custom-views-routing.module.ts":
+/*!***********************************************************************************!*\
+  !*** ./app/modules/custom-views-module/components/custom-views-routing.module.ts ***!
+  \***********************************************************************************/
+/*! exports provided: CustomViewsRoutingModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomViewsRoutingModule", function() { return CustomViewsRoutingModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "../node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _snow_load_monopitch_roof_snow_load_monopitch_roof_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./snow-load-monopitch-roof/snow-load-monopitch-roof.component */ "./app/modules/custom-views-module/components/snow-load-monopitch-roof/snow-load-monopitch-roof.component.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var routes = [
+    { path: 'scripts/custom/10/1', component: _snow_load_monopitch_roof_snow_load_monopitch_roof_component__WEBPACK_IMPORTED_MODULE_2__["SnowLoadMonopitchRoofComponent"] }
+];
+var CustomViewsRoutingModule = /** @class */ (function () {
+    function CustomViewsRoutingModule() {
+    }
+    CustomViewsRoutingModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            imports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(routes)],
+            exports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]],
+        })
+    ], CustomViewsRoutingModule);
+    return CustomViewsRoutingModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./app/modules/custom-views-module/components/custom-views.module.ts":
+/*!***************************************************************************!*\
+  !*** ./app/modules/custom-views-module/components/custom-views.module.ts ***!
+  \***************************************************************************/
+/*! exports provided: CustomViewsModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomViewsModule", function() { return CustomViewsModule; });
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common */ "../node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "../node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "../node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser/animations */ "../node_modules/@angular/platform-browser/fesm5/animations.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "../node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ "../node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/translation.service */ "./app/services/translation.service.ts");
+/* harmony import */ var _md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../md-components-module/md-components.module */ "./app/modules/md-components-module/md-components.module.ts");
+/* harmony import */ var _pipes_module_pipes_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../pipes-module/pipes.module */ "./app/modules/pipes-module/pipes.module.ts");
+/* harmony import */ var _script_interpreter_script_interpreter_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../script-interpreter/script-interpreter.module */ "./app/modules/script-interpreter/script-interpreter.module.ts");
+/* harmony import */ var _snow_load_monopitch_roof_snow_load_monopitch_roof_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./snow-load-monopitch-roof/snow-load-monopitch-roof.component */ "./app/modules/custom-views-module/components/snow-load-monopitch-roof/snow-load-monopitch-roof.component.ts");
+/* harmony import */ var _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../common/errors/app-error-handler */ "./app/common/errors/app-error-handler.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+var CustomViewsModule = /** @class */ (function () {
+    function CustomViewsModule() {
+    }
+    CustomViewsModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
+            declarations: [
+                _snow_load_monopitch_roof_snow_load_monopitch_roof_component__WEBPACK_IMPORTED_MODULE_11__["SnowLoadMonopitchRoofComponent"]
+            ],
+            imports: [
+                _pipes_module_pipes_module__WEBPACK_IMPORTED_MODULE_9__["PipesModule"],
+                _angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+                _script_interpreter_script_interpreter_module__WEBPACK_IMPORTED_MODULE_10__["ScriptInterpreterModule"],
+                _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
+                _md_components_module_md_components_module__WEBPACK_IMPORTED_MODULE_8__["MdComponentsModule"],
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateModule"].forRoot({
+                    loader: {
+                        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateLoader"],
+                        useClass: _services_translation_service__WEBPACK_IMPORTED_MODULE_7__["TranslateLanguageLoader"]
+                    }
+                })
+            ],
+            entryComponents: [],
+            exports: [],
+            providers: [
+                { provide: _angular_core__WEBPACK_IMPORTED_MODULE_2__["ErrorHandler"], useClass: _common_errors_app_error_handler__WEBPACK_IMPORTED_MODULE_12__["AppErrorHandler"] }
+            ]
+        })
+    ], CustomViewsModule);
+    return CustomViewsModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./app/modules/custom-views-module/components/snow-load-monopitch-roof/snow-load-monopitch-roof.component.scss":
+/*!*********************************************************************************************************************!*\
+  !*** ./app/modules/custom-views-module/components/snow-load-monopitch-roof/snow-load-monopitch-roof.component.scss ***!
+  \*********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAvbW9kdWxlcy9jdXN0b20tdmlld3MtbW9kdWxlL2NvbXBvbmVudHMvc25vdy1sb2FkLW1vbm9waXRjaC1yb29mL3Nub3ctbG9hZC1tb25vcGl0Y2gtcm9vZi5jb21wb25lbnQuc2NzcyJ9 */"
+
+/***/ }),
+
+/***/ "./app/modules/custom-views-module/components/snow-load-monopitch-roof/snow-load-monopitch-roof.component.ts":
+/*!*******************************************************************************************************************!*\
+  !*** ./app/modules/custom-views-module/components/snow-load-monopitch-roof/snow-load-monopitch-roof.component.ts ***!
+  \*******************************************************************************************************************/
+/*! exports provided: SnowLoadMonopitchRoofComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SnowLoadMonopitchRoofComponent", function() { return SnowLoadMonopitchRoofComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "../node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "../node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _script_interpreter_services_script_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../script-interpreter/services/script.service */ "./app/modules/script-interpreter/services/script.service.ts");
+/* harmony import */ var _script_interpreter_services_parameter_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../script-interpreter/services/parameter.service */ "./app/modules/script-interpreter/services/parameter.service.ts");
+/* harmony import */ var _script_interpreter_services_calculation_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../script-interpreter/services/calculation.service */ "./app/modules/script-interpreter/services/calculation.service.ts");
+/* harmony import */ var _services_translation_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../services/translation.service */ "./app/services/translation.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var ScriptId = 10;
+var SnowLoadMonopitchRoofComponent = /** @class */ (function () {
+    function SnowLoadMonopitchRoofComponent(route, scriptService, parameterService, calculationService, translationService) {
+        this.route = route;
+        this.scriptService = scriptService;
+        this.parameterService = parameterService;
+        this.calculationService = calculationService;
+        this.translationService = translationService;
+    }
+    Object.defineProperty(SnowLoadMonopitchRoofComponent.prototype, "snowFences", {
+        get: function () {
+            return this.parameters.find(function (p) { return p.name == "SnowFences"; });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SnowLoadMonopitchRoofComponent.prototype, "slope", {
+        get: function () {
+            return this.parameters.find(function (p) { return p.name == "α"; });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    SnowLoadMonopitchRoofComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.getScript();
+        this.getParameters();
+        this.translationService.languageChanged$.subscribe(function (language) {
+            _this.getScript();
+            _this.getParameters();
+        });
+    };
+    SnowLoadMonopitchRoofComponent.prototype.getScript = function () {
+        var _this = this;
+        this.scriptService.getScript(ScriptId).subscribe(function (script) {
+            _this.script = script;
+        }, function (error) { return console.error(error); });
+    };
+    SnowLoadMonopitchRoofComponent.prototype.getParameters = function () {
+        var _this = this;
+        this.parameterService.getParameters(ScriptId, this.translationService.getCurrentLanguage())
+            .subscribe(function (parameters) {
+            _this.parameters = parameters;
+        }, function (error) { return console.error(error); });
+    };
+    SnowLoadMonopitchRoofComponent.prototype.setAddition = function () {
+        this.addition = Math.tan(+this.slope.value * Math.PI / 180) * 300 / 5;
+    };
+    SnowLoadMonopitchRoofComponent.ctorParameters = function () { return [
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"] },
+        { type: _script_interpreter_services_script_service__WEBPACK_IMPORTED_MODULE_2__["ScriptService"] },
+        { type: _script_interpreter_services_parameter_service__WEBPACK_IMPORTED_MODULE_3__["ParameterService"] },
+        { type: _script_interpreter_services_calculation_service__WEBPACK_IMPORTED_MODULE_4__["CalculationService"] },
+        { type: _services_translation_service__WEBPACK_IMPORTED_MODULE_5__["TranslationService"] }
+    ]; };
+    SnowLoadMonopitchRoofComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'snow-load-monopitch-roof',
+            template: __webpack_require__(/*! raw-loader!./snow-load-monopitch-roof.component.html */ "../node_modules/raw-loader/index.js!./app/modules/custom-views-module/components/snow-load-monopitch-roof/snow-load-monopitch-roof.component.html"),
+            styles: [__webpack_require__(/*! ./snow-load-monopitch-roof.component.scss */ "./app/modules/custom-views-module/components/snow-load-monopitch-roof/snow-load-monopitch-roof.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
+            _script_interpreter_services_script_service__WEBPACK_IMPORTED_MODULE_2__["ScriptService"],
+            _script_interpreter_services_parameter_service__WEBPACK_IMPORTED_MODULE_3__["ParameterService"],
+            _script_interpreter_services_calculation_service__WEBPACK_IMPORTED_MODULE_4__["CalculationService"],
+            _services_translation_service__WEBPACK_IMPORTED_MODULE_5__["TranslationService"]])
+    ], SnowLoadMonopitchRoofComponent);
+    return SnowLoadMonopitchRoofComponent;
 }());
 
 

@@ -1,0 +1,56 @@
+﻿<h1>{{script.name}}</h1>
+
+<div>
+    <svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+        <g>
+            <title>background</title>
+            <rect fill="none" id="canvas_background" [attr.height]="200+addition" width="400" y="-1" x="-1" />
+            <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+                <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%" />
+            </g>
+        </g>
+        <g>
+            <title>Layer 1</title>
+            <line id="left"
+                  x1="50" y1="200"
+                  x2="50" [attr.y2]="addition"
+                  stroke-width="3" stroke="#ffffff" fill="none" />
+            <line id="top"
+                  x1="50" [attr.y1]="addition"
+                  x2="350" y2="0"
+                  stroke-width="3" stroke="#ffffff" fill="none" />
+            <line id="right"
+                  x1="350" y1="0"
+                  x2="350" y2="200"
+                  stroke-width="3" stroke="#ffffff" fill="none" />
+            <line id="bottom"
+                  x1="0" y1="200"
+                  x2="400" y2="200"
+                  stroke-width="3" stroke="#ffffff" fill="none" />
+            <line id="angle"
+                  x1="50" [attr.y1]="addition"
+                  x2="225" [attr.y2]="addition"
+                  stroke-width="0.5" stroke="#ffffff" fill="none" />
+            <line *ngIf="snowFences.value == true"
+                  id="snow-fence"
+                  x1="55" [attr.y1]="addition"
+                  x2="55" [attr.y2]="addition-20"
+                  stroke-width="2" stroke="#ffffff" fill="none" />
+            <text xml:space="preserve"
+                  text-anchor="start"
+                  font-family="Helvetica, Arial, sans-serif"
+                  font-size="24"
+                  id="angle"
+                  [attr.y]="addition > 30 ? addition-5 : 30"
+                  x="209.5"
+                  stroke-width="0"
+                  stroke="#0f0f00"
+                  fill="#ffffff">{{slope.name}} = {{slope.value}}{{slope.unit}}</text>
+        </g>
+    </svg>
+</div>
+
+<span>
+    <input type="checkbox" [(ngModel)]="snowFences.value" /> Snow fences
+</span>
+<input type="number" [(ngModel)]="slope.value" max="90" (change)="setAddition()" />

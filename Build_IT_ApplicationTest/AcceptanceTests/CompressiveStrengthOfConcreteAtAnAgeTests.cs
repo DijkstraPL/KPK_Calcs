@@ -24,7 +24,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
 
         [Test]
         [Repeat(25)]
-        public void SteelTensionCalculationTest_RandomExamples_Success()
+        public void CompressiveStrengthOfConcreteAtAnAgeTests_RandomExamples_Success()
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
@@ -40,7 +40,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
                 parametersForCalculation["cement_type_"].ValueOptions
                 .Select(vo => vo.Value)
                 .ToArray());
-            parametersForCalculation["t"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["t"].Value = _testEngine.GetBigRandom(min: 3);
 
             Assert.DoesNotThrow(() => _testEngine.Calculate(ID, parametersForCalculation.Select(p => p.Value).ToList()),
                String.Join(", ", parametersForCalculation.Select(p => $"{p.Value.Name}={p.Value.Value}")));
