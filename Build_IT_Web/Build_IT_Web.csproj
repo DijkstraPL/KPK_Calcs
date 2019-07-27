@@ -52,6 +52,13 @@
     <None Remove="ClientApp\app\services\search.service.ts" />
     <None Remove="ClientApp\app\services\translation.service.ts" />
     <None Remove="ClientApp\app\services\utilities.ts" />
+    <None Remove="ClientApp\assets\images\custom-views\snow-zones.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ClientApp\assets\images\custom-views\snow-zones.jpg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

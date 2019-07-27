@@ -10,7 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CustomViewsModule } from '../custom-views-module/components/custom-views.module';
 import { ScriptFormComponent } from './components/script-form/script-form.component';
 import { ParametersFormComponent } from './components/script-form/parameters-form/parameters-form.component';
 import { ScriptCalculatorComponent } from './components/script-calculator/script-calculator.component';
@@ -75,7 +74,6 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 ParameterTranslationFormComponent
             ],
             imports: [
-                CustomViewsModule,
                 PipesModule,
                 CommonModule,
                 RouterModule,

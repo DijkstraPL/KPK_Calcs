@@ -11,10 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Build_IT_Data\Build_IT_Data.csproj" />
     <ProjectReference Include="..\Build_IT_SnowLoad\Build_IT_SnowLoads.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SnowLoadsService\ExceptionalSituations\" />
+    <ProjectReference Include="..\Build_IT_WindLoads\Build_IT_WindLoads.csproj" />
   </ItemGroup>
 
 </Project>

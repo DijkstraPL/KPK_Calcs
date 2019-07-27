@@ -1,1 +1,81 @@
-﻿
+﻿p.parameter-description {
+    color: rgba(255,255,255,.7);
+    font-size: 87.5%;
+    position: relative;
+    top: -1.4em;
+    max-width: 205px;
+    margin:0px;
+}
+
+p.parameter-description-normal {
+    color: rgba(255,255,255,.7);
+    max-width: 205px;
+    font-size: 87.5%;
+    position: relative;
+    top: -0.7em;
+    margin: 0px;
+}
+
+p.parameter-description-radio {
+    color: rgba(255,255,255,.7);
+    max-width: 205px;
+}
+
+div.parameter-radio {
+    position: relative;
+}
+
+div.parameter-radio label {
+    font-size: 75%;
+}
+
+div.parameter-checkbox {
+    position: relative;
+}
+
+.container {
+    overflow: hidden;
+}
+
+.figure {
+    float: left;
+}
+
+.form {
+    float: left;
+}
+
+input.svg-input {
+    background-color: transparent;
+    color: white;
+    width: 40px;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-bottom-color: gray;
+}
+
+.map-container{
+    position:relative;
+}
+
+.zone-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.zone:hover{
+    fill:rgba(255, 255, 255, 0.3);
+    cursor:pointer;
+}
+
+.zone{
+    z-index:1;
+    fill:transparent;
+}
+
+.selected {
+    fill: rgba(255, 255, 255, 0.5);
+
+}

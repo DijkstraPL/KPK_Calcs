@@ -8,7 +8,7 @@ namespace Build_IT_SnowLoads.Exceptional
     /// <summary>
     /// Calculation class for exceptional over door or loading bay.
     /// </summary>
-    /// <remarks>[PN-EN 1991-1-3 B4]</remarks>
+    /// <remarks>[PN-EN 1991-1-3 B3]</remarks>
     /// <example>
     /// <code>
     /// class TestClass
@@ -130,7 +130,7 @@ namespace Build_IT_SnowLoads.Exceptional
 
         #endregion // Constructors
 
-        #region Methods
+        #region Public_Methods
 
         /// <summary>
         /// Calculate <see cref="DriftLength"/>.
@@ -154,6 +154,10 @@ namespace Build_IT_SnowLoads.Exceptional
             CalculateSnowLoadOnRoof();
         }
 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+        
         private void SetReferences()
         {
             snowLoad = Building.SnowLoad;
@@ -172,6 +176,6 @@ namespace Build_IT_SnowLoads.Exceptional
                 SnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient, snowLoad.SnowLoadForSpecificReturnPeriod);
         }
 
-        #endregion // Methods
+        #endregion // Private_Methods
     }
 }
