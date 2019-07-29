@@ -3,6 +3,7 @@
     public enum Language
     {
         English,
-        Polish
+        Polish,
+        German
     }
 }

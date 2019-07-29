@@ -13,7 +13,7 @@ import { Subject, of } from 'rxjs';
 var TranslationService = /** @class */ (function () {
     function TranslationService(translate) {
         this.translate = translate;
-        this.languages = ['en', 'pl'];
+        this.languages = ['en', 'pl', 'de'];
         this.onLanguageChanged = new Subject();
         this.languageChanged$ = this.onLanguageChanged.asObservable();
         this.addLanguages(this.languages);
@@ -39,7 +39,7 @@ var TranslationService = /** @class */ (function () {
     };
     TranslationService.prototype.useBrowserLanguage = function () {
         var browserLang = this.getBrowserLanguage();
-        if (browserLang.match(/en|pl/)) {
+        if (browserLang.match(/en|pl|de/)) {
             this.changeLanguage(browserLang);
             return browserLang;
         }
@@ -66,7 +66,7 @@ var TranslationService = /** @class */ (function () {
     TranslationService.prototype.getTranslationAsync = function (key, interpolateParams) {
         return this.translate.get(key, interpolateParams);
     };
-    TranslationService.LanguageCodes = [{ 'en': 0 }, { 'pl': 1 }];
+    TranslationService.LanguageCodes = [{ 'en': 0 }, { 'pl': 1 }, { 'de': 2 }];
     TranslationService = __decorate([
         Injectable({
             providedIn: 'root',
@@ -85,6 +85,8 @@ var TranslateLanguageLoader = /** @class */ (function () {
                 return of(require('../../assets/locale/en.json'));
             case 'pl':
                 return of(require('../../assets/locale/pl.json'));
+            case 'de':
+                return of(require('../../assets/locale/de.json'));
             default:
         }
     };

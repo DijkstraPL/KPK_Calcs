@@ -1,36 +1,36 @@
 ﻿{
   "app": {
-    "Home": "Home",
-    "NewScript": "New script",
-    "About": "About project",
+    "Home": "Hauptseite",
+    "NewScript": "Neues Skript",
+    "About": "Über das Projekt",
     "Loads": {
-      "Header": "Loads",
-      "DeadLoads": "Dead Loads",
-      "SnowLoads": "Snow Loads"
+      "Header": "Last",
+      "DeadLoads": "Eigenlasten",
+      "SnowLoads": "Schneelasten"
     },
     "Languages": {
-      "Language": "Language",
-      "English": "English",
-      "Polish": "Polish",
-      "German": "German"
+      "Language": "Sprache",
+      "English": "Englisch",
+      "Polish": "Polieren",
+      "German": "Deutsche"
     },
     "Search": "Search"
   },
 
   "carousel": {
-    "Next": "Next",
-    "Previous": "Previous",
+    "Next": "Suche",
+    "Previous": "Bisherige",
     "SnowLoads": {
-      "Header": "Snow Loads",
-      "Description": "Check out calculators for snow loads."
+      "Header": "Schneelasten",
+      "Description": "Rechner für Schneelasten auschecken."
     },
     "DeadLoads": {
-      "Header": "Dead Loads",
-      "Description": "Check out calculators for dead loads."
+      "Header": "Eigenlasten",
+      "Description": "Überprüfen Sie die Taschenrechner auf tote Lasten."
     },
     "About": {
-      "Header": "About project",
-      "Description": "Read more about the project and the author of this site."
+      "Header": "Über das Projekt",
+      "Description": "Lesen Sie mehr über das Projekt und den Autor dieser Website."
     }
   },
 
@@ -58,7 +58,7 @@
     },
     "Author": {
       "Header": "Author: Konrad Kania",
-      "Description": "I graduated at the Technical University in £ódŸ at the faculty of Civil Engineering. <br/>Currently, I also finished postgraduate studies at Polish Academy of Science and work for building company as a programmer since the beginning of March 2017. </br>I treat building designing with great passion the same as the programming. <br/>This way of doing things and possibilities which comes with those two branches bring me an idea to make something for overall usage. <br/>I started working on this site since September 2018 and I hope that there will be only more and better content available for everyone."
+      "Description": "I graduated at the Technical University in £ód at the faculty of Civil Engineering. <br/>Currently, I also finished postgraduate studies at Polish Academy of Science and work for building company as a programmer since the beginning of March 2017. </br>I treat building designing with great passion the same as the programming. <br/>This way of doing things and possibilities which comes with those two branches bring me an idea to make something for overall usage. <br/>I started working on this site since September 2018 and I hope that there will be only more and better content available for everyone."
     }
   },
 

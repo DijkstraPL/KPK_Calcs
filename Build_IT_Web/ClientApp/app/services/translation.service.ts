@@ -7,8 +7,8 @@ import { Observable, Subject, of } from 'rxjs';
 })
 export class TranslationService {
 
-    private languages = ['en', 'pl'];
-    public static LanguageCodes = [{ 'en': 0 }, { 'pl': 1 }]
+    private languages = ['en', 'pl', 'de'];
+    public static LanguageCodes = [{ 'en': 0 }, { 'pl': 1 }, { 'de': 2 }]
 
     private onLanguageChanged = new Subject<string>();
     languageChanged$ = this.onLanguageChanged.asObservable();
@@ -45,7 +45,7 @@ export class TranslationService {
     useBrowserLanguage(): string | void {
         const browserLang = this.getBrowserLanguage();
 
-        if (browserLang.match(/en|pl/)) {
+        if (browserLang.match(/en|pl|de/)) {
             this.changeLanguage(browserLang);
             return browserLang;
         }
@@ -88,6 +88,8 @@ export class TranslateLanguageLoader implements TranslateLoader {
                 return of(require('../../assets/locale/en.json'));
             case 'pl':
                 return of(require('../../assets/locale/pl.json'));
+            case 'de':
+                return of(require('../../assets/locale/de.json'));
             default:
         }
     }
