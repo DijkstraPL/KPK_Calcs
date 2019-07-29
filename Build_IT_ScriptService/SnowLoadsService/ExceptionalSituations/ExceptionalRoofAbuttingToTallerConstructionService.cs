@@ -10,6 +10,7 @@ using System.Linq;
 namespace Build_IT_ScriptService.SnowLoadsService.ExceptionalSituations
 {
     [Export("SnowLoad-ExceptionalRoofAbuttingToTallerConstruction", typeof(ICalculator))]
+    [Export(typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
     public class ExceptionalRoofAbuttingToTallerConstructionService : SnowLoadBaseService, ICalculator

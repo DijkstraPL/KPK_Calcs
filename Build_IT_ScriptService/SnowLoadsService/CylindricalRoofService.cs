@@ -10,6 +10,7 @@ using System.Linq;
 namespace Build_IT_ScriptService.SnowLoadsService
 {
     [Export("SnowLoad-CylindricalRoof", typeof(ICalculator))]
+    [Export(typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
     public class CylindricalRoofService : SnowLoadBaseService, ICalculator

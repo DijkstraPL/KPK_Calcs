@@ -28,8 +28,4 @@
     <ProjectReference Include="..\Build_IT_Web_TestHelper\Build_IT_Web_TestHelper.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="IntegrationTests\" />
-  </ItemGroup>
-
 </Project>
