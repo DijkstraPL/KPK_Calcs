@@ -6,8 +6,11 @@ using Build_IT_Application.Interfaces;
 using Build_IT_Application.Mapping;
 using Build_IT_CommonTools;
 using Build_IT_CommonTools.Interfaces;
+using Build_IT_Data.Entities.Application;
+using Build_IT_Data.Entities.Authentication;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess;
+using Build_IT_DataAccess.Application;
 using Build_IT_DataAccess.DeadLoads;
 using Build_IT_DataAccess.DeadLoads.Interfaces;
 using Build_IT_DataAccess.DeadLoads.Repositories;
@@ -22,12 +25,14 @@ using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 using System.Reflection;
 using ScriptMappingProfile = Build_IT_Application.Mapping.ScriptMappingProfile;
 
@@ -57,49 +62,20 @@ namespace Build_IT_Web
         {
             services.Configure<FigureSettings>(Configuration.GetSection("PhotoSettings"));
             string dataAccessAssemblyName = Configuration.GetSection("DataAccess").GetValue<string>("Project");
-
-            services.AddScoped<IScriptRepository, ScriptRepository>();
-            services.AddScoped<ITagRepository, TagRepository>();
-            services.AddScoped<IParameterRepository, ParameterRepository>();
-
+            
             SetTranslationsServices(services);
 
-            services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();
-#if RELEASE
-            services.AddDbContext<ScriptInterpreterDbContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("Scripts"), 
-                b => b.MigrationsAssembly(dataAccessAssemblyName)));
-#endif
-#if DEBUG
-            services.AddDbContext<ScriptInterpreterDbContext>(
-                options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("Scripts"),
-                b => b.MigrationsAssembly(dataAccessAssemblyName)));
-#endif
-
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<ISubcategoryRepository, SubcategoryRepository>();
-            services.AddScoped<IMaterialRepository, MaterialRepository>();
-
-            services.AddScoped<IDeadLoadsUnitOfWork, DeadLoadsUnitOfWork>();
-#if RELEASE
-            services.AddDbContext<DeadLoadsDbContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("DeadLoads"),
-                b => b.MigrationsAssembly(dataAccessAssemblyName)));
-#endif
-#if DEBUG
-            services.AddDbContext<DeadLoadsDbContext>(
-                options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("DeadLoads"),
-                b => b.MigrationsAssembly(dataAccessAssemblyName)));
-#endif
+            SetDbContexts(services, dataAccessAssemblyName);
+            SetRepositoriesServices(services);
 
             services.AddScoped<IDateTime, MyDateTime>();
             services.AddTransient<INotificationService, NotificationService>();
 
-            services.AddMediatR(typeof(GetAllCategoriesQuery.Handler).GetTypeInfo().Assembly);
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+            ConfigureMediatR(services);
 
             SetUpAutoMapper(services);
+
+            SetAuthorizationServices(services);
 
             services.AddMvc()
                 .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =
@@ -119,7 +95,6 @@ namespace Build_IT_Web
             });
         }
 
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -127,6 +102,8 @@ namespace Build_IT_Web
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -154,6 +131,16 @@ namespace Build_IT_Web
                 }
             });
 
+            using (var serviceScope =
+                app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var dbContext =
+                serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+                var userManager = serviceScope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+                dbContext.Database.Migrate();
+                DbSeeder.Seed(dbContext, roleManager, userManager);
+            }
         }
 
         #endregion // Public_Methods
@@ -181,6 +168,65 @@ namespace Build_IT_Web
 
             services.AddScoped<IScriptMappingProfile, ScriptMappingProfile>();
         }
+
+        private void SetDbContexts(IServiceCollection services, string dataAccessAssemblyName)
+        {
+#if RELEASE
+            services.AddDbContext<ScriptInterpreterDbContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("Scripts"), 
+                b => b.MigrationsAssembly(dataAccessAssemblyName)));
+            
+            services.AddDbContext<DeadLoadsDbContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("DeadLoads"),
+                b => b.MigrationsAssembly(dataAccessAssemblyName)));
+#endif
+#if DEBUG
+            services.AddDbContext<ScriptInterpreterDbContext>(
+                options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("Scripts"),
+                b => b.MigrationsAssembly(dataAccessAssemblyName)));
+
+            services.AddDbContext<DeadLoadsDbContext>(
+                options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("DeadLoads"),
+                b => b.MigrationsAssembly(dataAccessAssemblyName)));
+#endif
+        }
+
+        private static void SetRepositoriesServices(IServiceCollection services)
+        {
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ISubcategoryRepository, SubcategoryRepository>();
+            services.AddScoped<IMaterialRepository, MaterialRepository>();
+
+            services.AddScoped<IDeadLoadsUnitOfWork, DeadLoadsUnitOfWork>();
+
+            services.AddScoped<IScriptRepository, ScriptRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IParameterRepository, ParameterRepository>();
+
+            services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();
+        }
+
+        private static void ConfigureMediatR(IServiceCollection services)
+        {
+            services.AddMediatR(typeof(GetAllCategoriesQuery.Handler).GetTypeInfo().Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+        }
+
+        private void SetAuthorizationServices(IServiceCollection services)
+        {
+            services.AddIdentity<ApplicationUser, IdentityRole>(
+                options =>
+                {
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequiredLength = 7;
+                }).AddEntityFrameworkStores<ApplicationDbContext>();
+                
+        }
+        
         #endregion // Private_Methods
     }
 }

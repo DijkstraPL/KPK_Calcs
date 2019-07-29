@@ -99,7 +99,7 @@ namespace Build_IT_ScriptService.SnowLoadsService
 
         private Terrain GetTerrainCategory(HeightDisplacement heightDisplacement)
         {
-            return Terrain.Create(TerrainType.Value, heightDisplacement)
+            return Terrain.Create(TerrainType.Value, heightDisplacement);
           //  return new TerrainCategoryIV();
         }
         private HeightDisplacement GetHeightDisplacement(EqualHeightWalls structureData)
