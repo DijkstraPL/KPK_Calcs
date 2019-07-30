@@ -13,49 +13,54 @@ namespace Build_IT_ScriptService.SnowLoadsService
     [Export(typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
-    public class MultiSpanRoofService : SnowLoadBaseService, ICalculator
+    public class MultiSpanRoofService : SnowLoadBaseService
     {
         #region Properties
         
         public Property<double> LeftSlope { get; } =
-            new Property<double>("LeftSlope", 
+            new Property<double>("LeftSlope",
                 v => Convert.ToDouble(v));
         public Property<bool> LeftSnowFences { get; } =
-            new Property<bool>("LeftSnowFences", 
-                v => v == "true");
+            new Property<bool>("LeftSnowFences",
+                v => v.ToString() == "true");
         public Property<double> RightSlope { get; } =
             new Property<double>("RightSlope",
                 v => Convert.ToDouble(v));
         public Property<bool> RightSnowFences { get; } =
             new Property<bool>("RightSnowFences",
-                v => v == "true");
-
+                v => v.ToString() == "true");
+        
         #endregion // Properties
 
         #region Constructors
 
         public MultiSpanRoofService()
         {
+            Result = new Result(new Dictionary<string, string> {
+                { "C_e_",          null },
+                { "s_k_",          null },
+                { "V",             null },
+                { "C_esl_",        null },
+                { "s_n_",          null },
+                { "s_Ad_",         null },
+                { "t_i_",          null },
+                { "∆_t_",          null },
+                { "U",             null },
+                { "C_t_",          null },
+                { "μ_1_(α_1_)",    null },
+                { "μ_1_(α_2_)",    null },
+                { "μ_2_(α)",       null },
+                { "s(α_1_)",       null },
+                { "s(α_2_)",       null },
+                { "s_middle_",     null }
+            });
         }
 
         #endregion // Constructors
 
         #region Public_Methods
-
-        public void Map(IList<object> args)
-        {
-            for (int i = 0; i < args.Count; i += 2)
-            {
-                var properties = this.GetType().GetProperties().Select(
-                    p => p.GetValue(this, null) as Property);
-
-                var property = properties.SingleOrDefault(p => p.Name == args[i].ToString());
-                if (property != null)
-                    property.SetValue(args[i + 1]);
-            }
-        }
-
-        public IResult Calculate()
+        
+        public override IResult Calculate()
         {
             BuildingSite buildingSite = GetBuildingSite();
             SnowLoad snowLoad = GetSnowLoad(buildingSite);
@@ -68,31 +73,30 @@ namespace Build_IT_ScriptService.SnowLoadsService
             building.CalculateThermalCoefficient();
             multiSpanRoof.CalculateSnowLoad();
 
-            var result = new Result();
-            result.Properties.Add("C_e_", buildingSite.ExposureCoefficient);
-            result.Properties.Add("s_k_", snowLoad.DefaultCharacteristicSnowLoad);
-            result.Properties.Add("V", snowLoad.VariationCoefficient);
-            result.Properties.Add("C_esl_", snowLoad.ExceptionalSnowLoadCoefficient);
-            result.Properties.Add("s_n_", snowLoad.SnowLoadForSpecificReturnPeriod);
-            result.Properties.Add("s_Ad_", snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
-            result.Properties.Add("t_i_", building.InternalTemperature);
-            result.Properties.Add("∆_t_", building.TempreatureDifference);
-            result.Properties.Add("U", building.OverallHeatTransferCoefficient);
-            result.Properties.Add("C_t_", building.ThermalCoefficient);
-            result.Properties.Add("μ_1_(α_1_)", multiSpanRoof.LeftRoof.ShapeCoefficient);
-            result.Properties.Add("μ_1_(α_2_)", multiSpanRoof.RightRoof.ShapeCoefficient);
-            result.Properties.Add("μ_2_(α)", multiSpanRoof.ShapeCoefficient);
-            result.Properties.Add("s(α_1_)", multiSpanRoof.LeftRoof.SnowLoadOnRoofValue);
-            result.Properties.Add("s(α_2_)", multiSpanRoof.RightRoof.SnowLoadOnRoofValue);
-            result.Properties.Add("s_middle_", multiSpanRoof.SnowLoadOnMiddleRoof);
+            Result["C_e_"] = buildingSite.ExposureCoefficient;
+            Result["s_k_"] = snowLoad.DefaultCharacteristicSnowLoad;
+            Result["V"] = snowLoad.VariationCoefficient;
+            Result["C_esl_"] = snowLoad.ExceptionalSnowLoadCoefficient;
+            Result["s_n_"] = snowLoad.SnowLoadForSpecificReturnPeriod;
+            Result["s_Ad_"] = snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod;
+            Result["t_i_"] = building.InternalTemperature;
+            Result["∆_t_"] = building.TempreatureDifference;
+            Result["U"] = building.OverallHeatTransferCoefficient;
+            Result["C_t_"] = building.ThermalCoefficient;
+            Result["μ_1_(α_1_)"] = multiSpanRoof.LeftRoof.ShapeCoefficient;
+            Result["μ_1_(α_2_)"] = multiSpanRoof.RightRoof.ShapeCoefficient;
+            Result["μ_2_(α)"] = multiSpanRoof.ShapeCoefficient;
+            Result["s(α_1_)"] = multiSpanRoof.LeftRoof.SnowLoadOnRoofValue;
+            Result["s(α_2_)"] = multiSpanRoof.RightRoof.SnowLoadOnRoofValue;
+            Result["s_middle_"] = multiSpanRoof.SnowLoadOnMiddleRoof;
 
-            return result;
+            return Result;
         }
 
         #endregion // Public_Methods
 
         #region Private_Methods
-           
+
         private MultiSpanRoof GetMultiSpanRoof(Building building)
         {
             return new MultiSpanRoof(building, LeftSlope.Value, RightSlope.Value,

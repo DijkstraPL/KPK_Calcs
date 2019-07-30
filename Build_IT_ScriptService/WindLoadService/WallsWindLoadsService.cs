@@ -20,7 +20,7 @@ namespace Build_IT_ScriptService.SnowLoadsService
     [Export(typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
-    public class WallsWindLoadsService : ICalculator
+    public class WallsWindLoadsService : ServiceBase
     {
         #region Properties
 
@@ -35,10 +35,10 @@ namespace Build_IT_ScriptService.SnowLoadsService
                 v => Convert.ToDouble(v));
         public Property<EqualHeightWalls.Rotation> WindDirection { get; } =
             new Property<EqualHeightWalls.Rotation>("WindDirection",
-                v => Enum.Parse<EqualHeightWalls.Rotation>(v));
+                v => Enum.Parse<EqualHeightWalls.Rotation>(v.ToString()));
         public Property<TerrainType> TerrainType { get; } =
             new Property<TerrainType>("TerrainType",
-                v => Enum.Parse<TerrainType>(v));
+                v => Enum.Parse<TerrainType>(v.ToString()));
         public Property<double> HorizontalDistanceToObstruction { get; } =
             new Property<double>("HorizontalDistanceToObstruction",
                 v => Convert.ToDouble(v));
@@ -53,26 +53,14 @@ namespace Build_IT_ScriptService.SnowLoadsService
 
         public WallsWindLoadsService()
         {
+            Result = new Result(new Dictionary<string, string>() { { "w", null } });
         }
 
         #endregion // Constructors
 
         #region Public_Methods
-
-        public void Map(IList<object> args)
-        {
-            for (int i = 0; i < args.Count; i += 2)
-            {
-                var properties = this.GetType().GetProperties().Select(
-                    p => p.GetValue(this, null) as Property);
-
-                var property = properties.SingleOrDefault(p => p.Name == args[i].ToString());
-                if (property != null)
-                    property.SetValue(args[i + 1]);
-            }
-        }
-
-        public IResult Calculate()
+        
+        public override IResult Calculate()
         {
             EqualHeightWalls structureData = GetStructureData();
             HeightDisplacement heightDisplacement = GetHeightDisplacement(structureData);

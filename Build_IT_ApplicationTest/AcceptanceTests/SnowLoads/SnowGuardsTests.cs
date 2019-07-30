@@ -1,30 +1,18 @@
-﻿using AutoMapper;
-using Build_IT_Application.Infrastructures;
-using Build_IT_Application.Infrastructures.Interfaces;
-using Build_IT_Application.Mapping;
-using Build_IT_Application.ScriptInterpreter.Calculations.Commands;
-using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
+﻿using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_Data.Entities.Scripts.Enums;
-using Build_IT_DataAccess.ScriptInterpreter;
-using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
-using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 
-namespace Build_IT_ApplicationTest.AcceptanceTests
+namespace Build_IT_ApplicationTest.AcceptanceTests.SnowLoads
 {
     [TestFixture]
-    public class SteelTensionTests
+    public class SnowGuardsTests
     {
-        private const long ID = 1;
+        private const long ID = 26;
         private ScriptCalculatorTestEngine _testEngine;
 
         [SetUp]
@@ -45,11 +33,11 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
                 (p.Context & ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
-            parametersForCalculation["A"].Value = _testEngine.GetBigRandom();
-            parametersForCalculation["N_Ed_"].Value = _testEngine.GetBigRandom();
-            parametersForCalculation["f_y_"].Value = _testEngine.GetBigRandom();
-
-            Assert.DoesNotThrow(() => _testEngine.Calculate(ID, parametersForCalculation.Select(p => p.Value).ToList()),
+            parametersForCalculation["α"].Value = _testEngine.GetSmallRandom(max:90);
+            parametersForCalculation["b"].Value = _testEngine.GetSmallRandom();
+            parametersForCalculation["s"].Value = _testEngine.GetSmallRandom();
+                      
+                Assert.DoesNotThrow(() => _testEngine.Calculate(ID, parametersForCalculation.Select(p => p.Value).ToList()),
                String.Join(", ", parametersForCalculation.Select(p => $"{p.Value.Name}={p.Value.Value}")));
         }
     }

@@ -13,40 +13,44 @@ namespace Build_IT_ScriptService.SnowLoadsService
     [Export(typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
-    public class DriftingAtProjectionsObstructionsService : SnowLoadBaseService, ICalculator
+    public class DriftingAtProjectionsObstructionsService : SnowLoadBaseService
     {
         #region Properties
-        
+
         public Property<double> ObstructionHeight { get; } =
-            new Property<double>("ObstructionHeight", 
+            new Property<double>("ObstructionHeight",
                 v => Convert.ToDouble(v));
-       
+
         #endregion // Properties
 
         #region Constructors
 
         public DriftingAtProjectionsObstructionsService()
         {
+            Result = new Result(new Dictionary<string, string> {
+                { "C_e_",  null },
+                { "s_k_",  null },
+                { "V",     null },
+                { "C_esl_",null },
+                { "s_n_",  null },
+                { "s_Ad_", null },
+                { "t_i_",  null },
+                { "∆_t_",  null },
+                { "U",     null },
+                { "C_t_",  null },
+                { "μ_1_",  null },
+                { "μ_2_",  null },
+                { "l_s_",  null },
+                { "s_2_",  null },
+                { "s_1_",  null }
+            });
         }
 
         #endregion // Constructors
 
         #region Public_Methods
-
-        public void Map(IList<object> args)
-        {
-            for (int i = 0; i < args.Count; i += 2)
-            {
-                var properties = this.GetType().GetProperties().Select(
-                    p => p.GetValue(this, null) as Property);
-
-                var property = properties.SingleOrDefault(p => p.Name == args[i].ToString());
-                if (property != null)
-                    property.SetValue(args[i + 1]);
-            }
-        }
-
-        public IResult Calculate()
+        
+        public override IResult Calculate()
         {
             BuildingSite buildingSite = GetBuildingSite();
             SnowLoad snowLoad = GetSnowLoad(buildingSite);
@@ -59,30 +63,29 @@ namespace Build_IT_ScriptService.SnowLoadsService
             building.CalculateThermalCoefficient();
             driftingAtProjectionsObstructions.CalculateSnowLoad();
 
-            var result = new Result();
-            result.Properties.Add("C_e_", buildingSite.ExposureCoefficient);
-            result.Properties.Add("s_k_", snowLoad.DefaultCharacteristicSnowLoad);
-            result.Properties.Add("V", snowLoad.VariationCoefficient);
-            result.Properties.Add("C_esl_", snowLoad.ExceptionalSnowLoadCoefficient);
-            result.Properties.Add("s_n_", snowLoad.SnowLoadForSpecificReturnPeriod);
-            result.Properties.Add("s_Ad_", snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
-            result.Properties.Add("t_i_", building.InternalTemperature);
-            result.Properties.Add("∆_t_", building.TempreatureDifference);
-            result.Properties.Add("U", building.OverallHeatTransferCoefficient);
-            result.Properties.Add("C_t_", building.ThermalCoefficient);
-            result.Properties.Add("μ_1_", driftingAtProjectionsObstructions.FirstShapeCoefficient);
-            result.Properties.Add("μ_2_", driftingAtProjectionsObstructions.SecondShapeCoefficient);
-            result.Properties.Add("l_s_", driftingAtProjectionsObstructions.DriftLength);
-            result.Properties.Add("s_2_", driftingAtProjectionsObstructions.SnowLoadOnRoofValue);
-            result.Properties.Add("s_1_", driftingAtProjectionsObstructions.SnowLoadOnRoofValueAtTheEnd);
+            Result["C_e_"] = buildingSite.ExposureCoefficient;
+            Result["s_k_"] = snowLoad.DefaultCharacteristicSnowLoad;
+            Result["V"] = snowLoad.VariationCoefficient;
+            Result["C_esl_"] = snowLoad.ExceptionalSnowLoadCoefficient;
+            Result["s_n_"] = snowLoad.SnowLoadForSpecificReturnPeriod;
+            Result["s_Ad_"] = snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod;
+            Result["t_i_"] = building.InternalTemperature;
+            Result["∆_t_"] = building.TempreatureDifference;
+            Result["U"] = building.OverallHeatTransferCoefficient;
+            Result["C_t_"] = building.ThermalCoefficient;
+            Result["μ_1_"] = driftingAtProjectionsObstructions.FirstShapeCoefficient;
+            Result["μ_2_"] = driftingAtProjectionsObstructions.SecondShapeCoefficient;
+            Result["l_s_"] = driftingAtProjectionsObstructions.DriftLength;
+            Result["s_2_"] = driftingAtProjectionsObstructions.SnowLoadOnRoofValue;
+            Result["s_1_"] = driftingAtProjectionsObstructions.SnowLoadOnRoofValueAtTheEnd;
 
-            return result;
+            return Result;
         }
 
         #endregion // Public_Methods
 
         #region Private_Methods
-           
+
         private DriftingAtProjectionsObstructions GetDriftingAtProjectionsObstructions(Building building)
         {
             return new DriftingAtProjectionsObstructions(building, ObstructionHeight.Value);

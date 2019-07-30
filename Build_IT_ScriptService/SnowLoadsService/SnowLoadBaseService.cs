@@ -4,16 +4,16 @@ using System;
 
 namespace Build_IT_ScriptService.SnowLoadsService
 {
-    public abstract class SnowLoadBaseService
+    public abstract class SnowLoadBaseService : ServiceBase
     {
         #region Properties
         
         public Property<Zones> Zone { get; } =
             new Property<Zones>("Zone",
-            v => Enum.Parse<Zones>(v));
+            v => Enum.Parse<Zones>(v.ToString()));
         public Property<Topographies> Topography { get; } =
             new Property<Topographies>("Topography",
-            v => Enum.Parse<Topographies>(v));
+            v => Enum.Parse<Topographies>(v.ToString()));
         public Property<double> AltitudeAboveSea { get; } =
             new Property<double>("AltitudeAboveSea",
                 v => Convert.ToDouble(v));
@@ -28,10 +28,10 @@ namespace Build_IT_ScriptService.SnowLoadsService
                 v => Convert.ToInt32(v));
         public Property<DesignSituation> DesignSituation { get; } =
             new Property<DesignSituation>("DesignSituation",
-            v => Enum.Parse<DesignSituation>(v));
+            v => Enum.Parse<DesignSituation>(v.ToString()));
         public Property<bool> ExceptionalSituation { get; } =
             new Property<bool>("ExceptionalSituation",
-            v => v == "true");
+            v => v.ToString() == "true");
         public Property<double> InternalTemperature { get; } =
             new Property<double>("InternalTemperature",
             v => Convert.ToDouble(v));

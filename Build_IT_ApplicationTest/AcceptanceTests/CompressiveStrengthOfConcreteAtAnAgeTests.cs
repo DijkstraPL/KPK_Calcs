@@ -24,7 +24,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
 
         [Test]
         [Repeat(25)]
-        public void CompressiveStrengthOfConcreteAtAnAgeTests_RandomExamples_Success()
+        public void CalculateTests_RandomExamples_Success()
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 

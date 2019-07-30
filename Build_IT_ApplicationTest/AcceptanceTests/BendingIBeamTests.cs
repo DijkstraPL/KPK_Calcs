@@ -90,7 +90,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
 
         [Test]
         [Description("27 - Bending - I-Beam")]
-        public void BendingResistanceCalculationTest_Example1_11_Success()
+        public void CalculateTests_Example1_11_Success()
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 

@@ -8,18 +8,43 @@ namespace Build_IT_Data.Calculators
     public class Result : IResult
     {
         #region Properties
-        
-        public IDictionary<string, object> Properties { get; private set; }
+
+        public object this[string name]
+        {
+            get => _properties[name];
+            set
+            {
+                _properties[name] = value;
+            }
+        }
+
+        public IDictionary<string, string> Descriptions { get; }
 
         #endregion // Properties
 
+        #region Fields
+
+        private IDictionary<string, object> _properties;
+
+        #endregion // Fields
+
         #region Constructors
-        
-        public Result()
+
+        public Result(IDictionary<string,string> properties)
         {
-            Properties = new Dictionary<string, object>();
+            _properties = new Dictionary<string, object>();
+            foreach (var property in properties)
+                _properties.Add(property.Key, default);
+
+            Descriptions = properties;
         }
 
         #endregion // Constructors
+
+        #region Public_Methods
+        
+        public IDictionary<string, object> GetProperties() => _properties;
+
+        #endregion // Public_Methods
     }
 }
