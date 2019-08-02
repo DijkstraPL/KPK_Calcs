@@ -4248,7 +4248,10 @@ var ParametersFormComponent = /** @class */ (function () {
         this.editMode = true;
         this.newlyAddedParameter = true;
         this.newParameter = new _models_parameterImpl__WEBPACK_IMPORTED_MODULE_3__["ParameterImpl"]();
-        this.newParameter.number = Math.max.apply(Math, this.parameters.map(function (p) { return p.number; })) + 1;
+        if (this.parameters.length == 0)
+            this.newParameter.number = 0;
+        else
+            this.newParameter.number = Math.max.apply(Math, this.parameters.map(function (p) { return p.number; })) + 1;
     };
     ParametersFormComponent.prototype.saveParameters = function () {
         var _this = this;

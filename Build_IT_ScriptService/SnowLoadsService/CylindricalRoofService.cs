@@ -2,6 +2,7 @@
 using Build_IT_Data.Calculators.Interfaces;
 using Build_IT_SnowLoads;
 using Build_IT_SnowLoads.BuildingTypes;
+using Build_IT_SnowLoads.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Composition;
@@ -55,9 +56,9 @@ namespace Build_IT_ScriptService.SnowLoadsService
         
         public override IResult Calculate()
         {
-            BuildingSite buildingSite = GetBuildingSite();
-            SnowLoad snowLoad = GetSnowLoad(buildingSite);
-            Building building = GetBuilding(snowLoad);
+            IBuildingSite buildingSite = GetBuildingSite();
+            ISnowLoad snowLoad = GetSnowLoad(buildingSite);
+            IBuilding building = GetBuilding(snowLoad);
             CylindricalRoof cylindricalRoof = GetCylindricalRoof(building);
 
             if (!ExposureCoefficient.HasValue)
@@ -90,7 +91,7 @@ namespace Build_IT_ScriptService.SnowLoadsService
 
         #region Private_Methods
            
-        private CylindricalRoof GetCylindricalRoof(Building building)
+        private CylindricalRoof GetCylindricalRoof(IBuilding building)
         {
             return new CylindricalRoof(building, Width.Value, Height.Value);
         }

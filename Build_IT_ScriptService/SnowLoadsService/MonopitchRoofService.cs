@@ -18,10 +18,10 @@ namespace Build_IT_ScriptService.SnowLoadsService
         #region Properties
 
         public Property<double> Slope { get; } =
-            new Property<double>("Slope", 
+            new Property<double>("Slope",
                 v => Convert.ToDouble(v));
         public Property<bool> SnowFences { get; } =
-            new Property<bool>("SnowFences", 
+            new Property<bool>("SnowFences",
                 v => v.ToString() == "true");
 
         #endregion // Properties
@@ -63,18 +63,18 @@ namespace Build_IT_ScriptService.SnowLoadsService
             building.CalculateThermalCoefficient();
             monopitchRoof.CalculateSnowLoad();
 
-            Result["C_e_"]=buildingSite.ExposureCoefficient;
-            Result["s_k_"]=snowLoad.DefaultCharacteristicSnowLoad;
-            Result["V"]=snowLoad.VariationCoefficient;
-            Result["C_esl_"]=snowLoad.ExceptionalSnowLoadCoefficient;
-            Result["s_n_"]=snowLoad.SnowLoadForSpecificReturnPeriod;
-            Result["s_Ad_"]=snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod;
-            Result["t_i_"]=building.InternalTemperature;
-            Result["∆_t_"]=building.TempreatureDifference;
-            Result["U"]=building.OverallHeatTransferCoefficient;
-            Result["C_t_"]=building.ThermalCoefficient;
-            Result["μ_1_"]=monopitchRoof.ShapeCoefficient;
-            Result["s"]=monopitchRoof.SnowLoadOnRoofValue;
+            Result["C_e_"] = buildingSite.ExposureCoefficient;
+            Result["s_k_"] = snowLoad.DefaultCharacteristicSnowLoad;
+            Result["V"] = snowLoad.VariationCoefficient;
+            Result["C_esl_"] = snowLoad.ExceptionalSnowLoadCoefficient;
+            Result["s_n_"] = snowLoad.SnowLoadForSpecificReturnPeriod;
+            Result["s_Ad_"] = snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod;
+            Result["t_i_"] = building.InternalTemperature;
+            Result["∆_t_"] = building.TempreatureDifference;
+            Result["U"] = building.OverallHeatTransferCoefficient;
+            Result["C_t_"] = building.ThermalCoefficient;
+            Result["μ_1_"] = monopitchRoof.ShapeCoefficient;
+            Result["s"] = monopitchRoof.SnowLoadOnRoofValue;
 
             return Result;
         }
@@ -82,11 +82,12 @@ namespace Build_IT_ScriptService.SnowLoadsService
         #endregion // Public_Methods
 
         #region Private_Methods
-           
+
         private MonopitchRoof GetMonopitchRoof(Building building)
         {
-            return new MonopitchRoof(building, Slope.Value,
-                SnowFences.HasValue ? SnowFences.Value : default);
+            if (SnowFences.HasValue)
+                return new MonopitchRoof(building, Slope.Value, SnowFences.Value);
+            return new MonopitchRoof(building, Slope.Value);
         }
 
         #endregion // Private_Methods

@@ -10,6 +10,7 @@ namespace Build_IT_Application.ScriptInterpreter.Services.Queries
 
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool Required { get; set; }
 
         #endregion // Properties
     }

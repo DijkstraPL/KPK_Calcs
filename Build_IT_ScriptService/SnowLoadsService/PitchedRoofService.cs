@@ -104,8 +104,8 @@ namespace Build_IT_ScriptService.SnowLoadsService
         private PitchedRoof GetPitchedRoof(Building building)
         {
             return new PitchedRoof(building, LeftSlope.Value, RightSlope.Value,
-                LeftSnowFences.HasValue ? LeftSnowFences.Value : default,
-                RightSnowFences.HasValue ? RightSnowFences.Value : default);
+                LeftSnowFences.HasValue ? LeftSnowFences.Value : PitchedRoof.DefaultSnowFences,
+                RightSnowFences.HasValue ? RightSnowFences.Value : PitchedRoof.DefaultSnowFences);
         }
 
         #endregion // Private_Methods

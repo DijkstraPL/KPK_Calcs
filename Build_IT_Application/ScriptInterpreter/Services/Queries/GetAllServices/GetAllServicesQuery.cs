@@ -88,7 +88,8 @@ namespace Build_IT_Application.ScriptInterpreter.Services.Queries.GetAllServices
                             data.Add(new SimplePropertyResource
                             {
                                 Name = propertyData.Name,
-                                Description = propertyData.Description
+                                Description = propertyData.Description,
+                                Required = propertyData.Required
                             });
                     }
                 });
@@ -107,7 +108,7 @@ namespace Build_IT_Application.ScriptInterpreter.Services.Queries.GetAllServices
                         results.Add(new SimplePropertyResource
                         {
                             Name = resultParameter.Key,
-                            Description = resultParameter.Value
+                            Description = resultParameter.Value,
                         });
                 });
                 return results;

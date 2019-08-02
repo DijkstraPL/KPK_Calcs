@@ -109,7 +109,7 @@ namespace Build_IT_ScriptService.SnowLoadsService
             return new RoofAbuttingToTallerConstruction(building, 
                 UpperBuildingWidth.Value, LowerBuildingWidth.Value,
                 HeightDifference.Value, HigherRoofSlope.Value, 
-                HigherRoofSnowFences.HasValue ? HigherRoofSnowFences.Value : default );
+                HigherRoofSnowFences.HasValue ? HigherRoofSnowFences.Value : RoofAbuttingToTallerConstruction.DefaultSnowFences);
         }
 
         #endregion // Private_Methods

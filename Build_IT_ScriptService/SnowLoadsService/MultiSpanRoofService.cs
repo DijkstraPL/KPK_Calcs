@@ -100,8 +100,8 @@ namespace Build_IT_ScriptService.SnowLoadsService
         private MultiSpanRoof GetMultiSpanRoof(Building building)
         {
             return new MultiSpanRoof(building, LeftSlope.Value, RightSlope.Value,
-                LeftSnowFences.HasValue ? LeftSnowFences.Value : default,
-                RightSnowFences.HasValue ? RightSnowFences.Value : default);
+                LeftSnowFences.HasValue ? LeftSnowFences.Value : MultiSpanRoof.DefaultSnowFences,
+                RightSnowFences.HasValue ? RightSnowFences.Value : MultiSpanRoof.DefaultSnowFences);
         }
 
         #endregion // Private_Methods

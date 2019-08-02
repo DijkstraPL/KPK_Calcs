@@ -62,6 +62,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// </summary>
         public IBuilding Building { get; private set; }
 
+        public const bool DefaultSnowFences = false;
+
         #endregion
 
         #region Constructors
@@ -75,7 +77,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <param name="leftRoofSnowFences">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="LeftRoof"/>.</param>
         /// <param name="rightRoofSnowFences">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="RightRoof"/>.</param>
         public PitchedRoof(IBuilding building, double leftRoofSlope, double rightRoofSlope,
-            bool leftRoofSnowFences = false, bool rightRoofSnowFences = false)
+            bool leftRoofSnowFences = DefaultSnowFences, bool rightRoofSnowFences = DefaultSnowFences)
         {
             LeftRoofCasesSnowLoad = new Dictionary<int, double>();
             RightRoofCasesSnowLoad = new Dictionary<int, double>();

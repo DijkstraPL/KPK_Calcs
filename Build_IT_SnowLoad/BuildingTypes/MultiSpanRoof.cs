@@ -67,6 +67,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// </summary>
         public IBuilding Building { get; private set; }
 
+        public const bool DefaultSnowFences = false;
+
         #endregion // Properties
 
         #region Fields
@@ -87,7 +89,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <param name="leftRoofSnowFences">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="LeftRoof"/>.</param>
         /// <param name="rightRoofSnowFences">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="RightRoof"/>.</param>
         public MultiSpanRoof(IBuilding building, double leftRoofSlope, double rightRoofSlope,
-            bool leftRoofSnowFences = false, bool rightRoofSnowFences = false)
+            bool leftRoofSnowFences = DefaultSnowFences, bool rightRoofSnowFences = DefaultSnowFences)
         {
             Building = building;
 

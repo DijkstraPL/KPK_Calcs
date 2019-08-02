@@ -13,16 +13,18 @@ namespace Build_IT_ScriptService
         public Type Type { get; }
         public bool HasValue { get; protected set; }
         public string Description { get; }
+        public bool Required { get; }
 
         #endregion // Properties
 
         #region Constructors
 
-        public Property(string name, Type type, string description)
+        public Property(string name, Type type, string description, bool required = true)
         {
             Name = name;
             Type = type;
             Description = description;
+            Required = required;
         }
 
         #endregion // Constructors
@@ -59,8 +61,8 @@ namespace Build_IT_ScriptService
 
         #region Constructors
         
-        public Property(string name, Func<object, T> toType, string description = null)
-            : base(name, typeof(T), description)
+        public Property(string name, Func<object, T> toType, string description = null, bool required = true)
+            : base(name, typeof(T), description, required)
         {
             _toType = toType;
         }
