@@ -29,11 +29,11 @@ namespace Build_IT_ScriptService.WindLoadsService
         public Property<double> BuildingWidth { get; } =
             new Property<double>("BuildingWidth",
                 v => Convert.ToDouble(v));
-        public Property<double> BuildingMaxHeight { get; } =
-            new Property<double>("BuildingMaxHeight",
+        public Property<double> BuildingInnerHeight { get; } =
+            new Property<double>("BuildingInnerHeight",
                 v => Convert.ToDouble(v));
-        public Property<double> BuildingMinHeight { get; } =
-            new Property<double>("BuildingMinHeight",
+        public Property<double> BuildingOuterHeight { get; } =
+            new Property<double>("BuildingOuterHeight",
                 v => Convert.ToDouble(v));
 
         public Property<double> ReferenceHeight { get; } =
@@ -61,11 +61,16 @@ namespace Build_IT_ScriptService.WindLoadsService
                 { "I_v_(z_e_)", null },
                 { "q_p_(z_e_)", null },
                 { "c_sc,d_", null },
-                { "w_e,F_", null },
-                { "w_e,G_", null },
-                { "w_e,H_", null },
-                { "w_e,I_", null },
-                { "w_e,J_", null },
+                { "w_e,F,max_", null },
+                { "w_e,G,max_", null },
+                { "w_e,H,max_", null },
+                { "w_e,I,max_", null },
+                { "w_e,J,max_", null },
+                { "w_e,F,min_", null },
+                { "w_e,G,min_", null },
+                { "w_e,H,min_", null },
+                { "w_e,I,min_", null },
+                { "w_e,J,min_", null },
             });
         }
 
@@ -90,8 +95,11 @@ namespace Build_IT_ScriptService.WindLoadsService
             ExternalPressureWindForce externalPressureWindForce =
                 GetExternalPressureWindForce(windLoadData, wallsWindLoads, structuralFactorCalculator);
 
-            var referenceHeight = ReferenceHeight.HasValue ? ReferenceHeight.Value : BuildingMaxHeight.Value;
+            var referenceHeight = ReferenceHeight.HasValue ? ReferenceHeight.Value : 
+                Math.Max( BuildingInnerHeight.Value, BuildingOuterHeight.Value);
             var externalPressureWindForceMax = externalPressureWindForce.GetExternalPressureWindForceMaxAt(
+                referenceHeight, calculateStructuralFactor: structuralFactorCalculator != null);
+            var externalPressureWindForceMin = externalPressureWindForce.GetExternalPressureWindForceMinAt(
                 referenceHeight, calculateStructuralFactor: structuralFactorCalculator != null);
 
             Result["e"] = structureData.EdgeDistance;
@@ -104,7 +112,8 @@ namespace Build_IT_ScriptService.WindLoadsService
             Result["I_v_(z_e_)"] = windLoadData.GetTurbulenceIntensityAt(referenceHeight);
             Result["q_p_(z_e_)"] = windLoadData.GetPeakVelocityPressureAt(referenceHeight);
             Result["c_s_c_d_"] = structuralFactorCalculator?.GetStructuralFactor(structuralFactorCalculator != null) ?? StructuralFactorCalculator.DefaultStructuralFactor;
-            SetPressureWindForces(externalPressureWindForceMax);
+            SetPressureWindForces(externalPressureWindForceMax, isMax:true);
+            SetPressureWindForces(externalPressureWindForceMin, isMax: false);
 
             return Result;
         }
@@ -113,19 +122,20 @@ namespace Build_IT_ScriptService.WindLoadsService
 
         #region Private_Methods
 
-        private void SetPressureWindForces(IDictionary<Field, double> externalPressureWindForceMax)
+        private void SetPressureWindForces(IDictionary<Field, double> externalPressureWindForce, bool isMax)
         {
-            Result["w_e,F_"] = externalPressureWindForceMax.ContainsKey(Field.F) ? externalPressureWindForceMax[Field.F] : double.NaN;
-            Result["w_e,G_"] = externalPressureWindForceMax.ContainsKey(Field.G) ? externalPressureWindForceMax[Field.G] : double.NaN;
-            Result["w_e,H_"] = externalPressureWindForceMax.ContainsKey(Field.H) ? externalPressureWindForceMax[Field.H] : double.NaN;
-            Result["w_e,I_"] = externalPressureWindForceMax.ContainsKey(Field.I) ? externalPressureWindForceMax[Field.I] : double.NaN;
-            Result["w_e,J_"] = externalPressureWindForceMax.ContainsKey(Field.J) ? externalPressureWindForceMax[Field.J] : double.NaN;
+            string valueText = isMax ? "max" : "min";
+            Result[$"w_e,F,{valueText}_"] = externalPressureWindForce.ContainsKey(Field.F) ? externalPressureWindForce[Field.F] : double.NaN;
+            Result[$"w_e,G,{valueText}_"] = externalPressureWindForce.ContainsKey(Field.G) ? externalPressureWindForce[Field.G] : double.NaN;
+            Result[$"w_e,H,{valueText}_"] = externalPressureWindForce.ContainsKey(Field.H) ? externalPressureWindForce[Field.H] : double.NaN;
+            Result[$"w_e,I,{valueText}_"] = externalPressureWindForce.ContainsKey(Field.I) ? externalPressureWindForce[Field.I] : double.NaN;
+            Result[$"w_e,J,{valueText}_"] = externalPressureWindForce.ContainsKey(Field.J) ? externalPressureWindForce[Field.J] : double.NaN;
         }
 
         private DuopitchRoof GetStructureData()
         {
             return new DuopitchRoof(BuildingLength.Value, BuildingWidth.Value,
-                BuildingMaxHeight.Value, BuildingMinHeight.Value, BuildingOrientation.Value);
+                BuildingOuterHeight.Value, BuildingInnerHeight.Value, BuildingOrientation.Value);
         }
 
         private DuopitchRoofWindLoads GetDuopitchRoofWindLoads(IDuopitchRoof structure, IWindLoadData windLoadData)

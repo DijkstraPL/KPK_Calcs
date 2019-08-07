@@ -60,12 +60,18 @@ namespace Build_IT_ScriptService.WindLoadsService
                 { "I_v_(z_e_)", null },
                 { "q_p_(z_e_)", null },
                 { "c_sc,d_", null },
-                { "w_e,Fup_", null },
-                { "w_e,Flow_", null },
-                { "w_e,F_", null },
-                { "w_e,G_", null },
-                { "w_e,H_", null },
-                { "w_e,I_", null },
+                { "w_e,F,max_", null },
+                { "w_e,Fup,max_", null },
+                { "w_e,Flow,max_", null },
+                { "w_e,G,max_", null },
+                { "w_e,H,max_", null },
+                { "w_e,I,max_", null },
+                { "w_e,F,min_", null },
+                { "w_e,Fup,min_", null },
+                { "w_e,Flow,min_", null },
+                { "w_e,G,min_", null },
+                { "w_e,H,min_", null },
+                { "w_e,I,min_", null },
             });
         }
 
@@ -93,6 +99,8 @@ namespace Build_IT_ScriptService.WindLoadsService
             var referenceHeight = ReferenceHeight.HasValue ? ReferenceHeight.Value : BuildingMaxHeight.Value;
             var externalPressureWindForceMax = externalPressureWindForce.GetExternalPressureWindForceMaxAt(
                 referenceHeight, calculateStructuralFactor: structuralFactorCalculator != null);
+            var externalPressureWindForceMin = externalPressureWindForce.GetExternalPressureWindForceMinAt(
+                referenceHeight, calculateStructuralFactor: structuralFactorCalculator != null);
 
             Result["e"] = structureData.EdgeDistance;
             Result["v_b,0_"] = buildingSite.FundamentalValueBasicWindVelocity;
@@ -104,7 +112,8 @@ namespace Build_IT_ScriptService.WindLoadsService
             Result["I_v_(z_e_)"] = windLoadData.GetTurbulenceIntensityAt(referenceHeight);
             Result["q_p_(z_e_)"] = windLoadData.GetPeakVelocityPressureAt(referenceHeight);
             Result["c_s_c_d_"] = structuralFactorCalculator?.GetStructuralFactor(structuralFactorCalculator != null) ?? StructuralFactorCalculator.DefaultStructuralFactor;
-            SetPressureWindForces(externalPressureWindForceMax);
+            SetPressureWindForces(externalPressureWindForceMax, isMax: true);
+            SetPressureWindForces(externalPressureWindForceMin, isMax: false);
 
             return Result;
         }
@@ -113,14 +122,15 @@ namespace Build_IT_ScriptService.WindLoadsService
 
         #region Private_Methods
 
-        private void SetPressureWindForces(IDictionary<Field, double> externalPressureWindForceMax)
+        private void SetPressureWindForces(IDictionary<Field, double> externalPressureWindForce, bool isMax)
         {
-            Result["w_e,F_"] = externalPressureWindForceMax.ContainsKey(Field.F) ? externalPressureWindForceMax[Field.F] : double.NaN;
-            Result["w_e,Fup_"] = externalPressureWindForceMax.ContainsKey(Field.Fup) ? externalPressureWindForceMax[Field.Fup] : double.NaN;
-            Result["w_e,Flow_"] = externalPressureWindForceMax.ContainsKey(Field.Fup) ? externalPressureWindForceMax[Field.Flow] : double.NaN;
-            Result["w_e,G_"] = externalPressureWindForceMax.ContainsKey(Field.G) ? externalPressureWindForceMax[Field.G] : double.NaN;
-            Result["w_e,H_"] = externalPressureWindForceMax.ContainsKey(Field.H) ? externalPressureWindForceMax[Field.H] : double.NaN;
-            Result["w_e,I_"] = externalPressureWindForceMax.ContainsKey(Field.I) ? externalPressureWindForceMax[Field.I] : double.NaN;
+            string valueText = isMax ? "max" : "min";
+            Result[$"w_e,F,{valueText}_"] = externalPressureWindForce.ContainsKey(Field.F) ? externalPressureWindForce[Field.F] : double.NaN;
+            Result[$"w_e,Fup,{valueText}_"] = externalPressureWindForce.ContainsKey(Field.Fup) ? externalPressureWindForce[Field.Fup] : double.NaN;
+            Result[$"w_e,Flow,{valueText}_"] = externalPressureWindForce.ContainsKey(Field.Fup) ? externalPressureWindForce[Field.Flow] : double.NaN;
+            Result[$"w_e,G,{valueText}_"] = externalPressureWindForce.ContainsKey(Field.G) ? externalPressureWindForce[Field.G] : double.NaN;
+            Result[$"w_e,H,{valueText}_"] = externalPressureWindForce.ContainsKey(Field.H) ? externalPressureWindForce[Field.H] : double.NaN;
+            Result[$"w_e,I,{valueText}_"] = externalPressureWindForce.ContainsKey(Field.I) ? externalPressureWindForce[Field.I] : double.NaN;
         }
 
         private MonopitchRoof GetStructureData()

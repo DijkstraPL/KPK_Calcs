@@ -60,10 +60,14 @@ namespace Build_IT_ScriptService.WindLoadsService
                 { "I_v_(z_e_)", null },
                 { "q_p_(z_e_)", null },
                 { "c_sc,d_", null },
-                { "w_e,F_", null },
-                { "w_e,G_", null },
-                { "w_e,H_", null },
-                { "w_e,I_", null },
+                { "w_e,F,max_", null },
+                { "w_e,G,max_", null },
+                { "w_e,H,max_", null },
+                { "w_e,I,max_", null },
+                { "w_e,F,min_", null },
+                { "w_e,G,min_", null },
+                { "w_e,H,min_", null },
+                { "w_e,I,min_", null },
             });
         }
 
@@ -91,6 +95,8 @@ namespace Build_IT_ScriptService.WindLoadsService
             var referenceHeight = ReferenceHeight.HasValue ? ReferenceHeight.Value : BuildingHeight.Value;
             var externalPressureWindForceMax = externalPressureWindForce.GetExternalPressureWindForceMaxAt(
                 referenceHeight, calculateStructuralFactor: structuralFactorCalculator != null);
+            var externalPressureWindForceMin = externalPressureWindForce.GetExternalPressureWindForceMinAt(
+                referenceHeight, calculateStructuralFactor: structuralFactorCalculator != null);
 
 
             Result["e"] = structureData.EdgeDistance;
@@ -103,10 +109,14 @@ namespace Build_IT_ScriptService.WindLoadsService
             Result["I_v_(z_e_)"] = windLoadData.GetTurbulenceIntensityAt(referenceHeight);
             Result["q_p_(z_e_)"] = windLoadData.GetPeakVelocityPressureAt(referenceHeight);
             Result["c_s_c_d_"] = structuralFactorCalculator?.GetStructuralFactor(structuralFactorCalculator != null) ?? StructuralFactorCalculator.DefaultStructuralFactor;
-            Result["w_e,F_"] = externalPressureWindForceMax.ContainsKey(Field.F) ? externalPressureWindForceMax[Field.F] : double.NaN;
-            Result["w_e,G_"] = externalPressureWindForceMax.ContainsKey(Field.G) ? externalPressureWindForceMax[Field.G] : double.NaN;
-            Result["w_e,H_"] = externalPressureWindForceMax.ContainsKey(Field.H) ? externalPressureWindForceMax[Field.H] : double.NaN;
-            Result["w_e,I_"] = externalPressureWindForceMax.ContainsKey(Field.I) ? externalPressureWindForceMax[Field.I] : double.NaN;
+            Result["w_e,F,max_"] = externalPressureWindForceMax.ContainsKey(Field.F) ? externalPressureWindForceMax[Field.F] : double.NaN;
+            Result["w_e,G,max_"] = externalPressureWindForceMax.ContainsKey(Field.G) ? externalPressureWindForceMax[Field.G] : double.NaN;
+            Result["w_e,H,max_"] = externalPressureWindForceMax.ContainsKey(Field.H) ? externalPressureWindForceMax[Field.H] : double.NaN;
+            Result["w_e,I,max_"] = externalPressureWindForceMax.ContainsKey(Field.I) ? externalPressureWindForceMax[Field.I] : double.NaN;
+            Result["w_e,F,min_"] = externalPressureWindForceMin.ContainsKey(Field.F) ? externalPressureWindForceMin[Field.F] : double.NaN;
+            Result["w_e,G,min_"] = externalPressureWindForceMin.ContainsKey(Field.G) ? externalPressureWindForceMin[Field.G] : double.NaN;
+            Result["w_e,H,min_"] = externalPressureWindForceMin.ContainsKey(Field.H) ? externalPressureWindForceMin[Field.H] : double.NaN;
+            Result["w_e,I,min_"] = externalPressureWindForceMin.ContainsKey(Field.I) ? externalPressureWindForceMin[Field.I] : double.NaN;
 
             return Result;
         }
