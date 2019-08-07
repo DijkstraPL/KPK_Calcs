@@ -11,6 +11,12 @@ namespace Build_IT_WindLoads.Factors
 {
     public class StructuralFactorCalculator : IStructuralFactorCalculator
     {
+        #region Properties
+
+        public const double DefaultStructuralFactor = 1;
+
+        #endregion // Properties
+
         #region Fields
 
         private readonly IStructure _building;
@@ -42,7 +48,7 @@ namespace Build_IT_WindLoads.Factors
         public double GetStructuralFactor(bool calculate = true)
         {
             if (!calculate || _building.Height < 15)
-                return 1;
+                return DefaultStructuralFactor;
 
             var structuralFactor = GetStructuralFactor();
 

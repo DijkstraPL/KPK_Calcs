@@ -17,7 +17,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.UpdateScript
             RuleFor(v => v.Author).MaximumLength(150);
             RuleFor(v => v.AccordingTo).MaximumLength(150);
             RuleFor(v => v.Notes).MaximumLength(1000);
-            RuleFor(v => v.DefaultLanguage).NotEmpty();
+            RuleFor(v => v.DefaultLanguage).Must(language => language >= 0);
         }
 
         #endregion // Constructors

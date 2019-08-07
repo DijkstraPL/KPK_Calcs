@@ -1,9 +1,6 @@
-﻿using Build_IT_Data.Calculators;
-using Build_IT_Data.Calculators.Interfaces;
-using Build_IT_WindLoads;
+﻿using Build_IT_WindLoads;
 using Build_IT_WindLoads.BuildingData;
 using Build_IT_WindLoads.BuildingData.Interfaces;
-using Build_IT_WindLoads.BuildingData.Walls;
 using Build_IT_WindLoads.DynamicCharacteristics.Enums;
 using Build_IT_WindLoads.Factors;
 using Build_IT_WindLoads.Factors.Interfaces;
@@ -15,9 +12,6 @@ using Build_IT_WindLoads.Terrains.Interfaces;
 using Build_IT_WindLoads.WindLoadsCases;
 using Build_IT_WindLoads.WindLoadsCases.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Composition;
-using System.Linq;
 
 namespace Build_IT_ScriptService.WindLoadsService
 {
@@ -35,18 +29,19 @@ namespace Build_IT_ScriptService.WindLoadsService
             new Property<WindZone>("WindZone",
                 v => Enum.Parse<WindZone>(v.ToString()));
 
-
+        // HeightDisplacement
         public Property<double> HorizontalDistanceToObstruction { get; } =
             new Property<double>("HorizontalDistanceToObstruction",
                 v => Convert.ToDouble(v), required: false);
-        // h_ave_
         public Property<double> ObstructionHeight { get; } =
             new Property<double>("ObstructionHeight",
-                v => Convert.ToDouble(v), required: false);
+                v => Convert.ToDouble(v), required: false); // h_ave_
+        // -- HeightDisplacement
+
+        // Orography
         public Property<Orographies> Orography { get; } =
             new Property<Orographies>("Orography",
                 v => Enum.Parse<Orographies>(v.ToString()), required: false);
-
         public Property<double> ActualLengthUpwindSlope { get; } =
             new Property<double>("ActualLengthUpwindSlope",
                 v => Convert.ToDouble(v), required: false);
@@ -59,12 +54,15 @@ namespace Build_IT_ScriptService.WindLoadsService
         public Property<double> HorizontalDistanceFromCrestTop { get; } =
             new Property<double>("HorizontalDistanceFromCrestTop",
                 v => Convert.ToDouble(v), required: false);
+        // -- Orography
 
-        public Property<double> WindDirectionGlobal { get; } =
-            new Property<double>("WindDirectionGlobal",
+        // DirectionalFactor
+        public Property<double> WindDirection { get; } =
+            new Property<double>("WindDirection",
                 v => Convert.ToDouble(v), required: false);
+        // -- DirectionalFactor
 
-
+        // ReferenceHeightDueToNeighbouringStructures
         public Property<double> HighBuildingWidth { get; } =
             new Property<double>("HighBuildingWidth",
                 v => Convert.ToDouble(v), required: false);
@@ -77,11 +75,13 @@ namespace Build_IT_ScriptService.WindLoadsService
         public Property<double> DistanceToBuilding { get; } =
             new Property<double>("DistanceToBuilding",
                 v => Convert.ToDouble(v), required: false);
+        // -- ReferenceHeightDueToNeighbouringStructures
 
-
+        // StructuralFactorCalculator
         public Property<StructuralType> StructuralType { get; } =
             new Property<StructuralType>("StructuralType",
                 v => Enum.Parse<StructuralType>(v.ToString()), required: false);
+        // -- StructuralFactorCalculator
 
 
         #endregion // Properties
@@ -93,7 +93,7 @@ namespace Build_IT_ScriptService.WindLoadsService
         /// </summary>
         /// <param name="structureData"></param>
         /// <returns></returns>
-        protected HeightDisplacement GetHeightDisplacement(EqualHeightWalls structureData)
+        protected HeightDisplacement GetHeightDisplacement(IStructure structureData)
         {
             if (HorizontalDistanceToObstruction.HasValue && TerrainType.Value == Build_IT_WindLoads.Terrains.Enums.TerrainType.Terrain_IV)
                 return new HeightDisplacement(structureData,
@@ -129,8 +129,8 @@ namespace Build_IT_ScriptService.WindLoadsService
 
         protected DirectionalFactor GetDirectionalFactor()
         {
-            if (WindDirectionGlobal.HasValue)
-                return new DirectionalFactor(WindZone.Value, WindDirectionGlobal.Value);
+            if (WindDirection.HasValue)
+                return new DirectionalFactor(WindZone.Value, WindDirection.Value);
             return null;
         }
 
@@ -168,6 +168,15 @@ namespace Build_IT_ScriptService.WindLoadsService
                 return new StructuralFactorCalculator(
                     structure, terrain, windLoadData, StructuralType.Value);
             return null;
+        }
+
+        protected ExternalPressureWindForce GetExternalPressureWindForce(
+            IWindLoadData windLoadData, IWindLoadCase wallsWindLoads, IStructuralFactorCalculator structuralFactorCalculator)
+        {
+            return new ExternalPressureWindForce(
+                    windLoadData,
+                    wallsWindLoads,
+                    structuralFactorCalculator);
         }
 
         #endregion // Protected_Methods

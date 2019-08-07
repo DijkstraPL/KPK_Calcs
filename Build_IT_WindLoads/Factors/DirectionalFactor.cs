@@ -8,6 +8,7 @@ namespace Build_IT_WindLoads.Factors
         #region Properties
 
         public double WindDirection { get; }
+        public const double DefaultDirectionalFactor= 1;
 
         #endregion // Properties
 

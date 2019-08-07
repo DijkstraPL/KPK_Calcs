@@ -9,11 +9,17 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
 {
     public class FlatRoof : Structure, IFlatRoofBuilding
     {
+        #region Properties
+
+        public const Rotation DefaultRotation = Rotation.Degrees_0;
+
+        #endregion // Properties
+
         #region Constructors
 
         public FlatRoof(
             double length, double width, double height, 
-            Rotation rotation = Rotation.Degrees_0) : base()
+            Rotation rotation = DefaultRotation) : base()
         {
             if (length < 0 || width < 0 || height < 0)
                 throw new ArgumentOutOfRangeException("Wrong building dimensions.");

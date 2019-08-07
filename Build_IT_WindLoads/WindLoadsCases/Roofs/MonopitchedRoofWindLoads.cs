@@ -65,7 +65,7 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
 
         #region Constructors
 
-        public IWindLoadCase Create(
+        public static MonopitchedRoofWindLoads Create(
             IMonopitchRoof building, IWindLoadData windLoadData)
         {
             if (building.CurrentRotation == MonopitchRoof.Rotation.Degrees_0)

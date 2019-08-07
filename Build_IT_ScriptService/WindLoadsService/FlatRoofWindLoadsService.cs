@@ -3,22 +3,23 @@ using Build_IT_Data.Calculators.Interfaces;
 using Build_IT_WindLoads;
 using Build_IT_WindLoads.BuildingData;
 using Build_IT_WindLoads.BuildingData.Interfaces;
-using Build_IT_WindLoads.BuildingData.Walls;
+using Build_IT_WindLoads.BuildingData.Roofs;
 using Build_IT_WindLoads.Factors;
 using Build_IT_WindLoads.TerrainOrographies;
 using Build_IT_WindLoads.Terrains;
 using Build_IT_WindLoads.WindLoadsCases;
+using Build_IT_WindLoads.WindLoadsCases.Roofs;
 using System;
 using System.Collections.Generic;
 using System.Composition;
 
 namespace Build_IT_ScriptService.WindLoadsService
 {
-    [Export("WindLoad-Walls", typeof(ICalculator))]
+    [Export("WindLoad-FlatRoof", typeof(ICalculator))]
     [Export(typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-4")]
     [ExportMetadata("Type", "WindLoad")]
-    public class WallsWindLoadsService : WindLoadBaseService
+    public class FlatRoofWindLoadsService : WindLoadBaseService
     {
         #region Properties
 
@@ -35,19 +36,18 @@ namespace Build_IT_ScriptService.WindLoadsService
         public Property<double> ReferenceHeight { get; } =
             new Property<double>("ReferenceHeight",
                 v => Convert.ToDouble(v));
+
         /// <summary>
         /// Building side
         /// </summary>
-        public Property<EqualHeightWalls.Rotation> BuildingOrientation { get; } =
-            new Property<EqualHeightWalls.Rotation>("BuildingOrientation",
-                v => Enum.Parse<EqualHeightWalls.Rotation>(v.ToString()), required: false);
-
+        public Property<FlatRoof.Rotation> BuildingOrientation { get; } =
+            new Property<FlatRoof.Rotation>("BuildingOrientation",
+                v => Enum.Parse<FlatRoof.Rotation>(v.ToString()), required: false);
 
         #endregion // Properties
-
         #region Constructors
 
-        public WallsWindLoadsService()
+        public FlatRoofWindLoadsService()
         {
             Result = new Result(new Dictionary<string, string>() {
                 { "e", null },
@@ -60,11 +60,10 @@ namespace Build_IT_ScriptService.WindLoadsService
                 { "I_v_(z_e_)", null },
                 { "q_p_(z_e_)", null },
                 { "c_sc,d_", null },
-                { "w_e,A_", null },
-                { "w_e,B_", null },
-                { "w_e,C_", null },
-                { "w_e,D_", null },
-                { "w_e,E_", null },
+                { "w_e,F_", null },
+                { "w_e,G_", null },
+                { "w_e,H_", null },
+                { "w_e,I_", null },
             });
         }
 
@@ -74,7 +73,7 @@ namespace Build_IT_ScriptService.WindLoadsService
 
         public override IResult Calculate()
         {
-            EqualHeightWalls structureData = GetStructureData();
+            FlatRoof structureData = GetStructureData();
             HeightDisplacement heightDisplacement = GetHeightDisplacement(structureData);
             TerrainOrography terrainOrography = GetTerrainOrography();
             Terrain terrain = GetTerrainCategory(heightDisplacement, terrainOrography);
@@ -83,11 +82,11 @@ namespace Build_IT_ScriptService.WindLoadsService
             ReferenceHeightDueToNeighbouringStructures referenceHeightDueToNeighbouringStructures
                 = GetReferenceHeightDueToNeighbouringStructures();
             WindLoadData windLoadData = GetWindLoadData(buildingSite, structureData, referenceHeightDueToNeighbouringStructures);
-            WallsWindLoads wallsWindLoads = GetWallsWindLoads(structureData, windLoadData);
+            FlatRoofWindLoads flatRoofWindLoads = GetFlatRoofWindLoads(structureData, windLoadData);
             StructuralFactorCalculator structuralFactorCalculator =
                 GetStructuralFactorCalculator(structureData, terrain, windLoadData);
             ExternalPressureWindForce externalPressureWindForce =
-                GetExternalPressureWindForce(windLoadData, wallsWindLoads, structuralFactorCalculator);
+                GetExternalPressureWindForce(windLoadData, flatRoofWindLoads, structuralFactorCalculator);
 
             var referenceHeight = ReferenceHeight.HasValue ? ReferenceHeight.Value : BuildingHeight.Value;
             var externalPressureWindForceMax = externalPressureWindForce.GetExternalPressureWindForceMaxAt(
@@ -104,32 +103,29 @@ namespace Build_IT_ScriptService.WindLoadsService
             Result["I_v_(z_e_)"] = windLoadData.GetTurbulenceIntensityAt(referenceHeight);
             Result["q_p_(z_e_)"] = windLoadData.GetPeakVelocityPressureAt(referenceHeight);
             Result["c_s_c_d_"] = structuralFactorCalculator?.GetStructuralFactor(structuralFactorCalculator != null) ?? StructuralFactorCalculator.DefaultStructuralFactor;
-            Result["w_e,A_"] = externalPressureWindForceMax.ContainsKey(Field.A) ? externalPressureWindForceMax[Field.A] : double.NaN;
-            Result["w_e,B_"] = externalPressureWindForceMax.ContainsKey(Field.B) ? externalPressureWindForceMax[Field.B] : double.NaN;
-            Result["w_e,C_"] = externalPressureWindForceMax.ContainsKey(Field.C) ? externalPressureWindForceMax[Field.C] : double.NaN;
-            Result["w_e,D_"] = externalPressureWindForceMax.ContainsKey(Field.D) ? externalPressureWindForceMax[Field.D] : double.NaN;
-            Result["w_e,E_"] = externalPressureWindForceMax.ContainsKey(Field.E) ? externalPressureWindForceMax[Field.E] : double.NaN;
- 
+            Result["w_e,F_"] = externalPressureWindForceMax.ContainsKey(Field.F) ? externalPressureWindForceMax[Field.F] : double.NaN;
+            Result["w_e,G_"] = externalPressureWindForceMax.ContainsKey(Field.G) ? externalPressureWindForceMax[Field.G] : double.NaN;
+            Result["w_e,H_"] = externalPressureWindForceMax.ContainsKey(Field.H) ? externalPressureWindForceMax[Field.H] : double.NaN;
+            Result["w_e,I_"] = externalPressureWindForceMax.ContainsKey(Field.I) ? externalPressureWindForceMax[Field.I] : double.NaN;
+
             return Result;
         }
 
-
         #endregion // Public_Methods
 
-        #region Private_Methods
+        #region Protected_Methods
 
-        private EqualHeightWalls GetStructureData()
+        protected virtual FlatRoof GetStructureData()
         {
-            return new EqualHeightWalls(BuildingLength.Value, BuildingWidth.Value, BuildingHeight.Value,
-                BuildingOrientation.HasValue ? BuildingOrientation.Value : EqualHeightWalls.DefaultRotation);
+            return new FlatRoof(BuildingLength.Value, BuildingWidth.Value, BuildingHeight.Value,
+                BuildingOrientation.HasValue ? BuildingOrientation.Value : FlatRoof.DefaultRotation);
         }
 
-
-        private WallsWindLoads GetWallsWindLoads(IStructure structure, IWindLoadData windLoadData)
+        protected virtual FlatRoofWindLoads GetFlatRoofWindLoads(IFlatRoofBuilding structure, IWindLoadData windLoadData)
         {
-            return new WallsWindLoads(structure, windLoadData);
+            return new FlatRoofWindLoads(structure, windLoadData);
         }
-        
-        #endregion // Private_Methods
+
+        #endregion // Protected_Methods
     }
 }

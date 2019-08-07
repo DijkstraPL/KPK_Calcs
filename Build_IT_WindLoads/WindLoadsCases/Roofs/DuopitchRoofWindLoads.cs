@@ -99,7 +99,7 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
 
         #region Constructors
 
-        public IWindLoadCase Create(
+        public static DuopitchRoofWindLoads Create(
             IDuopitchRoof building, IWindLoadData windLoadData)
         {
             if (building.CurrentRotation == DuopitchRoof.Rotation.Degrees_0)
@@ -117,8 +117,7 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
         }
 
         #endregion // Constructors
-
-
+        
         #region Public_Methods
 
         //TODO: Check that
