@@ -4200,11 +4200,11 @@ var ParametersFormComponent = /** @class */ (function () {
         if (confirm("Are you sure?")) {
             this.parameterService.delete(this.scriptId, parameterId)
                 .subscribe(function () {
+                _this.parameters = _this.parameters.filter(function (p) { return p.id != parameterId; });
                 _this.onParametersToShowChange();
                 _this.refreshNumbering(_this.parameters.find(function (p) { return p.id == parameterId; }).number);
                 _this.saveParameters();
             }, function (error) { return console.error(error); });
-            this.parameters = this.parameters.filter(function (p) { return p.id != parameterId; });
         }
     };
     ParametersFormComponent.prototype.refreshNumbering = function (number) {

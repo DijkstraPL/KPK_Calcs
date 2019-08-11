@@ -11,7 +11,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
 {
 
     [TestFixture]
-    public class CompressiveStrengthOfConcreteAtAnAgeTests
+    public class ConcreteParametersAtAnAgeTests
     {
         private const long ID = 2;
         private ScriptCalculatorTestEngine _testEngine;
@@ -34,8 +34,10 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
                 (p.Context & ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
-            parametersForCalculation["f_ck_"].Value = _testEngine.GetBigRandom();
-            parametersForCalculation["f_cm_"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["Class"].Value = _testEngine.GetValueFromRange(
+                parametersForCalculation["Class"].ValueOptions
+                .Select(vo => vo.Value)
+                .ToArray());
             parametersForCalculation["cement_type_"].Value = _testEngine.GetValueFromRange(
                 parametersForCalculation["cement_type_"].ValueOptions
                 .Select(vo => vo.Value)
