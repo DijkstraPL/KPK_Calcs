@@ -109,11 +109,11 @@ export class ParametersFormComponent implements OnInit {
         if (confirm("Are you sure?")) {
             this.parameterService.delete(this.scriptId, parameterId)
                 .subscribe(() => {
+                    this.parameters = this.parameters.filter(p => p.id != parameterId);
                     this.onParametersToShowChange();
                     this.refreshNumbering(this.parameters.find(p => p.id == parameterId).number);
                     this.saveParameters();
                 }, error => console.error(error));
-            this.parameters = this.parameters.filter(p => p.id != parameterId)
         }
     }
 
@@ -161,7 +161,10 @@ export class ParametersFormComponent implements OnInit {
         this.editMode = true;
         this.newlyAddedParameter = true;
         this.newParameter = new ParameterImpl();
-        this.newParameter.number = Math.max.apply(Math, this.parameters.map(function (p) { return p.number; })) + 1;
+        if (this.parameters.length == 0)
+            this.newParameter.number = 0;
+        else
+            this.newParameter.number = Math.max.apply(Math, this.parameters.map(function (p) { return p.number; })) + 1;
     }
 
     saveParameters() {

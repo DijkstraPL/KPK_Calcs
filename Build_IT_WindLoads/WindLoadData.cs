@@ -11,6 +11,13 @@ namespace Build_IT_WindLoads
 {
     public class WindLoadData : IWindLoadData
     {
+        #region Properties
+
+        public const double DefaultHeightStrip = 1;
+        public const bool AllowCustomReferenceHeight = false;
+
+        #endregion // Properties
+
         #region Fields
 
         private IDictionary<double, double> _referenceHeights = new Dictionary<double, double>();
@@ -34,7 +41,7 @@ namespace Build_IT_WindLoads
         #region Constructors
 
         public WindLoadData(IBuildingSite buildingSite, IStructure building,
-            double heightStrip = 1, bool allowCustomReferenceHeight = false, 
+            double heightStrip = DefaultHeightStrip, bool allowCustomReferenceHeight = AllowCustomReferenceHeight, 
             IFactorAt referenceHeightDueToNeighbouringStructures = null)
         {
             _buildingSite = buildingSite;

@@ -131,6 +131,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
         public Dictionary<int, double> SnowLoadsNearTallerBuilding { get; private set; }
 
+        public const bool DefaultSnowFences = false;
+
         #endregion
 
         #region Fields
@@ -152,7 +154,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <param name="slopeOfHigherRoof">Set <see cref="IMonopitchRoof.Slope"/> for <see cref="UpperRoof"/>.</param>
         /// <param name="snowFencesOnHigherRoof">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="UpperRoof"/>.</param>
         public RoofAbuttingToTallerConstruction(IBuilding building, double widthOfUpperBuilding, double widthOfLowerBuilding,
-           double heightDifference, double slopeOfHigherRoof, bool snowFencesOnHigherRoof = false)
+           double heightDifference, double slopeOfHigherRoof, bool snowFencesOnHigherRoof = DefaultSnowFences)
         {
             Building = building;
 

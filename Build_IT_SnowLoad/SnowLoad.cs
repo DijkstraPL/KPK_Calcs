@@ -141,6 +141,9 @@ namespace Build_IT_SnowLoads
         /// </summary>
         public IBuildingSite BuildingSite { get; private set; }
 
+        public const DesignSituation DefaultDesignSituation = DesignSituation.A;
+        public const bool DefaultExcepctionalSituation = false;
+
         #endregion // Properties
 
         #region Constructors
@@ -152,8 +155,8 @@ namespace Build_IT_SnowLoads
         /// <param name="currentDesignSituation">Set <see cref="CurrentDesignSituation"/>.</param>
         /// <param name="excepctionalSituation">Set <see cref="ExcepctionalSituation"/>.</param>
         public SnowLoad(IBuildingSite buildingSite,
-            DesignSituation currentDesignSituation = DesignSituation.A,
-            bool excepctionalSituation = false)
+            DesignSituation currentDesignSituation = DefaultDesignSituation,
+            bool excepctionalSituation = DefaultExcepctionalSituation)
         {
             BuildingSite = buildingSite;
             CurrentDesignSituation = currentDesignSituation;

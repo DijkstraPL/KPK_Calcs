@@ -1,4 +1,4 @@
-{
+ï»¿{
   "app": {
     "Home": "Home",
     "NewScript": "New script",
@@ -11,7 +11,8 @@
     "Languages": {
       "Language": "Language",
       "English": "English",
-      "Polish": "Polish"
+      "Polish": "Polish",
+      "German": "German"
     },
     "Search": "Search"
   },
@@ -57,7 +58,7 @@
     },
     "Author": {
       "Header": "Author: Konrad Kania",
-      "Description": "I graduated at the Technical University in £ódŸ at the faculty of Civil Engineering. <br/>Currently, I also finished postgraduate studies at Polish Academy of Science and work for building company as a programmer since the beginning of March 2017. </br>I treat building designing with great passion the same as the programming. <br/>This way of doing things and possibilities which comes with those two branches bring me an idea to make something for overall usage. <br/>I started working on this site since September 2018 and I hope that there will be only more and better content available for everyone."
+      "Description": "I graduated at the Technical University in Â£Ã³dÅ¸ at the faculty of Civil Engineering. <br/>Currently, I also finished postgraduate studies at Polish Academy of Science and work for building company as a programmer since the beginning of March 2017. </br>I treat building designing with great passion the same as the programming. <br/>This way of doing things and possibilities which comes with those two branches bring me an idea to make something for overall usage. <br/>I started working on this site since September 2018 and I hope that there will be only more and better content available for everyone."
     }
   },
 

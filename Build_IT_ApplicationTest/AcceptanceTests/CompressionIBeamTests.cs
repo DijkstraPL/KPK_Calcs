@@ -9,11 +9,10 @@ using System.Text;
 
 namespace Build_IT_ApplicationTest.AcceptanceTests
 {
-
     [TestFixture]
-    public class CompressiveStrengthOfConcreteAtAnAgeTests
+    public class CompressionIBeamTests
     {
-        private const long ID = 2;
+        private const long ID = 6;
         private ScriptCalculatorTestEngine _testEngine;
 
         [SetUp]
@@ -24,7 +23,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
 
         [Test]
         [Repeat(25)]
-        public void CompressiveStrengthOfConcreteAtAnAgeTests_RandomExamples_Success()
+        public void CalculateTests_RandomExamples_Success()
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
@@ -34,13 +33,17 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
                 (p.Context & ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
-            parametersForCalculation["f_ck_"].Value = _testEngine.GetBigRandom();
-            parametersForCalculation["f_cm_"].Value = _testEngine.GetBigRandom();
-            parametersForCalculation["cement_type_"].Value = _testEngine.GetValueFromRange(
-                parametersForCalculation["cement_type_"].ValueOptions
+            parametersForCalculation["f_y_"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["h"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["b"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["t_f_"].Value = _testEngine.GetSmallRandom(min: 0.01);
+            parametersForCalculation["t_w_"].Value = _testEngine.GetSmallRandom(min: 0.01);
+            parametersForCalculation["r"].Value = _testEngine.GetSmallRandom(min: 0.01);
+            parametersForCalculation["a"].Value = _testEngine.GetSmallRandom(min: 0.01);
+            parametersForCalculation["Type"].Value = _testEngine.GetValueFromRange(
+                parametersForCalculation["Type"].ValueOptions
                 .Select(vo => vo.Value)
                 .ToArray());
-            parametersForCalculation["t"].Value = _testEngine.GetBigRandom(min: 3);
 
             Assert.DoesNotThrow(() => _testEngine.Calculate(ID, parametersForCalculation.Select(p => p.Value).ToList()),
                String.Join(", ", parametersForCalculation.Select(p => $"{p.Value.Name}={p.Value.Value}")));

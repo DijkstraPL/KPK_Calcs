@@ -2,6 +2,7 @@
 using Build_IT_Data.Calculators.Interfaces;
 using Build_IT_SnowLoads;
 using Build_IT_SnowLoads.BuildingTypes;
+using Build_IT_SnowLoads.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Composition;
@@ -10,9 +11,10 @@ using System.Linq;
 namespace Build_IT_ScriptService.SnowLoadsService
 {
     [Export("SnowLoad-CylindricalRoof", typeof(ICalculator))]
+    [Export(typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
-    public class CylindricalRoofService : SnowLoadBaseService, ICalculator
+    public class CylindricalRoofService : SnowLoadBaseService
     {
         #region Properties
         
@@ -22,37 +24,41 @@ namespace Build_IT_ScriptService.SnowLoadsService
         public Property<double> Height { get; } =
             new Property<double>("Height",
                 v => Convert.ToDouble(v));
-
+        
         #endregion // Properties
 
         #region Constructors
 
         public CylindricalRoofService()
         {
+            Result = new Result(new Dictionary<string, string> {
+                { "C_e_",     null },
+                { "s_k_",     null },
+                { "V",        null },
+                { "C_esl_",   null },
+                { "s_n_",     null },
+                { "s_Ad_",    null },
+                { "t_i_",     null },
+                { "∆_t_",     null },
+                { "U",        null },
+                { "C_t_",     null },
+                { "l_s_",     null },
+                { "μ_3_",     null },
+                { "s_I_",     null },
+                { "s_l,II_",  null },
+                { "s_r,II_",  null }
+            });
         }
 
         #endregion // Constructors
 
         #region Public_Methods
-
-        public void Map(IList<object> args)
+        
+        public override IResult Calculate()
         {
-            for (int i = 0; i < args.Count; i += 2)
-            {
-                var properties = this.GetType().GetProperties().Select(
-                    p => p.GetValue(this, null) as Property);
-
-                var property = properties.SingleOrDefault(p => p.Name == args[i].ToString());
-                if (property != null)
-                    property.SetValue(args[i + 1]);
-            }
-        }
-
-        public IResult Calculate()
-        {
-            BuildingSite buildingSite = GetBuildingSite();
-            SnowLoad snowLoad = GetSnowLoad(buildingSite);
-            Building building = GetBuilding(snowLoad);
+            IBuildingSite buildingSite = GetBuildingSite();
+            ISnowLoad snowLoad = GetSnowLoad(buildingSite);
+            IBuilding building = GetBuilding(snowLoad);
             CylindricalRoof cylindricalRoof = GetCylindricalRoof(building);
 
             if (!ExposureCoefficient.HasValue)
@@ -62,31 +68,30 @@ namespace Build_IT_ScriptService.SnowLoadsService
             cylindricalRoof.CalculateSnowLoad();
             cylindricalRoof.CalculateDriftLength();
 
-            var result = new Result();
-            result.Properties.Add("C_e_", buildingSite.ExposureCoefficient);
-            result.Properties.Add("s_k_", snowLoad.DefaultCharacteristicSnowLoad);
-            result.Properties.Add("V", snowLoad.VariationCoefficient);
-            result.Properties.Add("C_esl_", snowLoad.ExceptionalSnowLoadCoefficient);
-            result.Properties.Add("s_n_", snowLoad.SnowLoadForSpecificReturnPeriod);
-            result.Properties.Add("s_Ad_", snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
-            result.Properties.Add("t_i_", building.InternalTemperature);
-            result.Properties.Add("∆_t_", building.TempreatureDifference);
-            result.Properties.Add("U", building.OverallHeatTransferCoefficient);
-            result.Properties.Add("C_t_", building.ThermalCoefficient);
-            result.Properties.Add("l_s_", cylindricalRoof.DriftLength);
-            result.Properties.Add("μ_3_", cylindricalRoof.ShapeCoefficient);
-            result.Properties.Add("s_I_", cylindricalRoof.RoofCasesSnowLoad[1]);
-            result.Properties.Add("s_l,II_", cylindricalRoof.RoofCasesSnowLoad[2]);
-            result.Properties.Add("s_r,II_", cylindricalRoof.RoofCasesSnowLoad[3]);
+            Result["C_e_"]= buildingSite.ExposureCoefficient;
+            Result["s_k_"] = snowLoad.DefaultCharacteristicSnowLoad;
+            Result["V"] = snowLoad.VariationCoefficient;
+            Result["C_esl_"] = snowLoad.ExceptionalSnowLoadCoefficient;
+            Result["s_n_"] = snowLoad.SnowLoadForSpecificReturnPeriod;
+            Result["s_Ad_"] = snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod;
+            Result["t_i_"] = building.InternalTemperature;
+            Result["∆_t_"] = building.TempreatureDifference;
+            Result["U"] = building.OverallHeatTransferCoefficient;
+            Result["C_t_"] = building.ThermalCoefficient;
+            Result["l_s_"] = cylindricalRoof.DriftLength;
+            Result["μ_3_"] = cylindricalRoof.ShapeCoefficient;
+            Result["s_I_"] = cylindricalRoof.RoofCasesSnowLoad[1];
+            Result["s_l,II_"] = cylindricalRoof.RoofCasesSnowLoad[2];
+            Result["s_r,II_"] = cylindricalRoof.RoofCasesSnowLoad[3];
 
-            return result;
+            return Result;
         }
 
         #endregion // Public_Methods
 
         #region Private_Methods
            
-        private CylindricalRoof GetCylindricalRoof(Building building)
+        private CylindricalRoof GetCylindricalRoof(IBuilding building)
         {
             return new CylindricalRoof(building, Width.Value, Height.Value);
         }

@@ -10,9 +10,10 @@ using System.Linq;
 namespace Build_IT_ScriptService.SnowLoadsService
 {
     [Export("SnowLoad-RoofAbuttingToTallerConstruction", typeof(ICalculator))]
+    [Export(typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
-    public class RoofAbuttingToTallerConstructionService : SnowLoadBaseService, ICalculator
+    public class RoofAbuttingToTallerConstructionService : SnowLoadBaseService
     {
         #region Properties
         
@@ -30,34 +31,41 @@ namespace Build_IT_ScriptService.SnowLoadsService
                 v => Convert.ToDouble(v));
         public Property<bool> HigherRoofSnowFences { get; } =
             new Property<bool>("HigherRoofSnowFences",
-                v => v == "true");
-
+                v => v.ToString() == "true");
+        
         #endregion // Properties
 
         #region Constructors
 
         public RoofAbuttingToTallerConstructionService()
         {
+            Result = new Result(new Dictionary<string, string> {
+                { "C_e_",      null },
+                { "s_k_",      null },
+                { "V",         null },
+                { "C_esl_",    null },
+                { "s_n_",      null },
+                { "s_Ad_",     null },
+                { "t_i_",      null },
+                { "∆_t_",      null },
+                { "U",         null },
+                { "C_t_",      null },
+                { "μ_s_",      null },
+                { "μ_w_",      null },
+                { "μ_2_",      null },
+                { "μ_1_",      null },
+                { "l_s_",      null },
+                { "s_I_",      null },
+                { "s_l,II_",   null },
+                { "s_r,II_",   null }
+            });
         }
 
         #endregion // Constructors
 
         #region Public_Methods
-
-        public void Map(IList<object> args)
-        {
-            for (int i = 0; i < args.Count; i += 2)
-            {
-                var properties = this.GetType().GetProperties().Select(
-                    p => p.GetValue(this, null) as Property);
-
-                var property = properties.SingleOrDefault(p => p.Name == args[i].ToString());
-                if (property != null)
-                    property.SetValue(args[i + 1]);
-            }
-        }
-
-        public IResult Calculate()
+        
+        public override IResult Calculate()
         {
             BuildingSite buildingSite = GetBuildingSite();
             SnowLoad snowLoad = GetSnowLoad(buildingSite);
@@ -70,27 +78,26 @@ namespace Build_IT_ScriptService.SnowLoadsService
             building.CalculateThermalCoefficient();
             roofAbuttingToTallerConstruction.CalculateSnowLoad();
 
-            var result = new Result();
-            result.Properties.Add("C_e_", buildingSite.ExposureCoefficient);
-            result.Properties.Add("s_k_", snowLoad.DefaultCharacteristicSnowLoad);
-            result.Properties.Add("V", snowLoad.VariationCoefficient);
-            result.Properties.Add("C_esl_", snowLoad.ExceptionalSnowLoadCoefficient);
-            result.Properties.Add("s_n_", snowLoad.SnowLoadForSpecificReturnPeriod);
-            result.Properties.Add("s_Ad_", snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
-            result.Properties.Add("t_i_", building.InternalTemperature);
-            result.Properties.Add("∆_t_", building.TempreatureDifference);
-            result.Properties.Add("U", building.OverallHeatTransferCoefficient);
-            result.Properties.Add("C_t_", building.ThermalCoefficient);
-            result.Properties.Add("μ_s_", roofAbuttingToTallerConstruction.ShapeCoefficientSlidingSnow);
-            result.Properties.Add("μ_w_", roofAbuttingToTallerConstruction.ShapeCoefficientWind);
-            result.Properties.Add("μ_2_", roofAbuttingToTallerConstruction.ShapeCoefficient);
-            result.Properties.Add("μ_1_", roofAbuttingToTallerConstruction.ShapeCoefficientAtTheEnd);
-            result.Properties.Add("l_s_", roofAbuttingToTallerConstruction.DriftLength);
-            result.Properties.Add("s_I_", roofAbuttingToTallerConstruction.SnowLoadsNearTallerBuilding[1]);
-            result.Properties.Add("s_l,II_", roofAbuttingToTallerConstruction.SnowLoadsNearTallerBuilding[2]);
-            result.Properties.Add("s_r,II_", roofAbuttingToTallerConstruction.SnowLoadOnRoofValueAtTheEnd);
+            Result["C_e_"]=buildingSite.ExposureCoefficient;
+            Result["s_k_"]=snowLoad.DefaultCharacteristicSnowLoad;
+            Result["V"]=snowLoad.VariationCoefficient;
+            Result["C_esl_"]=snowLoad.ExceptionalSnowLoadCoefficient;
+            Result["s_n_"]=snowLoad.SnowLoadForSpecificReturnPeriod;
+            Result["s_Ad_"]=snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod;
+            Result["t_i_"]=building.InternalTemperature;
+            Result["∆_t_"]=building.TempreatureDifference;
+            Result["U"]=building.OverallHeatTransferCoefficient;
+            Result["C_t_"]=building.ThermalCoefficient;
+            Result["μ_s_"]=roofAbuttingToTallerConstruction.ShapeCoefficientSlidingSnow;
+            Result["μ_w_"]=roofAbuttingToTallerConstruction.ShapeCoefficientWind;
+            Result["μ_2_"]=roofAbuttingToTallerConstruction.ShapeCoefficient;
+            Result["μ_1_"]=roofAbuttingToTallerConstruction.ShapeCoefficientAtTheEnd;
+            Result["l_s_"]=roofAbuttingToTallerConstruction.DriftLength;
+            Result["s_I_"]=roofAbuttingToTallerConstruction.SnowLoadsNearTallerBuilding[1];
+            Result["s_l,II_"]=roofAbuttingToTallerConstruction.SnowLoadsNearTallerBuilding[2];
+            Result["s_r,II_"]=roofAbuttingToTallerConstruction.SnowLoadOnRoofValueAtTheEnd;
 
-            return result;
+            return Result;
         }
 
         #endregion // Public_Methods
@@ -102,7 +109,7 @@ namespace Build_IT_ScriptService.SnowLoadsService
             return new RoofAbuttingToTallerConstruction(building, 
                 UpperBuildingWidth.Value, LowerBuildingWidth.Value,
                 HeightDifference.Value, HigherRoofSlope.Value, 
-                HigherRoofSnowFences.HasValue ? HigherRoofSnowFences.Value : default );
+                HigherRoofSnowFences.HasValue ? HigherRoofSnowFences.Value : RoofAbuttingToTallerConstruction.DefaultSnowFences);
         }
 
         #endregion // Private_Methods

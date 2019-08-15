@@ -1,4 +1,5 @@
 ﻿using Build_IT_WindLoads.Factors.Interfaces;
+using Build_IT_WindLoads.TerrainOrographies;
 using System;
 
 namespace Build_IT_WindLoads.Terrains
@@ -7,7 +8,7 @@ namespace Build_IT_WindLoads.Terrains
     {
         #region Constructors
 
-        public TerrainCategory0(IFactorAt terrainOrography = null) 
+        public TerrainCategory0(TerrainOrography terrainOrography = null) 
             : base(roughnessLength: 0.003, minimumHeight: 1,
                   maximumHeight: 200, terrainOrography: terrainOrography)
         {

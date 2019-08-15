@@ -16,7 +16,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 {
     [Route("api/scripts")]
     [ApiController]
-    public class ScriptsController : BaseController// ControllerBase
+    public class ScriptsController : BaseController
     {
         [HttpGet("{lang?}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

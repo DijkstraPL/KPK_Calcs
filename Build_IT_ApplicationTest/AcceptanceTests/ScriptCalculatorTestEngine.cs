@@ -88,5 +88,8 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
         public string GetValueFromRange(string[] possibleValues)
             => possibleValues[_random.Next(possibleValues.Length)];
 
+        public bool GetRandomBoolean()
+            => Convert.ToBoolean(_random.Next(0, 2));
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Build_IT_Application.ScriptInterpreter.Parameters.Commands.CreateParameter;
+﻿using Build_IT_Application.ScriptInterpreter.Parameters.Commands.CopyParameters;
+using Build_IT_Application.ScriptInterpreter.Parameters.Commands.CreateParameter;
 using Build_IT_Application.ScriptInterpreter.Parameters.Commands.DeleteParameter;
 using Build_IT_Application.ScriptInterpreter.Parameters.Commands.UpdateParameter;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries.GetAllParametersForScript;
@@ -53,6 +54,14 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         public async Task<IActionResult> DeleteParameter(long parId)
         {
             await Mediator.Send(new DeleteParameterCommand { Id = parId });
+
+            return NoContent();
+        }
+
+        [HttpGet("{oldScriptId}/copyto/{newScriptId}")]
+        public async Task<IActionResult> CopyParametersTo(long oldScriptId, long newScriptId)
+        {
+            await Mediator.Send(new CopyParametersCommand { OldScriptId = oldScriptId, NewScriptId =newScriptId });
 
             return NoContent();
         }

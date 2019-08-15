@@ -154,6 +154,8 @@ namespace Build_IT_ScriptInterpreter.Scripts
             try
             {
                 parameter.Value = expressionEvaluator.Evaluate();
+                if (parameter.ValueType == ValueTypes.Number && parameter.Value.GetType() == typeof(String))
+                    parameter.Value = Convert.ToDouble(parameter.Value.ToString().Replace(',','.'), CultureInfo.InvariantCulture);
             }
             catch (ArgumentException ex)
             {

@@ -21,7 +21,9 @@ namespace Build_IT_WindLoads.Factors
 
         [Abbreviation("h_ave")]
         [Unit("m")]
-        public double ObstructionsHeight { get; } = 15;
+        public double ObstructionsHeight { get; } = DefaultObstructionHeight;
+
+        public const double DefaultObstructionHeight = 15;
 
         #endregion // Properties
 
@@ -29,7 +31,7 @@ namespace Build_IT_WindLoads.Factors
 
         public HeightDisplacement(IStructure building,
             double horizontalDistanceToObstruction,
-            double obstructionHeight = 15)
+            double obstructionHeight = DefaultObstructionHeight)
         {
             _building = building;
             HorizontalDistanceToObstruction = horizontalDistanceToObstruction;

@@ -93,11 +93,11 @@ var ParametersFormComponent = /** @class */ (function () {
         if (confirm("Are you sure?")) {
             this.parameterService.delete(this.scriptId, parameterId)
                 .subscribe(function () {
+                _this.parameters = _this.parameters.filter(function (p) { return p.id != parameterId; });
                 _this.onParametersToShowChange();
                 _this.refreshNumbering(_this.parameters.find(function (p) { return p.id == parameterId; }).number);
                 _this.saveParameters();
             }, function (error) { return console.error(error); });
-            this.parameters = this.parameters.filter(function (p) { return p.id != parameterId; });
         }
     };
     ParametersFormComponent.prototype.refreshNumbering = function (number) {
@@ -141,7 +141,10 @@ var ParametersFormComponent = /** @class */ (function () {
         this.editMode = true;
         this.newlyAddedParameter = true;
         this.newParameter = new ParameterImpl();
-        this.newParameter.number = Math.max.apply(Math, this.parameters.map(function (p) { return p.number; })) + 1;
+        if (this.parameters.length == 0)
+            this.newParameter.number = 0;
+        else
+            this.newParameter.number = Math.max.apply(Math, this.parameters.map(function (p) { return p.number; })) + 1;
     };
     ParametersFormComponent.prototype.saveParameters = function () {
         var _this = this;

@@ -62,7 +62,7 @@ var ScriptFormComponent = /** @class */ (function () {
             groupName: new FormControl('Other'),
             description: new FormControl('', [Validators.required, Validators.minLength(25), Validators.maxLength(500)]),
             notes: new FormControl('', Validators.maxLength(1000)),
-            defaultLanguage: new FormControl('0', Validators.required),
+            defaultLanguage: new FormControl(0, Validators.required),
             tags: new FormArray([])
         });
         this.parametersToShow = 'dataParameters';

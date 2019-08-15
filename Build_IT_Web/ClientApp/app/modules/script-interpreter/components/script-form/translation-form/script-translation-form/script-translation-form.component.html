@@ -14,6 +14,10 @@
                         *ngIf="defaultLanguage != languages.polish">
                 {{'app.Languages.Polish'| translate}}
             </mat-option>
+            <mat-option [value]="languages.german"
+                        *ngIf="defaultLanguage != languages.german">
+                {{'app.Languages.German'| translate}}
+            </mat-option>
         </mat-select>
     </mat-form-field>
 

@@ -85,6 +85,7 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
                         Number = parameter.Number,
                         Name = parameter.Name,
                         Value = parameter.Value,
+                        ValueType = (SIP.ValueTypes)parameter.ValueType,
                         VisibilityValidator = parameter.VisibilityValidator,
                         DataValidator = parameter.DataValidator,
                         Context = (SIP.ParameterOptions)parameter.Context
