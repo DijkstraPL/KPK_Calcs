@@ -5,6 +5,7 @@ using Build_IT_Application.ScriptInterpreter.Parameters.Queries.GetAllParameters
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Build_IT_Web.Services;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [HttpPost("{scriptId}/parameters")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
+        [Authorize()]
         public async Task<IActionResult> CreateParameter(long scriptId, [FromBody] CreateParameterCommand command)
         {
             command.ScriptId = scriptId;
@@ -35,6 +37,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [HttpPut("{scriptId}/parameters/{parId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize()]
         public async Task<IActionResult> UpdateParameter(long scriptId, long parId, [FromBody] UpdateParameterCommand command)
         {
             command.ScriptId = scriptId;
@@ -46,6 +49,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [HttpDelete("{scriptId}/parameters/{parId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize()]
         public async Task<IActionResult> DeleteParameter(long parId)
         {
             await Mediator.Send(new DeleteParameterCommand { Id = parId });

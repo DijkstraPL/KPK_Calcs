@@ -7,10 +7,10 @@ using Build_IT_Application.Mapping;
 using Build_IT_CommonTools;
 using Build_IT_CommonTools.Interfaces;
 using Build_IT_Data.Entities.Application;
-using Build_IT_Data.Entities.Authentication;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess;
 using Build_IT_DataAccess.Application;
+using Build_IT_DataAccess.Application.Interfaces;
 using Build_IT_DataAccess.DeadLoads;
 using Build_IT_DataAccess.DeadLoads.Interfaces;
 using Build_IT_DataAccess.DeadLoads.Repositories;
@@ -22,18 +22,21 @@ using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Services.Interfaces;
 using FluentValidation.AspNetCore;
 using MediatR;
-using MediatR.Pipeline;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Reflection;
+using System.Text;
 using ScriptMappingProfile = Build_IT_Application.Mapping.ScriptMappingProfile;
 
 namespace Build_IT_Web
@@ -76,6 +79,7 @@ namespace Build_IT_Web
             SetUpAutoMapper(services);
 
             SetAuthorizationServices(services);
+            SetAuthenticationServices(services);
 
             services.AddMvc()
                 .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =
@@ -103,7 +107,7 @@ namespace Build_IT_Web
                 app.UseDeveloperExceptionPage();
             }
 
-            app.
+            app.UseAuthentication();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -134,8 +138,7 @@ namespace Build_IT_Web
             using (var serviceScope =
                 app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                var dbContext =
-                serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                var dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
                 var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
                 var userManager = serviceScope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
                 dbContext.Database.Migrate();
@@ -158,17 +161,6 @@ namespace Build_IT_Web
             services.AddScoped<ITranslationService, Services.TranslationService>();
         }
 
-        private static void SetUpAutoMapper(IServiceCollection services)
-        {
-            services.AddAutoMapper(new Assembly[] {
-                typeof(AutoMapperProfile).GetTypeInfo().Assembly,
-                typeof(ScriptMappingProfile).GetTypeInfo().Assembly,
-                typeof(DeadLoadsMappingProfile).GetTypeInfo().Assembly
-            });
-
-            services.AddScoped<IScriptMappingProfile, ScriptMappingProfile>();
-        }
-
         private void SetDbContexts(IServiceCollection services, string dataAccessAssemblyName)
         {
 #if RELEASE
@@ -179,6 +171,10 @@ namespace Build_IT_Web
             services.AddDbContext<DeadLoadsDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DeadLoads"),
                 b => b.MigrationsAssembly(dataAccessAssemblyName)));
+            
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("Application"),
+                b => b.MigrationsAssembly(dataAccessAssemblyName)));
 #endif
 #if DEBUG
             services.AddDbContext<ScriptInterpreterDbContext>(
@@ -188,11 +184,17 @@ namespace Build_IT_Web
             services.AddDbContext<DeadLoadsDbContext>(
                 options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("DeadLoads"),
                 b => b.MigrationsAssembly(dataAccessAssemblyName)));
+
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(Configuration.GetSection("TestConnectionStrings").GetValue<string>("Application"),
+                b => b.MigrationsAssembly(dataAccessAssemblyName)));
 #endif
         }
 
-        private static void SetRepositoriesServices(IServiceCollection services)
+        private void SetRepositoriesServices(IServiceCollection services)
         {
+            services.AddScoped<IApplicationUnitOfWork, ApplicationUnitOfWork>();
+
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ISubcategoryRepository, SubcategoryRepository>();
             services.AddScoped<IMaterialRepository, MaterialRepository>();
@@ -206,13 +208,24 @@ namespace Build_IT_Web
             services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();
         }
 
-        private static void ConfigureMediatR(IServiceCollection services)
+        private void ConfigureMediatR(IServiceCollection services)
         {
             services.AddMediatR(typeof(GetAllCategoriesQuery.Handler).GetTypeInfo().Assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
         }
 
+        private void SetUpAutoMapper(IServiceCollection services)
+        {
+            services.AddAutoMapper(new Assembly[] {
+                typeof(AutoMapperProfile).GetTypeInfo().Assembly,
+                typeof(ScriptMappingProfile).GetTypeInfo().Assembly,
+                typeof(DeadLoadsMappingProfile).GetTypeInfo().Assembly
+            });
+
+            services.AddScoped<IScriptMappingProfile, ScriptMappingProfile>();
+        }
+        
         private void SetAuthorizationServices(IServiceCollection services)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>(
@@ -224,9 +237,38 @@ namespace Build_IT_Web
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequiredLength = 7;
                 }).AddEntityFrameworkStores<ApplicationDbContext>();
-                
+
         }
-        
+
+        private void SetAuthenticationServices(IServiceCollection services)
+        {
+            services.AddAuthentication(opts =>
+            {
+                opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = Configuration["Auth:Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                           Encoding.UTF8.GetBytes(Configuration["Auth:Jwt:Key"])),
+                    ValidAudience = Configuration["Auth:Jwt:Audience"],
+                    ClockSkew = TimeSpan.Zero,
+
+                    RequireExpirationTime = true,
+                    ValidateIssuer = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateAudience = true
+                };
+            });
+        }
+
+
         #endregion // Private_Methods
     }
 }

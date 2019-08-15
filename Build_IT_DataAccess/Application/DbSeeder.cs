@@ -10,9 +10,11 @@ namespace Build_IT_DataAccess.Application
 {
     public static class DbSeeder
     {
+        #region Public_Methods
+        
         public static void Seed(ApplicationDbContext dbContext,
-           RoleManager<IdentityRole> roleManager,
-           UserManager<ApplicationUser> userManager)
+            RoleManager<IdentityRole> roleManager,
+            UserManager<ApplicationUser> userManager)
         {
             if (!dbContext.Users.Any())
             {
@@ -22,7 +24,11 @@ namespace Build_IT_DataAccess.Application
             }
         }
 
-        private static async Task CreateUsers(ApplicationDbContext dbContext, 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+
+        private static async Task CreateUsers(ApplicationDbContext dbContext,
             RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager)
         {
@@ -52,6 +58,19 @@ namespace Build_IT_DataAccess.Application
                 LastModifiedDate = lastModifiedDate
             };
 
+            if (await userManager.FindByNameAsync(userAdmin.UserName) == null)
+            {
+                await userManager.CreateAsync(userAdmin, "LolpoLolpo24");
+                await userManager.AddToRoleAsync(userAdmin, roleRegisteredUser);
+                await userManager.AddToRoleAsync(userAdmin, roleAdministrator);
+
+                userAdmin.EmailConfirmed = true;
+                userAdmin.LockoutEnabled = false;
+            }
+
+            await dbContext.SaveChangesAsync();
         }
+
+        #endregion // Private_Methods
     }
 }

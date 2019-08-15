@@ -13,11 +13,15 @@ import { ElementSelectDirective } from '../../directives/element-select.directiv
 import { ConfigurationService } from '../../services/configuration.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { SearchService } from '../../services/search.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 var NavMenuComponent = /** @class */ (function () {
-    function NavMenuComponent(translationService, configurations, searchService) {
+    function NavMenuComponent(translationService, auth, configurations, searchService, router) {
         this.translationService = translationService;
+        this.auth = auth;
         this.configurations = configurations;
         this.searchService = searchService;
+        this.router = router;
         this.searchForm = new FormGroup({
             search: new FormControl('')
         });
@@ -29,6 +33,11 @@ var NavMenuComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    NavMenuComponent.prototype.logout = function () {
+        if (this.auth.logout())
+            this.router.navigate([""]);
+        return false;
+    };
     NavMenuComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.languageChangedSubscription = this.translationService.languageChanged$.subscribe(function (data) {
@@ -54,8 +63,10 @@ var NavMenuComponent = /** @class */ (function () {
             styleUrls: ['./nav-menu.component.css']
         }),
         __metadata("design:paramtypes", [TranslationService,
+            AuthService,
             ConfigurationService,
-            SearchService])
+            SearchService,
+            Router])
     ], NavMenuComponent);
     return NavMenuComponent;
 }());

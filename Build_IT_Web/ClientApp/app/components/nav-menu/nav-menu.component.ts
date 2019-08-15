@@ -4,6 +4,8 @@ import { ElementSelectDirective } from '../../directives/element-select.directiv
 import { ConfigurationService } from '../../services/configuration.service';
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { SearchService } from '../../services/search.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-nav-menu',
@@ -25,9 +27,17 @@ export class NavMenuComponent implements OnInit, OnDestroy {
     }
 
     constructor(private translationService: TranslationService,
+        public auth: AuthService,
         public configurations: ConfigurationService,
-        private searchService: SearchService) {
+        private searchService: SearchService,
+        private router: Router) {
 
+    }
+
+    logout(): boolean {
+        if (this.auth.logout()) 
+            this.router.navigate([""]);
+        return false;
     }
 
     ngOnInit() {

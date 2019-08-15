@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
@@ -11,6 +11,7 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { AboutMeComponent } from './components/about-me/about-me.component';
+import { LoginComponent } from './components/login/login.component';
 
 import { AppErrorHandler } from './common/errors/app-error-handler';
 import { LoadsRoutingModule } from './modules/loads/loads-routing.module';
@@ -26,14 +27,21 @@ import { LocalStoreManager } from './services/local-store-manager.service';
 import { ConfigurationService } from './services/configuration.service';
 import { SearchService } from './services/search.service';
 
+import { AuthService } from './services/auth.service';
+import { AuthInterceptor } from './services/auth.interceptor';
+import { AuthResponseInterceptor } from './services/auth.response.interceptor';
+import { RegisterComponent } from './components/register/register.component';
+
 @NgModule({
   declarations: [
       AppComponent,
       NavMenuComponent,
-        HomeComponent,
-        CarouselComponent,
-        AboutMeComponent,
-        ElementSelectDirective
+      HomeComponent,
+      CarouselComponent,
+      AboutMeComponent,
+      ElementSelectDirective,
+      LoginComponent,
+      RegisterComponent
   ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -58,6 +66,18 @@ import { SearchService } from './services/search.service';
     ],
     providers: [
         { provide: ErrorHandler, useClass: AppErrorHandler },
+        { provide: 'BASE_URL', useFactory: getBaseUrl },
+        AuthService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthResponseInterceptor,
+            multi: true
+        },
         TranslationService,
         LocalStoreManager,
         ConfigurationService,
@@ -66,3 +86,7 @@ import { SearchService } from './services/search.service';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function getBaseUrl() {
+    return document.getElementsByTagName('base')[0].href;
+}

@@ -9,9 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { ScriptService } from '../../services/script.service';
+import { AuthService } from '../../../../services/auth.service';
 var ScriptCardComponent = /** @class */ (function () {
-    function ScriptCardComponent(scriptService) {
+    function ScriptCardComponent(scriptService, auth) {
         this.scriptService = scriptService;
+        this.auth = auth;
         this.deleted = new EventEmitter();
     }
     ScriptCardComponent.prototype.delete = function (script) {
@@ -36,7 +38,8 @@ var ScriptCardComponent = /** @class */ (function () {
             templateUrl: './script-card.component.html',
             styleUrls: ['./script-card.component.scss']
         }),
-        __metadata("design:paramtypes", [ScriptService])
+        __metadata("design:paramtypes", [ScriptService,
+            AuthService])
     ], ScriptCardComponent);
     return ScriptCardComponent;
 }());

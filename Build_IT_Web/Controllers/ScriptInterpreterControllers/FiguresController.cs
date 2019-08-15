@@ -3,6 +3,7 @@ using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         }
 
         [HttpPost("{parameterId}/figures")]
+        [Authorize()]
         public async Task<IActionResult> Upload(long parameterId, IFormFile file)
         {
             var parameter = await _parameterRepository.GetAsync(parameterId);
@@ -93,6 +95,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         }
 
         [HttpDelete("{parameterId}/figures/{figureId}")]
+        [Authorize()]
         public async Task<IActionResult> Detach(long parameterId, long figureId)
         {
             var parameter = await _parameterRepository.GetParameterWithAllDependanciesAsync(parameterId);

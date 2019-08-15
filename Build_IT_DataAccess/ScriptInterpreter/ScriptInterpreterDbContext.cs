@@ -72,8 +72,8 @@ namespace Build_IT_DataAccess.ScriptInterpreter
             modelBuilder.ApplyConfiguration(new ParameterConfiguration());
             modelBuilder.ApplyConfiguration(new ValueOptionConfiguration());
             modelBuilder.ApplyConfiguration(new ScriptTagConfiguration());
-            modelBuilder.ApplyConfiguration(new ParameterFigureConfiguration());
             modelBuilder.ApplyConfiguration(new FigureConfiguration());
+            modelBuilder.ApplyConfiguration(new ParameterFigureConfiguration());
 
             modelBuilder.ApplyConfiguration(new ScriptTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ParameterTranslationConfiguration());

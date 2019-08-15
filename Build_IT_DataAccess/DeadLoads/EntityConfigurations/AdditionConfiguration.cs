@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.DeadLoads.EntityConfigurations
 {
-    public class AdditionConfiguration : IEntityTypeConfiguration<Addition>
+    internal class AdditionConfiguration : IEntityTypeConfiguration<Addition>
     {
         #region Public_Methods
 

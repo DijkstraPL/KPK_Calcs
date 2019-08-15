@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 {
-    public class ScriptConfiguration : IEntityTypeConfiguration<Script>
+    internal class ScriptConfiguration : IEntityTypeConfiguration<Script>
     {
         #region Public_Methods
         

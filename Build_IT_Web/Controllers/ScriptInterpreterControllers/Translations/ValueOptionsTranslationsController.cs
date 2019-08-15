@@ -8,6 +8,7 @@ using Build_IT_Data.Entities.Scripts.Translations;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources.Translations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Translations
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
+        [Authorize()]
         public async Task<IActionResult> CreateValueOptionTranslation([FromBody] CreateValueOptionTranslationCommand command)
         {
             await Mediator.Send(command);
@@ -37,6 +39,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Translations
         [HttpPut("{valueOptionTranslationId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize()]
         public async Task<IActionResult> UpdateValueOptionTranslation(long valueOptionTranslationId, [FromBody] UpdateValueOptionTranslationCommand command)
         {
             command.Id = valueOptionTranslationId;
@@ -48,6 +51,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Translations
         [HttpPut("{valueOptionTranslationId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize()]
         public async Task<IActionResult> DeleteValueOptionTranslation(long valueOptionTranslationId)
         {
             await Mediator.Send(new DeleteValueOptionTranslationCommand { Id = valueOptionTranslationId });

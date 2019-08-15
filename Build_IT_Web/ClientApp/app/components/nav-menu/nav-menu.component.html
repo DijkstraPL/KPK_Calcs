@@ -21,7 +21,8 @@
                     <span class="fa fa-home"></span> {{'app.Home' | translate}} <span class="sr-only">(current)</span>
                 </a>
             </li>
-            <li class="nav-item"
+            <li *ngIf="this.auth.isLoggedIn()"
+                class="nav-item"
                 [routerLinkActive]='["active"]'
                 [routerLinkActiveOptions]='{ exact: true }'>
                 <a class="nav-link"
@@ -61,9 +62,27 @@
                     <span class="fa fa-user-circle"></span> {{'app.About' | translate}}
                 </a>
             </li>
+            <li *ngIf="!this.auth.isLoggedIn()"
+                class="nav-item"
+                [routerLinkActive]='["active"]'
+                [routerLinkActiveOptions]='{ exact: true }'>
+                <a class="nav-link"
+                   [routerLink]="['/login']">
+                    <span class="fa fa-sign-in-alt"></span> Log in
+                </a>
+            </li>
+            <li *ngIf="this.auth.isLoggedIn()"
+                class="nav-item"
+                [routerLinkActive]='["active"]'
+                [routerLinkActiveOptions]='{ exact: true }'>
+                <a class="nav-link"
+                   (click)="logout()">
+                    <span class='fa fa-sign-out-alt'></span> Log out
+                </a>
+            </li>
             <!--<li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>-->
+        <a class="nav-link disabled" href="#">Disabled</a>
+    </li>-->
         </ul>
         <form class="form-inline my-2 my-lg-0"
               (ngSubmit)="onSearch()"

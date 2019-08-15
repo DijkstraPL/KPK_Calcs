@@ -26,12 +26,14 @@
                     [routerLink]="['/scripts/calculator', script.id]">
                 <span class="fa fa-calculator"></span> {{'scriptCard.Calculate' | translate}}
             </button>
-            <button mat-stroked-button
+            <button *ngIf="this.auth.isLoggedIn()"
+                    mat-stroked-button
                     [routerLink]="['/scripts/edit', script.id]">
                 <span class="fa fa-edit"></span> {{'scriptCard.Edit' | translate}}
             </button>
         </div>
-        <button mat-stroked-button
+        <button *ngIf="this.auth.isLoggedIn()"
+                mat-stroked-button
                 color="warn"
                 class="float-right"
                 (click)="delete(script)">

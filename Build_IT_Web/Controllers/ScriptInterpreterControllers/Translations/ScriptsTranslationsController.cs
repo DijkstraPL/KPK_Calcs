@@ -4,6 +4,7 @@ using Build_IT_Application.ScriptInterpreter.Translations.Commands.UpdateScriptT
 using Build_IT_Application.ScriptInterpreter.Translations.Queries.GetScriptTranslation;
 using Build_IT_Application.ScriptInterpreter.Translations.Queries.GetScriptTranslations;
 using Build_IT_Data.Entities.Scripts.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Translations
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
+        [Authorize()]
         public async Task<IActionResult> CreateScriptTranslation([FromBody] CreateScriptTranslationCommand command)
         {
             await Mediator.Send(command);
@@ -41,6 +43,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Translations
         [HttpPut("{scriptId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize()]
         public async Task<IActionResult> UpdateScriptTranslation(long scriptId, [FromBody] UpdateScriptTranslationCommand command)
         {
             await Mediator.Send(command);
@@ -51,6 +54,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers.Translations
         [HttpDelete("{scriptId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize()]
         public async Task<IActionResult> DeleteParameterTranslation(long scriptId)
         {
             await Mediator.Send(new DeleteScriptTranslationCommand { Id = scriptId });

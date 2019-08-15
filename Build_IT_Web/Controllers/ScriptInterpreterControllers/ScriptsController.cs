@@ -5,6 +5,7 @@ using Build_IT_Application.ScriptInterpreter.Scripts.Queries;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetAllScripts;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript;
 using Build_IT_Web.Services;
+using Microsoft.AspNetCore.Authorization;
 //using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
+        [Authorize()]
         public async Task<IActionResult> Create([FromBody]CreateScriptCommand command)
         {
             return Ok(await Mediator.Send(command));
@@ -53,6 +55,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize()]
         public async Task<IActionResult> Delete(long id)
         {
             await Mediator.Send(new DeleteScriptCommand { Id = id });

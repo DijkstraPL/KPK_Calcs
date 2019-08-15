@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations.Translations
 {
-    public class ScriptTranslationConfiguration : IEntityTypeConfiguration<ScriptTranslation>
+    internal class ScriptTranslationConfiguration : IEntityTypeConfiguration<ScriptTranslation>
     {
         #region Public_Methods
 

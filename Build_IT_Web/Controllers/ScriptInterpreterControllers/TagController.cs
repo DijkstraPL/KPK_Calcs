@@ -6,6 +6,7 @@ using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
+        [Authorize()]
         public async Task<IActionResult> CreateTag(long scriptId, [FromBody] CreateTagCommand command)
         {
             var newTag = await Mediator.Send(command);

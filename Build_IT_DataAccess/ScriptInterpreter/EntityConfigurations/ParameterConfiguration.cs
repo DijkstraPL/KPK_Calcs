@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 {
-    public class ParameterConfiguration : IEntityTypeConfiguration<Parameter>
+    internal class ParameterConfiguration : IEntityTypeConfiguration<Parameter>
     {
         #region Public_Methods
 

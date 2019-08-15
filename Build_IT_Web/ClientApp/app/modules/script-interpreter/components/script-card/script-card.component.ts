@@ -1,6 +1,7 @@
 ﻿import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { Script } from '../../models/interfaces/script'
 import { ScriptService } from '../../services/script.service';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
     selector: 'app-script-card',
@@ -12,7 +13,8 @@ export class ScriptCardComponent {
     @Input('script') script: Script;
     @Output('deleted') deleted = new EventEmitter<number>();
 
-    constructor(private scriptService: ScriptService) {
+    constructor(private scriptService: ScriptService,
+        public auth: AuthService) {
     }
        
     delete(script: Script): void {
