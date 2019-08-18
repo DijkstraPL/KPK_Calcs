@@ -90,7 +90,8 @@ var ScriptInterpreterModule = /** @class */ (function () {
                 })
             ],
             entryComponents: [
-                ExistingFiguresDialogComponent
+                ExistingFiguresDialogComponent,
+                ParameterFiguresComponent
             ],
             exports: [
                 ScriptCardsComponent

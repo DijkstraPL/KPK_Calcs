@@ -7,32 +7,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input } from '@angular/core';
-import { FigureService } from '../../../../services/figure.service';
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 var ParameterFiguresComponent = /** @class */ (function () {
-    function ParameterFiguresComponent(figureService) {
-        this.figureService = figureService;
+    function ParameterFiguresComponent(dialogRef, parameter) {
+        this.dialogRef = dialogRef;
+        this.parameter = parameter;
     }
-    ParameterFiguresComponent.prototype.ngOnInit = function () {
-        this.figures = this.parameter.figures;
+    ParameterFiguresComponent.prototype.onCloseClick = function () {
+        this.dialogRef.close();
     };
-    ParameterFiguresComponent.prototype.expanded = function () {
-        this.isExpanded = true;
-    };
-    ParameterFiguresComponent.prototype.collapsed = function () {
-        this.isExpanded = false;
-    };
-    __decorate([
-        Input(),
-        __metadata("design:type", Object)
-    ], ParameterFiguresComponent.prototype, "parameter", void 0);
     ParameterFiguresComponent = __decorate([
         Component({
             selector: 'parameter-figures',
             templateUrl: './parameter-figures.component.html',
             styleUrls: ['./parameter-figures.component.scss']
         }),
-        __metadata("design:paramtypes", [FigureService])
+        __param(1, Inject(MAT_DIALOG_DATA)),
+        __metadata("design:paramtypes", [MatDialogRef, Object])
     ], ParameterFiguresComponent);
     return ParameterFiguresComponent;
 }());

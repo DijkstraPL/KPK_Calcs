@@ -1,7 +1,9 @@
 ﻿import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { TranslationService } from '../../services/translation.service';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
     selector: 'app-login',
@@ -10,15 +12,22 @@ import { AuthService } from '../../services/auth.service';
 })
 
 export class LoginComponent {
-    title: string;
     form: FormGroup;
+
+    get username(): AbstractControl {
+        return this.form.get('Username');
+    }
+    get password(): AbstractControl {
+        return this.form.get('Password');
+    }
+
 
     constructor(private router: Router,
         private fb: FormBuilder,
         private authService: AuthService,
+        private bottomSheetRef: MatBottomSheetRef<LoginComponent>,
         @Inject('BASE_URL') private baseUrl: string) {
 
-        this.title = "Zaloguj się";
         this.createForm();
 
     }
@@ -48,6 +57,7 @@ export class LoginComponent {
                     + this.authService.getAuth()!.token
                 );
 
+                this.bottomSheetRef.dismiss();
                 this.router.navigate(["home"]);
             },
                 err => {
@@ -59,7 +69,12 @@ export class LoginComponent {
                 });
     }
 
+    dismiss() {
+        this.bottomSheetRef.dismiss();
+    }
+
     onBack() {
+        this.bottomSheetRef.dismiss();
         this.router.navigate(["home"]);
     }
 

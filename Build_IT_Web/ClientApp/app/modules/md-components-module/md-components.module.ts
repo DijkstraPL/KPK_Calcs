@@ -18,35 +18,39 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 @NgModule({
     declarations: [
     ],
-  exports: [
-      CommonModule,
-      MatSelectModule,
-      MatTableModule,
-      MatButtonModule,
-      MatInputModule,
-      MatCheckboxModule,
-      BrowserModule,
-      BrowserAnimationsModule,
-      DragDropModule,
-      MatCardModule,
-      MatAutocompleteModule,
-      MatProgressBarModule,
-      MatRadioModule,
-      MatExpansionModule,
-      MatListModule,
-      MatTabsModule,
-      MatChipsModule,
-      MatToolbarModule,
-      MatPaginatorModule,
-      MatDialogModule,
-      MatTooltipModule
-  ]
+    exports: [
+        CommonModule,
+        MatSelectModule,
+        MatTableModule,
+        MatButtonModule,
+        MatInputModule,
+        MatCheckboxModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        DragDropModule,
+        MatCardModule,
+        MatAutocompleteModule,
+        MatProgressBarModule,
+        MatRadioModule,
+        MatExpansionModule,
+        MatListModule,
+        MatTabsModule,
+        MatChipsModule,
+        MatToolbarModule,
+        MatPaginatorModule,
+        MatDialogModule,
+        MatTooltipModule,
+        MatBottomSheetModule
+    ],
+    providers: [
+        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }
+    ]
 })
 export class MdComponentsModule { }

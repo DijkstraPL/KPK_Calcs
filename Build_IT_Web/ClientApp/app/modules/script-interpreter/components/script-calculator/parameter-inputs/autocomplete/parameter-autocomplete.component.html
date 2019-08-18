@@ -1,4 +1,6 @@
 ﻿<mat-form-field>
+    <span *ngIf="parameter.figures && parameter.figures.length > 0"
+          matPrefix><figures-button [parameter]="parameter"></figures-button></span>
     <input type="text"
            aria-label="Number"
            matInput

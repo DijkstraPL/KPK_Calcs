@@ -8,6 +8,9 @@
       "DeadLoads": "Stałe",
       "SnowLoads": "Śnieg"
     },
+    "Register": "Zarejestruj",
+    "LogIn": "Zaloguj",
+    "LogOut": "Wyloguj",
     "Languages": {
       "Language": "Language",
       "English": "Angielski",
@@ -15,6 +18,34 @@
       "German": "Niemiecki"
     },
     "Search": "Szukaj"
+  },
+
+  "login": {
+    "Title": "Zaloguj się",
+    "UsernameOrEmail": "Nazwa użytkownika lub adres e-mail",
+    "WriteProperUsernameOrPassword": "Wpisz poprawną nazwę użytkownika lub adress e-mail.",
+    "Password": "Hasło",
+    "WritePassword": "Wpisz hasło.",
+    "RememberMe": "Zapamiętaj mnie",
+    "LogIn": "Zaloguj",
+    "ForgotPassword": "Zapomniałeś hasła?",
+    "DontHaveAccount": "Nie masz konta? Kliknij tu, aby je utworzyć!"
+  },
+
+  "register": {
+    "RegisterNewUser": "Zarejestruj nowego użytkownika",
+    "WriteUsername": "Write username...",
+    "WriteProperUsername": "Proszę wpisać poprawną nazwę użytkownika.",
+    "WriteEmail": "Wpisz e-mail...",
+    "WriteProperEmail": "Wpisz właściwy adres e-mail.",
+    "WritePassword": "Wpisz hasło...",
+    "WriteProperPassword": "Wpisz poprawne hasło.",
+    "RepeatPassword": "Powtórz hasło...",
+    "WrongPasswordConfirmation": "Hasło i jego potwierdzenie nie są zgodne.",
+    "WriteDisplayedName": "Określ wyświetlaną nazwę użytkownika...",
+    "WriteProperDisplayedName": "Wpisz poprawną nazwę użytkownika do wyświetlania.",
+    "Register": "Zarejestruj",
+    "Cancel": "Anuluj"
   },
 
   "carousel": {

@@ -1,7 +1,8 @@
-﻿import { Component, Input, OnInit } from '@angular/core';
+﻿import { Component, Input, OnInit, Inject } from '@angular/core';
 import { Parameter } from '../../../../models/interfaces/parameter';
 import { FigureService } from '../../../../services/figure.service';
 import { Figure } from '../../../../models/interfaces/figure';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
     selector: 'parameter-figures',
@@ -9,24 +10,14 @@ import { Figure } from '../../../../models/interfaces/figure';
     styleUrls: ['./parameter-figures.component.scss']
 })
 
-export class ParameterFiguresComponent implements OnInit {
-
-    @Input() parameter: Parameter;
-    figures: Figure[];
-    isExpanded: boolean;
-    
-    constructor(private figureService: FigureService) {
+export class ParameterFiguresComponent {
+        
+    constructor(
+        public dialogRef: MatDialogRef<ParameterFiguresComponent>,
+        @Inject(MAT_DIALOG_DATA) public parameter: Parameter) {
     }
 
-    ngOnInit(): void {
-        this.figures = this.parameter.figures;
-    }    
-
-    expanded() {
-        this.isExpanded = true;
-    }
-
-    collapsed() {
-        this.isExpanded = false;
+    onCloseClick(): void {
+        this.dialogRef.close();
     }
 }

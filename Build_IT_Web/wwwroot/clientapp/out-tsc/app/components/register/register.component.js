@@ -20,7 +20,6 @@ var RegisterComponent = /** @class */ (function () {
         this.fb = fb;
         this.http = http;
         this.baseUrl = baseUrl;
-        this.title = "Rejestracja nowego użytkownika";
         // Inicjalizacja formularza
         this.createForm();
     }
@@ -46,7 +45,7 @@ var RegisterComponent = /** @class */ (function () {
         tempUser.Email = this.form.value.Email;
         tempUser.Password = this.form.value.Password;
         tempUser.DisplayName = this.form.value.DisplayName;
-        var url = this.baseUrl + "api/user";
+        var url = this.baseUrl + "api/users";
         this.http
             .put(url, tempUser)
             .subscribe(function (res) {

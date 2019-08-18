@@ -1,6 +1,8 @@
 ﻿
 <div class="justify-content-start parameter-radio">
     <label class="align-self-start mb-2">
+        <span *ngIf="parameter.figures && parameter.figures.length > 0"
+              matPrefix><figures-button [parameter]="parameter"></figures-button></span>
         <span [innerHtml]="parameter.name | html"></span>{{isRequired() ? '*' : ''}}
     </label>
     <mat-radio-group [(ngModel)]="parameter.value"

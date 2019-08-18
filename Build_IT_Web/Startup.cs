@@ -87,6 +87,8 @@ namespace Build_IT_Web
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1) //validate api rules
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetAllMaterialsQueryValidator>());
 
+            services.AddEntityFrameworkSqlServer();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });

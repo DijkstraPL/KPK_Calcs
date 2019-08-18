@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
     selector: 'app-register',
@@ -11,7 +12,6 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class RegisterComponent {
-    title: string;
     form: FormGroup;
 
     constructor(private router: Router,
@@ -19,7 +19,6 @@ export class RegisterComponent {
         private http: HttpClient,
         @Inject('BASE_URL') private baseUrl: string) {
 
-        this.title = "Rejestracja nowego użytkownika";
 
         // Inicjalizacja formularza
         this.createForm();
@@ -49,7 +48,7 @@ export class RegisterComponent {
         tempUser.Password = this.form.value.Password;
         tempUser.DisplayName = this.form.value.DisplayName;
 
-        var url = this.baseUrl + "api/user";
+        var url = this.baseUrl + "api/users";
 
         this.http
             .put<User>(url, tempUser)

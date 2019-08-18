@@ -2,6 +2,8 @@
 import { Parameter } from '../../../../models/interfaces/parameter';
 import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 import { ValueType } from '../../../../models/enums/valueType';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ParameterFiguresComponent } from '../figures/parameter-figures.component';
 
 @Component({
     selector: 'parameter-input',

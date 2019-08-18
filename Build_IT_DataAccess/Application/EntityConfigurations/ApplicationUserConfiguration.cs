@@ -26,6 +26,9 @@ namespace Build_IT_DataAccess.Application.EntityConfigurations
 
             builder.Property(p => p.LastModifiedDate)
                 .IsRequired();
+
+            builder.HasMany(u => u.Tokens)
+                .WithOne(i => i.ApplicationUser);
         }
 
         #endregion // Public_Methods

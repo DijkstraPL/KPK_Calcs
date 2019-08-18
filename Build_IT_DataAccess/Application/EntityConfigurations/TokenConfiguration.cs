@@ -32,6 +32,12 @@ namespace Build_IT_DataAccess.Application.EntityConfigurations
 
             builder.Property(p => p.LastModifiedDate)
                 .IsRequired();
+
+            builder.Property(i => i.Id)
+                .ValueGeneratedOnAdd();
+
+            builder.HasOne(i => i.ApplicationUser)
+                .WithMany(u => u.Tokens);
         }
 
         #endregion // Public_Methods

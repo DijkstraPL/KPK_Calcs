@@ -15,13 +15,16 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { SearchService } from '../../services/search.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { LoginComponent } from '../login/login.component';
 var NavMenuComponent = /** @class */ (function () {
-    function NavMenuComponent(translationService, auth, configurations, searchService, router) {
+    function NavMenuComponent(translationService, auth, configurations, searchService, router, bottomSheet) {
         this.translationService = translationService;
         this.auth = auth;
         this.configurations = configurations;
         this.searchService = searchService;
         this.router = router;
+        this.bottomSheet = bottomSheet;
         this.searchForm = new FormGroup({
             search: new FormControl('')
         });
@@ -52,6 +55,9 @@ var NavMenuComponent = /** @class */ (function () {
     NavMenuComponent.prototype.onSearch = function () {
         this.searchService.search(this.searchValue.value);
     };
+    NavMenuComponent.prototype.openLoginSheet = function () {
+        this.bottomSheet.open(LoginComponent);
+    };
     __decorate([
         ViewChild('languageSelector', null),
         __metadata("design:type", ElementSelectDirective)
@@ -66,7 +72,8 @@ var NavMenuComponent = /** @class */ (function () {
             AuthService,
             ConfigurationService,
             SearchService,
-            Router])
+            Router,
+            MatBottomSheet])
     ], NavMenuComponent);
     return NavMenuComponent;
 }());

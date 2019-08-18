@@ -8,6 +8,9 @@
       "DeadLoads": "Dead Loads",
       "SnowLoads": "Snow Loads"
     },
+    "Register": "Register",
+    "LogIn": "Log in",
+    "LogOut": "Log out",
     "Languages": {
       "Language": "Language",
       "English": "English",
@@ -15,6 +18,34 @@
       "German": "German"
     },
     "Search": "Search"
+  },
+
+  "login": {
+    "Title": "Log in",
+    "UsernameOrEmail": "Username or email address",
+    "WriteProperUsernameOrPassword": "Write proper username or password.",
+    "Password": "Password",
+    "WritePassword": "Write password.",
+    "RememberMe": "Remember me",
+    "LogIn": "Log in",
+    "ForgotPassword": "Forgot password?",
+    "DontHaveAccount": "Don't have account? Click here to create one!"
+  },
+
+  "register": {
+    "RegisterNewUser": "Register new user",
+    "WriteUsername": "Write username...",
+    "WriteProperUsername": "Write proper username.",
+    "WriteEmail": "Write email...",
+    "WriteProperEmail": "Write proper email.",
+    "WritePassword": "Write password...",
+    "WriteProperPassword": "Write proper password.",
+    "RepeatPassword": "Repeat password...",
+    "WrongPasswordConfirmation": "Password and its confirmation are not the same.",
+    "WriteDisplayedName": "Write displayed name...",
+    "WriteProperDisplayedName": "Write proper displayed name.",
+    "Register": "Register",
+    "Cancel": "Cancel"
   },
 
   "carousel": {

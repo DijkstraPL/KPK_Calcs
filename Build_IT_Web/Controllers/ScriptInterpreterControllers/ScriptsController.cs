@@ -45,6 +45,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize()]
         public async Task<IActionResult> UpdateScript([FromBody]UpdateScriptCommand command)
         {
             await Mediator.Send(command);

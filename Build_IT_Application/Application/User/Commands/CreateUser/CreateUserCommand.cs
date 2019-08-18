@@ -1,6 +1,7 @@
 ﻿using Build_IT_Application.Exceptions;
 using Build_IT_CommonTools.Interfaces;
 using Build_IT_Data.Entities.Application;
+using Build_IT_DataAccess.Application;
 using Build_IT_DataAccess.Application.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -29,7 +30,7 @@ namespace Build_IT_Application.Application.User.Commands.CreateUser
 
             private readonly IDateTime _dateTime;
             private readonly UserManager<ApplicationUser> _userManager;
-            private readonly IApplicationUnitOfWork _unitOfWork;
+            private readonly ApplicationDbContext _context;
 
             #endregion // Fields
 
@@ -38,11 +39,11 @@ namespace Build_IT_Application.Application.User.Commands.CreateUser
             public Handler(
                 IDateTime dateTime,
                 UserManager<ApplicationUser> userManager,
-                IApplicationUnitOfWork unitOfWork)
+                ApplicationDbContext context)
             {
                 _dateTime = dateTime;
                 _userManager = userManager;
-                _unitOfWork = unitOfWork;
+                _context = context;
             }
 
             #endregion // Constructors
@@ -60,7 +61,7 @@ namespace Build_IT_Application.Application.User.Commands.CreateUser
 
                 var now = _dateTime.Now;
 
-                user = new ApplicationUser()
+                var newUser = new ApplicationUser()
                 {
                     SecurityStamp = Guid.NewGuid().ToString(),
                     UserName = request.UserName,
@@ -70,14 +71,21 @@ namespace Build_IT_Application.Application.User.Commands.CreateUser
                     LastModifiedDate = now
                 };
 
-                await _userManager.CreateAsync(user, request.Password);
+                await _userManager.CreateAsync(newUser, request.Password);
 
-                await _userManager.AddToRoleAsync(user, "RegisteredUser");
+                await _userManager.AddToRoleAsync(newUser, "RegisteredUser");
 
-                user.EmailConfirmed = true;
-                user.LockoutEnabled = false;
+                newUser.EmailConfirmed = true;
+                newUser.LockoutEnabled = false;
 
-                await _unitOfWork.CompleteAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+
+                }
 
                 return Unit.Value;
             }

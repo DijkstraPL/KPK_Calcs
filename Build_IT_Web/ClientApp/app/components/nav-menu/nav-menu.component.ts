@@ -6,6 +6,8 @@ import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { SearchService } from '../../services/search.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
     selector: 'app-nav-menu',
@@ -30,7 +32,8 @@ export class NavMenuComponent implements OnInit, OnDestroy {
         public auth: AuthService,
         public configurations: ConfigurationService,
         private searchService: SearchService,
-        private router: Router) {
+        private router: Router,
+        private bottomSheet: MatBottomSheet) {
 
     }
 
@@ -55,5 +58,9 @@ export class NavMenuComponent implements OnInit, OnDestroy {
 
     onSearch() {
         this.searchService.search(this.searchValue.value);
+    }
+
+    openLoginSheet() {
+        this.bottomSheet.open(LoginComponent);
     }
 }

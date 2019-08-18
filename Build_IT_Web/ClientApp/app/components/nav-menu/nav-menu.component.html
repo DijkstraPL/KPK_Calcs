@@ -67,8 +67,9 @@
                 [routerLinkActive]='["active"]'
                 [routerLinkActiveOptions]='{ exact: true }'>
                 <a class="nav-link"
-                   [routerLink]="['/login']">
-                    <span class="fa fa-sign-in-alt"></span> Log in
+                   (click)="openLoginSheet()">
+                    <!--[routerLink]="['/login']"-->
+                    <span class="fa fa-sign-in-alt"></span> {{'app.LogIn' | translate }} / {{'app.Register' | translate }}
                 </a>
             </li>
             <li *ngIf="this.auth.isLoggedIn()"
@@ -77,7 +78,7 @@
                 [routerLinkActiveOptions]='{ exact: true }'>
                 <a class="nav-link"
                    (click)="logout()">
-                    <span class='fa fa-sign-out-alt'></span> Log out
+                    <span class='fa fa-sign-out-alt'></span> {{'app.LogOut' | translate }}
                 </a>
             </li>
             <!--<li class="nav-item">

@@ -32,8 +32,7 @@ namespace Build_IT_DataAccess.Application
             RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager)
         {
-            DateTime createdDate = DateTime.Now;
-            DateTime lastModifiedDate = DateTime.Now;
+            var now = DateTime.Now;
 
             string roleAdministrator = "Administrator";
             string roleRegisteredUser = "RegisteredUser";
@@ -54,8 +53,9 @@ namespace Build_IT_DataAccess.Application
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = "KokanPL",
                 Email = "kania.konrad92@gmail.com",
-                CreatedDate = createdDate,
-                LastModifiedDate = lastModifiedDate
+                CreatedDate = now,
+                LastModifiedDate = now,
+                DisplayName = "Konrad Kania"
             };
 
             if (await userManager.FindByNameAsync(userAdmin.UserName) == null)

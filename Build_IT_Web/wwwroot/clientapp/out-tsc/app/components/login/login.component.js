@@ -14,15 +14,30 @@ import { Component, Inject } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 var LoginComponent = /** @class */ (function () {
-    function LoginComponent(router, fb, authService, baseUrl) {
+    function LoginComponent(router, fb, authService, bottomSheetRef, baseUrl) {
         this.router = router;
         this.fb = fb;
         this.authService = authService;
+        this.bottomSheetRef = bottomSheetRef;
         this.baseUrl = baseUrl;
-        this.title = "Zaloguj się";
         this.createForm();
     }
+    Object.defineProperty(LoginComponent.prototype, "username", {
+        get: function () {
+            return this.form.get('Username');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(LoginComponent.prototype, "password", {
+        get: function () {
+            return this.form.get('Password');
+        },
+        enumerable: true,
+        configurable: true
+    });
     LoginComponent.prototype.createForm = function () {
         this.form = this.fb.group({
             Username: ['', Validators.required],
@@ -44,6 +59,7 @@ var LoginComponent = /** @class */ (function () {
                 + username
                 + " TOKEN: "
                 + _this.authService.getAuth().token);
+            _this.bottomSheetRef.dismiss();
             _this.router.navigate(["home"]);
         }, function (err) {
             // Logowanie nieudane
@@ -53,7 +69,11 @@ var LoginComponent = /** @class */ (function () {
             });
         });
     };
+    LoginComponent.prototype.dismiss = function () {
+        this.bottomSheetRef.dismiss();
+    };
     LoginComponent.prototype.onBack = function () {
+        this.bottomSheetRef.dismiss();
         this.router.navigate(["home"]);
     };
     LoginComponent.prototype.getFormControl = function (name) {
@@ -77,10 +97,11 @@ var LoginComponent = /** @class */ (function () {
             templateUrl: './login.component.html',
             styleUrls: ['./login.component.scss']
         }),
-        __param(3, Inject('BASE_URL')),
+        __param(4, Inject('BASE_URL')),
         __metadata("design:paramtypes", [Router,
             FormBuilder,
-            AuthService, String])
+            AuthService,
+            MatBottomSheetRef, String])
     ], LoginComponent);
     return LoginComponent;
 }());

@@ -24,8 +24,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 var MdComponentsModule = /** @class */ (function () {
     function MdComponentsModule() {
     }
@@ -53,7 +54,11 @@ var MdComponentsModule = /** @class */ (function () {
                 MatToolbarModule,
                 MatPaginatorModule,
                 MatDialogModule,
-                MatTooltipModule
+                MatTooltipModule,
+                MatBottomSheetModule
+            ],
+            providers: [
+                { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }
             ]
         })
     ], MdComponentsModule);
