@@ -9,27 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component, Input } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ParameterFiguresComponent } from '../figures/parameter-figures.component';
 var FiguresButtonComponent = /** @class */ (function () {
     function FiguresButtonComponent(dialog) {
         this.dialog = dialog;
     }
-    FiguresButtonComponent_1 = FiguresButtonComponent;
     FiguresButtonComponent.prototype.openFigures = function () {
         var dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = false;
         dialogConfig.autoFocus = true;
         dialogConfig.width = 'auto';
         dialogConfig.data = this.parameter;
-        var dialogRef = this.dialog.open(FiguresButtonComponent_1, dialogConfig);
+        var dialogRef = this.dialog.open(ParameterFiguresComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(function (result) {
         });
     };
-    var FiguresButtonComponent_1;
     __decorate([
         Input(),
         __metadata("design:type", Object)
     ], FiguresButtonComponent.prototype, "parameter", void 0);
-    FiguresButtonComponent = FiguresButtonComponent_1 = __decorate([
+    FiguresButtonComponent = __decorate([
         Component({
             selector: 'figures-button',
             templateUrl: './figures-button.component.html',
