@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Build_IT_Application.Application.User.Commands.CreateUser;
+using Build_IT_Application.Application.User.Commands.GetToken;
 using Build_IT_Application.DeadLoads.Categories.Queries.GetAllCategories;
 using Build_IT_Application.DeadLoads.Materials.Queries.GetAllMaterials;
 using Build_IT_Application.Infrastructures;
@@ -65,7 +67,7 @@ namespace Build_IT_Web
         {
             services.Configure<FigureSettings>(Configuration.GetSection("PhotoSettings"));
             string dataAccessAssemblyName = Configuration.GetSection("DataAccess").GetValue<string>("Project");
-            
+
             SetTranslationsServices(services);
 
             SetDbContexts(services, dataAccessAssemblyName);
@@ -73,6 +75,7 @@ namespace Build_IT_Web
 
             services.AddScoped<IDateTime, MyDateTime>();
             services.AddTransient<INotificationService, NotificationService>();
+            AddAuthorizationServices(services);
 
             ConfigureMediatR(services);
 
@@ -208,6 +211,12 @@ namespace Build_IT_Web
             services.AddScoped<IParameterRepository, ParameterRepository>();
 
             services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();
+        }
+
+        private void AddAuthorizationServices(IServiceCollection services)
+        {
+            services.AddTransient<IRequestHandler<CreateUserCommand>, CreateUserCommand.Handler>();
+            services.AddTransient<IRequestHandler<TokenRequestCommand, TokenResponseQuery>, TokenRequestCommand.Handler>();
         }
 
         private void ConfigureMediatR(IServiceCollection services)
