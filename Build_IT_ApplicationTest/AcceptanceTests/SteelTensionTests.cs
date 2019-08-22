@@ -45,7 +45,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
                 (p.Context & ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
-            parametersForCalculation["A"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["A"].Value = _testEngine.GetBigRandom(min:1);
             parametersForCalculation["N_Ed_"].Value = _testEngine.GetBigRandom();
             parametersForCalculation["f_y_"].Value = _testEngine.GetBigRandom();
 

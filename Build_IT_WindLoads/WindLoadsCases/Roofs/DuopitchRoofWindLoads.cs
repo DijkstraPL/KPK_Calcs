@@ -114,10 +114,12 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
             : base(building, windLoadData)
         {
             Angle = building.Angle;
+            if (Angle < 5 && Angle > -5 || Angle > 75 || Angle < -45)
+                throw new ArgumentOutOfRangeException(nameof(Angle));
         }
 
         #endregion // Constructors
-        
+
         #region Public_Methods
 
         //TODO: Check that
@@ -161,60 +163,86 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
             => GetExternalPressureCoefficients(
                GetExternalPressureCoefficientTenSquareMetersMin(),
                GetExternalPressureCoefficientOneSquareMeterMin());
-        //if (externalPressureCoefficients[Field.I] > 0 &&
-        //    externalPressureCoefficients[Field.J] < 0 ||
-        //    externalPressureCoefficients[Field.I] < 0 &&
-        //    externalPressureCoefficients[Field.J] > 0)
-        //    externalPressureCoefficients[Field.I] = 
-        // TODO: add logic from aware
 
         #endregion // Public_Methods
 
         #region Private_Methods
 
         private IDictionary<Field, double> GetExternalPressureCoefficientTenSquareMetersMax()
-            => GetExternalPressureCoefficient(
-                ratio5: RatioFor10SquareMetersAngle5Max,
-                ratio15: RatioFor10SquareMetersAngle15Max,
-                ratio30: RatioFor10SquareMetersAngle30Max,
-                ratio45: RatioFor10SquareMetersAngle45Max,
-                ratio60: RatioFor10SquareMetersAngle60Max,
-                ratio75: RatioFor10SquareMetersAngle75Max);
+        {
+            if (Angle > 5)
+                return GetExternalPressureCoefficient(
+                               ratio5: RatioFor10SquareMetersAngle5Max,
+                               ratio15: RatioFor10SquareMetersAngle15Max,
+                               ratio30: RatioFor10SquareMetersAngle30Max,
+                               ratio45: RatioFor10SquareMetersAngle45Max,
+                               ratio60: RatioFor10SquareMetersAngle60Max,
+                               ratio75: RatioFor10SquareMetersAngle75Max);
+            return GetExternalPressureCoefficient(
+                           ratio5: RatioFor10SquareMetersAngleMinus5Max,
+                           ratio15: RatioFor10SquareMetersAngleMinus15Max,
+                           ratio30: RatioFor10SquareMetersAngleMinus30Max,
+                           ratio45: RatioFor10SquareMetersAngleMinus45Max);
+        }
 
         private IDictionary<Field, double> GetExternalPressureCoefficientOneSquareMeterMax()
-            => GetExternalPressureCoefficient(
-                ratio5: RatioFor1SquareMeterAngle5Max,
-                ratio15: RatioFor1SquareMeterAngle15Max,
-                ratio30: RatioFor1SquareMeterAngle30Max,
-                ratio45: RatioFor1SquareMeterAngle45Max,
-                ratio60: RatioFor1SquareMeterAngle60Max,
-                ratio75: RatioFor1SquareMeterAngle75Max);
+        {
+            if (Angle > 5)
+                return GetExternalPressureCoefficient(
+                           ratio5: RatioFor1SquareMeterAngle5Max,
+                           ratio15: RatioFor1SquareMeterAngle15Max,
+                           ratio30: RatioFor1SquareMeterAngle30Max,
+                           ratio45: RatioFor1SquareMeterAngle45Max,
+                           ratio60: RatioFor1SquareMeterAngle60Max,
+                           ratio75: RatioFor1SquareMeterAngle75Max);
+            return GetExternalPressureCoefficient(
+                           ratio5: RatioFor1SquareMeterAngleMinus5Max,
+                           ratio15: RatioFor1SquareMeterAngleMinus15Max,
+                           ratio30: RatioFor1SquareMeterAngleMinus30Max,
+                           ratio45: RatioFor1SquareMeterAngleMinus45Max);
+        }
 
         private IDictionary<Field, double> GetExternalPressureCoefficientTenSquareMetersMin()
-            => GetExternalPressureCoefficient(
-                ratio5: RatioFor10SquareMetersAngle5Min,
-                ratio15: RatioFor10SquareMetersAngle15Min,
-                ratio30: RatioFor10SquareMetersAngle30Min,
-                ratio45: RatioFor10SquareMetersAngle45Min,
-                ratio60: RatioFor10SquareMetersAngle60Min,
-                ratio75: RatioFor10SquareMetersAngle75Min);
+        {
+            if (Angle > 5)
+                return GetExternalPressureCoefficient(
+                           ratio5: RatioFor10SquareMetersAngle5Min,
+                           ratio15: RatioFor10SquareMetersAngle15Min,
+                           ratio30: RatioFor10SquareMetersAngle30Min,
+                           ratio45: RatioFor10SquareMetersAngle45Min,
+                           ratio60: RatioFor10SquareMetersAngle60Min,
+                           ratio75: RatioFor10SquareMetersAngle75Min);
+            return GetExternalPressureCoefficient(
+                       ratio5: RatioFor10SquareMetersAngleMinus5Min,
+                       ratio15: RatioFor10SquareMetersAngleMinus15Min,
+                       ratio30: RatioFor10SquareMetersAngleMinus30Min,
+                       ratio45: RatioFor10SquareMetersAngleMinus45Min);
+        }
 
         private IDictionary<Field, double> GetExternalPressureCoefficientOneSquareMeterMin()
-            => GetExternalPressureCoefficient(
-                ratio5: RatioFor1SquareMeterAngle5Min,
-                ratio15: RatioFor1SquareMeterAngle15Min,
-                ratio30: RatioFor1SquareMeterAngle30Min,
-                ratio45: RatioFor1SquareMeterAngle45Min,
-                ratio60: RatioFor1SquareMeterAngle60Min,
-                ratio75: RatioFor1SquareMeterAngle75Min);
+        {
+            if (Angle > 5)
+                return GetExternalPressureCoefficient(
+                           ratio5: RatioFor1SquareMeterAngle5Min,
+                           ratio15: RatioFor1SquareMeterAngle15Min,
+                           ratio30: RatioFor1SquareMeterAngle30Min,
+                           ratio45: RatioFor1SquareMeterAngle45Min,
+                           ratio60: RatioFor1SquareMeterAngle60Min,
+                           ratio75: RatioFor1SquareMeterAngle75Min);
+            return GetExternalPressureCoefficient(
+                       ratio5: RatioFor1SquareMeterAngleMinus5Min,
+                       ratio15: RatioFor1SquareMeterAngleMinus15Min,
+                       ratio30: RatioFor1SquareMeterAngleMinus30Min,
+                       ratio45: RatioFor1SquareMeterAngleMinus45Min);
+        }
 
         private IDictionary<Field, double> GetExternalPressureCoefficient(
             IDictionary<Field, double> ratio5,
             IDictionary<Field, double> ratio15,
             IDictionary<Field, double> ratio30,
             IDictionary<Field, double> ratio45,
-            IDictionary<Field, double> ratio60,
-            IDictionary<Field, double> ratio75)
+            IDictionary<Field, double> ratio60 = null,
+            IDictionary<Field, double> ratio75 = null)
         {
             var ratios = new Dictionary<double, IDictionary<Field, double>>()
                {
@@ -226,10 +254,8 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
                    {75, ratio75 }
                };
 
-            if (Angle < 5)
-                throw new ArgumentOutOfRangeException(nameof(Angle));
-            if (ratios.ContainsKey(Angle))
-                return ratios[Angle];
+            if (ratios.ContainsKey(Math.Abs(Angle)))
+                return ratios[Math.Abs(Angle)];
 
             return GetIntermediaryRatio(ratios);
         }
@@ -245,11 +271,11 @@ namespace Build_IT_WindLoads.WindLoadsCases.Roofs
                     continue;
                 }
 
-                if (Angle < ratio.Key)
+                if (Math.Abs(Angle) < ratio.Key)
                     return InterpolateBetweenFor(
                         (ratio.Key, ratio.Value),
                         (previousAngleValue, ratios[previousAngleValue]),
-                        Angle);
+                        Math.Abs(Angle));
 
                 previousAngleValue = ratio.Key;
             }

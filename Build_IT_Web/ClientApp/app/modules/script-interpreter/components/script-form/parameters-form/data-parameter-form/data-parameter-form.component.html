@@ -160,11 +160,11 @@
     </mat-form-field>
 
     <mat-form-field class="m-2 form-medium">
-        <input matInput
-               placeholder="{{'scriptsForm.Parameters.EditMode.VisibilityValidator.Header' | translate}}"
-               formControlName="visibilityValidator"
-               [errorStateMatcher]="matcher"
-               autocomplete="off" />
+        <textarea matInput
+                  placeholder="{{'scriptsForm.Parameters.EditMode.VisibilityValidator.Header' | translate}}"
+                  formControlName="visibilityValidator"
+                  [errorStateMatcher]="matcher"
+                  autocomplete="off" ></textarea>
         <mat-hint>{{'scriptsForm.Parameters.EditMode.VisibilityValidator.Hint' | translate}}</mat-hint>
         <mat-error *ngIf="parameterVisibilityValidator && parameterVisibilityValidator.hasError('maxlength')">
             {{'scriptsForm.Parameters.EditMode.VisibilityValidator.MaxLengthError' | translate:parameterVisibilityValidator.errors.maxlength}}
@@ -172,11 +172,11 @@
     </mat-form-field>
 
     <mat-form-field class="m-2 form-medium">
-        <input matInput
-               placeholder="{{'scriptsForm.Parameters.EditMode.DataValidator.Header' | translate}}"
-               formControlName="dataValidator"
-               [errorStateMatcher]="matcher"
-               autocomplete="off" />
+        <textarea matInput
+                  placeholder="{{'scriptsForm.Parameters.EditMode.DataValidator.Header' | translate}}"
+                  formControlName="dataValidator"
+                  [errorStateMatcher]="matcher"
+                  autocomplete="off" ></textarea>
         <mat-hint>{{'scriptsForm.Parameters.EditMode.DataValidator.Hint' | translate}}</mat-hint>
         <mat-error *ngIf="parameterDataValidator && parameterDataValidator.hasError('maxlength')">
             {{'scriptsForm.Parameters.EditMode.DataValidator.MaxLengthError' | translate:parameterDataValidator.errors.maxlength}}
