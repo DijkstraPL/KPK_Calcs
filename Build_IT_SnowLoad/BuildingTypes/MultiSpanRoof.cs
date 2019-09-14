@@ -117,7 +117,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
         #endregion // Constructors
 
-        #region Methods
+        #region Public_Methods
 
         /// <summary>
         /// Calculate <see cref="IMonopitchRoof.SnowLoadOnRoofValue"/> for <see cref="LeftRoof"/> and <see cref="RightRoof"/>
@@ -134,6 +134,10 @@ namespace Build_IT_SnowLoads.BuildingTypes
             CalculateSnowLoadShapeCoefficient();
             CalculateSnowLoadOnRoof();
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
 
         private void SetReferences()
         {
@@ -177,6 +181,6 @@ namespace Build_IT_SnowLoads.BuildingTypes
                         snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
         }
 
-        #endregion // Methods
+        #endregion // Private_Methods
     }
 }

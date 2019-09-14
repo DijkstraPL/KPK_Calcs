@@ -33,7 +33,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
                 (p.Context & ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
-            parametersForCalculation["f_y_"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["f_y_"].Value = _testEngine.GetBigRandom(min: 0.01);
             parametersForCalculation["h"].Value = _testEngine.GetBigRandom();
             parametersForCalculation["b"].Value = _testEngine.GetBigRandom();
             parametersForCalculation["t_f_"].Value = _testEngine.GetSmallRandom(min: 0.01);

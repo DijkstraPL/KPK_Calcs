@@ -32,6 +32,9 @@ namespace Build_IT_Data.Calculators
 
         public Result(IDictionary<string,string> properties)
         {
+            if (properties == null)
+                throw new ArgumentNullException(nameof(properties));
+
             _properties = new Dictionary<string, object>();
             foreach (var property in properties)
                 _properties.Add(property.Key, default);

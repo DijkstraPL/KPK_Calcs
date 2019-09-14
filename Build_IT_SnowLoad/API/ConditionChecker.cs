@@ -37,7 +37,7 @@ namespace Build_IT_SnowLoads.API
                     case DesignSituation.B3:
                         return true;
                     default:
-                        return false;
+                        throw new NotSupportedException();
                 }
 
             if (!annexB)

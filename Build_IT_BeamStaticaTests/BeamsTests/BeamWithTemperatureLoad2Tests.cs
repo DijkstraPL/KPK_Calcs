@@ -1,5 +1,5 @@
 ﻿using Build_IT_BeamStatica.Beams;
-using Build_IT_BeamStatica.Loads.ContinousLoads;
+using Build_IT_BeamStatica.Loads.ContinuousLoads;
 using Build_IT_BeamStatica.Nodes;
 using Build_IT_BeamStatica.Spans;
 using Build_IT_Data.Materials;

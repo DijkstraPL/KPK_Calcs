@@ -107,7 +107,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
         #endregion // Constructors
 
-        #region Methods
+        #region Public_Methods
 
         /// <summary>
         /// Calculate <see cref="IMonopitchRoof.SnowLoadOnRoofValue"/> for <see cref="LeftRoof"/> and <see cref="RightRoof"/> 
@@ -119,6 +119,10 @@ namespace Build_IT_SnowLoads.BuildingTypes
             RightRoof.CalculateSnowLoad();
             SetCasesSnowLoad();
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
 
         /// <summary>
         /// Set <see cref="LeftRoofCasesSnowLoad"/> and <see cref="RightRoofCasesSnowLoad"/>.
@@ -138,7 +142,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
             RightRoofCasesSnowLoad.Add(3, 0.5 * RightRoof.SnowLoadOnRoofValue);
         }
 
-        #endregion // Methods
+        #endregion // Private_Methods
 
     }
 }

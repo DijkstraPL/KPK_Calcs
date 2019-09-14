@@ -1,7 +1,7 @@
 ﻿using Build_IT_BeamStatica.Beams;
 using Build_IT_BeamStatica.Beams.Interfaces;
 using Build_IT_BeamStatica.Loads;
-using Build_IT_BeamStatica.Loads.ContinousLoads;
+using Build_IT_BeamStatica.Loads.ContinuousLoads;
 using Build_IT_BeamStatica.Nodes;
 using Build_IT_BeamStatica.Spans;
 using Build_IT_Data.Materials;
@@ -39,7 +39,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
             
             var startLoad = new LoadData(value: -150, position: 3);
             var endLoad = new LoadData(value: -50, position: 8);
-            span1.ContinousLoads.Add(ContinousAngledLoad.Create(startLoad, endLoad, 30));
+            span1.ContinousLoads.Add(ContinuousAngledLoad.Create(startLoad, endLoad, 30));
 
             _beam = new Beam(spans, nodes, includeSelfWeight: false);
 

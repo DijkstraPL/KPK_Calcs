@@ -10,10 +10,15 @@ namespace Build_IT_DataTests.UnitTests.Sections
     public class SectionPropertiesTests
     {
         [Test()]
-        public void ConstructorTest_MinusArgument_ThrowsArgumentOutOfRangeException()
+        public void ConstructorTest_MinusArea_ThrowsArgumentOutOfRangeException()
         {
             Assert.Throws<ArgumentOutOfRangeException>(()
                 => new SectionProperties(area: -1, momentOfInteria: 250));
+        }
+
+        [Test()]
+        public void ConstructorTest_MinusMomentOfInteria_ThrowsArgumentOutOfRangeException()
+        {
             Assert.Throws<ArgumentOutOfRangeException>(()
                 => new SectionProperties(area: 100, momentOfInteria: -1));
         }

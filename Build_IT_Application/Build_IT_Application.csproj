@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Build_IT_BeamStatica\Build_IT_BeamStatica.csproj" />
     <ProjectReference Include="..\Build_IT_DataAccess\Build_IT_DataAccess.csproj" />
     <ProjectReference Include="..\Build_IT_ScriptInterpreter\Build_IT_ScriptInterpreter.csproj" />
   </ItemGroup>

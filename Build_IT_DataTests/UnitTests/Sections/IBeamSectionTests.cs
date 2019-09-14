@@ -16,7 +16,6 @@ namespace Build_IT_DataTests.UnitTests.Sections
                 flangeWidth: 8, webWidth: 5.3, radius: 9);
         }
 
-        [Test()]
         [TestCase(-91, 180, 8, 5.3, 9)]
         [TestCase(91, -180, 8, 5.3, 9)]
         [TestCase(91, 0, 8, 5.3, 9)]

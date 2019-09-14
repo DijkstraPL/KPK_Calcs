@@ -1,4 +1,4 @@
-﻿using Build_IT_BeamStatica.Loads.ContinousLoads.NormalLoadResults;
+﻿using Build_IT_BeamStatica.Loads.ContinuousLoads.NormalLoadResults;
 using Build_IT_BeamStatica.Loads.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
 using Moq;

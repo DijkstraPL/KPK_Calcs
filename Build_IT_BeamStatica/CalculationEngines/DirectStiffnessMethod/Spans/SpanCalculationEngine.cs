@@ -1,5 +1,5 @@
 ﻿using Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
-using Build_IT_BeamStatica.Loads.ContinousLoads;
+using Build_IT_BeamStatica.Loads.ContinuousLoads;
 using Build_IT_BeamStatica.Loads.Interfaces;
 using Build_IT_BeamStatica.Nodes.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
@@ -76,7 +76,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Spans
         private void AddSelfWeightLoad()
         {
             double load = -_span.Material.Density * g / 1000 * _span.Section.Area / 10000;
-            _span.ContinousLoads.Add(ContinousShearLoad.Create(0, load, _span.Length, load));
+            _span.ContinousLoads.Add(ContinuousShearLoad.Create(0, load, _span.Length, load));
         }
 
         private double SetNormalForceLoadVector(bool isLeftNode)
