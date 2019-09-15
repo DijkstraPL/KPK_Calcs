@@ -201,11 +201,15 @@ namespace Build_IT_SnowLoads.Exceptional
         {
             if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
                 LeftSnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(LeftShapeCoefficient, snowLoad.SnowLoadForSpecificReturnPeriod);
+            else
+                throw new ArgumentException();
         }
         private void CalculateSnowLoad2()
         {
             if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
                 RightSnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(RightShapeCoefficient, snowLoad.SnowLoadForSpecificReturnPeriod);
+            else
+                throw new ArgumentException();
         }
 
 

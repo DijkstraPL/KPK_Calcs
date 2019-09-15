@@ -73,8 +73,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
         #region Fields
 
-        private ISnowLoad snowLoad;
-        private IBuildingSite buildingSite;
+        private ISnowLoad _snowLoad;
+        private IBuildingSite _buildingSite;
 
         #endregion // Fields
 
@@ -141,8 +141,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
         private void SetReferences()
         {
-            snowLoad = Building.SnowLoad;
-            buildingSite = snowLoad.BuildingSite;
+            _snowLoad = Building.SnowLoad;
+            _buildingSite = _snowLoad.BuildingSite;
         }
 
         /// <summary>
@@ -165,20 +165,20 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <seealso cref="SnowLoadCalc.CalculateSnowLoad(double, double, double, double)"/>
         private void CalculateSnowLoadOnRoof()
         {
-            if (!snowLoad.ExcepctionalSituation)
+            if (!_snowLoad.ExcepctionalSituation)
                 SnowLoadOnMiddleRoof =
                     SnowLoadCalc.CalculateSnowLoad(
                         ShapeCoefficient,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.SnowLoadForSpecificReturnPeriod);
+                        _snowLoad.SnowLoadForSpecificReturnPeriod);
             else
                 SnowLoadOnMiddleRoof =
                     SnowLoadCalc.CalculateSnowLoad(
                         ShapeCoefficient,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
+                        _snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
         }
 
         #endregion // Private_Methods
