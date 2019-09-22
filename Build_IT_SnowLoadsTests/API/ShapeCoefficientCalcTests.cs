@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System;
 
-namespace Build_IT_SnowLoadsTests.API
+namespace Build_IT_SnowLoadsUnitTests.API
 {
     [TestFixture()]
     public class ShapeCoefficientCalcTests

@@ -2,7 +2,7 @@
 using Build_IT_SnowLoads.API;
 using NUnit.Framework;
 
-namespace Build_IT_SnowLoadsTests.API
+namespace Build_IT_SnowLoadsUnitTests.API
 {
     [TestFixture]
     public class ConditionCheckerTests

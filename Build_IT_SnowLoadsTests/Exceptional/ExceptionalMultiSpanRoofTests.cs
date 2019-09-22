@@ -5,7 +5,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 
-namespace Build_IT_SnowLoadsTests.Exceptional
+namespace Build_IT_SnowLoadsUnitTests.Exceptional
 {
     [TestFixture()]
     public class ExceptionalMultiSpanRoofTests

@@ -4,7 +4,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 
-namespace Build_IT_SnowLoadsTests.BuildingTypes
+namespace Build_IT_SnowLoadsUnitTests.BuildingTypes
 {
     [TestFixture()]
     public class DriftingAtProjectionsObstructionsTests

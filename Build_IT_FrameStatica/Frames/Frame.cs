@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Build_IT_FrameStaticaTests")]
+[assembly: InternalsVisibleTo("Build_IT_FrameStaticaAcceptanceTests")]
 namespace Build_IT_FrameStatica.Frames
 {
     public class Frame
