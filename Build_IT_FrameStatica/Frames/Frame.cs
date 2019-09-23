@@ -26,5 +26,42 @@ namespace Build_IT_FrameStatica.Frames
 
             CalculationEngine = new DirectStiffnessCalculationEngine(this);
         }
+        
+        public void SetNumeration()
+        {
+            short spanCounter = 0;
+            short nodeCounter = 0;
+
+            spanCounter = SetSpanNumeration(spanCounter);
+            nodeCounter = SetNodeNumeration(nodeCounter);
+
+            SetNumberOfDegreesOfFreedom();
+        }
+
+        #region Private_Methods
+
+        private void SetNumberOfDegreesOfFreedom()
+        {
+            foreach (var node in Nodes)
+                NumberOfDegreesOfFreedom += node.DegreesOfFreedom;
+        }
+
+        private short SetSpanNumeration(short spanCounter)
+        {
+            foreach (var span in Spans)
+                span.Number = spanCounter++;
+            return spanCounter;
+        }
+
+        private short SetNodeNumeration(short nodeCounter)
+        {
+            foreach (var node in Nodes)
+                node.SetDisplacementNumeration(ref nodeCounter);
+            foreach (var node in Nodes)
+                node.SetReactionNumeration(ref nodeCounter);
+            return nodeCounter;
+        }
+
+        #endregion // Private_Methods
     }
 }
