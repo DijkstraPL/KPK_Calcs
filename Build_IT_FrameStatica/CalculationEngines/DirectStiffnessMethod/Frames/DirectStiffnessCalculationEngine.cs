@@ -1,14 +1,17 @@
-﻿using Build_IT_FrameStatica.CalculationEngines.Interfaces;
+﻿using Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Spans;
+using Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Spans.Interfaces;
+using Build_IT_FrameStatica.CalculationEngines.Interfaces;
 using Build_IT_FrameStatica.Frames;
-using System;
+using Build_IT_FrameStatica.Spans.Interfaces;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Frames
 {
     internal class DirectStiffnessCalculationEngine : IFrameCalculationEngine
     {
         private Frame _frame;
+        private IList<(ISpan span, ISpanCalculationEngine calculationEngine)> _spanCalculationEngines
+            = new List<(ISpan, ISpanCalculationEngine)>();
 
         public DirectStiffnessCalculationEngine(Frame frame)
         {

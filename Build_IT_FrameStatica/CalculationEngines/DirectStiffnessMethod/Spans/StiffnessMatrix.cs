@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Spans
 {
-    internal class StiffnessMatrix
+    internal class StiffnessMatrix : IStiffnessMatrix
     {
         #region Properties
 
