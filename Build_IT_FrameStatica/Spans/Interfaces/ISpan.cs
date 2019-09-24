@@ -10,7 +10,17 @@ namespace Build_IT_FrameStatica.Spans.Interfaces
         short Number { get; set; }
         ISection Section { get; }
         IMaterial Material { get; }
-        
+
         #endregion // Properties
+
+        #region Public_Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Angle in degrees.</returns>
+        double GetAngle();
+
+        #endregion // Public_Methods
     }
 }

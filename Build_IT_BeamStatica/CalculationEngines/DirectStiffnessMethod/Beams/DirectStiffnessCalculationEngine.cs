@@ -49,7 +49,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
             _globalStiffnessMatrix.Calculate();
             if (_beam.IncludeSelfWeight)
                 AddSelfWeightLoad();
-            CaluclateJointLoadVector();
+            CalculateJointLoadVector();
             CalculateSpanLoadVectors();
             CalculateSpanLoadVector();
             CalculateDeflectionVector();
@@ -84,7 +84,7 @@ namespace Build_IT_BeamStatica.CalculationEngines.DirectStiffnessMethod.Beams
                 spanEnginePair.calculationEngine.StiffnessMatrix.Calculate();
         }
 
-        private void CaluclateJointLoadVector()
+        private void CalculateJointLoadVector()
         {
             if (_beam.NumberOfDegreesOfFreedom != 0)
                 _jointLoadVector = VectorAdapter.Create(_beam.NumberOfDegreesOfFreedom);

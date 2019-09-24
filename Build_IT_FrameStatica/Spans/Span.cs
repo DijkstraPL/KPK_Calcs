@@ -24,23 +24,41 @@ namespace Build_IT_FrameStatica.Spans
         public IMaterial Material { get; }
         public ISection Section { get; }
 
-        public ICollection<IContinousLoad> ContinousLoads => throw new NotImplementedException();
+        public ICollection<IContinousLoad> ContinousLoads { get; private set; }
+        public ICollection<ISpanLoad> PointLoads { get; private set; }
 
-        public ICollection<ISpanLoad> PointLoads => throw new NotImplementedException();
+        public bool IncludeSelfWeight { get; set; }
 
         #endregion // Properties
 
         #region Constructors
 
-        public Span(INode leftNode, INode rightNode, IMaterial material, ISection section)
+        public Span(INode leftNode, INode rightNode, IMaterial material, ISection section, bool includeSelfWeight)
         {
             LeftNode = leftNode ?? throw new ArgumentNullException(nameof(leftNode));
             RightNode = rightNode ?? throw new ArgumentNullException(nameof(rightNode));
 
             Material = material ?? throw new ArgumentNullException(nameof(material));
             Section = section ?? throw new ArgumentNullException(nameof(section));
+
+            ContinousLoads = new List<IContinousLoad>();
+            PointLoads = new List<ISpanLoad>();
+
+            IncludeSelfWeight = includeSelfWeight;
         }
-        
+
         #endregion // Constructors
+
+        #region Public_Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Angle in degrees.</returns>
+        public double GetAngle() =>
+            Math.Atan((RightNode.Position.Y - LeftNode.Position.Y) /
+            (RightNode.Position.X - LeftNode.Position.X)) * 180 / Math.PI;
+            
+        #endregion // Public_Methods
     }
 }

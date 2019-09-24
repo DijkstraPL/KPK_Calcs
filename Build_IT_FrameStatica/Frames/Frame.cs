@@ -1,6 +1,7 @@
 ﻿using Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod;
 using Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Frames;
 using Build_IT_FrameStatica.CalculationEngines.Interfaces;
+using Build_IT_FrameStatica.Frames.Interfaces;
 using Build_IT_FrameStatica.Nodes.Interfaces;
 using Build_IT_FrameStatica.Spans.Interfaces;
 using System;
@@ -11,7 +12,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Build_IT_FrameStaticaAcceptanceTests")]
 namespace Build_IT_FrameStatica.Frames
 {
-    public class Frame
+    public class Frame : IFrame
     {
         public short NumberOfDegreesOfFreedom { get; private set; }
 
@@ -19,6 +20,8 @@ namespace Build_IT_FrameStatica.Frames
         public ICollection<INode> Nodes { get; }
 
         public IFrameCalculationEngine CalculationEngine { get; private set; }
+
+        public bool IncludeSelfWeight => throw new NotImplementedException();
 
         public Frame(IList<ISpan> spans, ICollection<INode> nodes)
         {

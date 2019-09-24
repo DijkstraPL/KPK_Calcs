@@ -57,9 +57,11 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Spans
             SetRightNodeHorizontalMovementColumn(horizontalValue);
             SetRightNodeVerticalMovementColumn(verticalValue);
             SetRightNodeLeftRotationColumn(verticalValue);
-
+                       
             SetSize();
             SetMatrix();
+
+            AdjustMatrix();
         }
 
         private void SetLeftNodeHorizontalMovementColumn(double horizontalValue)
@@ -143,7 +145,46 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Spans
                     i = 0;
                 }
             }
-        }    
+        }
+
+        private void AdjustMatrix()
+        {
+            CalculateTransformationMatrix();
+            Matrix = _transformationMatrix.Multiply(Matrix).Multiply(_transformationMatrix.Transpose());
+            SetAdjustedMatrix();
+        }
+
+        private void CalculateTransformationMatrix()
+        {
+            _transformationMatrix = MatrixAdapter.Create(Size, Size);
+            double angle = _span.GetAngle() * Math.PI / 180;
+            _transformationMatrix[0, 0] = Math.Cos(angle);
+            _transformationMatrix[0, 1] = -Math.Sin(angle);
+            _transformationMatrix[1, 0] = Math.Sin(angle);
+            _transformationMatrix[1, 1] = Math.Cos(angle);
+            _transformationMatrix[2, 2] = 1;
+            _transformationMatrix[3, 3] = Math.Cos(angle);
+            _transformationMatrix[3, 4] = -Math.Sin(angle);
+            _transformationMatrix[4, 3] = Math.Sin(angle);
+            _transformationMatrix[4, 4] = Math.Cos(angle);
+            _transformationMatrix[5, 5] = 1;
+        }
+
+        private void SetAdjustedMatrix()
+        {
+            int i = 0;
+            int j = 0;
+            foreach (var position in MatrixOfPositions)
+            {
+                position.Value = Matrix[j, i];
+                i++;
+                if (i % Size == 0)
+                {
+                    j++;
+                    i = 0;
+                }
+            }
+        }     
 
         #endregion // Private_Methods
     }

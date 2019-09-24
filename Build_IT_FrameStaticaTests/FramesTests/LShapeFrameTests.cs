@@ -14,7 +14,7 @@ using Build_IT_FrameStatica.Coords;
 namespace Build_IT_FrameStaticaTests.FramesTests
 {
     [TestFixture]
-    [Explicit("Not ready")]
+    //[Explicit("Not ready")]
     public class LShapeFrameTests
     {
         private Frame _frame;
@@ -23,7 +23,7 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         public void SetUpFrame()
         {
             var material = new Material(youngModulus: 200, density:0, thermalExpansionCoefficient:0);
-            var section = new SectionProperties(area: 600, momentOfInteria: 6000);
+            var section = new SectionProperties(area: 6, momentOfInteria: 6000);
 
             var node1 = new PinNode(new Point(0, 0));
             var node2 = new FreeNode(new Point(6, 0));
@@ -35,14 +35,16 @@ namespace Build_IT_FrameStaticaTests.FramesTests
                 leftNode: node1,
                 rightNode: node2,
                 material: material,
-                section: section
+                section: section,
+                 includeSelfWeight: false
                 );
 
             var span2 = new Span(
                 leftNode: node2,
                 rightNode: node3,
                 material: material,
-                section: section
+                section: section,
+                 includeSelfWeight: false
                 );
 
             var spans = new Span[] { span1, span2 };
@@ -53,8 +55,7 @@ namespace Build_IT_FrameStaticaTests.FramesTests
 
             _frame.CalculationEngine.Calculate();
         }
-
-
+        
         [Test()]
         public void NodeForcesCalculationsTest_Successful()
         {
