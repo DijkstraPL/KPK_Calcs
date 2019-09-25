@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Build_IT_FrameStatica.Frames.Interfaces
 {
-    public  interface IFrame
+    public  interface IFrame : IResultProvider
     {
         #region Properties
 

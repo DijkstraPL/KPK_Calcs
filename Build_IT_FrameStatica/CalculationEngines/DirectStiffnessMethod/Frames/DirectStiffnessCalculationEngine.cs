@@ -146,13 +146,13 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Frames
 
         private void SetLeftNodeReactions(int i)
         {
-            if (_frame.Spans.SingleOrDefault(s => s.LeftNode.HorizontalMovementNumber == i)?.LeftNode.NormalForce != null)
-                _frame.Spans.SingleOrDefault(s => s.LeftNode.HorizontalMovementNumber == i).LeftNode.NormalForce.Value
+            if (_frame.Spans.SingleOrDefault(s => s.LeftNode.HorizontalMovementNumber == i)?.LeftNode.HorizontalForce != null)
+                _frame.Spans.SingleOrDefault(s => s.LeftNode.HorizontalMovementNumber == i).LeftNode.HorizontalForce.Value
                     += _spanCalculationEngines.Where(sep => sep.span.LeftNode.HorizontalMovementNumber == i)
                     .Sum(sep => sep.calculationEngine.Forces[0]);
 
-            if (_frame.Spans.SingleOrDefault(s => s.LeftNode.VerticalMovementNumber == i)?.LeftNode.ShearForce != null)
-                _frame.Spans.SingleOrDefault(s => s.LeftNode.VerticalMovementNumber == i).LeftNode.ShearForce.Value
+            if (_frame.Spans.SingleOrDefault(s => s.LeftNode.VerticalMovementNumber == i)?.LeftNode.VerticalForce != null)
+                _frame.Spans.SingleOrDefault(s => s.LeftNode.VerticalMovementNumber == i).LeftNode.VerticalForce.Value
                     += _spanCalculationEngines.Where(sep => sep.span.LeftNode.VerticalMovementNumber == i)
                     .Sum(sep => sep.calculationEngine.Forces[1]);
 
@@ -164,13 +164,13 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Frames
 
         private void SetRightNodeReactions(int i)
         {
-            if (_frame.Spans.SingleOrDefault(s => s.RightNode.HorizontalMovementNumber == i)?.RightNode.NormalForce != null)
-                _frame.Spans.SingleOrDefault(s => s.RightNode.HorizontalMovementNumber == i).RightNode.NormalForce.Value
+            if (_frame.Spans.SingleOrDefault(s => s.RightNode.HorizontalMovementNumber == i)?.RightNode.HorizontalForce != null)
+                _frame.Spans.SingleOrDefault(s => s.RightNode.HorizontalMovementNumber == i).RightNode.HorizontalForce.Value
                     += _spanCalculationEngines.Where(sep => sep.span.RightNode.HorizontalMovementNumber == i)
                     .Sum(sep => sep.calculationEngine.Forces[3]);
 
-            if (_frame.Spans.SingleOrDefault(s => s.RightNode.VerticalMovementNumber == i)?.RightNode.ShearForce != null)
-                _frame.Spans.SingleOrDefault(s => s.RightNode.VerticalMovementNumber == i).RightNode.ShearForce.Value
+            if (_frame.Spans.SingleOrDefault(s => s.RightNode.VerticalMovementNumber == i)?.RightNode.VerticalForce != null)
+                _frame.Spans.SingleOrDefault(s => s.RightNode.VerticalMovementNumber == i).RightNode.VerticalForce.Value
                     += _spanCalculationEngines.Where(sep => sep.span.RightNode.VerticalMovementNumber == i)
                     .Sum(sep => sep.calculationEngine.Forces[4]);
 

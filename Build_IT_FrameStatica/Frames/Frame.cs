@@ -3,6 +3,8 @@ using Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Frames;
 using Build_IT_FrameStatica.CalculationEngines.Interfaces;
 using Build_IT_FrameStatica.Frames.Interfaces;
 using Build_IT_FrameStatica.Nodes.Interfaces;
+using Build_IT_FrameStatica.Results.Interfaces;
+using Build_IT_FrameStatica.Results.OnSpan;
 using Build_IT_FrameStatica.Spans.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,8 @@ namespace Build_IT_FrameStatica.Frames
 {
     public class Frame : IFrame
     {
+        #region Properties
+        
         public short NumberOfDegreesOfFreedom { get; private set; }
 
         public IList<ISpan> Spans { get; }
@@ -22,6 +26,9 @@ namespace Build_IT_FrameStatica.Frames
         public IFrameCalculationEngine CalculationEngine { get; private set; }
 
         public bool IncludeSelfWeight => throw new NotImplementedException();
+        public IResultsContainer Results { get; }
+
+        #endregion // Properties
 
         public Frame(IList<ISpan> spans, ICollection<INode> nodes)
         {
@@ -29,6 +36,7 @@ namespace Build_IT_FrameStatica.Frames
             Nodes = nodes ?? throw new ArgumentNullException(nameof(nodes));
 
             CalculationEngine = new DirectStiffnessCalculationEngine(this);
+            Results = new ResultsContainer(this);
         }
         
         public void SetNumeration()

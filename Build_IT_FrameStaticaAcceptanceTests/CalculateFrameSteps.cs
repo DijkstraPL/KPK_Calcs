@@ -55,14 +55,16 @@ namespace Build_IT_FrameStaticaAcceptanceTests
               leftNode: _node1,
               rightNode: _node2,
               material: _material,
-              section: _section
+              section: _section,
+              includeSelfWeight: false
               );
 
             _span2 = new Span(
                 leftNode: _node2,
                 rightNode: _node3,
                 material: _material,
-                section: _section
+                section: _section,
+                includeSelfWeight: false
                 );
 
             _spans = new Span[] { _span1, _span2 };
@@ -85,20 +87,20 @@ namespace Build_IT_FrameStaticaAcceptanceTests
         [Then(@"the result should be correct")]
         public void ThenTheResultShouldBeCorrect()
         {
-            Assert.That(_frame.Spans[0].LeftNode.NormalForce, Is.Null);
-            Assert.That(_frame.Spans[0].LeftNode.ShearForce.Value, Is.EqualTo(-1.875).Within(0.001));
+            Assert.That(_frame.Spans[0].LeftNode.HorizontalForce, Is.Null);
+            Assert.That(_frame.Spans[0].LeftNode.VerticalForce.Value, Is.EqualTo(-1.875).Within(0.001));
             Assert.That(_frame.Spans[0].LeftNode.BendingMoment, Is.Null);
 
-            Assert.That(_frame.Spans[0].RightNode.NormalForce.Value, Is.EqualTo(0).Within(0.001));
-            Assert.That(_frame.Spans[0].RightNode.ShearForce.Value, Is.EqualTo(-1.875).Within(0.001));
+            Assert.That(_frame.Spans[0].RightNode.HorizontalForce.Value, Is.EqualTo(0).Within(0.001));
+            Assert.That(_frame.Spans[0].RightNode.VerticalForce.Value, Is.EqualTo(-1.875).Within(0.001));
             Assert.That(_frame.Spans[0].RightNode.BendingMoment.Value, Is.EqualTo(-11.248).Within(0.001));
 
-            Assert.That(_frame.Spans[1].LeftNode.NormalForce.Value, Is.EqualTo(1.875).Within(0.001));
-            Assert.That(_frame.Spans[1].LeftNode.ShearForce.Value, Is.EqualTo(5).Within(0.001));
+            Assert.That(_frame.Spans[1].LeftNode.HorizontalForce.Value, Is.EqualTo(1.875).Within(0.001));
+            Assert.That(_frame.Spans[1].LeftNode.VerticalForce.Value, Is.EqualTo(5).Within(0.001));
             Assert.That(_frame.Spans[1].LeftNode.BendingMoment.Value, Is.EqualTo(-11.248).Within(0.001));
 
-            Assert.That(_frame.Spans[1].RightNode.NormalForce.Value, Is.EqualTo(-5).Within(0.001));
-            Assert.That(_frame.Spans[1].RightNode.ShearForce.Value, Is.EqualTo(1.875).Within(0.001));
+            Assert.That(_frame.Spans[1].RightNode.HorizontalForce.Value, Is.EqualTo(-5).Within(0.001));
+            Assert.That(_frame.Spans[1].RightNode.VerticalForce.Value, Is.EqualTo(1.875).Within(0.001));
             Assert.That(_frame.Spans[1].RightNode.BendingMoment.Value, Is.EqualTo(-18.752).Within(0.001));
         }
     }

@@ -47,12 +47,17 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Spans
 
             LoadVector = VectorAdapter.Create(StiffnessMatrix.Size);
 
-            LoadVector[0] = SetNormalForceLoadVector(isLeftNode: true);
-            LoadVector[1] = SetShearForceLoadVector(isLeftNode: true);
+            var angle = _span.GetAngle() * Math.PI / 180;
+            LoadVector[0] = SetNormalForceLoadVector(isLeftNode: true) * Math.Cos(angle) +
+                SetShearForceLoadVector(isLeftNode: true) * - Math.Sin(angle);
+            LoadVector[1] = SetShearForceLoadVector(isLeftNode: true) * Math.Cos(angle) +
+                SetNormalForceLoadVector(isLeftNode: true) * - Math.Sin(angle);
             LoadVector[2] = SetBendingMomentForceLoadVector(isLeftNode: true);
 
-            LoadVector[3] = SetNormalForceLoadVector(isLeftNode: false);
-            LoadVector[4] = SetShearForceLoadVector(isLeftNode: false);
+            LoadVector[3] = SetNormalForceLoadVector(isLeftNode: false) * Math.Cos(angle) +
+                SetShearForceLoadVector(isLeftNode: false) * - Math.Sin(angle);
+            LoadVector[4] = SetShearForceLoadVector(isLeftNode: false) * Math.Cos(angle) +
+                SetNormalForceLoadVector(isLeftNode: false) * - Math.Sin(angle);
             LoadVector[5] = SetBendingMomentForceLoadVector(isLeftNode: false);
 
             //if (_span.LeftNode.Angle != 0)

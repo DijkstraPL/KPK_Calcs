@@ -22,8 +22,8 @@ namespace Build_IT_FrameStatica.Nodes
 
         public ICollection<INodeLoad> ConcentratedForces { get; set; } = new List<INodeLoad>();
 
-        public IResultValue NormalForce { get; protected set; } = null;
-        public IResultValue ShearForce { get; protected set; } = null;
+        public IResultValue HorizontalForce { get; protected set; } = null;
+        public IResultValue VerticalForce { get; protected set; } = null;
         public IResultValue BendingMoment { get; protected set; } = null;
 
         public IResultValue HorizontalDeflection { get; protected set; } = null;

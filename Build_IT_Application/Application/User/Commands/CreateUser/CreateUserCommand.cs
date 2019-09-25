@@ -82,7 +82,7 @@ namespace Build_IT_Application.Application.User.Commands.CreateUser
                 {
                     await _context.SaveChangesAsync();
                 }
-                catch (Exception ex)
+                catch
                 {
 
                 }

@@ -5,42 +5,42 @@ using Build_IT_FrameStatica.Results.Reactions;
 
 namespace Build_IT_FrameStatica.Nodes
 {
-    internal class PinNode : Node
+    internal class SupportedNode : Node
     {
         #region Properties
 
-        public override short DegreesOfFreedom => 2;
+        public override short DegreesOfFreedom => 1;
 
         #endregion // Properties
 
         #region Constructors
-
-        public PinNode(
+        
+        public SupportedNode(
             Point position,
-            IResultValue shearForce = null,
-            IResultValue horizontalDeflection = null,
-            IResultValue rotation = null)
+            IResultValue horizontalForce = null, 
+            IResultValue verticalForce = null, 
+            IResultValue rotation = null) 
             : base(position)
         {
-            VerticalForce = shearForce ?? new ShearForce();
-            HorizontalDeflection = horizontalDeflection ?? new HorizontalDeflection();
+            HorizontalForce = horizontalForce ?? new NormalForce();
+            VerticalForce = verticalForce ?? new ShearForce();
             LeftRotation = rotation ?? new Rotation();
             RightRotation = LeftRotation;
         }
-        
+
         #endregion // Constructors
 
         #region Public_Methods
 
         public override void SetDisplacementNumeration(ref short currentCounter)
         {
-            HorizontalMovementNumber = currentCounter++;
             LeftRotationNumber = currentCounter++;
             RightRotationNumber = LeftRotationNumber;
         }
 
         public override void SetReactionNumeration(ref short currentCounter)
         {
+            HorizontalMovementNumber = currentCounter++;
             VerticalMovementNumber = currentCounter++;
         }
 

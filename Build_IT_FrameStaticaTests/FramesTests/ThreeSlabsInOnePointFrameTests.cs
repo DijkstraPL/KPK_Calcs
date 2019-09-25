@@ -10,30 +10,32 @@ using Build_IT_FrameStatica.Loads.PointLoads;
 using Build_IT_Data.Sections;
 using Build_IT_Data.Materials;
 using Build_IT_FrameStatica.Coords;
+using Build_IT_FrameStatica.Loads.ContinuousLoads;
 
 namespace Build_IT_FrameStaticaTests.FramesTests
 {
     [TestFixture]
     //[Explicit("Not ready")]
-    public class LShapeFrameTests
+    public class ThreeSlabsInOnePointFrameTests
     {
         private Frame _frame;
 
         [SetUp]
         public void SetUpFrame()
         {
-            var material = new Material(youngModulus: 200, density:0, thermalExpansionCoefficient:0);
-            var section = new SectionProperties(area: 6, momentOfInteria: 6000);
+            var material = new Material(youngModulus: 205, density:0, thermalExpansionCoefficient:0);
+            var section = new SectionProperties(area: 10.6, momentOfInteria: 171);
 
-            var node1 = new PinNode(new Point(0, 0));
-            var node2 = new FreeNode(new Point(6, 0));
-            var node3 = new FixedNode(new Point(6, -6));
+            var node1 = new FixedNode(new Point(0, 0));
+            var node2 = new FixedNode(new Point(3, 0));
+            var node3 = new SupportedNode(new Point(6, 4));
+            var nodeX = new FreeNode(new Point(3, 4));
 
-            var nodes = new Node[] { node1, node2, node3 };
+            var nodes = new Node[] { node1, node2, node3, nodeX };
 
             var span1 = new Span(
                 leftNode: node1,
-                rightNode: node2,
+                rightNode: nodeX,
                 material: material,
                 section: section,
                  includeSelfWeight: false
@@ -41,15 +43,27 @@ namespace Build_IT_FrameStaticaTests.FramesTests
 
             var span2 = new Span(
                 leftNode: node2,
-                rightNode: node3,
+                rightNode: nodeX,
                 material: material,
                 section: section,
                  includeSelfWeight: false
                 );
 
-            var spans = new Span[] { span1, span2 };
+            var span3 = new Span(
+                leftNode: node3,
+                rightNode: nodeX,
+                material: material,
+                section: section,
+                 includeSelfWeight: false
+                );
 
-            node2.ConcentratedForces.Add(new NormalLoad(value: 5));
+            var spans = new Span[] { span1, span2, span3 };
+
+            nodeX.ConcentratedForces.Add(new NormalLoad(value: 10));
+            span3.ContinousLoads.Add(
+                ContinuousShearLoad.Create(
+                    startPosition: 0, startValue: -5, 
+                    endPosition: span3.Length, endValue: -5));
 
             _frame = new Frame(spans, nodes);
 

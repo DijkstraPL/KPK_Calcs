@@ -112,7 +112,7 @@ namespace Build_IT_Application.Application.User.Commands.GetToken
                     return CreateAccessToken(user.Id, rt.Value);
 
                 }
-                catch (Exception ex)
+                catch
                 {
                     throw new UnauthorizedAccessException();
                 }
@@ -159,7 +159,7 @@ namespace Build_IT_Application.Application.User.Commands.GetToken
                     return CreateAccessToken(rtNew.ApplicationUserId, rtNew.Value);
                     // ... i wyślij go do klienta
                 }
-                catch (Exception ex)
+                catch
                 {
                     throw new UnauthorizedAccessException();
                 }
