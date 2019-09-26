@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject>Build_IT_SoftwareArchitecture.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Documents\Decisions\0001-SYS-record-architecture-decisions.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Structurizr.Client" Version="0.9.2" />
+    <PackageReference Include="Structurizr.Core" Version="0.9.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Documents\Decisions\0001-SYS-record-architecture-decisions.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
