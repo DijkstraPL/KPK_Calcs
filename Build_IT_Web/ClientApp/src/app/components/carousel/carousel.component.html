@@ -1,0 +1,74 @@
+﻿
+    <div class="d-flex justify-content-center">
+        <div id="carouselExampleIndicators"
+             class="carousel slide w-100"
+             data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators"
+                    data-slide-to="0"
+                    class="active"></li>
+                <li data-target="#carouselExampleIndicators"
+                    data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators"
+                    data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+
+                <div class="carousel-item active"
+                     [routerLinkActive]='["link-active"]'
+                     [routerLinkActiveOptions]='{ exact: true }'>
+                    <div class="d-flex justify-content-center nav-item link"
+                         [routerLink]="['/snowloads']">
+                        <img src="../../../assets/images/snow_load_carousel.jpg"
+                             alt="Snow load">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>{{'carousel.SnowLoads.Header' | translate}}</h5>
+                            <p>{{'carousel.SnowLoads.Description' | translate}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item"
+                     [routerLinkActive]='["link-active"]'
+                     [routerLinkActiveOptions]='{ exact: true }'>
+                    <div class="d-flex justify-content-center link"
+                         [routerLink]="['/deadloads']">
+                        <img src="../../../assets/images/dead_load_carousel.jpg"
+                             alt="Lorem ipsum">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>{{'carousel.DeadLoads.Header' | translate}}</h5>
+                            <p>{{'carousel.DeadLoads.Description' | translate}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item"
+                     [routerLinkActive]='["link-active"]'
+                     [routerLinkActiveOptions]='{ exact: true }'>
+                    <div class="d-flex justify-content-center link"
+                         [routerLink]="['/about']">
+                        <img src="../../../assets/images/about_me_carousel.jpg"
+                             alt="Lorem ipsum">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>{{'carousel.About.Header' | translate}}</h5>
+                            <p>{{'carousel.About.Description' | translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev"
+               href="#carouselExampleIndicators"
+               role="button"
+               data-slide="prev">
+                <span class="carousel-control-prev-icon"
+                      aria-hidden="true"></span>
+                <span class="sr-only">{{'carousel.Previous' | translate}}</span>
+            </a>
+            <a class="carousel-control-next"
+               href="#carouselExampleIndicators"
+               role="button"
+               data-slide="next">
+                <span class="carousel-control-next-icon"
+                      aria-hidden="true"></span>
+                <span class="sr-only">{{'carousel.Next' | translate}}</span>
+            </a>
+        </div>
+    </div>

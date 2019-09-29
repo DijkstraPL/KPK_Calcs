@@ -1,16 +1,43 @@
+using AutoMapper;
+using Build_IT_Application.Application.User.Commands.CreateUser;
+using Build_IT_Application.Application.User.Commands.GetToken;
+using Build_IT_Application.DeadLoads.Categories.Queries.GetAllCategories;
+using Build_IT_Application.Infrastructures;
+using Build_IT_Application.Interfaces;
+using Build_IT_Application.Mapping;
+using Build_IT_CommonTools;
+using Build_IT_CommonTools.Interfaces;
+using Build_IT_Data.Entities.Application;
+using Build_IT_Data.Entities.Scripts;
+using Build_IT_DataAccess;
+using Build_IT_DataAccess.Application;
+using Build_IT_DataAccess.Application.Interfaces;
+using Build_IT_DataAccess.DeadLoads;
+using Build_IT_DataAccess.DeadLoads.Interfaces;
+using Build_IT_DataAccess.DeadLoads.Repositories;
+using Build_IT_DataAccess.DeadLoads.Repositories.Interfaces;
+using Build_IT_DataAccess.ScriptInterpreter;
+using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
+using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
+using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
+using Build_IT_Web.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
-using Build_IT_Web.Data;
-using Build_IT_Web.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.Reflection;
+using System.Text;
 
 namespace Build_IT_Web
 {
@@ -55,52 +82,26 @@ namespace Build_IT_Web
             SetAuthorizationServices(services);
             SetAuthenticationServices(services);
 
-            services.AddMvc()
-                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =
-                Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1) //validate api rules
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetAllMaterialsQueryValidator>());
+            //services.AddMvc()
+            //    .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =
+            //    Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
+            //    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1) //validate api rules
+            //    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetAllMaterialsQueryValidator>());
 
             services.AddEntityFrameworkSqlServer();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-            });
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            //});
+
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
 
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "wwwroot/clientapp/dist";
-                //configuration.RootPath = "wwwroot/clientapp/out-tsc";
-            });
-
-
-
-
-
-
-
-
-
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
-            services.AddControllersWithViews();
-            services.AddRazorPages();
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
             });
         }
 
@@ -120,17 +121,19 @@ namespace Build_IT_Web
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
+
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            //});
 
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseIdentityServer();
-            app.UseAuthorization();
+            //app.UseIdentityServer();
+            //app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -139,6 +142,11 @@ namespace Build_IT_Web
                 endpoints.MapRazorPages();
             });
 
+            app.UseStaticFiles();
+            if (!env.IsDevelopment())
+            {
+                app.UseSpaStaticFiles();
+            }
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -151,6 +159,16 @@ namespace Build_IT_Web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            using (var serviceScope =
+                app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+                var userManager = serviceScope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+                dbContext.Database.Migrate();
+                DbSeeder.Seed(dbContext, roleManager, userManager);
+            }
         }
 
         #endregion // Public_Methods

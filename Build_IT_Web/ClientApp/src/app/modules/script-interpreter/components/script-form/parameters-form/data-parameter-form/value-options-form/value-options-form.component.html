@@ -1,0 +1,85 @@
+﻿
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{'scriptsForm.Parameters.ValueOptions.Header' | translate}}
+            </mat-panel-title>
+            <mat-panel-description>
+                {{'scriptsForm.Parameters.ValueOptions.Hint' | translate}}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="parameterForm">
+
+            <div>
+                <mat-radio-group formControlName="valueOptionSetting">
+                    <mat-radio-button [value]="valueOptionSettings.None"
+                                      class="ml-2">
+                        {{'scriptsForm.Parameters.ValueOptions.None' | translate}}
+                    </mat-radio-button>
+                    <mat-radio-button [value]="valueOptionSettings.UserInput"
+                                      class="ml-2">
+                        {{'scriptsForm.Parameters.ValueOptions.AllowAny' | translate}}
+                    </mat-radio-button>
+                    <mat-radio-button [value]="valueOptionSettings.Boolean"
+                                      (change)="booleanSettingChecked($event)"
+                                      class="ml-2">
+                        {{'scriptsForm.Parameters.ValueOptions.Boolean' | translate}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div *ngIf="parameterValueOptionSetting.value != valueOptionSettings.Boolean">
+                <ul *ngFor="let valueOption of parameterValueOptions.controls; let i = index">
+                    <li>
+                        <div [formGroup]="valueOption">
+                            <mat-form-field class="m-2">
+                                <input matInput
+                                       placeholder="{{'scriptsForm.Parameters.ValueOptions.Name.Header' | translate}}"
+                                       formControlName="name"
+                                       [errorStateMatcher]="matcher"
+                                       autocomplete="off" />
+                                <mat-hint>{{'scriptsForm.Parameters.ValueOptions.Name.Hint' | translate}}</mat-hint>
+                                <!--<mat-error *ngIf="parameterDocument && parameterDocument.hasError('maxlength')">
+                        Document should be maximum {{parameterDocument.errors.maxlength.requiredLength}} characters long.
+                    </mat-error>-->
+                            </mat-form-field>
+                            <mat-form-field class="m-2">
+                                <input matInput
+                                       placeholder="{{'scriptsForm.Parameters.ValueOptions.Value.Header' | translate}}"
+                                       formControlName="value"
+                                       [errorStateMatcher]="matcher"
+                                       autocomplete="off" />
+                                <mat-hint>{{'scriptsForm.Parameters.ValueOptions.Value.Hint' | translate}}</mat-hint>
+                            </mat-form-field>
+
+                            <mat-form-field class="m-2 form-medium">
+                                <textarea matInput
+                                          placeholder="{{'scriptsForm.Parameters.ValueOptions.Description.Header' | translate}}"
+                                          formControlName="description"
+                                          [errorStateMatcher]="matcher"
+                                          autocomplete="off"></textarea>
+                                <mat-hint>{{'scriptsForm.Parameters.ValueOptions.Description.Hint' | translate}}</mat-hint>
+                            </mat-form-field>
+
+                            <button mat-stroked-button
+                                    color="warn"
+                                    type="button"
+                                    (click)="remove(valueOption)">
+                                {{'scriptsForm.Parameters.ValueOptions.Remove' | translate}}
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+                <button mat-stroked-button
+                        color="accent"
+                        type="button"
+                        (click)="addValueOption()">
+                    {{'scriptsForm.Parameters.ValueOptions.Add' | translate}}
+                </button>
+            </div>
+        </form>
+
+    </mat-expansion-panel>
+</mat-accordion>

@@ -1,0 +1,33 @@
+﻿<mat-form-field>
+    <span *ngIf="parameter.figures && parameter.figures.length > 0"
+          matPrefix><figures-button [parameter]="parameter"></figures-button></span>
+    <input type="text"
+           aria-label="Number"
+           matInput
+           [required]="isRequired()"
+           [formControl]="valueOptionsForm"
+           [attr.type]="parameter.valueType == 0 ? 'number' : 'text'"
+           name="parameterInput"
+           [ngClass]="parameter.name"
+           [matAutocomplete]="auto"
+           [(ngModel)]="parameter.value"
+           (change)="changeValue()">
+    <mat-placeholder>
+        <span [innerHtml]="parameter.name | html"></span>
+    </mat-placeholder>
+    <span matSuffix
+          [innerHtml]="parameter.unit | html"></span>
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete"
+                  autoActiveFirstOption>
+    <mat-option *ngIf="!isRequired()"
+                class="default"> </mat-option>
+    <mat-option *ngFor="let valueOption of filteredValueOptions | async"
+                [value]="valueOption.value"
+                [ngClass]="valueOption.name">
+        {{valueOption.name }}
+    </mat-option>
+</mat-autocomplete>
+
+<p class="parameter-description">{{parameter.description}}</p>
