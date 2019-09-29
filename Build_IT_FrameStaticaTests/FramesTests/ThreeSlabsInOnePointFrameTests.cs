@@ -1,16 +1,12 @@
-﻿using Build_IT_FrameStatica.Nodes.Interfaces;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Build_IT_FrameStatica.Spans;
-using Build_IT_FrameStatica.Frames;
-using Build_IT_FrameStatica.Nodes;
-using Build_IT_FrameStatica.Loads.PointLoads;
+﻿using Build_IT_Data.Materials;
 using Build_IT_Data.Sections;
-using Build_IT_Data.Materials;
 using Build_IT_FrameStatica.Coords;
+using Build_IT_FrameStatica.Frames;
 using Build_IT_FrameStatica.Loads.ContinuousLoads;
+using Build_IT_FrameStatica.Loads.PointLoads;
+using Build_IT_FrameStatica.Nodes;
+using Build_IT_FrameStatica.Spans;
+using NUnit.Framework;
 
 namespace Build_IT_FrameStaticaTests.FramesTests
 {
@@ -23,8 +19,8 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         [SetUp]
         public void SetUpFrame()
         {
-            var material = new Material(youngModulus: 205, density:0, thermalExpansionCoefficient:0);
-            var section = new SectionProperties(area: 10.6, momentOfInteria: 171);
+            var material = new Material(youngModulus: 210, density: 0, thermalExpansionCoefficient: 0);
+            var section = new SectionProperties(area: 1500, momentOfInteria: 312500);
 
             var node1 = new FixedNode(new Point(0, 0));
             var node2 = new FixedNode(new Point(3, 0));
@@ -42,16 +38,16 @@ namespace Build_IT_FrameStaticaTests.FramesTests
                 );
 
             var span2 = new Span(
-                leftNode: node2,
-                rightNode: nodeX,
+                leftNode: nodeX,
+                rightNode: node2,
                 material: material,
                 section: section,
                  includeSelfWeight: false
                 );
 
             var span3 = new Span(
-                leftNode: node3,
-                rightNode: nodeX,
+                leftNode: nodeX,
+                rightNode: node3,
                 material: material,
                 section: section,
                  includeSelfWeight: false
@@ -62,22 +58,22 @@ namespace Build_IT_FrameStaticaTests.FramesTests
             nodeX.ConcentratedForces.Add(new NormalLoad(value: 10));
             span3.ContinousLoads.Add(
                 ContinuousShearLoad.Create(
-                    startPosition: 0, startValue: -5, 
+                    startPosition: 0, startValue: -5,
                     endPosition: span3.Length, endValue: -5));
 
             _frame = new Frame(spans, nodes);
 
             _frame.CalculationEngine.Calculate();
         }
-        
+
         [Test()]
         public void NodeForcesCalculationsTest_Successful()
         {
             Assert.Multiple(() =>
             {
-                Assert.That(_frame.Spans[0].LeftNode.HorizontalForce, Is.Null);
-                Assert.That(_frame.Spans[0].LeftNode.VerticalForce.Value, Is.EqualTo(-1.87).Within(0.01));
-                Assert.That(_frame.Spans[0].LeftNode.BendingMoment, Is.Null);
+                Assert.That(_frame.Spans[0].LeftNode.HorizontalForce.Value, Is.EqualTo(0.921993).Within(0.000001));
+                Assert.That(_frame.Spans[0].LeftNode.VerticalForce.Value, Is.EqualTo(0.542354).Within(0.000001));
+                Assert.That(_frame.Spans[0].LeftNode.BendingMoment.Value, Is.EqualTo(0.608440).Within(0.000001));
 
                 Assert.That(_frame.Spans[0].RightNode.HorizontalForce, Is.Null);
                 Assert.That(_frame.Spans[0].RightNode.VerticalForce, Is.Null);
@@ -87,9 +83,17 @@ namespace Build_IT_FrameStaticaTests.FramesTests
                 Assert.That(_frame.Spans[1].LeftNode.VerticalForce, Is.Null);
                 Assert.That(_frame.Spans[1].LeftNode.BendingMoment, Is.Null);
 
-                Assert.That(_frame.Spans[1].RightNode.HorizontalForce.Value, Is.EqualTo(-5).Within(0.01));
-                Assert.That(_frame.Spans[1].RightNode.VerticalForce.Value, Is.EqualTo(1.87).Within(0.01));
-                Assert.That(_frame.Spans[1].RightNode.BendingMoment.Value, Is.EqualTo(-18.77).Within(0.01));
+                Assert.That(_frame.Spans[1].RightNode.HorizontalForce.Value, Is.EqualTo(0.655601).Within(0.000001));
+                Assert.That(_frame.Spans[1].RightNode.VerticalForce.Value, Is.EqualTo(8.054708).Within(0.000001));
+                Assert.That(_frame.Spans[1].RightNode.BendingMoment.Value, Is.EqualTo(0.783685).Within(0.000001));
+
+                Assert.That(_frame.Spans[2].LeftNode.HorizontalForce, Is.Null);
+                Assert.That(_frame.Spans[2].LeftNode.VerticalForce, Is.Null);
+                Assert.That(_frame.Spans[2].LeftNode.BendingMoment, Is.Null);
+
+                Assert.That(_frame.Spans[2].RightNode.HorizontalForce.Value, Is.EqualTo(-11.577594).Within(0.000001));
+                Assert.That(_frame.Spans[2].RightNode.VerticalForce.Value, Is.EqualTo(6.402937).Within(0.000001));
+                Assert.That(_frame.Spans[2].RightNode.BendingMoment, Is.Null);
             });
         }
 
@@ -98,18 +102,29 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         {
             Assert.Multiple(() =>
             {
-                Assert.That(_frame.Spans[0].LeftNode.HorizontalDeflection.Value, Is.EqualTo(13.16).Within(0.01));
+                Assert.That(_frame.Spans[0].LeftNode.HorizontalDeflection, Is.Null);
                 Assert.That(_frame.Spans[0].LeftNode.VerticalDeflection, Is.Null);
-                Assert.That(_frame.Spans[0].LeftNode.RightRotation.Value, Is.EqualTo(0.00092).Within(0.00001));
+                Assert.That(_frame.Spans[0].LeftNode.RightRotation, Is.Null);
 
-                Assert.That(_frame.Spans[0].RightNode.LeftRotation.Value, Is.EqualTo(-0.00189).Within(0.00001));
-                Assert.That(_frame.Spans[1].LeftNode.HorizontalDeflection.Value, Is.EqualTo(13.16).Within(0.01));
-                Assert.That(_frame.Spans[1].LeftNode.VerticalDeflection.Value, Is.EqualTo(-0.09).Within(0.01));
-                Assert.That(_frame.Spans[1].LeftNode.RightRotation.Value, Is.EqualTo(-0.00189).Within(0.00001));
+                Assert.That(_frame.Spans[0].RightNode.LeftRotation.Value, Is.EqualTo(-0.000003).Within(0.000001));
+                Assert.That(_frame.Spans[0].RightNode.HorizontalDeflection.Value, Is.EqualTo(0.001103).Within(0.000001));
+                Assert.That(_frame.Spans[0].RightNode.VerticalDeflection.Value, Is.EqualTo(-0.001023).Within(0.000001));
+
+                Assert.That(_frame.Spans[1].LeftNode.HorizontalDeflection.Value, Is.EqualTo(0.001103).Within(0.000001));
+                Assert.That(_frame.Spans[1].LeftNode.VerticalDeflection.Value, Is.EqualTo(-0.001023).Within(0.000001));
+                Assert.That(_frame.Spans[1].LeftNode.RightRotation.Value, Is.EqualTo(-0.000003).Within(0.000001));
 
                 Assert.That(_frame.Spans[1].RightNode.LeftRotation, Is.Null);
                 Assert.That(_frame.Spans[1].RightNode.HorizontalDeflection, Is.Null);
                 Assert.That(_frame.Spans[1].RightNode.VerticalDeflection, Is.Null);
+
+                Assert.That(_frame.Spans[2].LeftNode.HorizontalDeflection.Value, Is.EqualTo(0.001103).Within(0.000001));
+                Assert.That(_frame.Spans[2].LeftNode.VerticalDeflection.Value, Is.EqualTo(-0.001023).Within(0.000001));
+                Assert.That(_frame.Spans[2].LeftNode.RightRotation.Value, Is.EqualTo(-0.000003).Within(0.000001));
+
+                Assert.That(_frame.Spans[2].RightNode.LeftRotation.Value, Is.EqualTo(0.000006).Within(0.000001));
+                Assert.That(_frame.Spans[2].RightNode.HorizontalDeflection, Is.Null);
+                Assert.That(_frame.Spans[2].RightNode.VerticalDeflection, Is.Null);
             });
         }
 

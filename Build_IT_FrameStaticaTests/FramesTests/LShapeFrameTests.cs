@@ -1,15 +1,11 @@
-﻿using Build_IT_FrameStatica.Nodes.Interfaces;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Build_IT_FrameStatica.Spans;
-using Build_IT_FrameStatica.Frames;
-using Build_IT_FrameStatica.Nodes;
-using Build_IT_FrameStatica.Loads.PointLoads;
+﻿using Build_IT_Data.Materials;
 using Build_IT_Data.Sections;
-using Build_IT_Data.Materials;
 using Build_IT_FrameStatica.Coords;
+using Build_IT_FrameStatica.Frames;
+using Build_IT_FrameStatica.Loads.PointLoads;
+using Build_IT_FrameStatica.Nodes;
+using Build_IT_FrameStatica.Spans;
+using NUnit.Framework;
 
 namespace Build_IT_FrameStaticaTests.FramesTests
 {
@@ -22,7 +18,7 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         [SetUp]
         public void SetUpFrame()
         {
-            var material = new Material(youngModulus: 200, density:0, thermalExpansionCoefficient:0);
+            var material = new Material(youngModulus: 200, density: 0, thermalExpansionCoefficient: 0);
             var section = new SectionProperties(area: 6, momentOfInteria: 6000);
 
             var node1 = new PinNode(new Point(0, 0));
@@ -55,7 +51,7 @@ namespace Build_IT_FrameStaticaTests.FramesTests
 
             _frame.CalculationEngine.Calculate();
         }
-        
+
         [Test()]
         public void NodeForcesCalculationsTest_Successful()
         {
