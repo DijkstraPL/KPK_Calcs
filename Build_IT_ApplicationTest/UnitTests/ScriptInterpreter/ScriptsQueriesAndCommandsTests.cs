@@ -234,7 +234,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         {
             var script = new Script();
             _scriptRepository.Setup(sr => sr.GetAsync(1))
-                .Returns(Task.FromResult(script));
+                .Returns(new ValueTask<Script>(Task.FromResult(script)));
 
             _scriptRepository.Setup(sr => sr.Remove(script));
             _unitOfWork.Setup(uow => uow.CompleteAsync())
@@ -256,7 +256,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         public void DeleteScriptTest_NoneScript_Success()
         {
             _scriptRepository.Setup(sr => sr.GetAsync(1))
-                .Returns(Task.FromResult(default(Script)));
+                .Returns(new ValueTask<Script>(Task.FromResult(default(Script))));
             
             var deleteScriptCommand = new DeleteScriptCommand.Handler(
                 _scriptRepository.Object, _unitOfWork.Object);

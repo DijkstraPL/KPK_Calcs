@@ -11,7 +11,7 @@ namespace Build_IT_DataAccess.Interfaces
     {
         #region Public_Methods
 
-        Task<TEntity> GetAsync(long id);
+        ValueTask<TEntity> GetAsync(long id);
         Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken);
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
 

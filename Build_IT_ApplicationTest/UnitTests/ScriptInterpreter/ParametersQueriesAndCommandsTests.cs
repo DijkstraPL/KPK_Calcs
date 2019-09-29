@@ -50,7 +50,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             _parameterRepository.Setup(pr => pr.GetAllParametersForScriptAsync(1))
                 .Returns(Task.FromResult(parameters));
             _scriptRepository.Setup(sr => sr.GetAsync(1))
-                .Returns(Task.FromResult(new Script { DefaultLanguage = Language.English }));
+                .Returns(new ValueTask<Script>(
+                Task.FromResult(new Script { DefaultLanguage = Language.English })));
 
             var getAllParametersForScriptQuery = new GetAllParametersForScriptQuery.Handler(
                _parameterRepository.Object, _scriptRepository.Object,
@@ -72,7 +73,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             var parameter = new Parameter();
 
             _scriptRepository.Setup(sr => sr.GetAsync(1))
-                .Returns(Task.Run(() => new Script()));
+                .Returns(new ValueTask<Script>(Task.Run(() => new Script())));
             _parameterRepository.Setup(pr => pr.AddAsync(parameter))
                 .Returns(Task.FromResult(default(object)));
             _unitOfWork.Setup(uow => uow.CompleteAsync())
@@ -127,7 +128,8 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         {
             var parameterResource = new ParameterResource();
 
-            _scriptRepository.Setup(sr => sr.GetAsync(1)).Returns(Task.Run(() => default(Script)));
+            _scriptRepository.Setup(sr => sr.GetAsync(1))
+                .Returns(new ValueTask<Script>(Task.Run(() => default(Script))));
 
             var scriptMappingProfile = new Mock<IScriptMappingProfile>();
 
@@ -155,7 +157,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             var parameter = new Parameter { Name = "a" };
 
             _scriptRepository.Setup(sr => sr.GetAsync(1))
-                .Returns(Task.FromResult(script));
+                .Returns(new ValueTask<Script>(Task.FromResult(script)));
             _parameterRepository.Setup(pr => pr.GetParameterWithAllDependanciesAsync(2))
                 .Returns(Task.FromResult(parameter));
             _unitOfWork.Setup(uow => uow.CompleteAsync())
@@ -213,7 +215,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             var parameter = new Parameter { Name = "a" };
 
             _scriptRepository.Setup(sr => sr.GetAsync(1))
-                .Returns(Task.FromResult(default(Script)));
+                .Returns(new ValueTask<Script>(Task.FromResult(default(Script))));
             _parameterRepository.Setup(pr => pr.GetParameterWithAllDependanciesAsync(2))
                 .Returns(Task.FromResult(parameter));
 
@@ -245,7 +247,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
             var script = new Script();
 
             _scriptRepository.Setup(sr => sr.GetAsync(1))
-                .Returns(Task.FromResult(script));
+                .Returns(new ValueTask<Script>(Task.FromResult(script)));
             _parameterRepository.Setup(pr => pr.GetParameterWithAllDependanciesAsync(2))
                 .Returns(Task.FromResult(default(Parameter)));
 
@@ -275,7 +277,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         {
             var parameter = new Parameter();
             _parameterRepository.Setup(pr => pr.GetAsync(1))
-                .Returns(Task.FromResult(parameter));
+                .Returns(new ValueTask<Parameter>(Task.FromResult(parameter)));
 
             _parameterRepository.Setup(sr => sr.Remove(parameter));
             _unitOfWork.Setup(uow => uow.CompleteAsync())
@@ -299,7 +301,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         public void DeleteScriptTest_NoneScript_Success()
         {
             _parameterRepository.Setup(pr => pr.GetAsync(1))
-                .Returns(Task.FromResult(default(Parameter)));
+                .Returns(new ValueTask<Parameter>(Task.FromResult(default(Parameter))));
 
             var cancellationToken = CancellationToken.None;
             var deleteParameterCommand = new DeleteParameterCommand.Handler(
