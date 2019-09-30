@@ -35,8 +35,16 @@ namespace Build_IT_FrameStatica.Spans
 
         public Span(INode leftNode, INode rightNode, IMaterial material, ISection section, bool includeSelfWeight)
         {
-            LeftNode = leftNode ?? throw new ArgumentNullException(nameof(leftNode));
-            RightNode = rightNode ?? throw new ArgumentNullException(nameof(rightNode));
+            if (leftNode.Position.X <= rightNode.Position.X)
+            {
+                LeftNode = leftNode ?? throw new ArgumentNullException(nameof(leftNode));
+                RightNode = rightNode ?? throw new ArgumentNullException(nameof(rightNode));
+            }
+            else
+            {
+                LeftNode = rightNode ?? throw new ArgumentNullException(nameof(rightNode));
+                RightNode = leftNode ?? throw new ArgumentNullException(nameof(leftNode));
+            }
 
             Material = material ?? throw new ArgumentNullException(nameof(material));
             Section = section ?? throw new ArgumentNullException(nameof(section));
@@ -58,7 +66,7 @@ namespace Build_IT_FrameStatica.Spans
         public double GetAngle() =>
             Math.Atan((RightNode.Position.Y - LeftNode.Position.Y) /
             (RightNode.Position.X - LeftNode.Position.X)) * 180 / Math.PI;
-            
+
         #endregion // Public_Methods
     }
 }

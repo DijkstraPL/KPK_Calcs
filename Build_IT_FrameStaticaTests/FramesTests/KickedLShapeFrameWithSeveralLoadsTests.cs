@@ -11,6 +11,7 @@ using NUnit.Framework;
 namespace Build_IT_FrameStaticaTests.FramesTests
 {
     [TestFixture]
+    [Property("Name", "2019.09.30-04")]
     public class KickedLShapeFrameWithSeveralLoadsTests
     {
         private Frame _frame;

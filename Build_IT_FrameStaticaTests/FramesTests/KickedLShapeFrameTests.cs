@@ -10,6 +10,7 @@ using NUnit.Framework;
 namespace Build_IT_FrameStaticaTests.FramesTests
 {
     [TestFixture]
+    [Property("Name", "2019.09.30-03")]
     public class KickedLShapeFrameTests
     {
         private Frame _frame;

@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Build_IT_FrameStaticaTests.FramesTests
 {
     [TestFixture]
-    //[Explicit("Not ready")]
+    [Property("Name", "2019.09.30-02")]
     public class LShapeFrameTests
     {
         private Frame _frame;
@@ -18,8 +18,8 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         [SetUp]
         public void SetUpFrame()
         {
-            var material = new Material(youngModulus: 200, density: 0, thermalExpansionCoefficient: 0);
-            var section = new SectionProperties(area: 6, momentOfInteria: 6000);
+            var material = new Material(youngModulus: 210, density: 0, thermalExpansionCoefficient: 0);
+            var section = new SectionProperties(area: 1500, momentOfInteria: 312500);
 
             var node1 = new PinNode(new Point(0, 0));
             var node2 = new FreeNode(new Point(6, 0));
@@ -58,7 +58,7 @@ namespace Build_IT_FrameStaticaTests.FramesTests
             Assert.Multiple(() =>
             {
                 Assert.That(_frame.Spans[0].LeftNode.HorizontalForce, Is.Null);
-                Assert.That(_frame.Spans[0].LeftNode.VerticalForce.Value, Is.EqualTo(-1.87).Within(0.01));
+                Assert.That(_frame.Spans[0].LeftNode.VerticalForce.Value, Is.EqualTo(-1.874).Within(0.001));
                 Assert.That(_frame.Spans[0].LeftNode.BendingMoment, Is.Null);
 
                 Assert.That(_frame.Spans[0].RightNode.HorizontalForce, Is.Null);
@@ -70,8 +70,8 @@ namespace Build_IT_FrameStaticaTests.FramesTests
                 Assert.That(_frame.Spans[1].LeftNode.BendingMoment, Is.Null);
 
                 Assert.That(_frame.Spans[1].RightNode.HorizontalForce.Value, Is.EqualTo(-5).Within(0.01));
-                Assert.That(_frame.Spans[1].RightNode.VerticalForce.Value, Is.EqualTo(1.87).Within(0.01));
-                Assert.That(_frame.Spans[1].RightNode.BendingMoment.Value, Is.EqualTo(-18.77).Within(0.01));
+                Assert.That(_frame.Spans[1].RightNode.VerticalForce.Value, Is.EqualTo(1.874).Within(0.001));
+                Assert.That(_frame.Spans[1].RightNode.BendingMoment.Value, Is.EqualTo(-18.755).Within(0.001));
             });
         }
 
@@ -80,14 +80,14 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         {
             Assert.Multiple(() =>
             {
-                Assert.That(_frame.Spans[0].LeftNode.HorizontalDeflection.Value, Is.EqualTo(13.16).Within(0.01));
+                Assert.That(_frame.Spans[0].LeftNode.HorizontalDeflection.Value, Is.EqualTo(0.2401).Within(0.0001));
                 Assert.That(_frame.Spans[0].LeftNode.VerticalDeflection, Is.Null);
-                Assert.That(_frame.Spans[0].LeftNode.RightRotation.Value, Is.EqualTo(0.00092).Within(0.00001));
+                Assert.That(_frame.Spans[0].LeftNode.RightRotation.Value, Is.EqualTo(0.000017).Within(0.000001));
 
-                Assert.That(_frame.Spans[0].RightNode.LeftRotation.Value, Is.EqualTo(-0.00189).Within(0.00001));
-                Assert.That(_frame.Spans[1].LeftNode.HorizontalDeflection.Value, Is.EqualTo(13.16).Within(0.01));
-                Assert.That(_frame.Spans[1].LeftNode.VerticalDeflection.Value, Is.EqualTo(-0.09).Within(0.01));
-                Assert.That(_frame.Spans[1].LeftNode.RightRotation.Value, Is.EqualTo(-0.00189).Within(0.00001));
+                Assert.That(_frame.Spans[0].RightNode.LeftRotation.Value, Is.EqualTo(-0.000034).Within(0.000001));
+                Assert.That(_frame.Spans[1].LeftNode.HorizontalDeflection.Value, Is.EqualTo(0.240).Within(0.001));
+                Assert.That(_frame.Spans[1].LeftNode.VerticalDeflection.Value, Is.EqualTo(-0.00036).Within(0.00001));
+                Assert.That(_frame.Spans[1].LeftNode.RightRotation.Value, Is.EqualTo(-0.000034).Within(0.00001));
 
                 Assert.That(_frame.Spans[1].RightNode.LeftRotation, Is.Null);
                 Assert.That(_frame.Spans[1].RightNode.HorizontalDeflection, Is.Null);

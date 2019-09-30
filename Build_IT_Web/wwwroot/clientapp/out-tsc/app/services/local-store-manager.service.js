@@ -7,6 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { Injectable } from "@angular/core";
 import { Utilities } from "./utilities";
 var LocalStoreManager = /** @class */ (function () {
+    /**
+    * Provides a wrapper for accessing the web storage API and synchronizing session storage across tabs/windows.
+    */
     function LocalStoreManager() {
         this.syncKeys = [];
         this.reservedKeys = [

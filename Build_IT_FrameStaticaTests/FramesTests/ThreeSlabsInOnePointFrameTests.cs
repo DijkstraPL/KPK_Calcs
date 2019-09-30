@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Build_IT_FrameStaticaTests.FramesTests
 {
     [TestFixture]
-    //[Explicit("Not ready")]
+    [Property("Name", "2019.09.30-05")]
     public class ThreeSlabsInOnePointFrameTests
     {
         private Frame _frame;
