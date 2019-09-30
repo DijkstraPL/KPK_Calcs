@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using static Build_IT_ScriptInterpreter.Units.Area;
-using static Build_IT_ScriptInterpreter.Units.Volume;
 
 namespace Build_IT_ScriptInterpreter.Units
 {

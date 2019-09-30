@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,7 +28,7 @@ namespace Build_IT_DataAccess
 
         #region Public_Methods
         
-        public virtual Task<TEntity> GetAsync(long id)
+        public virtual ValueTask<TEntity> GetAsync(long id)
         {
             return Context.Set<TEntity>().FindAsync(id);
         }

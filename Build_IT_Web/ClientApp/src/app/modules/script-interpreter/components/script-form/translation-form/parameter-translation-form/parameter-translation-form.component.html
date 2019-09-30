@@ -1,0 +1,76 @@
+﻿<mat-accordion>
+    <mat-expansion-panel *ngFor="let mappedParameter of mappedParameters">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <span [innerHtml]="mappedParameter.parameter.name | html"></span>&nbsp;- {{mappedParameter.parameter.description}}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-form-field class="m-2"
+                        *ngIf="mappedParameter.parameter.groupName">
+            <mat-label>{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}</mat-label>
+            <input matInput
+                   placeholder="{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}"
+                   [(ngModel)]="mappedParameter.translation.groupName"
+                   [errorStateMatcher]="matcher"
+                   autocomplete="off" />
+            <mat-hint>{{mappedParameter.parameter.groupName}}</mat-hint>
+            <!--<mat-error *ngIf="parameterGroupName && parameterGroupName.hasError('maxlength')">
+                {{'scriptsForm.Parameters.EditMode.GroupName.MaxLengthError' | translate:parameterGroupName.errors.maxlength}}
+            </mat-error>-->
+        </mat-form-field>
+
+        <mat-form-field class="m-2 full-width">
+            <textarea matInput
+                      placeholder="{{'scriptsForm.Parameters.EditMode.Description.Header' | translate}}"
+                       [(ngModel)]="mappedParameter.translation.description"
+                      [errorStateMatcher]="matcher"
+                      autocomplete="off"></textarea>
+            <mat-hint>{{mappedParameter.parameter.description}}</mat-hint>
+            <!--<mat-error *ngIf="parameterDescription && parameterDescription.hasError('maxlength')">
+                {{'scriptsForm.Parameters.EditMode.Description.MaxLengthError' | translate:parameterDescription.errors.maxlength}}
+            </mat-error>-->
+        </mat-form-field>
+
+        <mat-form-field class="m-2 full-width"
+                        *ngIf="mappedParameter.parameter.notes">
+            <textarea matInput
+                      placeholder="{{'scriptsForm.Parameters.EditMode.Note.Header' | translate}}"
+                       [(ngModel)]="mappedParameter.translation.notes"
+                      [errorStateMatcher]="matcher"
+                      autocomplete="off"></textarea>
+            <mat-hint>{{mappedParameter.parameter.notes}}</mat-hint>
+            <!--<mat-error *ngIf="parameterNotes && parameterNotes.hasError('maxlength')">
+                {{'scriptsForm.Parameters.EditMode.Note.MaxLengthError' | translate:parameterNotes.errors.maxlength}}
+            </mat-error>-->
+        </mat-form-field>
+
+        <div *ngFor="let valueOption of mappedParameter.valueOptions">
+
+            <mat-form-field class="m-2"
+                            *ngIf="valueOption.origin.name">
+                <mat-label>{{'scriptsForm.Parameters.ValueOptions.Name.Header' | translate}}</mat-label>
+                <input matInput
+                       placeholder="{{'scriptsForm.Parameters.ValueOptions.Name.Header' | translate}}"
+                       [(ngModel)]="valueOption.translation.name"
+                       [errorStateMatcher]="matcher"
+                       autocomplete="off" />
+                <mat-hint>{{valueOption.origin.name}}</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field class="m-2"
+                            *ngIf="valueOption.origin.description">
+                <mat-label>{{'scriptsForm.Parameters.ValueOptions.Description.Header' | translate}}</mat-label>
+                <input matInput
+                       placeholder="{{'scriptsForm.Parameters.ValueOptions.Description.Header' | translate}}"
+                       [(ngModel)]="valueOption.translation.description"
+                       [errorStateMatcher]="matcher"
+                       autocomplete="off" />
+                <mat-hint>{{valueOption.origin.description}}</mat-hint>
+            </mat-form-field>
+
+        </div>
+
+    </mat-expansion-panel>
+
+</mat-accordion>

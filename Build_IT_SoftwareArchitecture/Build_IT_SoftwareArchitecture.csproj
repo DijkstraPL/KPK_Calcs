@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject>Build_IT_SoftwareArchitecture.Program</StartupObject>
@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Documents\Decisions\0001-SYS-record-architecture-decisions.md" />
+    <None Remove="Documents\Decisions\0002-SYS-migrate-to-core3.md" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Documents\Decisions\0002-SYS-migrate-to-core3.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\Decisions\0001-SYS-record-architecture-decisions.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

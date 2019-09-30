@@ -1,0 +1,32 @@
+﻿<div [formGroup]="translationForm">
+
+    <app-script-translation-form [scriptForm]="scriptForm"
+                                 [defaultLanguage]="defaultLanguage"
+                                 [translationForm]="translationForm"
+                                 [translationData]="translationData"></app-script-translation-form>
+    <app-parameter-translation-form [scriptForm]="scriptForm"
+                                    [defaultLanguage]="defaultLanguage"
+                                    [translationForm]="translationForm"
+                                    [translationData]="translationData"
+                                    #parameterTranslationForm></app-parameter-translation-form>
+
+    <div class="flex-column">
+        <button mat-stroked-button
+                color="accent"
+                type="button"
+                (click)="onScriptTranslationSubmit()"
+                [disabled]="!translationForm.valid"
+                class="mt-3 ml-3">
+            {{translationData.editMode ? ('scriptsForm.Translations.Update' | translate) : ('scriptsForm.Translations.Add' | translate)}}
+        </button>
+
+        <button mat-stroked-button
+                color="warn"
+                type="button"
+                *ngIf="translationData.editMode"
+                (click)="removeScriptTranslation()"
+                class="mt-3 ml-3">
+            {{'scriptsForm.Translations.Remove' | translate}}
+        </button>
+    </div>
+</div>

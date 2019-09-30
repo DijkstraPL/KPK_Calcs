@@ -31,7 +31,8 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
         private readonly ISubcategoryRepository _subcategoryRepository;
         private readonly IMaterialRepository _materialRepository;
 
-        private readonly IDictionary<string, Func<string, Task<object>>> _repositories;
+        private readonly IDictionary<string, Func<string, Task<object>>> _repositories
+            = new Dictionary<string, Func<string, Task<object>>>();
 
         #endregion // Fields
 

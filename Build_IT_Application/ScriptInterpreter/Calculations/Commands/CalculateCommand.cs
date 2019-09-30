@@ -32,7 +32,6 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
             private readonly IParameterRepository _parameterRepository;
             private readonly ITranslationService _translationService;
             private readonly IMapper _mapper;
-            private readonly ILogger<Handler> _logger;
 
             #endregion // Fields
 

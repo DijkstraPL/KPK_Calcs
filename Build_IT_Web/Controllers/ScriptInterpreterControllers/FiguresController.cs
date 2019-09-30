@@ -22,7 +22,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
     {
         #region Fields
 
-        private readonly IHostingEnvironment _host;
+        private readonly IWebHostEnvironment _host;
         private readonly IParameterRepository _parameterRepository;
         private readonly IScriptInterpreterUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -32,7 +32,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
 
         #region Constructors
 
-        public FiguresController(IHostingEnvironment host,
+        public FiguresController(IWebHostEnvironment host,
             IParameterRepository parameterRepository,
             IScriptInterpreterUnitOfWork unitOfWork,
             IMapper mapper,

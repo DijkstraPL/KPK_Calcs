@@ -1,125 +1,158 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Authors>Konrad Kania</Authors>
-    <Version>1.0.1</Version>
-    <Company></Company>
-    <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
-    <Product />
-    <AssemblyName>Build_IT_Web</AssemblyName>
-    <RootNamespace>Build_IT_Web</RootNamespace>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+
+    <!-- Set this to true if you enable server-side prerendering -->
+    <BuildServerSideRenderer>false</BuildServerSideRenderer>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ClientApp\app\components\parameters-form\**" />
-    <Compile Remove="ClientApp\app\components\script-calculator\**" />
-    <Compile Remove="ClientApp\app\components\script-cards\**" />
-    <Compile Remove="ClientApp\app\components\script-card\**" />
-    <Compile Remove="ClientApp\app\components\script-form\**" />
-    <Content Remove="ClientApp\app\components\parameters-form\**" />
-    <Content Remove="ClientApp\app\components\script-calculator\**" />
-    <Content Remove="ClientApp\app\components\script-cards\**" />
-    <Content Remove="ClientApp\app\components\script-card\**" />
-    <Content Remove="ClientApp\app\components\script-form\**" />
-    <EmbeddedResource Remove="ClientApp\app\components\parameters-form\**" />
-    <EmbeddedResource Remove="ClientApp\app\components\script-calculator\**" />
-    <EmbeddedResource Remove="ClientApp\app\components\script-cards\**" />
-    <EmbeddedResource Remove="ClientApp\app\components\script-card\**" />
-    <EmbeddedResource Remove="ClientApp\app\components\script-form\**" />
-    <None Remove="ClientApp\app\components\parameters-form\**" />
-    <None Remove="ClientApp\app\components\script-calculator\**" />
-    <None Remove="ClientApp\app\components\script-cards\**" />
-    <None Remove="ClientApp\app\components\script-card\**" />
-    <None Remove="ClientApp\app\components\script-form\**" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.5.0" />
+    <PackageReference Include="MediatR" Version="7.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Contracts" Version="3.0.0" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="4.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\app\common\app-error.ts" />
-    <None Remove="ClientApp\app\common\errors\app-error-handler.ts" />
-    <None Remove="ClientApp\app\common\errors\app-error-state-matcher.ts" />
-    <None Remove="ClientApp\app\common\errors\bad-input-error.ts" />
-    <None Remove="ClientApp\app\common\errors\not-found-error.ts" />
-    <None Remove="ClientApp\app\directives\element-select.directive.ts" />
-    <None Remove="ClientApp\app\models\token.response.ts" />
-    <None Remove="ClientApp\app\models\user.ts" />
-    <None Remove="ClientApp\app\modules\script-interpreter\models\api\create-script-command.ts" />
-    <None Remove="ClientApp\app\modules\script-interpreter\models\enums\language.ts" />
-    <None Remove="ClientApp\app\modules\script-interpreter\services\parameter-translation.service.ts" />
-    <None Remove="ClientApp\app\modules\script-interpreter\services\script-translation.service.ts" />
-    <None Remove="ClientApp\app\modules\script-interpreter\services\translations\value-option-translation.service.ts" />
-    <None Remove="ClientApp\app\services\auth.interceptor.ts" />
-    <None Remove="ClientApp\app\services\auth.response.interceptor.ts" />
-    <None Remove="ClientApp\app\services\auth.service.ts" />
-    <None Remove="ClientApp\app\services\configuration.service.ts" />
-    <None Remove="ClientApp\app\services\db-keys.ts" />
-    <None Remove="ClientApp\app\services\local-store-manager.service.ts" />
-    <None Remove="ClientApp\app\services\search.service.ts" />
-    <None Remove="ClientApp\app\services\translation.service.ts" />
-    <None Remove="ClientApp\app\services\utilities.ts" />
-    <None Remove="ClientApp\assets\images\custom-views\snow-zones.jpg" />
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(SpaRoot)**" />
+    <None Remove="$(SpaRoot)**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ClientApp\assets\images\custom-views\snow-zones.jpg">
+    <None Remove="ClientApp\src\app\common\errors\app-error-handler.ts" />
+    <None Remove="ClientApp\src\app\common\errors\app-error-state-matcher.ts" />
+    <None Remove="ClientApp\src\app\common\errors\app-error.ts" />
+    <None Remove="ClientApp\src\app\common\errors\bad-input-error.ts" />
+    <None Remove="ClientApp\src\app\common\errors\not-found-error.ts" />
+    <None Remove="ClientApp\src\app\directives\element-select.directive.ts" />
+    <None Remove="ClientApp\src\app\models\token.response.ts" />
+    <None Remove="ClientApp\src\app\models\user.ts" />
+    <None Remove="ClientApp\src\app\modules\script-interpreter\models\api\scripts\create-script-command.ts" />
+    <None Remove="ClientApp\src\app\modules\script-interpreter\models\enums\language.ts" />
+    <None Remove="ClientApp\src\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />
+    <None Remove="ClientApp\src\app\modules\script-interpreter\services\translations\script-translation.service.ts" />
+    <None Remove="ClientApp\src\app\modules\script-interpreter\services\translations\value-option-translation.service.ts" />
+    <None Remove="ClientApp\src\app\services\auth.interceptor.ts" />
+    <None Remove="ClientApp\src\app\services\auth.response.interceptor.ts" />
+    <None Remove="ClientApp\src\app\services\auth.service.ts" />
+    <None Remove="ClientApp\src\app\services\configuration.service.ts" />
+    <None Remove="ClientApp\src\app\services\db-keys.ts" />
+    <None Remove="ClientApp\src\app\services\local-store-manager.service.ts" />
+    <None Remove="ClientApp\src\app\services\search.service.ts" />
+    <None Remove="ClientApp\src\app\services\translation.service.ts" />
+    <None Remove="ClientApp\src\app\services\utilities.ts" />
+    <None Remove="ClientApp\src\assets\images\custom-views\snow-zones.jpg" />
+    <None Remove="ClientApp\src\assets\locale\de.json" />
+    <None Remove="ClientApp\src\assets\locale\en.json" />
+    <None Remove="ClientApp\src\assets\locale\pl.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ClientApp\src\assets\images\custom-views\snow-zones.jpg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\src\assets\locale\de.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\src\assets\locale\en.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\src\assets\locale\pl.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\app\common\validators\" />
-    <Folder Include="ClientApp\app\modules\loads\components\wind-loads-components\" />
-    <Folder Include="wwwroot\clientapp\uploads\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.1.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="8.4.0" />
-    <PackageReference Include="MediatR" Version="7.0.0" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="4.0.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="4.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Build_IT_Application\Build_IT_Application.csproj" />
+    <ProjectReference Include="..\Build_IT_CommonTools\Build_IT_CommonTools.csproj" />
     <ProjectReference Include="..\Build_IT_DataAccess\Build_IT_DataAccess.csproj" />
-    <ProjectReference Include="..\Build_IT_ScriptInterpreter\Build_IT_ScriptInterpreter.csproj" />
+    <ProjectReference Include="..\Build_IT_Data\Build_IT_Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\app\common\errors\app-error-state-matcher.ts" />
-    <TypeScriptCompile Include="ClientApp\app\common\errors\app-error-handler.ts" />
-    <TypeScriptCompile Include="ClientApp\app\common\errors\bad-input-error.ts" />
-    <TypeScriptCompile Include="ClientApp\app\common\errors\not-found-error.ts" />
-    <TypeScriptCompile Include="ClientApp\app\common\errors\app-error.ts" />
-    <TypeScriptCompile Include="ClientApp\app\directives\element-select.directive.ts" />
-    <TypeScriptCompile Include="ClientApp\app\models\user.ts" />
-    <TypeScriptCompile Include="ClientApp\app\models\token.response.ts" />
-    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\models\api\scripts\create-script-command.ts" />
-    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\models\enums\language.ts" />
-    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\value-option-translation.service.ts" />
-    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />
-    <TypeScriptCompile Include="ClientApp\app\modules\script-interpreter\services\translations\script-translation.service.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\auth.interceptor.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\auth.response.interceptor.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\configuration.service.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\db-keys.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\local-store-manager.service.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\auth.service.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\search.service.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\translation.service.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\utilities.ts" />
+    <Folder Include="ClientApp\src\app\common\validators\" />
+    <Folder Include="ClientApp\src\app\modules\loads\components\wind-loads-components\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="nlog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <TypeScriptCompile Include="ClientApp\src\app\common\errors\app-error-handler.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\errors\app-error-state-matcher.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\errors\app-error.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\errors\bad-input-error.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\errors\not-found-error.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\directives\element-select.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\token.response.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\models\api\scripts\create-script-command.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\models\enums\language.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\translations\script-translation.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\translations\value-option-translation.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\auth.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\auth.response.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\configuration.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\db-keys.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\local-store-manager.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\search.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\translation.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\utilities.ts" />
   </ItemGroup>
+
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
 
 </Project>

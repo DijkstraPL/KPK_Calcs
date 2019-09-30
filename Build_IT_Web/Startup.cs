@@ -1,8 +1,7 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Build_IT_Application.Application.User.Commands.CreateUser;
 using Build_IT_Application.Application.User.Commands.GetToken;
 using Build_IT_Application.DeadLoads.Categories.Queries.GetAllCategories;
-using Build_IT_Application.DeadLoads.Materials.Queries.GetAllMaterials;
 using Build_IT_Application.Infrastructures;
 using Build_IT_Application.Interfaces;
 using Build_IT_Application.Mapping;
@@ -22,24 +21,23 @@ using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Services.Interfaces;
-using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Reflection;
 using System.Text;
-using ScriptMappingProfile = Build_IT_Application.Mapping.ScriptMappingProfile;
 
 namespace Build_IT_Web
 {
@@ -59,7 +57,7 @@ namespace Build_IT_Web
         }
 
         #endregion // Constructors
-
+        
         #region Public_Methods
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -84,49 +82,71 @@ namespace Build_IT_Web
             SetAuthorizationServices(services);
             SetAuthenticationServices(services);
 
-            services.AddMvc()
-                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =
-                Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1) //validate api rules
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetAllMaterialsQueryValidator>());
+            //services.AddMvc()
+            //    .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =
+            //    Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
+            //    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1) //validate api rules
+            //    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetAllMaterialsQueryValidator>());
 
             services.AddEntityFrameworkSqlServer();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-            });
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            //});
+
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
 
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "wwwroot/clientapp/dist";
-                //configuration.RootPath = "wwwroot/clientapp/out-tsc";
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
+
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            //});
+
+            app.UseRouting();
+
             app.UseAuthentication();
+            //app.UseIdentityServer();
+            //app.UseAuthorization();
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
+            app.UseEndpoints(endpoints =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
 
-            app.UseMvc();
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            if (!env.IsDevelopment())
+            {
+                app.UseSpaStaticFiles();
+            }
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -236,7 +256,7 @@ namespace Build_IT_Web
 
             services.AddScoped<IScriptMappingProfile, ScriptMappingProfile>();
         }
-        
+
         private void SetAuthorizationServices(IServiceCollection services)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>(

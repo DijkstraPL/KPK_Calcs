@@ -1,0 +1,27 @@
+﻿
+<div class="align-self-start parameter-radio">
+    <label class="align-self-start mb-2">
+        <span *ngIf="parameter.figures && parameter.figures.length > 0"
+              matPrefix><figures-button [parameter]="parameter"></figures-button></span>
+        <span [innerHtml]="parameter.name | html"></span>{{isRequired() ? '*' : ''}}
+    </label>
+
+    <div class="d-inline-flex"
+         [ngClass]="parameter.name">
+        <mat-checkbox *ngIf="!isRequired()"
+                      class="mr-3 default"
+                      #defaultField
+                      (change)="defaultChecked($event)">
+            {{'scriptCalculator.Controls.Default' | translate}}
+        </mat-checkbox>
+
+        <mat-checkbox *ngIf="!isDefault"
+                      [required]="isRequired()"
+                      #checkboxField
+                      class="true"
+                      (change)="changeValue($event)">
+            {{'scriptCalculator.Controls.True' | translate}}
+        </mat-checkbox>
+    </div>
+    <p class="parameter-description-normal">{{parameter.description}}</p>
+</div>
