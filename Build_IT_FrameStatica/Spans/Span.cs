@@ -35,16 +35,8 @@ namespace Build_IT_FrameStatica.Spans
 
         public Span(INode leftNode, INode rightNode, IMaterial material, ISection section, bool includeSelfWeight)
         {
-            if (leftNode.Position.X <= rightNode.Position.X)
-            {
-                LeftNode = leftNode ?? throw new ArgumentNullException(nameof(leftNode));
-                RightNode = rightNode ?? throw new ArgumentNullException(nameof(rightNode));
-            }
-            else
-            {
-                LeftNode = rightNode ?? throw new ArgumentNullException(nameof(rightNode));
-                RightNode = leftNode ?? throw new ArgumentNullException(nameof(leftNode));
-            }
+            LeftNode = leftNode ?? throw new ArgumentNullException(nameof(leftNode));
+            RightNode = rightNode ?? throw new ArgumentNullException(nameof(rightNode));
 
             Material = material ?? throw new ArgumentNullException(nameof(material));
             Section = section ?? throw new ArgumentNullException(nameof(section));
@@ -63,10 +55,26 @@ namespace Build_IT_FrameStatica.Spans
         /// 
         /// </summary>
         /// <returns>Angle in degrees.</returns>
-        public double GetAngle() =>
-            Math.Atan((RightNode.Position.Y - LeftNode.Position.Y) /
+        public double GetAngle()
+        {
+            var angle = Math.Atan((RightNode.Position.Y - LeftNode.Position.Y) /
             (RightNode.Position.X - LeftNode.Position.X)) * 180 / Math.PI;
 
+            if (angle < 0)
+                return 180 - angle;
+            return angle;
+        }
+
         #endregion // Public_Methods
+
+        #region Private_Methods
+        
+        double ISpan.GetLambdaX()
+            => (RightNode.Position.X - LeftNode.Position.X) / Length;
+
+        double ISpan.GetLambdaY()
+            => (RightNode.Position.Y - LeftNode.Position.Y) / Length;
+
+        #endregion // Private_Methods
     }
 }

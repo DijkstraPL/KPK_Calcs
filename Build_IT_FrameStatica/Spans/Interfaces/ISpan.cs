@@ -20,6 +20,8 @@ namespace Build_IT_FrameStatica.Spans.Interfaces
         /// </summary>
         /// <returns>Angle in degrees.</returns>
         double GetAngle();
+        internal double GetLambdaX();
+        internal double GetLambdaY();
 
         #endregion // Public_Methods
     }

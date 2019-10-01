@@ -68,13 +68,13 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         {
             Assert.Multiple(() =>
             {
-                Assert.That(_frame.Spans[0].RightNode.HorizontalForce, Is.Null);
-                Assert.That(_frame.Spans[0].RightNode.VerticalForce.Value, Is.EqualTo(4.477).Within(0.001));
-                Assert.That(_frame.Spans[0].RightNode.BendingMoment, Is.Null);
-
                 Assert.That(_frame.Spans[0].LeftNode.HorizontalForce, Is.Null);
-                Assert.That(_frame.Spans[0].LeftNode.VerticalForce, Is.Null);
+                Assert.That(_frame.Spans[0].LeftNode.VerticalForce.Value, Is.EqualTo(4.477).Within(0.001));
                 Assert.That(_frame.Spans[0].LeftNode.BendingMoment, Is.Null);
+
+                Assert.That(_frame.Spans[0].RightNode.HorizontalForce, Is.Null);
+                Assert.That(_frame.Spans[0].RightNode.VerticalForce, Is.Null);
+                Assert.That(_frame.Spans[0].RightNode.BendingMoment, Is.Null);
 
                 Assert.That(_frame.Spans[1].LeftNode.HorizontalForce, Is.Null);
                 Assert.That(_frame.Spans[1].LeftNode.VerticalForce, Is.Null);
@@ -99,11 +99,11 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         {
             Assert.Multiple(() =>
             {
-                Assert.That(_frame.Spans[0].RightNode.HorizontalDeflection.Value, Is.EqualTo(95.140).Within(0.001));
-                Assert.That(_frame.Spans[0].RightNode.VerticalDeflection, Is.Null);
-                Assert.That(_frame.Spans[0].RightNode.LeftRotation.Value, Is.EqualTo(0.023600).Within(0.000001));
+                Assert.That(_frame.Spans[0].LeftNode.HorizontalDeflection.Value, Is.EqualTo(95.140).Within(0.001));
+                Assert.That(_frame.Spans[0].LeftNode.VerticalDeflection, Is.Null);
+                Assert.That(_frame.Spans[0].LeftNode.LeftRotation.Value, Is.EqualTo(0.023600).Within(0.000001));
 
-                Assert.That(_frame.Spans[0].LeftNode.RightRotation.Value, Is.EqualTo(0.020930).Within(0.000001));
+                Assert.That(_frame.Spans[0].RightNode.RightRotation.Value, Is.EqualTo(0.020930).Within(0.000001));
                 Assert.That(_frame.Spans[1].LeftNode.HorizontalDeflection.Value, Is.EqualTo(-18.404).Within(0.001));
                 Assert.That(_frame.Spans[1].LeftNode.VerticalDeflection.Value, Is.EqualTo(-227.100).Within(0.001));
                 Assert.That(_frame.Spans[1].LeftNode.RightRotation.Value, Is.EqualTo(0.020930).Within(0.000001));

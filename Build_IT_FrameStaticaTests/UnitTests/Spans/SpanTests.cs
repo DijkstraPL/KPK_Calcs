@@ -29,7 +29,24 @@ namespace Build_IT_FrameStaticaTests.UnitTests.Spans
         }
 
         [Test]
-        public void GetAngleTest_ReturnsMinus90()
+        public void GetAngleTest_MinusAngle_Returns225()
+        {
+            var material = Mock.Of<IMaterial>();
+            var section = Mock.Of<ISection>();
+            var leftNode = new Mock<INode>();
+            var rightNode = new Mock<INode>();
+            leftNode.Setup(ln => ln.Position).Returns(new Point(2, 2));
+            rightNode.Setup(rn => rn.Position).Returns(new Point(1, 3));
+
+            var span = new Span(leftNode.Object, rightNode.Object, material, section, includeSelfWeight: false);
+
+            var result = span.GetAngle();
+
+            Assert.That(result, Is.EqualTo(225));
+        }
+
+        [Test]
+        public void GetAngleTest_MinusAngle_Returns270()
         {
             var material = Mock.Of<IMaterial>();
             var section = Mock.Of<ISection>();
@@ -42,7 +59,7 @@ namespace Build_IT_FrameStaticaTests.UnitTests.Spans
 
             var result = span.GetAngle();
 
-            Assert.That(result, Is.EqualTo(-90));
+            Assert.That(result, Is.EqualTo(270));
         }
 
         [Test]

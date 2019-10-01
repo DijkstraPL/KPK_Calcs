@@ -39,14 +39,14 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Spans
 
         public void Calculate()
         {
-            CalculateStiffnessMatrixForGeneralBeam();
+            CalculateStiffnessMatrixForGeneralSpan();
         }
 
         #endregion // Public_Methods
 
         #region Private_Methods
 
-        private void CalculateStiffnessMatrixForGeneralBeam()
+        private void CalculateStiffnessMatrixForGeneralSpan()
         {
             var horizontalValue = _span.Section.Area * _span.Material.YoungModulus / _span.Length * 100; // kN
             var verticalValue = _span.Material.YoungModulus * _span.Section.MomentOfInteria / Math.Pow(_span.Length, 3) / 100; // kN/m
@@ -157,16 +157,16 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Spans
         private void CalculateTransformationMatrix()
         {
             _transformationMatrix = MatrixAdapter.Create(Size, Size);
-            double angle = _span.GetAngle() * Math.PI / 180;
-            _transformationMatrix[0, 0] = Math.Cos(angle);
-            _transformationMatrix[0, 1] = -Math.Sin(angle);
-            _transformationMatrix[1, 0] = Math.Sin(angle);
-            _transformationMatrix[1, 1] = Math.Cos(angle);
+                  
+            _transformationMatrix[0, 0] = _span.GetLambdaX();
+            _transformationMatrix[0, 1] = -_span.GetLambdaY();
+            _transformationMatrix[1, 0] = _span.GetLambdaY();
+            _transformationMatrix[1, 1] = _span.GetLambdaX();
             _transformationMatrix[2, 2] = 1;
-            _transformationMatrix[3, 3] = Math.Cos(angle);
-            _transformationMatrix[3, 4] = -Math.Sin(angle);
-            _transformationMatrix[4, 3] = Math.Sin(angle);
-            _transformationMatrix[4, 4] = Math.Cos(angle);
+            _transformationMatrix[3, 3] = _span.GetLambdaX();
+            _transformationMatrix[3, 4] = -_span.GetLambdaY();
+            _transformationMatrix[4, 3] = _span.GetLambdaY();
+            _transformationMatrix[4, 4] = _span.GetLambdaX();
             _transformationMatrix[5, 5] = 1;
         }
 
