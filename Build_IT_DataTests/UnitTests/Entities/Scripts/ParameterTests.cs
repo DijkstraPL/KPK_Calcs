@@ -1,8 +1,5 @@
 ﻿using Build_IT_Data.Entities.Scripts;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_DataTests.UnitTests.Entities.Scripts
 {

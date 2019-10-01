@@ -12,7 +12,7 @@ namespace Build_IT_DataTests.UnitTests.Sections
         private void SetUpIBeamSection()
         {
             _iBeamSection = new IBeamSection(
-                width: 91, height: 180, 
+                width: 91, height: 180,
                 flangeWidth: 8, webWidth: 5.3, radius: 9);
         }
 
@@ -33,9 +33,9 @@ namespace Build_IT_DataTests.UnitTests.Sections
         [Test()]
         public void IBeamSection_ZeroRadiusTest_Success()
         {
-           var beamSection = new IBeamSection(
-                width: 10, height: 10,
-                flangeWidth: 1, webWidth: 1, radius: 0);
+            var beamSection = new IBeamSection(
+                 width: 10, height: 10,
+                 flangeWidth: 1, webWidth: 1, radius: 0);
             Assert.That(beamSection.Circumference, Is.EqualTo(5.8).Within(0.001));
         }
 

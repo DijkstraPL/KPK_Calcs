@@ -47,7 +47,7 @@ namespace Build_IT_DataTests.UnitTests.Sections
         [Test()]
         public void PolygonSection_AdjustedPointsTest_Success()
         {
-            Assert.That(_polygonSection.AdjustedPoints[0].X, Is.EqualTo(-426.3736).Within(0.0001), message:"Point 0 - X");
+            Assert.That(_polygonSection.AdjustedPoints[0].X, Is.EqualTo(-426.3736).Within(0.0001), message: "Point 0 - X");
             Assert.That(_polygonSection.AdjustedPoints[0].Y, Is.EqualTo(-33.3333).Within(0.0001), message: "Point 0 - Y");
             Assert.That(_polygonSection.AdjustedPoints[1].X, Is.EqualTo(-126.3736).Within(0.0001), message: "Point 1 - X");
             Assert.That(_polygonSection.AdjustedPoints[1].Y, Is.EqualTo(-233.3333).Within(0.0001), message: "Point 1 - Y");

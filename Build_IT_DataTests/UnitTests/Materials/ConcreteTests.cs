@@ -10,7 +10,7 @@ namespace Build_IT_DataTests.UnitTests.Materials
         [Test]
         public void ConcreteCreationTest_MinusYoungModulus_ThrowsArgumentOutOfRangeException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() 
+            Assert.Throws<ArgumentOutOfRangeException>(()
                 => new Concrete(youngModulus: -30, withReinforcement: true));
         }
 
