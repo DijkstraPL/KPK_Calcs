@@ -14,14 +14,8 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         #endregion // Properties
 
-        #region Fields
-
-        private double _currentLength;
-
-        #endregion // Fields
-
         #region Constructors
-        
+
         public ShearResult(IFrame frame) : base(frame)
         {
         }
@@ -29,13 +23,12 @@ namespace Build_IT_FrameStatica.Results.OnSpan
         #endregion // Constructors
 
         #region Protected_Methods
-        
-        protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
+
+        protected override IResultValue CalculateAtPosition(ISpan span, double distanceFromLeftSide)
         {
             Result = new ShearForce(distanceFromLeftSide) { Value = 0 };
-            _currentLength = 0;
 
-            CalculateShear(distanceFromLeftSide);
+            CalculateShear(span, distanceFromLeftSide);
 
             return Result;
         }
@@ -43,38 +36,30 @@ namespace Build_IT_FrameStatica.Results.OnSpan
         #endregion // Protected_Methods
 
         #region Private_Methods
-        
-        private void CalculateShear(double distanceFromLeftSide)
-        {
-            foreach (var span in Spans)
-            {
-                CalculateShearForceFromNodeForces(span);
-                CalculateShearFromContinousLoads(distanceFromLeftSide, span);
-                CalculateShearFromPointLoads(distanceFromLeftSide, span);
 
-                _currentLength += span.Length;
-                if (distanceFromLeftSide <= _currentLength)
-                    break;
-            }
+        private void CalculateShear(ISpan span, double distanceFromLeftSide)
+        {
+            CalculateShearForceFromNodeForces(span);
+            CalculateShearFromContinousLoads(distanceFromLeftSide, span);
+            CalculateShearFromPointLoads(distanceFromLeftSide, span);
         }
 
         private void CalculateShearForceFromNodeForces(ISpan span)
         {
-            Result.Value += span.LeftNode.VerticalForce?.Value ?? 0;
-            Result.Value += span.LeftNode.ConcentratedForces.Sum(l => l.CalculateShear());
+            Result.Value += span.LeftForces.ShearForce;
         }
 
         private void CalculateShearFromContinousLoads(double distanceFromLeftSide, ISpan span)
         {
             foreach (var load in span.ContinousLoads)
-                if (distanceFromLeftSide - _currentLength > load.StartPosition.Position)
-                    Result.Value += load.CalculateShear(distanceFromLeftSide - load.StartPosition.Position - _currentLength);
+                if (distanceFromLeftSide > load.StartPosition.Position)
+                    Result.Value += load.CalculateShear(distanceFromLeftSide - load.StartPosition.Position);
         }
 
         private void CalculateShearFromPointLoads(double distanceFromLeftSide, ISpan span)
         {
             foreach (var load in span.PointLoads)
-                if (distanceFromLeftSide - _currentLength > load.Position)
+                if (distanceFromLeftSide > load.Position)
                     Result.Value += load.CalculateShear();
         }
 

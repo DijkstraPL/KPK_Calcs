@@ -29,6 +29,11 @@ namespace Build_IT_FrameStatica.Spans
 
         public bool IncludeSelfWeight { get; set; }
 
+        Forces ISpan.LeftForces { get; } = new Forces();
+        Forces ISpan.RightForces { get; } = new Forces();
+        Displacements ISpan.LeftDisplacements { get; } = new Displacements();
+        Displacements ISpan.RightDisplacements { get; } = new Displacements();
+
         #endregion // Properties
 
         #region Constructors

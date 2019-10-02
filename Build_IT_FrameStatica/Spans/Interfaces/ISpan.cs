@@ -10,6 +10,10 @@ namespace Build_IT_FrameStatica.Spans.Interfaces
         short Number { get; set; }
         ISection Section { get; }
         IMaterial Material { get; }
+        internal Forces LeftForces { get; }
+        internal Forces RightForces { get; }
+        internal Displacements LeftDisplacements { get; }
+        internal Displacements RightDisplacements { get; } 
 
         #endregion // Properties
 

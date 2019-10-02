@@ -95,30 +95,104 @@ namespace Build_IT_FrameStaticaTests.FramesTests
             });
         }
 
-        //[Test()]
-        //[TestCase(0, 0)]
-        //[TestCase(2, 0)]
-        //[TestCase(3, 0)]
-        //[TestCase(4, 0)]
-        //[TestCase(6, 0)]
-        //public void NormalForceAtPositionCalculationsTest_Successful(double position, double result)
-        //{
-        //    double calculatedShear = _frame.Results.NormalForce.GetValue(position).Value;
+        [Test()]
+        [TestCase(0, 0, 0)]
+        [TestCase(2, 0, 0)]
+        [TestCase(3, 0, 0)]
+        [TestCase(4, 0, 0)]
+        [TestCase(6, 0, 0)]
+        [TestCase(0, 1, 1.874)]
+        [TestCase(2, 1, 1.874)]
+        [TestCase(3, 1, 1.874)]
+        [TestCase(4, 1, 1.874)]
+        [TestCase(6, 1, 1.874)]
+        public void NormalForceAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
+        {
+            double calculatedShear = _frame.Results.NormalForce.GetValue(position, spanIndex).Value;
 
-        //    Assert.That(calculatedShear, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
-        //}
+            Assert.That(calculatedShear, Is.EqualTo(result).Within(0.001), message: $"Span {spanIndex} at {position}m.");
+        }
 
-        //[Test()]
-        //[TestCase(0, -1.871)]
-        //[TestCase(2, -1.871)]
-        //[TestCase(3, -1.871)]
-        //[TestCase(4, -1.871)]
-        //[TestCase(6, -1.871)]
-        //public void ShearForceAtPositionCalculationsTest_Successful(double position, double result)
-        //{
-        //    double calculatedShear = _frame.Results.Shear.GetValue(position).Value;
+        [Test()]
+        [TestCase(0, 0, -1.874)]
+        [TestCase(2, 0, -1.874)]
+        [TestCase(3, 0, -1.874)]
+        [TestCase(4, 0, -1.874)]
+        [TestCase(6, 0, -1.874)]
+        [TestCase(0, 1, 5)]
+        [TestCase(2, 1, 5)]
+        [TestCase(3, 1, 5)]
+        [TestCase(4, 1, 5)]
+        [TestCase(6, 1, 5)]
+        public void ShearForceAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
+        {
+            double calculatedShear = _frame.Results.Shear.GetValue(position, spanIndex).Value;
 
-        //    Assert.That(calculatedShear, Is.EqualTo(result).Within(0.001), message: $"At {position}m.");
-        //}
+            Assert.That(calculatedShear, Is.EqualTo(result).Within(0.001), message: $"Span {spanIndex} at {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, 0, 0)]
+        [TestCase(2, 0, -3.748)]
+        [TestCase(4, 0, -7.497)]
+        [TestCase(6, 0, -11.245)]
+        [TestCase(0, 1, -11.245)]
+        [TestCase(2, 1, -1.245)]
+        [TestCase(4, 1, 8.755)]
+        [TestCase(6, 1, 18.754)]
+        public void BendingMomentAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
+        {
+            double calculatedMoment = _frame.Results.BendingMoment.GetValue(position, spanIndex).Value;
+
+            Assert.That(calculatedMoment, Is.EqualTo(result).Within(0.001), message: $"Span {spanIndex} at {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, 0, 0.000017)]
+        [TestCase(2, 0, 0.000011)]
+        [TestCase(4, 0, -0.000006)]
+        [TestCase(6, 0, -0.000034)]
+        [TestCase(0, 1, -0.000034)]
+        [TestCase(2, 1, -0.000053)]
+        [TestCase(4, 1, -0.000042)]
+        [TestCase(6, 1, 0)]
+        public void RotationAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
+        {
+            double rotation = _frame.Results.Rotation.GetValue(position, spanIndex).Value;
+
+            Assert.That(rotation, Is.EqualTo(result).Within(0.000001), message: $"Span {spanIndex} at {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, 0, 0)]
+        [TestCase(2, 0, 0.240)]
+        [TestCase(4, 0, 0.240)]
+        [TestCase(6, 0, 0.240)]
+        [TestCase(0, 1, 0.240)]
+        [TestCase(2, 1, 0.147)]
+        [TestCase(4, 1, 0.047)]
+        [TestCase(6, 1, 0)]
+        public void HorizontalDeflectionAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
+        {
+            double deflection = _frame.Results.HorizontalDeflection.GetValue(position, spanIndex).Value;
+
+            Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"Span {spanIndex} at {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, 0, 0)]
+        [TestCase(2, 0, 0.030)]
+        [TestCase(4, 0, 0.038)]
+        [TestCase(6, 0, -0.0004)]
+        [TestCase(0, 1, -0.0004)]
+        [TestCase(2, 1, -0.0002)]
+        [TestCase(4, 1, -0.0001)]
+        [TestCase(6, 1, 0)]
+        public void VerticalDeflectionAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
+        {
+            double deflection = _frame.Results.VerticalDeflection.GetValue(position, spanIndex).Value;
+
+            Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"Span {spanIndex} at {position}m.");
+        }
     }
 }

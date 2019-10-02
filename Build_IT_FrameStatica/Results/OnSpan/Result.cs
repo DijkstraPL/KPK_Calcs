@@ -39,8 +39,9 @@ namespace Build_IT_FrameStatica.Results.OnSpan
         {
             Values = new List<IResultValue>();
 
-            for (int i = 0; i < Spans.Sum(s => s.Length) * tick; i++)
-                Values.Add(CalculateAtPosition(i / tick));
+            foreach (var span in Spans)
+                for (int i = 0; i < span.Length * tick; i++)
+                    Values.Add(CalculateAtPosition(span, i / tick));
         }
 
         public IResultValue GetMaxValue(double startPosition = 0, double? endPosition = null)
@@ -63,14 +64,21 @@ namespace Build_IT_FrameStatica.Results.OnSpan
             return filteredValues.FirstOrDefault(r => r.Value == minValue);
         }
 
-        public IResultValue GetValue(double distanceFromLeftSide)
-            => CalculateAtPosition(distanceFromLeftSide);
+        public IResultValue GetValue(double distanceFromLeftSide, short spanNumber)
+        {
+            if (Spans.Count <= spanNumber)
+                throw new IndexOutOfRangeException(nameof(spanNumber));
+            var span = Spans[spanNumber];
+            if (span.Length < distanceFromLeftSide)
+                throw new ArgumentOutOfRangeException(nameof(distanceFromLeftSide));
+            return CalculateAtPosition(Spans[spanNumber], distanceFromLeftSide);
+        }
 
         #endregion // Public_Methods
 
         #region Protected_Methods
 
-        protected abstract IResultValue CalculateAtPosition(double distanceFromLeftSide);
+        protected abstract IResultValue CalculateAtPosition(ISpan span, double distanceFromLeftSide);
 
         #endregion // Protected_Methods
 

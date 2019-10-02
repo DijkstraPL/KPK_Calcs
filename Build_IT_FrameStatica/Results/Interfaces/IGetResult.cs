@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Build_IT_FrameStatica.Spans.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,7 +16,7 @@ namespace Build_IT_FrameStatica.Results.Interfaces
         #region Public_Methods
 
         void SetValues();
-        IResultValue GetValue(double distanceFromLeftSide);
+        IResultValue GetValue(double distanceFromLeftSide, short spanNumber);
         IResultValue GetMaxValue(double startPosition = 0, double? endPosition = null);
         IResultValue GetMinValue(double startPosition = 0, double? endPosition = null);
 

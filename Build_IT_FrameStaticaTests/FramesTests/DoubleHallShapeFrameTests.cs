@@ -82,7 +82,7 @@ namespace Build_IT_FrameStaticaTests.FramesTests
                 section: section,
                  includeSelfWeight: false
                 );
-
+            
             var spans = new Span[] { span1, span2, span3, span4, span5, span6 };
 
             node2.ConcentratedForces.Add(new NormalLoad(20));

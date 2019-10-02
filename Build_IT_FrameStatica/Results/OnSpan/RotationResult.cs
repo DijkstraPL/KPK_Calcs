@@ -39,7 +39,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         #region Protected_Methods
 
-        protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
+        protected override IResultValue CalculateAtPosition(ISpan span, double distanceFromLeftSide)
         {
             _distanceFromLeftSide = distanceFromLeftSide;
             Result = new Rotation(_distanceFromLeftSide) { Value = 0 };
@@ -98,12 +98,12 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
             if (_currentLength != 0)
             {
-                _spanRotation += Frame.Results.Shear.GetValue(_currentLength).Value
+                _spanRotation += Frame.Results.Shear.GetValue(_currentLength, span.Number).Value
                 * (_distanceFromLeftSide - _currentLength)
                 * (_distanceFromLeftSide - _currentLength) / 2
                 / (span.Material.YoungModulus * span.Section.MomentOfInteria);
 
-                _spanRotation += Frame.Results.BendingMoment.GetValue(_currentLength).Value
+                _spanRotation += Frame.Results.BendingMoment.GetValue(_currentLength, span.Number).Value
                     * (_distanceFromLeftSide - _currentLength)
                     / (span.Material.YoungModulus * span.Section.MomentOfInteria);
             }

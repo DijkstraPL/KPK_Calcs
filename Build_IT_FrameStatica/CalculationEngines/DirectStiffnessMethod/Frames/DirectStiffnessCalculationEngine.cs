@@ -15,7 +15,7 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Frames
     internal class DirectStiffnessCalculationEngine : IFrameCalculationEngine
     {
         #region Fields
-        
+
         private IFrame _frame;
         private IGlobalStiffnessMatrix _globalStiffnessMatrix;
 
@@ -41,7 +41,7 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Frames
         #endregion // Constructors
 
         #region Public_Methods
-        
+
         public void Calculate()
         {
             _frame.SetNumeration();
@@ -56,12 +56,14 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Frames
             CalculateDisplacements();
             CalculateForces();
             CalculateReactions();
+            SetForces();
+            SetDisplacements();
         }
 
         #endregion // Public_Methods
 
         #region Private_Methods
-        
+
         private void SetSpanCalculationEngines()
         {
             foreach (var span in _frame.Spans)
@@ -200,6 +202,43 @@ namespace Build_IT_FrameStatica.CalculationEngines.DirectStiffnessMethod.Frames
                     _spanLoadVector[i] += spanEnginePair.calculationEngine.LoadVector[5];
             }
         }
+
+        private void SetForces()
+        {
+            foreach (var spanCalculationEngine in _spanCalculationEngines)
+            {
+                spanCalculationEngine.span.LeftForces.NormalForce += spanCalculationEngine.calculationEngine.Forces[0] * spanCalculationEngine.span.GetLambdaX();
+                spanCalculationEngine.span.LeftForces.NormalForce += spanCalculationEngine.calculationEngine.Forces[1] * spanCalculationEngine.span.GetLambdaY();
+                spanCalculationEngine.span.LeftForces.ShearForce += spanCalculationEngine.calculationEngine.Forces[1] * spanCalculationEngine.span.GetLambdaX();
+                spanCalculationEngine.span.LeftForces.ShearForce += spanCalculationEngine.calculationEngine.Forces[0] * -spanCalculationEngine.span.GetLambdaY();
+                spanCalculationEngine.span.LeftForces.BendingMoment -= spanCalculationEngine.calculationEngine.Forces[2];
+
+                spanCalculationEngine.span.RightForces.NormalForce += spanCalculationEngine.calculationEngine.Forces[3] * spanCalculationEngine.span.GetLambdaX();
+                spanCalculationEngine.span.RightForces.NormalForce += spanCalculationEngine.calculationEngine.Forces[4] * spanCalculationEngine.span.GetLambdaY();
+                spanCalculationEngine.span.RightForces.ShearForce += spanCalculationEngine.calculationEngine.Forces[4] * spanCalculationEngine.span.GetLambdaX();
+                spanCalculationEngine.span.RightForces.ShearForce += spanCalculationEngine.calculationEngine.Forces[3] * -spanCalculationEngine.span.GetLambdaY();
+                spanCalculationEngine.span.RightForces.BendingMoment -= spanCalculationEngine.calculationEngine.Forces[5];
+            }
+        }
+        
+        private void SetDisplacements()
+        {
+            foreach (var spanCalculationEngine in _spanCalculationEngines)
+            {
+                spanCalculationEngine.span.LeftDisplacements.NormalDeflection += spanCalculationEngine.calculationEngine.Displacements[0] * spanCalculationEngine.span.GetLambdaX();
+                spanCalculationEngine.span.LeftDisplacements.NormalDeflection += spanCalculationEngine.calculationEngine.Displacements[1] * spanCalculationEngine.span.GetLambdaY();
+                spanCalculationEngine.span.LeftDisplacements.ShearDeflection += spanCalculationEngine.calculationEngine.Displacements[1] * spanCalculationEngine.span.GetLambdaX();
+                spanCalculationEngine.span.LeftDisplacements.ShearDeflection += spanCalculationEngine.calculationEngine.Displacements[0] * -spanCalculationEngine.span.GetLambdaY();
+                spanCalculationEngine.span.LeftDisplacements.Rotation -= spanCalculationEngine.calculationEngine.Displacements[2];
+
+                spanCalculationEngine.span.RightDisplacements.NormalDeflection += spanCalculationEngine.calculationEngine.Displacements[3] * spanCalculationEngine.span.GetLambdaX();
+                spanCalculationEngine.span.RightDisplacements.NormalDeflection += spanCalculationEngine.calculationEngine.Displacements[4] * spanCalculationEngine.span.GetLambdaY();
+                spanCalculationEngine.span.RightDisplacements.ShearDeflection += spanCalculationEngine.calculationEngine.Displacements[4] * spanCalculationEngine.span.GetLambdaX();
+                spanCalculationEngine.span.RightDisplacements.ShearDeflection += spanCalculationEngine.calculationEngine.Displacements[3] * -spanCalculationEngine.span.GetLambdaY();
+                spanCalculationEngine.span.RightDisplacements.Rotation -= spanCalculationEngine.calculationEngine.Displacements[5];
+            }
+        }
+
 
         #endregion // Private_Methods
     }

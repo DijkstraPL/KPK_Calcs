@@ -35,7 +35,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         #region Protected_Methods
         
-        protected override IResultValue CalculateAtPosition(double distanceFromLeftSide)
+        protected override IResultValue CalculateAtPosition(ISpan span, double distanceFromLeftSide)
         {
             _distanceFromLeftSide = distanceFromLeftSide;
             Result = new Rotation(distanceFromLeftSide) { Value = 0 };
@@ -44,7 +44,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
             _spanDeflection = 0;
 
-            CalculateDeflection();
+            CalculateDeflection(span);
 
             _spanDeflection *= 10;
             Result.Value += _spanDeflection;
@@ -56,7 +56,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         #region Private_Methods
 
-        private void CalculateDeflection()
+        private void CalculateDeflection(ISpan span)
         {
             double calculatedLength = 0;
             foreach (var span in Frame.Spans)
@@ -89,7 +89,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
             if (_currentLength != 0)
             {
-                _spanDeflection -= Frame.Results.NormalForce.GetValue(_currentLength).Value
+                _spanDeflection -= Frame.Results.NormalForce.GetValue(_currentLength, span.Number).Value
                     * (_distanceFromLeftSide - _currentLength)
                     / (span.Material.YoungModulus * span.Section.Area);
             }
