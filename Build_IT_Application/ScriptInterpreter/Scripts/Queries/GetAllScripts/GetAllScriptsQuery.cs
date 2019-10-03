@@ -3,9 +3,7 @@ using Build_IT_Application.Infrastructures.Interfaces;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

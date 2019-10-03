@@ -1,0 +1,9 @@
+﻿<prism:PrismApplication x:Class="Build_IT_Desktop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:local="clr-namespace:Build_IT_Desktop">
+    <Application.Resources>
+        <ResourceDictionary Source="/Build_IT_Desktop;component/Resources/ResourceDictionaries/ControlsStyles.xaml"/>
+    </Application.Resources>
+</prism:PrismApplication>

@@ -15,7 +15,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
         #endregion // Properties
 
         #region Fields
-        
+
         private const double _nextToNodePosition = 0.00000001;
 
         private double _currentLength;
@@ -34,7 +34,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
         #endregion // Constructors
 
         #region Protected_Methods
-        
+
         protected override IResultValue CalculateAtPosition(ISpan span, double distanceFromLeftSide)
         {
             _distanceFromLeftSide = distanceFromLeftSide;
@@ -59,25 +59,20 @@ namespace Build_IT_FrameStatica.Results.OnSpan
         private void CalculateDeflection(ISpan span)
         {
             double calculatedLength = 0;
-            foreach (var span in Frame.Spans)
-            {
-                calculatedLength += span.Length;
-                if (calculatedLength <= _distanceFromLeftSide &&
-                   !IsLastNode(span))
-                {
-                    _currentLength += span.Length;
-                    continue;
-                }
-
-                if (_distanceFromLeftSide >= _currentLength)
-                {
-                    CalculateDeflectionFromCalculatedForcesAndDisplacements(span);
-                    CalculateDeflectionFromNodeForces(span);
-                    CalculateDeflectionFromContinousLoads(span);
-                    CalculateDeflectionFromPointLoads(span);
-                }
+            calculatedLength += span.Length;
+            if (calculatedLength <= _distanceFromLeftSide &&
+               !IsLastNode(span))
                 _currentLength += span.Length;
+
+            if (_distanceFromLeftSide >= _currentLength)
+            {
+                CalculateDeflectionFromCalculatedForcesAndDisplacements(span);
+                CalculateDeflectionFromNodeForces(span);
+                CalculateDeflectionFromContinousLoads(span);
+                CalculateDeflectionFromPointLoads(span);
             }
+            _currentLength += span.Length;
+
         }
 
         private bool IsLastNode(ISpan span) =>
@@ -102,7 +97,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         private void CalculateDeflectionFromContinousLoads(ISpan span)
         {
-            _spanDeflection -= span.ContinousLoads.Sum(cl => 
+            _spanDeflection -= span.ContinousLoads.Sum(cl =>
             cl.CalculateHorizontalDeflection(span, _distanceFromLeftSide, _currentLength));
         }
 
@@ -130,7 +125,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
                     / (span.Material.YoungModulus * span.Section.Area);
             }
         }
-        
+
         private void CalculateDeflectionFromNormalForces(ISpan span)
         {
             _spanDeflection -= (span.LeftNode.HorizontalForce?.Value
