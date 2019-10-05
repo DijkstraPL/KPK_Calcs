@@ -11,8 +11,14 @@ namespace Build_IT_Desktop.Data.ScriptRepository.Scripts.Queries
 {
     public class GetAllScriptsQuery : IRequest<IEnumerable<ScriptResource>>
     {
+        #region Fields
+        
         private const string _url = "http://building-it.net/api/scripts";
 
+        #endregion // Fields
+
+        #region Public_Methods
+        
         public async Task<IEnumerable<ScriptResource>> Execute()
         {
             using (WebClient webClient = new WebClient())
@@ -21,5 +27,7 @@ namespace Build_IT_Desktop.Data.ScriptRepository.Scripts.Queries
                 return JsonConvert.DeserializeObject<List<ScriptResource>>(json);
             }
         }
+
+        #endregion // Public_Methods
     }
 }

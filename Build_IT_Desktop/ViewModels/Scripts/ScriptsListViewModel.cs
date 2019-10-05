@@ -34,9 +34,9 @@ namespace Build_IT_Desktop.ViewModels.Scripts
             Task.Factory.StartNew(async () =>
             {
                 var scripts = await allScriptsQuery.Execute();
-                Scripts = new ObservableCollection<ScriptContainerViewModel>(scripts.Select(s => new ScriptContainerViewModel(s)));
+                Scripts = new List<ScriptContainerViewModel>(scripts.Select(s => 
+                    _container.Resolve<ScriptContainerViewModel>((typeof(ScriptResource), s))));
             });
         }
     }
-
 }

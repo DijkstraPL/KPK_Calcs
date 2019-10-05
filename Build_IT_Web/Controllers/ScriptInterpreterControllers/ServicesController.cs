@@ -21,7 +21,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
     {
         [HttpGet("{lang?}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<ServiceResource>>> GetScripts(string lang = TranslationService.DefaultLanguageCode)
+        public async Task<ActionResult<IEnumerable<ServiceResource>>> GetServices(string lang = TranslationService.DefaultLanguageCode)
         {
             return Ok(await Mediator.Send(new GetAllServicesQuery()));
         }

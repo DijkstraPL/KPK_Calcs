@@ -1,4 +1,5 @@
-﻿export enum ValueType {
+export enum ValueType {
     number = "Number",
-    text = "Text"
+    text = "Text",
+    table = "Table"
 }

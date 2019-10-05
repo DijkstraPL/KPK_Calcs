@@ -1,7 +1,6 @@
 ﻿using Build_IT_Data.Entities.Scripts.Enums;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Build_IT_Desktop.Models.Resources
 {

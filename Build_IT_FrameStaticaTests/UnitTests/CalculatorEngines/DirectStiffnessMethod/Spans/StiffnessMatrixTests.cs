@@ -30,6 +30,10 @@ namespace Build_IT_FrameStaticaTests.UnitTests.CalculatorEnignes.DirectStiffness
             span.Setup(s => s.RightNode.RightRotationNumber).Returns(7);
             span.Setup(s => s.LeftNode.Position).Returns(new Point(0, 0));
             span.Setup(s => s.RightNode.Position).Returns(new Point(7, 0));
+            span.Setup(s => s.LeftForces).Returns(new Forces());
+            span.Setup(s => s.RightForces).Returns(new Forces());
+            span.Setup(s => s.GetLambdaX()).Returns(1);
+            span.Setup(s => s.GetLambdaY()).Returns(0);
 
             _stiffnessMatrix = new StiffnessMatrix(span.Object);
         }
@@ -223,6 +227,10 @@ namespace Build_IT_FrameStaticaTests.UnitTests.CalculatorEnignes.DirectStiffness
             span.Setup(s => s.RightNode.RightRotationNumber).Returns(7);
             span.Setup(s => s.LeftNode.Position).Returns(new Point(0,0));
             span.Setup(s => s.RightNode.Position).Returns(new Point(0, -6));
+            span.Setup(s => s.LeftForces).Returns(new Forces());
+            span.Setup(s => s.RightForces).Returns(new Forces());
+            span.Setup(s => s.GetLambdaX()).Returns(0);
+            span.Setup(s => s.GetLambdaY()).Returns(-1);
 
             var stiffnessMatrix = new StiffnessMatrix(span.Object);
 

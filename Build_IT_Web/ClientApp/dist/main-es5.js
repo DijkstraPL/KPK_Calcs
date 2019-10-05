@@ -40,7 +40,7 @@ module.exports = "\r\n    <div class=\"d-flex justify-content-center\">\r\n     
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-carousel class=\"mt-2\"></app-carousel>\r\n\r\n<app-script-cards></app-script-cards>"
+module.exports = "<app-carousel class=\"mt-2\"></app-carousel>\r\n\r\n<h1>Test</h1>\r\n<app-script-cards></app-script-cards>\r\n"
 
 /***/ }),
 

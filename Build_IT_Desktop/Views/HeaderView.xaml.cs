@@ -1,4 +1,5 @@
-﻿using Prism.Ioc;
+﻿using Build_IT_Desktop.Views.Constants;
+using Prism.Ioc;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
@@ -36,10 +37,6 @@ namespace Build_IT_Desktop.Views
         private void WindowControlsView_Loaded(object sender, RoutedEventArgs e)
         {
             _window = Window.GetWindow(this);
-
-            var windowControlsView = _container.Resolve<WindowControlsView>();
-            IRegion windowControlsRegion = _regionManager.Regions["WindowControlsRegion"];
-            windowControlsRegion.Add(windowControlsView);
         }
 
         private void Special_DragWindow(object sender, MouseButtonEventArgs e)
@@ -48,6 +45,34 @@ namespace Build_IT_Desktop.Views
                 _window.WindowState = WindowState.Normal;
 
             _window.DragMove();
+        }
+
+        private void SpecialMinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            _window.WindowState = WindowState.Minimized;
+        }
+
+        private void AdjustWindowSizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_window.WindowState == WindowState.Maximized)
+            {
+                _window.WindowState = WindowState.Normal;
+                Maximize.Visibility = Visibility.Visible;
+                Restore.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                _window.MaxHeight = SystemParameters.WorkArea.Height + 9;
+                _window.WindowState = WindowState.Maximized;
+
+                Maximize.Visibility = Visibility.Collapsed;
+                Restore.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void SpecialCloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            _window.Close();
         }
     }
 }

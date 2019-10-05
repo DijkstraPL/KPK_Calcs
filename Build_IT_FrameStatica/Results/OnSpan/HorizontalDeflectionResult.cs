@@ -18,7 +18,6 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         private const double _nextToNodePosition = 0.00000001;
 
-        private double _currentLength;
         private double _distanceFromLeftSide;
 
         private double _spanDeflection;
@@ -39,9 +38,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
         {
             _distanceFromLeftSide = distanceFromLeftSide;
             Result = new Rotation(distanceFromLeftSide) { Value = 0 };
-
-            _currentLength = 0;
-
+            
             _spanDeflection = 0;
 
             CalculateDeflection(span);
@@ -58,12 +55,6 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         private void CalculateDeflection(ISpan span)
         {
-            double calculatedLength = 0;
-            calculatedLength += span.Length;
-            if (calculatedLength <= _distanceFromLeftSide &&
-               !IsLastNode(span))
-                _currentLength += span.Length;
-
             if (_distanceFromLeftSide >= _currentLength)
             {
                 CalculateDeflectionFromCalculatedForcesAndDisplacements(span);

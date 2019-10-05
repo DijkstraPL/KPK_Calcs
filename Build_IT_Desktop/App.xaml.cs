@@ -1,4 +1,6 @@
-﻿using Build_IT_Desktop.Data.ScriptRepository.Scripts.Queries;
+﻿using Build_IT_Desktop.Data.ScriptRepository.Parameters.Queries;
+using Build_IT_Desktop.Data.ScriptRepository.Scripts.Queries;
+using Build_IT_Desktop.ViewModels.Scripts;
 using Build_IT_Desktop.Views;
 using Prism.Ioc;
 using Prism.Unity;
@@ -21,6 +23,8 @@ namespace Build_IT_Desktop
             var unityContainer = Container.GetContainer();
 
             unityContainer.RegisterTypeForNavigation<GetAllScriptsQuery>();
+            unityContainer.RegisterTypeForNavigation<GetAllEdiitableParametersForScriptQuery>();
+            containerRegistry.RegisterSingleton<ScriptFormViewModel>();
         }
     }
 }

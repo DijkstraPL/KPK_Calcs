@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Build_IT_FrameStaticaTests")]
 [assembly: InternalsVisibleTo("Build_IT_FrameStaticaAcceptanceTests")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 namespace Build_IT_FrameStatica.Frames
 {
     public class Frame : IFrame

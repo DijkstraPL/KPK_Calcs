@@ -1,9 +1,10 @@
-﻿import { Injectable, Inject, PLATFORM_ID, Injector } from "@angular/core";
+import { Injectable, Inject, PLATFORM_ID, Injector } from "@angular/core";
 import { HttpClient, HttpErrorResponse, HttpHandler, HttpResponse, HttpEvent, HttpRequest, HttpInterceptor } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
 import { Router } from "@angular/router";
 import { tap, catchError, flatMap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class AuthResponseInterceptor implements HttpInterceptor {
@@ -67,6 +68,6 @@ export class AuthResponseInterceptor implements HttpInterceptor {
                         }));
             }
         }
-        return Observable.throw(err);
+        return throwError(err);
     }
 }

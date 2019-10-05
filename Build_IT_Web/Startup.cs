@@ -2,6 +2,7 @@ using AutoMapper;
 using Build_IT_Application.Application.User.Commands.CreateUser;
 using Build_IT_Application.Application.User.Commands.GetToken;
 using Build_IT_Application.DeadLoads.Categories.Queries.GetAllCategories;
+using Build_IT_Application.DeadLoads.Materials.Queries.GetAllMaterials;
 using Build_IT_Application.Infrastructures;
 using Build_IT_Application.Interfaces;
 using Build_IT_Application.Mapping;
@@ -21,6 +22,7 @@ using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using Build_IT_Web.Services.Interfaces;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -38,6 +40,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 
 namespace Build_IT_Web
 {
@@ -82,11 +85,10 @@ namespace Build_IT_Web
             SetAuthorizationServices(services);
             SetAuthenticationServices(services);
 
-            //services.AddMvc()
-            //    .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =
-            //    Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
-            //    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1) //validate api rules
-            //    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetAllMaterialsQueryValidator>());
+            services.AddMvc()
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore) //ignores self reference object 
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0) //validate api rules
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetAllMaterialsQueryValidator>());
 
             services.AddEntityFrameworkSqlServer();
 
@@ -131,8 +133,8 @@ namespace Build_IT_Web
             app.UseRouting();
 
             app.UseAuthentication();
-            //app.UseIdentityServer();
-            //app.UseAuthorization();
+           // app.UseIdentityServer();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
