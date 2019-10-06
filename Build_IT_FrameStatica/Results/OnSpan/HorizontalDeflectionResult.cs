@@ -37,8 +37,8 @@ namespace Build_IT_FrameStatica.Results.OnSpan
         protected override IResultValue CalculateAtPosition(ISpan span, double distanceFromLeftSide)
         {
             _distanceFromLeftSide = distanceFromLeftSide;
-            Result = new Rotation(distanceFromLeftSide) { Value = 0 };
-            
+            Result = new Rotation(span, distanceFromLeftSide) { Value = 0 };
+
             _spanDeflection = 0;
 
             CalculateDeflection(span);
@@ -55,79 +55,50 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         private void CalculateDeflection(ISpan span)
         {
-            if (_distanceFromLeftSide >= _currentLength)
-            {
-                CalculateDeflectionFromCalculatedForcesAndDisplacements(span);
-                CalculateDeflectionFromNodeForces(span);
-                CalculateDeflectionFromContinousLoads(span);
-                CalculateDeflectionFromPointLoads(span);
-            }
-            _currentLength += span.Length;
-
+            CalculateDeflectionFromCalculatedForcesAndDisplacements(span);
+            CalculateDeflectionFromContinousLoads(span);
+            CalculateDeflectionFromPointLoads(span);
         }
-
-        private bool IsLastNode(ISpan span) =>
-            span == Frame.Spans.Last(); //&& _distanceFromLeftSide == Frame.Length;
-
+        
         private void CalculateDeflectionFromCalculatedForcesAndDisplacements(ISpan span)
         {
-            _spanDeflection += span.LeftNode.HorizontalDeflection?.Value / 10 ?? 0;
+            _spanDeflection += span.LeftDisplacements.NormalDeflection / 10;
 
-            if (_currentLength != 0)
-            {
-                _spanDeflection -= Frame.Results.NormalForce.GetValue(_currentLength, span.Number).Value
-                    * (_distanceFromLeftSide - _currentLength)
-                    / (span.Material.YoungModulus * span.Section.Area);
-            }
+            _spanDeflection += span.LeftForces.NormalForce * _distanceFromLeftSide 
+                / (span.Material.YoungModulus * span.Section.Area);
         }
-
-        private void CalculateDeflectionFromNodeForces(ISpan span)
-        {
-            CalculateDeflectionFromNormalForces(span);
-        }
-
+        
         private void CalculateDeflectionFromContinousLoads(ISpan span)
         {
             _spanDeflection -= span.ContinousLoads.Sum(cl =>
-            cl.CalculateHorizontalDeflection(span, _distanceFromLeftSide, _currentLength));
+            cl.CalculateHorizontalDeflection(span, _distanceFromLeftSide, 0));
         }
 
         private void CalculateDeflectionFromPointLoads(ISpan span)
         {
-            CalculateDeflectionFromHorizontalDisplacements(span);
+           // CalculateDeflectionFromHorizontalDisplacements(span);
             CalculateDeflectionFromNormalForcesPointLoads(span);
         }
 
-        private void CalculateDeflectionFromHorizontalDisplacements(ISpan span)
-        {
-            _spanDeflection += span.LeftNode.ConcentratedForces.Sum(cf
-                => cf.CalculateHorizontalDisplacement()) / 10;
-        }
+        //private void CalculateDeflectionFromHorizontalDisplacements(ISpan span)
+        //{
+        //    _spanDeflection += span.LeftNode.ConcentratedForces.Sum(cf
+        //        => cf.CalculateHorizontalDisplacement()) / 10;
+        //}
 
         private void CalculateDeflectionFromNormalForcesPointLoads(ISpan span)
         {
             foreach (var load in span.PointLoads)
             {
-                if (_distanceFromLeftSide - _currentLength <= load.Position)
+                if (_distanceFromLeftSide <= load.Position)
                     continue;
 
                 _spanDeflection -= load.CalculateNormalForce()
-                    * (_distanceFromLeftSide - _currentLength - load.Position)
+                    * (_distanceFromLeftSide - load.Position)
                     / (span.Material.YoungModulus * span.Section.Area);
             }
         }
-
-        private void CalculateDeflectionFromNormalForces(ISpan span)
-        {
-            _spanDeflection -= (span.LeftNode.HorizontalForce?.Value
-                * (_distanceFromLeftSide - _currentLength)
-                ?? 0)
-                / (span.Material.YoungModulus * span.Section.Area);
-            _spanDeflection -= span.LeftNode.ConcentratedForces.Sum(cf => cf.CalculateNormalForce())
-                * (_distanceFromLeftSide - _currentLength)
-                / (span.Material.YoungModulus * span.Section.Area);
-        }
-
+        
         #endregion // Private_Methods
     }
 }

@@ -40,38 +40,48 @@ namespace Build_IT_FrameStatica.Results.OnSpan
             Values = new List<IResultValue>();
 
             foreach (var span in Spans)
-                for (int i = 0; i < span.Length * tick; i++)
+                for (int i = 0; i <= span.Length * tick; i++)
                     Values.Add(CalculateAtPosition(span, i / tick));
         }
-
-        public IResultValue GetMaxValue(double startPosition = 0, double? endPosition = null)
+               
+        public IResultValue GetMaxValue()
         {
             CheckValuesIfNeeded();
-            var filteredValues = SetFilteredValues(startPosition, endPosition);
 
-            var maxValue = filteredValues.Max(v => v.Value);
-
-            return filteredValues.FirstOrDefault(r => r.Value == maxValue);
+            return Values.Aggregate((v1, v2) => v1.Value > v2.Value ? v1 : v2);
         }
 
-        public IResultValue GetMinValue(double startPosition = 0, double? endPosition = null)
+        public IResultValue GetMaxValue(short[] spanNumbers, double startPosition = 0, double? endPosition = null)
         {
             CheckValuesIfNeeded();
-            var filteredValues = SetFilteredValues(startPosition, endPosition);
+            var filteredValues = SetFilteredValues(spanNumbers, startPosition, endPosition);
 
-            var minValue = filteredValues.Min(v => v.Value);
+            return filteredValues.Aggregate((v1, v2) => v1.Value > v2.Value ? v1 : v2);
+        }
 
-            return filteredValues.FirstOrDefault(r => r.Value == minValue);
+        public IResultValue GetMinValue()
+        {
+            CheckValuesIfNeeded();
+
+            return Values.Aggregate((v1, v2) => v1.Value < v2.Value ? v1 : v2);
+        }
+
+        public IResultValue GetMinValue(short[] spanNumbers, double startPosition = 0, double? endPosition = null)
+        {
+            CheckValuesIfNeeded();
+            var filteredValues = SetFilteredValues(spanNumbers, startPosition, endPosition);
+
+            return filteredValues.Aggregate((v1, v2) => v1.Value < v2.Value ? v1 : v2);
         }
 
         public IResultValue GetValue(double distanceFromLeftSide, short spanNumber)
         {
             if (Spans.Count <= spanNumber)
                 throw new IndexOutOfRangeException(nameof(spanNumber));
-            var span = Spans[spanNumber];
+            var span = Spans.First(s => s.Number == spanNumber);
             if (span.Length < distanceFromLeftSide)
                 throw new ArgumentOutOfRangeException(nameof(distanceFromLeftSide));
-            return CalculateAtPosition(Spans[spanNumber], distanceFromLeftSide);
+            return CalculateAtPosition(span, distanceFromLeftSide);
         }
 
         #endregion // Public_Methods
@@ -84,11 +94,12 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         #region Private_Methods
 
-        private IEnumerable<IResultValue> SetFilteredValues(double startPosition, double? endPosition)
+        private IEnumerable<IResultValue> SetFilteredValues(short[] spanNumbers, double startPosition, double? endPosition)
         {
+            var values = Values.Where(v => spanNumbers.Contains(v.Span.Number));
             if (startPosition == 0 && endPosition == null)
-                return Values;
-            return Values.Where(r => r.Position >= startPosition && r.Position <= endPosition);
+                return values;
+            return values.Where(r => r.Position >= startPosition && r.Position <= endPosition);
         }
 
         private void CheckValuesIfNeeded()

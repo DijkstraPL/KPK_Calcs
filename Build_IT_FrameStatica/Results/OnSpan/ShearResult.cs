@@ -22,13 +22,20 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         #endregion // Constructors
 
+        #region Public_Methods
+        
+        private double _distanceFromLeftSide;
+
+        #endregion // Public_Methods
+
         #region Protected_Methods
 
         protected override IResultValue CalculateAtPosition(ISpan span, double distanceFromLeftSide)
         {
-            Result = new ShearForce(distanceFromLeftSide) { Value = 0 };
+            _distanceFromLeftSide = distanceFromLeftSide;
+            Result = new ShearForce(span, _distanceFromLeftSide) { Value = 0 };
 
-            CalculateShear(span, distanceFromLeftSide);
+            CalculateShear(span);
 
             return Result;
         }
@@ -37,11 +44,11 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         #region Private_Methods
 
-        private void CalculateShear(ISpan span, double distanceFromLeftSide)
+        private void CalculateShear(ISpan span)
         {
             CalculateShearForceFromNodeForces(span);
-            CalculateShearFromContinousLoads(distanceFromLeftSide, span);
-            CalculateShearFromPointLoads(distanceFromLeftSide, span);
+            CalculateShearFromContinousLoads( span);
+            CalculateShearFromPointLoads( span);
         }
 
         private void CalculateShearForceFromNodeForces(ISpan span)
@@ -49,17 +56,17 @@ namespace Build_IT_FrameStatica.Results.OnSpan
             Result.Value += span.LeftForces.ShearForce;
         }
 
-        private void CalculateShearFromContinousLoads(double distanceFromLeftSide, ISpan span)
+        private void CalculateShearFromContinousLoads( ISpan span)
         {
             foreach (var load in span.ContinousLoads)
-                if (distanceFromLeftSide > load.StartPosition.Position)
-                    Result.Value += load.CalculateShear(distanceFromLeftSide - load.StartPosition.Position);
+                if (_distanceFromLeftSide > load.StartPosition.Position)
+                    Result.Value += load.CalculateShear(_distanceFromLeftSide - load.StartPosition.Position);
         }
 
-        private void CalculateShearFromPointLoads(double distanceFromLeftSide, ISpan span)
+        private void CalculateShearFromPointLoads( ISpan span)
         {
             foreach (var load in span.PointLoads)
-                if (distanceFromLeftSide > load.Position)
+                if (_distanceFromLeftSide > load.Position)
                     Result.Value += load.CalculateShear();
         }
 

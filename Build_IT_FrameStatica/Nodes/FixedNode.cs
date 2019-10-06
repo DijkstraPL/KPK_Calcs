@@ -16,9 +16,9 @@ namespace Build_IT_FrameStatica.Nodes
 
         public FixedNode(
             Point position,
-            IResultValue normalForce = null,
-            IResultValue shearForce = null,
-            IResultValue bendingMoment = null)
+            IValue normalForce = null,
+            IValue shearForce = null,
+            IValue bendingMoment = null)
             : base(position)
         {
             HorizontalForce = normalForce ?? new NormalForce();

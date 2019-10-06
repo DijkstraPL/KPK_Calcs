@@ -15,6 +15,12 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         #endregion // Properties
 
+        #region Fields
+
+        private double _distanceFromLeftSide;
+
+        #endregion // Fields
+
         #region Constructors
 
         public NormalForceResult(IFrame frame) : base(frame)
@@ -27,9 +33,10 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         protected override IResultValue CalculateAtPosition(ISpan span, double distanceFromLeftSide)
         {
-            Result = new NormalForce(distanceFromLeftSide) { Value = 0 };
+            _distanceFromLeftSide = distanceFromLeftSide;
+            Result = new NormalForce(span, _distanceFromLeftSide) { Value = 0 };
 
-            CalculateNormalForce(span, distanceFromLeftSide);
+            CalculateNormalForce(span);
 
             return Result;
         }
@@ -38,11 +45,11 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         #region Private_Methods
 
-        private void CalculateNormalForce(ISpan span, double distanceFromLeftSide)
+        private void CalculateNormalForce(ISpan span)
         {
             CalculateNormalForceFromNodeForces(span);
-            CalculateNormalForceFromContinousLoads(distanceFromLeftSide, span);
-            CalculateNormalForceFromPointLoads(distanceFromLeftSide, span);
+            CalculateNormalForceFromContinousLoads(span);
+            CalculateNormalForceFromPointLoads(span);
         }
 
         private void CalculateNormalForceFromNodeForces(ISpan span)
@@ -50,17 +57,17 @@ namespace Build_IT_FrameStatica.Results.OnSpan
             Result.Value += span.LeftForces.NormalForce;
         }
 
-        private void CalculateNormalForceFromContinousLoads(double distanceFromLeftSide, ISpan span)
+        private void CalculateNormalForceFromContinousLoads(ISpan span)
         {
             foreach (var load in span.ContinousLoads)
-                if (distanceFromLeftSide > load.StartPosition.Position)
-                    Result.Value += load.CalculateNormalForce(distanceFromLeftSide - load.StartPosition.Position);
+                if (_distanceFromLeftSide > load.StartPosition.Position)
+                    Result.Value += load.CalculateNormalForce(_distanceFromLeftSide - load.StartPosition.Position);
         }
 
-        private void CalculateNormalForceFromPointLoads(double distanceFromLeftSide, ISpan span)
+        private void CalculateNormalForceFromPointLoads(ISpan span)
         {
             foreach (var load in span.PointLoads)
-                if (distanceFromLeftSide > load.Position)
+                if (_distanceFromLeftSide > load.Position)
                     Result.Value += load.CalculateNormalForce();
         }
 

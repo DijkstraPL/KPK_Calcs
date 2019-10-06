@@ -6,7 +6,7 @@ namespace Build_IT_FrameStatica.Nodes.Interfaces
     {
         #region Properties
 
-        IResultValue VerticalForce { get; }
+        IValue VerticalForce { get; }
 
         #endregion // Properties
     }

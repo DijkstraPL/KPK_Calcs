@@ -17,9 +17,9 @@ namespace Build_IT_FrameStatica.Nodes
         
         public SupportedNode(
             Point position,
-            IResultValue horizontalForce = null, 
-            IResultValue verticalForce = null, 
-            IResultValue rotation = null) 
+            IValue horizontalForce = null, 
+            IValue verticalForce = null, 
+            IValue rotation = null) 
             : base(position)
         {
             HorizontalForce = horizontalForce ?? new NormalForce();

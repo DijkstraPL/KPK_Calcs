@@ -13,6 +13,12 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         #endregion // Properties
 
+        #region Fields
+        
+        private double _distanceFromLeftSide;
+
+        #endregion // Fields
+
         #region Constructors
 
         public BendingMomentResult(IFrame frame) : base(frame)
@@ -25,8 +31,9 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         protected override IResultValue CalculateAtPosition(ISpan span, double distanceFromLeftSide)
         {
-            Result = new Reactions.BendingMoment(distanceFromLeftSide) { Value = 0 };
-            CalculateBendingMoment(span, distanceFromLeftSide);
+            _distanceFromLeftSide = distanceFromLeftSide;
+            Result = new Reactions.BendingMoment(span, _distanceFromLeftSide) { Value = 0 };
+            CalculateBendingMoment(span);
 
             return Result;
         }
@@ -35,31 +42,31 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         #region Private_Methods
 
-        private void CalculateBendingMoment(ISpan span, double distanceFromLeftSide)
+        private void CalculateBendingMoment(ISpan span)
         {
-            CalculateBendingMomentFromNodeForces(distanceFromLeftSide, span);
-            CalculateBendingMomentFromContinousLoads(distanceFromLeftSide, span);
-            CalculateBendingMomentFromPointLoads(distanceFromLeftSide, span);
+            CalculateBendingMomentFromNodeForces( span);
+            CalculateBendingMomentFromContinousLoads( span);
+            CalculateBendingMomentFromPointLoads( span);
         }
 
-        private void CalculateBendingMomentFromNodeForces(double distanceFromLeftSide, ISpan span)
+        private void CalculateBendingMomentFromNodeForces(ISpan span)
         {
             Result.Value += span.LeftForces.BendingMoment;
-            Result.Value += span.LeftForces.ShearForce * distanceFromLeftSide;
+            Result.Value += span.LeftForces.ShearForce * _distanceFromLeftSide;
         }
 
-        private void CalculateBendingMomentFromContinousLoads(double distanceFromLeftSide, ISpan span)
+        private void CalculateBendingMomentFromContinousLoads( ISpan span)
         {
             foreach (var load in span.ContinousLoads)
-                if (distanceFromLeftSide > load.StartPosition.Position)
-                    Result.Value += load.CalculateBendingMoment(distanceFromLeftSide - load.StartPosition.Position);
+                if (_distanceFromLeftSide > load.StartPosition.Position)
+                    Result.Value += load.CalculateBendingMoment(_distanceFromLeftSide - load.StartPosition.Position);
         }
 
-        private void CalculateBendingMomentFromPointLoads(double distanceFromLeftSide, ISpan span)
+        private void CalculateBendingMomentFromPointLoads( ISpan span)
         {
             foreach (var load in span.PointLoads)
-                if (distanceFromLeftSide > load.Position)
-                    Result.Value += load.CalculateBendingMoment(distanceFromLeftSide - load.Position);
+                if (_distanceFromLeftSide > load.Position)
+                    Result.Value += load.CalculateBendingMoment(_distanceFromLeftSide - load.Position);
         }
 
         #endregion // Private_Methods

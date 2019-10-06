@@ -17,8 +17,10 @@ namespace Build_IT_FrameStatica.Results.Interfaces
 
         void SetValues();
         IResultValue GetValue(double distanceFromLeftSide, short spanNumber);
-        IResultValue GetMaxValue(double startPosition = 0, double? endPosition = null);
-        IResultValue GetMinValue(double startPosition = 0, double? endPosition = null);
+        IResultValue GetMaxValue();
+        IResultValue GetMaxValue(short[] spanNumbers, double startPosition = 0, double? endPosition = null);
+        IResultValue GetMinValue();
+        IResultValue GetMinValue(short[] spanNumbers, double startPosition = 0, double? endPosition = null);
 
         #endregion // Public_Methods
     }

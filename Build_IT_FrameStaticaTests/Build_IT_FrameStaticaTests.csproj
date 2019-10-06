@@ -7,6 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FrameData\2019.09.30-03_0-4.csv" />
+    <None Remove="FrameData\2019.09.30-03_1-5.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="FrameData\2019.09.30-03_0-4.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FrameData\2019.09.30-03_1-5.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
     <PackageReference Include="Moq" Version="4.13.0" />
     <PackageReference Include="NUnit" Version="3.12.0" />

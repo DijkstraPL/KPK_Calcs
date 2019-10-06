@@ -11,10 +11,17 @@ namespace Build_IT_FrameStatica.Results.Interfaces
         IGetResult NormalForce { get; }
         IGetResult Shear { get; }
         IGetResult BendingMoment { get; }
-        IGetResult HorizontalDeflection { get; }
-        IGetResult VerticalDeflection { get; }
+        IGetResult NormalDeflection { get; }
+        IGetResult ShearDeflection { get; }
         IGetResult Rotation { get; }
 
         #endregion // Properties
+
+        #region Public_Methods
+
+        IResultValue GetHorizontalDeflection(double position, short spanNumber);
+        IResultValue GetVerticalDeflection(double position, short spanNumber);
+
+        #endregion // Public_Methods
     }
 }

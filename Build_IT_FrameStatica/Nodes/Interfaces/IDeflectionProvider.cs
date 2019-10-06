@@ -6,8 +6,8 @@ namespace Build_IT_FrameStatica.Nodes.Interfaces
     {
         #region Properties
 
-        IResultValue HorizontalDeflection { get; }
-        IResultValue VerticalDeflection { get; }
+        IValue HorizontalDeflection { get; }
+        IValue VerticalDeflection { get; }
 
         #endregion // Properties
     }

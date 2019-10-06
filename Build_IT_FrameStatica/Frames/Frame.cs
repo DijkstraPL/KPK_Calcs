@@ -31,6 +31,8 @@ namespace Build_IT_FrameStatica.Frames
 
         #endregion // Properties
 
+        #region Constructors
+        
         public Frame(IList<ISpan> spans, ICollection<INode> nodes)
         {
             Spans = spans ?? throw new ArgumentNullException(nameof(spans));
@@ -39,6 +41,10 @@ namespace Build_IT_FrameStatica.Frames
             CalculationEngine = new DirectStiffnessCalculationEngine(this);
             Results = new ResultsContainer(this);
         }
+
+        #endregion // Constructors
+
+        #region Public_Methods
         
         public void SetNumeration()
         {
@@ -50,6 +56,8 @@ namespace Build_IT_FrameStatica.Frames
 
             SetNumberOfDegreesOfFreedom();
         }
+
+        #endregion // Public_Methods
 
         #region Private_Methods
 

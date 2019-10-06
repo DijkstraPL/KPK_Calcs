@@ -108,9 +108,9 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         [TestCase(6, 1, 1.874)]
         public void NormalForceAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
         {
-            double calculatedShear = _frame.Results.NormalForce.GetValue(position, spanIndex).Value;
+            double calculatedNormalForce = _frame.Results.NormalForce.GetValue(position, spanIndex).Value;
 
-            Assert.That(calculatedShear, Is.EqualTo(result).Within(0.001), message: $"Span {spanIndex} at {position}m.");
+            Assert.That(calculatedNormalForce, Is.EqualTo(result).Within(0.001), message: $"Span {spanIndex} at {position}m.");
         }
 
         [Test()]
@@ -164,25 +164,58 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         }
 
         [Test()]
-        [TestCase(0, 0, 0)]
-        [TestCase(2, 0, 0.240)]
-        [TestCase(4, 0, 0.240)]
-        [TestCase(6, 0, 0.240)]
-        [TestCase(0, 1, 0.240)]
-        [TestCase(2, 1, 0.147)]
-        [TestCase(4, 1, 0.047)]
+        [TestCase(0, 0, 0.2401)]
+        [TestCase(2, 0, 0.2401)]
+        [TestCase(4, 0, 0.2401)]
+        [TestCase(6, 0, 0.2401)]
+        [TestCase(0, 1, -0.0004)]
+        [TestCase(2, 1, -0.0002)]
+        [TestCase(4, 1, -0.0001)]
         [TestCase(6, 1, 0)]
-        public void HorizontalDeflectionAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
+        public void NormalDeflectionAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
         {
-            double deflection = _frame.Results.HorizontalDeflection.GetValue(position, spanIndex).Value;
+            double deflection = _frame.Results.NormalDeflection.GetValue(position, spanIndex).Value;
 
-            Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"Span {spanIndex} at {position}m.");
+            Assert.That(deflection, Is.EqualTo(result).Within(0.0001), message: $"Span {spanIndex} at {position}m.");
         }
 
         [Test()]
         [TestCase(0, 0, 0)]
-        [TestCase(2, 0, 0.030)]
-        [TestCase(4, 0, 0.038)]
+        [TestCase(2, 0, 0.0303)]
+        [TestCase(4, 0, 0.0378)]
+        [TestCase(6, 0, -0.0004)]
+        [TestCase(0, 1, 0.2401)]
+        [TestCase(2, 1, 0.1474)]
+        [TestCase(4, 1, 0.0470)]
+        [TestCase(6, 1, 0)]
+        public void ShearDeflectionAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
+        {
+            double deflection = _frame.Results.ShearDeflection.GetValue(position, spanIndex).Value;
+
+            Assert.That(deflection, Is.EqualTo(result).Within(0.0001), message: $"Span {spanIndex} at {position}m.");
+        }
+
+
+        [Test()]
+        [TestCase(0, 0, 0.2401)]
+        [TestCase(2, 0, 0.2401)]
+        [TestCase(4, 0, 0.2401)]
+        [TestCase(6, 0, 0.2401)]
+        [TestCase(0, 1, 0.2401)]
+        [TestCase(2, 1, 0.1474)]
+        [TestCase(4, 1, 0.0470)]
+        [TestCase(6, 1, 0)]
+        public void HorizontalDeflectionAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
+        {
+            double deflection = _frame.Results.GetHorizontalDeflection(position, spanIndex).Value;
+
+            Assert.That(deflection, Is.EqualTo(result).Within(0.0001), message: $"Span {spanIndex} at {position}m.");
+        }
+
+        [Test()]
+        [TestCase(0, 0, 0)]
+        [TestCase(2, 0, 0.0303)]
+        [TestCase(4, 0, 0.0378)]
         [TestCase(6, 0, -0.0004)]
         [TestCase(0, 1, -0.0004)]
         [TestCase(2, 1, -0.0002)]
@@ -190,9 +223,9 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         [TestCase(6, 1, 0)]
         public void VerticalDeflectionAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
         {
-            double deflection = _frame.Results.VerticalDeflection.GetValue(position, spanIndex).Value;
+            double deflection = _frame.Results.GetVerticalDeflection(position, spanIndex).Value;
 
-            Assert.That(deflection, Is.EqualTo(result).Within(0.001), message: $"Span {spanIndex} at {position}m.");
+            Assert.That(deflection, Is.EqualTo(result).Within(0.0001), message: $"Span {spanIndex} at {position}m.");
         }
     }
 }

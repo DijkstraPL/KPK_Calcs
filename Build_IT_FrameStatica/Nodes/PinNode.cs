@@ -17,9 +17,9 @@ namespace Build_IT_FrameStatica.Nodes
 
         public PinNode(
             Point position,
-            IResultValue shearForce = null,
-            IResultValue horizontalDeflection = null,
-            IResultValue rotation = null)
+            IValue shearForce = null,
+            IValue horizontalDeflection = null,
+            IValue rotation = null)
             : base(position)
         {
             VerticalForce = shearForce ?? new ShearForce();

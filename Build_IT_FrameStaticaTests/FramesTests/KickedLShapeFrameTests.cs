@@ -1,4 +1,5 @@
-﻿using Build_IT_Data.Materials;
+﻿using Build_IT_CommonTools.Extensions;
+using Build_IT_Data.Materials;
 using Build_IT_Data.Sections;
 using Build_IT_FrameStatica.Coords;
 using Build_IT_FrameStatica.Frames;
@@ -6,6 +7,11 @@ using Build_IT_FrameStatica.Loads.ContinuousLoads;
 using Build_IT_FrameStatica.Nodes;
 using Build_IT_FrameStatica.Spans;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Build_IT_FrameStaticaTests.FramesTests
 {
@@ -14,13 +20,10 @@ namespace Build_IT_FrameStaticaTests.FramesTests
     public class KickedLShapeFrameTests
     {
         private Frame _frame;
-
+               
         [SetUp]
         public void SetUpFrame()
         {
-            //var material = new Material(youngModulus: 200, density:0, thermalExpansionCoefficient:0);
-            //var section = new SectionProperties(area: 6, momentOfInteria: 6000);
-
             var material = new Material(youngModulus: 210, density: 0, thermalExpansionCoefficient: 0);
             var section = new SectionProperties(area: 1500, momentOfInteria: 312500);
 
@@ -97,6 +100,45 @@ namespace Build_IT_FrameStaticaTests.FramesTests
                 Assert.That(_frame.Spans[1].RightNode.HorizontalDeflection, Is.Null);
                 Assert.That(_frame.Spans[1].RightNode.VerticalDeflection, Is.Null);
             });
+        }
+
+        [TestCaseSource(typeof(DataSplitter), nameof(DataSplitter.SplitData), new object[] { (short)0, "2019.09.30-03_0-4" })]
+        [TestCaseSource(typeof(DataSplitter), nameof(DataSplitter.SplitData), new object[] { (short)1, "2019.09.30-03_1-5" })]
+        public void CalculationsAreCorrectTest_Successful(short spanNumber, double position, double fx, double fz, double my, double ux, double uy, bool lastOne)
+        {
+            if (lastOne)
+                position = _frame.Spans.First(s => s.Number == spanNumber).Length;
+            double calculatedNormalForce = _frame.Results.NormalForce.GetValue(position, spanNumber).Value;
+            double calculatedShear = _frame.Results.Shear.GetValue(position, spanNumber).Value;
+            double calculatedMoment = _frame.Results.BendingMoment.GetValue(position, spanNumber).Value;
+            double calculatedHorizontalDeflection = _frame.Results.NormalDeflection.GetValue(position, spanNumber).Value;
+            double calculatedVerticalDeflection = _frame.Results.ShearDeflection.GetValue(position, spanNumber).Value;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(calculatedNormalForce, Is.EqualTo(fx).Within(0.001), message: $"Normal force - span {spanNumber} at {position}m.");
+                Assert.That(calculatedShear, Is.EqualTo(fz).Within(0.001), message: $"Shear force - span {spanNumber} at {position}m.");
+                Assert.That(calculatedMoment, Is.EqualTo(my).Within(0.001), message: $"Bending moment - span {spanNumber} at {position}m.");
+                Assert.That(calculatedHorizontalDeflection, Is.EqualTo(ux).Within(0.001), message: $"Horizontal deflection - span {spanNumber} at {position}m.");
+                Assert.That(calculatedVerticalDeflection, Is.EqualTo(uy).Within(0.001), message: $"Vertical deflection - span {spanNumber} at {position}m.");
+
+            });
+        }
+       
+        [Test()]
+        [TestCase(0, 0, 0)]
+        [TestCase(2, 0, 0.000002)]
+        [TestCase(4, 0, 0.000001)]
+        [TestCase(6, 0, -0.000005)]
+        [TestCase(0, 1, -0.000011)]
+        [TestCase(2, 1, -0.000004)]
+        [TestCase(4, 1, 0.000012)]
+        [TestCase(6, 1, 0)]
+        public void RotationAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
+        {
+            double rotation = _frame.Results.Rotation.GetValue(position, spanIndex).Value;
+
+            Assert.That(rotation, Is.EqualTo(result).Within(0.000001), message: $"Span {spanIndex} at {position}m.");
         }
     }
 }

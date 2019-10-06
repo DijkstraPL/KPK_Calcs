@@ -1,21 +1,28 @@
 ﻿using Build_IT_FrameStatica.Results.Interfaces;
+using Build_IT_FrameStatica.Spans.Interfaces;
 
 namespace Build_IT_FrameStatica.Results.Displacements
 {
-    internal abstract class Displacement : IResultValue
+    internal class Displacement : IResultValue
     {
         #region Properties
 
         public double Value { get; set; }
-        public double? Position { get; }
+        public double Position { get; }
+        public ISpan Span { get; }
 
         #endregion // Properties
 
         #region Constructors
-        
-        protected Displacement(double? position = null)
+
+        protected Displacement()
+        {
+        }
+
+        public Displacement(ISpan span, double position)
         {
             Position = position;
+            Span = span;
         }
 
         #endregion // Constructors
