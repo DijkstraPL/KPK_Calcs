@@ -68,7 +68,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
             return new Displacement(span, position) 
             { 
-                Value = shearDeflection.Value * span.GetLambdaX() + normalDeflection.Value *- span.GetLambdaY() 
+                Value = shearDeflection.Value * span.GetLambdaX() + normalDeflection.Value * span.GetLambdaY() 
             };
         }
         #endregion // Public_Methods

@@ -168,9 +168,9 @@ namespace Build_IT_FrameStaticaTests.FramesTests
         [TestCase(2, 0, 0.2401)]
         [TestCase(4, 0, 0.2401)]
         [TestCase(6, 0, 0.2401)]
-        [TestCase(0, 1, -0.0004)]
-        [TestCase(2, 1, -0.0002)]
-        [TestCase(4, 1, -0.0001)]
+        [TestCase(0, 1, 0.0004)]
+        [TestCase(2, 1, 0.0002)]
+        [TestCase(4, 1, 0.0001)]
         [TestCase(6, 1, 0)]
         public void NormalDeflectionAtPositionCalculationsTest_Successful(double position, short spanIndex, double result)
         {

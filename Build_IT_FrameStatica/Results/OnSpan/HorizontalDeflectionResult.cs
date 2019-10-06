@@ -64,7 +64,7 @@ namespace Build_IT_FrameStatica.Results.OnSpan
         {
             _spanDeflection += span.LeftDisplacements.NormalDeflection / 10;
 
-            _spanDeflection += span.LeftForces.NormalForce * _distanceFromLeftSide 
+            _spanDeflection -= span.LeftForces.NormalForce * _distanceFromLeftSide 
                 / (span.Material.YoungModulus * span.Section.Area);
         }
         
@@ -76,15 +76,15 @@ namespace Build_IT_FrameStatica.Results.OnSpan
 
         private void CalculateDeflectionFromPointLoads(ISpan span)
         {
-           // CalculateDeflectionFromHorizontalDisplacements(span);
+            CalculateDeflectionFromHorizontalDisplacements(span);
             CalculateDeflectionFromNormalForcesPointLoads(span);
         }
 
-        //private void CalculateDeflectionFromHorizontalDisplacements(ISpan span)
-        //{
-        //    _spanDeflection += span.LeftNode.ConcentratedForces.Sum(cf
-        //        => cf.CalculateHorizontalDisplacement()) / 10;
-        //}
+        private void CalculateDeflectionFromHorizontalDisplacements(ISpan span)
+        {
+            _spanDeflection -= span.LeftNode.ConcentratedForces.Sum(cf
+                => cf.CalculateHorizontalDisplacement()) / 10;
+        }
 
         private void CalculateDeflectionFromNormalForcesPointLoads(ISpan span)
         {

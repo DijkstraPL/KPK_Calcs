@@ -30,9 +30,9 @@ namespace Build_IT_FrameStaticaTests
                 data.Ux = Convert.ToDouble(split[i + 6].Replace(',', '.'), CultureInfo.InvariantCulture);
                 data.Uz = Convert.ToDouble(split[i + 7].Replace(',', '.'), CultureInfo.InvariantCulture);
 
-                if (split[i + 1].Contains("początek"))
+                if (split[i + 1].Contains("początek", StringComparison.InvariantCulture))
                     data.Position = 0;
-                else if (split[i + 1].Contains("koniec"))
+                else if (split[i + 1].Contains("koniec", StringComparison.InvariantCulture))
                     data.LastOne = true;
                 else
                     SetPosition(split, i, data);
@@ -46,7 +46,7 @@ namespace Build_IT_FrameStaticaTests
         #endregion // Public_Methods
 
         #region Private_Methods
-        
+
         private static string GetDataFromFile(string fileName)
         {
             var path = @".\FrameData\" + fileName + ".csv";
@@ -64,33 +64,39 @@ namespace Build_IT_FrameStaticaTests
             var positionString = new String(split[i + 1].Where(s => Char.IsDigit(s) || s == ',').ToArray());
             data.Position = Convert.ToDouble(positionString.Replace(',', '.'), CultureInfo.InvariantCulture);
 
-            if (split[i + 1].Contains("(+)"))
-                data.Positive = true;
-            else if (split[i + 1].Contains("(-)"))
-                data.Positive = false;
+            //if (split[i + 1].Contains("(+)", StringComparison.InvariantCulture))
+            //    data.Position += Data.Offset;
+            //else if (split[i + 1].Contains("(-)", StringComparison.InvariantCulture))
+            //    data.Position -= Data.Offset;
         }
 
         private static IEnumerable GroupSamePositions(short spanNumber, List<Data> organizedData)
         {
+            var groupedData = organizedData.GroupBy(d => d.Position);
 
-            Data toBeAdded = null;
-            foreach (var data in organizedData)
+            foreach (var group in groupedData)
             {
-                if (toBeAdded != null && toBeAdded.Position == data.Position)
-                    yield return new TestCaseData(spanNumber, data.Position,
-                        (data.Fx + toBeAdded.Fx) / 2,
-                        (data.Fz + toBeAdded.Fz) / 2,
-                        (data.My + toBeAdded.My) / 2,
-                        (data.Ux + toBeAdded.Ux) / 2,
-                        (data.Uz + toBeAdded.Uz) / 2,
-                        data.LastOne);
-                else if (data.Positive == true || data.Positive == false)
-                    toBeAdded = data;
+                if (group.Count() == 1)
+                    yield return new object[] { spanNumber, group.First() };
                 else
-                    yield return new TestCaseData(spanNumber, data.Position, data.Fx, data.Fz, data.My, data.Ux, data.Uz, data.LastOne);
+                {
+                    var data = new Data();
+                    data.Position = group.First().Position;
+                    data.MinMaxFx[0] = group.Min(d => d.Fx);
+                    data.MinMaxFx[1] = group.Max(d => d.Fx);
+                    data.MinMaxFz[0] = group.Min(d => d.Fz);
+                    data.MinMaxFz[1] = group.Max(d => d.Fz);
+                    data.MinMaxMy[0] = group.Min(d => d.My);
+                    data.MinMaxMy[1] = group.Max(d => d.My);
+                    data.MinMaxUx[0] = group.Min(d => d.Ux);
+                    data.MinMaxUx[1] = group.Max(d => d.Ux);
+                    data.MinMaxUz[0] = group.Min(d => d.Uz);
+                    data.MinMaxUz[1] = group.Max(d => d.Uz);
+                    data.HasTwoValues = true;
+                    yield return new object[] { spanNumber, data };
+                }
             }
         }
-
         #endregion // Private_Methods
     }
 }
