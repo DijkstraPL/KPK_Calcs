@@ -202,8 +202,7 @@ namespace Build_IT_FrameStaticaTests.FramesTests
                 Assert.That(_frame.Spans[5].RightNode.LeftRotation, Is.Null);
             });
         }
-
-
+        
         [TestCaseSource(typeof(DataSplitter), nameof(DataSplitter.SplitData), new object[] { (short)0, "2019.09.30-06_0-14" })]
         [TestCaseSource(typeof(DataSplitter), nameof(DataSplitter.SplitData), new object[] { (short)1, "2019.09.30-06_1-15" })]
         [TestCaseSource(typeof(DataSplitter), nameof(DataSplitter.SplitData), new object[] { (short)2, "2019.09.30-06_2-28" })]
@@ -225,19 +224,24 @@ namespace Build_IT_FrameStaticaTests.FramesTests
                 if (data.HasTwoValues)
                 {
                     Assert.That(calculatedNormalForce, Is.GreaterThanOrEqualTo(data.MinMaxFx[0]).Within(0.001)
-                        .And.LessThanOrEqualTo(data.MinMaxFx[1]).Within(0.001),
+                        .And.LessThanOrEqualTo(data.MinMaxFx[1]).Within(0.001)
+                        .Or.EqualTo((data.MinMaxFx[0] + data.MinMaxFx[1]) / 2).Within(0.01),
                         message: $"Normal force - span {spanNumber} at {data.Position}m."); ;
                     Assert.That(calculatedShear, Is.GreaterThanOrEqualTo(data.MinMaxFz[0]).Within(0.001)
-                        .And.LessThanOrEqualTo(data.MinMaxFz[1]).Within(0.001),
+                        .And.LessThanOrEqualTo(data.MinMaxFz[1]).Within(0.001)
+                        .Or.EqualTo((data.MinMaxFz[0] + data.MinMaxFz[1]) / 2).Within(0.01),
                         message: $"Shear force - span {spanNumber} at {data.Position}m.");
                     Assert.That(calculatedMoment, Is.GreaterThanOrEqualTo(data.MinMaxMy[0]).Within(0.001)
-                        .And.LessThanOrEqualTo(data.MinMaxMy[1]).Within(0.001),
+                        .And.LessThanOrEqualTo(data.MinMaxMy[1]).Within(0.001)
+                        .Or.EqualTo((data.MinMaxMy[0] + data.MinMaxMy[1]) / 2).Within(0.01),
                         message: $"Bending moment force - span {spanNumber} at {data.Position}m.");
                     Assert.That(calculatedHorizontalDeflection, Is.GreaterThanOrEqualTo(data.MinMaxUx[0]).Within(0.001)
-                        .And.LessThanOrEqualTo(data.MinMaxUx[1]).Within(0.001),
+                        .And.LessThanOrEqualTo(data.MinMaxUx[1]).Within(0.001)
+                        .Or.EqualTo((data.MinMaxUx[0] + data.MinMaxUx[1]) / 2).Within(0.01),
                         message: $"Horizontal deflection - span {spanNumber} at {data.Position}m.");
                     Assert.That(calculatedVerticalDeflection, Is.GreaterThanOrEqualTo(data.MinMaxUz[0]).Within(0.001)
-                        .And.LessThanOrEqualTo(data.MinMaxUz[1]).Within(0.001),
+                        .And.LessThanOrEqualTo(data.MinMaxUz[1]).Within(0.001)
+                        .Or.EqualTo((data.MinMaxUz[0] + data.MinMaxUz[1]) / 2).Within(0.01),
                         message: $"Vertical deflection - span {spanNumber} at {data.Position}m.");
                 }
                 else

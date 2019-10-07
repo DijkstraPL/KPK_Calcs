@@ -62,12 +62,8 @@ namespace Build_IT_FrameStatica.Spans
         /// <returns>Angle in degrees.</returns>
         public double GetAngle()
         {
-            var angle = Math.Atan((RightNode.Position.Y - LeftNode.Position.Y) /
+            return Math.Atan((RightNode.Position.Y - LeftNode.Position.Y) /
             (RightNode.Position.X - LeftNode.Position.X)) * 180 / Math.PI;
-
-            if (angle < 0)
-                return 180 - angle;
-            return angle;
         }
 
         #endregion // Public_Methods

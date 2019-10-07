@@ -9,9 +9,10 @@
                 <ResourceDictionary Source="/Build_IT_Desktop;component/Resources/ResourceDictionaries/Template.xaml"/>
                 <ResourceDictionary Source="/Build_IT_Desktop;component/Resources/ResourceDictionaries/ColorsResourceDictionary.xaml"/>
                 <ResourceDictionary Source="/Build_IT_Desktop;component/Resources/ResourceDictionaries/ImagesResourceDictionary.xaml"/>
-                <ResourceDictionary Source="/Build_IT_Desktop;component/Resources/ResourceDictionaries/TextStylesResourceDictionary.xaml"/>
-                <ResourceDictionary Source="/Build_IT_Desktop;component/Resources/ResourceDictionaries/ButtonsStylesResourceDictionary.xaml"/>
-                <ResourceDictionary Source="/Build_IT_Desktop;component/Resources/ResourceDictionaries/ScrollBarsStylesResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/Build_IT_Desktop;component/Resources/ResourceDictionaries/Controls/TextStylesResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/Build_IT_Desktop;component/Resources/ResourceDictionaries/Controls/ButtonsStylesResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/Build_IT_Desktop;component/Resources/ResourceDictionaries/Controls/ScrollBarsStylesResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/Build_IT_Desktop;component/Resources/ResourceDictionaries/Controls/ComboBoxResourceDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

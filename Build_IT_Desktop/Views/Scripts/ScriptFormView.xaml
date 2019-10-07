@@ -13,8 +13,11 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding ParameterName}"/>
+                        <TextBlock Text="{Binding ParameterName}"/>                        
                         <TextBox Text="{Binding ParameterValue}"/>
+                        <ComboBox ItemsSource="{Binding ValueOptions}"
+                                  SelectedItem="{Binding ParameterValue}"
+                                  DisplayMemberPath="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
