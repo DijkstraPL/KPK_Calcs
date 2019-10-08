@@ -1,5 +1,6 @@
-﻿using Build_IT_Desktop.Views.Constants;
+﻿using Build_IT_CalculationModule.Views;
 using Build_IT_Desktop.Views.Scripts;
+using Build_IT_Infrastructure.Constants;
 using Prism.Ioc;
 using Prism.Regions;
 using System.Windows;

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\Exit.png" />
+    <None Remove="Resources\Images\Maximize.png" />
+    <None Remove="Resources\Images\Minimize.png" />
+    <None Remove="Resources\Images\Restore.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Build_IT_Data\Build_IT_Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\Exit.png" />
+    <Resource Include="Resources\Images\Maximize.png" />
+    <Resource Include="Resources\Images\Minimize.png" />
+    <Resource Include="Resources\Images\Restore.png" />
+  </ItemGroup>
+
+</Project>

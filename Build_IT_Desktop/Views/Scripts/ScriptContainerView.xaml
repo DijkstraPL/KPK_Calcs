@@ -14,13 +14,21 @@
             <Border Background="{StaticResource GrayBrush}"
                     HorizontalAlignment="Stretch"
                     Padding="5">
-            <TextBlock Text="{Binding ScriptName}"
-                       TextWrapping="Wrap"
-                       Style="{StaticResource MinorHeaderTextBlock}"/>
+                <StackPanel>
+                    <TextBlock Text="{Binding ScriptName}"
+                               TextWrapping="Wrap"
+                               Style="{StaticResource MinorHeaderTextBlock}"/>
+                    <TextBlock Text="{Binding ScriptDocument}"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
             </Border>
             <Border Padding="5">
-                <TextBlock Text="{Binding ScriptDescription}"
+                <StackPanel>
+                    <ListBox ItemsSource="{Binding Tags}"
+                             DisplayMemberPath="Name"/>
+                    <TextBlock Text="{Binding ScriptDescription}"
                            TextWrapping="Wrap"/>
+                </StackPanel>
             </Border>
             <Border Background="{StaticResource GrayBrush}"
                     HorizontalAlignment="Stretch"
