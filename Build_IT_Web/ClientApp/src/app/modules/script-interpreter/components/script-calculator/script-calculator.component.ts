@@ -84,6 +84,7 @@ export class ScriptCalculatorComponent implements OnInit {
 
     private prepareParameter(parameter: Parameter): void {
         parameter.equation = parameter.value;
+        parameter.valueOptions = parameter.valueOptions.sort((a, b) => a.number - b.number);
     }
 
     sortParameters(parameters: Parameter[], prop: string) {

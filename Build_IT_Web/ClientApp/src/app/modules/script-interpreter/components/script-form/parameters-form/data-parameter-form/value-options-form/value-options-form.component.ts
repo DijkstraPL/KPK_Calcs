@@ -1,4 +1,4 @@
-﻿import { Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { AppErrorStateMatcher } from '../../../../../../../common/errors/app-error-state-matcher';
 import { ValueOptionSettings } from '../../../../../models/enums/valueOptionSettings';
@@ -32,6 +32,7 @@ export class ValueOptionsFormComponent {
         this.parameterValueOptions.push(
             new FormGroup({
                 id: new FormControl(0),
+                number: new FormControl(0),
                 name: new FormControl(''),
                 value: new FormControl(''),
                 description: new FormControl('')

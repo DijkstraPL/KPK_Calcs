@@ -130,11 +130,17 @@ namespace Build_IT_SoftwareArchitecture
         {
             Styles styles = _workspace.Views.Configuration.Styles;
             _singlePageApplication.AddTags("Web app");
+            _desktopApp.AddTags("Desktop app");
+            _mobileApp.AddTags("Mobile app");
+            _database.AddTags("Database");
             styles.Add(new ElementStyle(Tags.SoftwareSystem) { Background = "#1168bd", Color = "#ffffff" });
             styles.Add(new ElementStyle(Tags.Person) { Background = "#08427b", Color = "#ffffff", Shape = Shape.Person });
             styles.Add(new ElementStyle(Tags.Container) { Width = 650, Height = 400, Background = "#2279ce", Shape = Shape.Box });
+            styles.Add(new ElementStyle("Web app") { Width = 550, Background = "#2279ce", Shape = Shape.WebBrowser });
+            styles.Add(new ElementStyle("Desktop app") { Width = 550, Background = "#2279ce", Shape = Shape.WebBrowser });
+            styles.Add(new ElementStyle("Mobile app") { Width = 550, Background = "#2279ce", Shape = Shape.MobileDeviceLandscape });
+            styles.Add(new ElementStyle("Database") { Width = 550, Background = "#2279ce", Shape = Shape.Ellipse });
             styles.Add(new ElementStyle(Tags.Component) { Width = 550, Background = "#338adf", Shape = Shape.Box });
-            styles.Add(new ElementStyle("Web app") { Width = 550, Background = "#338adf", Shape = Shape.WebBrowser });
             styles.Add(new RelationshipStyle(Tags.Relationship) { Thickness = 4, Dashed = false, FontSize = 32, Width = 400 });
          
         }

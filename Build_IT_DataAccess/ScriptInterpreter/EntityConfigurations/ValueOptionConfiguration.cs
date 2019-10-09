@@ -15,6 +15,9 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
             builder.Property(vo => vo.Name)
                 .IsRequired();
 
+            builder.Property(p => p.Number)
+                .IsRequired();
+
             builder.Property(vo => vo.Value)
                 .IsRequired();
         }

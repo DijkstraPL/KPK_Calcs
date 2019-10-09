@@ -80,6 +80,7 @@ namespace Build_IT_Application.Mapping
                 if (valueOption == null)
                     continue;
                 valueOption.Name = valueOptionResource.Name;
+                valueOption.Number = valueOptionResource.Number;
                 valueOption.Value = valueOptionResource.Value;
                 valueOption.Description = valueOptionResource.Description;
             }
@@ -98,7 +99,7 @@ namespace Build_IT_Application.Mapping
             var addedValueOptions = valueOptionsResource
                 .Where(vor => !parameter.ValueOptions.Any(vo => vo.Id == vor.Id))
                  .Select(vor =>
-                 new ValueOption { Name = vor.Name, Description = vor.Description, Value = vor.Value }
+                 new ValueOption { Name = vor.Name, Number = vor.Number, Description = vor.Description, Value = vor.Value }
                  ).ToList();
             foreach (var valueOption in addedValueOptions)
                 parameter.ValueOptions.Add(valueOption);

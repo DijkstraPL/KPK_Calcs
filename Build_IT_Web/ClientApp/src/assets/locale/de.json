@@ -1,4 +1,4 @@
-﻿{
+{
   "app": {
     "Home": "Hauptseite",
     "NewScript": "Neues Skript",
@@ -255,6 +255,10 @@
         "Name": {
           "Header": "Name",
           "Hint": "Name"
+        },
+        "Number": {
+          "Header": "Number",
+          "Hint": "Provide number for ordering"
         },
         "Value": {
           "Header": "Value",

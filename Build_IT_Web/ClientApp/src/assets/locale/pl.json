@@ -1,4 +1,4 @@
-﻿{
+{
   "app": {
     "Home": "Strona główna",
     "NewScript": "Nowy skrypt",
@@ -255,6 +255,10 @@
         "Name": {
           "Header": "Nazwa",
           "Hint": "Nazwa"
+        },
+        "Number": {
+          "Header": "Numer",
+          "Hint": "Numer używany do sortowania"
         },
         "Value": {
           "Header": "Wartość",

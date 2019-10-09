@@ -1,4 +1,4 @@
-﻿import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatRadioButton } from '@angular/material/radio';
@@ -119,6 +119,7 @@ export class DataParameterFormComponent implements OnInit {
 
             parameter.valueOptions.forEach(vo => this.parameterValueOptions.push(new FormGroup({
                 id: new FormControl(vo.id),
+                number: new FormControl(vo.number),
                 name: new FormControl(vo.name),
                 value: new FormControl(vo.value),
                 description: new FormControl(vo.description)
