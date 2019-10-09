@@ -41,14 +41,7 @@ namespace Build_IT_SoftwareArchitecture
         {
             Model model = _workspace.Model;
 
-            Person user = model.AddPerson("User", "A user of my software system.");
-            Person admin = model.AddPerson("Admin", "An admin of my software system.");
-            Person creator = model.AddPerson("Creator", "A creator for scripts.");
-            _softwareSystem = model.AddSoftwareSystem("Build-IT Web site", "My site.");
-
-            user.Uses(_softwareSystem, "Uses");
-            admin.Uses(_softwareSystem, "Administrate");
-            creator.Uses(_softwareSystem, "Uses");
+            _softwareSystem = model.AddSoftwareSystem("Build-IT System", "System for all software related to Building-IT");
         }
 
         private static void SendWorkspaceToServer()
