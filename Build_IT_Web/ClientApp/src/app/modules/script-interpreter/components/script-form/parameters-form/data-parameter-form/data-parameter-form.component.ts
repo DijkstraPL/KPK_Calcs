@@ -104,6 +104,11 @@ export class DataParameterFormComponent implements OnInit {
     get parameterFigures(): FormArray {
         return this.parameterForm.get('figures') as FormArray;
     }
+    get styledValue(): string {
+        return this.getStyledValue();
+    }
+
+    private colors: string[] = ["yellow", "red", "green"];
 
     constructor(private parameterService: ParameterService) {
     }
@@ -266,5 +271,38 @@ export class DataParameterFormComponent implements OnInit {
 
     private setValueOptionsSettings() {
         this.allowUserValues = this.newParameter.valueOptionSetting == ValueOptionSettings.UserInput;
+    }
+
+    private getStyledValue() : string {
+        let styledValue = "";
+        let parameter = "";
+        let insideParameter = false;
+        let index = 0;
+        for (var i = 0; i < this.parameterValue.value.length; i++) {
+            if (insideParameter && this.parameterValue.value[i] == "]") {
+                styledValue += `<span style="color:red">${parameter}</span>`;
+                parameter = "";
+                insideParameter = false;
+                continue;
+            }
+            else if (this.parameterValue.value[i] == "[") {
+                insideParameter = true;
+                continue;
+            }
+            else if (insideParameter) {
+                parameter += this.parameterValue.value[i];
+                continue;
+            }
+
+
+            if (this.parameterValue.value[i] == "(")
+                styledValue += `<span style="color:${this.colors[index++]}">(</span>`;
+            else if (this.parameterValue.value[i] == ")")
+                styledValue += `<span style="color:${this.colors[--index]}">)</span>`;
+            else
+                styledValue += this.parameterValue.value[i];
+        }
+
+        return styledValue;
     }
 }

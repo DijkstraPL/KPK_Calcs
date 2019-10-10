@@ -1,4 +1,4 @@
-﻿
+
 
 <form (ngSubmit)="onSubmit($event)"
       [formGroup]="parameterForm">
@@ -117,8 +117,10 @@
         </mat-error>
     </mat-form-field>
 
-    <!--<div contenteditable="true"
-         [innerHtml]="parameterValue.value | html"></div>-->
+    <div contenteditable="true"
+         [attr.style]="styles"
+         [innerHtml]="styledValue | html | safeHtml"
+         id="valueEditor"></div>
 
     <mat-form-field class="m-2 full-width">
         <textarea matInput

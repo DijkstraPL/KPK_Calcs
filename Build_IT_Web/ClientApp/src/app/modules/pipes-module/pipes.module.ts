@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { HtmlPipe } from './text-pipes/html-pipe';
 import { ToNumberPipe } from './text-pipes/toNumber-pipe';
+import { SafeHtmlPipe } from './text-pipes/safe-html-pipe';
 
 @NgModule({
     declarations: [
         HtmlPipe,
-        ToNumberPipe
+        ToNumberPipe,
+        SafeHtmlPipe
     ],
     imports: [
     ],
     exports: [
         HtmlPipe,
-        ToNumberPipe
+        ToNumberPipe,
+        SafeHtmlPipe
     ]
 })
 export class PipesModule {

@@ -51,6 +51,7 @@
     <None Remove="ClientApp\src\app\directives\element-select.directive.ts" />
     <None Remove="ClientApp\src\app\models\token.response.ts" />
     <None Remove="ClientApp\src\app\models\user.ts" />
+    <None Remove="ClientApp\src\app\modules\pipes-module\text-pipes\safe-html-pipe.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\models\api\scripts\create-script-command.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\models\enums\language.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />
@@ -113,6 +114,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\directives\element-select.directive.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\token.response.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\pipes-module\text-pipes\safe-html-pipe.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\models\api\scripts\create-script-command.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\models\enums\language.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />
