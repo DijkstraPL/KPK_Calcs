@@ -1,4 +1,4 @@
-﻿import { AlternativeScript } from "./interfaces/alternativeScript";
+import { AlternativeScript } from "./interfaces/alternativeScript";
 import { ValueOption } from "./interfaces/valueOption";
 import { ValueType } from "./enums/valueType";
 import { ParameterOptions } from "./enums/parameterOptions";
@@ -23,6 +23,6 @@ export class ParameterImpl implements Parameter {
     valueOptionSetting: ValueOptionSettings;
     valueOptions: ValueOption[] = [];
     figures: Figure[] = [];
-    
+        
     equation: string;
 }

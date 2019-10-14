@@ -9,10 +9,10 @@ namespace Build_IT_WebTest.EndToEndTests
 {
     [TestFixture]
     [EndToEndCategory]
-    [Ignore("End To End")]
+    [Explicit("End To End")]
     public class SteelTensionTests
     {
-        private const string _chromeDriver = @"C:\KPK_Calcs\Build_IT_WebTest\bin\Debug\netcoreapp2.2";
+        private const string _chromeDriver = @"C:\KPK_Calcs\Build_IT_WebTest\bin\Debug\netcoreapp3.0";
         private const string _url = "http://building-it.net/scripts/calculator/1";
         private IWebDriver _driver;
 

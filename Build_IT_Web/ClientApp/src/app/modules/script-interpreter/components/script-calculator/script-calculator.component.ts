@@ -49,7 +49,7 @@ export class ScriptCalculatorComponent implements OnInit {
         let sub = this.route.params.subscribe(params => {
             id = +params['id'];
         });
-        if (id != undefined) 
+        if (id != undefined)
             this.getScript(id);
         sub.unsubscribe();
 
@@ -74,7 +74,7 @@ export class ScriptCalculatorComponent implements OnInit {
         this.parameterService.getParameters(this.script.id).subscribe(parameters => {
             this.parameters = parameters.filter(p => (p.context & ParameterOptions.editable) != 0),
                 this.staticDataParameters = parameters.filter(p =>
-                    (p.context & ParameterOptions.staticData) != 0 && 
+                    (p.context & ParameterOptions.staticData) != 0 &&
                     (p.context & ParameterOptions.visible) != 0),
                 this.parameters.forEach(p => this.prepareParameter(p)),
                 this.filterParameters(),
@@ -85,6 +85,10 @@ export class ScriptCalculatorComponent implements OnInit {
     private prepareParameter(parameter: Parameter): void {
         parameter.equation = parameter.value;
         parameter.valueOptions = parameter.valueOptions.sort((a, b) => a.number - b.number);
+
+        let value = sessionStorage.getItem("Script" + this.script.id + parameter.name);
+        if (value != null)
+            parameter.value = value;
     }
 
     sortParameters(parameters: Parameter[], prop: string) {
@@ -98,6 +102,8 @@ export class ScriptCalculatorComponent implements OnInit {
     onValueChanged(parameter: Parameter) {
         this.valueChanged = true;
 
+        sessionStorage.setItem("Script" + this.script.id + parameter.name, parameter.value);
+
         this.filterParameters();
     }
 
@@ -106,6 +112,7 @@ export class ScriptCalculatorComponent implements OnInit {
         this.visibleParameters = this.parameters.filter(p =>
             (p.context & ParameterOptions.visible) != 0 &&
             this.validateVisibility(p));
+
 
         if (this.groups == undefined)
             this.createGroups();
@@ -151,6 +158,15 @@ export class ScriptCalculatorComponent implements OnInit {
         return validationResult;
     }
 
+    clean() {
+        this.parameters.forEach(p => {
+            sessionStorage.removeItem("Script" + this.script.id + p.name);
+            p.value = p.equation;
+        });
+
+        this.valueChanged = true;
+    }
+
     calculate() {
         this.isCalculating = true;
         this.calculationService.calculate(this.script.id, this.parameters.filter(p => this.validateVisibility(p)))
@@ -173,7 +189,7 @@ export class ScriptCalculatorComponent implements OnInit {
         let secondPartOfEquation = parameter.equation;
 
         this.parameters.concat(this.staticDataParameters).concat(this.resultParameters).forEach(p => {
-            secondPartOfEquation = secondPartOfEquation.replace(`[${p.name}]`, ` ${p.value}${p.unit} `); 
+            secondPartOfEquation = secondPartOfEquation.replace(`[${p.name}]`, ` ${p.value}${p.unit} `);
         });
 
         return firstPartOfEquation + ' = ' + secondPartOfEquation;
@@ -216,7 +232,7 @@ export class ScriptCalculatorComponent implements OnInit {
 
         try {
             let result = eval(dataValidatorEquation) as boolean;
-            if (result != null) 
+            if (result != null)
                 return result;
             else
                 return true;
@@ -237,7 +253,7 @@ export class ScriptCalculatorComponent implements OnInit {
                 .replace('||', ' OR ')
                 .replace(/\s{2,}/g, ' ')
                 .replace(/\r?\n|\r/g, ' ');
-                this.errorMessages.push(pureValidationEquation);
+            this.errorMessages.push(pureValidationEquation);
         });
     }
 }

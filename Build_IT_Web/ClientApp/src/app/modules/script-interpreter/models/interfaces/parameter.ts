@@ -1,9 +1,10 @@
-﻿import { AlternativeScript } from "./alternativeScript";
+import { AlternativeScript } from "./alternativeScript";
 import { ValueOption } from "./valueOption";
 import { ValueType } from "../enums/valueType";
 import { ParameterOptions } from "../enums/parameterOptions";
 import { ValueOptionSettings } from "../enums/valueOptionSettings";
 import { Figure } from "./figure";
+import { EventEmitter } from "events";
 
 export interface Parameter {
     id: number;
@@ -21,7 +22,7 @@ export interface Parameter {
     notes: string;
     valueOptionSetting: ValueOptionSettings;
     valueOptions: ValueOption[];
-    figures: Figure[]
+    figures: Figure[];
 
     equation: string;
 }

@@ -1,92 +1,101 @@
-﻿
-<div *ngIf="script">
+
+  <div *ngIf="script">
     <div class="text-center">
-        <h1>{{script.name}}</h1>
+      <h1>{{script.name}}</h1>
     </div>
 
     <p class="ml-2">{{script.description}}</p>
     <ul>
-        <li *ngFor="let tag of script.tags">
-            {{tag.name}}
-        </li>
+      <li *ngFor="let tag of script.tags">
+        {{tag.name}}
+      </li>
     </ul>
+
     <div *ngIf="!visibleParameters">
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
 
     <div *ngIf="staticDataParameters && staticDataParameters.length > 0">
-        <h5 class="ml-2">{{'scriptCalculator.StaticData' | translate}}</h5>
-        <mat-list dense>
-            <div *ngFor="let parameter of staticDataParameters">
-                <parameter-result [parameter]="parameter"></parameter-result>
-                <mat-divider></mat-divider>
-            </div>
-        </mat-list>
+      <h5 class="ml-2">{{'scriptCalculator.StaticData' | translate}}</h5>
+      <mat-list dense>
+        <div *ngFor="let parameter of staticDataParameters">
+          <parameter-result [parameter]="parameter"></parameter-result>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-list>
     </div>
 
+    <button mat-stroked-button
+            color="warn"
+            class="clean"
+            type="button"
+            (click)="clean()">
+      <span class="fa fa-backward"></span> {{'scriptCalculator.Clean' | translate}}
+    </button>
+
     <div class="mt-2">
-        <div *ngFor="let parameter of notGroupedParameters"
-             class="list-inline-item ml-5 d-inline-flex">
-            <parameter-form [parameter]="parameter"
-                            (valueChanged)="onValueChanged($event)"></parameter-form>
-        </div>
+      <div *ngFor="let parameter of notGroupedParameters"
+           class="list-inline-item ml-5 d-inline-flex">
+        <parameter-form [parameter]="parameter"
+                        (valueChanged)="onValueChanged($event)"></parameter-form>
+      </div>
 
 
-        <mat-accordion>
-            <mat-expansion-panel *ngFor="let group of groups">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        {{group.name}}
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let group of groups">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{group.name}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-                <ul class="list-inline m-0">
-                    <li *ngFor="let parameter of group.parameters"
-                        class="list-inline-item ml-5 d-inline-flex">
-                        <parameter-form [parameter]="parameter"
-                                        (valueChanged)="onValueChanged($event)"></parameter-form>
-                    </li>
-                </ul>
+          <ul class="list-inline m-0">
+            <li *ngFor="let parameter of group.parameters"
+                class="list-inline-item ml-5 d-inline-flex">
+              <parameter-form [parameter]="parameter"
+                              (valueChanged)="onValueChanged($event)"></parameter-form>
+            </li>
+          </ul>
 
-            </mat-expansion-panel>
-        </mat-accordion>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
 
 
     <div class="text-center"
          *ngIf="visibleParameters">
 
-            <mat-chip-list aria-label="Error list"
-                           class="list-horizontal"
-                           *ngIf="errorMessages">
-                <mat-chip *ngFor="let errorMessage of errorMessages"
-                          [innerHtml]="errorMessage | html"
-                          color="warn"
-                          selected></mat-chip>
-            </mat-chip-list>
+      <mat-chip-list aria-label="Error list"
+                     class="list-horizontal"
+                     *ngIf="errorMessages">
+        <mat-chip *ngFor="let errorMessage of errorMessages"
+                  [innerHtml]="errorMessage | html"
+                  color="warn"
+                  selected></mat-chip>
+      </mat-chip-list>
 
-        <button mat-stroked-button
-                color="accent"
-                class="calculate"
-                type="button"
-                [disabled]="!isValid()"
-                (click)="calculate()">
-            <span class="fa fa-calculator"></span> {{'scriptCalculator.Calculate' | translate}}
-        </button>
+      <button mat-stroked-button
+              color="accent"
+              class="calculate"
+              type="button"
+              [disabled]="!isValid()"
+              (click)="calculate()">
+        <span class="fa fa-calculator"></span> {{'scriptCalculator.Calculate' | translate}}
+      </button>
     </div>
 
     <div *ngIf="isCalculating"
          class="mt-2">
-        <mat-progress-bar mode="query"></mat-progress-bar>
+      <mat-progress-bar mode="query"></mat-progress-bar>
     </div>
 
     <div *ngIf="resultParameters && !valueChanged">
-        <h3 class="ml-2">{{'scriptCalculator.Results' | translate}}</h3>
-        <mat-list dense>
-            <div *ngFor="let parameter of resultParameters">
-                <parameter-result [parameter]="parameter"></parameter-result>
-                <mat-divider></mat-divider>
-            </div>
-        </mat-list>
+      <h3 class="ml-2">{{'scriptCalculator.Results' | translate}}</h3>
+      <mat-list dense>
+        <div *ngFor="let parameter of resultParameters">
+          <parameter-result [parameter]="parameter"></parameter-result>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-list>
     </div>
-</div>
+  </div>

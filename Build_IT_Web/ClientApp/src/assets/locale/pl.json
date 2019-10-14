@@ -294,6 +294,7 @@
   },
 
   "scriptCalculator": {
+    "Clean":  "Wyczyść",
     "StaticData": "Stałe",
     "Calculate": "Oblicz",
     "Results": "Wyniki",
