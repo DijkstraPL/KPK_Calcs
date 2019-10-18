@@ -15,9 +15,11 @@ namespace Build_IT_DataAccess.ScriptInterpreter
 
         public DbSet<Script> Scripts { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Parameter> Parameters { get; set; }
         public DbSet<Figure> Figures { get; set; }
         public DbSet<ScriptTranslation> ScriptsTranslations { get; set; }
+        public DbSet<GroupTranslation> GroupsTranslations { get; set; }
         public DbSet<ParameterTranslation> ParametersTranslations { get; set; }
         public DbSet<ValueOptionTranslation> ValueOptionsTranslations { get; set; }
 
@@ -69,6 +71,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter
 
             modelBuilder.ApplyConfiguration(new ScriptConfiguration());
             modelBuilder.ApplyConfiguration(new TagConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupConfiguration());
             modelBuilder.ApplyConfiguration(new ParameterConfiguration());
             modelBuilder.ApplyConfiguration(new ValueOptionConfiguration());
             modelBuilder.ApplyConfiguration(new ScriptTagConfiguration());
@@ -76,6 +79,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter
             modelBuilder.ApplyConfiguration(new ParameterFigureConfiguration());
 
             modelBuilder.ApplyConfiguration(new ScriptTranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ParameterTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ValueOptionTranslationConfiguration());
         }

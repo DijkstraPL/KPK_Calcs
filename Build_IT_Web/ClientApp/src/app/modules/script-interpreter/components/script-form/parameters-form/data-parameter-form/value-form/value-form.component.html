@@ -1,32 +1,9 @@
 
-<mat-form-field class="m-2 full-width">
-  <div matInput
-       contenteditable="true"
-       #value
+  <div contenteditable="true"
        [attr.style]="styles"
-       [innerHtml]="styledValue | html | safeHtml"
-       id="valueEditor"
-       formControlName="value"
-       [errorStateMatcher]="matcher"
-       autocomplete="off"></div>
-  <mat-hint>{{'scriptsForm.Parameters.EditMode.Value.Hint' | translate}}</mat-hint>
-  <mat-error *ngIf="parameterValue && parameterValue.hasError('maxlength')">
-    {{'scriptsForm.Parameters.EditMode.Value.MaxLengthError' | translate:parameterValue.errors.maxlength}}
-  </mat-error>
-</mat-form-field>
-
-<mat-form-field class="m-2 full-width">
-  <textarea matInput
-            #value
-            placeholder="{{'scriptsForm.Parameters.EditMode.Value.Header' | translate}}"
-            formControlName="value"
-            [errorStateMatcher]="matcher"
-            autocomplete="off"></textarea>
-  <mat-hint>{{'scriptsForm.Parameters.EditMode.Value.Hint' | translate}}</mat-hint>
-  <mat-error *ngIf="parameterValue && parameterValue.hasError('maxlength')">
-    {{'scriptsForm.Parameters.EditMode.Value.MaxLengthError' | translate:parameterValue.errors.maxlength}}
-  </mat-error>
-</mat-form-field>
+       [innerHtml]="styledValue | safeHtml"
+       (keyup)="changed()"
+       #element></div>
 
 <div>
   <button mat-stroked-button

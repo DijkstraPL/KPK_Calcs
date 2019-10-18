@@ -21,6 +21,8 @@ namespace Build_IT_Data.Entities.Scripts
         public ValueOptionSettings ValueOptionSetting { get; set; }
         public ParameterOptions Context { get; set; }
         public string GroupName { get; set; }
+        public Group Group { get; set; }
+        public long? GroupId { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
         public Script Script { get; set; }

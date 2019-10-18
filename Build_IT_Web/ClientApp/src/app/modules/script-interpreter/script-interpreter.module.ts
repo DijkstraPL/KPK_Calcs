@@ -30,6 +30,7 @@ import { FigureParameterFormComponent } from './components/script-form/parameter
 import { ParameterFiguresComponent } from './components/script-calculator/parameter-inputs/figures/parameter-figures.component';
 import { ExistingFiguresDialogComponent } from './components/script-form/parameters-form/data-parameter-form/existing-figures-dialog/existing-figures-dialog.component';
 import { FiguresButtonComponent } from './components/script-calculator/parameter-inputs/figures-button/figures-button.component';
+import { ValueFormComponent } from './components/script-form/parameters-form/data-parameter-form/value-form/value-form.component';
 
 import { ScriptService } from './services/script.service';
 import { TagService } from './services/tag.service';
@@ -70,7 +71,8 @@ import { TranslateLanguageLoader } from '../../services/translation.service';
         ExistingFiguresDialogComponent,
         ScriptTranslationFormComponent,
         ParameterTranslationFormComponent,
-        FiguresButtonComponent
+        FiguresButtonComponent,
+        ValueFormComponent
     ],
     imports: [
         PipesModule,

@@ -36,6 +36,25 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                     b.ToTable("Scripts_Figures");
                 });
 
+            modelBuilder.Entity("Build_IT_Data.Entities.Scripts.Group", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VisibilityValidator")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Scripts_Groups");
+                });
+
             modelBuilder.Entity("Build_IT_Data.Entities.Scripts.Parameter", b =>
                 {
                     b.Property<long>("Id")
@@ -54,6 +73,9 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("GroupId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("GroupName")
                         .HasColumnType("nvarchar(max)");
@@ -88,6 +110,8 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.HasIndex("ScriptId");
 
@@ -190,6 +214,29 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Scripts_Tags");
+                });
+
+            modelBuilder.Entity("Build_IT_Data.Entities.Scripts.Translations.GroupTranslation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("GroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Language")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("Scripts_GroupTranslations");
                 });
 
             modelBuilder.Entity("Build_IT_Data.Entities.Scripts.Translations.ParameterTranslation", b =>
@@ -310,6 +357,10 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
 
             modelBuilder.Entity("Build_IT_Data.Entities.Scripts.Parameter", b =>
                 {
+                    b.HasOne("Build_IT_Data.Entities.Scripts.Group", "Group")
+                        .WithMany("Parameters")
+                        .HasForeignKey("GroupId");
+
                     b.HasOne("Build_IT_Data.Entities.Scripts.Script", "Script")
                         .WithMany("Parameters")
                         .HasForeignKey("ScriptId")
@@ -343,6 +394,15 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                     b.HasOne("Build_IT_Data.Entities.Scripts.Tag", "Tag")
                         .WithMany()
                         .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Build_IT_Data.Entities.Scripts.Translations.GroupTranslation", b =>
+                {
+                    b.HasOne("Build_IT_Data.Entities.Scripts.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

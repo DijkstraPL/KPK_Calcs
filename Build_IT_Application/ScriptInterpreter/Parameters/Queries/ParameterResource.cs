@@ -22,6 +22,7 @@ namespace Build_IT_Application.ScriptInterpreter.Parameters.Queries
         public ValueOptionSettings ValueOptionSetting { get; set; }
         public ParameterOptions Context { get; set; }
         public string GroupName { get; set; }
+        public GroupResource Group { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
         public ICollection<FigureResource> Figures { get; set; }

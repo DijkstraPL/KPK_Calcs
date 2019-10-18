@@ -24,6 +24,7 @@ namespace Build_IT_Application.Mapping
                 .ForMember(sr => sr.Tags, operation
                 => operation.MapFrom(s => s.Tags.Select(st => st.Tag)));
             CreateMap<Tag, TagResource>();
+            CreateMap<Group, GroupResource>();
             CreateMap<Parameter, ParameterResource>()
                 .ForMember(p => p.Equation, operation => operation.Ignore())
                 .ForMember(pr => pr.Figures, operation
@@ -44,6 +45,7 @@ namespace Build_IT_Application.Mapping
                     AddNewTags(sr, s);
                 });
             CreateMap<TagResource, Tag>();
+            CreateMap<GroupResource, Group>();
             CreateMap<ParameterResource, Parameter>()
                 .ForMember(p => p.Script, operation => operation.Ignore())
                 .ForMember(p => p.ScriptId, operation => operation.Ignore())

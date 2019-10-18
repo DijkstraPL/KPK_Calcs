@@ -5,6 +5,7 @@ import { ParameterOptions } from "./enums/parameterOptions";
 import { ValueOptionSettings } from "./enums/valueOptionSettings";
 import { Parameter } from "./interfaces/parameter";
 import { Figure } from "./interfaces/figure";
+import { Group } from "./interfaces/group";
 
 export class ParameterImpl implements Parameter {
     id: number;
@@ -23,6 +24,7 @@ export class ParameterImpl implements Parameter {
     valueOptionSetting: ValueOptionSettings;
     valueOptions: ValueOption[] = [];
     figures: Figure[] = [];
+    group: Group;
         
     equation: string;
 }

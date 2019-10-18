@@ -15,7 +15,10 @@ import { SafeHtmlPipe } from './text-pipes/safe-html-pipe';
         HtmlPipe,
         ToNumberPipe,
         SafeHtmlPipe
-    ]
+    ],
+    providers: [
+        HtmlPipe
+        ]
 })
 export class PipesModule {
     //static forRoot() {

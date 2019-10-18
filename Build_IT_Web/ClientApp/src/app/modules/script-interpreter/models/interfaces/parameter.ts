@@ -1,10 +1,9 @@
-import { AlternativeScript } from "./alternativeScript";
-import { ValueOption } from "./valueOption";
-import { ValueType } from "../enums/valueType";
 import { ParameterOptions } from "../enums/parameterOptions";
 import { ValueOptionSettings } from "../enums/valueOptionSettings";
+import { ValueType } from "../enums/valueType";
 import { Figure } from "./figure";
-import { EventEmitter } from "events";
+import { Group } from "./group";
+import { ValueOption } from "./valueOption";
 
 export interface Parameter {
     id: number;
@@ -23,6 +22,7 @@ export interface Parameter {
     valueOptionSetting: ValueOptionSettings;
     valueOptions: ValueOption[];
     figures: Figure[];
+    group: Group;
 
     equation: string;
 }

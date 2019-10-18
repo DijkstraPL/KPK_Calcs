@@ -7,6 +7,16 @@
   <ItemGroup>
     <Compile Remove="ScriptInterpreter\Migrations\20190608124417_PhotosTablesAdded.cs" />
     <Compile Remove="ScriptInterpreter\Migrations\20190608124417_PhotosTablesAdded.Designer.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191018204800_GroupsForParameters.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191018204800_GroupsForParameters.Designer.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191018205358_GroupsForParameters.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191018205358_GroupsForParameters.Designer.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191018210506_GroupsForParameters.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191018210506_GroupsForParameters.Designer.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191018211314_GroupsForParameters.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191018211314_GroupsForParameters.Designer.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191018211427_GroupsForParameters.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191018211427_GroupsForParameters.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
