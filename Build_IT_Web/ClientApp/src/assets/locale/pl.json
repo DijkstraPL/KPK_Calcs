@@ -170,6 +170,24 @@
       "Header": "Tagi",
       "AddNewTags": "Dodaj nowe tagi"
     },
+    "Groups": {
+      "Header": "Grupy",
+      "Description": "Używane do zgrupowania parametrów",
+      "Name": {
+        "Header": "Nazwa grupy",
+        "Hint": "Nazwa grupy dla parametrów",
+        "MaxLengthError": "Nazwa nie powinna przekraczać {{requiredLength}} znaków.",
+        "RequiredError": " Nazwa grupy jest <strong>wymagana</strong>."
+      },
+      "VisibilityValidator": {
+        "Header": "Walidacja widoczności",
+        "Hint": "Walidacja widoczności",
+        "MaxLengthError": "Walidacja widoczności może mieć maksymalnie {{requiredLength}} znaków."
+      },
+      "Remove": "Usuń",
+      "Add": "Dodaj",
+      "Save": "Zapisz"
+    },
     "Parameters": {
       "Header": "Parametry",
       "ParametersFilterLabel": "Filtruj parametry",
@@ -283,7 +301,9 @@
       "Header": "Tłumaczenia",
       "Add": "Dodaj Tłumaczenie",
       "Update": "Aktualizuj Tłumaczenie",
-      "Remove": "Usuń"
+      "Remove": "Usuń",
+      "Groups": "Grupy",
+      "GroupName" :  "Nazwa grupy"
     }
   },
 

@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-state-matcher';
@@ -6,6 +6,7 @@ import { Language } from '../../../models/enums/language';
 import { ScriptTranslation } from '../../../models/interfaces/translations/scriptTranslation';
 import { ScriptTranslationService } from '../../../services/translations/script-translation.service';
 import { ParameterTranslationFormComponent } from './parameter-translation-form/parameter-translation-form.component';
+import { GroupTranslationFormComponent } from './group-translation-form/group-translation-form.component';
 
 @Component({
     selector: 'app-translation-form',
@@ -28,6 +29,7 @@ export class TranslationFormComponent implements OnInit {
     languages = Language;
 
     @ViewChild('parameterTranslationForm', { static: false }) parameterTranslationForm: ParameterTranslationFormComponent;
+    @ViewChild('groupTranslationForm', { static: false }) groupTranslationForm: GroupTranslationFormComponent;
 
     matcher = new AppErrorStateMatcher();
     translationData = { editMode: false, scriptId: 0 };
@@ -88,11 +90,13 @@ export class TranslationFormComponent implements OnInit {
                     this.translationData.editMode = true;
                 }, error => { throw error });
             this.parameterTranslationForm.parametersSubmit();
+            this.groupTranslationForm.groupsSubmit();
         }
         else {
             this.scriptTranslationService.update(this.translationForm.value)
                 .subscribe((scriptTranslation: ScriptTranslation) => this.translationForm.patchValue(scriptTranslation));
             this.parameterTranslationForm.parametersSubmit();
+            this.groupTranslationForm.groupsSubmit();
         }
     }
 

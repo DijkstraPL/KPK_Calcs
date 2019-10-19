@@ -12,6 +12,9 @@ import { ValueOption } from '../../../../models/interfaces/valueOption';
 import { ParameterImpl } from '../../../../models/parameterImpl';
 import { ValueOptionImpl } from '../../../../models/valueOptionImpl';
 import { ParameterService } from '../../../../services/parameter.service';
+import { Group } from '../../../../models/interfaces/group';
+import { GroupService } from '../../../../services/group.service';
+import { GroupImpl } from '../../../../models/groupImpl';
 
 @Component({
     selector: 'app-data-parameter-form',
@@ -31,12 +34,12 @@ export class DataParameterFormComponent implements OnInit {
         dataValidator: new FormControl('', Validators.maxLength(1000)),
         unit: new FormControl('', Validators.maxLength(50)),
         context: new FormControl('3', Validators.required),
-        groupName: new FormControl('', Validators.maxLength(200)),
         accordingTo: new FormControl('', Validators.maxLength(200)),
         notes: new FormControl('', Validators.maxLength(1000)),
         valueOptionSetting: new FormControl(0),
         valueOptions: new FormArray([]),
         figures: new FormArray([]),
+        groupId: new FormControl(null)
     });
 
     matcher = new AppErrorStateMatcher();
@@ -45,10 +48,12 @@ export class DataParameterFormComponent implements OnInit {
     @Input('scriptId') scriptId: number;
     @Input('newParameter') newParameter: Parameter = new ParameterImpl();
     @Input('parameters') parameters: Parameter[];
-     previousParameters: Parameter[];
+    previousParameters: Parameter[];
 
     @Output('created') created = new EventEmitter<Parameter>();
     @Output('updated') updated = new EventEmitter<Parameter>();
+
+    groups: Group[];
 
     valueTypes = this.getEnumValues(ValueType);
     context = ParameterOptions;
@@ -61,7 +66,7 @@ export class DataParameterFormComponent implements OnInit {
     @ViewChild('optional', { static: true }) optional: MatCheckbox;
 
     @ViewChild('value', { static: false }) value: ElementRef;
-    
+
     get parameterId(): AbstractControl {
         return this.parameterForm.get('id');
     }
@@ -98,24 +103,31 @@ export class DataParameterFormComponent implements OnInit {
     get parameterValueOptions(): FormArray {
         return this.parameterForm.get('valueOptions') as FormArray;
     }
-    get parameterGroupName(): AbstractControl {
-        return this.parameterForm.get('groupName');
+    get parameterGroupId(): AbstractControl {
+        return this.parameterForm.get('groupId');
     }
     get parameterFigures(): FormArray {
         return this.parameterForm.get('figures') as FormArray;
     }
-    
-    constructor(private parameterService: ParameterService) {
+
+    constructor(private parameterService: ParameterService,
+        private groupService: GroupService) {
     }
 
     ngOnInit(): void {
         this.previousParameters = this.parameters.filter(p => p.number < this.parameterNumber.value);
+        this.groupService.getGroups(this.scriptId)
+            .subscribe(groups => this.groups = groups,
+                error => console.error(error));
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.newParameter) {
             let parameter = changes.newParameter.currentValue as Parameter;
+
             this.parameterForm.patchValue(parameter);
+            if (parameter.group != null)
+                this.parameterGroupId.setValue(parameter.group.id);
 
             parameter.valueOptions.forEach(vo => this.parameterValueOptions.push(new FormGroup({
                 id: new FormControl(vo.id),

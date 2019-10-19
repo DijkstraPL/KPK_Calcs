@@ -18,6 +18,8 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
             builder.HasMany<Parameter>(g => g.Parameters)
                 .WithOne(p => p.Group)
                 .HasForeignKey(p => p.GroupId);
+
+            builder.HasOne<Script>(g => g.Script);
         }
 
         #endregion // Public_Methods

@@ -14,6 +14,8 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
 {
     public class ScriptCalculator
     {
+        #region Fields
+        
         private readonly Script _script;
         private readonly List<Parameter> _parameters;
 
@@ -21,12 +23,20 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
         private IDictionary<string, object> _parameterValues;
         private IScript _scriptToInterpret;
 
+        #endregion // Fields
+
+        #region Constructors
+        
         public ScriptCalculator(Script script, List<Parameter> parameters)
         {
             _script = script;
             _parameters = parameters;
         }
 
+        #endregion // Constructors
+
+        #region Internal_Methods
+        
         internal async Task CalculateAsync(IEnumerable<ParameterResource> userParameters)
         {
             _scriptToInterpret = await MapScript();
@@ -57,10 +67,14 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
         }
 
         internal IEnumerable<Parameter> GetResult()
-            => _parameters.Where(p => 
-            ((SIP.ParameterOptions)p.Context & SIP.ParameterOptions.Calculation) != 0 && 
+            => _parameters.Where(p =>
+            ((SIP.ParameterOptions)p.Context & SIP.ParameterOptions.Calculation) != 0 &&
             _calculationEngine.CalculatePrediction(p.VisibilityValidator, _parameterValues));
 
+        #endregion // Internal_Methods
+
+        #region Private_Methods
+        
         private async Task<IScript> MapScript()
         {
             return await Task.Run(() =>
@@ -94,5 +108,8 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
                 return parameters;
             });
         }
+
+
+        #endregion // Private_Methods
     }
 }

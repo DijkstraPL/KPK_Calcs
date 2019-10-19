@@ -104,13 +104,17 @@
         <mat-hint>{{'scriptsForm.Parameters.EditMode.ValueType.Hint' | translate}}</mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="m-2">
+    <mat-form-field class="m-2"
+                    *ngIf="groups">
         <mat-label>{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}</mat-label>
-        <input matInput
-               placeholder="{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}"
-               formControlName="groupName"
-               [errorStateMatcher]="matcher"
-               autocomplete="off" />
+        <mat-select matInput
+                    placeholder="{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}"
+                    formControlName="groupId">
+          <mat-option [value]=""
+                      selected="selected"> - </mat-option>
+          <mat-option *ngFor="let group of groups"
+                      [value]="group.id">{{group.name}}</mat-option>
+        </mat-select>
         <mat-hint>{{'scriptsForm.Parameters.EditMode.GroupName.Hint' | translate}}</mat-hint>
         <mat-error *ngIf="parameterGroupName && parameterGroupName.hasError('maxlength')">
             {{'scriptsForm.Parameters.EditMode.GroupName.MaxLengthError' | translate:parameterGroupName.errors.maxlength}}

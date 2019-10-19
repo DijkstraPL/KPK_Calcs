@@ -106,6 +106,37 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
             ScriptInterpreterContext.Remove(valueOptionTranslation);
         }
 
+        public async Task<IEnumerable<GroupTranslation>> GetGroupTranslations(long scriptId, Language language)
+        {
+            var groupsIds = ScriptInterpreterContext.Groups
+                .Where(g => g.ScriptId == scriptId)
+                .Select(g => g.Id);
+            return await ScriptInterpreterContext.GroupsTranslations
+                          .Where(gt => groupsIds.Contains(gt.GroupId) && gt.Language == language)
+                          .ToListAsync();
+        }
+
+        public async Task<GroupTranslation> GetGroupTranslation(long groupId)
+        {
+            return await ScriptInterpreterContext.GroupsTranslations
+                .FirstOrDefaultAsync(gt => gt.GroupId == groupId);
+        }
+        public async Task<GroupTranslation> GetGroupTranslation(long groupId, Language language)
+        {
+            return await ScriptInterpreterContext.GroupsTranslations
+                .FirstOrDefaultAsync(gt => gt.GroupId == groupId && gt.Language == language);
+        }
+
+        public async Task AddGroupTranslationAsync(GroupTranslation groupTranslation)
+        {
+            await ScriptInterpreterContext.AddAsync(groupTranslation);
+        }
+
+        public void RemoveGroupTranslation(GroupTranslation groupTranslation)
+        {
+            ScriptInterpreterContext.Remove(groupTranslation);
+        }
+               
         #endregion // Public_Methods
     }
 }

@@ -1,12 +1,12 @@
-﻿import { Parameter } from "./interfaces/parameter";
+import { Parameter } from "./interfaces/parameter";
+import { Group } from "./interfaces/group";
 
 export class ParametersGroup  {
-
-    name: string;
+    group: Group;
     parameters: Parameter[] = [];
 
-    constructor(name: string) {
-        this.name = name;
+    constructor(group: Group) {
+        this.group = group;
     }
 
     addParameter(parameter: Parameter) {

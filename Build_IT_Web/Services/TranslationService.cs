@@ -70,8 +70,6 @@ namespace Build_IT_Web.Services
                     parameterResource.Description = parameterTranslation.Description;
                 if (parameterTranslation.Notes != null)
                     parameterResource.Notes = parameterTranslation.Notes;
-                if (parameterTranslation.GroupName != null)
-                    parameterResource.GroupName = parameterTranslation.GroupName;
                 foreach (var valueOption in parameterResource.ValueOptions)
                     await SetValueOptionTranslation(languageCode, valueOption, defaultLanguage);
             }

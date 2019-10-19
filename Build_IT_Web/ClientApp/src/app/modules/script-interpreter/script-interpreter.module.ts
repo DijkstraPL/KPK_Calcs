@@ -46,6 +46,10 @@ import { MdComponentsModule } from '../md-components-module/md-components.module
 import { FigureService } from './services/figure.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateLanguageLoader } from '../../services/translation.service';
+import { GroupService } from './services/group.service';
+import { GroupsFormComponent } from './components/script-form/parameters-form/data-parameter-form/groups-form/groups-form.component';
+import { GroupTranslationService } from './services/translations/group-translation.service';
+import { GroupTranslationFormComponent } from './components/script-form/translation-form/group-translation-form/group-translation-form.component';
 
 @NgModule({
     declarations: [
@@ -72,7 +76,9 @@ import { TranslateLanguageLoader } from '../../services/translation.service';
         ScriptTranslationFormComponent,
         ParameterTranslationFormComponent,
         FiguresButtonComponent,
-        ValueFormComponent
+        ValueFormComponent,
+        GroupsFormComponent,
+        GroupTranslationFormComponent
     ],
     imports: [
         PipesModule,
@@ -101,10 +107,12 @@ import { TranslateLanguageLoader } from '../../services/translation.service';
         ScriptService,
         TagService,
         CalculationService,
+        GroupService,
         ParameterService,
         FigureService, 
         ScriptTranslationService,
         ParameterTranslationService,
+        GroupTranslationService,
         { provide: ErrorHandler, useClass: AppErrorHandler }
     ]
 })

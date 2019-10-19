@@ -13,7 +13,6 @@ namespace Build_IT_Data.Entities.Scripts.Translations
         public Language Language { get; set; }
         public string Description { get; set; }
         public string Notes { get; set; }
-        public string GroupName { get; set; }
 
         #endregion // Properties
     }

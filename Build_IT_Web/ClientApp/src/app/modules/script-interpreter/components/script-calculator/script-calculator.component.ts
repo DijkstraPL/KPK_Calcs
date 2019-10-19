@@ -11,6 +11,7 @@ import { ParameterService } from '../../services/parameter.service';
 import { ScriptService } from '../../services/script.service';
 import { TranslationService } from '../../../../services/translation.service';
 import { retry } from 'rxjs/operators';
+import { Group } from '../../models/interfaces/group';
 
 @Component({
     selector: 'script-calculator',
@@ -107,7 +108,6 @@ export class ScriptCalculatorComponent implements OnInit {
         this.filterParameters();
     }
 
-
     filterParameters() {
         this.visibleParameters = this.parameters.filter(p =>
             (p.context & ParameterOptions.visible) != 0 &&
@@ -120,11 +120,13 @@ export class ScriptCalculatorComponent implements OnInit {
     }
 
     private createGroups() {
-        let groupNames = this.visibleParameters.map(vp => vp.groupName)
-            .filter((value, index, self) => self.indexOf(value) === index &&
-                value != "" && value != undefined);
+        let groups: Group[] = [];
+        this.visibleParameters.forEach(vp => {
+            if (vp.group != null && groups.every(g => g.id != vp.group.id))
+                groups.push(vp.group)
+        });
 
-        this.groups = groupNames.map(gn => new ParametersGroup(gn));
+        this.groups = groups.map(gn => new ParametersGroup(gn));
     }
 
     private populateGroups() {
@@ -132,10 +134,10 @@ export class ScriptCalculatorComponent implements OnInit {
         this.notGroupedParameters = [];
 
         this.visibleParameters.forEach(vp => {
-            if (vp.groupName == "" || vp.groupName == undefined)
+            if (vp.group == undefined || vp.group.name == "" || vp.group.name == undefined)
                 this.notGroupedParameters.push(vp);
             else {
-                let group = this.groups.find(g => g.name === vp.groupName)
+                let group = this.groups.find(g => g.group.name === vp.group.name)
                 group.addParameter(vp);
             }
         });

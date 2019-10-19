@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { AppErrorStateMatcher } from '../../../../../../common/errors/app-error-state-matcher';
@@ -30,7 +30,6 @@ export class ParameterTranslationFormComponent implements OnInit {
             parameterId: new FormControl('0'),
             description: new FormControl(),
             notes: new FormControl(),
-            groupName: new FormControl(),
             language: new FormControl('0')
         })
     ]);
@@ -155,7 +154,6 @@ export class ParameterTranslationFormComponent implements OnInit {
                     parameterId: new FormControl(updatedTranslation.parameterId),
                     description: new FormControl(updatedTranslation.description),
                     notes: new FormControl(updatedTranslation.notes),
-                    groupName: new FormControl(updatedTranslation.groupName),
                     language: new FormControl(updatedTranslation.language)
                 }));
             });
@@ -170,7 +168,6 @@ export class ParameterTranslationFormComponent implements OnInit {
                     parameterId: new FormControl(newTranslation.parameterId),
                     description: new FormControl(newTranslation.description),
                     notes: new FormControl(newTranslation.notes),
-                    groupName: new FormControl(newTranslation.groupName),
                     language: new FormControl(newTranslation.language)
                 }));
             });

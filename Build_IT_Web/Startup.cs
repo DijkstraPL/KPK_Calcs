@@ -181,6 +181,7 @@ namespace Build_IT_Web
         {
             services.AddScoped<ITranslationRepository, TranslationRepository>();
             services.AddScoped<IScriptTranslationRepository, TranslationRepository>();
+            services.AddScoped<IGroupTranslationRepository, TranslationRepository>();
             services.AddScoped<IParameterTranslationRepository, TranslationRepository>();
             services.AddScoped<IValueOptionTranslationRepository, TranslationRepository>();
 
@@ -230,6 +231,7 @@ namespace Build_IT_Web
 
             services.AddScoped<IScriptRepository, ScriptRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IParameterRepository, ParameterRepository>();
 
             services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();

@@ -47,10 +47,15 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("ScriptId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("VisibilityValidator")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ScriptId");
 
                     b.ToTable("Scripts_Groups");
                 });
@@ -76,9 +81,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
 
                     b.Property<long?>("GroupId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("GroupName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -249,9 +251,6 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GroupName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Language")
                         .HasColumnType("int");
 
@@ -353,6 +352,15 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Migrations
                     b.HasIndex("ParameterId");
 
                     b.ToTable("Scripts_ValueOptions");
+                });
+
+            modelBuilder.Entity("Build_IT_Data.Entities.Scripts.Group", b =>
+                {
+                    b.HasOne("Build_IT_Data.Entities.Scripts.Script", "Script")
+                        .WithMany()
+                        .HasForeignKey("ScriptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Build_IT_Data.Entities.Scripts.Parameter", b =>

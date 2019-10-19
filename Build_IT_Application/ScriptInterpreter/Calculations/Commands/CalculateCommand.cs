@@ -72,6 +72,21 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
             }
 
             #endregion // Public_Methods
+
+
+            private string GetVisibilityValidator(Parameter parameter)
+            {
+                string visibilityValidator = string.Empty;
+
+                if (parameter.Group != null && !string.IsNullOrWhiteSpace(parameter.Group.VisibilityValidator))
+                    visibilityValidator += parameter.Group.VisibilityValidator;
+
+                if (string.IsNullOrWhiteSpace(visibilityValidator))
+                    visibilityValidator += parameter.VisibilityValidator;
+                else if (!string.IsNullOrWhiteSpace(parameter.VisibilityValidator))
+                    visibilityValidator += "&&" + parameter.VisibilityValidator;
+                return visibilityValidator;
+            }
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Build_IT_Data.Entities.Scripts
         public string Name { get; set; }
         public string VisibilityValidator { get; set; }
         public ICollection<Parameter> Parameters { get; private set; }
+        public long ScriptId { get; set; }
+        public Script Script { get; set; }
 
         #endregion // Properties
 

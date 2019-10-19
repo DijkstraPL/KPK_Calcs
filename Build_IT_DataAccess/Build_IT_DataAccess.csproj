@@ -17,6 +17,10 @@
     <Compile Remove="ScriptInterpreter\Migrations\20191018211314_GroupsForParameters.Designer.cs" />
     <Compile Remove="ScriptInterpreter\Migrations\20191018211427_GroupsForParameters.cs" />
     <Compile Remove="ScriptInterpreter\Migrations\20191018211427_GroupsForParameters.Designer.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191019082134_GroupNameRemovedFromParameterScriptIdAddedToGroup.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191019082134_GroupNameRemovedFromParameterScriptIdAddedToGroup.Designer.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191019082859_GroupNameRemovedFromParameterScriptIdAddedToGroup.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191019082859_GroupNameRemovedFromParameterScriptIdAddedToGroup.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

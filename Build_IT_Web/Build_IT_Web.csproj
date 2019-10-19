@@ -28,7 +28,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Contracts" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.6" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="4.0.1" />
@@ -55,6 +57,7 @@
     <None Remove="ClientApp\src\app\modules\pipes-module\text-pipes\safe-html-pipe.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\models\api\scripts\create-script-command.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\models\enums\language.ts" />
+    <None Remove="ClientApp\src\app\modules\script-interpreter\services\translations\group-translation.service.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\services\translations\script-translation.service.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\services\translations\value-option-translation.service.ts" />
@@ -125,6 +128,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\modules\pipes-module\text-pipes\safe-html-pipe.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\models\api\scripts\create-script-command.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\models\enums\language.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\translations\group-translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\translations\script-translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\translations\value-option-translation.service.ts" />

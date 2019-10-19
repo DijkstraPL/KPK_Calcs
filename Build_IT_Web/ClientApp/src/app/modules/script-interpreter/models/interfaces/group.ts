@@ -4,5 +4,4 @@ export interface Group {
     id: number;
     name: string;
     visibilityValidator: string;   
-    parameters: Parameter[];
 }

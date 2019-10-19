@@ -1,25 +1,11 @@
-﻿<mat-accordion>
+<mat-accordion>
     <mat-expansion-panel *ngFor="let mappedParameter of mappedParameters">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <span [innerHtml]="mappedParameter.parameter.name | html"></span>&nbsp;- {{mappedParameter.parameter.description}}
             </mat-panel-title>
         </mat-expansion-panel-header>
-
-        <mat-form-field class="m-2"
-                        *ngIf="mappedParameter.parameter.groupName">
-            <mat-label>{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}</mat-label>
-            <input matInput
-                   placeholder="{{'scriptsForm.Parameters.EditMode.GroupName.Header' | translate}}"
-                   [(ngModel)]="mappedParameter.translation.groupName"
-                   [errorStateMatcher]="matcher"
-                   autocomplete="off" />
-            <mat-hint>{{mappedParameter.parameter.groupName}}</mat-hint>
-            <!--<mat-error *ngIf="parameterGroupName && parameterGroupName.hasError('maxlength')">
-                {{'scriptsForm.Parameters.EditMode.GroupName.MaxLengthError' | translate:parameterGroupName.errors.maxlength}}
-            </mat-error>-->
-        </mat-form-field>
-
+      
         <mat-form-field class="m-2 full-width">
             <textarea matInput
                       placeholder="{{'scriptsForm.Parameters.EditMode.Description.Header' | translate}}"

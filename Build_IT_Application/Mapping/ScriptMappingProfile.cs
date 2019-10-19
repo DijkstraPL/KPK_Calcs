@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Build_IT_Application.ScriptInterpreter.Figures.Queries;
+using Build_IT_Application.ScriptInterpreter.Groups.Queries;
 using Build_IT_Application.ScriptInterpreter.Parameters.Commands.CreateParameter;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries;
@@ -32,6 +33,7 @@ namespace Build_IT_Application.Mapping
             CreateMap<ValueOption, ValueOptionResource>();
             CreateMap<Figure, FigureResource>();
             CreateMap<ScriptTranslation, ScriptTranslationResource>();
+            CreateMap<GroupTranslation, GroupTranslationResource>();
             CreateMap<ParameterTranslation, ParameterTranslationResource>();
             CreateMap<ValueOptionTranslation, ValueOptionTranslationResource>();
 
@@ -70,6 +72,7 @@ namespace Build_IT_Application.Mapping
                 .ForMember(vo => vo.ParameterId, operation => operation.Ignore());
             CreateMap<ScriptTranslationResource, ScriptTranslation>();
             CreateMap<ParameterTranslationResource, ParameterTranslation>();
+            CreateMap<GroupTranslationResource, GroupTranslation>();
             CreateMap<ValueOptionTranslationResource, ValueOptionTranslation>()
                 .ForMember(vot => vot.ValueOption, operation => operation.Ignore());
         }

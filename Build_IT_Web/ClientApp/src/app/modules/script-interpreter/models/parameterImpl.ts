@@ -18,13 +18,13 @@ export class ParameterImpl implements Parameter {
     dataValidator: string;
     unit: string;
     context: ParameterOptions;
-    groupName: string;
     accordingTo: string;
     notes: string;
     valueOptionSetting: ValueOptionSettings;
     valueOptions: ValueOption[] = [];
     figures: Figure[] = [];
     group: Group;
+    groupId: number | null;
         
     equation: string;
 }

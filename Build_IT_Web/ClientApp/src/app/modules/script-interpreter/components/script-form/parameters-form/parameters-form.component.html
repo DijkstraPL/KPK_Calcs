@@ -1,4 +1,7 @@
-﻿<div *ngIf="!editMode">
+<div *ngIf="!editMode">
+  <app-groups-form [scriptId]="scriptId"
+                   [parameters]="parameters"></app-groups-form>
+
     <div class="m-4">
         <label id="parameters-type-filter">{{'scriptsForm.Parameters.ParametersFilterLabel' | translate}}:</label>
         <mat-radio-group aria-labelledby="parameters-type-filter"
