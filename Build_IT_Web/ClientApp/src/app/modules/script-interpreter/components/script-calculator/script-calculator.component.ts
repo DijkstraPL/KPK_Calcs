@@ -26,7 +26,10 @@ export class ScriptCalculatorComponent implements OnInit {
     parameters: Parameter[];
     visibleParameters: Parameter[];
     staticDataParameters: Parameter[];
+
     resultParameters: Parameter[];
+    notGroupedResultParameters: Parameter[];
+    groupsResultParameters: ParametersGroup[];
 
     groups: ParametersGroup[];
     notGroupedParameters: Parameter[];
@@ -121,7 +124,7 @@ export class ScriptCalculatorComponent implements OnInit {
 
     private createGroups() {
         let groups: Group[] = [];
-        this.visibleParameters.forEach(vp => {
+        this.parameters.forEach(vp => {
             if (vp.group != null && groups.every(g => g.id != vp.group.id))
                 groups.push(vp.group)
         });
@@ -175,6 +178,7 @@ export class ScriptCalculatorComponent implements OnInit {
             .subscribe(params => {
                 this.resultParameters = params.filter(p => (p.context & ParameterOptions.visible) != 0);
                 this.resultParameters.forEach(p => p.equation = this.setEquation(p));
+                this.filterResults(this.resultParameters);
             },
                 error => {
                     console.error(error);
@@ -184,6 +188,28 @@ export class ScriptCalculatorComponent implements OnInit {
                     this.isCalculating = false;
                     this.valueChanged = false;
                 });
+    }
+
+    filterResults(resultParameters: Parameter[]) {
+        this.notGroupedResultParameters = [];
+        this.groupsResultParameters = [];
+
+        resultParameters.forEach(rp => {
+            if (rp.group == null)
+                this.notGroupedResultParameters.push(rp);
+            else if (rp.group != null &&
+                this.groupsResultParameters
+                    .every(g => g.group.id != rp.group.id)) {
+                let group = new ParametersGroup(rp.group);
+                group.addParameter(rp);
+                this.groupsResultParameters.push(group);
+            }
+            else {
+                let group = this.groupsResultParameters
+                    .find(grp => grp.group.id == rp.group.id);
+                group.addParameter(rp);
+            }
+        });
     }
 
     private setEquation(parameter: Parameter): string {
@@ -198,10 +224,18 @@ export class ScriptCalculatorComponent implements OnInit {
     }
 
     private validateVisibility(parameter: Parameter): boolean {
-        if (!parameter.visibilityValidator)
-            return true;
+        let group = parameter.group;
 
-        let visibilityValidatorEquation = parameter.visibilityValidator;
+        let visibilityValidatorEquation = "";
+        if (group != null && group.visibilityValidator) 
+            visibilityValidatorEquation = group.visibilityValidator;
+        if (!visibilityValidatorEquation)
+            visibilityValidatorEquation = parameter.visibilityValidator;
+        else if (parameter.visibilityValidator)
+            visibilityValidatorEquation = `(${visibilityValidatorEquation})&&(${parameter.visibilityValidator})`;
+
+        if (!visibilityValidatorEquation)
+            return true;
 
         this.parameters.forEach(p => {
             let value = p.valueType == ValueType.number ? p.value : `'${p.value}'`;

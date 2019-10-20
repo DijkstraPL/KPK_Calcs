@@ -7,6 +7,7 @@ using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -53,40 +54,60 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
 
             #region Public_Methods
             
-            public async Task<IEnumerable<ParameterResource>> Handle(CalculateCommand request, CancellationToken cancellationToken)
+            public async Task<IEnumerable<ParameterResource>> Handle(
+                CalculateCommand request, CancellationToken cancellationToken)
             {
                 var script = await _scriptRepository.GetAsync(request.ScriptId);
-                var parameters = await _parameterRepository.GetAllParametersForScriptAsync(request.ScriptId);
+                var parameters = await _parameterRepository
+                    .GetAllParametersForScriptAsync(request.ScriptId)
+                    .ConfigureAwait(false);
+
+                SetVisibilityValidators(parameters);
 
                 var equations = new Dictionary<long, string>(parameters.ToDictionary(p => p.Id, p => p.Value));
 
                 var scriptCalculator = new ScriptCalculator(script, parameters.ToList());
 
-                await scriptCalculator.CalculateAsync(request.InputData.Where(v => v.Value != null));
+                await scriptCalculator
+                    .CalculateAsync(request.InputData.Where(v => v.Value != null))
+                    .ConfigureAwait(false);
 
-                var calculatedParameters = _mapper.Map<List<Parameter>, List<ParameterResource>>(scriptCalculator.GetResult().ToList());
-                calculatedParameters.ForEach(cp => cp.Equation = equations.SingleOrDefault(p => p.Key == cp.Id).Value);
+                var calculatedParameters = _mapper
+                    .Map<List<Parameter>, List<ParameterResource>>(scriptCalculator.GetResult().ToList());
+                calculatedParameters.ForEach(cp => cp.Equation = equations
+                    .SingleOrDefault(p => p.Key == cp.Id).Value);
 
-                await _translationService.SetParametersTranslation(request.LanguageCode, calculatedParameters, script.DefaultLanguage);
+                await _translationService.SetParametersTranslation(
+                    request.LanguageCode, calculatedParameters, script.DefaultLanguage)
+                    .ConfigureAwait(false);
                 return calculatedParameters;
             }
 
             #endregion // Public_Methods
 
+            #region Private_Methods
+                       
+            private void SetVisibilityValidators(IEnumerable<Parameter> parameters)
+            {
+                foreach (var parameter in parameters)
+                    parameter.VisibilityValidator = GetVisibilityValidator(parameter);
+            }
 
             private string GetVisibilityValidator(Parameter parameter)
             {
                 string visibilityValidator = string.Empty;
 
                 if (parameter.Group != null && !string.IsNullOrWhiteSpace(parameter.Group.VisibilityValidator))
-                    visibilityValidator += parameter.Group.VisibilityValidator;
+                    visibilityValidator = parameter.Group.VisibilityValidator;
 
                 if (string.IsNullOrWhiteSpace(visibilityValidator))
-                    visibilityValidator += parameter.VisibilityValidator;
+                    visibilityValidator = parameter.VisibilityValidator;
                 else if (!string.IsNullOrWhiteSpace(parameter.VisibilityValidator))
-                    visibilityValidator += "&&" + parameter.VisibilityValidator;
+                    visibilityValidator = $"({visibilityValidator})&&({parameter.VisibilityValidator})";
                 return visibilityValidator;
             }
+
+            #endregion // Private_Methods                       
         }
     }
 }

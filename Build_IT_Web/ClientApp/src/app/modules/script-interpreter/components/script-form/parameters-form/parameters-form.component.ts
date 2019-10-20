@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ParameterFilter } from '../../../models/enums/parameter-filter';
 import { Parameter } from '../../../models/interfaces/parameter';
@@ -169,6 +169,9 @@ export class ParametersFormComponent implements OnInit {
 
     saveParameters() {
         this.parameters.forEach(p => {
+            if (p.group != null)
+                p.groupId = p.group.id;
+
             this.parameterService.update(this.scriptId, p)
                 .subscribe(() => { },
                     error => console.error(error))

@@ -42,22 +42,24 @@
 
 
       <mat-accordion>
-        <mat-expansion-panel *ngFor="let group of groups">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{group.group.name}}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
+        <div *ngFor="let group of groups">
+          <mat-expansion-panel *ngIf="group.parameters.length > 0">
+            <mat-expansion-panel-header >
+              <mat-panel-title>
+                {{group.group.name}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
 
-          <ul class="list-inline m-0">
-            <li *ngFor="let parameter of group.parameters"
-                class="list-inline-item ml-5 d-inline-flex">
-              <parameter-form [parameter]="parameter"
-                              (valueChanged)="onValueChanged($event)"></parameter-form>
-            </li>
-          </ul>
+            <ul class="list-inline m-0">
+              <li *ngFor="let parameter of group.parameters"
+                  class="list-inline-item ml-5 d-inline-flex">
+                <parameter-form [parameter]="parameter"
+                                (valueChanged)="onValueChanged($event)"></parameter-form>
+              </li>
+            </ul>
 
-        </mat-expansion-panel>
+          </mat-expansion-panel>
+        </div>
       </mat-accordion>
     </div>
 
@@ -90,11 +92,19 @@
     </div>
 
     <div *ngIf="resultParameters && !valueChanged">
-      <h3 class="ml-2">{{'scriptCalculator.Results' | translate}}</h3>
+      <h3 class="ml-5">{{'scriptCalculator.Results' | translate}}</h3>
       <mat-list dense>
-        <div *ngFor="let parameter of resultParameters">
+        <div *ngFor="let parameter of notGroupedResultParameters">
           <parameter-result [parameter]="parameter"></parameter-result>
           <mat-divider></mat-divider>
+        </div>
+        <div *ngFor="let group of groupsResultParameters">
+          <h5 class="ml-2">{{group.group.name}}</h5>
+          <div *ngFor="let parameter of group.parameters">
+            <parameter-result [parameter]="parameter"
+                              class="ml-2"></parameter-result>
+            <mat-divider></mat-divider>
+          </div>
         </div>
       </mat-list>
     </div>

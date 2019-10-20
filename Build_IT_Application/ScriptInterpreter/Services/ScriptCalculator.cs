@@ -84,7 +84,7 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
                     _script.Description,
                     _script.Tags.Select(t => t.Tag.Name).ToArray())
                     .Build();
-            });
+            }).ConfigureAwait(false);
         }
 
         private async Task<IEnumerable<IParameter>> MapParameters()
@@ -106,7 +106,7 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
                     });
                 }
                 return parameters;
-            });
+            }).ConfigureAwait(false);
         }
 
 

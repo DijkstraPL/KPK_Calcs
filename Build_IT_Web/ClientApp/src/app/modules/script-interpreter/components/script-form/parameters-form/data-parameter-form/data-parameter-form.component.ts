@@ -126,8 +126,10 @@ export class DataParameterFormComponent implements OnInit {
             let parameter = changes.newParameter.currentValue as Parameter;
 
             this.parameterForm.patchValue(parameter);
-            if (parameter.group != null)
+            if (parameter.group != null) {
                 this.parameterGroupId.setValue(parameter.group.id);
+                parameter.groupId = parameter.group.id;
+            }
 
             parameter.valueOptions.forEach(vo => this.parameterValueOptions.push(new FormGroup({
                 id: new FormControl(vo.id),
@@ -154,7 +156,7 @@ export class DataParameterFormComponent implements OnInit {
         console.log('Previous parameter: ', newParameter.previousValue);
         console.log('New parameter: ', newParameter.currentValue);
         this.newParameter = newParameter.currentValue;
-        // this.setDataType();
+
         this.setValueOptionsSettings();
         this.setParameterType();
     }
