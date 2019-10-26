@@ -1,4 +1,4 @@
-﻿<h1>{{script.name}}</h1>
+<h1>{{script.name}}</h1>
 
 <div class="container">
     <div class="figure">
@@ -49,7 +49,7 @@
                       x1="50" [attr.y1]="addition+offset"
                       x2="225" [attr.y2]="addition+offset"
                       stroke-width="0.5" stroke="#ffffff" fill="none" />
-                <line *ngIf="snowFences.value == true"
+                <line *ngIf="snowFences.value == 'true'"
                       id="snow-fence"
                       x1="55" [attr.y1]="addition+offset"
                       x2="55" [attr.y2]="addition+offset-20"
@@ -64,7 +64,7 @@
                                 <input class="svg-input"
                                        [required]="isRequired(slope)"
                                        autocomplete="off"
-                                       [attr.type]="slope.valueType == 0 ? 'number' : 'text'"
+                                       [attr.type]="slope.valueType == valueTypes.number ? 'number' : 'text'"
                                        [(ngModel)]="slope.value"
                                        (change)="onSlopeChange()" />
                             </span>{{slope.unit}}
@@ -82,7 +82,7 @@
             <input matInput
                    [required]="isRequired(altitude)"
                    autocomplete="off"
-                   [attr.type]="altitude.valueType == 0 ? 'number' : 'text'"
+                   [attr.type]="altitude.valueType == valueTypes.number ? 'number' : 'text'"
                    [(ngModel)]="altitude.value"
                    (change)="onSlopeChange()">
             <mat-placeholder>
@@ -96,7 +96,7 @@
             <input matInput
                    [required]="isRequired(slope)"
                    autocomplete="off"
-                   [attr.type]="slope.valueType == 0 ? 'number' : 'text'"
+                   [attr.type]="slope.valueType == valueTypes.number ? 'number' : 'text'"
                    [(ngModel)]="slope.value"
                    (change)="onSlopeChange()">
             <mat-placeholder>

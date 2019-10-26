@@ -39,7 +39,7 @@ export class ScriptCalculatorComponent implements OnInit {
 
     isCalculating: boolean;
     errorMessages: string[];
-
+    
     constructor(
         private route: ActivatedRoute,
         private scriptService: ScriptService,

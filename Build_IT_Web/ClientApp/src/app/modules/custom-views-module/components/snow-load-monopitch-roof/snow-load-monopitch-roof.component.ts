@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Directive, Input } from '@angular/core';
+import { Component, OnInit, Directive, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ScriptService } from '../../../script-interpreter/services/script.service';
 import { ParameterService } from '../../../script-interpreter/services/parameter.service';
@@ -7,6 +7,7 @@ import { TranslationService } from '../../../../services/translation.service';
 import { Script } from '../../../script-interpreter/models/interfaces/script';
 import { Parameter } from '../../../script-interpreter/models/interfaces/parameter';
 import { ParameterOptions } from '../../../script-interpreter/models/enums/parameterOptions';
+import { ValueType } from '../../../script-interpreter/models/enums/valueType';
 
 
 const ScriptId = 10;
@@ -25,6 +26,8 @@ export class SnowLoadMonopitchRoofComponent implements OnInit {
     parameterOptions = ParameterOptions;
 
     offset: number = 80;
+
+    valueTypes = ValueType;
 
     get snowFences(): Parameter {
         return this.parameters.find(p => p.name == "SnowFences");

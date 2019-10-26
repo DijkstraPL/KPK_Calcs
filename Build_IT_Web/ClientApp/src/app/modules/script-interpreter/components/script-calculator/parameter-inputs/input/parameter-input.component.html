@@ -1,11 +1,11 @@
-﻿<mat-form-field>
+<mat-form-field>
     <span *ngIf="parameter.figures && parameter.figures.length > 0"
           matPrefix><figures-button [parameter]="parameter"></figures-button></span>
     <input matInput
            [required]="isRequired()"
            autocomplete="off"
            [ngClass]="parameter.name"
-           [attr.type]="parameter.valueType == 0 ? 'number' : 'text'"
+           [attr.type]="parameter.valueType == valueTypes.number ? 'number' : 'text'"
            [(ngModel)]="parameter.value"
            (change)="changeValue()">
     <mat-placeholder>

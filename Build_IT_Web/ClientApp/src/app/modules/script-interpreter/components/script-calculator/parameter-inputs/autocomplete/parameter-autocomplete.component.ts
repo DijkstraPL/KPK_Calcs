@@ -1,10 +1,11 @@
-﻿import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Parameter } from '../../../../models/interfaces/parameter';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ValueOption } from '../../../../models/interfaces/valueOption';
 import { ParameterOptions } from '../../../../models/enums/parameterOptions';
+import { ValueType } from '../../../../models/enums/valueType';
 
 @Component({
     selector: 'parameter-autocomplete',
@@ -21,6 +22,8 @@ export class ParameterAutocompleteComponent implements OnInit {
     @Output() valueChanged = new EventEmitter<Parameter>();
 
     parameterOptions = ParameterOptions;
+
+    valueTypes = ValueType;
 
     constructor() {
     }
