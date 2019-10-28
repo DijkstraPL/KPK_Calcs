@@ -54,10 +54,10 @@ namespace Build_IT_DataAccess.ScriptInterpreter
 
                     _configuration = builder.Build();
                 }
-#if RELEASE
+#if RELEASE 
                 optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Scripts"));
 #endif
-#if DEBUG
+#if DEBUG 
                 optionsBuilder.UseSqlServer(_configuration.GetSection("TestConnectionStrings").GetValue<string>("Scripts"));
 #endif
             }

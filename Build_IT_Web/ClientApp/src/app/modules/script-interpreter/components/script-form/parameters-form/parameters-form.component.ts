@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ParameterFilter } from '../../../models/enums/parameter-filter';
 import { Parameter } from '../../../models/interfaces/parameter';
 import { ParameterImpl } from '../../../models/parameterImpl';
 import { ParameterService } from '../../../services/parameter.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { GroupsFormComponent } from './data-parameter-form/groups-form/groups-form.component';
 
 @Component({
     selector: 'app-parameters-form',

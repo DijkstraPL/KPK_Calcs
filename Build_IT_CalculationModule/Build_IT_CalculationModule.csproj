@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon />
     <StartupObject />
+    <Configurations>Debug;Release;DEVTEST;Staging</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

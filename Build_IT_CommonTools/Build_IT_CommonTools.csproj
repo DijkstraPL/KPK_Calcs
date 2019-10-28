@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>Build_IT_CommonTools</RootNamespace>
     <LangVersion>7.3</LangVersion>
+    <Configurations>Debug;Release;DEVTEST;Staging</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

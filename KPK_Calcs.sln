@@ -121,9 +121,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DesktopApp", "DesktopApp", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_Desktop", "Build_IT_Desktop\Build_IT_Desktop.csproj", "{EFC56C93-F38F-4E9D-B85D-77216993A414}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_CalculationModule", "Build_IT_CalculationModule\Build_IT_CalculationModule.csproj", "{D985BEEF-1C45-47AA-B6A0-F706BAB2DA86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_CalculationModule", "Build_IT_CalculationModule\Build_IT_CalculationModule.csproj", "{D985BEEF-1C45-47AA-B6A0-F706BAB2DA86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_Infrastructure", "Build_IT_Infrastructure\Build_IT_Infrastructure.csproj", "{A776F3AC-6BE4-4CBC-BE7C-952BE9F0ADF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_Infrastructure", "Build_IT_Infrastructure\Build_IT_Infrastructure.csproj", "{A776F3AC-6BE4-4CBC-BE7C-952BE9F0ADF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

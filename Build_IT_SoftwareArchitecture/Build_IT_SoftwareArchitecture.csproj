@@ -5,6 +5,7 @@
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject>Build_IT_SoftwareArchitecture.Program</StartupObject>
+    <Configurations>Debug;Release;DEVTEST;Staging</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

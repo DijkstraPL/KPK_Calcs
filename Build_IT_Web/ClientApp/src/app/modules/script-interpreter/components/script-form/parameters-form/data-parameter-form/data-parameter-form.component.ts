@@ -271,11 +271,43 @@ export class DataParameterFormComponent implements OnInit {
     }
 
     private update() {
+        if (this.newParameter.name != this.parameterName.value) {
+            let name = this.newParameter.name;
+            this.newParameter.name = this.parameterName.value;
+            this.rename(name, this.parameterName.value)
+            return;
+        }
+
         this.parameterService.update(this.scriptId, this.parameterForm.value)
             .subscribe(() => {
                 this.updated.emit(this.parameterForm.value);
             },
                 error => console.error(error));
+    }
+
+    private rename(oldName: string, newName: string) {
+        this.parameters.forEach(p => {
+            p.dataValidator = this.getNewText(oldName, newName, p.dataValidator);
+            p.equation = this.getNewText(oldName, newName, p.equation);
+            p.value = this.getNewText(oldName, newName, p.value);
+            p.visibilityValidator = this.getNewText(oldName, newName, p.visibilityValidator);
+            if (p.group) {
+                p.group.visibilityValidator = this.getNewText(oldName, newName, p.group.visibilityValidator);
+                this.groupService.update(this.scriptId, p.group);
+            }
+
+            this.parameterService.update(this.scriptId, p)
+                .subscribe(() => {
+                    this.updated.emit(p);
+                },
+                    error => console.error(error));
+        });
+    }
+
+    private getNewText(oldName: string, newName: string, text: string): string {
+        if (text && text.indexOf(`[${oldName}]`) >= 0)
+            text = text.replace(`[${oldName}]`, `[${newName}]`);
+        return text;
     }
 
     private setValueOptionsSettings() {

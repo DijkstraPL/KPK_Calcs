@@ -103,7 +103,7 @@ namespace Build_IT_Web
 
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "wwwroot/clientapp/dist";
+                configuration.RootPath = "ClientApp/dist";
             });
         }
 
@@ -146,20 +146,16 @@ namespace Build_IT_Web
 
             app.UseStaticFiles();
             if (!env.IsDevelopment())
-            {
                 app.UseSpaStaticFiles();
-            }
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "ClientApp/src";
 
                 if (env.IsDevelopment())
-                {
                     spa.UseAngularCliServer(npmScript: "start");
-                }
             });
 
             using (var serviceScope =

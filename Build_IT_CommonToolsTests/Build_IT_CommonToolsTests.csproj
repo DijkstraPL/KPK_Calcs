@@ -6,6 +6,8 @@
     <IsPackable>false</IsPackable>
 
     <ApplicationIcon />
+
+    <Configurations>Debug;Release;DEVTEST;Staging</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
