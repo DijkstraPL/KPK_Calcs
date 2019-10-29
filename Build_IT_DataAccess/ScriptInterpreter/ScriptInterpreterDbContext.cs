@@ -22,6 +22,9 @@ namespace Build_IT_DataAccess.ScriptInterpreter
         public DbSet<GroupTranslation> GroupsTranslations { get; set; }
         public DbSet<ParameterTranslation> ParametersTranslations { get; set; }
         public DbSet<ValueOptionTranslation> ValueOptionsTranslations { get; set; }
+        public DbSet<TestData> TestDatas { get; set; }
+        public DbSet<TestParameter> TestParameters { get; set; }
+        public DbSet<Assertion> Assertions { get; set; }
 
         #endregion // Properties
 
@@ -82,6 +85,10 @@ namespace Build_IT_DataAccess.ScriptInterpreter
             modelBuilder.ApplyConfiguration(new GroupTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ParameterTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ValueOptionTranslationConfiguration());
+
+            modelBuilder.ApplyConfiguration(new TestDataConfiguration());
+            modelBuilder.ApplyConfiguration(new TestParameterConfiguration());
+            modelBuilder.ApplyConfiguration(new AssertionConfiguration());
         }
 
 #endregion // Protected_Methods

@@ -27,7 +27,7 @@ namespace Build_IT_Data.Entities.Scripts
         #endregion // Properties
 
         #region Constructors
-        
+
         public Script()
         {
             Tags = new HashSet<ScriptTag>();
