@@ -15,35 +15,37 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
     public class ScriptCalculator
     {
         #region Fields
-        
-        private readonly Script _script;
+
         private readonly List<Parameter> _parameters;
 
         private SI.CalculationEngine _calculationEngine;
         private IDictionary<string, object> _parameterValues;
-        private IScript _scriptToInterpret;
 
         #endregion // Fields
 
         #region Constructors
-        
-        public ScriptCalculator(Script script, List<Parameter> parameters)
+
+        public ScriptCalculator(List<Parameter> parameters)
         {
-            _script = script;
             _parameters = parameters;
         }
 
         #endregion // Constructors
 
         #region Internal_Methods
-        
+
+        internal async Task<bool> ValidateResults(IEnumerable<ParameterResource> userParameters, params string[] validatorEquations)
+        {
+            await CalculateAsync(userParameters).ConfigureAwait(false);
+
+            return validatorEquations.All(ve => _calculationEngine.CalculatePrediction(ve, _parameterValues));
+        }
+
         internal async Task CalculateAsync(IEnumerable<ParameterResource> userParameters)
         {
-            _scriptToInterpret = await MapScript();
             var parameters = await MapParameters();
-            _scriptToInterpret.Parameters = parameters.ToList();
 
-            _calculationEngine = new SI.CalculationEngine(_scriptToInterpret);
+            _calculationEngine = new SI.CalculationEngine(parameters.ToList());
 
             _parameterValues = userParameters
                 .Where(p => (p.Context & ParameterOptions.Optional) == 0 ||
@@ -55,12 +57,13 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
                  double.Parse(p.Value?.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture) :
                 (object)p.Value);
             _calculationEngine.Calculate(_parameterValues);
-            _parameters.RemoveAll(p => !_parameterValues.ContainsKey(p.Name));
+            _parameters.RemoveAll(p => !_parameterValues.ContainsKey(p.Name) ||
+                !_calculationEngine.CalculatePrediction(p.VisibilityValidator, _parameterValues) ||
+                !_calculationEngine.CalculatePrediction(p.Group?.VisibilityValidator, _parameterValues));
 
             foreach (var par in _parameterValues)
             {
-                var pp = _parameters.SingleOrDefault(p => p.Name == par.Key &&
-                _calculationEngine.CalculatePrediction(p.VisibilityValidator, _parameterValues));
+                var pp = _parameters.SingleOrDefault(p => p.Name == par.Key);
                 if (pp != null)
                     pp.Value = par.Value.ToString();
             }
@@ -74,18 +77,18 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
         #endregion // Internal_Methods
 
         #region Private_Methods
-        
-        private async Task<IScript> MapScript()
-        {
-            return await Task.Run(() =>
-            {
-                return SI.ScriptBuilder.Create(
-                    _script.Name,
-                    _script.Description,
-                    _script.Tags.Select(t => t.Tag.Name).ToArray())
-                    .Build();
-            }).ConfigureAwait(false);
-        }
+
+        //private async Task<IScript> MapScript()
+        //{
+        //    return await Task.Run(() =>
+        //    {
+        //        return SI.ScriptBuilder.Create(
+        //            _script.Name,
+        //            _script.Description,
+        //            _script.Tags.Select(t => t.Tag.Name).ToArray())
+        //            .Build();
+        //    }).ConfigureAwait(false);
+        //}
 
         private async Task<IEnumerable<IParameter>> MapParameters()
         {
@@ -102,7 +105,9 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
                         ValueType = (SIP.ValueTypes)parameter.ValueType,
                         VisibilityValidator = parameter.VisibilityValidator,
                         DataValidator = parameter.DataValidator,
-                        Context = (SIP.ParameterOptions)parameter.Context
+                        Context = (SIP.ParameterOptions)parameter.Context,
+                        Group = parameter.Group != null ?
+                            new SIP.Group { VisibilityValidator = parameter.Group.VisibilityValidator } : null
                     });
                 }
                 return parameters;

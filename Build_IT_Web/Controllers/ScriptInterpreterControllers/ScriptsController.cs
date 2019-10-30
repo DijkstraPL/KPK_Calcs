@@ -1,12 +1,11 @@
-﻿using Build_IT_Application.ScriptInterpreter.Scripts.Commands.CreateScript;
+﻿using Build_IT_Application.Infrastructures;
+using Build_IT_Application.ScriptInterpreter.Scripts.Commands.CreateScript;
 using Build_IT_Application.ScriptInterpreter.Scripts.Commands.DeleteScript;
 using Build_IT_Application.ScriptInterpreter.Scripts.Commands.UpdateScript;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetAllScripts;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript;
-using Build_IT_Web.Services;
 using Microsoft.AspNetCore.Authorization;
-//using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

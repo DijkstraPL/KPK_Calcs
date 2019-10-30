@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
 {
-    public class CalculateCommand : IRequest<IEnumerable<ParameterResource>>
+    public class CalculateQuery : IRequest<IEnumerable<ParameterResource>>
     {
         #region Properties
         
@@ -25,7 +25,7 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
 
         #endregion // Properties
 
-        public class Handler : IRequestHandler<CalculateCommand, IEnumerable<ParameterResource>>
+        public class Handler : IRequestHandler<CalculateQuery, IEnumerable<ParameterResource>>
         {
             #region Fields
 
@@ -55,18 +55,16 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
             #region Public_Methods
             
             public async Task<IEnumerable<ParameterResource>> Handle(
-                CalculateCommand request, CancellationToken cancellationToken)
+                CalculateQuery request, CancellationToken cancellationToken)
             {
                 var script = await _scriptRepository.GetAsync(request.ScriptId);
                 var parameters = await _parameterRepository
                     .GetAllParametersForScriptAsync(request.ScriptId)
                     .ConfigureAwait(false);
 
-                SetVisibilityValidators(parameters);
-
                 var equations = new Dictionary<long, string>(parameters.ToDictionary(p => p.Id, p => p.Value));
 
-                var scriptCalculator = new ScriptCalculator(script, parameters.ToList());
+                var scriptCalculator = new ScriptCalculator(parameters.ToList());
 
                 await scriptCalculator
                     .CalculateAsync(request.InputData.Where(v => v.Value != null))
@@ -83,31 +81,7 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
                 return calculatedParameters;
             }
 
-            #endregion // Public_Methods
-
-            #region Private_Methods
-                       
-            private void SetVisibilityValidators(IEnumerable<Parameter> parameters)
-            {
-                foreach (var parameter in parameters)
-                    parameter.VisibilityValidator = GetVisibilityValidator(parameter);
-            }
-
-            private string GetVisibilityValidator(Parameter parameter)
-            {
-                string visibilityValidator = string.Empty;
-
-                if (parameter.Group != null && !string.IsNullOrWhiteSpace(parameter.Group.VisibilityValidator))
-                    visibilityValidator = parameter.Group.VisibilityValidator;
-
-                if (string.IsNullOrWhiteSpace(visibilityValidator))
-                    visibilityValidator = parameter.VisibilityValidator;
-                else if (!string.IsNullOrWhiteSpace(parameter.VisibilityValidator))
-                    visibilityValidator = $"({visibilityValidator})&&({parameter.VisibilityValidator})";
-                return visibilityValidator;
-            }
-
-            #endregion // Private_Methods                       
+            #endregion // Public_Methods                          
         }
     }
 }

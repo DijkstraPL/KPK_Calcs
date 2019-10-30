@@ -20,7 +20,7 @@ namespace Build_IT_ScriptInterpreter.Parameters.Interfaces
         string Unit { get; set; }
         ParameterOptions Context { get; }
         ValueTypes ValueType { get; set; }
-        string GroupName { get; set; }
+        IGroup Group { get; set; }
         string AccordingTo { get; set; }
         string Notes { get; set; }
 

@@ -4,6 +4,7 @@ using Build_IT_Application.Application.User.Commands.GetToken;
 using Build_IT_Application.DeadLoads.Categories.Queries.GetAllCategories;
 using Build_IT_Application.DeadLoads.Materials.Queries.GetAllMaterials;
 using Build_IT_Application.Infrastructures;
+using Build_IT_Application.Infrastructures.Interfaces;
 using Build_IT_Application.Interfaces;
 using Build_IT_Application.Mapping;
 using Build_IT_CommonTools;
@@ -21,10 +22,8 @@ using Build_IT_DataAccess.ScriptInterpreter;
 using Build_IT_DataAccess.ScriptInterpreter.Interfaces;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
-using Build_IT_Web.Services.Interfaces;
 using FluentValidation.AspNetCore;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,11 +35,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Reflection;
 using System.Text;
-using System.Text.Json;
 
 namespace Build_IT_Web
 {
@@ -182,7 +179,7 @@ namespace Build_IT_Web
             services.AddScoped<IValueOptionTranslationRepository, TranslationRepository>();
 
             services.AddScoped<Build_IT_Application.Infrastructures.Interfaces.ITranslationService, Build_IT_Application.Infrastructures.TranslationService>();
-            services.AddScoped<ITranslationService, Services.TranslationService>();
+            services.AddScoped<ITranslationService, TranslationService>();
         }
 
         private void SetDbContexts(IServiceCollection services, string dataAccessAssemblyName)
@@ -229,7 +226,8 @@ namespace Build_IT_Web
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IParameterRepository, ParameterRepository>();
-
+            services.AddScoped<ITestDataRepository, TestDataRepository>();
+            
             services.AddScoped<IScriptInterpreterUnitOfWork, ScriptInterpreterUnitOfWork>();
         }
 

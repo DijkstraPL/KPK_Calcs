@@ -22,7 +22,7 @@ namespace Build_IT_ScriptInterpreter.Parameters
         public string Unit { get; set; }
         public List<ValueOption> ValueOptions { get; set; }
         public ParameterOptions Context { get; set; }
-        public string GroupName { get; set; }
+        public IGroup Group { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
 

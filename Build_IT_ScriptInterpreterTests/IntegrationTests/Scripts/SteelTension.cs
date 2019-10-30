@@ -97,7 +97,7 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
 
             var script = scriptBuilder.Build();
 
-            var calculationEngine = new CalculationEngine(script);
+            var calculationEngine = new CalculationEngine(script.Parameters);
             calculationEngine.CalculateFromText("[A]=60|[f_y_]=235|[N_Ed_]=1400");
 
             Assert.That(script.GetParameterByName("N_pl,Rd_").Value, Is.EqualTo(1410).Within(0.000001));

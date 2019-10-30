@@ -45,7 +45,7 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
 
             var script = scriptBuilder.Build();
 
-            var calculationEngine = new CalculationEngine(script);
+            var calculationEngine = new CalculationEngine(script.Parameters);
 
             calculationEngine.CalculateFromText("[f_ck_]=30");
 

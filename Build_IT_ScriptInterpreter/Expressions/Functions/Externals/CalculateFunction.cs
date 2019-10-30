@@ -167,7 +167,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
 
             script.Parameters = GetParameters(scriptData, parameterRepository).ToList();
 
-            var calculationEngine = new CalculationEngine(script);
+            var calculationEngine = new CalculationEngine(script.Parameters);
 
             IDictionary<string, object> parameterValues = GetParametersValues(functionArgs);
 

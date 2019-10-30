@@ -46,7 +46,7 @@ namespace Build_IT_ScriptInterpreterTests.UnitTests.Scripts
                     parameter4.Object
                 });
 
-            var calculationEngine = new CalculationEngine(script.Object);
+            var calculationEngine = new CalculationEngine(script.Object.Parameters);
 
             calculationEngine.CalculateFromText("[a]=1|[b]=2");
 

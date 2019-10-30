@@ -122,7 +122,7 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
 
             var script = scriptBuilder.Build();
 
-            var calculationEngine = new CalculationEngine(script);
+            var calculationEngine = new CalculationEngine(script.Parameters);
 
             calculationEngine.CalculateFromText("[f_ck_]=30|[f_cm_]=38|[cement_type_]=CEM 42,5R|[t]=5");
 

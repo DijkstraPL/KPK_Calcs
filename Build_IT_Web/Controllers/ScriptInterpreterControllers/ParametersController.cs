@@ -1,11 +1,10 @@
-﻿using Build_IT_Application.ScriptInterpreter.Parameters.Commands.CopyParameters;
+﻿using Build_IT_Application.Infrastructures;
+using Build_IT_Application.ScriptInterpreter.Parameters.Commands.CopyParameters;
 using Build_IT_Application.ScriptInterpreter.Parameters.Commands.CreateParameter;
 using Build_IT_Application.ScriptInterpreter.Parameters.Commands.DeleteParameter;
 using Build_IT_Application.ScriptInterpreter.Parameters.Commands.UpdateParameter;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries.GetAllParametersForScript;
 using Build_IT_Web.Controllers.ScriptInterpreterControllers.Resources;
-using Build_IT_Web.Services;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

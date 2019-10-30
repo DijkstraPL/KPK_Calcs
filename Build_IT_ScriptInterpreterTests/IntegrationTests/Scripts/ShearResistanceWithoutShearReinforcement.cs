@@ -194,7 +194,7 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
 
             var script = scriptBuilder.Build();
 
-            var calculationEngine = new CalculationEngine(script);
+            var calculationEngine = new CalculationEngine(script.Parameters);
             calculationEngine.CalculateFromText("[V_Ed_]=100|[f_ck_]=30|[b_w_]=240|[d]=461|[A_sl_]=339|[N_Ed_]=100|[A_c_]=150000");
 
             Assert.That(0.128571, Is.EqualTo(script.GetParameterByName("C_Rd,c_").Value).Within(0.000001));
