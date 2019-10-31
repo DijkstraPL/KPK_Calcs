@@ -296,6 +296,9 @@
         "Remove": "Usuń"
       }
     },
+    "TestData": {
+      "Header": "Dane testowe"
+    },
 
     "Translations": {
       "Header": "Tłumaczenia",
@@ -303,7 +306,7 @@
       "Update": "Aktualizuj Tłumaczenie",
       "Remove": "Usuń",
       "Groups": "Grupy",
-      "GroupName" :  "Nazwa grupy"
+      "GroupName": "Nazwa grupy"
     }
   },
 

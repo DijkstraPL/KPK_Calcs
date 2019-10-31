@@ -71,27 +71,43 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Queries
 
                 var editableParameters = parametersResource.Where(p => (p.Context & ParameterOptions.Editable) != 0);
 
-                foreach (var editableParameter in editableParameters)
-                    editableParameter.Value = testData.TestParameters
-                        .First(p => p.ParameterId == editableParameter.Id)?.Value;
+                SetValues(testData, editableParameters);
 
-                var scriptCalculator = new ScriptCalculator(parameters.ToList());
-                if (request.AssertionId == null)
+                try
                 {
-                    var assertions = testData.Assertions;
-                    var assertionsValues = assertions.Select(a => a.Value).ToArray();
-                    return await scriptCalculator.ValidateResults(editableParameters, assertionsValues).ConfigureAwait(false);
+                    var scriptCalculator = new ScriptCalculator(parameters.ToList());
+                    if (request.AssertionId == null)
+                    {
+                        var assertions = testData.Assertions;
+                        var assertionsValues = assertions.Select(a => a.Value).ToArray();
+                        return await scriptCalculator.ValidateResults(editableParameters, assertionsValues).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        var assertion = testData.Assertions.First(a => a.Id == request.AssertionId);
+                        return await scriptCalculator.ValidateResults(editableParameters, assertion.Value).ConfigureAwait(false);
+                    }
                 }
-                else
+                catch 
                 {
-                    var assertion = testData.Assertions.First(a => a.Id == request.AssertionId);
-                    return await scriptCalculator.ValidateResults(editableParameters, assertion.Value).ConfigureAwait(false);
+                    return false;
                 }
             }
 
             #endregion // Public_Methods
 
             #region Private_Methods
+            
+            private void SetValues(TestData testData, IEnumerable<ParameterResource> editableParameters)
+            {
+                foreach (var editableParameter in editableParameters)
+                {
+                    if ((editableParameter.Context & ParameterOptions.Optional) == 0 ||
+                        testData.TestParameters.Any(p => p.ParameterId == editableParameter.Id))
+                        editableParameter.Value = testData.TestParameters
+                            .First(p => p.ParameterId == editableParameter.Id)?.Value;
+                }
+            }
 
             #endregion // Private_Methods                       
         }

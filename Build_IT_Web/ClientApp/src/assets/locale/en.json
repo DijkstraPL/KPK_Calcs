@@ -296,6 +296,9 @@
         "Remove": "Remove"
       }
     },
+    "TestData": {
+      "Header": "Test data"
+    },
 
     "Translations": {
       "Header": "Translations",

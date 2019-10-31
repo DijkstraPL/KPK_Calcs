@@ -50,6 +50,7 @@ import { GroupService } from './services/group.service';
 import { GroupsFormComponent } from './components/script-form/parameters-form/data-parameter-form/groups-form/groups-form.component';
 import { GroupTranslationService } from './services/translations/group-translation.service';
 import { GroupTranslationFormComponent } from './components/script-form/translation-form/group-translation-form/group-translation-form.component';
+import { TestDataFormComponent } from './components/script-form/test-data-form/test-data-form.component';
 
 @NgModule({
     declarations: [
@@ -78,7 +79,8 @@ import { GroupTranslationFormComponent } from './components/script-form/translat
         FiguresButtonComponent,
         ValueFormComponent,
         GroupsFormComponent,
-        GroupTranslationFormComponent
+        GroupTranslationFormComponent,
+        TestDataFormComponent
     ],
     imports: [
         PipesModule,

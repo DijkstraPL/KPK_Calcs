@@ -1,4 +1,4 @@
-﻿<h2 class="mt-4 text-center"
+<h2 class="mt-4 text-center"
     *ngIf="!editMode">
     {{'scriptsForm.Header' | translate}}
 </h2>
@@ -9,35 +9,42 @@
 
 <form (ngSubmit)="onSubmit()"
       [formGroup]="scriptForm">
-    <mat-tab-group dynamicHeight>
+  <mat-tab-group dynamicHeight>
 
-        <mat-tab label="{{'scriptsForm.ScriptData.Header' | translate}}">
-            <div class="mat-elevation-z4">
-                <script-data-form [scriptForm]="scriptForm"
-                                  [includeNote]="includeNote"></script-data-form>
-            </div>
-        </mat-tab>
+    <mat-tab label="{{'scriptsForm.ScriptData.Header' | translate}}">
+      <div class="mat-elevation-z4">
+        <script-data-form [scriptForm]="scriptForm"
+                          [includeNote]="includeNote"></script-data-form>
+      </div>
+    </mat-tab>
 
-        <mat-tab label="{{'scriptsForm.Tags.Header' | translate}}">
-            <div class="mat-elevation-z4">
-                <tag-form [scriptForm]="scriptForm"></tag-form>
-            </div>
-        </mat-tab>
+    <mat-tab label="{{'scriptsForm.Tags.Header' | translate}}">
+      <div class="mat-elevation-z4">
+        <tag-form [scriptForm]="scriptForm"></tag-form>
+      </div>
+    </mat-tab>
 
-        <mat-tab label="{{'scriptsForm.Parameters.Header' | translate}}"
-                 *ngIf="editMode">
-            <div class="mat-elevation-z4">
-                <app-parameters-form *ngIf="editMode"></app-parameters-form>
-            </div>
-        </mat-tab>
+    <mat-tab label="{{'scriptsForm.Parameters.Header' | translate}}"
+             *ngIf="editMode">
+      <div class="mat-elevation-z4">
+        <app-parameters-form *ngIf="editMode"></app-parameters-form>
+      </div>
+    </mat-tab>
 
-        <mat-tab label="{{'scriptsForm.Translations.Header' | translate}}">
-            <div class="mat-elevation-z4">
-                <app-translation-form [defaultLanguage]="scriptDefaultLanguage.value" 
-                                      [scriptForm]="scriptForm"></app-translation-form>
-            </div>
-        </mat-tab>
-    </mat-tab-group>
+    <mat-tab label="{{'scriptsForm.TestData.Header' | translate}}"
+             *ngIf="editMode">
+      <div class="mat-elevation-z4">
+        <app-test-data-form *ngIf="editMode"></app-test-data-form>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="{{'scriptsForm.Translations.Header' | translate}}">
+      <div class="mat-elevation-z4">
+        <app-translation-form [defaultLanguage]="scriptDefaultLanguage.value"
+                              [scriptForm]="scriptForm"></app-translation-form>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
     
     <button mat-stroked-button
             color="accent"
