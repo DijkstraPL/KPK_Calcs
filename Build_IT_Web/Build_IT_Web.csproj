@@ -57,7 +57,11 @@
     <None Remove="ClientApp\src\app\models\user.ts" />
     <None Remove="ClientApp\src\app\modules\pipes-module\text-pipes\safe-html-pipe.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\models\api\scripts\create-script-command.ts" />
+    <None Remove="ClientApp\src\app\modules\script-interpreter\models\assertionImpl.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\models\enums\language.ts" />
+    <None Remove="ClientApp\src\app\modules\script-interpreter\models\testDataImpl.ts" />
+    <None Remove="ClientApp\src\app\modules\script-interpreter\models\testParameterImpl.ts" />
+    <None Remove="ClientApp\src\app\modules\script-interpreter\services\test-data.service.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\services\translations\group-translation.service.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />
     <None Remove="ClientApp\src\app\modules\script-interpreter\services\translations\script-translation.service.ts" />
@@ -128,7 +132,11 @@
     <TypeScriptCompile Include="ClientApp\src\app\models\user.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\pipes-module\text-pipes\safe-html-pipe.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\models\api\scripts\create-script-command.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\models\assertionImpl.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\models\enums\language.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\models\testDataImpl.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\models\testParameterImpl.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\test-data.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\translations\group-translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\translations\parameter-translation.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\script-interpreter\services\translations\script-translation.service.ts" />

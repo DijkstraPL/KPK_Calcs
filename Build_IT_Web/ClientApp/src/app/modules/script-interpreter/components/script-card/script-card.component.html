@@ -1,4 +1,4 @@
-﻿
+
 <mat-card class="flex-grow-1">
     <mat-card-header>
         <div mat-card-avatar class="script-header-image"></div>
@@ -35,7 +35,7 @@
         <button *ngIf="this.auth.isLoggedIn()"
                 mat-stroked-button
                 color="warn"
-                class="float-right"
+                class="float-right remove-button"
                 (click)="delete(script)">
             <span class="fa fa-remove"></span> {{'scriptCard.Delete' | translate}}
         </button>

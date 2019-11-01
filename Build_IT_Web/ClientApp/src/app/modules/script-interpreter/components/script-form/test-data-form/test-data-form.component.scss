@@ -1,0 +1,37 @@
+table {
+  width: 70%;
+}
+
+button {
+  margin: 16px 8px;
+}
+
+p.parameter-description {
+  color: rgba(255,255,255,.7);
+  font-size: 87.5%;
+  position: relative;
+  top: -1.4em;
+  max-width: 205px;
+}
+
+.test-data-card {
+  max-width: 500px;
+}
+
+.actions {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.mat-card-actions > button:not(.actions) {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.mat-card-title > button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

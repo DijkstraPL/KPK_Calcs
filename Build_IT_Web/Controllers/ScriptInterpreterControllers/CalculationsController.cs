@@ -26,15 +26,19 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             return Ok(await Mediator.Send(query));
         }
 
-        [HttpGet("test/{testId}/{assertionId?}/{lang?}")]
+        [HttpGet("test/{testId}/{assertionId}/{lang?}")]
         public async Task<ActionResult<bool>> Test(
-            long testId, long? assertionId, string lang = TranslationService.DefaultLanguageCode)
+            long testId, long assertionId, string lang = TranslationService.DefaultLanguageCode)
         {
+            long? assertionIdFinal = assertionId;
+            if(assertionId == -1)
+                assertionIdFinal = null;
+            
             var query = new TestQuery
             {
                 TestId = testId,
                 LanguageCode = lang,
-                AssertionId = assertionId,
+                AssertionId = assertionIdFinal,
             };
 
             return Ok(await Mediator.Send(query));
