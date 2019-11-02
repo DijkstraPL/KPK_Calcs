@@ -20,13 +20,11 @@ export class TestDataService {
         return this.http.post('/api/testData/' + scriptId , testData);
     }
 
+    update(testData: TestData) {
+        return this.http.put('/api/testData/' + testData.id, testData);
+    }
+
     delete(testDataId: number) {
         return this.http.delete('/api/testData/' + testDataId);
     }
-
-
-    //update(scriptId: number, parameter: Parameter) {
-    //    return this.http.put('/api/scripts/' + scriptId + '/parameters/' + parameter.id, parameter);
-    //}
-
 }

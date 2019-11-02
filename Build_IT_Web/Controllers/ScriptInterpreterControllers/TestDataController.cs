@@ -7,6 +7,7 @@ using Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetAllScripts;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript;
 using Build_IT_Application.ScriptInterpreter.TestDatas.Commands.CreateTestData;
 using Build_IT_Application.ScriptInterpreter.TestDatas.Commands.DeleteTestData;
+using Build_IT_Application.ScriptInterpreter.TestDatas.Commands.UpdateTestData;
 using Build_IT_Application.ScriptInterpreter.TestDatas.Queries.GetTestDatasForScript;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -37,16 +38,16 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
             return Ok(await Mediator.Send(command));
         }
 
-        //[HttpPut("{id}")]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[Authorize()]
-        //public async Task<IActionResult> UpdateScript([FromBody]UpdateScriptCommand command)
-        //{
-        //    await Mediator.Send(command);
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize()]
+        public async Task<IActionResult> Update([FromBody]UpdateTestDataCommand command)
+        {
+            await Mediator.Send(command);
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

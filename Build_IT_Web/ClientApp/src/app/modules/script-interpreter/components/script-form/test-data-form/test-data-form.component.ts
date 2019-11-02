@@ -12,6 +12,7 @@ import { Assertion } from '../../../models/interfaces/assertion';
 import { CalculationService } from '../../../services/calculation.service';
 import { AssertionImpl } from '../../../models/assertionImpl';
 import { TestDataImpl } from '../../../models/testDataImpl';
+import { TestParameterImpl } from '../../../models/testParameterImpl';
 
 @Component({
     selector: 'app-test-data-form',
@@ -70,7 +71,7 @@ export class TestDataFormComponent implements OnInit {
         this.testDataService.create(this.scriptId, new TestDataImpl())
             .subscribe(td => {
                 this.testDatasContainers = [];
-                this.loadData()
+                this.loadData();
             });
     }
 
@@ -80,7 +81,7 @@ export class TestDataFormComponent implements OnInit {
     }
 
     saveTestData(testDataContainer) {
-
+        this.testDataService.update(testDataContainer.testData);
     }
 
     getTestDatas(scriptId: number) {
@@ -109,17 +110,16 @@ export class TestDataFormComponent implements OnInit {
 
             this.parameters.forEach(p => {
                 let testParameter = td.testParameters.find(tp => tp.parameterId == p.id);
+                if (testDataParameterPairs.parametersPairs.some(pp => pp.testParameter == testParameter))
+                    return;
+
                 if (testParameter)
                     testDataParameterPairs.parametersPairs.push({ parameter: p, testParameter: testParameter });
-                else
-                    testDataParameterPairs.parametersPairs.push({parameter: p, testParameter: new TestParameterImpl(p)})
-
-
-            });
-
-            td.testParameters.forEach(tp => {
-                let parameter = this.parameters.find(p => p.id == tp.parameterId);
-                testDataParameterPairs.parametersPairs.push({ parameter: parameter, testParameter: tp });
+                else if ((p.context & ParameterOptions.editable) != 0) {
+                    let newTestParameter = new TestParameterImpl(p.id, td.id);
+                    testDataParameterPairs.parametersPairs.push({ parameter: p, testParameter: newTestParameter });
+                    td.testParameters.push(newTestParameter);
+                }
             });
         });
     }

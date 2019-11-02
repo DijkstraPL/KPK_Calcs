@@ -1,14 +1,15 @@
 import { TestParameter } from "./interfaces/testParameter";
+import { Assertion } from "./interfaces/assertion";
 
-export class TestDataImpl implements TestParameter {
+export class TestParameterImpl implements TestParameter {
+
     id: number;
-    scriptId: number;
-    name: string;
-    testParameters: TestParameter[];
-    assertions: Assertion[];
+    value: string;
+    testDataId: number;
+    parameterId: number;
 
-    constructor() {
-        this.testParameters = [];
-        this.assertions = [];
+    constructor(parameterId: number, testDataId: number) {
+        this.parameterId = parameterId;
+        this.testDataId = testDataId;
     }
 }

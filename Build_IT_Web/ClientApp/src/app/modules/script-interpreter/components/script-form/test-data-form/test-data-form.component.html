@@ -7,11 +7,17 @@
   <mat-card class="test-data-card m-4">
     <mat-card-header>
       <mat-card-title>
-        {{testDataContainer.testData.name}}
-        <span class="fa fa-times text-danger"
-              *ngIf="!testDataContainer.result"></span>
-        <span class="fa fa-check text-success"
-              *ngIf="testDataContainer.result"></span>
+        <mat-form-field>
+          <input matInput
+                 autocomplete="off"
+                 [(ngModel)]="testDataContainer.testData.name" />
+          <span matSuffix>
+            <span class="fa fa-times text-danger"
+                  *ngIf="!testDataContainer.result"></span>
+            <span class="fa fa-check text-success"
+                  *ngIf="testDataContainer.result"></span>
+          </span>
+        </mat-form-field>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -78,7 +84,7 @@
         </button>
 
         <button mat-stroked-button
-                (click)="save(testDataContainer)">
+                (click)="saveTestData(testDataContainer)">
           Save
         </button>
       </div>
