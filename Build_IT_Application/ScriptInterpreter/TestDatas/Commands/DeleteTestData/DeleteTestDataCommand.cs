@@ -43,14 +43,15 @@ namespace Build_IT_Application.ScriptInterpreter.TestDatas.Commands.DeleteTestDa
 
             public async Task<Unit> Handle(DeleteTestDataCommand request, CancellationToken cancellationToken)
             {
-                var testData = await _testDataRepository.GetAsync(request.Id);
+                var testData = await _testDataRepository.GetTestDataWithAllDependanciesAsync(request.Id).ConfigureAwait(false);
 
                 if (testData == null)
                     throw new NotFoundException(nameof(testData), request.Id);
 
-                _testDataRepository.Remove(testData);
-                await _unitOfWork.CompleteAsync(cancellationToken).ConfigureAwait(false);
+                _testDataRepository.RemoveWithAllDependancies(testData);
 
+                await _unitOfWork.CompleteAsync(cancellationToken).ConfigureAwait(false);
+                
                 return Unit.Value;
             }
 

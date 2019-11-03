@@ -45,6 +45,15 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
                 .FirstOrDefaultAsync(td => td.Id == testDataId);
         }
 
+        public void RemoveWithAllDependancies(TestData testData)
+        {
+            if (testData.Assertions != null)
+                ScriptInterpreterContext.Assertions.RemoveRange(testData.Assertions);
+            if (testData.TestParameters != null)
+                ScriptInterpreterContext.TestParameters.RemoveRange(testData.TestParameters);
+            ScriptInterpreterContext.TestDatas.Remove(testData);
+        }
+
         #endregion // Public_Methods
     }
 }

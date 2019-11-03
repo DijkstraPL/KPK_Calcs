@@ -76,12 +76,15 @@ export class TestDataFormComponent implements OnInit {
     }
 
     removeTestData(testDataContainer) {
-        this.testDataService.delete(testDataContainer.testData.id);
-        this.testDatasContainers.filter(tdp => tdp.testData != testDataContainer.testData);
+        this.testDataService.delete(testDataContainer.testData.id)
+            .subscribe(() => { }, error => console.error(error));
+        this.testDatasContainers = this.testDatasContainers.filter(tdp => tdp.testData.id != testDataContainer.testData.id);
+        this.testDatas = this.testDatas.filter(td => td.id != testDataContainer.testData.id)
     }
 
     saveTestData(testDataContainer) {
-        this.testDataService.update(testDataContainer.testData);
+        this.testDataService.update(testDataContainer.testData)
+            .subscribe(() => { }, error => console.error(error));
     }
 
     getTestDatas(scriptId: number) {

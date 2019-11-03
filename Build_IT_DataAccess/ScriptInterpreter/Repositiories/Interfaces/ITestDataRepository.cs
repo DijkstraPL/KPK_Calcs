@@ -13,6 +13,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces
         
         Task<IEnumerable<TestData>> GetAllTestDataForScriptAsync(long scriptId);
         Task<TestData> GetTestDataWithAllDependanciesAsync(long testDataId);
+        void RemoveWithAllDependancies(TestData testData);
 
         #endregion // Public_Methods
     }

@@ -8,6 +8,7 @@ using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -70,10 +71,14 @@ namespace Build_IT_Application.ScriptInterpreter.TestDatas.Commands.CreateTestDa
                 _scriptMappingProfile.UpdateAssertions(request.Assertions, testData);
                 _scriptMappingProfile.RemoveNotAddedAssertions(request.Assertions, testData);
                 _scriptMappingProfile.AddNewAssertions(request.Assertions, testData);
+                
+                var testParameters = request.TestParameters
+                    .Where(tp => !string.IsNullOrWhiteSpace(tp.Value))
+                    .ToList();
 
-                _scriptMappingProfile.UpdateTestParameters(request.TestParameters, testData);
-                _scriptMappingProfile.RemoveNotAddedTestParameters(request.TestParameters, testData);
-                _scriptMappingProfile.AddNewTestParameters(request.TestParameters, testData);
+                _scriptMappingProfile.UpdateTestParameters(testParameters, testData);
+                _scriptMappingProfile.RemoveNotAddedTestParameters(testParameters, testData);
+                _scriptMappingProfile.AddNewTestParameters(testParameters, testData);
 
                 var script = await _scriptRepository.GetAsync(request.ScriptId);
                 if (script == null)

@@ -137,7 +137,7 @@ namespace Build_IT_Application.Mapping
             var addedTestParameters = testParametersResource
                 .Where(tpr => !testData.TestParameters.Any(tp => tp.Id == tpr.Id))
                  .Select(tpr =>
-                 new TestParameter { Value = tpr.Value }
+                 new TestParameter { Value = tpr.Value, ParameterId = tpr.ParameterId, TestDataId = tpr.TestDataId }
                  ).ToList();
             foreach (var testParameter in addedTestParameters)
                 testData.TestParameters.Add(testParameter);
@@ -178,7 +178,7 @@ namespace Build_IT_Application.Mapping
             var addedAssertions = assertionsResources
                 .Where(ar => !testData.Assertions.Any(a => a.Id == ar.Id))
                  .Select(ar =>
-                 new Assertion { Value = ar.Value }
+                 new Assertion { Value = ar.Value, TestDataId = ar.TestDataId }
                  ).ToList();
             foreach (var assertion in addedAssertions)
                 testData.Assertions.Add(assertion);
