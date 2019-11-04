@@ -1,33 +1,22 @@
-# ADR divide desktop app to modules
+# 3. SYS - Use modular monolith
 
-Build into Prism library possibility to divide views into a different modules is worth to consider
+Date: 2019-10-08
 
-* **Issue**: Hard to maintain one big module of an application.
+## Status
 
-* **Decision**: Keep small modules as a containers for functionalities.
+Accepted
 
-* **Status**: Done.
+## Context
 
-* **Group**: Versioning.
+- Hard to maintain one big module of an application.
 
-* **Assumptions**: Could be done easily.
+## Decision
 
-* **Constraints**: None.
+Keep small modules as a containers for functionalities.
 
-* **Positions**: Keep one big module.
+## Consequences
 
-* **Argument**: It is better to have it as several smaller modules in terms of readability and future work.
-
-* **Implications**: .Net Core 3.0 not allows to create Class libraries for WPF stuff.
-
-* **Related decisions**: Create libraries as WPF apps and then change their types.
-
-* **Related requirements**: None.
-
-* **Related artifacts**: None.
-
-* **Related principles**: None.
-
-* **Date**: 2019-10-08
-
-* **Notes**: None.
+- Positive
+	- It is better to have it as several smaller modules in terms of readability and future work.
+- Negative
+	- .Net Core 3.0 not allows to create Class libraries for WPF stuff.

@@ -1,33 +1,19 @@
-# ADR start working on proper decision documentation
+# 1. SYS - Record architecture decisions
 
-Due to going along with the DNA course, I decided to add some ADRs (Architectural Decision Records) during the work on this project.
+Date: 2019-09-26
 
-* **Issue**: I don't have a single place where I could add documentation about all of mine decisions.
+## Status
 
-* **Decision**: Add new folder where I can add and find all previous decision documents with appropriate comments.
+Accepted
 
-* **Status**: Done.
+## Context
 
-* **Group**: Documentation.
+We need to record the architectural decisions made on this project.
 
-* **Assumptions**: Could be done easily.
+## Decision
 
-* **Constraints**: None.
+We will use Architecture Decision Records, as [described by Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions).
 
-* **Positions**: Adding those kind of decision to another web portal such as Asana, Trelo or GitHub.
+## Consequences
 
-* **Argument**: It is better to have it close to the code.
-
-* **Implications**: None.
-
-* **Related decisions**: None.
-
-* **Related requirements**: None.
-
-* **Related artifacts**: None.
-
-* **Related principles**: None.
-
-* **Date**: 2019-09-26
-
-* **Notes**: None.
+See Michael Nygard's article, linked above. For a lightweight ADR toolset, see Nat Pryce's [adr-tools](https://github.com/npryce/adr-tools).

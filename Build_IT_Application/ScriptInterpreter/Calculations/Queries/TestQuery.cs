@@ -71,7 +71,7 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Queries
 
                 var editableParameters = parametersResource.Where(p => (p.Context & ParameterOptions.Editable) != 0);
 
-                SetValues(testData, editableParameters);
+                var calculationParameters = SetValues(testData, editableParameters);
 
                 try
                 {
@@ -80,12 +80,12 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Queries
                     {
                         var assertions = testData.Assertions;
                         var assertionsValues = assertions.Select(a => a.Value).ToArray();
-                        return await scriptCalculator.ValidateResults(editableParameters, assertionsValues).ConfigureAwait(false);
+                        return await scriptCalculator.ValidateResults(calculationParameters, assertionsValues).ConfigureAwait(false);
                     }
                     else
                     {
                         var assertion = testData.Assertions.First(a => a.Id == request.AssertionId);
-                        return await scriptCalculator.ValidateResults(editableParameters, assertion.Value).ConfigureAwait(false);
+                        return await scriptCalculator.ValidateResults(calculationParameters, assertion.Value).ConfigureAwait(false);
                     }
                 }
                 catch 
@@ -98,14 +98,16 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Queries
 
             #region Private_Methods
             
-            private void SetValues(TestData testData, IEnumerable<ParameterResource> editableParameters)
+            private IEnumerable<ParameterResource> SetValues(TestData testData, IEnumerable<ParameterResource> editableParameters)
             {
                 foreach (var editableParameter in editableParameters)
                 {
                     if ((editableParameter.Context & ParameterOptions.Optional) == 0 ||
                         testData.TestParameters.Any(p => p.ParameterId == editableParameter.Id))
                         editableParameter.Value = testData.TestParameters
-                            .First(p => p.ParameterId == editableParameter.Id)?.Value;
+                            .FirstOrDefault(p => p.ParameterId == editableParameter.Id)?.Value;
+                    if (!string.IsNullOrWhiteSpace(editableParameter.Value))
+                        yield return editableParameter;
                 }
             }
 
