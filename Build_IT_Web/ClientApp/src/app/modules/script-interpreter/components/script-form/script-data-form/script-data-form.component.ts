@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { AppErrorStateMatcher } from '../../../../../common/errors/app-error-state-matcher';
 import { Language } from '../../../models/enums/language';
@@ -20,9 +20,6 @@ export class ScriptDataFormComponent {
     get scriptName(): AbstractControl {
         return this.scriptForm.get('name');
     }
-    get scriptAuthor(): AbstractControl {
-        return this.scriptForm.get('author');
-    }
     get scriptDocument(): AbstractControl {
         return this.scriptForm.get('accordingTo');
     }
@@ -37,5 +34,8 @@ export class ScriptDataFormComponent {
     }
     get scriptDefaultLanguage(): AbstractControl {
         return this.scriptForm.get('defaultLanguage');
+    }
+    get scriptIsPublic(): AbstractControl {
+        return this.scriptForm.get('isPublic');
     }
 }

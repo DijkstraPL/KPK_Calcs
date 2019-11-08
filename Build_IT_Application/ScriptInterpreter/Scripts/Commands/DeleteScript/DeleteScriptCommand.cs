@@ -17,6 +17,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.DeleteScript
         #region Properties
 
         public long Id { get; set; }
+        public string CurrentUserId { get; set; }
 
         #endregion // Properties        
         public class Handler : IRequestHandler<DeleteScriptCommand>
@@ -45,6 +46,9 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.DeleteScript
             public async Task<Unit> Handle(DeleteScriptCommand request, CancellationToken cancellationToken)
             {
                 var script = await _scriptRepository.GetAsync(request.Id);
+
+                if (script.Author != request.CurrentUserId)
+                    throw new ValidationException();
 
                 if (script == null)
                     throw new NotFoundException(nameof(Script), request.Id);

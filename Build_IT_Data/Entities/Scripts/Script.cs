@@ -20,6 +20,7 @@ namespace Build_IT_Data.Entities.Scripts
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
         public string Version { get; set; }
+        public bool IsPublic { get; set; }
         public Language DefaultLanguage { get; set; }
         public ICollection<Parameter> Parameters { get; private set; }
         public ICollection<ScriptTranslation> ScriptTranslations { get; private set; }

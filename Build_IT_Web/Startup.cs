@@ -265,6 +265,7 @@ namespace Build_IT_Web
                     options.Password.RequireUppercase = true;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequiredLength = 7;
+                    options.User.RequireUniqueEmail = true;
                 }).AddEntityFrameworkStores<ApplicationDbContext>();
 
         }

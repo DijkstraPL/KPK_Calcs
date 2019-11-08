@@ -42,6 +42,9 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
             builder.HasMany<Parameter>(s => s.Parameters)
                 .WithOne(p => p.Script)
                 .HasForeignKey(p => p.ScriptId);
+
+            builder.Property(s => s.IsPublic)
+                .HasDefaultValue(false);
         }
 
         #endregion // Public_Methods

@@ -1,4 +1,4 @@
-﻿import { Language } from "./enums/language";
+import { Language } from "./enums/language";
 import { Script } from "./interfaces/script";
 import { Tag } from "./interfaces/tag";
 
@@ -7,7 +7,6 @@ export class ScriptImpl implements Script {
     name: string;
     description: string;
     groupName: string;
-    author: string;
     added: Date;
     version: string;
     modified: Date;
@@ -15,4 +14,5 @@ export class ScriptImpl implements Script {
     notes: string;
     tags: Tag[] = [];
     defaultLanguage: Language;
+    isPublic: boolean;
 }

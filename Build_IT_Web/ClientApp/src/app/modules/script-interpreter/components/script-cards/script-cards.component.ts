@@ -1,4 +1,4 @@
-﻿import { Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ScriptService } from '../../services/script.service';
 import { Script } from '../../models/interfaces/script';
 import { PageEvent } from '@angular/material/paginator';
@@ -65,7 +65,6 @@ export class ScriptCardsComponent {
         if (this.filterValue)
             this.filteredScripts = this.filteredScripts.filter(s =>
                 s.name && s.name.toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0 ||
-                s.author && s.author.toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0 ||
                 s.accordingTo && s.accordingTo.toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0 ||
                 s.groupName && s.groupName.toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0 ||
                 s.tags && s.tags.some(t => t.name && t.name.toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0) 

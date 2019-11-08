@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Script } from '../../models/interfaces/script';
@@ -21,14 +21,14 @@ export class ScriptFormComponent implements OnInit {
 
     scriptForm = new FormGroup({
         id: new FormControl('0'),
-        name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
-        author: new FormControl('', Validators.maxLength(40)),
+        name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),       
         accordingTo: new FormControl('', Validators.maxLength(50)),
         groupName: new FormControl('Other'),
         description: new FormControl('', [Validators.required, Validators.minLength(25), Validators.maxLength(500)]),
         notes: new FormControl('', Validators.maxLength(1000)),
         defaultLanguage: new FormControl(0, Validators.required),
-        tags: new FormArray([])
+        tags: new FormArray([]),
+        isPublic: new FormControl(false)
     });
 
     parametersToShow: string = 'dataParameters';
