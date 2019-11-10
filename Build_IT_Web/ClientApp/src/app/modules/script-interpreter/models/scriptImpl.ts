@@ -15,4 +15,5 @@ export class ScriptImpl implements Script {
     tags: Tag[] = [];
     defaultLanguage: Language;
     isPublic: boolean;
+    isEditable: boolean;
 }

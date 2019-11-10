@@ -48,8 +48,20 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetAllScripts
             public async Task<IEnumerable<ScriptResource>> Handle(GetAllScriptsQuery request, CancellationToken cancellationToken)
             {
                 var scripts = await _scriptRepository.GetAllScriptsWithTagsAsync();
-                var scriptResources = _mapper.Map<IEnumerable<Script>, IEnumerable<ScriptResource>>(scripts
-                    .Where(s => s.IsPublic || s.Author == request.CurrentUserId || request.IsAdmin));
+
+                var scriptResources = scripts
+                    .Select(s =>
+                    {
+                        ScriptResource scriptResource = null;
+                        if (s.IsPublic || s.Author == request.CurrentUserId || request.IsAdmin)
+                        {
+                            scriptResource = _mapper.Map<Script, ScriptResource>(s);
+                            scriptResource.IsEditable = s.Author == request.CurrentUserId || request.IsAdmin;
+                        }
+                        return scriptResource;
+                    })
+                    .Where(sr => sr != null);
+
                 await _translationService.SetScriptsTranslation(request.Language, scriptResources);
 
                 return scriptResources;

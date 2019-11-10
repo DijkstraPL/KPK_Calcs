@@ -14,4 +14,5 @@ export interface Script {
     tags: Tag[];
     defaultLanguage: Language;
     isPublic: boolean;
+    isEditable: boolean;
 }
