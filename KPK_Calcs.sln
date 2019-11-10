@@ -131,7 +131,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_Mobile.Android", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_Mobile.iOS", "Build_IT_Mobile\Build_IT_Mobile.iOS\Build_IT_Mobile.iOS.csproj", "{E53497F2-31D3-4BC7-BD1A-46F308DB659A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build_IT_Mobile", "Build_IT_Mobile\Build_IT_Mobile\Build_IT_Mobile.csproj", "{F2553373-2F4A-4BFC-B9D6-CC54E2553721}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_Mobile", "Build_IT_Mobile\Build_IT_Mobile\Build_IT_Mobile.csproj", "{F2553373-2F4A-4BFC-B9D6-CC54E2553721}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{ADDF6EC7-2325-4E68-A93C-A343907A1455}"
+	ProjectSection(SolutionItems) = preProject
+		Documentation\Script1.docx = Documentation\Script1.docx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
