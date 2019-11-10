@@ -27,6 +27,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.UpdateScript
         public Language DefaultLanguage { get; set; }
         public ICollection<TagResource> Tags { get; set; }
         public bool IsPublic { get; set; }
+        public bool IsAdmin { get; set; }
 
         #endregion // Properties
 
@@ -60,7 +61,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.UpdateScript
             {
                 var script = await _scriptRepository.GetScriptWithTagsAsync(request.Id);
 
-                if (script.Author != request.Author)
+                if (script.Author != request.Author && !request.IsAdmin)
                     throw new ValidationException();
 
                 if (script == null)

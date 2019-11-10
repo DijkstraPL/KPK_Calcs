@@ -80,6 +80,8 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         public async Task<IActionResult> UpdateScript([FromBody]UpdateScriptCommand command)
         {
             command.Author = GetCurrentUserId();
+            command.IsAdmin = await IsCurrentUserAdmin();
+
             await Mediator.Send(command);
 
             return NoContent();
@@ -92,8 +94,9 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
         public async Task<IActionResult> Delete(long id)
         {
             var currentUserId = GetCurrentUserId();
+            var isAdmin = await IsCurrentUserAdmin();
 
-            await Mediator.Send(new DeleteScriptCommand { Id = id, CurrentUserId = currentUserId });
+            await Mediator.Send(new DeleteScriptCommand { Id = id, CurrentUserId = currentUserId, IsAdmin = isAdmin });
 
             return NoContent();
         }

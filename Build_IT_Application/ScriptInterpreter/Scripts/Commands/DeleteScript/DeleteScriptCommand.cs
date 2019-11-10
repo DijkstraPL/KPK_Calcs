@@ -18,6 +18,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.DeleteScript
 
         public long Id { get; set; }
         public string CurrentUserId { get; set; }
+        public bool IsAdmin { get; set; }
 
         #endregion // Properties        
         public class Handler : IRequestHandler<DeleteScriptCommand>
@@ -47,7 +48,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.DeleteScript
             {
                 var script = await _scriptRepository.GetAsync(request.Id);
 
-                if (script.Author != request.CurrentUserId)
+                if (script.Author != request.CurrentUserId && !request.IsAdmin)
                     throw new ValidationException();
 
                 if (script == null)

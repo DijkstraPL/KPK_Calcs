@@ -53,7 +53,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript
                 var script = await _scriptRepository.GetScriptWithTagsAsync(request.Id);
 
                 if (!script.IsPublic && script.Author != request.CurrentUserId && !request.IsAdmin)
-                    script = null;
+                    throw new ValidationException();
                 if (script == null)
                     throw new NotFoundException(nameof(Script), request.Id);
 
