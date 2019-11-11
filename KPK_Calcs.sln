@@ -136,6 +136,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{ADDF6EC7-2325-4E68-A93C-A343907A1455}"
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Script1.docx = Documentation\Script1.docx
+		ScriptsList.txt = ScriptsList.txt
 	EndProjectSection
 EndProject
 Global

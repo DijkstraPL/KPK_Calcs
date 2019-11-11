@@ -175,7 +175,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         public void UpdateScriptTest_Success()
         {
             var scriptResource = new ScriptResource();
-            var script = new Script { Version = "1" };
+            var script = new Script();
             _mapper.Setup(m => m.Map<ScriptResource, Script>(scriptResource, script))
                 .Returns(script);
             _mapper.Setup(m => m.Map<Script, ScriptResource>(script))

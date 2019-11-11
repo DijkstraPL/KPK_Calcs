@@ -34,6 +34,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
             return await ScriptInterpreterContext.Scripts
                 .Include(s => s.Tags)
                 .ThenInclude(t => t.Tag)
+                .Include(s => s.Versions)
                 .ToListAsync();
         }
 
@@ -42,6 +43,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
             return await ScriptInterpreterContext.Scripts
                 .Include(s => s.Tags)
                 .ThenInclude(s => s.Tag)
+                .Include(s => s.Versions)
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 

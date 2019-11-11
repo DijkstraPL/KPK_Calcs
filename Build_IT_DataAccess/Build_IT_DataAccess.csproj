@@ -28,6 +28,8 @@
     <Compile Remove="ScriptInterpreter\Migrations\20191019082859_GroupNameRemovedFromParameterScriptIdAddedToGroup.Designer.cs" />
     <Compile Remove="ScriptInterpreter\Migrations\20191029223013_TestDataAdded.cs" />
     <Compile Remove="ScriptInterpreter\Migrations\20191029223013_TestDataAdded.Designer.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191111091608_Versions.cs" />
+    <Compile Remove="ScriptInterpreter\Migrations\20191111091608_Versions.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

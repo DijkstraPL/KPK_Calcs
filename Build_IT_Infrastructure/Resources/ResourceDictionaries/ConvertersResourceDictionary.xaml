@@ -5,4 +5,5 @@
 
     <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <conv:BoolToVisibilityReverseConverter x:Key="BoolToVisibilityReverseConverter"/>
+    <conv:AllFalseToVisibilityConverter x:Key="AllFalseToVisibilityConverter"/>
 </ResourceDictionary>

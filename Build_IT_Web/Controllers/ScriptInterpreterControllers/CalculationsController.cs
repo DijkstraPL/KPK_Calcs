@@ -12,7 +12,7 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
     [ApiController]
     public class CalculationsController : BaseController
     {
-        [HttpPut("{scriptId}/calculate/{lang?}")]
+        [HttpPost("{scriptId}/calculate/{lang?}")]
         public async Task<ActionResult<IEnumerable<ParameterResource>>> Calculate(
             long scriptId, [FromBody] List<ParameterResource> userParameters, string lang = TranslationService.DefaultLanguageCode)
         {

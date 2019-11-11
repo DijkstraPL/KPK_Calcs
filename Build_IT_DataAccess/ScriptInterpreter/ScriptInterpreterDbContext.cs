@@ -18,10 +18,14 @@ namespace Build_IT_DataAccess.ScriptInterpreter
         public DbSet<Group> Groups { get; set; }
         public DbSet<Parameter> Parameters { get; set; }
         public DbSet<Figure> Figures { get; set; }
+        public DbSet<Version> Versions { get; set; }
+
         public DbSet<ScriptTranslation> ScriptsTranslations { get; set; }
         public DbSet<GroupTranslation> GroupsTranslations { get; set; }
         public DbSet<ParameterTranslation> ParametersTranslations { get; set; }
         public DbSet<ValueOptionTranslation> ValueOptionsTranslations { get; set; }
+        public DbSet<VersionTranslation> VersionsTranslations { get; set; }
+
         public DbSet<TestData> TestDatas { get; set; }
         public DbSet<TestParameter> TestParameters { get; set; }
         public DbSet<Assertion> Assertions { get; set; }
@@ -80,11 +84,13 @@ namespace Build_IT_DataAccess.ScriptInterpreter
             modelBuilder.ApplyConfiguration(new ScriptTagConfiguration());
             modelBuilder.ApplyConfiguration(new FigureConfiguration());
             modelBuilder.ApplyConfiguration(new ParameterFigureConfiguration());
+            modelBuilder.ApplyConfiguration(new VersionConfiguration());
 
             modelBuilder.ApplyConfiguration(new ScriptTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new GroupTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ParameterTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ValueOptionTranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new VersionTranslationConfiguration());
 
             modelBuilder.ApplyConfiguration(new TestDataConfiguration());
             modelBuilder.ApplyConfiguration(new TestParameterConfiguration());

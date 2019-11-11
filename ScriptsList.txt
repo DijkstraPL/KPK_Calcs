@@ -1,0 +1,25 @@
+# Loads
+Thermal load
+Live loads
+Combinations
+
+# Mechanica and resitance
+Moment of inertia
+Main axises
+Pressures in element
+
+# Steel
+Section class
+Buckling resistance
+Bending with normal force
+Weld calculations
+Shear resistance
+Bolt connections
+
+# Concrete
+Concrete cover
+Reinforcement - bending
+Reinforcement - shear
+Minimum reinforcement - shrinkage
+
+# Wood

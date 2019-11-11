@@ -75,7 +75,6 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.CreateScript
                     DefaultLanguage = request.DefaultLanguage,
                     Added = _dateTime.Now,
                     Modified = _dateTime.Now,
-                    Version = "1",
                     IsPublic = request.IsPublic
                 };
                 RemoveNotAddedTags(request, script);

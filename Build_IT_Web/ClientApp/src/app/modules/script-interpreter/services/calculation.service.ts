@@ -13,7 +13,7 @@ export class CalculationService {
     }
     
     calculate(scriptId: number, parameters: Parameter[], language?: string): Observable<Parameter[]> {
-        return this.http.put<Parameter[]>('/api/scripts/' + scriptId + '/calculate/' + (language || this.translationService.getCurrentLanguage()), parameters);
+        return this.http.post<Parameter[]>('/api/scripts/' + scriptId + '/calculate/' + (language || this.translationService.getCurrentLanguage()), parameters);
     }
 
     test(scriptId: number, testData: TestData, language?: string): Observable<boolean> {

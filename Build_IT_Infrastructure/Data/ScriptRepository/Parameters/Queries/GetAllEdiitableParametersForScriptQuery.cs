@@ -13,7 +13,7 @@ namespace Build_IT_Infrastructure.Data.ScriptRepository.Parameters.Queries
     {
         #region Fields
         
-        private const string _url = "http://building-it.net/api/scripts/{scriptId}/parameters";
+        private const string _url = Address.Url + "api/scripts/{scriptId}/parameters";
         private readonly long _scriptId;
 
         #endregion // Fields

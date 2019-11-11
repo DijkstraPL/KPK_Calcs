@@ -26,6 +26,8 @@ namespace Build_IT_Data.Entities.Scripts
         public string Notes { get; set; }
         public Script Script { get; set; }
         public long ScriptId { get; set; }
+        public Version Version { get; set; }
+        public long? VersionId { get; set; }
         public ICollection<ParameterFigure> ParameterFigures { get; private set; }
 
         public ICollection<ParameterTranslation> ParametersTranslations { get; private set; }

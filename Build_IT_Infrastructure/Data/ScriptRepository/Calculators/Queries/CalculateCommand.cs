@@ -12,7 +12,7 @@ namespace Build_IT_Infrastructure.Data.ScriptRepository.Calculators.Queries
     {
         #region Fields
         
-        private const string _url = "http://building-it.net/api/scripts/{scriptId}/calculate";
+        private const string _url = Address.Url + "api/scripts/{scriptId}/calculate";
         private long _scriptId;
         private List<ParameterResource> _data;
 
@@ -40,7 +40,7 @@ namespace Build_IT_Infrastructure.Data.ScriptRepository.Calculators.Queries
             using (HttpClient httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(_url);
-                var respone = await httpClient.PutAsync(
+                var respone = await httpClient.PostAsync(
                     _url.Replace("{scriptId}", _scriptId.ToString()), content);
                 var result = await respone.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<List<ParameterResource>>(result);
