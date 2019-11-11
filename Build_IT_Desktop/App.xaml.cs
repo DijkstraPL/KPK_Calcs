@@ -26,7 +26,7 @@ namespace Build_IT_Desktop
             var unityContainer = Container.GetContainer();
 
             unityContainer.RegisterTypeForNavigation<GetAllScriptsQuery>();
-            unityContainer.RegisterTypeForNavigation<GetAllEdiitableParametersForScriptQuery>();
+            unityContainer.RegisterTypeForNavigation<GetAllEditableParametersForScriptQuery>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

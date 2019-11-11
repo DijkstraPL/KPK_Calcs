@@ -148,7 +148,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
             {
                 if (parameter.ValueType == ValueTypes.Number)
                     parameters.TryAdd(parameter.Name,
-                        double.Parse(parameter.Value.ToString(), CultureInfo.InvariantCulture));
+                        double.Parse(parameter.Value.ToString().Replace(',','.'), CultureInfo.InvariantCulture));
                 else
                     parameters.TryAdd(parameter.Name,
                         parameter.Value.ToString());

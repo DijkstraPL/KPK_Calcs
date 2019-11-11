@@ -1,4 +1,5 @@
 ﻿using Build_IT_CalculationModule.Data;
+using Build_IT_CalculationModule.ViewModels.Interfaces;
 using Build_IT_Data.Entities.Scripts.Enums;
 using Build_IT_Infrastructure.Models;
 using Prism.Mvvm;
@@ -8,7 +9,7 @@ using System.Linq;
 
 namespace Build_IT_CalculationModule.ViewModels
 {
-    public class ParameterControlViewModel : BindableBase
+    public class ParameterControlViewModel : BindableBase, IParameterData
     {
         #region Properties
 
@@ -17,6 +18,7 @@ namespace Build_IT_CalculationModule.ViewModels
         public string ParameterNameMain { get; private set; }
         public string ParameterNameSubscript { get; private set; }
         public string ParameterNameSupscript { get; private set; }
+        public string ParameterNameLast { get; private set; }
 
         public string ParameterValue
         {
@@ -24,7 +26,7 @@ namespace Build_IT_CalculationModule.ViewModels
             set 
             { 
                 ParameterResource.Value = value;
-                ValueChanged(this, new ParameterControlEventArgs(this));
+                ValueChanged?.Invoke(this, new ParameterControlEventArgs(this));
                 if (IsClean)
                     IsClean = false;
             }
@@ -35,7 +37,7 @@ namespace Build_IT_CalculationModule.ViewModels
         public bool IsEditable => (ParameterResource.ValueOptionSetting & ValueOptionSettings.UserInput) != 0;
         public bool IsBoolean => (ParameterResource.ValueOptionSetting & ValueOptionSettings.Boolean) != 0;
         public bool ContainsValueOptions => ParameterResource.ValueOptions.Count > 0;
-        public bool ContainsFewValueOptions => ParameterResource.ValueOptions.Count < 4;
+        public bool ContainsFewValueOptions => ParameterResource.ValueOptions.Count < 4 && ParameterResource.ValueOptions.Count > 0;
         public bool IsRequired => (ParameterResource.Context & ParameterOptions.Optional) == 0;
 
         public ParameterResource ParameterResource { get; }
@@ -47,7 +49,7 @@ namespace Build_IT_CalculationModule.ViewModels
         }
         public bool IsDefaultValueChecked
         {
-            get => ParameterValue == null;
+            get => string.IsNullOrWhiteSpace(ParameterValue);
             set => ParameterValue = value ? null : _falseCode;
         }
 
@@ -118,7 +120,11 @@ namespace Build_IT_CalculationModule.ViewModels
                     .Substring(firstIndexOfSubscript + 1, lastIndexOfSubscript - firstIndexOfSubscript - 1);
             if (firstIndexOfSupscript != -1)
                 ParameterNameSupscript = ParameterResource.Name
-                    .Substring(firstIndexOfSubscript + 1, lastIndexOfSupscript - firstIndexOfSupscript - 1);
+                    .Substring(firstIndexOfSupscript + 1, lastIndexOfSupscript - firstIndexOfSupscript - 1);
+
+            int maxIndex = Math.Max(lastIndexOfSubscript, lastIndexOfSupscript);
+            if (maxIndex != -1 && maxIndex < ParameterResource.Name.Length - 1)
+                ParameterNameLast = ParameterResource.Name.Substring(maxIndex + 1);
         }
 
         #endregion // Private_Methods

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Build_IT_Infrastructure.Data.ScriptRepository.Parameters.Queries
 {
-    public class GetAllEdiitableParametersForScriptQuery : IRequest<IEnumerable<ParameterResource>>
+    public class GetAllEditableParametersForScriptQuery : IRequest<IEnumerable<ParameterResource>>
     {
         #region Fields
         
@@ -20,7 +20,7 @@ namespace Build_IT_Infrastructure.Data.ScriptRepository.Parameters.Queries
 
         #region Constructors
         
-        public GetAllEdiitableParametersForScriptQuery(long scriptId)
+        public GetAllEditableParametersForScriptQuery(long scriptId)
         {
             _scriptId = scriptId;
         }

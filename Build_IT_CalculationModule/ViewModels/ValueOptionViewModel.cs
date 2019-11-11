@@ -1,4 +1,6 @@
-﻿using Build_IT_Infrastructure.Models;
+﻿using Build_IT_CalculationModule.ViewModels.Interfaces;
+using Build_IT_Infrastructure.Models;
+using System;
 
 namespace Build_IT_CalculationModule.ViewModels
 {
@@ -11,31 +13,31 @@ namespace Build_IT_CalculationModule.ViewModels
 
         public bool IsOptionChecked
         {
-            get => _parameterControlViewModel.ParameterValue == Value;
+            get => _parameterData.ParameterValue == Value;
             set
             {
                 if (value)
-                    _parameterControlViewModel.ParameterValue = Value;
+                    _parameterData.ParameterValue = Value;
             }
         }
 
-        public string ParameterName => _parameterControlViewModel.ParameterName;
+        public string ParameterName => _parameterData.ParameterName;
 
         #endregion // Properties
 
         #region Fields
 
         private readonly ValueOptionResource _valueOptionResource;
-        private readonly ParameterControlViewModel _parameterControlViewModel;
+        private readonly IParameterData _parameterData;
 
         #endregion // Fields
 
         #region Constructors
 
-        public ValueOptionViewModel(ValueOptionResource valueOptionResource, ParameterControlViewModel parameterControlViewModel)
+        public ValueOptionViewModel(ValueOptionResource valueOptionResource, IParameterData parameterData)
         {
-            _valueOptionResource = valueOptionResource;
-            _parameterControlViewModel = parameterControlViewModel;
+            _valueOptionResource = valueOptionResource ?? throw new ArgumentNullException(nameof(valueOptionResource));
+            _parameterData = parameterData ?? throw new ArgumentNullException(nameof(parameterData));
         }
 
         #endregion // Constructors

@@ -34,7 +34,7 @@ namespace Build_IT_CalculationModule.ViewModels
         public IEnumerable<ParameterControlViewModel> ParameterViewModels
         {
             get { return _parameterViewModels; }
-            set 
+            set
             {
                 SetProperty(ref _parameterViewModels, value);
                 CalculateCommand.RaiseCanExecuteChanged();
@@ -70,8 +70,8 @@ namespace Build_IT_CalculationModule.ViewModels
         {
             _container = container ?? throw new ArgumentNullException(nameof(container));
 
-            CalculateCommand = new DelegateCommand(async () => await Calculate(), 
-                () => ParameterViewModels?.All(pvm => pvm.IsValid) ?? false);
+            CalculateCommand = new DelegateCommand(async () => await Calculate(),
+                () => ValidateCalculation());
 
             ScriptChanged += (s, e) => SetParameters();
         }
@@ -84,7 +84,7 @@ namespace Build_IT_CalculationModule.ViewModels
         {
             CalculatedParameters = null;
 
-            var getAllParametersForScriptQuery = _container.Resolve<GetAllEdiitableParametersForScriptQuery>((typeof(long), SelectedScript.Id));
+            var getAllParametersForScriptQuery = _container.Resolve<GetAllEditableParametersForScriptQuery>((typeof(long), SelectedScript.Id));
             var parameters = await getAllParametersForScriptQuery.Execute();
             ParameterViewModels = new List<ParameterControlViewModel>(parameters.Select(p =>
                  SetupParameterControlViewModel(p)));
@@ -103,7 +103,7 @@ namespace Build_IT_CalculationModule.ViewModels
             CheckData();
             CalculateCommand.RaiseCanExecuteChanged();
         }
-        
+
         private void CheckVisibility()
         {
             var parameters = new Dictionary<string, object>();
@@ -163,7 +163,10 @@ namespace Build_IT_CalculationModule.ViewModels
 
         private void AddParameter(Dictionary<string, object> parameters, ParameterControlViewModel parameter)
         {
-            if (parameter.ParameterResource.ValueType == ValueTypes.Number)
+            if (string.IsNullOrWhiteSpace(parameter.ParameterValue) && parameter.ParameterResource.ValueType == ValueTypes.Number)
+                return;
+
+            if (parameter.ParameterResource.ValueType == ValueTypes.Number)                
                 parameters.Add(parameter.ParameterName, Convert.ToDouble(parameter.ParameterValue, CultureInfo.InvariantCulture));
             else
                 parameters.Add(parameter.ParameterName, parameter.ParameterValue);
@@ -176,6 +179,15 @@ namespace Build_IT_CalculationModule.ViewModels
                 (typeof(long), _selectedScript.Id), (typeof(List<ParameterResource>), parameters));
 
             CalculatedParameters = await calculateQuery.Execute();
+        }
+
+        private bool ValidateCalculation()
+        {
+            if (ParameterViewModels == null)
+                return false;
+            return ParameterViewModels.All(pvm => pvm.IsValid &&
+                (pvm.IsRequired ? !string.IsNullOrWhiteSpace(pvm.ParameterValue) : true) || 
+                !pvm.IsVisible);
         }
 
         #endregion // Private_Methods
