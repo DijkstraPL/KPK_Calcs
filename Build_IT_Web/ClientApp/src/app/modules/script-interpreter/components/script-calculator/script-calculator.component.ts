@@ -12,6 +12,7 @@ import { ScriptService } from '../../services/script.service';
 import { TranslationService } from '../../../../services/translation.service';
 import { retry } from 'rxjs/operators';
 import { Group } from '../../models/interfaces/group';
+import { RangeOfParameters } from '../../models/rangeOfParameters';
 
 @Component({
     selector: 'script-calculator',
@@ -39,7 +40,8 @@ export class ScriptCalculatorComponent implements OnInit {
 
     isCalculating: boolean;
     errorMessages: string[];
-    
+    arrayParameters: Parameter[][];
+
     constructor(
         private route: ActivatedRoute,
         private scriptService: ScriptService,
@@ -227,7 +229,7 @@ export class ScriptCalculatorComponent implements OnInit {
         let group = parameter.group;
 
         let visibilityValidatorEquation = "";
-        if (group != null && group.visibilityValidator) 
+        if (group != null && group.visibilityValidator)
             visibilityValidatorEquation = group.visibilityValidator;
         if (!visibilityValidatorEquation)
             visibilityValidatorEquation = parameter.visibilityValidator;

@@ -1,4 +1,5 @@
-﻿using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
+﻿using Build_IT_Application.ScriptInterpreter.Calculations.Queries;
+using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_Data.Entities.Scripts.Enums;
 using Build_IT_ScriptInterpreter.Parameters.Interfaces;
@@ -16,7 +17,7 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
     {
         #region Fields
 
-        private readonly List<Parameter> _parameters;
+        private readonly List<ParameterResource> _parameters;
 
         private SI.CalculationEngine _calculationEngine;
         private IDictionary<string, object> _parameterValues;
@@ -25,7 +26,7 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
 
         #region Constructors
 
-        public ScriptCalculator(List<Parameter> parameters)
+        public ScriptCalculator(List<ParameterResource> parameters)
         {
             _parameters = parameters;
         }
@@ -34,25 +35,25 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
 
         #region Internal_Methods
 
-        internal async Task<bool> ValidateResults(IEnumerable<ParameterResource> userParameters, params string[] validatorEquations)
+        internal async Task<bool> ValidateResults(IEnumerable<CalculateParameterResource> userParameters, params string[] validatorEquations)
         {
             await CalculateAsync(userParameters).ConfigureAwait(false);
 
             return validatorEquations.All(ve => _calculationEngine.CalculatePrediction(ve, _parameterValues));
         }
 
-        internal async Task CalculateAsync(IEnumerable<ParameterResource> userParameters)
+        internal async Task CalculateAsync(IEnumerable<CalculateParameterResource> userParameters)
         {
             var parameters = await MapParameters();
 
             _calculationEngine = new SI.CalculationEngine(parameters.ToList());
 
             _parameterValues = userParameters
-                .Where(p => (p.Context & ParameterOptions.Optional) == 0 ||
-                !string.IsNullOrWhiteSpace(p.Value) && (p.Context & ParameterOptions.Optional) != 0)
+                .Where(p => (p.Context & SIP.ParameterOptions.Optional) == 0 ||
+                !string.IsNullOrWhiteSpace(p.Value) && (p.Context & SIP.ParameterOptions.Optional) != 0)
                 .ToDictionary(
                 p => p.Name,
-                p => p.ValueType == ValueTypes.Number ?
+                p => p.ValueType == SIP.ValueTypes.Number ?
                  string.IsNullOrWhiteSpace(p.Value) ? 0 :
                  double.Parse(p.Value?.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture) :
                 (object)p.Value);
@@ -69,7 +70,7 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
             }
         }
 
-        internal IEnumerable<Parameter> GetResult()
+        internal IEnumerable<ParameterResource> GetResult()
             => _parameters.Where(p =>
             ((SIP.ParameterOptions)p.Context & SIP.ParameterOptions.Calculation) != 0 &&
             _calculationEngine.CalculatePrediction(p.VisibilityValidator, _parameterValues));

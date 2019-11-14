@@ -37,7 +37,9 @@ namespace Build_IT_CalculationModule.ViewModels
         public bool IsEditable => (ParameterResource.ValueOptionSetting & ValueOptionSettings.UserInput) != 0;
         public bool IsBoolean => (ParameterResource.ValueOptionSetting & ValueOptionSettings.Boolean) != 0;
         public bool ContainsValueOptions => ParameterResource.ValueOptions.Count > 0;
-        public bool ContainsFewValueOptions => ParameterResource.ValueOptions.Count < 4 && ParameterResource.ValueOptions.Count > 0;
+        public bool ShouldUseRadioButtons => ParameterResource.ValueOptions.Count < 4 && 
+            ParameterResource.ValueOptions.Count > 0 && 
+            !IsEditable;
         public bool IsRequired => (ParameterResource.Context & ParameterOptions.Optional) == 0;
 
         public ParameterResource ParameterResource { get; }

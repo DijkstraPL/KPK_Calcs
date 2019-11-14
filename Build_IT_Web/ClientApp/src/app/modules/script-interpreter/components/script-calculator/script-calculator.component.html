@@ -84,6 +84,15 @@
               (click)="calculate()">
         <span class="fa fa-calculator"></span> {{'scriptCalculator.Calculate' | translate}}
       </button>
+
+      <button mat-stroked-button
+              color="accent"
+              class="calculate"
+              type="button"
+              [disabled]="!isValid()"
+              (click)="calculateRange()">
+        <span class="fa fa-calculator"></span> {{'scriptCalculator.Calculate' | translate}}
+      </button>
     </div>
 
     <div *ngIf="isCalculating"
@@ -109,3 +118,5 @@
       </mat-list>
     </div>
   </div>
+
+<chart-result [arrayParameters]="arrayParameters"></chart-result>

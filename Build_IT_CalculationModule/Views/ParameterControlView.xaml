@@ -51,11 +51,11 @@
                       SelectedValuePath="Value"
                       DisplayMemberPath="Name"
                       IsEditable="{Binding IsEditable}"
-                    Visibility="{Binding ContainsFewValueOptions, 
+                      Visibility="{Binding ShouldUseRadioButtons, 
                                 Converter={StaticResource BoolToVisibilityReverseConverter}}">
                 </ComboBox>
                 <ItemsControl ItemsSource="{Binding ValueOptions}"
-                          Visibility="{Binding ContainsFewValueOptions, 
+                          Visibility="{Binding ShouldUseRadioButtons, 
                                 Converter={StaticResource BoolToVisibilityConverter}}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -74,5 +74,8 @@
             </Grid>
             <TextBlock Text="{Binding ParameterUnit}"/>
         </StackPanel>
+        <TextBlock Text="{Binding ParameterResource.Description}"
+                   FontSize="10"
+                   TextWrapping="Wrap"/>
     </StackPanel>
 </UserControl>

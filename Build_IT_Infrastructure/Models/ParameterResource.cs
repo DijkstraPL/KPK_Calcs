@@ -20,7 +20,7 @@ namespace Build_IT_Infrastructure.Models
         public ICollection<ValueOptionResource> ValueOptions { get; set; }
         public ValueOptionSettings ValueOptionSetting { get; set; }
         public ParameterOptions Context { get; set; }
-        public string GroupName { get; set; }
+        public GroupResource Group { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
         public ICollection<FigureResource> Figures { get; set; }

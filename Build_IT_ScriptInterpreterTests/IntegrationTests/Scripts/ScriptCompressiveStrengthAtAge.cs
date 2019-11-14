@@ -19,18 +19,12 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
 
             var cementTypes = new List<ValueOption>
             {
-                new ValueOption(value: "CEM 42,5R",
-                description: "Rapid hardening high strength cements (R)."),
-                new ValueOption(value: "CEM 52,5N",
-                description: "Rapid hardening high strength cements (R)."),
-                new ValueOption(value: "CEM 52,5R",
-                description: "Rapid hardening high strength cements (R)."),
-                new ValueOption(value: "CEM 32,5R",
-                description: "Normal and rapid hardening cements (N)."),
-                new ValueOption(value: "CEM 42,5",
-                description: "Normal and rapid hardening cements (N)."),
-                new ValueOption(value: "CEM 32,5N",
-                description: "Slow hardening cements (S).")
+                new ValueOption(value: "CEM 42,5R"),
+                new ValueOption(value: "CEM 52,5N"),
+                new ValueOption(value: "CEM 52,5R"),
+                new ValueOption(value: "CEM 32,5R"),
+                new ValueOption(value: "CEM 42,5"),
+                new ValueOption(value: "CEM 32,5N")
             };
 
             scriptBuilder.AppendParameter(new Parameter()
@@ -38,7 +32,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 Number = 1,
                 Name = "f_ck_",
                 VisibilityValidator = "[f_ck_]>0",
-                Description = "Characteristic compressive cylinder strength of concrete at 28 days.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Editable | ParameterOptions.Visible,
                 Unit = "MPa"
@@ -48,7 +41,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                     Number = 2,
                     Name = "f_cm_",
                     VisibilityValidator = "[f_cm_]>0",
-                    Description = "Mean compressive strength at 28 days.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
                     Unit = "MPa",
@@ -57,7 +49,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 {
                     Number = 3,
                     Name = "cement_type_",
-                    Description = "Type of cement.",
                     ValueOptions = cementTypes,
                     ValueType = ValueTypes.Text,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
@@ -68,7 +59,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                     Number = 4,
                     Name = "t",
                     VisibilityValidator = "[t]>3",
-                    Description = "Age of the concrete in days.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
                     Unit = "day"
@@ -81,7 +71,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 Value = "if(in([cement_type_],'CEM 42,5R','CEM 52,5N', 'CEM 52,5R') == true,0.2," +
                 "if(in([cement_type_],'CEM 32,5R','CEM 42,5') == true,0.25," +
                 "if(in([cement_type_],'CEM 32,5N') == true,0.38, ERROR('Invalid cement type.'))))",
-                Description = "Coefficient which depends on the type of cement.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Calculation | ParameterOptions.Visible,
                 Unit = "-"
@@ -92,7 +81,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 Number = 11,
                 Name = "β_cc_(t)",
                 Value = "Exp([s]*(1-Sqrt(28/[t])))",
-                Description = "Coefficient which depends on the age of the concrete t.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Calculation | ParameterOptions.Visible,
                 Unit = "-"
@@ -103,7 +91,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 Number = 12,
                 Name = "f_cm_(t)",
                 Value = "[β_cc_(t)]*[f_cm_]",
-                Description = "Mean concrete compressive strength at an age of t days.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Calculation | ParameterOptions.Visible,
                 Unit = "MPa"
@@ -114,7 +101,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 Number = 13,
                 Name = "f_ck_(t)",
                 Value = "if([t]>=28,[f_ck_],if([t]>3,[f_cm_(t)]-8,ERROR('Not even 3 days.')))",
-                Description = "Concrete compressive strength at time t.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Calculation | ParameterOptions.Visible,
                 Unit = "MPa"

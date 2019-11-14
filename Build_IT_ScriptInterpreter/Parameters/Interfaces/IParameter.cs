@@ -13,7 +13,6 @@ namespace Build_IT_ScriptInterpreter.Parameters.Interfaces
         int Number { get; set; }
         string Name { get; set; }
         object Value { get; set; }
-        string Description { get; set; }
         List<ValueOption> ValueOptions { get; set; }
         object VisibilityValidator { get; set; }
         object DataValidator { get; set; }
@@ -21,8 +20,6 @@ namespace Build_IT_ScriptInterpreter.Parameters.Interfaces
         ParameterOptions Context { get; }
         ValueTypes ValueType { get; set; }
         IGroup Group { get; set; }
-        string AccordingTo { get; set; }
-        string Notes { get; set; }
 
         #endregion // Properties
     }

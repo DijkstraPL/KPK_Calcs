@@ -79,7 +79,7 @@ namespace Build_IT_CalculationModuleTests.ViewModels
                 Assert.IsTrue(parameterControlViewModel.IsBoolean);
                 Assert.IsFalse(parameterControlViewModel.IsEditable);
                 Assert.IsFalse(parameterControlViewModel.ContainsValueOptions);
-                Assert.IsFalse(parameterControlViewModel.ContainsFewValueOptions);
+                Assert.IsFalse(parameterControlViewModel.ShouldUseRadioButtons);
                 Assert.IsTrue(parameterControlViewModel.IsRequired);
             });
         }
@@ -98,7 +98,7 @@ namespace Build_IT_CalculationModuleTests.ViewModels
                 Assert.IsTrue(parameterControlViewModel.IsEditable);
                 Assert.IsFalse(parameterControlViewModel.IsBoolean);
                 Assert.IsFalse(parameterControlViewModel.ContainsValueOptions);
-                Assert.IsFalse(parameterControlViewModel.ContainsFewValueOptions);
+                Assert.IsFalse(parameterControlViewModel.ShouldUseRadioButtons);
                 Assert.IsTrue(parameterControlViewModel.IsRequired);
             });
         }
@@ -121,7 +121,7 @@ namespace Build_IT_CalculationModuleTests.ViewModels
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(parameterControlViewModel.ContainsValueOptions);
-                Assert.IsFalse(parameterControlViewModel.ContainsFewValueOptions);
+                Assert.IsFalse(parameterControlViewModel.ShouldUseRadioButtons);
                 Assert.IsFalse(parameterControlViewModel.IsEditable);
                 Assert.IsFalse(parameterControlViewModel.IsBoolean);
                 Assert.IsTrue(parameterControlViewModel.IsRequired);
@@ -144,7 +144,7 @@ namespace Build_IT_CalculationModuleTests.ViewModels
             Assert.Multiple(() =>
             {
                 Assert.IsTrue(parameterControlViewModel.ContainsValueOptions);
-                Assert.IsTrue(parameterControlViewModel.ContainsFewValueOptions);
+                Assert.IsTrue(parameterControlViewModel.ShouldUseRadioButtons);
                 Assert.IsFalse(parameterControlViewModel.IsEditable);
                 Assert.IsFalse(parameterControlViewModel.IsBoolean);
                 Assert.IsTrue(parameterControlViewModel.IsRequired);
@@ -165,7 +165,7 @@ namespace Build_IT_CalculationModuleTests.ViewModels
                 Assert.IsFalse(parameterControlViewModel.IsEditable);
                 Assert.IsFalse(parameterControlViewModel.IsBoolean);
                 Assert.IsFalse(parameterControlViewModel.ContainsValueOptions);
-                Assert.IsFalse(parameterControlViewModel.ContainsFewValueOptions);
+                Assert.IsFalse(parameterControlViewModel.ShouldUseRadioButtons);
                 Assert.IsFalse(parameterControlViewModel.IsRequired);
             });
         }

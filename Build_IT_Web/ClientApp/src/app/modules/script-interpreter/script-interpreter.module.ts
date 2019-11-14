@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomViewsModule } from '../custom-views-module/components/custom-views.module';
 import { CustomViewsRoutingModule } from '../custom-views-module/components/custom-views-routing.module';
+import { ChartsModule } from 'ng2-charts';
 
 import { ScriptFormComponent } from './components/script-form/script-form.component';
 import { ParametersFormComponent } from './components/script-form/parameters-form/parameters-form.component';
@@ -51,6 +52,7 @@ import { GroupsFormComponent } from './components/script-form/parameters-form/da
 import { GroupTranslationService } from './services/translations/group-translation.service';
 import { GroupTranslationFormComponent } from './components/script-form/translation-form/group-translation-form/group-translation-form.component';
 import { TestDataFormComponent } from './components/script-form/test-data-form/test-data-form.component';
+import { ChartResultComponent } from './components/script-calculator/parameter-results/chart-results/chart-result.component';
 
 @NgModule({
     declarations: [
@@ -80,7 +82,8 @@ import { TestDataFormComponent } from './components/script-form/test-data-form/t
         ValueFormComponent,
         GroupsFormComponent,
         GroupTranslationFormComponent,
-        TestDataFormComponent
+        TestDataFormComponent,
+        ChartResultComponent
     ],
     imports: [
         PipesModule,
@@ -91,6 +94,7 @@ import { TestDataFormComponent } from './components/script-form/test-data-form/t
         BrowserAnimationsModule,
         ReactiveFormsModule,
         MdComponentsModule,
+        ChartsModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

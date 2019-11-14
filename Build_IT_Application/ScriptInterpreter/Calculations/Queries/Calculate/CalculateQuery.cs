@@ -13,14 +13,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
+namespace Build_IT_Application.ScriptInterpreter.Calculations.Queries.Calculate
 {
     public class CalculateQuery : IRequest<IEnumerable<ParameterResource>>
     {
         #region Properties
         
         public long ScriptId { get; set; }
-        public ICollection<ParameterResource> InputData { get; set; }
+        public ICollection<CalculateParameterResource> InputData { get; set; }
         public string LanguageCode { get; set; }
 
         #endregion // Properties
@@ -64,14 +64,14 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Commands
 
                 var equations = new Dictionary<long, string>(parameters.ToDictionary(p => p.Id, p => p.Value));
 
-                var scriptCalculator = new ScriptCalculator(parameters.ToList());
+                var parameterResources = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters.ToList());
+                var scriptCalculator = new ScriptCalculator(parameterResources);
 
                 await scriptCalculator
                     .CalculateAsync(request.InputData.Where(v => v.Value != null))
                     .ConfigureAwait(false);
 
-                var calculatedParameters = _mapper
-                    .Map<List<Parameter>, List<ParameterResource>>(scriptCalculator.GetResult().ToList());
+                var calculatedParameters = scriptCalculator.GetResult().ToList();
                 calculatedParameters.ForEach(cp => cp.Equation = equations
                     .SingleOrDefault(p => p.Key == cp.Id).Value);
 

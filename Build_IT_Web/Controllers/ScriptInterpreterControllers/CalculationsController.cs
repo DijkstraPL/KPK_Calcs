@@ -1,6 +1,8 @@
 ﻿using Build_IT_Application.Infrastructures;
-using Build_IT_Application.ScriptInterpreter.Calculations.Commands;
 using Build_IT_Application.ScriptInterpreter.Calculations.Queries;
+using Build_IT_Application.ScriptInterpreter.Calculations.Queries.Calculate;
+using Build_IT_Application.ScriptInterpreter.Calculations.Queries.CalculateRange;
+using Build_IT_Application.ScriptInterpreter.Calculations.Queries.Test;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -14,9 +16,22 @@ namespace Build_IT_Web.Controllers.ScriptInterpreterControllers
     {
         [HttpPost("{scriptId}/calculate/{lang?}")]
         public async Task<ActionResult<IEnumerable<ParameterResource>>> Calculate(
-            long scriptId, [FromBody] List<ParameterResource> userParameters, string lang = TranslationService.DefaultLanguageCode)
+            long scriptId, [FromBody] List<CalculateParameterResource> userParameters, string lang = TranslationService.DefaultLanguageCode)
         {
             var query = new CalculateQuery
+            {
+                ScriptId = scriptId,
+                LanguageCode = lang,
+                InputData = userParameters,
+            };
+
+            return Ok(await Mediator.Send(query));
+        }
+        [HttpPost("{scriptId}/calculateRange/{lang?}")]
+        public async Task<ActionResult<IEnumerable<IEnumerable<ParameterResource>>>> CalculateRange(
+         long scriptId, [FromBody] RangeCalculationResource userParameters, string lang = TranslationService.DefaultLanguageCode)
+        {
+            var query = new CalculateRangeQuery
             {
                 ScriptId = scriptId,
                 LanguageCode = lang,

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Build_IT_Application.ScriptInterpreter.Calculations.Queries;
 using Build_IT_Application.ScriptInterpreter.Figures.Queries;
 using Build_IT_Application.ScriptInterpreter.Groups.Queries;
 using Build_IT_Application.ScriptInterpreter.Parameters.Commands.CreateParameter;
@@ -32,6 +33,8 @@ namespace Build_IT_Application.Mapping
                 .ForMember(p => p.Equation, operation => operation.Ignore())
                 .ForMember(pr => pr.Figures, operation
                 => operation.MapFrom(p => p.ParameterFigures.Select(pp => pp.Figure)));
+            CreateMap<Parameter, CalculateParameterResource>()
+                .ForMember(p => p.Equation, operation => operation.Ignore());
             CreateMap<ValueOption, ValueOptionResource>();
             CreateMap<TestData, TestDataResource>();
             CreateMap<Assertion, AssertionResource>();

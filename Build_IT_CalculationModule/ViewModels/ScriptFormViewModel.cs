@@ -88,6 +88,8 @@ namespace Build_IT_CalculationModule.ViewModels
             var parameters = await getAllParametersForScriptQuery.Execute();
             ParameterViewModels = new List<ParameterControlViewModel>(parameters.Select(p =>
                  SetupParameterControlViewModel(p)));
+            
+            CheckVisibility();
         }
 
         private ParameterControlViewModel SetupParameterControlViewModel(ParameterResource parameterResource)

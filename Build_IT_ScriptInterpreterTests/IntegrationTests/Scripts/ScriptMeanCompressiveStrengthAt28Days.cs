@@ -26,7 +26,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                     Number = 1,
                     Name = "f_ck_",
                     VisibilityValidator = "[f_ck_]>0",
-                    Description = "Characteristic compressive cylinder strength of concrete at 28 days.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
                     Unit = "MPa"
@@ -36,7 +35,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                     Number = 2,
                     Name = "f_cm_",
                     VisibilityValidator = "[f_cm_]>0",
-                    Description = "Mean compressive strength at 28 days.",
                     Value = "[f_ck_]+8",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Calculation | ParameterOptions.Visible,
