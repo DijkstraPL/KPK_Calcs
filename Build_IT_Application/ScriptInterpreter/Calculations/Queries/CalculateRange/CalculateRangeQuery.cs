@@ -58,27 +58,25 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Queries.CalculateR
             public async Task<IEnumerable<IEnumerable<ParameterResource>>> Handle(
                 CalculateRangeQuery request, CancellationToken cancellationToken)
             {
-                var calculatedParameters = new List<IEnumerable<ParameterResource>>();
-                var parameter = request.InputData.Parameters.FirstOrDefault(p => p.Id == request.InputData.ParameterId);
+                var parameters = await _parameterRepository
+                    .GetAllParametersForScriptAsync(request.ScriptId)
+                    .ConfigureAwait(false);
 
+                var parameter = request.InputData.Parameters.FirstOrDefault(p => p.Id == request.InputData.ParameterId);
+                                
                 var currentValue = request.InputData.MinValue;
-                while (currentValue < request.InputData.MaxValue)
+                var calculatedParameters = new List<IEnumerable<ParameterResource>>();
+                while (currentValue <= request.InputData.MaxValue)
                 {
                     parameter.Value = currentValue.ToString(CultureInfo.InvariantCulture);
-                    var calculator = new CalculateQuery()
-                    {
-                        LanguageCode = request.LanguageCode,
-                        ScriptId = request.ScriptId,
-                        InputData = request.InputData.Parameters.ToList()
-                    };
 
-                    var handler = new CalculateQuery.Handler(
-                        _scriptRepository, _parameterRepository, 
-                        _translationService, _mapper);
+                    var parameterResources = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters.ToList());
+                    var scriptCalculator = new ScriptCalculator(parameterResources);
+                    await scriptCalculator
+                        .CalculateAsync(request.InputData.Parameters.Where(v => v.Value != null))
+                        .ConfigureAwait(false);
 
-                    var results = await handler.Handle(calculator, CancellationToken.None)
-                       .ConfigureAwait(false);
-                   calculatedParameters.Add(results);
+                   calculatedParameters.Add(scriptCalculator.GetResult());
 
                     currentValue += request.InputData.Tick;
                 }

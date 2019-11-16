@@ -1,5 +1,52 @@
-<div style="display: block;">
-  <canvas baseChart width="400" height="400"
+<div>
+  <mat-form-field class="list-inline-item ml-5 d-inline-flex">
+    <input matInput
+           autocomplete="off"
+           type="number"
+           [(ngModel)]="minValue"
+           placeholder="Minimum">
+  </mat-form-field>
+  <mat-form-field class="list-inline-item ml-5 d-inline-flex">
+    <input matInput
+           autocomplete="off"
+           type="number"
+           [(ngModel)]="maxValue"
+           placeholder="Maximum">
+  </mat-form-field>
+  <mat-form-field class="list-inline-item ml-5 d-inline-flex">
+    <input matInput
+           autocomplete="off"
+           type="number"
+           [(ngModel)]="tick"
+           placeholder="Tick">
+  </mat-form-field>
+  <mat-form-field class="list-inline-item ml-5 d-inline-flex">
+    <mat-label>Parameter</mat-label>
+    <mat-select [(ngModel)]="selectedParameter">
+      <mat-option *ngFor="let parameter of availableParameters"
+                  [value]="parameter">
+        <span [innerHtml]="parameter.name | html"></span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-stroked-button
+          color="accent"
+          class="calculate"
+          type="button"
+          (click)="calculateRange()">
+    <span class="fa fa-area-chart"></span> Generate chart
+  </button>
+</div>
+<div *ngIf="isCalculating"
+     class="mt-2">
+  <mat-progress-bar mode="query"></mat-progress-bar>
+</div>
+<div class="chart"
+     *ngIf="lineChartData && lineChartData.length > 0 && !isCalculating">
+  <canvas baseChart
+          width="200"
+          height="200"
           [datasets]="lineChartData"
           [labels]="lineChartLabels"
           [options]="lineChartOptions"

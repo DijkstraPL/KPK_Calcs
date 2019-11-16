@@ -2,6 +2,8 @@
     <mat-list-item class="mt-3">
         <div class="d-inline-flex m-2">
             <h3 class="blockquote d-inline-block mr-2 parameter-result-header"
+                [ngClass]="{'valid': isValid,
+                'notValid': isNotValid}"
                 [innerHtml]="parameter.name | html"></h3>
             <div class="d-inline-block">
                 <p class="font-weight-bold mb-0 parameter-result-value">

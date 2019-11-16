@@ -65,8 +65,13 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
             foreach (var par in _parameterValues)
             {
                 var pp = _parameters.SingleOrDefault(p => p.Name == par.Key);
-                if (pp != null)
-                    pp.Value = par.Value.ToString();
+                if (pp == null)
+                    continue;
+                pp.Value = par.Value.ToString();
+                if ((pp.Context & ParameterOptions.Calculation) != 0 &&
+                    (pp.Context & ParameterOptions.Visible) != 0 &&
+                    !string.IsNullOrWhiteSpace(pp.DataValidator))
+                    pp.DataValidator = parameters.SingleOrDefault(p => p.Name == par.Key)?.DataValidator?.ToString();
             }
         }
 

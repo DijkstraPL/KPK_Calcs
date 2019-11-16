@@ -15,14 +15,21 @@ export class ParameterResultComponent implements OnInit {
     //forbiddenSigns = ['(', ')', ',', '.', '^'];
 
     valueTypes = ValueType;
+    isValid: boolean;
+    isNotValid: boolean;
 
     parameterEquation: string;
-    
+
     constructor() {
     }
 
     ngOnInit(): void {
-       // this.forbiddenSigns.forEach(fs => this.valueClass = this.parameter.name.replace(fs, ''));
+        if (this.parameter.dataValidator && this.parameter.dataValidator.length > 0) {
+            this.isValid = this.parameter.dataValidator == "True";
+            this.isNotValid = this.parameter.dataValidator != "True";
+        }
+        
+        // this.forbiddenSigns.forEach(fs => this.valueClass = this.parameter.name.replace(fs, ''));
     }
 
     isImportant(): boolean {

@@ -148,7 +148,7 @@ namespace Build_IT_ScriptInterpreter.Scripts
             {
                 if (parameter.ValueType == ValueTypes.Number)
                     parameters.TryAdd(parameter.Name,
-                        double.Parse(parameter.Value.ToString().Replace(',','.'), CultureInfo.InvariantCulture));
+                        double.Parse(parameter.Value.ToString().Replace(',', '.'), CultureInfo.InvariantCulture));
                 else
                     parameters.TryAdd(parameter.Name,
                         parameter.Value.ToString());
@@ -194,6 +194,9 @@ namespace Build_IT_ScriptInterpreter.Scripts
                     parameters[parameter.Name] = parameter.Value;
                 else
                     parameters.Add(parameter.Name, parameter.Value);
+
+                if (!string.IsNullOrWhiteSpace(parameter.DataValidator?.ToString()))
+                    CalculateDataValidator(parameter, parameters);
             }
         }
 
@@ -228,6 +231,11 @@ namespace Build_IT_ScriptInterpreter.Scripts
             {
                 parameter.Value = ex.Message;
             }
+        }
+
+        private void CalculateDataValidator(IParameter parameter, IDictionary<string, object> parameters)
+        {
+            parameter.DataValidator = IsValid(parameter, parameters);
         }
 
         #endregion // Private_Methods

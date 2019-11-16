@@ -6,6 +6,8 @@ import { Script } from '../../../../models/interfaces/script';
 import { RangeOfParameters } from '../../../../models/rangeOfParameters';
 import { CalculationService } from '../../../../services/calculation.service';
 import { ValueType } from '../../../../models/enums/valueType';
+import { isNullOrUndefined } from 'util';
+import { ParameterOptions } from '../../../../models/enums/parameterOptions';
 
 @Component({
     selector: 'chart-result',
@@ -15,21 +17,43 @@ import { ValueType } from '../../../../models/enums/valueType';
 
 export class ChartResultComponent implements OnInit {
 
-    @Input('parameters') parameters: Parameter[];
+    _parameters: Parameter[];
     @Input('script') script: Script;
 
-    public lineChartData: ChartDataSets[] = [
-        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    ];
-    public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    @Input('parameters')
+    set parameters(val: Parameter[]) {
+        this._parameters = val;
+        if (this._parameters)
+            this.availableParameters = this._parameters.filter(p => this.validateVisibility(p) &&
+                p.valueType == ValueType.number);
+    }
+    get parameters() {
+        return this._parameters;
+    }
+
+    availableParameters: Parameter[];
+    valueType = ValueType;
+
+    minValue: number;
+    maxValue: number;
+    tick: number;
+    selectedParameter: Parameter;
+
+    isCalculating: boolean;
+
+    public lineChartData: ChartDataSets[] = [];
+    public lineChartLabels: Label[] = [];
     public lineChartOptions = {
         responsive: true,
     };
     public lineChartColors: Color[] = [
-        {
-            borderColor: 'black',
-            backgroundColor: 'rgba(255,0,0,0.3)',
-        },
+        { backgroundColor: 'rgba(255,0,0,0.3)' },
+        { backgroundColor: 'rgba(0,255,0,0.3)' },
+        { backgroundColor: 'rgba(0,0,255,0.3)' },
+        { backgroundColor: 'rgba(255,255,0,0.3)' },
+        { backgroundColor: 'rgba(255,0,255,0.3)' },
+        { backgroundColor: 'rgba(0,255,255,0.3)' },
+        { backgroundColor: 'rgba(255,255,255,0.3)' },
     ];
     public lineChartLegend = true;
     public lineChartType = 'line';
@@ -40,29 +64,56 @@ export class ChartResultComponent implements OnInit {
     ngOnInit() {
     }
 
-
     calculateRange() {
-        //this.isCalculating = true;
+        this.isCalculating = true;
         let range = new RangeOfParameters();
-        range.maxValue = 500;
-        range.minValue = 100;
-        range.tick = 10;
-        range.parameterId = this.parameters[0].id;
+        range.maxValue = this.maxValue;
+        range.minValue = this.minValue;
+        range.tick = this.tick;
+        range.parameterId = this.selectedParameter.id;
         range.parameters = this.parameters.filter(p => this.validateVisibility(p));
+
+        this.lineChartLabels = [];
+        let currentValue = this.minValue;
+        while (currentValue <= this.maxValue) {
+            this.lineChartLabels.push(currentValue.toString());
+            currentValue += this.tick;
+        }
 
         this.calculationService.calculateRange(this.script.id, range)
             .subscribe(params => {
                 console.log(params);
+                let allParameters: Parameter[] = [];
+                params.forEach(p => p.forEach(inner => {
+                    if (allParameters.every(ap => ap.name != inner.name))
+                        allParameters.push(inner);
+                }));
+                allParameters = allParameters.sort((p1, p2) => p1.number - p2.number);
 
-                this.lineChartData.push({ data: params.map(p => +p.find(p => p.id == range.parameterId).value), label: this.parameters[0].name })
+                this.lineChartData = [];
+                for (let parameter of allParameters) {
+                    if (parameter.valueType == ValueType.number && (parameter.context & ParameterOptions.visible) != 0)
+                        this.lineChartData.push({
+                            data: params.map(p => {
+                                let currentParameter = p.find(p => p.name == parameter.name);
+                                if (isNullOrUndefined(currentParameter))
+                                    return NaN;
+                                return +currentParameter.value.replace(',', '.');
+                            }),
+                            label: parameter.name,
+                            lineTension: 0,
+                            hidden: (parameter.context & ParameterOptions.important) == 0,
+                            borderColor: 'black',
+                        });
+
+                }
             },
                 error => {
                     console.error(error);
-                    //this.isCalculating = false;
+                    this.isCalculating = false;
                 },
                 () => {
-                    //this.isCalculating = false;
-                    //this.valueChanged = false;
+                    this.isCalculating = false;
                 });
     }
 
