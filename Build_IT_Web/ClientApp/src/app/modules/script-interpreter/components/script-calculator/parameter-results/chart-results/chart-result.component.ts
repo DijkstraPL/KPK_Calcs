@@ -24,8 +24,8 @@ export class ChartResultComponent implements OnInit {
     set parameters(val: Parameter[]) {
         this._parameters = val;
         if (this._parameters)
-            this.availableParameters = this._parameters.filter(p => this.validateVisibility(p) &&
-                p.valueType == ValueType.number);
+            this.availableParameters = this._parameters
+                .filter(p => p.valueType == ValueType.number);
     }
     get parameters() {
         return this._parameters;
