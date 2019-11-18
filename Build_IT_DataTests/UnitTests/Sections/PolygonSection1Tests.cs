@@ -28,7 +28,7 @@ namespace Build_IT_DataTests.UnitTests.Sections
             var points = new List<IPoint>();
             points.Add(new Point(0, 0));
             points.Add(new Point(200, 0));
-            Assert.Throws< ArithmeticException>(() => new Section(points));
+            Assert.Throws<ArithmeticException>(() => new Section(points));
         }
 
         [Test()]

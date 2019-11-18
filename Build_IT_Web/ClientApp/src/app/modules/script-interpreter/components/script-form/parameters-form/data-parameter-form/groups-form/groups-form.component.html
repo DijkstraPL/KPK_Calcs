@@ -1,0 +1,69 @@
+
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{'scriptsForm.Groups.Header' | translate}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{'scriptsForm.Groups.Description' | translate}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="groupForms">
+      <div *ngFor="let group of groupForms.controls">
+        <div [formGroup]="group">
+          <mat-form-field class="m-2">
+            <input matInput
+                   placeholder="{{'scriptsForm.Groups.Name.Header' | translate}}"
+                   formControlName="name"
+                   [errorStateMatcher]="matcher"
+                   autocomplete="off" />
+            <mat-hint>
+              {{'scriptsForm.Groups.Name.Hint' | translate}}
+            </mat-hint>
+            <mat-error *ngIf="parameterName && parameterName.hasError('maxlength') && !parameterName.hasError('required')">
+              {{'scriptsForm.Groups.Name.MaxLengthError' | translate:group.get('name').errors.maxlength}}
+            </mat-error>
+            <mat-error *ngIf="parameterName && parameterName.hasError('required')">
+              {{'scriptsForm.Groups.Name.RequiredError' | translate}}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="m-2">
+            <input matInput
+                   placeholder="{{'scriptsForm.Groups.VisibilityValidator.Header' | translate}}"
+                   formControlName="visibilityValidator"
+                   [errorStateMatcher]="matcher"
+                   autocomplete="off" />
+            <mat-hint>
+              {{'scriptsForm.Groups.VisibilityValidator.Hint' | translate}}
+            </mat-hint>
+            <mat-error *ngIf="parameterName && parameterName.hasError('maxlength') && !parameterName.hasError('required')">
+              {{'scriptsForm.Groups.VisibilityValidator.MaxLengthError' | translate:group.get('visibilityValidator').errors.maxlength}}
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-stroked-button
+                  color="warn"
+                  type="button"
+                  (click)="remove(group)">
+            {{'scriptsForm.Groups.Remove' | translate}}
+          </button>
+        </div>
+      </div>
+
+      <button mat-stroked-button
+              color="accent"
+              type="button"
+              (click)="add()">
+        {{'scriptsForm.Groups.Add' | translate}}
+      </button>
+      <button mat-stroked-button
+              color="accent"
+              type="submit"
+              (click)="save()">
+        {{'scriptsForm.Groups.Save' | translate}}
+      </button>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>

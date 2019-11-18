@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 {
-    public class FigureConfiguration : IEntityTypeConfiguration<Figure>
+    internal class FigureConfiguration : IEntityTypeConfiguration<Figure>
     {
         #region Public_Methods
 

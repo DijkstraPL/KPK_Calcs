@@ -1,43 +1,100 @@
 ﻿using Build_IT_SnowLoads;
 using Build_IT_SnowLoads.Exceptional;
+using Build_IT_SnowLoads.Interfaces;
+using Moq;
 using NUnit.Framework;
 using System;
 
-namespace Build_IT_SnowLoadsTests.Exceptional
+namespace Build_IT_SnowLoadsUnitTests.Exceptional
 {
     [TestFixture()]
     public class ExceptionalMultiSpanRoofTests
     {
         [Test()]
-        [Description("Check constructor for the ExceptionalMultiSpanRoof.")]
-        public void ExceptionalMultiSpanRoofTest_Constructor_Success()
+        public void ExceptionalMultiSpanRoofTest_Constructor()
         {
-            var building = BuildingImplementation.CreateBuilding();
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
 
-            var exceptionalMultiSpanRoof = new ExceptionalMultiSpanRoof(building, 10, 5, 2);
+            var exceptionalMultiSpanRoof = new ExceptionalMultiSpanRoof(
+                building.Object, leftDriftLength: 10, rightDriftLength: 5, heightInTheLowestPart: 2);
 
-            Assert.IsNotNull(exceptionalMultiSpanRoof, "MultiSpan should be created.");
-            Assert.AreEqual(10, exceptionalMultiSpanRoof.LeftDriftLength,
-                "Drift length should be set at construction time.");
-            Assert.AreEqual(5, exceptionalMultiSpanRoof.RightDriftLength,
-                "Drift length should be set at construction time.");
-            Assert.AreEqual(2, exceptionalMultiSpanRoof.HeightInTheLowestPart,
-                "Height should be set at construction time.");         
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(10, exceptionalMultiSpanRoof.LeftDriftLength);
+                Assert.AreEqual(5, exceptionalMultiSpanRoof.RightDriftLength);
+                Assert.AreEqual(2, exceptionalMultiSpanRoof.HeightInTheLowestPart);
+            }); 
         }
 
         [Test()]
-        [Description("Check calculations of snow loads for the ExceptionalMultiSpanRoof.")]
-        public void ExceptionalMultiSpanRoofTest_CalculateSnowLoad_Success()
+        public void ExceptionalMultiSpanRoofTest_Constructor_MinusValues_ThrowsArgumentOutOfRangeException()
         {
-            var building = BuildingImplementation.CreateBuilding();
-            building.SnowLoadImplementation.ExcepctionalSituation = true;
-            building.SnowLoadImplementation.CurrentDesignSituation = DesignSituation.B2;
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
 
-            var exceptionalMultiSpanRoof = new ExceptionalMultiSpanRoof(building, 10, 5, 2);
+
+            Assert.Multiple(() =>
+            {
+                Assert.Throws<ArgumentOutOfRangeException>(() => new ExceptionalMultiSpanRoof(
+                building.Object, leftDriftLength: -10, rightDriftLength: 5, heightInTheLowestPart: 2));
+                Assert.Throws<ArgumentOutOfRangeException>(() => new ExceptionalMultiSpanRoof(
+                building.Object, leftDriftLength: 10, rightDriftLength: -5, heightInTheLowestPart: 2));
+                Assert.Throws<ArgumentOutOfRangeException>(() => new ExceptionalMultiSpanRoof(
+                building.Object, leftDriftLength: 10, rightDriftLength: 5, heightInTheLowestPart: -2));
+            });
+        }
+
+        [Test()]
+        public void ExceptionalMultiSpanRoofTest_CalculateSnowLoad_HorizontalDimensionOfThreeSlopes()
+        {
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+            snowLoad.Setup(sl => sl.ExcepctionalSituation).Returns(true);
+            snowLoad.Setup(sl => sl.CurrentDesignSituation).Returns(DesignSituation.B2);
+            snowLoad.Setup(sl => sl.SnowLoadForSpecificReturnPeriod).Returns(2);
+
+            var exceptionalMultiSpanRoof = new ExceptionalMultiSpanRoof(
+                building.Object, leftDriftLength: 10, rightDriftLength: 5, heightInTheLowestPart: 2);
 
             exceptionalMultiSpanRoof.CalculateSnowLoad();
-            Assert.AreEqual(2.7, Math.Round(exceptionalMultiSpanRoof.SnowLoad, 3),
-                "Snow load between roofs is not calculated properly.");
+            Assert.AreEqual(22.5, exceptionalMultiSpanRoof.HorizontalDimensionOfThreeSlopes,0.0001);
+        }
+
+        [Test()]
+        public void ExceptionalMultiSpanRoofTest_CalculateSnowLoad_ExceptionalDesignSituationBAnnexB()
+        {
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+            snowLoad.Setup(sl => sl.ExcepctionalSituation).Returns(true);
+            snowLoad.Setup(sl => sl.CurrentDesignSituation).Returns(DesignSituation.B2);
+            snowLoad.Setup(sl => sl.SnowLoadForSpecificReturnPeriod).Returns(2);
+
+            var exceptionalMultiSpanRoof = new ExceptionalMultiSpanRoof(
+                building.Object, leftDriftLength: 10, rightDriftLength: 5, heightInTheLowestPart: 2);
+            
+            exceptionalMultiSpanRoof.CalculateSnowLoad();
+            Assert.AreEqual(4, Math.Round(exceptionalMultiSpanRoof.SnowLoad, 3));
+        }
+
+        [Test()]
+        public void ExceptionalMultiSpanRoofTest_CalculateSnowLoad_NotExceptionalDesignSituationBAnnexB_ThrowsArgumentException()
+        {
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+            snowLoad.Setup(sl => sl.ExcepctionalSituation).Returns(false);
+            snowLoad.Setup(sl => sl.CurrentDesignSituation).Returns(DesignSituation.A);
+            snowLoad.Setup(sl => sl.SnowLoadForSpecificReturnPeriod).Returns(2);
+
+            var exceptionalMultiSpanRoof = new ExceptionalMultiSpanRoof(
+                building.Object, leftDriftLength: 10, rightDriftLength: 5, heightInTheLowestPart: 2);
+
+            Assert.Throws<ArgumentException>(() => exceptionalMultiSpanRoof.CalculateSnowLoad());
         }
     }
 }

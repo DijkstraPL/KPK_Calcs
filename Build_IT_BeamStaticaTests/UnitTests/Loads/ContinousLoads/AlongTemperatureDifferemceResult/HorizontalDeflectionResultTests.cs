@@ -1,4 +1,4 @@
-﻿using Build_IT_BeamStatica.Loads.ContinousLoads.AlongTemperatureDifferenceResult;
+﻿using Build_IT_BeamStatica.Loads.ContinuousLoads.AlongTemperatureDifferenceResult;
 using Build_IT_BeamStatica.Loads.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
 using Moq;

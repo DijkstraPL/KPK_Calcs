@@ -20,11 +20,14 @@ namespace Build_IT_Data.Entities.Scripts
         public ICollection<ValueOption> ValueOptions { get; private set; }
         public ValueOptionSettings ValueOptionSetting { get; set; }
         public ParameterOptions Context { get; set; }
-        public string GroupName { get; set; }
+        public Group Group { get; set; }
+        public long? GroupId { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
         public Script Script { get; set; }
         public long ScriptId { get; set; }
+        public Version Version { get; set; }
+        public long? VersionId { get; set; }
         public ICollection<ParameterFigure> ParameterFigures { get; private set; }
 
         public ICollection<ParameterTranslation> ParametersTranslations { get; private set; }

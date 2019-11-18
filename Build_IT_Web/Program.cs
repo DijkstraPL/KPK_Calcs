@@ -1,14 +1,19 @@
-﻿using Microsoft.AspNetCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
-using System;
 
 namespace Build_IT_Web
 {
     public class Program
     {
+        #region Public_Methods
+
         public static void Main(string[] args)
         {
             var logger = NLog.Web.NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
@@ -38,9 +43,15 @@ namespace Build_IT_Web
                     logging.SetMinimumLevel(LogLevel.Trace);
                 }).UseNLog();
 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+
         private static void SetupConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder builder)
         {
 
         }
+
+        #endregion // Private_Methods
     }
 }

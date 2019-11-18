@@ -25,13 +25,13 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
         public ITranslationService TranslationService { get; }
         public IParameterRepository ParameterRepository { get; }
         public IMapper Mapper { get; }
-        public CalculateCommand.Handler CalculateCommand { get; }
+        public CalculateQuery.Handler CalculateCommand { get; }
 
         private readonly Random _random = new Random();
 
         public ScriptCalculatorTestEngine()
         {
-            var logger = new Mock<ILogger<CalculateCommand.Handler>>();
+            var logger = new Mock<ILogger<CalculateQuery.Handler>>();
 
             ScriptInterpreterDbContext = new ScriptInterpreterDbContext(
                 new DbContextOptions<ScriptInterpreterDbContext>());
@@ -44,7 +44,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
             TranslationService = new TranslationService(new TranslationRepository(ScriptInterpreterDbContext));
             Mapper = new Mapper(config);
 
-            CalculateCommand = new CalculateCommand.Handler(ScriptRepository,
+            CalculateCommand = new CalculateQuery.Handler(ScriptRepository,
                 ParameterRepository, TranslationService, Mapper);
         }
 
@@ -55,7 +55,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
 
         public List<ParameterResource> Calculate(long scriptId, ICollection<ParameterResource> parametersForCalculation)
         {
-            var request = new CalculateCommand
+            var request = new CalculateQuery
             {
                 ScriptId = scriptId,
                 InputData = parametersForCalculation,
@@ -87,6 +87,9 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
 
         public string GetValueFromRange(string[] possibleValues)
             => possibleValues[_random.Next(possibleValues.Length)];
+
+        public bool GetRandomBoolean()
+            => Convert.ToBoolean(_random.Next(0, 2));
 
     }
 }

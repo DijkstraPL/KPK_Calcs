@@ -16,17 +16,18 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Queries
         public string Description { get; set; }
         public ICollection<TagResource> Tags { get; set; }
         public string GroupName { get; set; }
-        public string Author { get; set; }
         public DateTime Added { get; set; }
         public DateTime Modified { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
         public Language DefaultLanguage { get; set; }
+        public bool IsPublic { get; set; }
+        public bool IsEditable { get; set; }
 
         #endregion // Properties
 
         #region Constructors
-        
+
         public ScriptResource()
         {
             Tags = new HashSet<TagResource>();

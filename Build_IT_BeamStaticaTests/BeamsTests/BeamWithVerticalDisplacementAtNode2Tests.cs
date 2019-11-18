@@ -1,6 +1,6 @@
 ﻿using Build_IT_BeamStatica.Beams;
 using Build_IT_BeamStatica.Loads;
-using Build_IT_BeamStatica.Loads.ContinousLoads;
+using Build_IT_BeamStatica.Loads.ContinuousLoads;
 using Build_IT_BeamStatica.Loads.PointLoads;
 using Build_IT_BeamStatica.Nodes;
 using Build_IT_BeamStatica.Spans;
@@ -55,7 +55,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
 
             var startLoad = new LoadData(value: -6, position: 0);
             var endLoad = new LoadData(value: -6, position: 8);
-            span1.ContinousLoads.Add(ContinousShearLoad.Create(startLoad, endLoad));
+            span1.ContinousLoads.Add(ContinuousShearLoad.Create(startLoad, endLoad));
 
             _beam = new Beam(spans, nodes, includeSelfWeight: false);
 

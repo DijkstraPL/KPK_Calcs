@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.DeadLoads.EntityConfigurations
 {
-    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         #region Public_Methods
 

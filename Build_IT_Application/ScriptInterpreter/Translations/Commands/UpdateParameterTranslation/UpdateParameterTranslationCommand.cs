@@ -56,7 +56,6 @@ namespace Build_IT_Application.ScriptInterpreter.Translations.Commands.UpdatePar
                     throw new NotFoundException(nameof(UpdateParameterTranslationCommand), request.Id);
 
                 parameterTranslation.Description = request.Description;
-                parameterTranslation.GroupName = request.GroupName;
                 parameterTranslation.Language = request.Language;
                 parameterTranslation.Notes = request.Notes;
                 parameterTranslation.ParameterId = request.ParameterId;

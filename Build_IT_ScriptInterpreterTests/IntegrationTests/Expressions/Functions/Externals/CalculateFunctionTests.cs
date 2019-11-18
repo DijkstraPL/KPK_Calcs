@@ -85,7 +85,7 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Expressions.Functions
             parameters[4] = new NCalc.Expression("3");
 
             var result = new Mock<IResult>();
-            result.Setup(r => r.Properties)
+            result.Setup(r => r.GetProperties())
                 .Returns(new Dictionary<string, object>()
                 {
                     { "result", "4" }

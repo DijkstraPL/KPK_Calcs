@@ -16,9 +16,9 @@ namespace Build_IT_FrameStatica.Nodes
 
         public FreeNode(
             Point position,
-            IResultValue horizontalDeflection = null,
-            IResultValue verticalDeflection = null,
-            IResultValue rotation = null)
+            IValue horizontalDeflection = null,
+            IValue verticalDeflection = null,
+            IValue rotation = null)
             : base(position)
         {
             HorizontalDeflection = horizontalDeflection ?? new HorizontalDeflection();

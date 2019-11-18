@@ -1,4 +1,5 @@
-﻿using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
+﻿using Build_IT_Application.ScriptInterpreter.Calculations.Queries;
+using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_Data.Entities.Scripts.Enums;
 using Build_IT_ScriptInterpreter.Parameters.Interfaces;
@@ -14,64 +15,86 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
 {
     public class ScriptCalculator
     {
-        private readonly Script _script;
-        private readonly List<Parameter> _parameters;
+        #region Fields
+
+        private readonly List<ParameterResource> _parameters;
 
         private SI.CalculationEngine _calculationEngine;
         private IDictionary<string, object> _parameterValues;
-        private IScript _scriptToInterpret;
 
-        public ScriptCalculator(Script script, List<Parameter> parameters)
+        #endregion // Fields
+
+        #region Constructors
+
+        public ScriptCalculator(List<ParameterResource> parameters)
         {
-            _script = script;
             _parameters = parameters;
         }
 
-        internal async Task CalculateAsync(IEnumerable<ParameterResource> userParameters)
-        {
-            _scriptToInterpret = await MapScript();
-            var parameters = await MapParameters();
-            _scriptToInterpret.Parameters = parameters.ToList();
+        #endregion // Constructors
 
-            _calculationEngine = new SI.CalculationEngine(_scriptToInterpret);
+        #region Internal_Methods
+
+        internal async Task<bool> ValidateResults(IEnumerable<CalculateParameterResource> userParameters, params string[] validatorEquations)
+        {
+            await CalculateAsync(userParameters).ConfigureAwait(false);
+
+            return validatorEquations.All(ve => _calculationEngine.CalculatePrediction(ve, _parameterValues));
+        }
+
+        internal async Task CalculateAsync(IEnumerable<CalculateParameterResource> userParameters)
+        {
+            var parameters = await MapParameters();
+
+            _calculationEngine = new SI.CalculationEngine(parameters.ToList());
 
             _parameterValues = userParameters
-                .Where(p => (p.Context & ParameterOptions.Optional) == 0 ||
-                !string.IsNullOrWhiteSpace(p.Value) && (p.Context & ParameterOptions.Optional) != 0)
+                .Where(p => (p.Context & SIP.ParameterOptions.Optional) == 0 ||
+                !string.IsNullOrWhiteSpace(p.Value) && (p.Context & SIP.ParameterOptions.Optional) != 0)
                 .ToDictionary(
                 p => p.Name,
-                p => p.ValueType == ValueTypes.Number ?
+                p => p.ValueType == SIP.ValueTypes.Number ?
                  string.IsNullOrWhiteSpace(p.Value) ? 0 :
                  double.Parse(p.Value?.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture) :
                 (object)p.Value);
             _calculationEngine.Calculate(_parameterValues);
-            _parameters.RemoveAll(p => !_parameterValues.ContainsKey(p.Name));
+            _parameters.RemoveAll(p => !_parameterValues.ContainsKey(p.Name) ||
+                !_calculationEngine.CalculatePrediction(p.VisibilityValidator, _parameterValues) ||
+                !_calculationEngine.CalculatePrediction(p.Group?.VisibilityValidator, _parameterValues));
 
             foreach (var par in _parameterValues)
             {
-                var pp = _parameters.SingleOrDefault(p => p.Name == par.Key &&
-                _calculationEngine.CalculatePrediction(p.VisibilityValidator, _parameterValues));
-                if (pp != null)
-                    pp.Value = par.Value.ToString();
+                var pp = _parameters.SingleOrDefault(p => p.Name == par.Key);
+                if (pp == null)
+                    continue;
+                pp.Value = par.Value.ToString();
+                if ((pp.Context & ParameterOptions.Calculation) != 0 &&
+                    (pp.Context & ParameterOptions.Visible) != 0 &&
+                    !string.IsNullOrWhiteSpace(pp.DataValidator))
+                    pp.DataValidator = parameters.SingleOrDefault(p => p.Name == par.Key)?.DataValidator?.ToString();
             }
         }
 
-        internal IEnumerable<Parameter> GetResult()
-            => _parameters.Where(p => 
-            ((SIP.ParameterOptions)p.Context & SIP.ParameterOptions.Calculation) != 0 && 
+        internal IEnumerable<ParameterResource> GetResult()
+            => _parameters.Where(p =>
+            ((SIP.ParameterOptions)p.Context & SIP.ParameterOptions.Calculation) != 0 &&
             _calculationEngine.CalculatePrediction(p.VisibilityValidator, _parameterValues));
 
-        private async Task<IScript> MapScript()
-        {
-            return await Task.Run(() =>
-            {
-                return SI.ScriptBuilder.Create(
-                    _script.Name,
-                    _script.Description,
-                    _script.Tags.Select(t => t.Tag.Name).ToArray())
-                    .Build();
-            });
-        }
+        #endregion // Internal_Methods
+
+        #region Private_Methods
+
+        //private async Task<IScript> MapScript()
+        //{
+        //    return await Task.Run(() =>
+        //    {
+        //        return SI.ScriptBuilder.Create(
+        //            _script.Name,
+        //            _script.Description,
+        //            _script.Tags.Select(t => t.Tag.Name).ToArray())
+        //            .Build();
+        //    }).ConfigureAwait(false);
+        //}
 
         private async Task<IEnumerable<IParameter>> MapParameters()
         {
@@ -85,13 +108,19 @@ namespace Build_IT_Applications.ScriptInterpreter.Services
                         Number = parameter.Number,
                         Name = parameter.Name,
                         Value = parameter.Value,
+                        ValueType = (SIP.ValueTypes)parameter.ValueType,
                         VisibilityValidator = parameter.VisibilityValidator,
                         DataValidator = parameter.DataValidator,
-                        Context = (SIP.ParameterOptions)parameter.Context
+                        Context = (SIP.ParameterOptions)parameter.Context,
+                        Group = parameter.Group != null ?
+                            new SIP.Group { VisibilityValidator = parameter.Group.VisibilityValidator } : null
                     });
                 }
                 return parameters;
-            });
+            }).ConfigureAwait(false);
         }
+
+
+        #endregion // Private_Methods
     }
 }

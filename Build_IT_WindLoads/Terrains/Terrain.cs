@@ -62,8 +62,8 @@ namespace Build_IT_WindLoads.Terrains
 
         public static Terrain Create(
             TerrainType terrainType,
-            IFactor heightDisplacement = null, 
-            IFactorAt terrainOrography = null)
+            IFactor heightDisplacement = null,
+            TerrainOrography terrainOrography = null)
         {
             switch (terrainType)
             {

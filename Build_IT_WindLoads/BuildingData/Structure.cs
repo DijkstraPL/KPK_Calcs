@@ -53,6 +53,10 @@ namespace Build_IT_WindLoads.BuildingData
 
         #region Public_Methods
 
+        /// <summary>
+        /// PN-EN 1991-1-4 Fig.6.1
+        /// </summary>
+        /// <returns></returns>
         public abstract double GetReferenceHeight();
 
         #endregion // Public_Methods

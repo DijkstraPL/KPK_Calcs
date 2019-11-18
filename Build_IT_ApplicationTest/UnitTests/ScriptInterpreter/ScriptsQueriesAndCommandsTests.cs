@@ -175,7 +175,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         public void UpdateScriptTest_Success()
         {
             var scriptResource = new ScriptResource();
-            var script = new Script { Version = "1" };
+            var script = new Script();
             _mapper.Setup(m => m.Map<ScriptResource, Script>(scriptResource, script))
                 .Returns(script);
             _mapper.Setup(m => m.Map<Script, ScriptResource>(script))
@@ -234,7 +234,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         {
             var script = new Script();
             _scriptRepository.Setup(sr => sr.GetAsync(1))
-                .Returns(Task.FromResult(script));
+                .Returns(new ValueTask<Script>(Task.FromResult(script)));
 
             _scriptRepository.Setup(sr => sr.Remove(script));
             _unitOfWork.Setup(uow => uow.CompleteAsync())
@@ -256,7 +256,7 @@ namespace Build_IT_WebTest.UnitTests.Controllers.ScriptInterpreterController
         public void DeleteScriptTest_NoneScript_Success()
         {
             _scriptRepository.Setup(sr => sr.GetAsync(1))
-                .Returns(Task.FromResult(default(Script)));
+                .Returns(new ValueTask<Script>(Task.FromResult(default(Script))));
             
             var deleteScriptCommand = new DeleteScriptCommand.Handler(
                 _scriptRepository.Object, _unitOfWork.Object);

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations.Translations
 {
-    public class ParameterTranslationConfiguration : IEntityTypeConfiguration<ParameterTranslation>
+    internal class ParameterTranslationConfiguration : IEntityTypeConfiguration<ParameterTranslation>
     {
         #region Public_Methods
 

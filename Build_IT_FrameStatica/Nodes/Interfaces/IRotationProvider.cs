@@ -6,8 +6,8 @@ namespace Build_IT_FrameStatica.Nodes.Interfaces
     {
         #region Properties
 
-        IResultValue LeftRotation { get; }
-        IResultValue RightRotation { get; }
+        IValue LeftRotation { get; }
+        IValue RightRotation { get; }
 
         #endregion // Properties
     }

@@ -31,6 +31,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
         {
             return await ScriptInterpreterContext.Parameters
                 .Where(p => p.ScriptId == scriptId)
+                .Include(p => p.Group)
                 .Include(p => p.ValueOptions)
                 .Include(p => p.ParameterFigures)
                 .ThenInclude(p => p.Figure)
@@ -41,6 +42,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.Repositiories
         public async Task<Parameter> GetParameterWithAllDependanciesAsync(long parameterId)
         {
             return await ScriptInterpreterContext.Parameters
+                .Include(p => p.Group)
                 .Include(p => p.ValueOptions)
                 .Include(p => p.ParameterFigures)
                 .ThenInclude(p => p.Figure)

@@ -1,0 +1,28 @@
+﻿
+<div class="justify-content-start parameter-radio">
+    <label class="align-self-start mb-2">
+        <span *ngIf="parameter.figures && parameter.figures.length > 0"
+              matPrefix><figures-button [parameter]="parameter"></figures-button></span>
+        <span [innerHtml]="parameter.name | html"></span>{{isRequired() ? '*' : ''}}
+    </label>
+    <mat-radio-group [(ngModel)]="parameter.value"
+                     [ngClass]="parameter.name">
+        <mat-radio-button value=""
+                          *ngIf="!isRequired()"
+                          selected
+                          class="mr-3 default"
+                          (change)="changeValue($event)">
+            {{'scriptCalculator.Controls.Default' | translate}}
+        </mat-radio-button>
+        <mat-radio-button *ngFor="let valueOption of parameter.valueOptions; index as i"
+                          [value]="valueOption.value"
+                          [required]="isRequired()"
+                          class="mr-3"
+                          [ngClass]="valueOption.name"
+                          (change)="changeValue($event)">
+            {{valueOption.name }}
+        </mat-radio-button>
+        {{parameter.unit | html}}
+    </mat-radio-group>
+    <p class="parameter-description">{{parameter.description}}</p>
+</div>

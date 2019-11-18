@@ -1,4 +1,5 @@
 ﻿using Build_IT_Application.Infrastructures.Interfaces;
+using Build_IT_Application.ScriptInterpreter.Groups.Queries;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries;
 using Build_IT_Data.Entities.Scripts.Enums;
@@ -70,8 +71,6 @@ namespace Build_IT_Application.Infrastructures
                     parameterResource.Description = parameterTranslation.Description;
                 if (!string.IsNullOrEmpty(parameterTranslation.Notes))
                     parameterResource.Notes = parameterTranslation.Notes;
-                if (!string.IsNullOrEmpty(parameterTranslation.GroupName))
-                    parameterResource.GroupName = parameterTranslation.GroupName;
                 foreach (var valueOption in parameterResource.ValueOptions)
                     await SetValueOptionTranslation(languageCode, valueOption, defaultLanguage);
             }
@@ -96,6 +95,26 @@ namespace Build_IT_Application.Infrastructures
                     valueOptionResource.Name = valueOptionTranslation.Name;
                 if (!string.IsNullOrEmpty(valueOptionTranslation.Description))
                     valueOptionResource.Description = valueOptionTranslation.Description;
+            }
+            return;
+        }
+
+        public async Task SetGroupsTranslation(string languageCode, IEnumerable<GroupResource> groupResources, Language defaultLanguage)
+        {
+            foreach (var groupResource in groupResources)
+                await SetGroupTranslation(languageCode, groupResource, defaultLanguage);
+            return;
+        }
+
+        public async Task SetGroupTranslation(string languageCode, GroupResource groupResource, Language defaultLanguage)
+        {
+            if (Languages.ContainsKey(languageCode) && Languages[languageCode] != defaultLanguage)
+            {
+                var groupTranslation = await _translationRepository.GetGroupTranslation(groupResource.Id, Languages[languageCode]);
+                if (groupTranslation == null)
+                    return;
+                if (!string.IsNullOrEmpty(groupTranslation.Name))
+                    groupResource.Name = groupTranslation.Name;
             }
             return;
         }

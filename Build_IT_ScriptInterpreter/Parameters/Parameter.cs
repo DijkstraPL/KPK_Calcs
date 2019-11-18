@@ -14,7 +14,6 @@ namespace Build_IT_ScriptInterpreter.Parameters
 
         public string Name { get; set; }
         public int Number { get; set; }
-        public string Description { get; set; }
         public ValueTypes ValueType { get; set; }
         public object Value { get; set; }
         public object VisibilityValidator { get; set; }
@@ -22,9 +21,7 @@ namespace Build_IT_ScriptInterpreter.Parameters
         public string Unit { get; set; }
         public List<ValueOption> ValueOptions { get; set; }
         public ParameterOptions Context { get; set; }
-        public string GroupName { get; set; }
-        public string AccordingTo { get; set; }
-        public string Notes { get; set; }
+        public IGroup Group { get; set; }
 
         #endregion // Properties
 

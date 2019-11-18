@@ -32,7 +32,7 @@ namespace Build_IT_Application.ScriptInterpreter.Parameters.Commands.CreateParam
         public ICollection<ValueOptionResource> ValueOptions { get; set; }
         public ValueOptionSettings ValueOptionSetting { get; set; }
         public ParameterOptions Context { get; set; }
-        public string GroupName { get; set; }
+        public long? GroupId { get; set; }
         public string AccordingTo { get; set; }
         public string Notes { get; set; }
 
@@ -86,9 +86,9 @@ namespace Build_IT_Application.ScriptInterpreter.Parameters.Commands.CreateParam
                     Unit = request.Unit,
                     ValueOptionSetting = request.ValueOptionSetting,
                     Context = request.Context,
-                    GroupName = request.GroupName,
                     AccordingTo = request.AccordingTo,
                     Notes = request.Notes,
+                    GroupId = request.GroupId,
                 };
 
                 _scriptMappingProfile.UpdateValueOptions(request.ValueOptions, parameter);

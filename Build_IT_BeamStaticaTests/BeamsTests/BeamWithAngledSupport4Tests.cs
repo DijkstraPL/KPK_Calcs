@@ -1,5 +1,5 @@
 ﻿using Build_IT_BeamStatica.Beams;
-using Build_IT_BeamStatica.Loads.ContinousLoads;
+using Build_IT_BeamStatica.Loads.ContinuousLoads;
 using Build_IT_BeamStatica.Loads.PointLoads;
 using Build_IT_BeamStatica.Nodes;
 using Build_IT_BeamStatica.Spans;
@@ -36,7 +36,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
 
             var spans = new Span[] { span1 };
 
-            var shearLoad = ContinousAngledLoad.Create(
+            var shearLoad = ContinuousAngledLoad.Create(
                 startPosition: 1, startValue: -20, 
                 endPosition: 6, endValue: -100, angle:35);
             span1.ContinousLoads.Add(shearLoad);

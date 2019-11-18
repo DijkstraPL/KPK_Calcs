@@ -7,7 +7,6 @@ namespace Build_IT_ScriptInterpreter.Parameters.Interfaces
         #region Properties
 
         object Value { get; }
-       string  Description { get; }
         ValueOptionSettings ValueOptionSetting { get;  }
 
         #endregion // Properties

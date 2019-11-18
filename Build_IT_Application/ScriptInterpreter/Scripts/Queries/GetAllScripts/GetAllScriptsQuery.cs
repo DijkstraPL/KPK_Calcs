@@ -3,9 +3,8 @@ using Build_IT_Application.Infrastructures.Interfaces;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
 using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +15,8 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetAllScripts
         #region Properties
 
         public string Language { get; set; }
+        public string CurrentUserId { get; set; }
+        public bool IsAdmin { get; set; }
 
         #endregion // Properties
 
@@ -47,7 +48,20 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetAllScripts
             public async Task<IEnumerable<ScriptResource>> Handle(GetAllScriptsQuery request, CancellationToken cancellationToken)
             {
                 var scripts = await _scriptRepository.GetAllScriptsWithTagsAsync();
-                var scriptResources = _mapper.Map<IEnumerable<Script>, IEnumerable<ScriptResource>>(scripts);
+
+                var scriptResources = scripts
+                    .Select(s =>
+                    {
+                        ScriptResource scriptResource = null;
+                        if (s.IsPublic || s.Author == request.CurrentUserId || request.IsAdmin)
+                        {
+                            scriptResource = _mapper.Map<Script, ScriptResource>(s);
+                            scriptResource.IsEditable = s.Author == request.CurrentUserId || request.IsAdmin;
+                        }
+                        return scriptResource;
+                    })
+                    .Where(sr => sr != null);
+
                 await _translationService.SetScriptsTranslation(request.Language, scriptResources);
 
                 return scriptResources;

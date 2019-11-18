@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.DeadLoads.EntityConfigurations
 {
-    public class SubcategoryConfiguration : IEntityTypeConfiguration<Subcategory>
+    internal class SubcategoryConfiguration : IEntityTypeConfiguration<Subcategory>
     {
         #region Public_Methods
 

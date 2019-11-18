@@ -48,7 +48,7 @@ namespace Build_IT_DataTests.UnitTests.Sections
         [Test()]
         public void PolygonSection_AdjustedPointsTest_Success()
         {
-            Assert.That(_polygonSection.AdjustedPoints[0].X, Is.EqualTo(-429.1188).Within(0.0001), message:"Point 0 - X");
+            Assert.That(_polygonSection.AdjustedPoints[0].X, Is.EqualTo(-429.1188).Within(0.0001), message: "Point 0 - X");
             Assert.That(_polygonSection.AdjustedPoints[0].Y, Is.EqualTo(-27.9693).Within(0.0001), message: "Point 0 - Y");
             Assert.That(_polygonSection.AdjustedPoints[1].X, Is.EqualTo(-129.1188).Within(0.0001), message: "Point 1 - X");
             Assert.That(_polygonSection.AdjustedPoints[1].Y, Is.EqualTo(-227.9693).Within(0.0001), message: "Point 1 - Y");
@@ -71,7 +71,7 @@ namespace Build_IT_DataTests.UnitTests.Sections
         {
             Assert.That(_polygonSection.MomentOfInteria, Is.EqualTo(214964.4796).Within(0.0001));
         }
-        
+
         [Test()]
         public void PolygonSection_CalculatedSolidHeightTest_Success()
         {

@@ -4,7 +4,7 @@ using Build_IT_SnowLoads.Enums;
 using NUnit.Framework;
 using System;
 
-namespace Build_IT_SnowLoadsTests
+namespace Build_IT_SnowLoadsUnitTests
 {
     [TestFixture()]
     public class SnowLoadTests

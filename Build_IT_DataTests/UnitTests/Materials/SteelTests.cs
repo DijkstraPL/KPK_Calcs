@@ -11,9 +11,12 @@ namespace Build_IT_DataTests.UnitTests.Materials
         {
             var steel = new Steel();
 
-            Assert.That(steel.Density, Is.EqualTo(7850));
-            Assert.That(steel.ThermalExpansionCoefficient, Is.EqualTo(0.000012));
-            Assert.That(steel.YoungModulus, Is.EqualTo(210));
+            Assert.Multiple(() =>
+            {
+                Assert.That(steel.Density, Is.EqualTo(7850));
+                Assert.That(steel.ThermalExpansionCoefficient, Is.EqualTo(0.000012));
+                Assert.That(steel.YoungModulus, Is.EqualTo(210));
+            });
         }
     }
 }

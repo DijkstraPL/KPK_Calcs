@@ -67,12 +67,14 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// </summary>
         public IBuilding Building { get; private set; }
 
+        public const bool DefaultSnowFences = false;
+
         #endregion // Properties
 
         #region Fields
 
-        private ISnowLoad snowLoad;
-        private IBuildingSite buildingSite;
+        private ISnowLoad _snowLoad;
+        private IBuildingSite _buildingSite;
 
         #endregion // Fields
 
@@ -87,7 +89,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <param name="leftRoofSnowFences">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="LeftRoof"/>.</param>
         /// <param name="rightRoofSnowFences">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="RightRoof"/>.</param>
         public MultiSpanRoof(IBuilding building, double leftRoofSlope, double rightRoofSlope,
-            bool leftRoofSnowFences = false, bool rightRoofSnowFences = false)
+            bool leftRoofSnowFences = DefaultSnowFences, bool rightRoofSnowFences = DefaultSnowFences)
         {
             Building = building;
 
@@ -115,7 +117,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
         #endregion // Constructors
 
-        #region Methods
+        #region Public_Methods
 
         /// <summary>
         /// Calculate <see cref="IMonopitchRoof.SnowLoadOnRoofValue"/> for <see cref="LeftRoof"/> and <see cref="RightRoof"/>
@@ -133,10 +135,14 @@ namespace Build_IT_SnowLoads.BuildingTypes
             CalculateSnowLoadOnRoof();
         }
 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+
         private void SetReferences()
         {
-            snowLoad = Building.SnowLoad;
-            buildingSite = snowLoad.BuildingSite;
+            _snowLoad = Building.SnowLoad;
+            _buildingSite = _snowLoad.BuildingSite;
         }
 
         /// <summary>
@@ -159,22 +165,22 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <seealso cref="SnowLoadCalc.CalculateSnowLoad(double, double, double, double)"/>
         private void CalculateSnowLoadOnRoof()
         {
-            if (!snowLoad.ExcepctionalSituation)
+            if (!_snowLoad.ExcepctionalSituation)
                 SnowLoadOnMiddleRoof =
                     SnowLoadCalc.CalculateSnowLoad(
                         ShapeCoefficient,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.SnowLoadForSpecificReturnPeriod);
+                        _snowLoad.SnowLoadForSpecificReturnPeriod);
             else
                 SnowLoadOnMiddleRoof =
                     SnowLoadCalc.CalculateSnowLoad(
                         ShapeCoefficient,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
+                        _snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
         }
 
-        #endregion // Methods
+        #endregion // Private_Methods
     }
 }

@@ -55,7 +55,6 @@ namespace Build_IT_Application.ScriptInterpreter.Translations.Commands.CreatePar
                     Id = 0,
                     ParameterId = request.ParameterId,
                     Description = request.Description,
-                    GroupName = request.GroupName,
                     Notes = request.Notes,
                     Language = request.Language
                 };

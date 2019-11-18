@@ -1,0 +1,23 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h5>{{'scriptsForm.Translations.Groups' | translate}}</h5>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+
+    <mat-form-field class="m-2 full-width"
+                    *ngFor="let mappedGroup of mappedGroups">
+      <input matInput
+             placeholder="{{'scriptsForm.Translations.GroupName' | translate}}"
+             [(ngModel)]="mappedGroup.translation.name"
+             [errorStateMatcher]="matcher"
+             autocomplete="off" />
+      <mat-hint>{{mappedGroup.group.name}}</mat-hint>
+    </mat-form-field>
+
+
+  </mat-expansion-panel>
+
+</mat-accordion>

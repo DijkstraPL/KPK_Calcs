@@ -1,0 +1,16 @@
+
+       <!--[attr.style]="styles"-->
+  <div contenteditable="true"
+       [innerHtml]="styledValue | safeHtml"
+       (keyup)="changed()"
+       #element></div>
+
+<div>
+  <button mat-stroked-button
+          *ngFor="let parameter of previousParameters"
+          matTooltip="{{parameter.description}}"
+          matTooltipPosition="below"
+          innerHtml="{{parameter.name | html}} [{{parameter.unit | html}}]"
+          type="button"
+          (click)="select(parameter)"></button>
+</div>

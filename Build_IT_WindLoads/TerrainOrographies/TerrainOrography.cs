@@ -44,6 +44,8 @@ namespace Build_IT_WindLoads.TerrainOrographies
         [Unit("m")]
         public double HorizontalDistanceFromCrestTop { get; }
 
+        public const double DefaultOrographyFactor = 1;
+
         #endregion // Properties
 
         #region Constructors
@@ -67,7 +69,7 @@ namespace Build_IT_WindLoads.TerrainOrographies
         public double GetFactorAt(double verticalDistanceFromCrestTop)
         {
             if (!IsOrographicFactorNeeded())
-                return 1;
+                return DefaultOrographyFactor;
 
             double orographicLocationFactor = GetOrographicLocationFactorAt(verticalDistanceFromCrestTop);
 

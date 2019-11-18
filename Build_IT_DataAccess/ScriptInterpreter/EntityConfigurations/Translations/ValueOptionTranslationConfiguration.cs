@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations.Translations
 {
-    public class ValueOptionTranslationConfiguration : IEntityTypeConfiguration<ValueOptionTranslation>
+    internal class ValueOptionTranslationConfiguration : IEntityTypeConfiguration<ValueOptionTranslation>
     {
         #region Public_Methods
 

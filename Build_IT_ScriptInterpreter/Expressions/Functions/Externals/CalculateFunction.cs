@@ -108,10 +108,11 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
             for (int i = 1; i < functionArgs.Parameters.Length; i++)
                 try
                 {
-                    if (functionArgs.Parameters[i].Evaluate() == null)
+                    var result = functionArgs.Parameters[i].Evaluate();
+                    if (result == null)
                         arguments.RemoveAt(arguments.Count - 1);
                     else
-                        arguments.Add(functionArgs.Parameters[i].Evaluate());
+                        arguments.Add(result);
                 }
                 catch (ArgumentException)
                 {
@@ -124,7 +125,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
 
         private object SetParameters(IResult result, FunctionArgs functionArgs)
         {
-            foreach (var property in result.Properties)
+            foreach (var property in result.GetProperties())
                 functionArgs.Parameters.First().Parameters.Add($"{_prefix}{property.Key}", property.Value);
 
             return true;
@@ -166,7 +167,7 @@ namespace Build_IT_ScriptInterpreter.Expressions.Functions.Externals
 
             script.Parameters = GetParameters(scriptData, parameterRepository).ToList();
 
-            var calculationEngine = new CalculationEngine(script);
+            var calculationEngine = new CalculationEngine(script.Parameters);
 
             IDictionary<string, object> parameterValues = GetParametersValues(functionArgs);
 

@@ -1,6 +1,6 @@
 ﻿using Build_IT_BeamStatica.Beams;
 using Build_IT_BeamStatica.Loads;
-using Build_IT_BeamStatica.Loads.ContinousLoads;
+using Build_IT_BeamStatica.Loads.ContinuousLoads;
 using Build_IT_BeamStatica.Loads.PointLoads;
 using Build_IT_BeamStatica.Nodes;
 using Build_IT_BeamStatica.Spans;
@@ -65,7 +65,7 @@ namespace Build_IT_BeamStaticaTests.BeamsTests
 
             var startLoad = new LoadData(value: -20, position: 0);
             var endLoad = new LoadData(value: -20, position: 7);
-            span2.ContinousLoads.Add(ContinousShearLoad.Create(startLoad, endLoad));
+            span2.ContinousLoads.Add(ContinuousShearLoad.Create(startLoad, endLoad));
 
             var upDownTemperatureLoad = UpDownTemperatureDifferenceLoad.Create( // TODO: Check Hinge - something wrong
                 span3, upperTemperature: 5, lowerTemperature: 0);

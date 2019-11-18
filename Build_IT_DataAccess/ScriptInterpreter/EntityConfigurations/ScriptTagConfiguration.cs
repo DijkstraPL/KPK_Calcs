@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 {
-    public class ScriptTagConfiguration : IEntityTypeConfiguration<ScriptTag>
+    internal class ScriptTagConfiguration : IEntityTypeConfiguration<ScriptTag>
     {
         #region Public_Methods
         

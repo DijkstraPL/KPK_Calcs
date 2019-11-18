@@ -85,8 +85,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
         #region Fields
 
-        private ISnowLoad snowLoad;
-        private IBuildingSite buildingSite;
+        private ISnowLoad _snowLoad;
+        private IBuildingSite _buildingSite;
 
         #endregion // Fields
 
@@ -106,7 +106,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
         #endregion // Constructors
 
-        #region Methods
+        #region Public_Methods
 
         /// <summary>
         /// Calculate <see cref="DriftLength"/>.
@@ -129,10 +129,14 @@ namespace Build_IT_SnowLoads.BuildingTypes
             CalculateSnowLoadOnRoof();
         }
 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+
         private void SetReferences()
         {
-            snowLoad = Building.SnowLoad;
-            buildingSite = snowLoad.BuildingSite;
+            _snowLoad = Building.SnowLoad;
+            _buildingSite = _snowLoad.BuildingSite;
         }
 
         /// <summary>
@@ -142,7 +146,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         {
             FirstShapeCoefficient = 0.8;
 
-            SecondShapeCoefficient = snowLoad.SnowDensity * ObstructionHeight / snowLoad.SnowLoadForSpecificReturnPeriod;
+            SecondShapeCoefficient = _snowLoad.SnowDensity * ObstructionHeight / _snowLoad.SnowLoadForSpecificReturnPeriod;
 
             if (SecondShapeCoefficient < 0.8)
                 SecondShapeCoefficient = 0.8;
@@ -155,40 +159,40 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// </summary>
         private void CalculateSnowLoadOnRoof()
         {
-            if (!snowLoad.ExcepctionalSituation)
+            if (!_snowLoad.ExcepctionalSituation)
             {
                 SnowLoadOnRoofValue =
                     SnowLoadCalc.CalculateSnowLoad(
                         SecondShapeCoefficient,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.SnowLoadForSpecificReturnPeriod);
+                        _snowLoad.SnowLoadForSpecificReturnPeriod);
 
                 SnowLoadOnRoofValueAtTheEnd =
                     SnowLoadCalc.CalculateSnowLoad(
                         FirstShapeCoefficient,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.SnowLoadForSpecificReturnPeriod);
+                        _snowLoad.SnowLoadForSpecificReturnPeriod);
             }
             else
             {
                 SnowLoadOnRoofValue =
                     SnowLoadCalc.CalculateSnowLoad(
                         SecondShapeCoefficient,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
+                        _snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
 
                 SnowLoadOnRoofValueAtTheEnd =
                     SnowLoadCalc.CalculateSnowLoad(
                         FirstShapeCoefficient,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
+                        _snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
             }
         }
 
-        #endregion // Methods
+        #endregion // Private_Methods
     }
 }

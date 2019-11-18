@@ -18,6 +18,8 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript
 
         public long Id { get; set; }
         public string Language { get; set; }
+        public string CurrentUserId { get; set; }
+        public bool IsAdmin { get; set; }
 
         #endregion // Properties
 
@@ -50,10 +52,13 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Queries.GetScript
             {
                 var script = await _scriptRepository.GetScriptWithTagsAsync(request.Id);
 
+                if (!script.IsPublic && script.Author != request.CurrentUserId && !request.IsAdmin)
+                    throw new ValidationException();
                 if (script == null)
                     throw new NotFoundException(nameof(Script), request.Id);
 
                 var scriptResource = _mapper.Map<Script, ScriptResource>(script);
+                scriptResource.IsEditable = script.Author == request.CurrentUserId || request.IsAdmin;
                 await _translationService.SetScriptTranslation(request.Language, scriptResource);
 
                 return scriptResource;

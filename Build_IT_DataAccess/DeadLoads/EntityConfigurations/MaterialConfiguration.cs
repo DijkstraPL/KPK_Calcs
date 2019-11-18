@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.DeadLoads.EntityConfigurations
 {
-    public class MaterialConfiguration : IEntityTypeConfiguration<Material>
+    internal class MaterialConfiguration : IEntityTypeConfiguration<Material>
     {
         #region Public_Methods
 

@@ -1,23 +1,10 @@
-﻿using AutoMapper;
-using Build_IT_Application.Infrastructures;
-using Build_IT_Application.Infrastructures.Interfaces;
-using Build_IT_Application.Mapping;
-using Build_IT_Application.ScriptInterpreter.Calculations.Commands;
-using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
+﻿using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_Data.Entities.Scripts.Enums;
-using Build_IT_DataAccess.ScriptInterpreter;
-using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
-using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 
 namespace Build_IT_ApplicationTest.AcceptanceTests
 {
@@ -35,7 +22,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
 
         [Test]
         [Repeat(25)]
-        public void SteelTensionCalculationTest_RandomExamples_Success()
+        public void CalculateTests_RandomExamples_Success()
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
@@ -45,7 +32,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
                 (p.Context & ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
-            parametersForCalculation["A"].Value = _testEngine.GetBigRandom();
+            parametersForCalculation["A"].Value = _testEngine.GetBigRandom(min:1);
             parametersForCalculation["N_Ed_"].Value = _testEngine.GetBigRandom();
             parametersForCalculation["f_y_"].Value = _testEngine.GetBigRandom();
 

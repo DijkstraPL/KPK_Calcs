@@ -1,7 +1,7 @@
 ﻿using Build_IT_SnowLoads;
 using Build_IT_SnowLoads.Interfaces;
 
-namespace Build_IT_SnowLoadsTests
+namespace Build_IT_SnowLoadsUnitTests
 {
     public class SnowLoadImplementation : ISnowLoad
     {

@@ -10,51 +10,59 @@ using System.Linq;
 namespace Build_IT_ScriptService.SnowLoadsService
 {
     [Export("SnowLoad-PitchedRoof", typeof(ICalculator))]
+    [Export(typeof(ICalculator))]
     [ExportMetadata("Document", "PN-EN 1991-1-3")]
     [ExportMetadata("Type", "SnowLoad")]
-    public class PitchedRoofService : SnowLoadBaseService, ICalculator
+    public class PitchedRoofService : SnowLoadBaseService
     {
         #region Properties
-        
+
         public Property<double> LeftSlope { get; } =
             new Property<double>("LeftSlope", 
                 v => Convert.ToDouble(v));
         public Property<bool> LeftSnowFences { get; } =
             new Property<bool>("LeftSnowFences", 
-                v => v == "true");
+                v => v.ToString() == "true");
         public Property<double> RightSlope { get; } =
             new Property<double>("RightSlope",
                 v => Convert.ToDouble(v));
         public Property<bool> RightSnowFences { get; } =
             new Property<bool>("RightSnowFences",
-                v => v == "true");
-
+                v => v.ToString() == "true");
+        
         #endregion // Properties
 
         #region Constructors
 
         public PitchedRoofService()
         {
+            Result = new Result(new Dictionary<string, string> {
+                { "C_e_",        null },
+                { "s_k_",        null },
+                { "V",           null },
+                { "C_esl_",      null },
+                { "s_n_",        null },
+                { "s_Ad_",       null },
+                { "t_i_",        null },
+                { "∆_t_",        null },
+                { "U",           null },
+                { "C_t_",        null },
+                { "μ_l,1_",      null },
+                { "μ_r,1_",      null },
+                { "s_l,I_",      null },
+                { "s_r,I_",      null },
+                { "s_l,II_",     null },
+                { "s_r,II_",     null },
+                { "s_l,III_",    null },
+                { "s_r,III_",    null }
+            });
         }
 
         #endregion // Constructors
 
         #region Public_Methods
 
-        public void Map(IList<object> args)
-        {
-            for (int i = 0; i < args.Count; i += 2)
-            {
-                var properties = this.GetType().GetProperties().Select(
-                    p => p.GetValue(this, null) as Property);
-
-                var property = properties.SingleOrDefault(p => p.Name == args[i].ToString());
-                if (property != null)
-                    property.SetValue(args[i + 1]);
-            }
-        }
-
-        public IResult Calculate()
+        public override IResult Calculate()
         {
             BuildingSite buildingSite = GetBuildingSite();
             SnowLoad snowLoad = GetSnowLoad(buildingSite);
@@ -67,27 +75,26 @@ namespace Build_IT_ScriptService.SnowLoadsService
             building.CalculateThermalCoefficient();
             pitchedRoof.CalculateSnowLoad();
 
-            var result = new Result();
-            result.Properties.Add("C_e_", buildingSite.ExposureCoefficient);
-            result.Properties.Add("s_k_", snowLoad.DefaultCharacteristicSnowLoad);
-            result.Properties.Add("V", snowLoad.VariationCoefficient);
-            result.Properties.Add("C_esl_", snowLoad.ExceptionalSnowLoadCoefficient);
-            result.Properties.Add("s_n_", snowLoad.SnowLoadForSpecificReturnPeriod);
-            result.Properties.Add("s_Ad_", snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
-            result.Properties.Add("t_i_", building.InternalTemperature);
-            result.Properties.Add("∆_t_", building.TempreatureDifference);
-            result.Properties.Add("U", building.OverallHeatTransferCoefficient);
-            result.Properties.Add("C_t_", building.ThermalCoefficient);
-            result.Properties.Add("μ_l,1_", pitchedRoof.LeftRoof.ShapeCoefficient);
-            result.Properties.Add("μ_r,1_", pitchedRoof.RightRoof.ShapeCoefficient);
-            result.Properties.Add("s_l,I_", pitchedRoof.LeftRoofCasesSnowLoad[1]);
-            result.Properties.Add("s_r,I_", pitchedRoof.RightRoofCasesSnowLoad[1]);
-            result.Properties.Add("s_l,II_", pitchedRoof.LeftRoofCasesSnowLoad[2]);
-            result.Properties.Add("s_r,II_", pitchedRoof.RightRoofCasesSnowLoad[2]);
-            result.Properties.Add("s_l,III_", pitchedRoof.LeftRoofCasesSnowLoad[3]);
-            result.Properties.Add("s_r,III_", pitchedRoof.RightRoofCasesSnowLoad[3]);
+            Result["C_e_"]=buildingSite.ExposureCoefficient;
+            Result["s_k_"]=snowLoad.DefaultCharacteristicSnowLoad;
+            Result["V"]=snowLoad.VariationCoefficient;
+            Result["C_esl_"]=snowLoad.ExceptionalSnowLoadCoefficient;
+            Result["s_n_"]=snowLoad.SnowLoadForSpecificReturnPeriod;
+            Result["s_Ad_"]=snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod;
+            Result["t_i_"]=building.InternalTemperature;
+            Result["∆_t_"]=building.TempreatureDifference;
+            Result["U"]=building.OverallHeatTransferCoefficient;
+            Result["C_t_"]=building.ThermalCoefficient;
+            Result["μ_l,1_"]=pitchedRoof.LeftRoof.ShapeCoefficient;
+            Result["μ_r,1_"]=pitchedRoof.RightRoof.ShapeCoefficient;
+            Result["s_l,I_"]=pitchedRoof.LeftRoofCasesSnowLoad[1];
+            Result["s_r,I_"]=pitchedRoof.RightRoofCasesSnowLoad[1];
+            Result["s_l,II_"]=pitchedRoof.LeftRoofCasesSnowLoad[2];
+            Result["s_r,II_"]=pitchedRoof.RightRoofCasesSnowLoad[2];
+            Result["s_l,III_"]=pitchedRoof.LeftRoofCasesSnowLoad[3];
+            Result["s_r,III_"]=pitchedRoof.RightRoofCasesSnowLoad[3];
 
-            return result;
+            return Result;
         }
 
         #endregion // Public_Methods
@@ -97,8 +104,8 @@ namespace Build_IT_ScriptService.SnowLoadsService
         private PitchedRoof GetPitchedRoof(Building building)
         {
             return new PitchedRoof(building, LeftSlope.Value, RightSlope.Value,
-                LeftSnowFences.HasValue ? LeftSnowFences.Value : default,
-                RightSnowFences.HasValue ? RightSnowFences.Value : default);
+                LeftSnowFences.HasValue ? LeftSnowFences.Value : PitchedRoof.DefaultSnowFences,
+                RightSnowFences.HasValue ? RightSnowFences.Value : PitchedRoof.DefaultSnowFences);
         }
 
         #endregion // Private_Methods

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 {
-    public class ValueOptionConfiguration : IEntityTypeConfiguration<ValueOption>
+    internal class ValueOptionConfiguration : IEntityTypeConfiguration<ValueOption>
     {
         #region Public_Methods
         
@@ -13,6 +13,9 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
             builder.ToTable("Scripts_ValueOptions");
 
             builder.Property(vo => vo.Name)
+                .IsRequired();
+
+            builder.Property(p => p.Number)
                 .IsRequired();
 
             builder.Property(vo => vo.Value)

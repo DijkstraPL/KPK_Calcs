@@ -24,23 +24,58 @@ namespace Build_IT_FrameStatica.Spans
         public IMaterial Material { get; }
         public ISection Section { get; }
 
-        public ICollection<IContinousLoad> ContinousLoads => throw new NotImplementedException();
+        public ICollection<IContinousLoad> ContinousLoads { get; private set; }
+        public ICollection<ISpanLoad> PointLoads { get; private set; }
 
-        public ICollection<ISpanLoad> PointLoads => throw new NotImplementedException();
+        public bool IncludeSelfWeight { get; set; }
+
+        Forces ISpan.LeftForces { get; } = new Forces();
+        Forces ISpan.RightForces { get; } = new Forces();
+        Displacements ISpan.LeftDisplacements { get; } = new Displacements();
+        Displacements ISpan.RightDisplacements { get; } = new Displacements();
 
         #endregion // Properties
 
         #region Constructors
 
-        public Span(INode leftNode, INode rightNode, IMaterial material, ISection section)
+        public Span(INode leftNode, INode rightNode, IMaterial material, ISection section, bool includeSelfWeight)
         {
             LeftNode = leftNode ?? throw new ArgumentNullException(nameof(leftNode));
             RightNode = rightNode ?? throw new ArgumentNullException(nameof(rightNode));
 
             Material = material ?? throw new ArgumentNullException(nameof(material));
             Section = section ?? throw new ArgumentNullException(nameof(section));
+
+            ContinousLoads = new List<IContinousLoad>();
+            PointLoads = new List<ISpanLoad>();
+
+            IncludeSelfWeight = includeSelfWeight;
         }
-        
+
         #endregion // Constructors
+
+        #region Public_Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Angle in degrees.</returns>
+        public double GetAngle()
+        {
+            return Math.Atan((RightNode.Position.Y - LeftNode.Position.Y) /
+            (RightNode.Position.X - LeftNode.Position.X)) * 180 / Math.PI;
+        }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
+        
+        double ISpan.GetLambdaX()
+            => (RightNode.Position.X - LeftNode.Position.X) / Length;
+
+        double ISpan.GetLambdaY()
+            => (RightNode.Position.Y - LeftNode.Position.Y) / Length;
+
+        #endregion // Private_Methods
     }
 }

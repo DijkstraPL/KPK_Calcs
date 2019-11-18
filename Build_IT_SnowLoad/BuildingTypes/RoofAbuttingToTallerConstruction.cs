@@ -131,12 +131,14 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
         public Dictionary<int, double> SnowLoadsNearTallerBuilding { get; private set; }
 
+        public const bool DefaultSnowFences = false;
+
         #endregion
 
         #region Fields
 
-        private ISnowLoad snowLoad;
-        private IBuildingSite buildingSite;
+        private ISnowLoad _snowLoad;
+        private IBuildingSite _buildingSite;
 
         #endregion // Fields
 
@@ -152,7 +154,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <param name="slopeOfHigherRoof">Set <see cref="IMonopitchRoof.Slope"/> for <see cref="UpperRoof"/>.</param>
         /// <param name="snowFencesOnHigherRoof">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="UpperRoof"/>.</param>
         public RoofAbuttingToTallerConstruction(IBuilding building, double widthOfUpperBuilding, double widthOfLowerBuilding,
-           double heightDifference, double slopeOfHigherRoof, bool snowFencesOnHigherRoof = false)
+           double heightDifference, double slopeOfHigherRoof, bool snowFencesOnHigherRoof = DefaultSnowFences)
         {
             Building = building;
 
@@ -195,7 +197,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
         #endregion // Constructors
 
-        #region Methods
+        #region Public_Methods
 
         /// <summary>
         /// Calculate <see cref="DriftLength"/>.
@@ -223,10 +225,14 @@ namespace Build_IT_SnowLoads.BuildingTypes
             SetSnowLoadsNearTallerBuilding();
         }
 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+
         private void SetReferences()
         {
-            snowLoad = Building.SnowLoad;
-            buildingSite = snowLoad.BuildingSite;
+            _snowLoad = Building.SnowLoad;
+            _buildingSite = _snowLoad.BuildingSite;
         }
 
         /// <summary>
@@ -268,7 +274,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         private void CalculateShapeCoefficientWind()
         {
             ShapeCoefficientWind = Math.Min((WidthOfUpperBuilding + WidthOfLowerBuilding) / (2 * HeightDifference),
-                snowLoad.SnowDensity * HeightDifference / snowLoad.SnowLoadForSpecificReturnPeriod);
+                _snowLoad.SnowDensity * HeightDifference / _snowLoad.SnowLoadForSpecificReturnPeriod);
 
             if (ShapeCoefficientWind < 0.8)
                 ShapeCoefficientWind = 0.8;
@@ -303,37 +309,37 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <seealso cref="SnowLoadCalc.CalculateSnowLoad(double, double, double, double)"/>
         private void CalculateSnowLoadOnRoof()
         {
-            if (!snowLoad.ExcepctionalSituation)
+            if (!_snowLoad.ExcepctionalSituation)
             {
                 SnowLoadOnRoofValue =
                     SnowLoadCalc.CalculateSnowLoad(
                         ShapeCoefficient,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.SnowLoadForSpecificReturnPeriod);
+                        _snowLoad.SnowLoadForSpecificReturnPeriod);
 
                 SnowLoadOnRoofValueAtTheEnd =
                     SnowLoadCalc.CalculateSnowLoad(
                         ShapeCoefficientAtTheEnd,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.SnowLoadForSpecificReturnPeriod);
+                        _snowLoad.SnowLoadForSpecificReturnPeriod);
             }
             else
             {
                 SnowLoadOnRoofValue =
                     SnowLoadCalc.CalculateSnowLoad(
                         ShapeCoefficient,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
+                        _snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
 
                 SnowLoadOnRoofValueAtTheEnd =
                     SnowLoadCalc.CalculateSnowLoad(
                         ShapeCoefficientAtTheEnd,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
+                        _snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
             }
         }
 
@@ -342,30 +348,29 @@ namespace Build_IT_SnowLoads.BuildingTypes
             SnowLoadsNearTallerBuilding = new Dictionary<int, double>();
             double snowLoadInFirstCase;
 
-            if (!snowLoad.ExcepctionalSituation)
+            if (!_snowLoad.ExcepctionalSituation)
             {
                 snowLoadInFirstCase =
                     SnowLoadCalc.CalculateSnowLoad(
                         0.8,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.SnowLoadForSpecificReturnPeriod);
+                        _snowLoad.SnowLoadForSpecificReturnPeriod);
             }
             else
             {
                 snowLoadInFirstCase =
                     SnowLoadCalc.CalculateSnowLoad(
                         0.8,
-                        buildingSite.ExposureCoefficient,
+                        _buildingSite.ExposureCoefficient,
                         Building.ThermalCoefficient,
-                        snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
+                        _snowLoad.DesignExceptionalSnowLoadForSpecificReturnPeriod);
             }
 
             SnowLoadsNearTallerBuilding.Add(1, snowLoadInFirstCase);
             SnowLoadsNearTallerBuilding.Add(2, SnowLoadOnRoofValue);
         }
-
-
-        #endregion // Methods
+        
+        #endregion // Private_Methods
     }
 }

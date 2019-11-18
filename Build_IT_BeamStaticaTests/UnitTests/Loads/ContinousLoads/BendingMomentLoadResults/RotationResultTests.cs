@@ -1,4 +1,4 @@
-﻿using Build_IT_BeamStatica.Loads.ContinousLoads.BendingMomentLoadResults;
+﻿using Build_IT_BeamStatica.Loads.ContinuousLoads.BendingMomentLoadResults;
 using Build_IT_BeamStatica.Loads.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
 using Moq;

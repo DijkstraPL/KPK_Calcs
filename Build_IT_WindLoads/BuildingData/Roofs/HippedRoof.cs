@@ -75,37 +75,76 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
         {
             if (CurrentRotation == Rotation.Degrees_0)
             {
-                var restDistance = Width / 2 - 
+                var restDistance = Width / 2 -
                     GetDistanceForParallelToRidgeWindAt(EdgeDistance / 10) / 2;
-                var areaForFField = ((EdgeDistance / 4 + 
+                var areaForFField = ((EdgeDistance / 4 +
                     (EdgeDistance / 4 - restDistance)) *
                     EdgeDistance / 10 /
                     Math.Cos(Angle0InRadians)) / 2;
+                var areaForGField = (Width - 2 * EdgeDistance / 4) * EdgeDistance / 10 / Math.Cos(Angle0InRadians);
+                var areaForHField = (GetDistanceForParallelToRidgeWindAt(EdgeDistance / 10) + RidgeLength) *
+                    (Length / 2 - EdgeDistance / 10) / 2 / Math.Cos(Angle0InRadians);
+
+                var areaForKField = (GetDistanceForParallelToRidgeWindAt(Length / 2 - EdgeDistance / 20) + RidgeLength) *
+                    EdgeDistance / 20 / 2 / Math.Cos(Angle0InRadians);
+                var areaForJField = EdgeDistance / 10 * (Length / 2 - EdgeDistance / 20) / Math.Cos(Angle0InRadians);
+                var areaForIField = (Width - 2 * EdgeDistance / 10 +
+                    GetDistanceForParallelToRidgeWindAt(Length / 2 - EdgeDistance / 20)) *
+                    (Length / 2 - EdgeDistance / 20) / 2 / Math.Cos(Angle0InRadians);
+
+                var areaForMField = (Length - EdgeDistance / 10) *
+                    ((Width - RidgeLength) / 2 - EdgeDistance / 20)
+                    / 2 / Math.Cos(Angle90InRadians);
+                var areaForLField = Length * (Width - RidgeLength) / 2
+                    / 2 / Math.Cos(Angle90InRadians) - areaForMField;
 
                 Areas.Add(Field.F, areaForFField);
-                Areas.Add(Field.G, (Width - 2 * EdgeDistance / 4) * EdgeDistance / 10);
-                Areas.Add(Field.H, (GetDistanceForParallelToRidgeWindAt(EdgeDistance / 10) + RidgeLength ) * 
-                    (Length / 2 - EdgeDistance / 10) / 2);
-                Areas.Add(Field.I, ((GetDistanceForParallelToRidgeWindAt(
-                    Length/ 2 - EdgeDistance / 10)  + (Width -  EdgeDistance / 10 ) *2)) * 
-                    (Length / 2 - EdgeDistance / 10));
-                Areas.Add(Field.J, EdgeDistance / 10 * (Length / 2 - EdgeDistance / 10));
-                Areas.Add(Field.K, (GetDistanceForParallelToRidgeWindAt(
-                    Length / 2 - EdgeDistance / 10)));
-                // TODO: Add this + angles
-                Areas.Add(Field.L,  EdgeDistance / 10  );
-                Areas.Add(Field.M,  (Length - EdgeDistance / 10)  );
+                Areas.Add(Field.G, areaForGField);
+                Areas.Add(Field.H, areaForHField);
+
+                Areas.Add(Field.K, areaForKField);
+                Areas.Add(Field.I, areaForIField);
+                Areas.Add(Field.J, areaForJField);
+                Areas.Add(Field.M, areaForMField);
+                Areas.Add(Field.L, areaForLField);
+
             }
             else if (CurrentRotation == Rotation.Degrees_90)
             {
-                Areas.Add(Field.F, 1);
-                Areas.Add(Field.G, 1);
-                Areas.Add(Field.H, 1);
-                Areas.Add(Field.I, 1);
-                Areas.Add(Field.J, 1);
-                Areas.Add(Field.L, 1);
-                Areas.Add(Field.M, 1);
-                Areas.Add(Field.N, 1);
+                var restDistance = Length / 2 -
+                    GetDistanceForPerpendicularlyToRidgeWindAt(EdgeDistance / 10) / 2;
+                var areaForFField = ((EdgeDistance / 4 +
+                    (EdgeDistance / 4 - restDistance)) *
+                    EdgeDistance / 10 /
+                    Math.Cos(Angle90InRadians)) / 2;
+                var areaForGField = (Width - 2 * EdgeDistance / 4) * EdgeDistance / 10 / Math.Cos(Angle90InRadians);
+                var areaForHField = Width * (Length - RidgeLength) / 2 / 2 / Math.Cos(Angle90InRadians)
+                    - areaForFField * 2 - areaForGField;
+                var areaForIField = (Width - EdgeDistance / 10 * 2) *
+                    ((Length - RidgeLength) / 2 - EdgeDistance / 10) / 2 / Math.Cos(Angle90InRadians);
+                var areaForJField = Width * (Length - RidgeLength) / 2 / 2 / Math.Cos(Angle90InRadians) -
+                    areaForIField;
+                var areaForLField = EdgeDistance / 10 * Width / 2 / Math.Cos(Angle0InRadians);
+                double areaForMField;
+                if (EdgeDistance / 2 > (Width - RidgeLength) / 2)
+                    areaForMField = (EdgeDistance / 2 - EdgeDistance / 10 +
+                        EdgeDistance / 2 - EdgeDistance / 10 - (Length - RidgeLength) / 2) * Width / 2 / 2 /
+                        Math.Cos(Angle0InRadians);
+                else
+                    areaForMField = (EdgeDistance / 2 - EdgeDistance / 10) *
+                        Width / (Length - RidgeLength) * EdgeDistance / 2 / Math.Cos(Angle0InRadians);
+
+                var areaForNField = (Length + RidgeLength) * Width / 2 / 2 / Math.Cos(Angle0InRadians)
+                    - areaForMField - areaForLField;
+
+                Areas.Add(Field.F, areaForFField);
+                Areas.Add(Field.G, areaForGField);
+                Areas.Add(Field.H, areaForHField);
+                Areas.Add(Field.I, areaForIField);
+                Areas.Add(Field.J, areaForJField);
+                Areas.Add(Field.L, areaForLField);
+                Areas.Add(Field.M, areaForMField);
+                Areas.Add(Field.N, areaForNField);
             }
             else
                 throw new ArgumentException(nameof(CurrentRotation));
@@ -113,8 +152,13 @@ namespace Build_IT_WindLoads.BuildingData.Roofs
 
         private double GetDistanceForParallelToRidgeWindAt(double x)
         {
-           return ((RidgeLength / Length - Width / Length) *
-                    x + Width / 2) * 2;
+            return ((RidgeLength / Length - Width / Length) *
+                     x + Width / 2) * 2;
+        }
+
+        private double GetDistanceForPerpendicularlyToRidgeWindAt(double x)
+        {
+            return -2 * Length / (Width - RidgeLength) * x + Length;
         }
 
         #endregion // Private_Methods

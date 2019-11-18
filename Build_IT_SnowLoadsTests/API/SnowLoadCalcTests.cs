@@ -1,7 +1,7 @@
 ﻿using Build_IT_SnowLoads.API;
 using NUnit.Framework;
 
-namespace Build_IT_SnowLoadsTests.API
+namespace Build_IT_SnowLoadsUnitTests.API
 {
     [TestFixture()]
     public class SnowLoadCalcTests
@@ -9,7 +9,6 @@ namespace Build_IT_SnowLoadsTests.API
         #region CalculateSnowLoad
 
         [Test]
-        [Description("Ensure that calculation for snow load is proper.")]
         public void CalculateSnowLoadTest_Success()
         {
             double shapeCoefficient = 1.5;
@@ -19,9 +18,24 @@ namespace Build_IT_SnowLoadsTests.API
 
             double result = SnowLoadCalc.CalculateSnowLoad(shapeCoefficient, exposureCoefficient, thermalCoefficient, snowLoad);
 
-            Assert.AreEqual(1.296, result, "Something go wrong with calculation for snow load.");
+            Assert.AreEqual(1.296, result);
         }
 
         #endregion // CalculateSnowLoad
+
+        #region CalculateSnowLoadForAnnexB
+
+        [Test]
+        public void CalculateSnowLoadForAnnexBTest_Success()
+        {
+            double shapeCoefficient = 2;
+            double snowLoad = 3;
+
+            double result = SnowLoadCalc.CalculateSnowLoadForAnnexB(shapeCoefficient, snowLoad);
+
+            Assert.AreEqual(6, result);
+        }
+
+        #endregion // CalculateSnowLoadForAnnexB
     }
 }

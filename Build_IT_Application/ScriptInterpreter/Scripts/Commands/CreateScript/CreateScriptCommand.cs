@@ -28,6 +28,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.CreateScript
         public string Notes { get; set; }
         public Language DefaultLanguage { get; set; }
         public ICollection<TagResource> Tags { get; set; }
+        public bool IsPublic { get; set; }
 
         #endregion // Properties
 
@@ -74,7 +75,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.CreateScript
                     DefaultLanguage = request.DefaultLanguage,
                     Added = _dateTime.Now,
                     Modified = _dateTime.Now,
-                    Version = "1"
+                    IsPublic = request.IsPublic
                 };
                 RemoveNotAddedTags(request, script);
                 AddNewTags(request, script);

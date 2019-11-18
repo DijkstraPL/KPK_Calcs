@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
+using Build_IT_Application.ScriptInterpreter.Calculations.Queries;
 using Build_IT_Application.ScriptInterpreter.Figures.Queries;
+using Build_IT_Application.ScriptInterpreter.Groups.Queries;
 using Build_IT_Application.ScriptInterpreter.Parameters.Commands.CreateParameter;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Application.ScriptInterpreter.Scripts.Queries;
 using Build_IT_Application.ScriptInterpreter.Tags.Queries;
+using Build_IT_Application.ScriptInterpreter.TestDatas.Queries;
 using Build_IT_Application.ScriptInterpreter.Translations.Queries;
 using Build_IT_Data.Entities.Scripts;
 using Build_IT_Data.Entities.Scripts.Translations;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -24,16 +28,23 @@ namespace Build_IT_Application.Mapping
                 .ForMember(sr => sr.Tags, operation
                 => operation.MapFrom(s => s.Tags.Select(st => st.Tag)));
             CreateMap<Tag, TagResource>();
+            CreateMap<Group, GroupResource>();
             CreateMap<Parameter, ParameterResource>()
                 .ForMember(p => p.Equation, operation => operation.Ignore())
                 .ForMember(pr => pr.Figures, operation
                 => operation.MapFrom(p => p.ParameterFigures.Select(pp => pp.Figure)));
+            CreateMap<Parameter, CalculateParameterResource>()
+                .ForMember(p => p.Equation, operation => operation.Ignore());
             CreateMap<ValueOption, ValueOptionResource>();
+            CreateMap<TestData, TestDataResource>();
+            CreateMap<Assertion, AssertionResource>();
+            CreateMap<TestParameter, TestParameterResource>();
             CreateMap<Figure, FigureResource>();
             CreateMap<ScriptTranslation, ScriptTranslationResource>();
+            CreateMap<GroupTranslation, GroupTranslationResource>();
             CreateMap<ParameterTranslation, ParameterTranslationResource>();
             CreateMap<ValueOptionTranslation, ValueOptionTranslationResource>();
-
+            
             // API Resource to Domain
             CreateMap<ScriptResource, Script>()
                 .ForMember(s => s.Id, operation => operation.Ignore())
@@ -44,6 +55,7 @@ namespace Build_IT_Application.Mapping
                     AddNewTags(sr, s);
                 });
             CreateMap<TagResource, Tag>();
+            CreateMap<GroupResource, Group>();
             CreateMap<ParameterResource, Parameter>()
                 .ForMember(p => p.Script, operation => operation.Ignore())
                 .ForMember(p => p.ScriptId, operation => operation.Ignore())
@@ -66,12 +78,31 @@ namespace Build_IT_Application.Mapping
                 .ForMember(vo => vo.Id, operation => operation.Ignore())
                 .ForMember(vo => vo.Parameter, operation => operation.Ignore())
                 .ForMember(vo => vo.ParameterId, operation => operation.Ignore());
+            CreateMap<TestDataResource, TestData>()
+                .ForMember(td => td.Script, operation => operation.Ignore())
+                .ForMember(td => td.TestParameters, operation => operation.Ignore())
+                .ForMember(td => td.Assertions, operation => operation.Ignore())
+                .AfterMap((tdr, td) =>
+                {
+                    UpdateAssertions(tdr.Assertions, td);
+                    RemoveNotAddedAssertions(tdr.Assertions, td);
+                    AddNewAssertions(tdr.Assertions, td);
+                })
+                .AfterMap((tdr, td) =>
+                {
+                    UpdateTestParameters(tdr.TestParameters, td);
+                    RemoveNotAddedTestParameters(tdr.TestParameters, td);
+                    AddNewTestParameters(tdr.TestParameters, td);
+                });
+            CreateMap<AssertionResource, Assertion>();
+            CreateMap<TestParameterResource, TestParameter>();
             CreateMap<ScriptTranslationResource, ScriptTranslation>();
             CreateMap<ParameterTranslationResource, ParameterTranslation>();
+            CreateMap<GroupTranslationResource, GroupTranslation>();
             CreateMap<ValueOptionTranslationResource, ValueOptionTranslation>()
                 .ForMember(vot => vot.ValueOption, operation => operation.Ignore());
         }
-
+      
         public void UpdateValueOptions(ICollection<ValueOptionResource> valueOptionsResource, Parameter parameter)
         {
             foreach (var valueOptionResource in valueOptionsResource)
@@ -80,6 +111,7 @@ namespace Build_IT_Application.Mapping
                 if (valueOption == null)
                     continue;
                 valueOption.Name = valueOptionResource.Name;
+                valueOption.Number = valueOptionResource.Number;
                 valueOption.Value = valueOptionResource.Value;
                 valueOption.Description = valueOptionResource.Description;
             }
@@ -98,10 +130,69 @@ namespace Build_IT_Application.Mapping
             var addedValueOptions = valueOptionsResource
                 .Where(vor => !parameter.ValueOptions.Any(vo => vo.Id == vor.Id))
                  .Select(vor =>
-                 new ValueOption { Name = vor.Name, Description = vor.Description, Value = vor.Value }
+                 new ValueOption { Name = vor.Name, Number = vor.Number, Description = vor.Description, Value = vor.Value }
                  ).ToList();
             foreach (var valueOption in addedValueOptions)
                 parameter.ValueOptions.Add(valueOption);
+        }
+        public void AddNewTestParameters(ICollection<TestParameterResource> testParametersResource, TestData testData)
+        {
+            var addedTestParameters = testParametersResource
+                .Where(tpr => !testData.TestParameters.Any(tp => tp.Id == tpr.Id))
+                 .Select(tpr =>
+                 new TestParameter { Value = tpr.Value, ParameterId = tpr.ParameterId, TestDataId = tpr.TestDataId }
+                 ).ToList();
+            foreach (var testParameter in addedTestParameters)
+                testData.TestParameters.Add(testParameter);
+        }
+
+        public void RemoveNotAddedTestParameters(ICollection<TestParameterResource> testParametersResource, TestData testData)
+        {
+            var removedTestParameters = testData.TestParameters.Where(tp =>
+            !testParametersResource.Select(tpr => tpr.Id).Contains(tp.Id)).ToList();
+            foreach (var testParameter in removedTestParameters)
+                testData.TestParameters.Remove(testParameter);
+        }
+
+        public void UpdateTestParameters(ICollection<TestParameterResource> testParametersResource, TestData testData)
+        {
+            foreach (var testParameterResource in testParametersResource)
+            {
+                var testParameter = testData.TestParameters.FirstOrDefault(a => a.Id == testParameterResource.Id);
+                if (testParameter == null)
+                    continue;
+                testParameter.Value = testParameterResource.Value;
+            }
+        }
+
+        public void UpdateAssertions(ICollection<AssertionResource> assertionsResource, TestData testData)
+        {
+            foreach (var assertionResource in assertionsResource)
+            {
+                var assertion = testData.Assertions.FirstOrDefault(a => a.Id == assertionResource.Id);
+                if (assertion == null)
+                    continue;
+                assertion.Value = assertionResource.Value;
+            }
+        }
+
+        public void AddNewAssertions(ICollection<AssertionResource> assertionsResources, TestData testData)
+        {
+            var addedAssertions = assertionsResources
+                .Where(ar => !testData.Assertions.Any(a => a.Id == ar.Id))
+                 .Select(ar =>
+                 new Assertion { Value = ar.Value, TestDataId = ar.TestDataId }
+                 ).ToList();
+            foreach (var assertion in addedAssertions)
+                testData.Assertions.Add(assertion);
+        }
+
+        public void RemoveNotAddedAssertions(ICollection<AssertionResource> assertionsResource, TestData testData)
+        {
+            var removedAssertions = testData.Assertions.Where(a =>
+            !assertionsResource.Select(ar => ar.Id).Contains(a.Id)).ToList();
+            foreach (var assertion in removedAssertions)
+                testData.Assertions.Remove(assertion);
         }
 
         #endregion // Public_Methods
@@ -140,6 +231,7 @@ namespace Build_IT_Application.Mapping
             foreach (var figure in addedFigures)
                 parameter.ParameterFigures.Add(figure);
         }
+
 
         #endregion // Private_Methods
     }

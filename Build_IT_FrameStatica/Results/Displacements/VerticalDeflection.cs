@@ -1,10 +1,16 @@
-﻿namespace Build_IT_FrameStatica.Results.Displacements
+﻿using Build_IT_FrameStatica.Spans.Interfaces;
+
+namespace Build_IT_FrameStatica.Results.Displacements
 {
     internal class VerticalDeflection : Displacement
     {
         #region Constructors
 
-        public VerticalDeflection(double? position = null) : base(position)
+        public VerticalDeflection() : base()
+        {
+        }
+
+        public VerticalDeflection(ISpan span, double position) : base(span, position)
         {
         }
 

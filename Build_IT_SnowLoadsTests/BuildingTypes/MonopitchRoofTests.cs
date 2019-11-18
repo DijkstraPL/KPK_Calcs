@@ -6,7 +6,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 
-namespace Build_IT_SnowLoadsTests.BuildingTypes
+namespace Build_IT_SnowLoadsUnitTests.BuildingTypes
 {
     [TestFixture()]
     public class MonopitchRoofTests
@@ -15,65 +15,62 @@ namespace Build_IT_SnowLoadsTests.BuildingTypes
         public void MonopitchRoofTest_Constructor_MinusValues_Success()
         {
             var building = new Mock<IBuilding>();
+
             Assert.Throws<ArgumentOutOfRangeException>(()
                 => new MonopitchRoof(building.Object, -20));
         }
 
         [Test()]
-        [Description("Check constructor for the monopitchRoof.")]
         public void MonopitchRoofTest_Constructor_Success()
         {
-            var monopitchRoof = new MonopitchRoof(new BuildingImplementation()
-            { SnowLoad = new SnowLoadImplementation() }, 15);
-            Assert.IsNotNull(monopitchRoof, "MonopitchRoof should be created.");
-            Assert.AreEqual(15, monopitchRoof.Slope, "Slope should be set at construction time.");
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+
+            var monopitchRoof = new MonopitchRoof(building.Object, 15);
+
+            Assert.AreEqual(15, monopitchRoof.Slope);
         }
 
         [Test()]
-        [Description("Check calculations of snow loads for the monopitchRoof.")]
-        public void MonopitchRoofTest_CalculateSnowLoad_Success()
+        public void MonopitchRoofTest_CalculateSnowLoad_NotExceptional_Success()
         {
-            var building = BuildingImplementation.CreateBuilding();
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            var buildingSite = new Mock<IBuildingSite>();
 
-            var monopitchRoof = new MonopitchRoof(building, 15);
+            building.Setup(b => b.ThermalCoefficient).Returns(3);
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+            snowLoad.Setup(sl => sl.BuildingSite).Returns(buildingSite.Object);
+            snowLoad.Setup(sl => sl.SnowLoadForSpecificReturnPeriod).Returns(5);
+            buildingSite.Setup(bs => bs.ExposureCoefficient).Returns(2);
+
+            var monopitchRoof = new MonopitchRoof(building.Object, 15);
 
             monopitchRoof.CalculateSnowLoad();
-            Assert.AreEqual(0.72, Math.Round(monopitchRoof.SnowLoadOnRoofValue, 3), "Snow load is not calculated properly.");
+            Assert.AreEqual(24, monopitchRoof.SnowLoadOnRoofValue, 0.00001);
         }
 
         [Test()]
-        [Description("Example number 2 from \"Obciążenia budynków i konstrukcji budowlanych według Eurokodów\" - Anna Rawska-Skotniczy")]
-        public void ExampleTest2_CalculateSnowLoad_Success()
+        public void MonopitchRoofTest_CalculateSnowLoad_Exceptional_Success()
         {
-            var buildingSite = new BuildingSite(Zones.ThirdZone, Topographies.Normal, 360);
-            var snowLoad = new SnowLoad(buildingSite);
-            var building = new Building(snowLoad);
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            var buildingSite = new Mock<IBuildingSite>();
 
-            var monopitchRoof = new MonopitchRoof(building, 5);
+            building.Setup(b => b.ThermalCoefficient).Returns(3);
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+            snowLoad.Setup(sl => sl.BuildingSite).Returns(buildingSite.Object);
+            snowLoad.Setup(sl => sl.DesignExceptionalSnowLoadForSpecificReturnPeriod).Returns(10);
+            snowLoad.Setup(sl => sl.ExcepctionalSituation).Returns(true);
+            buildingSite.Setup(bs => bs.ExposureCoefficient).Returns(2);
 
-            buildingSite.CalculateExposureCoefficient();
-            snowLoad.CalculateSnowLoad();
-            building.CalculateThermalCoefficient();
+            var monopitchRoof = new MonopitchRoof(building.Object, 15);
+
             monopitchRoof.CalculateSnowLoad();
-            Assert.AreEqual(1.248, Math.Round(monopitchRoof.SnowLoadOnRoofValue, 3),
-                "Snow load for roof is not calculated properly.");
+            Assert.AreEqual(48, monopitchRoof.SnowLoadOnRoofValue, 0.00001);
         }
 
-        [Test()]
-        [Description("Example number 4 from \"Obciążenia budynków i konstrukcji budowlanych według Eurokodów\" - Anna Rawska-Skotniczy")]
-        public void ExampleTest4_CalculateSnowLoad_Success()
-        {
-            var buildingSite = new BuildingSite(Zones.SecondZone, Topographies.Normal, altitudeAboveSea: 175);
-            var snowLoad = new SnowLoad(buildingSite);
-            var building = new Building(snowLoad);
-            var monopitchRoof = new MonopitchRoof(building, 10);
 
-            buildingSite.CalculateExposureCoefficient();
-            snowLoad.CalculateSnowLoad();
-            building.CalculateThermalCoefficient();
-            monopitchRoof.CalculateSnowLoad();
-            Assert.AreEqual(0.72, Math.Round(monopitchRoof.SnowLoadOnRoofValue, 3),
-                "Snow load is not calculated properly.");
-        }
     }
 }

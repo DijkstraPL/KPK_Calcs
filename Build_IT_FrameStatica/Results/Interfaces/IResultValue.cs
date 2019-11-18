@@ -1,12 +1,6 @@
 ﻿namespace Build_IT_FrameStatica.Results.Interfaces
 {
-    public interface IResultValue
+    public interface IResultValue : IValue, IPosition
     {
-        #region Properties
-
-        double Value { get; set; }
-        double? Position { get; }
-
-        #endregion // Properties
     }
 }

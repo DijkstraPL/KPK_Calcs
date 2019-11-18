@@ -123,7 +123,7 @@ namespace Build_IT_SnowLoads.Exceptional
 
         #endregion // Constructors
 
-        #region Methods
+        #region Public_Methods
 
         /// <summary>
         /// Calculate <see cref="SnowLoad"/>.
@@ -135,7 +135,11 @@ namespace Build_IT_SnowLoads.Exceptional
             CalculateShapeCoefficient();
             CalculateSnowLoadOnRoof();
         }
-        
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
+
         private void SetReferences()
         {
             snowLoad = Building.SnowLoad;
@@ -157,10 +161,12 @@ namespace Build_IT_SnowLoads.Exceptional
 
         private void CalculateSnowLoadOnRoof()
         {
-            if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
+            if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, annexB: true))
                 SnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(ShapeCoefficient, snowLoad.SnowLoadForSpecificReturnPeriod);
+            else
+                throw new ArgumentException();
         }
 
-        #endregion // Methods
+        #endregion // Private_Methods
     }
 }

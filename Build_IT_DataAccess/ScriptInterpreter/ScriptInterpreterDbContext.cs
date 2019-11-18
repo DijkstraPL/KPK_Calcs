@@ -15,11 +15,20 @@ namespace Build_IT_DataAccess.ScriptInterpreter
 
         public DbSet<Script> Scripts { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Parameter> Parameters { get; set; }
         public DbSet<Figure> Figures { get; set; }
+        public DbSet<Version> Versions { get; set; }
+
         public DbSet<ScriptTranslation> ScriptsTranslations { get; set; }
+        public DbSet<GroupTranslation> GroupsTranslations { get; set; }
         public DbSet<ParameterTranslation> ParametersTranslations { get; set; }
         public DbSet<ValueOptionTranslation> ValueOptionsTranslations { get; set; }
+        public DbSet<VersionTranslation> VersionsTranslations { get; set; }
+
+        public DbSet<TestData> TestDatas { get; set; }
+        public DbSet<TestParameter> TestParameters { get; set; }
+        public DbSet<Assertion> Assertions { get; set; }
 
         #endregion // Properties
 
@@ -52,10 +61,10 @@ namespace Build_IT_DataAccess.ScriptInterpreter
 
                     _configuration = builder.Build();
                 }
-#if RELEASE
+#if RELEASE 
                 optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Scripts"));
 #endif
-#if DEBUG
+#if DEBUG 
                 optionsBuilder.UseSqlServer(_configuration.GetSection("TestConnectionStrings").GetValue<string>("Scripts"));
 #endif
             }
@@ -69,15 +78,23 @@ namespace Build_IT_DataAccess.ScriptInterpreter
 
             modelBuilder.ApplyConfiguration(new ScriptConfiguration());
             modelBuilder.ApplyConfiguration(new TagConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupConfiguration());
             modelBuilder.ApplyConfiguration(new ParameterConfiguration());
             modelBuilder.ApplyConfiguration(new ValueOptionConfiguration());
             modelBuilder.ApplyConfiguration(new ScriptTagConfiguration());
-            modelBuilder.ApplyConfiguration(new ParameterFigureConfiguration());
             modelBuilder.ApplyConfiguration(new FigureConfiguration());
+            modelBuilder.ApplyConfiguration(new ParameterFigureConfiguration());
+            modelBuilder.ApplyConfiguration(new VersionConfiguration());
 
             modelBuilder.ApplyConfiguration(new ScriptTranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ParameterTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ValueOptionTranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new VersionTranslationConfiguration());
+
+            modelBuilder.ApplyConfiguration(new TestDataConfiguration());
+            modelBuilder.ApplyConfiguration(new TestParameterConfiguration());
+            modelBuilder.ApplyConfiguration(new AssertionConfiguration());
         }
 
 #endregion // Protected_Methods

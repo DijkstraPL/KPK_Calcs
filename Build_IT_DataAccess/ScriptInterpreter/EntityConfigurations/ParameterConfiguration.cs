@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 {
-    public class ParameterConfiguration : IEntityTypeConfiguration<Parameter>
+    internal class ParameterConfiguration : IEntityTypeConfiguration<Parameter>
     {
         #region Public_Methods
 
@@ -29,6 +29,9 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
             builder.HasMany<ParameterFigure>(p => p.ParameterFigures)
                 .WithOne(pp => pp.Parameter)
                 .HasForeignKey(pp => pp.ParameterId);
+
+            builder.Property(p => p.VersionId)
+                .IsRequired(false);
         }
 
         #endregion // Public_Methods

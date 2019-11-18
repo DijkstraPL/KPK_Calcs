@@ -1,0 +1,43 @@
+
+<mat-card class="flex-grow-1">
+    <mat-card-header>
+        <div mat-card-avatar class="script-header-image"></div>
+        <mat-card-title>{{ script.name }}</mat-card-title>
+        <mat-card-subtitle>{{ script.accordingTo }}</mat-card-subtitle>
+    </mat-card-header>
+    <div mat-card-image>
+        <ul>
+            <li class="small"
+                *ngFor="let tag of script.tags">{{tag.name}}</li>
+        </ul>
+    </div>
+    <!--<img mat-card-image
+         src="https://lorempixel.com/300/300/?random={{script.id}}"
+         title="{{script.name}}"
+         alt="{{script.name}}">-->
+    <mat-card-content>
+        <p class="mb-4">
+            {{script.description }}
+        </p>
+    </mat-card-content>
+    <mat-card-actions class="footer">
+        <div class="actions">
+            <button mat-stroked-button
+                    [routerLink]="['/scripts/calculator', script.id]">
+                <span class="fa fa-calculator"></span> {{'scriptCard.Calculate' | translate}}
+            </button>
+            <button *ngIf="this.auth.isLoggedIn() && script.isEditable"
+                    mat-stroked-button
+                    [routerLink]="['/scripts/edit', script.id]">
+                <span class="fa fa-edit"></span> {{'scriptCard.Edit' | translate}}
+            </button>
+        </div>
+        <button *ngIf="this.auth.isLoggedIn() && script.isEditable"
+                mat-stroked-button
+                color="warn"
+                class="float-right remove-button"
+                (click)="delete(script)">
+            <span class="fa fa-remove"></span> {{'scriptCard.Delete' | translate}}
+        </button>
+    </mat-card-actions>
+</mat-card>

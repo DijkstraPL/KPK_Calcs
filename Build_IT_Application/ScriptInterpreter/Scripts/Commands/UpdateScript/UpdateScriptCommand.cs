@@ -26,6 +26,8 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.UpdateScript
         public string Notes { get; set; }
         public Language DefaultLanguage { get; set; }
         public ICollection<TagResource> Tags { get; set; }
+        public bool IsPublic { get; set; }
+        public bool IsAdmin { get; set; }
 
         #endregion // Properties
 
@@ -59,6 +61,9 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.UpdateScript
             {
                 var script = await _scriptRepository.GetScriptWithTagsAsync(request.Id);
 
+                if (script.Author != request.Author && !request.IsAdmin)
+                    throw new ValidationException();
+
                 if (script == null)
                     throw new NotFoundException(nameof(Script), request.Id);
 
@@ -70,6 +75,7 @@ namespace Build_IT_Application.ScriptInterpreter.Scripts.Commands.UpdateScript
                 script.AccordingTo = request.AccordingTo;
                 script.Notes = request.Notes;
                 script.DefaultLanguage = request.DefaultLanguage;
+                script.IsPublic = request.IsPublic;
                 script.Modified = _dateTime.Now;
 
                 RemoveNotAddedTags(request, script);

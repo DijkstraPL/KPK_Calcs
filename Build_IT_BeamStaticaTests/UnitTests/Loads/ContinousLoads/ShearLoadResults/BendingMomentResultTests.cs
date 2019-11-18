@@ -1,4 +1,4 @@
-﻿using Build_IT_BeamStatica.Loads.ContinousLoads.ShearLoadResults;
+﻿using Build_IT_BeamStatica.Loads.ContinuousLoads.ShearLoadResults;
 using Build_IT_BeamStatica.Loads.Interfaces;
 using Moq;
 using NUnit.Framework;

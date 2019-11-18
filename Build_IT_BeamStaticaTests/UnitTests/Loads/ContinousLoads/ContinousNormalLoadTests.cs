@@ -1,4 +1,4 @@
-﻿using Build_IT_BeamStatica.Loads.ContinousLoads;
+﻿using Build_IT_BeamStatica.Loads.ContinuousLoads;
 using Build_IT_BeamStatica.Loads.Interfaces;
 using Build_IT_BeamStatica.Spans.Interfaces;
 using Moq;
@@ -21,7 +21,7 @@ namespace Build_IT_BeamStaticaTests.UnitTests.Loads.ContinousLoads
             span.Setup(s => s.Material.YoungModulus).Returns(3);
             _span = span.Object;
 
-            _continousNormalLoad = ContinousNormalLoad.Create(
+            _continousNormalLoad = ContinuousNormalLoad.Create(
                 startPosition: 1, startValue: 2, endPosition: 5, endValue: 10);
         }
 

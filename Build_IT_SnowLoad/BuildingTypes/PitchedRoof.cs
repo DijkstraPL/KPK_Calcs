@@ -62,6 +62,8 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// </summary>
         public IBuilding Building { get; private set; }
 
+        public const bool DefaultSnowFences = false;
+
         #endregion
 
         #region Constructors
@@ -75,7 +77,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
         /// <param name="leftRoofSnowFences">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="LeftRoof"/>.</param>
         /// <param name="rightRoofSnowFences">Set <see cref="IMonopitchRoof.SnowFences"/> for <see cref="RightRoof"/>.</param>
         public PitchedRoof(IBuilding building, double leftRoofSlope, double rightRoofSlope,
-            bool leftRoofSnowFences = false, bool rightRoofSnowFences = false)
+            bool leftRoofSnowFences = DefaultSnowFences, bool rightRoofSnowFences = DefaultSnowFences)
         {
             LeftRoofCasesSnowLoad = new Dictionary<int, double>();
             RightRoofCasesSnowLoad = new Dictionary<int, double>();
@@ -105,7 +107,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
 
         #endregion // Constructors
 
-        #region Methods
+        #region Public_Methods
 
         /// <summary>
         /// Calculate <see cref="IMonopitchRoof.SnowLoadOnRoofValue"/> for <see cref="LeftRoof"/> and <see cref="RightRoof"/> 
@@ -117,6 +119,10 @@ namespace Build_IT_SnowLoads.BuildingTypes
             RightRoof.CalculateSnowLoad();
             SetCasesSnowLoad();
         }
+
+        #endregion // Public_Methods
+
+        #region Private_Methods
 
         /// <summary>
         /// Set <see cref="LeftRoofCasesSnowLoad"/> and <see cref="RightRoofCasesSnowLoad"/>.
@@ -136,7 +142,7 @@ namespace Build_IT_SnowLoads.BuildingTypes
             RightRoofCasesSnowLoad.Add(3, 0.5 * RightRoof.SnowLoadOnRoofValue);
         }
 
-        #endregion // Methods
+        #endregion // Private_Methods
 
     }
 }

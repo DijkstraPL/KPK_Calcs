@@ -174,7 +174,7 @@ namespace Build_IT_SnowLoads.Exceptional
 
         #endregion // Constructors
 
-        #region Methods
+        #region Public_Methods
 
         /// <summary>
         /// Calculate <see cref="LeftDriftLength"/> and <see cref="RightDriftLength"/>.
@@ -204,6 +204,10 @@ namespace Build_IT_SnowLoads.Exceptional
             CalculateSnowLoad2();
         }
 
+        #endregion // Public_Methods
+
+        #region Private_Methods
+
         private void SetReferences()
         {
             snowLoad = Building.SnowLoad;
@@ -219,13 +223,17 @@ namespace Build_IT_SnowLoads.Exceptional
         {
             if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
                 LeftSnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(LeftShapeCoefficient, snowLoad.SnowLoadForSpecificReturnPeriod);
+            else
+                throw new ArgumentException();
         }
         private void CalculateSnowLoad2()
         {
             if (ConditionChecker.ForDesignSituation(snowLoad.ExcepctionalSituation, snowLoad.CurrentDesignSituation, true))
                 RightSnowLoad = SnowLoadCalc.CalculateSnowLoadForAnnexB(RightShapeCoefficient, snowLoad.SnowLoadForSpecificReturnPeriod);
+            else
+                throw new ArgumentException();
         }
 
-        #endregion // Methods
+        #endregion // Private_Methods
     }
 }

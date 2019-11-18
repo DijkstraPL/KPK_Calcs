@@ -1,6 +1,6 @@
 ﻿using Build_IT_SnowLoads.Interfaces;
 
-namespace Build_IT_SnowLoadsTests
+namespace Build_IT_SnowLoadsUnitTests
 {
     public class BuildingImplementation : IBuilding
     {

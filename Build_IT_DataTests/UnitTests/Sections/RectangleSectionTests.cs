@@ -18,7 +18,7 @@ namespace Build_IT_DataTests.UnitTests.Sections
         [Test()]
         public void RectangleSection_MinusHeightTest_ThrowsArgumentOutOfRangeException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() 
+            Assert.Throws<ArgumentOutOfRangeException>(()
                 => new RectangleSection(width: 100, height: -250));
         }
 
@@ -63,7 +63,7 @@ namespace Build_IT_DataTests.UnitTests.Sections
             Assert.That(_rectangleSection.AdjustedPoints[2].Y, Is.EqualTo(125), message: "2Y");
             Assert.That(_rectangleSection.AdjustedPoints[3].X, Is.EqualTo(-50).Within(0.0001), message: "3X");
             Assert.That(_rectangleSection.AdjustedPoints[3].Y, Is.EqualTo(125), message: "3Y");
-           }
+        }
 
         [Test()]
         public void RectangleSection_CalculatedMomentOfInteriaTest_Success()

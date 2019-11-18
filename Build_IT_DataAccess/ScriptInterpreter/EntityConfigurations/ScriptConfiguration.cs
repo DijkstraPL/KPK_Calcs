@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 {
-    public class ScriptConfiguration : IEntityTypeConfiguration<Script>
+    internal class ScriptConfiguration : IEntityTypeConfiguration<Script>
     {
         #region Public_Methods
         
@@ -29,10 +29,7 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 
             builder.Property(s => s.Author)
                 .HasMaxLength(255);
-
-            builder.Property(s => s.Version)
-                .HasMaxLength(50);
-
+            
             builder.Property(s => s.DefaultLanguage)
                 .HasDefaultValue(Language.English);
 
@@ -42,6 +39,13 @@ namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
             builder.HasMany<Parameter>(s => s.Parameters)
                 .WithOne(p => p.Script)
                 .HasForeignKey(p => p.ScriptId);
+
+            builder.HasMany<Version>(s => s.Versions)
+                .WithOne(v => v.Script)
+                .HasForeignKey(v => v.ScriptId);
+
+            builder.Property(s => s.IsPublic)
+                .HasDefaultValue(false);
         }
 
         #endregion // Public_Methods

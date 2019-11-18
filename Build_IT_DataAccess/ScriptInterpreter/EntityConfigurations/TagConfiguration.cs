@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Build_IT_DataAccess.ScriptInterpreter.EntityConfigurations
 {
-    public class TagConfiguration : IEntityTypeConfiguration<Tag>
+    internal class TagConfiguration : IEntityTypeConfiguration<Tag>
     {
         #region Public_Methods
         

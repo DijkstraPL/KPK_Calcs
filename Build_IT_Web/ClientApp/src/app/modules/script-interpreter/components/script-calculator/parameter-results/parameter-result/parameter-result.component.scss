@@ -1,0 +1,23 @@
+.parameter-result-header{
+    position:relative;
+    top:0.4em;
+}
+
+.parameter-result-value{
+    font-size: 120%;
+}
+
+.parameter-result-important {
+    border-bottom-style: dotted;
+    border-top-style: dotted;
+    border-color: rgb(156,39,176);
+    border-width: 3px;
+}
+
+.valid{
+  color: rgba(0,255,0,0.3);
+}
+
+.notValid {
+  color: rgba(255,0,0,0.3);
+}

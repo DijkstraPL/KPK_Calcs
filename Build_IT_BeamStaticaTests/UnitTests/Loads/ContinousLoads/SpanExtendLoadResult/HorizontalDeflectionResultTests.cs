@@ -1,4 +1,4 @@
-﻿using Build_IT_BeamStatica.Loads.ContinousLoads.SpanExtendLoadResult;
+﻿using Build_IT_BeamStatica.Loads.ContinuousLoads.SpanExtendLoadResult;
 using Build_IT_BeamStatica.Loads.Interfaces;
 using Moq;
 using NUnit.Framework;

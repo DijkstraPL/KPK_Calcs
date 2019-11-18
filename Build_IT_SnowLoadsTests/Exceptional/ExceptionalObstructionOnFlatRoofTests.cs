@@ -1,67 +1,165 @@
 ﻿using Build_IT_SnowLoads;
 using Build_IT_SnowLoads.Exceptional;
+using Build_IT_SnowLoads.Interfaces;
+using Moq;
 using NUnit.Framework;
 using System;
 
-namespace Build_IT_SnowLoadsTests.Exceptional
+namespace Build_IT_SnowLoadsUnitTests.Exceptional
 {
     [TestFixture()]
     public class ExceptionalObstructionOnFlatRoofTests
     {
         [Test()]
-        [Description("Check constructor for the ExceptionalObstructionOnFlatRoof.")]
         public void ExceptionalObstructionOnFlatRoofTest_Constructor_Success()
         {
-            var building = BuildingImplementation.CreateBuilding();
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
 
             var exceptionalObstructionOnFlatRoof =
-                new ExceptionalObstructionOnFlatRoof(building, 15, 20, 1, 0.5);
+                new ExceptionalObstructionOnFlatRoof(building.Object, leftWidth: 15, rightWidth: 20,
+                leftHeightDifference: 1, rightHeightDifference: 0.5);
 
-            Assert.IsNotNull(exceptionalObstructionOnFlatRoof,
-                "ExceptionalObstructionOnFlatRoof should be created.");
-            Assert.AreEqual(15, exceptionalObstructionOnFlatRoof.LeftWidth,
-                "Width should be set at construction time.");
-            Assert.AreEqual(20, exceptionalObstructionOnFlatRoof.RightWidth,
-                "Width should be set at construction time.");
-            Assert.AreEqual(1, exceptionalObstructionOnFlatRoof.LeftHeightDifference,
-                "Height should be set at construction time.");
-            Assert.AreEqual(0.5, exceptionalObstructionOnFlatRoof.RightHeightDifference,
-                "Height should be set at construction time.");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(15, exceptionalObstructionOnFlatRoof.LeftWidth);
+                Assert.AreEqual(20, exceptionalObstructionOnFlatRoof.RightWidth);
+                Assert.AreEqual(1, exceptionalObstructionOnFlatRoof.LeftHeightDifference);
+                Assert.AreEqual(0.5, exceptionalObstructionOnFlatRoof.RightHeightDifference);
+            });
         }
 
         [Test()]
-        [Description("Check calculations of snow loads for the ExceptionalObstructionOnFlatRoof.")]
-        public void ExceptionalObstructionOnFlatRoofTest_CalculateSnowLoad_Success()
+        public void ExceptionalMultiSpanRoofTest_Constructor_MinusValues_ThrowsArgumentOutOfRangeException()
         {
-            var building = BuildingImplementation.CreateBuilding();
-            building.SnowLoadImplementation.ExcepctionalSituation = true;
-            building.SnowLoadImplementation.CurrentDesignSituation = DesignSituation.B2;
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+
+
+            Assert.Multiple(() =>
+            {
+                Assert.Throws<ArgumentOutOfRangeException>(() => new ExceptionalObstructionOnFlatRoof(
+                    building.Object, leftWidth: -15, rightWidth: 20,
+                    leftHeightDifference: 1, rightHeightDifference: 0.5));
+                Assert.Throws<ArgumentOutOfRangeException>(() => new ExceptionalObstructionOnFlatRoof(
+                    building.Object, leftWidth: 15, rightWidth: -20,
+                leftHeightDifference: 1, rightHeightDifference: 0.5));
+                Assert.Throws<ArgumentOutOfRangeException>(() => new ExceptionalObstructionOnFlatRoof(
+                    building.Object, leftWidth: 15, rightWidth: 20,
+                leftHeightDifference: -1, rightHeightDifference: 0.5));
+                Assert.Throws<ArgumentOutOfRangeException>(() => new ExceptionalObstructionOnFlatRoof(
+                    building.Object, leftWidth: 15, rightWidth: 20,
+                leftHeightDifference: -1, rightHeightDifference: -0.5));
+            });
+        }
+
+        [Test()]
+        public void ExceptionalMultiSpanRoofTest_Constructor_LargerThan2HeightDifferences_ThrowsArgumentOutOfRangeException()
+        {
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+
+
+            Assert.Multiple(() =>
+            {
+                Assert.Throws<ArgumentOutOfRangeException>(() => new ExceptionalObstructionOnFlatRoof(
+                    building.Object, leftWidth: 15, rightWidth: 20,
+                    leftHeightDifference: 3, rightHeightDifference: 0.5));
+                Assert.Throws<ArgumentOutOfRangeException>(() => new ExceptionalObstructionOnFlatRoof(
+                    building.Object, leftWidth: 15, rightWidth: 20,
+                leftHeightDifference: 1, rightHeightDifference: 3));
+            });
+        }
+
+        [Test()]
+        public void ExceptionalObstructionOnFlatRoofTest_CalculateDriftLength_HeightDifferenceLessThan1()
+        {
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+            snowLoad.Setup(sl => sl.ExcepctionalSituation).Returns(true);
+            snowLoad.Setup(sl => sl.CurrentDesignSituation).Returns(DesignSituation.B2);
+            snowLoad.Setup(sl => sl.SnowLoadForSpecificReturnPeriod).Returns(2);
 
             var exceptionalObstructionOnFlatRoof =
-                new ExceptionalObstructionOnFlatRoof(building, 15, 20, 1, 0.5);
+                new ExceptionalObstructionOnFlatRoof(building.Object, leftWidth: 15, rightWidth: 2,
+                leftHeightDifference: 1, rightHeightDifference: 0.5);
+
+            exceptionalObstructionOnFlatRoof.CalculateDriftLength();
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(5, exceptionalObstructionOnFlatRoof.LeftDriftLength, 0.0001);
+                Assert.AreEqual(2, exceptionalObstructionOnFlatRoof.RightDriftLength, 0.0001);
+            });
+        }
+
+        [Test()]
+        public void ExceptionalObstructionOnFlatRoofTest_CalculateDriftLength_HeightDifferenceMoreThan1()
+        {
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+            snowLoad.Setup(sl => sl.ExcepctionalSituation).Returns(true);
+            snowLoad.Setup(sl => sl.CurrentDesignSituation).Returns(DesignSituation.B2);
+            snowLoad.Setup(sl => sl.SnowLoadForSpecificReturnPeriod).Returns(2);
+
+            var exceptionalObstructionOnFlatRoof =
+                new ExceptionalObstructionOnFlatRoof(building.Object, leftWidth: 15, rightWidth: 2,
+                leftHeightDifference: 1.5, rightHeightDifference: 1.7);
+
+            exceptionalObstructionOnFlatRoof.CalculateDriftLength();
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(15, exceptionalObstructionOnFlatRoof.LeftDriftLength, 0.0001);
+                Assert.AreEqual(2, exceptionalObstructionOnFlatRoof.RightDriftLength, 0.0001);
+            });
+        }
+
+        [Test()]
+        public void ExceptionalMultiSpanRoofTest_CalculateSnowLoad_ExceptionalDesignSituationBAnnexB()
+        {
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+            snowLoad.Setup(sl => sl.ExcepctionalSituation).Returns(true);
+            snowLoad.Setup(sl => sl.CurrentDesignSituation).Returns(DesignSituation.B2);
+            snowLoad.Setup(sl => sl.SnowLoadForSpecificReturnPeriod).Returns(0.5);
+
+            var exceptionalObstructionOnFlatRoof =
+                new ExceptionalObstructionOnFlatRoof(building.Object, leftWidth: 15, rightWidth: 2,
+                leftHeightDifference: 1, rightHeightDifference: 2);
 
             exceptionalObstructionOnFlatRoof.CalculateSnowLoad();
 
-            Assert.AreEqual(2, Math.Round(exceptionalObstructionOnFlatRoof.LeftSnowLoad, 3),
-                "Snow load for roof is not calculated properly.");
-            Assert.AreEqual(1, Math.Round(exceptionalObstructionOnFlatRoof.RightSnowLoad, 3),
-                "Snow load for roof is not calculated properly.");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(4, exceptionalObstructionOnFlatRoof.LeftShapeCoefficient, 0.0001);
+                Assert.AreEqual(2, exceptionalObstructionOnFlatRoof.LeftSnowLoad, 0.0001);
+                Assert.AreEqual(5, exceptionalObstructionOnFlatRoof.RightShapeCoefficient, 0.0001);
+                Assert.AreEqual(2.5, exceptionalObstructionOnFlatRoof.RightSnowLoad, 0.0001);
+            });
         }
 
         [Test()]
-        [Description("Check calculations of drift length for the ExceptionalObstructionOnFlatRoof.")]
-        public void ExceptionalObstructionOnFlatRoofTest_CalculateDriftLength_Success()
+        public void ExceptionalObstructionOnFlatRoofTest_CalculateSnowLoad_NotExceptionalDesignSituationBAnnexB_ThrowsArgumentException()
         {
-            var building = BuildingImplementation.CreateBuilding();
+            var building = new Mock<IBuilding>();
+            var snowLoad = new Mock<ISnowLoad>();
+            building.Setup(b => b.SnowLoad).Returns(snowLoad.Object);
+            snowLoad.Setup(sl => sl.ExcepctionalSituation).Returns(false);
+            snowLoad.Setup(sl => sl.CurrentDesignSituation).Returns(DesignSituation.A);
+            snowLoad.Setup(sl => sl.SnowLoadForSpecificReturnPeriod).Returns(2);
 
             var exceptionalObstructionOnFlatRoof =
-                new ExceptionalObstructionOnFlatRoof(building, 15, 20, 1, 0.5);
+                new ExceptionalObstructionOnFlatRoof(building.Object, leftWidth: 15, rightWidth: 2,
+                leftHeightDifference: 1, rightHeightDifference: 0.5);
 
-            exceptionalObstructionOnFlatRoof.CalculateDriftLength();
-            Assert.AreEqual(5, Math.Round(exceptionalObstructionOnFlatRoof.LeftDriftLength, 3),
-                "Drift length for roof is not calculated properly.");
-            Assert.AreEqual(2.5, Math.Round(exceptionalObstructionOnFlatRoof.RightDriftLength, 3),
-                "Drift length for roof is not calculated properly.");
+            Assert.Throws<ArgumentException>(() => exceptionalObstructionOnFlatRoof.CalculateSnowLoad());
         }
     }
 }

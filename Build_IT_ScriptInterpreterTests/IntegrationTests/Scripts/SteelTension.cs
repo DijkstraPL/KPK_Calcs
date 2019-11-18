@@ -30,7 +30,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 {
                     Number = 1,
                     Name = "N_Ed_",
-                    Description = "Normal design force at calculated position.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
                     Unit = "kN"
@@ -39,7 +38,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 {
                     Number = 2,
                     Name = "A",
-                    Description = "Area of the section.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Editable | ParameterOptions.Visible,
                     Unit = "cm^2^"
@@ -48,7 +46,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 {
                     Number = 3,
                     Name = "f_y_",
-                    Description = "Yield strength.",
                     ValueType = ValueTypes.Number,
                     ValueOptions = new List<ValueOption>()
                     {
@@ -67,7 +64,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 {
                     Number = 4,
                     Name = "γ_M0_",
-                    Description = "Partial safety factor.",
                     Value = 1.0,
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.StaticData,
@@ -78,7 +74,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                     Number = 5,
                     Name = "N_pl,Rd_",
                     Value = "[A]*[f_y_]/[γ_M0_]/10",
-                    Description = "Design plastic resistance of the gross cross-section.",
                     ValueType = ValueTypes.Number,
                     Context = ParameterOptions.Calculation | ParameterOptions.Visible,
                     Unit = "kN"
@@ -89,7 +84,6 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
                 Number = 27,
                 Name = "Resistance",
                 Value = "[N_Ed_]/[N_pl,Rd_]*100",
-                Description = "Resistance of the element loaded with normal force.",
                 ValueType = ValueTypes.Number,
                 Context = ParameterOptions.Calculation | ParameterOptions.Visible,
                 Unit = "%"
@@ -97,7 +91,7 @@ namespace Build_IT_ScriptInterpreterTests.IntegrationTests.Scripts
 
             var script = scriptBuilder.Build();
 
-            var calculationEngine = new CalculationEngine(script);
+            var calculationEngine = new CalculationEngine(script.Parameters);
             calculationEngine.CalculateFromText("[A]=60|[f_y_]=235|[N_Ed_]=1400");
 
             Assert.That(script.GetParameterByName("N_pl,Rd_").Value, Is.EqualTo(1410).Within(0.000001));
