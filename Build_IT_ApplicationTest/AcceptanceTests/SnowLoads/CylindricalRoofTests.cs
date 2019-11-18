@@ -1,11 +1,10 @@
-﻿using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
+﻿using Build_IT_Application.ScriptInterpreter.Calculations.Queries;
 using Build_IT_Data.Entities.Scripts;
-using Build_IT_Data.Entities.Scripts.Enums;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using SIP = Build_IT_ScriptInterpreter.Parameters;
 
 namespace Build_IT_ApplicationTest.AcceptanceTests.SnowLoads
 {
@@ -27,18 +26,18 @@ namespace Build_IT_ApplicationTest.AcceptanceTests.SnowLoads
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
-            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
-            var parametersForCalculation = new Dictionary<string, ParameterResource>(
-                parametersResource.Where(p => (p.Context & ParameterOptions.Editable) != 0 &&
-                (p.Context & ParameterOptions.Visible) != 0)
+            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<CalculateParameterResource>>(parameters);
+            var parametersForCalculation = new Dictionary<string, CalculateParameterResource>(
+                parametersResource.Where(p => (p.Context & SIP.ParameterOptions.Editable) != 0 &&
+                (p.Context & SIP.ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
             parametersForCalculation["Zone"].Value = _testEngine.GetValueFromRange(
-                parametersForCalculation["Zone"].ValueOptions
+                parameters.First(p => p.Name =="Zone").ValueOptions
                 .Select(vo => vo.Value)
                 .ToArray());
             parametersForCalculation["Topography"].Value = _testEngine.GetValueFromRange(
-                parametersForCalculation["Topography"].ValueOptions
+               parameters.First(p => p.Name == "Topography").ValueOptions
                 .Select(vo => vo.Value)
                 .ToArray());
             parametersForCalculation["A"].Value = _testEngine.GetBigRandom();
@@ -49,7 +48,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests.SnowLoads
             {
                 parametersForCalculation["n"].Value = _testEngine.GetSmallRandom();
                 parametersForCalculation["DesignSituation"].Value = _testEngine.GetValueFromRange(
-                    parametersForCalculation["DesignSituation"].ValueOptions
+                    parameters.First(p => p.Name == "DesignSituation").ValueOptions
                     .Select(vo => vo.Value)
                     .ToArray());
                 parametersForCalculation["ExceptionalSituation"].Value = _testEngine.GetValueFromRange(

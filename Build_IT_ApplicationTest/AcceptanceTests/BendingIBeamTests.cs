@@ -1,22 +1,11 @@
-﻿using AutoMapper;
-using Build_IT_Application.Infrastructures;
-using Build_IT_Application.Infrastructures.Interfaces;
-using Build_IT_Application.Mapping;
-using Build_IT_Application.ScriptInterpreter.Calculations.Commands;
+﻿using Build_IT_Application.ScriptInterpreter.Calculations.Queries;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Data.Entities.Scripts;
-using Build_IT_Data.Entities.Scripts.Enums;
-using Build_IT_DataAccess.ScriptInterpreter;
-using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
-using Build_IT_DataAccess.ScriptInterpreter.Repositiories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Moq;
+using SIP = Build_IT_ScriptInterpreter.Parameters;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace Build_IT_ApplicationTest.AcceptanceTests
 {
@@ -38,10 +27,10 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
-            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
-            var parametersForCalculation = new Dictionary<string, ParameterResource>(
-                parametersResource.Where(p => (p.Context & ParameterOptions.Editable) != 0 &&
-                (p.Context & ParameterOptions.Visible) != 0)
+            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<CalculateParameterResource>>(parameters);
+            var parametersForCalculation = new Dictionary<string, CalculateParameterResource>(
+                parametersResource.Where(p => (p.Context & SIP.ParameterOptions.Editable) != 0 &&
+                (p.Context & SIP.ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
             parametersForCalculation["f_y_"].Value = "355";
@@ -66,10 +55,10 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
-            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
-            var parametersForCalculation = new Dictionary<string, ParameterResource>(
-                parametersResource.Where(p => (p.Context & ParameterOptions.Editable) != 0 &&
-                (p.Context & ParameterOptions.Visible) != 0)
+            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<CalculateParameterResource>>(parameters);
+            var parametersForCalculation = new Dictionary<string, CalculateParameterResource>(
+                parametersResource.Where(p => (p.Context & SIP.ParameterOptions.Editable) != 0 &&
+                (p.Context & SIP.ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
             parametersForCalculation["f_y_"].Value = "355";
@@ -94,10 +83,10 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
-            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
-            var parametersForCalculation = new Dictionary<string, ParameterResource>(
-                parametersResource.Where(p => (p.Context & ParameterOptions.Editable) != 0 &&
-                (p.Context & ParameterOptions.Visible) != 0)
+            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<CalculateParameterResource>>(parameters);
+            var parametersForCalculation = new Dictionary<string, CalculateParameterResource>(
+                parametersResource.Where(p => (p.Context & SIP.ParameterOptions.Editable) != 0 &&
+                (p.Context & SIP.ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
             parametersForCalculation["f_y_"].Value = "355";
@@ -123,10 +112,10 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
-            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
-            var parametersForCalculation = new Dictionary<string, ParameterResource>(
-                parametersResource.Where(p => (p.Context & ParameterOptions.Editable) != 0 &&
-                (p.Context & ParameterOptions.Visible) != 0)
+            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<CalculateParameterResource>>(parameters);
+            var parametersForCalculation = new Dictionary<string, CalculateParameterResource>(
+                parametersResource.Where(p => (p.Context & SIP.ParameterOptions.Editable) != 0 &&
+                (p.Context & SIP.ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
             parametersForCalculation["f_y_"].Value = "355";
@@ -151,10 +140,10 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
-            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
-            var parametersForCalculation = new Dictionary<string, ParameterResource>(
-                parametersResource.Where(p => (p.Context & ParameterOptions.Editable) != 0 &&
-                (p.Context & ParameterOptions.Visible) != 0)
+            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<CalculateParameterResource>>(parameters);
+            var parametersForCalculation = new Dictionary<string, CalculateParameterResource>(
+                parametersResource.Where(p => (p.Context & SIP.ParameterOptions.Editable) != 0 &&
+                (p.Context & SIP.ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
             parametersForCalculation["f_y_"].Value = "355";
@@ -180,10 +169,10 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
-            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
-            var parametersForCalculation = new Dictionary<string, ParameterResource>(
-                parametersResource.Where(p => (p.Context & ParameterOptions.Editable) != 0 &&
-                (p.Context & ParameterOptions.Visible) != 0)
+            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<CalculateParameterResource>>(parameters);
+            var parametersForCalculation = new Dictionary<string, CalculateParameterResource>(
+                parametersResource.Where(p => (p.Context & SIP.ParameterOptions.Editable) != 0 &&
+                (p.Context & SIP.ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
             parametersForCalculation["f_y_"].Value = _testEngine.GetBigRandom();
@@ -192,7 +181,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
             parametersForCalculation["t_f_"].Value = _testEngine.GetSmallRandom();
             parametersForCalculation["t_w_"].Value = _testEngine.GetSmallRandom();
             parametersForCalculation["Type"].Value =
-                _testEngine.GetValueFromRange(parametersForCalculation["Type"].ValueOptions
+                _testEngine.GetValueFromRange(parameters.First(p => p.Name=="Type").ValueOptions
                 .Select(vo => vo.Value)
                 .ToArray());
             parametersForCalculation["a"].Value = _testEngine.GetSmallRandom();

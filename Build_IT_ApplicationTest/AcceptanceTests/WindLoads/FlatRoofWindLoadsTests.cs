@@ -1,11 +1,11 @@
-﻿using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
+﻿using Build_IT_Application.ScriptInterpreter.Calculations.Queries;
+using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Data.Entities.Scripts;
-using Build_IT_Data.Entities.Scripts.Enums;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using SIP = Build_IT_ScriptInterpreter.Parameters;
 
 namespace Build_IT_ApplicationTest.AcceptanceTests.WindLoads
 {
@@ -27,18 +27,18 @@ namespace Build_IT_ApplicationTest.AcceptanceTests.WindLoads
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
-            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
-            var parametersForCalculation = new Dictionary<string, ParameterResource>(
-                parametersResource.Where(p => (p.Context & ParameterOptions.Editable) != 0 &&
-                (p.Context & ParameterOptions.Visible) != 0)
+            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<CalculateParameterResource>>(parameters);
+            var parametersForCalculation = new Dictionary<string, CalculateParameterResource>(
+                parametersResource.Where(p => (p.Context & SIP.ParameterOptions.Editable) != 0 &&
+                (p.Context & SIP.ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
             parametersForCalculation["WindZone"].Value = _testEngine.GetValueFromRange(
-                parametersForCalculation["WindZone"].ValueOptions
+                parameters.First(p => p.Name == "WindZone").ValueOptions
                 .Select(vo => vo.Value)
                 .ToArray());
             parametersForCalculation["TerrainType"].Value = _testEngine.GetValueFromRange(
-                parametersForCalculation["TerrainType"].ValueOptions
+                parameters.First(p => p.Name == "TerrainType").ValueOptions
                 .Select(vo => vo.Value)
                 .ToArray());
             parametersForCalculation["A"].Value = _testEngine.GetBigRandom();
@@ -46,11 +46,11 @@ namespace Build_IT_ApplicationTest.AcceptanceTests.WindLoads
             parametersForCalculation["b"].Value = _testEngine.GetSmallRandom(min: 1);
             parametersForCalculation["h"].Value = _testEngine.GetSmallRandom(min: 1);
             parametersForCalculation["BuildingOrientation"].Value = _testEngine.GetValueFromRange(
-                parametersForCalculation["BuildingOrientation"].ValueOptions
+                parameters.First(p => p.Name == "BuildingOrientation").ValueOptions
                 .Select(vo => vo.Value)
                 .ToArray());
             parametersForCalculation["Type"].Value = _testEngine.GetValueFromRange(
-                parametersForCalculation["Type"].ValueOptions
+                parameters.First(p => p.Name == "Type").ValueOptions
                 .Select(vo => vo.Value)
                 .ToArray());
             parametersForCalculation["r"].Value = _testEngine.GetSmallRandom(min: 1);
@@ -67,10 +67,10 @@ namespace Build_IT_ApplicationTest.AcceptanceTests.WindLoads
         {
             var parameters = _testEngine.ParameterRepository.GetAllParametersForScriptAsync(ID).Result.ToList();
 
-            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<ParameterResource>>(parameters);
-            var parametersForCalculation = new Dictionary<string, ParameterResource>(
-                parametersResource.Where(p => (p.Context & ParameterOptions.Editable) != 0 &&
-                (p.Context & ParameterOptions.Visible) != 0)
+            var parametersResource = _testEngine.Mapper.Map<List<Parameter>, List<CalculateParameterResource>>(parameters);
+            var parametersForCalculation = new Dictionary<string, CalculateParameterResource>(
+                parametersResource.Where(p => (p.Context & SIP.ParameterOptions.Editable) != 0 &&
+                (p.Context & SIP.ParameterOptions.Visible) != 0)
                 .ToDictionary(p => p.Name, p => p));
 
             parametersForCalculation["WindZone"].Value = "III";
@@ -88,7 +88,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests.WindLoads
             parametersForCalculation["WindDirection"].Value = "30";
 
             var results = _testEngine.Calculate(ID, parametersForCalculation
-                .Where(p=> !string.IsNullOrWhiteSpace(p.Value.Value))
+                .Where(p => !string.IsNullOrWhiteSpace(p.Value.Value))
                 .Select(p => p.Value).ToList());
 
             Assert.That(GetDoubleValue(results, "w_e,F,max_"), Is.EqualTo(-0.818).Within(0.001));

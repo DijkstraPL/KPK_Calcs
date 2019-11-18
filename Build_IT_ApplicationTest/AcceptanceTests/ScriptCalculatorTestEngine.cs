@@ -2,7 +2,8 @@
 using Build_IT_Application.Infrastructures;
 using Build_IT_Application.Infrastructures.Interfaces;
 using Build_IT_Application.Mapping;
-using Build_IT_Application.ScriptInterpreter.Calculations.Commands;
+using Build_IT_Application.ScriptInterpreter.Calculations.Queries;
+using Build_IT_Application.ScriptInterpreter.Calculations.Queries.Calculate;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_DataAccess.ScriptInterpreter;
 using Build_IT_DataAccess.ScriptInterpreter.Repositiories;
@@ -13,7 +14,6 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Build_IT_ApplicationTest.AcceptanceTests
@@ -53,7 +53,7 @@ namespace Build_IT_ApplicationTest.AcceptanceTests
             ScriptInterpreterDbContext.Dispose();
         }
 
-        public List<ParameterResource> Calculate(long scriptId, ICollection<ParameterResource> parametersForCalculation)
+        public List<ParameterResource> Calculate(long scriptId, ICollection<CalculateParameterResource> parametersForCalculation)
         {
             var request = new CalculateQuery
             {
