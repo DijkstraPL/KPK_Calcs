@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Build_IT_Application.Exceptions;
 using Build_IT_Application.Infrastructures.Interfaces;
 using Build_IT_Application.ScriptInterpreter.Parameters.Queries;
 using Build_IT_Applications.ScriptInterpreter.Services;
@@ -67,9 +68,16 @@ namespace Build_IT_Application.ScriptInterpreter.Calculations.Queries.Calculate
                 var parameterResources = _mapper.Map<List<Parameter>, List<ParameterResource>>(parameters.ToList());
                 var scriptCalculator = new ScriptCalculator(parameterResources);
 
-                await scriptCalculator
-                    .CalculateAsync(request.InputData.Where(v => v.Value != null))
-                    .ConfigureAwait(false);
+                try
+                {
+                    await scriptCalculator
+                        .CalculateAsync(request.InputData.Where(v => v.Value != null))
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    throw new CalculationException(script.Id, ex.Message, ex);
+                }
 
                 var calculatedParameters = scriptCalculator.GetResult().ToList();
                 calculatedParameters.ForEach(cp => cp.Equation = equations
