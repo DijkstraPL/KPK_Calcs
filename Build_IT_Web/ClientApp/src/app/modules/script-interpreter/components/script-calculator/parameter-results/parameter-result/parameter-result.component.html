@@ -9,7 +9,7 @@
                 <p class="font-weight-bold mb-0 parameter-result-value">
                     <span *ngIf="parameter.valueType == valueTypes.number; else textValue"
                           [ngClass]="parameter.name">
-                        {{parameter.value | toNumber | number:'1.0-3'}}
+                        {{parameter.value | toNumber}}
                     </span>
                     <ng-template #textValue>
                         <span [ngClass]="parameter.name">{{parameter.value}}</span>
