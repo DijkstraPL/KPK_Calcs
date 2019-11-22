@@ -98,6 +98,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_FrameStaticaAcceptanceTests", "Build_IT_FrameStaticaAcceptanceTests\Build_IT_FrameStaticaAcceptanceTests.csproj", "{3A3A9AA0-0A02-4991-82C2-ED15D8C8D217}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Architecture", "Architecture", "{55CDC6D8-2B68-4654-826F-8D0FE98D1BDE}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build_IT_SoftwareArchitecture", "Build_IT_SoftwareArchitecture\Build_IT_SoftwareArchitecture.csproj", "{75847B8F-70AF-45B4-9F37-45CB584A87F5}"
 EndProject
